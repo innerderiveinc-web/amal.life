@@ -1,4 +1,4 @@
-export type ActionStatus = 'PENDING' | 'COMPLETED' | 'SKIPPED' | 'ADAPTED';
+export type ActionStatus = 'PENDING' | 'STARTED' | 'COMPLETED' | 'PARTIAL' | 'SKIPPED' | 'SNOOZED' | 'ADAPTED';
 
 export type ActionCategory =
   | 'SALAH'
@@ -8,7 +8,102 @@ export type ActionCategory =
   | 'FAMILY'
   | 'TIME_MANAGEMENT'
   | 'DHIKR'
-  | 'SADAQAH';
+  | 'SADAQAH'
+  | 'PATIENCE'
+  | 'ANGER'
+  | 'PARENTS'
+  | 'RAMADAN'
+  | 'NEW_MUSLIM'
+  | 'REFLECTION';
+
+export type GoalIntent =
+  | 'START'
+  | 'RESTART'
+  | 'IMPROVE'
+  | 'MAINTAIN'
+  | 'LEARN'
+  | 'UNDERSTAND'
+  | 'PREPARE'
+  | 'OVERCOME_FRICTION';
+
+export type FrictionType =
+  | 'FORGETTING'
+  | 'TIME'
+  | 'ENERGY'
+  | 'LOCATION'
+  | 'DEVICE'
+  | 'COMPLEXITY'
+  | 'LOW_MOTIVATION'
+  | 'UNCLEAR_NEXT_STEP'
+  | 'EMOTIONAL_RESISTANCE'
+  | 'SCHEDULE_CONFLICT'
+  | 'TOO_LONG'
+  | 'TOO_DIFFICULT';
+
+export interface GoalBaseline {
+  currentFrequency: string;
+  currentDurationMinutes: number;
+  confidence: number;
+  availableMinutes: number;
+  preferredTimeOfDay: 'AFTER_FAJR' | 'MORNING' | 'AFTER_DHUHR' | 'AFTER_ASR' | 'EVENING' | 'BEFORE_BED';
+  knownBarriers: FrictionType[];
+}
+
+export interface UserGoal {
+  id: string;
+  userId: string;
+  title: string;
+  category: ActionCategory;
+  intent: GoalIntent;
+  desiredOutcome: string;
+  timeHorizon: '14_DAYS' | '21_DAYS' | '30_DAYS' | 'CUSTOM';
+  baseline: GoalBaseline;
+  status: 'ACTIVE' | 'PAUSED' | 'COMPLETED' | 'ARCHIVED';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface FrictionSignal {
+  id: string;
+  userId: string;
+  journeyId?: string;
+  type: FrictionType;
+  confidence: number;
+  source: 'USER_SELF_REPORT' | 'COMPLETION_PATTERN' | 'REFLECTION' | 'SCHEDULE';
+  userConfirmed: boolean;
+  detectedAt: string;
+}
+
+export interface AmalCompletionRecord {
+  id: string;
+  amalId: string;
+  userId: string;
+  status: 'FULL' | 'PARTIAL' | 'MINIMUM';
+  plannedMinutes: number;
+  actualMinutes: number;
+  completedAt: string;
+  selfReported: boolean;
+  notes?: string;
+}
+
+export interface AmalRecommendationRecord {
+  id: string;
+  userId: string;
+  journeyId?: string;
+  amalId: string;
+  score: number;
+  factors: {
+    evidenceFit: number;
+    goalFit: number;
+    contextFit: number;
+    feasibility: number;
+    preferenceFit: number;
+    continuity: number;
+  };
+  evidenceIds: string[];
+  explanation: string;
+  createdAt: string;
+}
 
 export interface AmalAction {
   id: string;
@@ -16,6 +111,8 @@ export interface AmalAction {
   dayNumber?: number | null;
   title: string;
   description: string;
+  minimumMinutes?: number;
+  targetMinutes: number;
   estimatedMinutes: number;
   category: ActionCategory;
   primaryEvidenceReference: string;
@@ -47,3 +144,4 @@ export interface AmalGenerationRequest {
   lifeStage?: string;
   preferredPace?: 'VERY_GENTLE' | 'STEADY' | 'INTENSIVE';
 }
+

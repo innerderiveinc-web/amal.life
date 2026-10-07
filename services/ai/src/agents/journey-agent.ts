@@ -24,6 +24,19 @@ export class JourneyAgent {
       description: template.description,
       durationDays: template.durationDays,
       currentDay: 1,
+      currentPhaseSequence: 1,
+      phases: template.phases
+        ? template.phases.map((p) => ({
+            id: `phase-${journeyId}-${p.sequence}`,
+            journeyId,
+            sequence: p.sequence,
+            title: p.title,
+            objective: p.objective,
+            durationDays: p.durationDays,
+            minimumActionMinutes: p.minimumActionMinutes,
+            targetActionMinutes: p.targetActionMinutes,
+          }))
+        : undefined,
       status: 'ACTIVE',
       approvedByUser: true,
       baselineDifficulty: template.baselineDifficulty,

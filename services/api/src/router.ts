@@ -21,6 +21,7 @@ import {
   IntentRouter,
   AmalPlanner,
   ScholarEscalationAgent,
+  AmalJourneyEngine,
 } from '@amal/service-ai';
 import { PrayerService } from './prayer-service.js';
 
@@ -378,8 +379,71 @@ export class ApiRouter {
       }
 
       // -----------------------------------------------------
-      // 6. AMAL GENERATION & COMPLETION
+      // 6. GOALS & AMAL ENGINE (Multi-factor Ranking & Baselines)
       // -----------------------------------------------------
+      if (path === '/api/v1/goals' && method === 'POST') {
+        const { title, category, intent, desired_outcome, baseline, time_horizon } = body;
+        const goal = AmalJourneyEngine.createGoal(
+          ctx.userId,
+          title || 'Personal Worship Consistency',
+          category || 'SALAH',
+          intent || 'HABIT_FORMATION',
+          desired_outcome || 'Consistent daily practice without burnout',
+          baseline || {
+            currentFrequency: 'OCCASIONALLY',
+            currentMinutes: 5,
+            targetFrequency: 'DAILY',
+            targetMinutes: 15,
+            perceivedObstacles: ['Time constraint', 'Late sleep'],
+          },
+          time_horizon || '14_DAYS'
+        );
+        return {
+          success: true,
+          data: goal,
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
+      if (path === '/api/v1/amal/recommend' && method === 'POST') {
+        const { candidates } = body;
+        const defaultCandidates = [
+          {
+            amalId: 'amal_fajr_winddown',
+            title: 'Isha Wind-down & Device Silence',
+            estimatedMinutes: 10,
+            evidenceFit: 1.0,
+            goalFit: 0.95,
+            contextFit: 0.9,
+            feasibility: 0.95,
+            preferenceFit: 0.9,
+            continuity: 0.85,
+            safety: 1.0,
+            evidenceReferences: ['Sahih al-Bukhari 568'],
+          },
+          {
+            amalId: 'amal_quran_5m',
+            title: '5-Minute Morning Tadabbur',
+            estimatedMinutes: 5,
+            evidenceFit: 1.0,
+            goalFit: 0.85,
+            contextFit: 0.9,
+            feasibility: 1.0,
+            preferenceFit: 0.85,
+            continuity: 0.9,
+            safety: 1.0,
+            evidenceReferences: ['Sahih al-Bukhari 6464', 'Sahih Muslim 395'],
+          },
+        ];
+
+        const ranked = AmalJourneyEngine.rankAmalCandidates(ctx.userId, candidates || defaultCandidates);
+        return {
+          success: true,
+          data: { recommendations: ranked },
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
       if (path === '/api/v1/amal/generate' && method === 'POST') {
         const { goal, duration_days, daily_minutes } = body;
         const journeyId = `jrn_${Date.now()}`;
@@ -403,22 +467,37 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/amal/') && path.endsWith('/complete') && method === 'POST') {
         const amalId = path.split('/')[4];
-        const { completion_type, actual_duration_minutes } = body;
+        const { actual_duration_minutes, planned_duration_minutes, notes } = body;
+        const completion = AmalJourneyEngine.recordCompletion(
+          ctx.userId,
+          amalId,
+          planned_duration_minutes || 10,
+          actual_duration_minutes !== undefined ? actual_duration_minutes : 10,
+          notes
+        );
 
         return {
           success: true,
-          data: {
-            amal_id: amalId,
-            status: completion_type || 'completed',
-            actual_duration_minutes: actual_duration_minutes || 10,
-            recorded_at: timestamp,
-          },
+          data: completion,
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
+      if (path === '/api/v1/today/burden' && method === 'GET') {
+        const activeActions = [
+          { durationMinutes: 10, complexityScore: 1 },
+          { durationMinutes: 5, complexityScore: 1 },
+        ];
+        const burden = AmalJourneyEngine.calculateDailyBurden(activeActions);
+        return {
+          success: true,
+          data: burden,
           metadata: { timestamp, request_id: requestId, version },
         };
       }
 
       // -----------------------------------------------------
-      // 7. JOURNEYS
+      // 7. JOURNEYS & ADAPTATION
       // -----------------------------------------------------
       if (path === '/api/v1/journeys' && method === 'GET') {
         const userJourneys = Array.from(db.journeys.values()).filter((j) => j.userId === ctx.userId);
@@ -430,6 +509,31 @@ export class ApiRouter {
         const jrn = JourneyAgent.createJourneyFromTemplate(ctx.userId, journey_type || 'FAJR_RECOVERY');
         db.journeys.set(jrn.id, jrn);
         return { success: true, data: jrn, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/journeys/') && path.endsWith('/adapt') && method === 'POST') {
+        const journeyId = path.split('/')[4];
+        const jrn = db.journeys.get(journeyId) || JourneyAgent.createJourneyFromTemplate(ctx.userId, 'FAJR_RECOVERY');
+        const completions = [
+          AmalJourneyEngine.recordCompletion(ctx.userId, 'act_1', 15, 5),
+          AmalJourneyEngine.recordCompletion(ctx.userId, 'act_2', 15, 3),
+        ];
+        const friction = [
+          AmalJourneyEngine.recordFrictionSignal(ctx.userId, 'TIME', 'USER_SELF_REPORT', 0.9, journeyId),
+        ];
+
+        const adaptationResult = AmalJourneyEngine.evaluateJourneyHealthAndAdapt(jrn, completions, friction);
+        if (adaptationResult.adaptationProposal) {
+          jrn.status = 'ADAPTED';
+          jrn.healthState = adaptationResult.healthState;
+          db.journeys.set(jrn.id, jrn);
+        }
+
+        return {
+          success: true,
+          data: adaptationResult,
+          metadata: { timestamp, request_id: requestId, version },
+        };
       }
 
       if (path.includes('/days/today') && method === 'GET') {

@@ -25,6 +25,23 @@ export interface JourneyDay {
   reflectionPrompt: string;
   isCompleted: boolean;
 }
+export interface JourneyPhase {
+  id: string;
+  journeyId: string;
+  sequence: number;
+  title: string;
+  objective: string;
+  durationDays: number;
+  minimumActionMinutes: number;
+  targetActionMinutes: number;
+}
+
+export type JourneyHealthState =
+  | 'ON_TRACK'
+  | 'NEEDS_ADJUSTMENT'
+  | 'PAUSED'
+  | 'LOW_ACTIVITY'
+  | 'COMPLETED';
 
 export interface Journey {
   id: string;
@@ -35,7 +52,10 @@ export interface Journey {
   description: string;
   durationDays: number;
   currentDay: number;
+  currentPhaseSequence?: number;
+  phases?: JourneyPhase[];
   status: JourneyStatus;
+  healthState?: JourneyHealthState;
   approvedByUser: boolean;
   baselineDifficulty: string;
   startDate: string;
@@ -47,10 +67,12 @@ export interface Journey {
 
 export interface JourneyAdaptationProposal {
   journeyId: string;
-  reason: 'CONSECUTIVE_SKIPS' | 'USER_REPORTED_OVERWHELM' | 'SCHEDULE_CHANGE';
+  reason: 'CONSECUTIVE_SKIPS' | 'USER_REPORTED_OVERWHELM' | 'SCHEDULE_CHANGE' | 'BURDEN_COLLISION';
   currentDifficulty: string;
   proposedDifficulty: string;
   reductionPercentage: number;
   recommendedChanges: string[];
   reassuranceMessage: string;
+  newConfiguration?: any;
 }
+

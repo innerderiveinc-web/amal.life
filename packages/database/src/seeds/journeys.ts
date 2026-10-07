@@ -1,5 +1,14 @@
 import { Journey, JourneyType } from '@amal/types';
 
+export interface JourneyPhaseTemplate {
+  sequence: number;
+  title: string;
+  objective: string;
+  durationDays: number;
+  minimumActionMinutes: number;
+  targetActionMinutes: number;
+}
+
 export interface JourneyTemplate {
   journeyType: JourneyType;
   title: string;
@@ -7,6 +16,7 @@ export interface JourneyTemplate {
   description: string;
   durationDays: number;
   baselineDifficulty: 'VERY_EASY' | 'EASY' | 'MODERATE' | 'CHALLENGING';
+  phases?: JourneyPhaseTemplate[];
   days: {
     dayNumber: number;
     title: string;
@@ -32,6 +42,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'A gentle, progressive 14-day routine that focuses on evening wind-down, screen discipline, and prophetic sleep habits rather than forceful willpower alone.',
     durationDays: 14,
     baselineDifficulty: 'MODERATE',
+    phases: [
+      { sequence: 1, title: 'Evening Friction Removal', objective: 'Establish consistent bedtime and phone distance', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 15 },
+      { sequence: 2, title: 'Awakening Anchors', objective: 'Untie sleep knots immediately upon alarm', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 15 },
+      { sequence: 3, title: 'Sunnah Integration', objective: 'Incorporate Sunnah of Fajr and calm morning presence', durationDays: 4, minimumActionMinutes: 10, targetActionMinutes: 20 },
+      { sequence: 4, title: 'Sustainable Maintenance', objective: 'Anchor lifelong routine and gentle recovery mechanics', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -116,6 +132,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Transform prayer from a stressful obligation into an anchoring sanctuary throughout your workday.',
     durationDays: 21,
     baselineDifficulty: 'EASY',
+    phases: [
+      { sequence: 1, title: 'Calendar Sanctuary', objective: 'Protect prayer intervals in workday', durationDays: 5, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 2, title: 'Presence & Khushu Base', objective: 'Slow down movements and contemplate recitation', durationDays: 7, minimumActionMinutes: 10, targetActionMinutes: 15 },
+      { sequence: 3, title: 'Rawatib Addition', objective: 'Safely integrate confirmed Sunnah prayers', durationDays: 5, minimumActionMinutes: 10, targetActionMinutes: 20 },
+      { sequence: 4, title: 'Lifelong Anchoring', objective: 'Prayer as emotional reset and sanctuary', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -144,6 +166,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Small, deeply meaningful daily doses: 5 verses with translation and contemplation.',
     durationDays: 14,
     baselineDifficulty: 'VERY_EASY',
+    phases: [
+      { sequence: 1, title: 'Gentle Reconnection', objective: 'Read 5 verses daily without guilt or speed pressure', durationDays: 3, minimumActionMinutes: 3, targetActionMinutes: 5 },
+      { sequence: 2, title: 'Tadabbur Contemplation', objective: 'Understand translation and connect to daily life', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 3, title: 'Recitation Practice', objective: 'Listen to master reciters and improve tajweed ease', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 4, title: 'Daily Flow', objective: 'Lock in an effortless daily Quran slot', durationDays: 3, minimumActionMinutes: 3, targetActionMinutes: 10 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -172,6 +200,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Read measured portions daily, cultivating love, understanding, and peaceful consistency.',
     durationDays: 30,
     baselineDifficulty: 'EASY',
+    phases: [
+      { sequence: 1, title: 'Habit Anchor', objective: 'Set fixed reading time after morning or evening prayer', durationDays: 7, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 2, title: 'Depth & Translation', objective: 'Deep dive into meanings and context', durationDays: 8, minimumActionMinutes: 5, targetActionMinutes: 15 },
+      { sequence: 3, title: 'Memorization Seeds', objective: 'Memorize short verses for Salah reflection', durationDays: 8, minimumActionMinutes: 10, targetActionMinutes: 20 },
+      { sequence: 4, title: 'Perpetual Habit', objective: 'Sustained independent engagement', durationDays: 7, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -200,6 +234,11 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Learn physiological and spiritual reflexes when frustrated: posture shifts, wudu, and istiadha.',
     durationDays: 7,
     baselineDifficulty: 'EASY',
+    phases: [
+      { sequence: 1, title: 'Trigger Recognition', objective: 'Identify somatic signs of irritation early', durationDays: 2, minimumActionMinutes: 3, targetActionMinutes: 5 },
+      { sequence: 2, title: 'Prophetic Pauses', objective: 'Practice 3-second pause and wudu reset', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 3, title: 'Speech Restraint', objective: 'Replace reactive complaints with calm silence or istighfar', durationDays: 2, minimumActionMinutes: 5, targetActionMinutes: 10 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -228,6 +267,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Conduct a gentle barakah audit, set smartphone boundaries, and build Salah-anchored focus blocks.',
     durationDays: 14,
     baselineDifficulty: 'MODERATE',
+    phases: [
+      { sequence: 1, title: 'Distraction Audit', objective: 'Identify digital leaks and energy drains', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 2, title: 'Barakah Windows', objective: 'Leverage early morning hours for prime tasks', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 15 },
+      { sequence: 3, title: 'Prioritizing the Eternal', objective: 'Structure day around Salah milestones', durationDays: 4, minimumActionMinutes: 10, targetActionMinutes: 20 },
+      { sequence: 4, title: 'Sustainable Balance', objective: 'Prevent burnout and keep intentional margins', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -256,6 +301,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Designed specifically for reverts: learn one clear concept at a time, celebrate your journey, and build confidence.',
     durationDays: 30,
     baselineDifficulty: 'VERY_EASY',
+    phases: [
+      { sequence: 1, title: 'Welcoming Sincerity', objective: 'Embrace ease and understand Allah’s gentle mercy', durationDays: 7, minimumActionMinutes: 3, targetActionMinutes: 5 },
+      { sequence: 2, title: 'Foundations of Worship', objective: 'Learn basic wudu and fundamental prayer postures', durationDays: 8, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 3, title: 'Living the Values', objective: 'Food mindfulness, clean habits, and kindness', durationDays: 8, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 4, title: 'Community & Growth', objective: 'Connect with local support and continuous learning', durationDays: 7, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
     days: [
       {
         dayNumber: 1,
@@ -284,6 +335,12 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
     description: 'Condition your appetite, sleep, and Quran routine before the crescent appears.',
     durationDays: 14,
     baselineDifficulty: 'EASY',
+    phases: [
+      { sequence: 1, title: 'Intention & Conditioning', objective: 'Set Ramadan goals and fast voluntary days if able', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 2, title: 'Night Prayer Priming', objective: 'Practice 2 rakat of Qiyam al-Layl before sleep', durationDays: 4, minimumActionMinutes: 10, targetActionMinutes: 20 },
+      { sequence: 3, title: 'Quran & Charity Momentum', objective: 'Establish daily juz/page pacing and give micro-sadaqah', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 15 },
+      { sequence: 4, title: 'Entering the Crescent', objective: 'Welcome Ramadan with pure heart and clean schedule', durationDays: 3, minimumActionMinutes: 10, targetActionMinutes: 20 },
+    ],
     days: [
       {
         dayNumber: 1,
