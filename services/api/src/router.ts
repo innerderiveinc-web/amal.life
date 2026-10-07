@@ -32,11 +32,13 @@ import { CommunicationsService } from './modules/notifications/communications.se
 import { GovernanceService } from './modules/governance/governance.service.js';
 import { PlatformService } from './modules/platform/platform.service.js';
 import { KnowledgeOpsService } from './modules/knowledge-ops/knowledge-ops.service.js';
+import { BillingService } from './modules/billing/billing.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
 const platformService = new PlatformService();
 const knowledgeOpsService = new KnowledgeOpsService();
+const billingService = new BillingService();
 
 export interface RequestContext {
   userId: string;
@@ -1111,6 +1113,106 @@ export class ApiRouter {
       if (path === '/internal/knowledge/health' && method === 'GET') {
         const health = knowledgeOpsService.getHealthScorecard();
         return { success: true, data: health, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 16. LAYER 15: BUSINESS, MONETIZATION & INSTITUTION PLATFORM
+      // -----------------------------------------------------
+      if (path === '/api/v1/billing/plans' && method === 'GET') {
+        const plans = billingService.getPlans();
+        return { success: true, data: plans, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/billing/subscription' && method === 'GET') {
+        const sub = billingService.getUserSubscription(ctx.userId);
+        return { success: true, data: sub, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/billing/entitlements/') && method === 'GET') {
+        const featureKey = path.split('/')[5];
+        const allowed = billingService.can(ctx.userId, featureKey);
+        return { success: true, data: { featureKey, allowed }, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/billing/checkout' && method === 'POST') {
+        const checkout = billingService.createCheckout(ctx.userId, body.planCode);
+        return { success: true, data: checkout, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/billing/activate' && method === 'POST') {
+        const sub = billingService.activateSubscription(ctx.userId, body.planCode, body.providerSubscriptionId);
+        return { success: true, data: sub, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/billing/cancel' && method === 'POST') {
+        const sub = billingService.cancelSubscription(ctx.userId, body.reason);
+        return { success: true, data: sub, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/billing/pause' && method === 'POST') {
+        const sub = billingService.pauseSubscription(ctx.userId);
+        return { success: true, data: sub, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/scholar/consultations' && method === 'POST') {
+        const consultation = billingService.bookScholarConsultation({
+          userId: ctx.userId,
+          scholarId: body.scholarId,
+          caseId: body.caseId,
+          consultationType: body.consultationType,
+          feeCents: body.feeCents,
+          currency: body.currency,
+        });
+        return { success: true, data: consultation, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/scholar/consultations/') && path.endsWith('/payout') && method === 'POST') {
+        const consId = path.split('/')[5];
+        const payout = billingService.releaseScholarPayout(consId);
+        return { success: true, data: payout, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/org/register' && method === 'POST') {
+        const org = billingService.registerInstitution({
+          name: body.name,
+          slug: body.slug,
+          institutionType: body.institutionType,
+          ownerUserId: ctx.userId,
+          maxSeats: body.maxSeats,
+        });
+        return { success: true, data: org, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/org/') && path.endsWith('/programs') && method === 'POST') {
+        const orgId = path.split('/')[4];
+        const prog = billingService.createInstitutionProgram({
+          institutionId: orgId,
+          name: body.name,
+          description: body.description,
+          journeyId: body.journeyId,
+        });
+        return { success: true, data: prog, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/org/') && path.endsWith('/dashboard') && method === 'GET') {
+        const orgId = path.split('/')[4];
+        const dash = billingService.getInstitutionDashboard(orgId);
+        return { success: true, data: dash, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/growth/referrals' && method === 'POST') {
+        const ref = billingService.createReferralInvite(ctx.userId);
+        return { success: true, data: ref, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/growth/referrals/convert' && method === 'POST') {
+        const ref = billingService.convertReferral(body.token, ctx.userId);
+        return { success: true, data: ref, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/growth/metrics' && method === 'GET') {
+        const metrics = billingService.getBusinessMetrics();
+        return { success: true, data: metrics, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------

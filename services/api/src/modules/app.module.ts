@@ -10,6 +10,7 @@ import { CommunicationsController } from './notifications/communications.control
 import { GovernanceController } from './governance/governance.controller.js';
 import { PlatformController } from './platform/platform.controller.js';
 import { KnowledgeOpsController } from './knowledge-ops/knowledge-ops.controller.js';
+import { BillingController } from './billing/billing.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -25,5 +26,6 @@ export class AppModule {
     GovernanceController,
     PlatformController,
     KnowledgeOpsController,
+    BillingController,
   ];
 }

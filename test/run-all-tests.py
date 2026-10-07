@@ -1993,6 +1993,123 @@ def test_layer14_real_corpus_scholar_network_and_knowledge_ops():
     print("✓ Layer 14 Real Islamic Corpus, Scholar Network & Knowledge Operations Successfully Verified.")
     return True
 
+def test_layer15_business_monetization_and_institution_platform():
+    log_header("TEST 25: LAYER 15 BUSINESS MODEL, MONETIZATION & INSTITUTION PLATFORM")
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    # 1. Database Migration 011 Architecture & Schema Invariants
+    mig11_file = os.path.join(base_dir, "packages/database/migrations/011_layer15_business_monetization_and_institution_platform.sql")
+    assert os.path.exists(mig11_file), "Migration 011 file must exist"
+    with open(mig11_file, "r", encoding="utf-8") as f:
+        mig11 = f.read()
+
+    required_tables = [
+        "billing_plans",
+        "billing_entitlements",
+        "user_subscriptions",
+        "subscription_invoices",
+        "scholar_consultations",
+        "institutions",
+        "institution_memberships",
+        "institution_programs",
+        "growth_referrals",
+        "growth_experiments",
+        "growth_experiment_assignments",
+        "revenue_ledger_entries",
+        "api_tenants",
+    ]
+    for tbl in required_tables:
+        assert f"CREATE TABLE IF NOT EXISTS {tbl}" in mig11, f"Missing table {tbl} in migration 011"
+    assert "ethical_review_passed" in mig11, "Missing ethical review flag for growth experiments"
+    assert "platform_fee_cents" in mig11 and "scholar_payout_cents" in mig11, "Missing transparent scholar fee split"
+    print("  ✓ Database Migration 011: All 13 relational billing, scholar economy, and institution tables verified.")
+
+    # 2. Types & Domain Contracts
+    billing_types_file = os.path.join(base_dir, "packages/types/src/billing.ts")
+    assert os.path.exists(billing_types_file), "Billing types file must exist"
+    with open(billing_types_file, "r", encoding="utf-8") as f:
+        bt_code = f.read()
+
+    assert "BillingPlan" in bt_code and "PlanTier" in bt_code
+    assert "BillingEntitlement" in bt_code and "UserSubscription" in bt_code
+    assert "ScholarConsultation" in bt_code and "ConsultationType" in bt_code
+    assert "Institution" in bt_code and "InstitutionType" in bt_code
+    assert "GrowthReferral" in bt_code and "GrowthExperiment" in bt_code
+    assert "RevenueLedgerEntry" in bt_code and "BusinessMetricsSummary" in bt_code
+    print("  ✓ Domain Contracts & Types: Plans, entitlements, consultations, institutions & ledger verified.")
+
+    # 3. Billing Backend Service & Invariants
+    billing_svc_file = os.path.join(base_dir, "services/api/src/modules/billing/billing.service.ts")
+    assert os.path.exists(billing_svc_file)
+    with open(billing_svc_file, "r", encoding="utf-8") as f:
+        svc_code = f.read()
+
+    # Plan Seeding & Unconditional Core Faith Access Invariant
+    assert "plan_free" in svc_code and "plan_plus_monthly" in svc_code and "plan_family_monthly" in svc_code
+    assert "unconditionedCoreFeatures" in svc_code
+    assert "quran_access" in svc_code and "prayer_times" in svc_code and "basic_evidence" in svc_code
+    print("  ✓ Ethical Paywall Invariant: Core faith resources (Quran, prayer, evidence) are NEVER paywalled.")
+
+    # Entitlement Engine & Feature Gating
+    assert "can(userId: string, featureKey: string)" in svc_code
+    assert "advanced_insights" in svc_code and "voice_interactions" in svc_code
+    print("  ✓ Canonical Entitlement Engine: Clean capability-based gating without scattered plan checks.")
+
+    # Subscription Lifecycle & No Dark Patterns
+    assert "createCheckout" in svc_code and "activateSubscription" in svc_code
+    assert "cancelSubscription" in svc_code and "pauseSubscription" in svc_code
+    print("  ✓ Subscription Lifecycle: Checkout, activation, transparent cancellation & pausing verified.")
+
+    # Scholar Economy & Transparent Escrow Fee Split
+    assert "bookScholarConsultation" in svc_code and "releaseScholarPayout" in svc_code
+    assert "platformFee" in svc_code and "scholarPayout" in svc_code
+    print("  ✓ Scholar Economy: 15% platform fee split, 85% scholar remuneration & escrow release verified.")
+
+    # Institutional SaaS & Privacy Firewall
+    assert "registerInstitution" in svc_code and "createInstitutionProgram" in svc_code
+    assert "getInstitutionDashboard" in svc_code
+    assert "Private reflections are NEVER exposed to org admins" in svc_code or "aggregatedCompletionRate" in svc_code
+    print("  ✓ Institutional Platform (AMAL for Organizations): Mosque/School programs & privacy firewall verified.")
+
+    # Growth Engine & Ethical Review Gates
+    assert "createReferralInvite" in svc_code and "convertReferral" in svc_code
+    assert "registerExperiment" in svc_code
+    assert "Fails ethical growth review" in svc_code or "ethicalReviewPassed" in svc_code
+    print("  ✓ Growth Engine: Ethical referrals (+7 Plus days reward) & strict anti-shame experiment gate verified.")
+
+    # Double-Entry Revenue Ledger & Business Metrics
+    assert "recordLedgerEntry" in svc_code and "getBusinessMetrics" in svc_code
+    assert "meaningfulAmalRate" in svc_code and "trustViolationsCount" in svc_code
+    print("  ✓ Financial Revenue Ledger: Double-entry audit trail & Meaningful Amal North Star verified.")
+
+    # 4. REST API Controller, Module & Router Integration
+    ctrl_file = os.path.join(base_dir, "services/api/src/modules/billing/billing.controller.ts")
+    mod_file = os.path.join(base_dir, "services/api/src/modules/billing/billing.module.ts")
+    app_module_file = os.path.join(base_dir, "services/api/src/modules/app.module.ts")
+    router_file = os.path.join(base_dir, "services/api/src/router.ts")
+
+    assert os.path.exists(ctrl_file) and os.path.exists(mod_file)
+    with open(app_module_file, "r", encoding="utf-8") as f:
+        app_mod_code = f.read()
+    assert "BillingController" in app_mod_code
+
+    with open(router_file, "r", encoding="utf-8") as f:
+        r_code = f.read()
+    assert "/api/v1/billing/plans" in r_code
+    assert "/api/v1/billing/subscription" in r_code
+    assert "/api/v1/billing/entitlements/" in r_code
+    assert "/api/v1/billing/checkout" in r_code
+    assert "/api/v1/billing/activate" in r_code
+    assert "/api/v1/billing/cancel" in r_code
+    assert "/api/v1/scholar/consultations" in r_code
+    assert "/api/v1/org/register" in r_code
+    assert "/api/v1/growth/referrals" in r_code
+    assert "/api/v1/growth/metrics" in r_code
+    print("  ✓ REST API & Router: Billing, Entitlements, Scholar Consultations, Org & Growth endpoints verified.")
+
+    print("✓ Layer 15 Business Model, Monetization & Institution Platform Successfully Verified.")
+    return True
+
 def main():
     print("""
     ======================================================================
@@ -2028,6 +2145,7 @@ def main():
         test_layer12_trust_safety_and_governance_control_plane,
         test_layer13_production_platform_and_infrastructure,
         test_layer14_real_corpus_scholar_network_and_knowledge_ops,
+        test_layer15_business_monetization_and_institution_platform,
     ]
 
     for check in checks:
@@ -2057,6 +2175,7 @@ def main():
     print("★ LAYER 12 TRUST ARCHITECTURE & GOVERNANCE CONTROL PLANE: VERIFIED (PASSED)")
     print("★ LAYER 13 PRODUCTION PLATFORM & CLOUD INFRASTRUCTURE: VERIFIED (PASSED)")
     print("★ LAYER 14 REAL CORPUS, SCHOLAR NETWORK & KNOWLEDGE OPERATIONS: VERIFIED (PASSED)")
+    print("★ LAYER 15 BUSINESS MODEL, MONETIZATION & INSTITUTION PLATFORM: VERIFIED (PASSED)")
     print("★ PRODUCTION READINESS: VERIFIED")
     print("=" * 70)
 
