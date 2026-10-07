@@ -1,19 +1,41 @@
+import { Controller, Get, Post, Param, Body, Headers, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AmalService } from './amal.service.js';
+import { AuthGuard, AuthUser } from '../../common/guards/auth.guard.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
+import { IdempotencyInterceptor } from '../../common/interceptors/idempotency.interceptor.js';
 
+export interface CompleteAmalDto {
+  completionType: 'FULL' | 'PARTIAL' | 'MINIMUM' | 'SKIPPED';
+  durationMinutes?: number;
+  notes?: string;
+}
+
+@Controller('amal')
+@UseGuards(AuthGuard)
+@UseInterceptors(IdempotencyInterceptor)
 export class AmalController {
-  public static handleCreateGoal(body: any, userId: string): any {
-    const goal = AmalService.createGoal(userId, body);
-    return { success: true, data: goal };
+  constructor(private readonly service: AmalService) {}
+
+  @Get('today')
+  async getToday(@CurrentUser() user: AuthUser) {
+    return this.service.findToday(user.id);
   }
 
-  public static handleCompleteAmal(body: any, userId: string, amalId: string): any {
-    const completion = AmalService.completeAmal(
-      userId,
-      amalId,
-      body.actual_duration_minutes ?? 10,
-      body.planned_duration_minutes ?? 10,
-      body.notes
-    );
-    return { success: true, data: completion };
+  @Post(':id/complete')
+  async complete(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Body() dto: CompleteAmalDto,
+    @Headers('idempotency-key') idempotencyKey?: string
+  ) {
+    const key = idempotencyKey || `auto_${id}_${Date.now()}`;
+    return this.service.complete({
+      amalId: id,
+      userId: user.id,
+      completionType: dto.completionType,
+      durationMinutes: dto.durationMinutes,
+      notes: dto.notes,
+      idempotencyKey: key,
+    });
   }
 }
