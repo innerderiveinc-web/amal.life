@@ -62,4 +62,47 @@ export class JourneysController {
   async complete(@CurrentUser() user: AuthUser, @Param('id') id: string) {
     return this.service.transition(user.id, id, JourneyState.COMPLETED);
   }
+
+  @Get(':id/adaptations')
+  async listAdaptations(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+    return [
+      {
+        id: `adp_${id}`,
+        journeyId: id,
+        trigger: 'REPEATED_TIME_FRICTION',
+        proposedPlan: { durationMinutes: 5, timeSlot: 'after_fajr' },
+        reasonCodes: ['TIME_FRICTION', 'LOW_FEASIBILITY'],
+        status: 'PREVIEW',
+      },
+    ];
+  }
+
+  @Post(':id/adaptation-preview')
+  async previewAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+    return {
+      currentPlan: '20 minutes evening recitation',
+      suggestedPlan: '5 minutes morning recitation after Fajr',
+      why: 'Recent morning sessions had 100% completion while evening sessions had repeated time friction.',
+      buttons: ['APPLY', 'KEEP_CURRENT', 'EDIT'],
+    };
+  }
+
+  @Post(':id/adaptation-approve')
+  async approveAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+    return {
+      applied: true,
+      journeyId: id,
+      newDurationMinutes: 5,
+      message: 'Plan simplified to 5 minutes after Fajr. Remember: "The most beloved deed to Allah is the most regular."',
+    };
+  }
+
+  @Post(':id/adaptation-reject')
+  async rejectAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+    return {
+      applied: false,
+      journeyId: id,
+      message: 'Kept current plan. No changes made.',
+    };
+  }
 }

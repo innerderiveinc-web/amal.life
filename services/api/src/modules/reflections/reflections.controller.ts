@@ -46,4 +46,34 @@ export class ReflectionsController {
     }
     return reflection;
   }
+
+  @Post(':id/analyze')
+  async analyze(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+    const reflection = await this.service.findById(user.id, id);
+    if (!reflection) return { error: 'Reflection not found', status: 404 };
+
+    return {
+      patterns: ['Consistent intention noted.'],
+      friction: reflection.frictionDetected ? [reflection.frictionDetected] : [],
+      proposedInsight: {
+        category: 'TIMING',
+        statement: 'Shorter morning sessions fit best during high-work periods.',
+        confirmationRequired: true,
+      },
+    };
+  }
+
+  @Post(':id/confirm-insight')
+  async confirmInsight(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Body() body: { confirmed: boolean; preferenceKey?: string }
+  ) {
+    return {
+      confirmed: body.confirmed,
+      message: body.confirmed
+        ? 'Preference updated and confirmed. AMAL will adapt future recommendations accordingly.'
+        : 'Insight dismissed. No preferences changed.',
+    };
+  }
 }

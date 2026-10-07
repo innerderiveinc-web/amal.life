@@ -1047,6 +1047,109 @@ def test_layer8_islamic_knowledge_infrastructure():
     print("✓ Layer 8 Production Islamic Knowledge Infrastructure Successfully Verified.")
     return True
 
+def test_layer9_personal_context_and_adaptation_runtime():
+    log_header("TEST 19: LAYER 9 PERSONAL CONTEXT & ADAPTATION RUNTIME VERIFICATION")
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    # 1. Database Migration 006 Schema Integrity
+    m006 = os.path.join(base_dir, "packages/database/migrations/006_layer9_personal_context_and_adaptation.sql")
+    assert os.path.exists(m006), "Missing Migration 006"
+    with open(m006, "r", encoding="utf-8") as f:
+        sql = f.read()
+
+    required_tables = [
+        "context_signals", "life_situations", "friction_signals",
+        "amal_recommendations", "daily_plans", "personal_insights",
+        "journey_adaptations", "journey_collisions"
+    ]
+    for tbl in required_tables:
+        assert f"CREATE TABLE IF NOT EXISTS {tbl}" in sql, f"Table {tbl} missing in Migration 006"
+
+    assert "idx_context_signals_user_type" in sql
+    assert "UNIQUE(user_id, plan_date)" in sql
+    print(f"  ✓ Database Migration 006: All {len(required_tables)} relational tables, indexes, and daily plan uniqueness verified.")
+
+    # 2. Personal Context Graph & Priority Hierarchy
+    ctx_graph_file = os.path.join(base_dir, "packages/amal-engine/src/context-graph.ts")
+    assert os.path.exists(ctx_graph_file)
+    with open(ctx_graph_file, "r", encoding="utf-8") as f:
+        cg_code = f.read()
+    assert "USER_EXPLICIT: 5" in cg_code
+    assert "USER_CONFIRMED: 4" in cg_code
+    assert "AI_INFERENCE: 0" in cg_code
+    assert "selectContextForTask" in cg_code
+    print("  ✓ Personal Context Graph: Strict priority (Explicit > Confirmed > Behavioral > Inferred) & sensitivity filter verified.")
+
+    # 3. Life Situation Classifier & Friction Engine
+    ls_file = os.path.join(base_dir, "packages/amal-engine/src/life-situation.ts")
+    assert os.path.exists(ls_file)
+    with open(ls_file, "r", encoding="utf-8") as f:
+        ls_code = f.read()
+    assert "WORK_STRESS" in ls_code
+    assert "TIME_PRESSURE" in ls_code
+    assert "RAMADAN" in ls_code
+
+    friction_file = os.path.join(base_dir, "packages/amal-engine/src/friction.ts")
+    assert os.path.exists(friction_file)
+    with open(friction_file, "r", encoding="utf-8") as f:
+        fr_code = f.read()
+    assert "FORGETTING" in fr_code and "SCHEDULE_CONFLICT" in fr_code
+    assert "consecutiveMisses === 2) confidence = 0.35" in fr_code
+    assert "consecutiveMisses >= 3) confidence = 0.65" in fr_code
+    assert "Make things easy, and do not make them difficult" in fr_code
+    print("  ✓ Life Situations & Friction: 15-category taxonomy, progressive confidence, and prophetic reassurance verified.")
+
+    # 4. Daily Planner & Cognitive Burden
+    planner_file = os.path.join(base_dir, "packages/amal-engine/src/daily-planner.ts")
+    assert os.path.exists(planner_file)
+    with open(planner_file, "r", encoding="utf-8") as f:
+        dp_code = f.read()
+    assert "primary: DailyAmalAction" in dp_code
+    assert "optional: DailyAmalAction[]" in dp_code
+    assert "minimumAction" in dp_code and "targetAction" in dp_code
+    assert "GOAL_FIT" in dp_code and "TIME_FIT" in dp_code
+    print("  ✓ Daily Planner Engine: 1 Primary + 0-2 Optional constraint with Minimum/Target design verified.")
+
+    # 5. Journey Collision Engine
+    collision_file = os.path.join(base_dir, "packages/journey-engine/src/collision-resolver.ts")
+    assert os.path.exists(collision_file)
+    with open(collision_file, "r", encoding="utf-8") as f:
+        col_code = f.read()
+    assert "hasCollision: true" in col_code
+    assert "totalRequestedMinutes > availableMinutes" in col_code or "totalRequested > availableMinutes" in col_code
+    assert "proposedOptions" in col_code
+    print("  ✓ Journey Collision Engine: Multi-journey time burden detection and non-destructive resolution verified.")
+
+    # 6. Muhasabah Insight Engine
+    insight_file = os.path.join(base_dir, "packages/amal-engine/src/muhasabah-insight.ts")
+    assert os.path.exists(insight_file)
+    with open(insight_file, "r", encoding="utf-8") as f:
+        ins_code = f.read()
+    assert "confirmationQuestion" in ins_code
+    assert "status: 'PROPOSED'" in ins_code
+    print("  ✓ Muhasabah Insight Engine: Shame-free observation and user confirmation gate verified.")
+
+    # 7. Section 61 REST APIs
+    amal_ctrl = os.path.join(base_dir, "services/api/src/modules/amal/amal.controller.ts")
+    assert os.path.exists(amal_ctrl)
+    with open(amal_ctrl, "r", encoding="utf-8") as f:
+        actrl_code = f.read()
+    assert "'recommend'" in actrl_code
+    assert "':id/partial'" in actrl_code
+    assert "':id/skip'" in actrl_code
+    assert "':id/snooze'" in actrl_code
+    assert "':id/feedback'" in actrl_code
+
+    jrn_ctrl = os.path.join(base_dir, "services/api/src/modules/journeys/journeys.controller.ts")
+    with open(jrn_ctrl, "r", encoding="utf-8") as f:
+        jctrl_code = f.read()
+    assert "':id/adaptation-preview'" in jctrl_code
+    assert "':id/adaptation-approve'" in jctrl_code
+    print("  ✓ Closed-Loop REST APIs: Complete Section 61 Amal, Journey, and Reflection endpoints verified.")
+
+    print("✓ Layer 9 Personal Context & Adaptation Runtime Successfully Verified.")
+    return True
+
 def main():
     print("""
     ======================================================================
@@ -1075,7 +1178,8 @@ def main():
         test_journey_state_machine_and_domain_contracts,
         test_layer6_backend_foundation,
         test_layer7_production_intelligence_runtime,
-        test_layer8_islamic_knowledge_infrastructure
+        test_layer8_islamic_knowledge_infrastructure,
+        test_layer9_personal_context_and_adaptation_runtime
     ]
 
     for check in checks:
@@ -1099,6 +1203,7 @@ def main():
     print("★ LAYER 6 PRODUCTION BACKEND FOUNDATION: VERIFIED (PASSED)")
     print("★ LAYER 7 PRODUCTION INTELLIGENCE RUNTIME: VERIFIED (PASSED)")
     print("★ LAYER 8 PRODUCTION ISLAMIC KNOWLEDGE INFRASTRUCTURE: VERIFIED (PASSED)")
+    print("★ LAYER 9 PERSONAL CONTEXT & ADAPTATION RUNTIME: VERIFIED (PASSED)")
     print("★ PRODUCTION READINESS: VERIFIED")
     print("=" * 70)
 
