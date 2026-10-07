@@ -71,31 +71,122 @@ export interface SourcePassage {
 }
 
 export type EvidenceEdgeType =
+  | 'CONTAINS'
   | 'PART_OF'
   | 'EXPLAINS'
   | 'REFERENCES'
   | 'SUPPORTS'
-  | 'CONTRADICTS'
   | 'QUALIFIES'
-  | 'RELATED_TO'
+  | 'LIMITS'
+  | 'CONTRASTS_WITH'
+  | 'DIFFERS_FROM'
   | 'NARRATED_BY'
   | 'AUTHORED_BY'
   | 'BELONGS_TO'
-  | 'DIFFERS_FROM'
   | 'APPLIES_TO'
-  | 'LEADS_TO'
-  | 'RECOMMENDS';
+  | 'RELATED_TO'
+  | 'INFORMS'
+  | 'CAN_SUPPORT'
+  | 'RECOMMENDS'
+  | 'LEADS_TO';
 
 export type EntityType =
+  | 'QURAN'
+  | 'QURAN_SURAH'
   | 'QURAN_AYAH'
+  | 'HADITH_COLLECTION'
+  | 'HADITH_BOOK'
+  | 'HADITH_CHAPTER'
   | 'HADITH_PASSAGE'
+  | 'NARRATOR'
   | 'TAFSIR_ENTRY'
+  | 'SCHOLAR'
+  | 'MADHHAB'
+  | 'SCHOLARLY_ISSUE'
   | 'FIQH_RULING'
+  | 'ISLAMIC_CONCEPT'
   | 'TOPIC'
-  | 'CONCEPT'
   | 'LIFE_SITUATION'
+  | 'GUIDANCE_PATTERN'
   | 'AMAL_ACTION'
   | 'JOURNEY';
+
+export type AmalPracticeType =
+  | 'QURANIC_PRACTICE'
+  | 'PROPHETIC_PRACTICE'
+  | 'SCHOLARLY_RECOMMENDATION'
+  | 'EDUCATIONAL_PRACTICE'
+  | 'BEHAVIORAL_EXERCISE'
+  | 'USER_CREATED_GOAL';
+
+export type ClaimSupportLevel =
+  | 'DIRECT'
+  | 'STRONG_INFERENCE'
+  | 'INTERPRETIVE'
+  | 'CONTESTED'
+  | 'UNSUPPORTED';
+
+export interface VerifiedClaim {
+  id: string;
+  text: string;
+  claimType: 'RELIGIOUS' | 'PRACTICAL' | 'BEHAVIORAL';
+  sourceIds: string[];
+  supportLevel: ClaimSupportLevel;
+  verificationStatus: VerificationStatus;
+  reviewedByScholarId?: string;
+  approvedAt?: string;
+}
+
+export interface AyahTranslationRecord {
+  id: string;
+  ayahId: string;
+  translator: string;
+  language: string;
+  publisher: string;
+  license: string;
+  version: number;
+  text: string;
+  status: VerificationStatus;
+}
+
+export interface HadithGradingAssessment {
+  hadithId: string;
+  assessedBy: string;
+  grading: HadithGrading;
+  methodology: string;
+  sourceReference: string;
+  status: VerificationStatus;
+}
+
+export interface TafsirPassageRecord {
+  id: string;
+  ayahId: string;
+  work: string;
+  author: string;
+  passage: string;
+  language: string;
+  methodology: string;
+  status: VerificationStatus;
+}
+
+export interface ScholarlyOpinionRecord {
+  id: string;
+  issueId: string;
+  scholarId: string;
+  madhhab: string;
+  position: string;
+  conditions: string[];
+  evidenceIds: string[];
+  status: VerificationStatus;
+}
+
+export interface LifeSituationRecord {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  crossDomainDomain: 'ISLAMIC_EVIDENCE' | 'LIFE_BEHAVIOR';
+}
 
 export interface EvidenceEdge {
   id: string;
@@ -131,3 +222,4 @@ export interface EvidencePack {
   prohibitedClaims: string[];
   requiresScholarEscalation: boolean;
 }
+
