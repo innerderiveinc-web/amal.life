@@ -1,72 +1,81 @@
-# AMAL OS — System Architecture Specification
+# AMAL OS — MASTER SYSTEM ARCHITECTURE SPECIFICATION
 
-## 1. Executive Architecture Overview
+## 1. Executive Architectural Topology
 
-AMAL OS is built around a decoupled, multi-layered service architecture that decouples personal user context from canonical Islamic knowledge.
+AMAL OS is built around three concentric rings that strictly decouple deterministic faith functions from AI, and personal user context from canonical Islamic knowledge:
 
-```
-                         AMAL OS
-                           │
-                 ┌─────────┴─────────┐
-                 │                   │
-             EXPERIENCE           ADMIN
-                 │                   │
-       ┌─────────┼─────────┐     Content Control
-       │         │         │     Scholar Portal
-     Mobile     Web     Scholar   Safety Monitor
-       │         │         │     Audit Logs
-       └─────────┼─────────┘
-                 ↓
-             API GATEWAY
-                 ↓
-        ┌────────┼─────────┐
-        ↓        ↓         ↓
-      USER     JOURNEY   FAMILY
-      CORE      CORE      CORE
-        │        │         │
-        └────────┼─────────┘
-                 ↓
-             AI GATEWAY
-                 ↓
-       ┌─────────┼─────────┐
-       ↓         ↓         ↓
-   RETRIEVAL   SAFETY   ORCHESTRATOR
-       │         │         │
-       └─────────┼─────────┘
-                 ↓
-        ISLAMIC EVIDENCE LAYER
-                 ↓
-       PostgreSQL + pgvector
-                 ↓
-       Licensed & Approved Sources
+```text
+                      AMAL OS V1
+                          │
+  ┌───────────────────────┼───────────────────────┐
+  ↓                       ↓                       ↓
+RING 1                  RING 2                  RING 3
+Deterministic Core      Governed Intelligence   Platform & Trust
+  │                       │                       │
+  ├── Users & Auth        ├── Knowledge Corpus    ├── Policy PDP
+  ├── Goals & Baselines   ├── Evidence Graph      ├── Family Hub
+  ├── Journey State       ├── Hybrid Retrieval    ├── Communication OS
+  ├── Today OS Planner    ├── 14 AI Agents        ├── Billing Engine
+  ├── Amal Completions    ├── Fatwa Firewall      ├── Incident Runbooks
+  ├── Muhasabah Vault     ├── Citation Auditor    ├── Multi-Cloud IaC
+  └── Transactional DB    └── Scholar Triage      └── Tamper-Evident Audit
 ```
 
 ---
 
-## 2. The 12 Orchestrated AI Agents
+## 2. Master System Invariant: Transactional Integrity
 
-Instead of a monolithic generic Islamic chatbot, AMAL uses a deterministic, orchestrated agent pipeline:
+Every mutation in the system must follow this invariant:
 
-1. **IntentRouter**: Analyzes input to detect worship, habit, emotional, fiqh, or crisis intents.
-2. **SafetyClassifier**: Classifies the prompt against the Fatwa Safety Firewall (Classes A, B, C, D, E).
-3. **ContextRetriever**: Pulls approved user context (routine, available minutes, timezone) with explicit consent boundaries.
-4. **IslamicRetriever**: Executes hybrid vector + keyword retrieval across verified Quran and Hadith passages.
-5. **EvidenceVerifier**: Validates source authority, editorial review status, and authentic grading metadata.
-6. **DeenExplainer**: Synthesizes guidance in understandable, dignified language without formulating fatwas.
-7. **AmalPlanner**: Computes the Amal score:  
-   $$\text{AMAL\_SCORE} = \text{EvidenceFit} \times \text{ContextFit} \times \text{Feasibility} \times \text{UserIntent} \times \text{Safety}$$
-8. **JourneyPlanner**: Configures multi-day progressive journeys with non-shaming adaptive pacing.
-9. **ReflectionAgent**: Derives behavioral routine observations from Muhasabah reflections without moral scorecards.
-10. **PersonalizationAgent**: Applies preferred madhhab nuances and reminder styles.
-11. **ScholarEscalationAgent**: Packages sensitive matters into structured triage cases for human scholars.
-12. **FamilyAgent**: Coordinates shared family journeys while maintaining strict reflection privacy.
-13. **CitationAuditor & ResponseFinalizer**: Verifies claim citations against primary passages before authorizing response publication.
+```text
+HTTP Request
+   ↓
+DTO Validation
+   ↓
+Authentication
+   ↓
+Policy / Authorization (PDP)
+   ↓
+Application Service
+   ↓
+Domain Rules
+   ↓
+Repository
+   ↓
+DB Transaction (withTransaction)
+   ├── Domain write
+   ├── Outbox event (appendOutboxEvent)
+   └── Audit event (AuditService.record)
+   ↓
+Commit
+   ↓
+Response
+```
 
 ---
 
-## 3. Data Isolation Architecture
+## 3. Epistemic Separation of Knowledge & Context
 
-To ensure religious behavior remains private, user data is decoupled from the Islamic Knowledge Graph:
-- **Islamic Evidence Graph**: Immutable, public, scholarly verified corpus.
-- **Personal Context Layer**: Client-scoped, encrypted, auditable, and subject to user erasure.
-- **Family Graph**: Permissions domain ensuring adult personal notes and reflections are strictly isolated from other household members.
+To preserve absolute theological integrity:
+1. **Canonical Islamic Knowledge:** Immutable, versioned, cryptographic provenance (Medina Quran text hash), public, and multi-scholar reviewed.
+2. **Personal Context:** Ephemeral, client-scoped, confidence-weighted, and subject to immediate user erasure. Derived observations are never treated as facts.
+3. **Behavioral Science Boundary:** Habit engineering and behavioral techniques are strictly labeled as practical human advice (`[YOU MAY FIND THIS PRACTICAL]`) and never conflated with divine Sunnah without authentic textual proof.
+
+---
+
+## 4. Governed AI Agent System (14 Agents)
+
+1. **Master Orchestrator:** 13-stage deterministic state pipeline coordinating safety, retrieval, generation, and auditing.
+2. **Intent Router:** Classifies seeker queries into 4 confidence tiers.
+3. **Safety Agent:** Prompt injection defense, data exfiltration prevention, and crisis intervention (Dial 988).
+4. **Context Agent:** Ephemeral `AIDataEnvelope` assembly respecting context boundaries.
+5. **Memory Agent:** Governed memory lifecycle enforcing: `User Choice` > `Confirmed Preference` > `Observed Pattern` > `AI Inference`.
+6. **Islamic Retrieval Agent:** Hybrid BM25 lexical, dense pgvector, and relational graph traversal of approved sources only.
+7. **Evidence Verification Agent:** Medina Mushaf SHA-256 provenance and Hadith chain checks.
+8. **Deen Explanation Agent:** Calm, accessible articulation of universal virtues and foundational concepts.
+9. **Fiqh Plurality Agent:** Explains documented differences across classical madhhabs without sectarian bias or false consensus.
+10. **Amal Planner Agent:** Generates daily action candidates constrained to 1 primary and 0–2 optional actions.
+11. **Journey Agent:** Evaluates phase progression and suggests gentle adaptations without guilt.
+12. **Muhasabah Reflection Agent:** Pattern analysis of friction and intentions without assigning spiritual worth or sin scores.
+13. **Scholar Escalation Agent:** Assembles structured Class D pastoral dossiers for human jurist review.
+14. **Islamic Citation Auditor:** Strict verification gate verifying every reference before response delivery.

@@ -16,6 +16,12 @@ import { BlueprintController } from './blueprint/blueprint.controller.js';
 import { ExecutionPackController } from './execution-pack/execution-pack.controller.js';
 import { AuthController } from './auth/auth.controller.js';
 import { PrivacyController } from './privacy/privacy.controller.js';
+import { UsersController } from './users/users.controller.js';
+import { FamilyController } from './family/family.controller.js';
+import { ScholarsController } from './scholars/scholars.controller.js';
+import { QuranController } from './quran/quran.controller.js';
+import { HadithController } from './hadith/hadith.controller.js';
+import { AdminController } from './admin/admin.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -37,5 +43,11 @@ export class AppModule {
     ExecutionPackController,
     AuthController,
     PrivacyController,
+    UsersController,
+    FamilyController,
+    ScholarsController,
+    QuranController,
+    HadithController,
+    AdminController,
   ];
 }
