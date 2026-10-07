@@ -48,6 +48,17 @@ export const ScholarTriageModal: React.FC<ScholarTriageModalProps> = ({
             <Text style={styles.categoryVal}>{caseCategory}</Text>
           </View>
 
+          <View style={styles.consentBreakdownBox}>
+            <View style={styles.consentItem}>
+              <Text style={styles.consentHeading}>What will be shared:</Text>
+              <Text style={styles.consentText}>• Your specific question and relevant factual context</Text>
+            </View>
+            <View style={styles.consentItem}>
+              <Text style={styles.consentHeading}>What won't be shared:</Text>
+              <Text style={styles.consentText}>• Unrelated private reflections and personal journals remain strictly isolated</Text>
+            </View>
+          </View>
+
           {!submitted ? (
             <>
               <Text style={styles.promptLabel}>
@@ -204,5 +215,26 @@ const styles = StyleSheet.create({
     color: AmalTheme.colors.text.primaryLight,
     lineHeight: 18,
     marginBottom: AmalTheme.spacing[3],
+  },
+  consentBreakdownBox: {
+    backgroundColor: AmalTheme.colors.surface.backgroundLight,
+    padding: AmalTheme.spacing[3],
+    borderRadius: AmalTheme.radii.md,
+    marginBottom: AmalTheme.spacing[3],
+    gap: 4,
+  },
+  consentItem: {
+    marginBottom: 2,
+  },
+  consentHeading: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: AmalTheme.colors.primary,
+    letterSpacing: 0.5,
+  },
+  consentText: {
+    fontSize: 11,
+    color: AmalTheme.colors.text.secondaryLight,
+    lineHeight: 16,
   },
 });

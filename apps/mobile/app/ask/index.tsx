@@ -5,6 +5,7 @@ import { EvidenceDrawer, ScholarTriageModal } from '../../components';
 
 export default function AskScreen() {
   const [query, setQuery] = useState('');
+  const [inputMode, setInputMode] = useState<'TEXT' | 'VOICE' | 'PASTE'>('TEXT');
   const [loading, setLoading] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
   const [showScholarModal, setShowScholarModal] = useState(false);
@@ -18,6 +19,24 @@ export default function AskScreen() {
       amalRecommends: 'Place your phone outside your sleep area 45 minutes before bedtime and pray two rak\'ahs with presence.',
       practicalInsight: 'Late heavy dinners create physical grogginess that makes the Fajr alarm harder to register.',
     },
+    scholarlyPlurality: {
+      hasDisagreement: true,
+      topic: 'Reciting Quran aloud in individual Fajr prayer',
+      positions: [
+        {
+          madhhab: 'Hanafi & Shafi\'i Majority',
+          position: 'Audible recitation is recommended (Sunnah) even when praying alone at dawn.',
+          sources: 'Al-Hidayah, Al-Majmu\'',
+        },
+        {
+          madhhab: 'Maliki & Hanbali View',
+          position: 'Quiet audible recitation is preferred, but silent recitation is permissible without penalty.',
+          sources: 'Al-Mughni, Al-Mudawwana',
+        },
+      ],
+      reasonForDifference: 'Different interpretations of Prophetic practice when praying alone versus in congregation.',
+    },
+    confidenceStatus: 'VERIFIED_EVIDENCE', // 'VERIFIED_EVIDENCE' | 'SCHOLARLY_DISAGREEMENT' | 'EVIDENCE_LIMITED' | 'SCHOLAR_REQUIRED'
     sources: [
       {
         reference: 'Sahih al-Bukhari 568',
@@ -28,7 +47,6 @@ export default function AskScreen() {
         scholarSignoffs: ['Dr. M. Akram', 'Sheikh T. Adams'],
       },
     ],
-    uncertainty: 'LOW',
     scholarRequired: false,
     citationsVerified: true,
   });
@@ -54,6 +72,8 @@ export default function AskScreen() {
             amalRecommends: 'Start with 5 minutes daily without setting excessive initial targets.',
             practicalInsight: 'Consistency built in small increments endures longer.',
           },
+          scholarlyPlurality: null,
+          confidenceStatus: 'VERIFIED_EVIDENCE',
           sources: [
             {
               reference: 'Quran 2:185',
@@ -64,7 +84,6 @@ export default function AskScreen() {
               scholarSignoffs: ['Dr. M. Akram'],
             },
           ],
-          uncertainty: 'LOW',
           scholarRequired: false,
           citationsVerified: true,
         });
@@ -81,6 +100,23 @@ export default function AskScreen() {
           Grounded in verified Quran & Hadith · No autonomous fatwas
         </Text>
 
+        {/* Input Mode Selector */}
+        <View style={styles.inputModeRow}>
+          {(['TEXT', 'VOICE', 'PASTE'] as const).map((m) => (
+            <TouchableOpacity
+              key={m}
+              style={[styles.inputModePill, inputMode === m && styles.inputModePillActive]}
+              onPress={() => setInputMode(m)}
+            >
+              <Text style={[styles.inputModeText, inputMode === m && styles.inputModeTextActive]}>
+                {m === 'TEXT' && '⌨️ Text'}
+                {m === 'VOICE' && '🎙 Voice'}
+                {m === 'PASTE' && '📋 Paste'}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {/* Suggested Prompts */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.promptScroll}>
           {[
@@ -92,9 +128,7 @@ export default function AskScreen() {
             <TouchableOpacity
               key={idx}
               style={styles.promptChip}
-              onPress={() => {
-                setQuery(prompt);
-              }}
+              onPress={() => setQuery(prompt)}
             >
               <Text style={styles.promptChipText}>{prompt}</Text>
             </TouchableOpacity>
@@ -105,7 +139,11 @@ export default function AskScreen() {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="What situation or question is on your mind?"
+            placeholder={
+              inputMode === 'VOICE'
+                ? 'Tap mic or speak your question...'
+                : 'What situation or question is on your mind?'
+            }
             placeholderTextColor={AmalTheme.colors.text.tertiaryLight}
             value={query}
             onChangeText={setQuery}
@@ -118,19 +156,24 @@ export default function AskScreen() {
         {/* Response View */}
         {response && (
           <View style={styles.responseCard}>
-            {/* Verification Badge */}
+            {/* Epistemic Confidence Badge (Section 93 - Never 93% confident) */}
             <View style={styles.badgeRow}>
-              <View style={styles.verifiedBadge}>
-                <Text style={styles.verifiedText}>✓ Citations Verified</Text>
+              <View style={styles.confidenceBadge}>
+                <Text style={styles.confidenceText}>
+                  {response.confidenceStatus === 'VERIFIED_EVIDENCE' && '✓ Verified Islamic Evidence'}
+                  {response.confidenceStatus === 'SCHOLARLY_DISAGREEMENT' && '⚖ Scholarly Disagreement Exists'}
+                  {response.confidenceStatus === 'EVIDENCE_LIMITED' && '⚠ Evidence is Limited'}
+                  {response.confidenceStatus === 'SCHOLAR_REQUIRED' && '👤 Scholar Review Recommended'}
+                </Text>
               </View>
               <View style={styles.groundedBadge}>
-                <Text style={styles.groundedText}>Governed Evidence Graph</Text>
+                <Text style={styles.groundedText}>Governed Graph</Text>
               </View>
             </View>
 
             <Text style={styles.answerText}>{response.answer}</Text>
 
-            {/* 4 Epistemic Segregation Cards */}
+            {/* 4 Epistemic Segregation Cards (Section 43) */}
             <View style={styles.epistemicBox}>
               <View style={styles.epistemicRow}>
                 <Text style={styles.epistemicTag}>[ISLAM SAYS]</Text>
@@ -152,6 +195,24 @@ export default function AskScreen() {
                 <Text style={styles.epistemicContent}>{response.epistemic.practicalInsight}</Text>
               </View>
             </View>
+
+            {/* Scholarly Plurality Section (Section 94) */}
+            {response.scholarlyPlurality && (
+              <View style={styles.pluralityBox}>
+                <Text style={styles.pluralityHeader}>SCHOLARLY PERSPECTIVES (IKHTILĀF)</Text>
+                <Text style={styles.pluralityTopic}>{response.scholarlyPlurality.topic}</Text>
+                {response.scholarlyPlurality.positions.map((pos: any, idx: number) => (
+                  <View key={idx} style={styles.positionRow}>
+                    <Text style={styles.madhhabTag}>{pos.madhhab}</Text>
+                    <Text style={styles.positionBody}>{pos.position}</Text>
+                    <Text style={styles.positionSources}>Sources: {pos.sources}</Text>
+                  </View>
+                ))}
+                <Text style={styles.reasonText}>
+                  Why they differ: {response.scholarlyPlurality.reasonForDifference}
+                </Text>
+              </View>
+            )}
 
             {/* Evidence Link */}
             {response.sources.length > 0 && (
@@ -214,7 +275,33 @@ const styles = StyleSheet.create({
     color: AmalTheme.colors.text.secondaryLight,
     lineHeight: 18,
     marginTop: 4,
-    marginBottom: AmalTheme.spacing[4],
+    marginBottom: AmalTheme.spacing[3],
+  },
+  inputModeRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: AmalTheme.spacing[3],
+  },
+  inputModePill: {
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: AmalTheme.radii.full,
+    backgroundColor: AmalTheme.colors.surface.cardLight,
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.surface.borderLight,
+  },
+  inputModePillActive: {
+    backgroundColor: AmalTheme.colors.primaryLight,
+    borderColor: AmalTheme.colors.primary,
+  },
+  inputModeText: {
+    fontSize: 11,
+    color: AmalTheme.colors.text.secondaryLight,
+    fontWeight: '600',
+  },
+  inputModeTextActive: {
+    color: AmalTheme.colors.primary,
+    fontWeight: '700',
   },
   promptScroll: {
     marginBottom: AmalTheme.spacing[3],
@@ -273,13 +360,13 @@ const styles = StyleSheet.create({
     gap: AmalTheme.spacing[2],
     marginBottom: AmalTheme.spacing[3],
   },
-  verifiedBadge: {
+  confidenceBadge: {
     backgroundColor: AmalTheme.colors.status.successLight,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: AmalTheme.radii.sm,
   },
-  verifiedText: {
+  confidenceText: {
     color: AmalTheme.colors.status.success,
     fontSize: 11,
     fontWeight: '700',
@@ -324,6 +411,55 @@ const styles = StyleSheet.create({
     fontSize: AmalTheme.typography.sizes.xs,
     color: AmalTheme.colors.text.primaryLight,
     lineHeight: 18,
+  },
+  pluralityBox: {
+    backgroundColor: AmalTheme.colors.surface.backgroundLight,
+    borderRadius: AmalTheme.radii.md,
+    padding: AmalTheme.spacing[3],
+    marginBottom: AmalTheme.spacing[4],
+    borderLeftWidth: 3,
+    borderLeftColor: AmalTheme.colors.accent.terracotta,
+  },
+  pluralityHeader: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: AmalTheme.colors.accent.terracotta,
+    letterSpacing: 1,
+  },
+  pluralityTopic: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: AmalTheme.colors.text.primaryLight,
+    marginVertical: 4,
+  },
+  positionRow: {
+    marginTop: 6,
+    paddingBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: AmalTheme.colors.surface.borderLight,
+  },
+  madhhabTag: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: AmalTheme.colors.primary,
+  },
+  positionBody: {
+    fontSize: 11,
+    color: AmalTheme.colors.text.primaryLight,
+    lineHeight: 16,
+    marginTop: 1,
+  },
+  positionSources: {
+    fontSize: 10,
+    color: AmalTheme.colors.text.secondaryLight,
+    fontStyle: 'italic',
+    marginTop: 2,
+  },
+  reasonText: {
+    fontSize: 11,
+    color: AmalTheme.colors.text.secondaryLight,
+    fontStyle: 'italic',
+    marginTop: 6,
   },
   evidenceButton: {
     backgroundColor: AmalTheme.colors.accent.sand,

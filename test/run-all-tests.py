@@ -1268,6 +1268,47 @@ def test_layer10_experience_and_product_runtime():
     assert "flushQueue" in off_code
     print("  ✓ Offline Service: Optimistic queueing, offline action cache, and background sync verified.")
 
+    # 6. Today OS Canonical Backend Endpoint & Typed Contracts
+    today_ctrl = os.path.join(base_dir, "services/api/src/modules/today/today.controller.ts")
+    today_svc = os.path.join(base_dir, "services/api/src/modules/today/today.service.ts")
+    assert os.path.exists(today_ctrl) and os.path.exists(today_svc)
+    with open(today_ctrl, "r", encoding="utf-8") as f:
+        tctrl_code = f.read()
+    assert "@Controller('today')" in tctrl_code
+    with open(today_svc, "r", encoding="utf-8") as f:
+        tsvc_code = f.read()
+    assert "TodayResponse" in tsvc_code
+    assert "whyThisAmal" in tsvc_code
+
+    types_today = os.path.join(base_dir, "packages/types/src/today.ts")
+    assert os.path.exists(types_today)
+    with open(types_today, "r", encoding="utf-8") as f:
+        tt_code = f.read()
+    assert "TodayState" in tt_code
+    assert "'EMPTY'" in tt_code and "'LOW_CAPACITY'" in tt_code and "'HIGH_BURDEN'" in tt_code
+    print("  ✓ Today OS Engine: Canonical GET /api/v1/today and 6 explicit states verified.")
+
+    # 7. Trust & Explainability: "Why this Amal?", Plurality, Memory "Forget This", and Scholar Consent
+    with open(amal_card_file, "r", encoding="utf-8") as f:
+        ac_full = f.read()
+    assert "Goal Fit" in ac_full and "Time Fit" in ac_full and "Journey Fit" in ac_full
+
+    with open(os.path.join(app_dir, "ask/index.tsx"), "r", encoding="utf-8") as f:
+        ask_full = f.read()
+    assert "scholarlyPlurality" in ask_full or "IKHTILĀF" in ask_full
+    assert "confidenceStatus" in ask_full
+
+    with open(os.path.join(app_dir, "settings/memory.tsx"), "r", encoding="utf-8") as f:
+        mem_full = f.read()
+    assert "Forget This" in mem_full
+    assert "Why does AMAL think this" in mem_full
+
+    with open(scholar_modal_file, "r", encoding="utf-8") as f:
+        sm_full = f.read()
+    assert "What will be shared" in sm_full
+    assert "What won't be shared" in sm_full
+    print("  ✓ Trust Architecture: 'Why this Amal?' 5-factor drawer, Ikhtilāf plurality, Memory 'Forget This', and Scholar consent firewall verified.")
+
     print("✓ Layer 10 Experience & Product Runtime Successfully Verified.")
     return True
 

@@ -4,6 +4,9 @@ import { AmalTheme } from '@amal/ui';
 
 export default function AmalTabScreen() {
   const [activeTab, setActiveTab] = useState<'ACTIVE' | 'DISCOVER'>('ACTIVE');
+  const [showAdaptationPrompt, setShowAdaptationPrompt] = useState(false);
+  const [showReviewPrompt, setShowReviewPrompt] = useState(false);
+  const [showRestartPrompt, setShowRestartPrompt] = useState(false);
 
   const canonicalJourneys = [
     { id: 'j-fajr', title: '14-Day Fajr Recovery', pace: 'Moderate', days: 14, category: 'Worship' },
@@ -65,11 +68,94 @@ export default function AmalTabScreen() {
               <TouchableOpacity style={styles.primaryActionBtn}>
                 <Text style={styles.primaryActionText}>Continue Today's Amal</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.adaptBtn}>
-                <Text style={styles.adaptBtnText}>Need a Simpler Pace?</Text>
-              </TouchableOpacity>
+              
+              <View style={styles.controlRow}>
+                <TouchableOpacity
+                  style={styles.controlPill}
+                  onPress={() => setShowAdaptationPrompt(!showAdaptationPrompt)}
+                >
+                  <Text style={styles.controlPillText}>Need a Simpler Pace?</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.controlPill}
+                  onPress={() => setShowReviewPrompt(!showReviewPrompt)}
+                >
+                  <Text style={styles.controlPillText}>Phase Review</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.controlPill}
+                  onPress={() => setShowRestartPrompt(!showRestartPrompt)}
+                >
+                  <Text style={styles.controlPillText}>Restart Options</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+
+          {/* Section 30: Adaptation UX */}
+          {showAdaptationPrompt && (
+            <View style={styles.adaptationCard}>
+              <Text style={styles.adaptationCardTitle}>ADJUST YOUR JOURNEY?</Text>
+              <Text style={styles.adaptationCardBody}>
+                You've completed shorter morning sessions more consistently recently.
+              </Text>
+              <View style={styles.adaptationChangeBox}>
+                <Text style={styles.changeFrom}>20 min evening</Text>
+                <Text style={styles.changeArrow}>→</Text>
+                <Text style={styles.changeTo}>10 min morning</Text>
+              </View>
+              <View style={styles.adaptationBtnRow}>
+                <TouchableOpacity style={styles.adaptApplyBtn}>
+                  <Text style={styles.adaptApplyText}>Apply Change</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.adaptKeepBtn} onPress={() => setShowAdaptationPrompt(false)}>
+                  <Text style={styles.adaptKeepText}>Keep Current</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          {/* Section 29: Journey Review */}
+          {showReviewPrompt && (
+            <View style={styles.reviewCard}>
+              <Text style={styles.reviewCardTitle}>PHASE 1 MILESTONE REVIEW</Text>
+              <Text style={styles.reviewQuestion}>What is working?</Text>
+              <View style={styles.chipRow}>
+                {['Too easy', 'Manageable', 'Difficult'].map((opt, i) => (
+                  <TouchableOpacity key={i} style={styles.reviewChip}>
+                    <Text style={styles.reviewChipText}>{opt}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <Text style={[styles.reviewQuestion, { marginTop: 10 }]}>What should change?</Text>
+              <View style={styles.chipRow}>
+                {['Keep it', 'Make it shorter', 'Change time', 'Pause'].map((opt, i) => (
+                  <TouchableOpacity key={i} style={styles.reviewChip}>
+                    <Text style={styles.reviewChipText}>{opt}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
+
+          {/* Section 32: Restart UX */}
+          {showRestartPrompt && (
+            <View style={styles.restartCard}>
+              <Text style={styles.restartTitle}>WELCOME BACK</Text>
+              <Text style={styles.restartSubtitle}>
+                Previous journey: 14-Day Fajr Recovery · What worked before: Short morning sessions.
+              </Text>
+              <View style={styles.chipRow}>
+                {['Restart Gently', 'Simplify Target', 'Change Time', 'Pause', 'Start Something New'].map((r, i) => (
+                  <TouchableOpacity key={i} style={styles.restartOptionBtn}>
+                    <Text style={styles.restartOptionText}>{r}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
 
           {/* Ease Principle Quote */}
           <View style={styles.quoteCard}>
@@ -88,10 +174,10 @@ export default function AmalTabScreen() {
                 <Text style={styles.badge}>{j.pace}</Text>
               </View>
               <Text style={styles.metaRow}>
-                {j.days} Days · Category: {j.category}
+                {j.days} Days · Category: {j.category} · Evidence Reviewed
               </Text>
               <TouchableOpacity style={styles.previewBtn}>
-                <Text style={styles.previewText}>Preview Journey</Text>
+                <Text style={styles.previewText}>Preview Curriculum & Grounding</Text>
               </TouchableOpacity>
             </View>
           ))}
@@ -212,7 +298,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   activeActions: {
-    gap: AmalTheme.spacing[2],
+    gap: AmalTheme.spacing[3],
   },
   primaryActionBtn: {
     backgroundColor: AmalTheme.colors.primary,
@@ -225,14 +311,157 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: AmalTheme.typography.sizes.sm,
   },
-  adaptBtn: {
-    paddingVertical: AmalTheme.spacing[2],
-    alignItems: 'center',
+  controlRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
   },
-  adaptBtnText: {
+  controlPill: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    backgroundColor: AmalTheme.colors.surface.backgroundLight,
+    borderRadius: AmalTheme.radii.full,
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.surface.borderLight,
+  },
+  controlPillText: {
     color: AmalTheme.colors.primary,
     fontWeight: '700',
+    fontSize: 11,
+  },
+  adaptationCard: {
+    backgroundColor: AmalTheme.colors.primaryLight,
+    borderRadius: AmalTheme.radii.xl,
+    padding: AmalTheme.spacing[4],
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.primary,
+    marginBottom: AmalTheme.spacing[4],
+  },
+  adaptationCardTitle: {
     fontSize: AmalTheme.typography.sizes.xs,
+    fontWeight: '800',
+    color: AmalTheme.colors.primary,
+    letterSpacing: 0.8,
+  },
+  adaptationCardBody: {
+    fontSize: AmalTheme.typography.sizes.xs,
+    color: AmalTheme.colors.text.secondaryLight,
+    marginTop: 2,
+    lineHeight: 18,
+  },
+  adaptationChangeBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: AmalTheme.spacing[2],
+    gap: 8,
+  },
+  changeFrom: {
+    fontSize: AmalTheme.typography.sizes.sm,
+    color: AmalTheme.colors.text.secondaryLight,
+    textDecorationLine: 'line-through',
+  },
+  changeArrow: {
+    fontSize: AmalTheme.typography.sizes.sm,
+    fontWeight: '700',
+    color: AmalTheme.colors.primary,
+  },
+  changeTo: {
+    fontSize: AmalTheme.typography.sizes.sm,
+    fontWeight: '800',
+    color: AmalTheme.colors.primary,
+  },
+  adaptationBtnRow: {
+    flexDirection: 'row',
+    gap: AmalTheme.spacing[2],
+  },
+  adaptApplyBtn: {
+    backgroundColor: AmalTheme.colors.primary,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: AmalTheme.radii.md,
+  },
+  adaptApplyText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  adaptKeepBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+  },
+  adaptKeepText: {
+    color: AmalTheme.colors.text.secondaryLight,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  reviewCard: {
+    backgroundColor: AmalTheme.colors.surface.cardLight,
+    borderRadius: AmalTheme.radii.xl,
+    padding: AmalTheme.spacing[4],
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.surface.borderLight,
+    marginBottom: AmalTheme.spacing[4],
+  },
+  reviewCardTitle: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: AmalTheme.colors.primary,
+    letterSpacing: 0.8,
+    marginBottom: 4,
+  },
+  reviewQuestion: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: AmalTheme.colors.text.primaryLight,
+    marginBottom: 4,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  reviewChip: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: AmalTheme.radii.full,
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.surface.borderLight,
+    backgroundColor: AmalTheme.colors.surface.backgroundLight,
+  },
+  reviewChipText: {
+    fontSize: 11,
+    color: AmalTheme.colors.text.secondaryLight,
+  },
+  restartCard: {
+    backgroundColor: AmalTheme.colors.surface.cardLight,
+    borderRadius: AmalTheme.radii.xl,
+    padding: AmalTheme.spacing[4],
+    borderWidth: 1,
+    borderColor: AmalTheme.colors.accent.sand,
+    marginBottom: AmalTheme.spacing[4],
+  },
+  restartTitle: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: AmalTheme.colors.accent.terracotta,
+    letterSpacing: 1,
+  },
+  restartSubtitle: {
+    fontSize: 12,
+    color: AmalTheme.colors.text.secondaryLight,
+    marginVertical: 4,
+    lineHeight: 18,
+  },
+  restartOptionBtn: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: AmalTheme.radii.md,
+    backgroundColor: AmalTheme.colors.primaryLight,
+  },
+  restartOptionText: {
+    fontSize: 11,
+    color: AmalTheme.colors.primary,
+    fontWeight: '700',
   },
   quoteCard: {
     backgroundColor: AmalTheme.colors.accent.sand,

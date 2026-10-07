@@ -5,10 +5,12 @@ import { JourneysController } from './journeys/journeys.controller.js';
 import { ReflectionsController } from './reflections/reflections.controller.js';
 import { HealthController } from './health/health.controller.js';
 import { EvidenceController } from './evidence/evidence.controller.js';
+import { TodayController } from './today/today.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
     HealthController,
+    TodayController,
     AiController,
     AmalController,
     GoalsController,
