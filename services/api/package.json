@@ -16,7 +16,8 @@
     "@amal/evidence": "workspace:*",
     "@amal/safety": "workspace:*",
     "@amal/auth": "workspace:*",
-    "@amal/service-ai": "workspace:*"
+    "@amal/service-ai": "workspace:*",
+    "@amal/service-notifications": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

@@ -1,5 +1,16 @@
 import { ReminderStyle, PrayerName } from '@amal/types';
 
+export * from './consent-engine.js';
+export * from './prayer-context-engine.js';
+export * from './fatigue-engine.js';
+export * from './collision-engine.js';
+export * from './suppression-engine.js';
+export * from './re-engagement-engine.js';
+export * from './template-engine.js';
+export * from './qsura-gateway.js';
+export * from './global-kill-switches.js';
+export * from './communication-orchestrator.js';
+
 export interface NotificationPayload {
   userId: string;
   category: 'SALAH' | 'AMAL' | 'JOURNEY' | 'REFLECT';

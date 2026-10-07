@@ -28,6 +28,9 @@ import {
   ModelRouter,
 } from '@amal/service-ai';
 import { PrayerService } from './prayer-service.js';
+import { CommunicationsService } from './modules/notifications/communications.service.js';
+
+const commsService = new CommunicationsService();
 
 export interface RequestContext {
   userId: string;
@@ -812,6 +815,54 @@ export class ApiRouter {
       if (path === '/api/v1/privacy/delete-account' && method === 'POST') {
         await PrivacyCenter.deleteUserAccount(ctx.userId);
         return { success: true, data: { deleted: true }, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 12. LAYER 11: COMMUNICATIONS, NOTIFICATIONS & PRAYER CONTEXT
+      // -----------------------------------------------------
+      if (path === '/api/v1/communications/preferences' && method === 'GET') {
+        const prefs = commsService.getPreferences(ctx.userId);
+        return { success: true, data: prefs, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/communications/preferences' && method === 'PATCH') {
+        const updated = commsService.updatePreferences(ctx.userId, body);
+        return { success: true, data: updated, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/communications/consent' && method === 'GET') {
+        const consents = commsService.getConsents(ctx.userId);
+        return { success: true, data: consents, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/communications/consent' && method === 'POST') {
+        const consent = commsService.setConsent(ctx.userId, body);
+        return { success: true, data: consent, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/prayers/today' && method === 'GET') {
+        const schedule = commsService.getTodayPrayerSchedule(ctx.userId);
+        return { success: true, data: schedule, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/prayers/settings' && method === 'PATCH') {
+        const settings = commsService.updatePrayerProfile(ctx.userId, body);
+        return { success: true, data: settings, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/notifications/interact' && method === 'POST') {
+        const metrics = commsService.recordInteraction(ctx.userId, body.action);
+        return { success: true, data: metrics, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/communications/send' && method === 'POST') {
+        const result = await commsService.orchestrateAndSend(body);
+        return { success: true, data: result, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/communications/webhook' && method === 'POST') {
+        const ack = await commsService.handleWebhook(body);
+        return { success: true, data: ack, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------

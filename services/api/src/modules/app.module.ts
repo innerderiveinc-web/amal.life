@@ -6,6 +6,7 @@ import { ReflectionsController } from './reflections/reflections.controller.js';
 import { HealthController } from './health/health.controller.js';
 import { EvidenceController } from './evidence/evidence.controller.js';
 import { TodayController } from './today/today.controller.js';
+import { CommunicationsController } from './notifications/communications.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -17,5 +18,6 @@ export class AppModule {
     JourneysController,
     ReflectionsController,
     EvidenceController,
+    CommunicationsController,
   ];
 }
