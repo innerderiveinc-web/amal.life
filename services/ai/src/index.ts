@@ -1,5 +1,6 @@
 export * from './gateway.js';
 export * from './orchestrator.js';
+export * from './runtime.js';
 export * from './agents/intent-router.js';
 export * from './agents/amal-planner.js';
 export * from './agents/journey-agent.js';
