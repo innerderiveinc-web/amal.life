@@ -33,12 +33,14 @@ import { GovernanceService } from './modules/governance/governance.service.js';
 import { PlatformService } from './modules/platform/platform.service.js';
 import { KnowledgeOpsService } from './modules/knowledge-ops/knowledge-ops.service.js';
 import { BillingService } from './modules/billing/billing.service.js';
+import { ExecutionService } from './modules/execution/execution.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
 const platformService = new PlatformService();
 const knowledgeOpsService = new KnowledgeOpsService();
 const billingService = new BillingService();
+const executionService = new ExecutionService();
 
 export interface RequestContext {
   userId: string;
@@ -1213,6 +1215,106 @@ export class ApiRouter {
       if (path === '/api/v1/growth/metrics' && method === 'GET') {
         const metrics = billingService.getBusinessMetrics();
         return { success: true, data: metrics, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 17. LAYER 16: 12-18 MONTH EXECUTION BLUEPRINT & LAUNCH
+      // -----------------------------------------------------
+      if (path === '/api/v1/execution/milestones' && method === 'GET') {
+        const milestones = executionService.getMilestones();
+        return { success: true, data: milestones, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution/milestones/') && !path.endsWith('/status') && method === 'GET') {
+        const code = path.split('/')[5];
+        const m = executionService.getMilestone(code);
+        if (!m) throw new Error(`Milestone ${code} not found.`);
+        return { success: true, data: m, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution/milestones/') && path.endsWith('/status') && method === 'POST') {
+        const code = path.split('/')[5];
+        const m = executionService.updateMilestoneStatus(code, body.status);
+        return { success: true, data: m, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/sprints/active' && method === 'GET') {
+        const sprint = executionService.getActiveSprint();
+        return { success: true, data: sprint, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/sprints' && method === 'POST') {
+        const sprint = executionService.createSprint({
+          sprintNumber: body.sprintNumber,
+          sprintName: body.sprintName,
+          squadName: body.squadName,
+          startDate: body.startDate,
+          endDate: body.endDate,
+          qualityBudgetPercent: body.qualityBudgetPercent,
+          committedStories: body.committedStories,
+        });
+        return { success: true, data: sprint, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/gates' && method === 'GET') {
+        const gates = executionService.getLaunchGates();
+        return { success: true, data: gates, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution/gates/') && path.endsWith('/evaluate') && method === 'POST') {
+        const level = path.split('/')[5];
+        const gate = executionService.evaluateGate(level, body.passed, body.signoff || ctx.userId);
+        return { success: true, data: gate, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/kill-switches' && method === 'GET') {
+        const switches = executionService.getKillSwitches();
+        return { success: true, data: switches, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution/kill-switches/') && path.endsWith('/toggle') && method === 'POST') {
+        const key = path.split('/')[5];
+        const sw = executionService.toggleKillSwitch(key, body.active, body.reason, ctx.userId);
+        return { success: true, data: sw, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/beta/cohorts' && method === 'GET') {
+        const cohorts = executionService.getBetaCohorts();
+        return { success: true, data: cohorts, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/beta/feedback' && method === 'POST') {
+        const fb = executionService.recordBetaFeedback({
+          userId: ctx.userId,
+          cohortId: body.cohortId,
+          feedbackCategory: body.feedbackCategory,
+          severity: body.severity || 'MEDIUM',
+          summary: body.summary,
+          didHelpIntentionalAction: body.didHelpIntentionalAction ?? true,
+        });
+        return { success: true, data: fb, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/decisions' && method === 'POST') {
+        const decision = executionService.logProductDecision({
+          decisionCode: body.decisionCode,
+          title: body.title,
+          contextReason: body.contextReason,
+          alternativesConsidered: body.alternativesConsidered || [],
+          evidenceUsed: body.evidenceUsed,
+          decisionOwner: body.decisionOwner || ctx.userId,
+        });
+        return { success: true, data: decision, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/decisions' && method === 'GET') {
+        const decisions = executionService.getDecisions();
+        return { success: true, data: decisions, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution/health' && method === 'GET') {
+        const health = executionService.getExecutionHealth();
+        return { success: true, data: health, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------

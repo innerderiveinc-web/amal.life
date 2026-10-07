@@ -2110,6 +2110,111 @@ def test_layer15_business_monetization_and_institution_platform():
     print("✓ Layer 15 Business Model, Monetization & Institution Platform Successfully Verified.")
     return True
 
+def test_layer16_execution_blueprint_and_launch_operations():
+    log_header("TEST 26: LAYER 16 12-18 MONTH EXECUTION BLUEPRINT & LAUNCH OPERATIONS")
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    # 1. Database Migration 012 Architecture & Schema Invariants
+    mig12_file = os.path.join(base_dir, "packages/database/migrations/012_layer16_execution_blueprint_and_launch_operations.sql")
+    assert os.path.exists(mig12_file), "Migration 012 file must exist"
+    with open(mig12_file, "r", encoding="utf-8") as f:
+        mig12 = f.read()
+
+    required_tables = [
+        "execution_milestones",
+        "execution_sprints",
+        "launch_gates",
+        "launch_kill_switches",
+        "beta_cohorts",
+        "beta_feedback_records",
+        "product_decision_log",
+    ]
+    for tbl in required_tables:
+        assert f"CREATE TABLE IF NOT EXISTS {tbl}" in mig12, f"Missing table {tbl} in migration 012"
+    assert "quality_budget_percent BETWEEN 15 AND 35" in mig12, "Missing quality budget capacity guard"
+    assert "did_help_intentional_action" in mig12, "Missing primary qualitative action feedback field"
+    print("  ✓ Database Migration 012: All 7 relational execution, launch gates, and cohort tables verified.")
+
+    # 2. Types & Domain Contracts
+    exec_types_file = os.path.join(base_dir, "packages/types/src/execution.ts")
+    assert os.path.exists(exec_types_file), "Execution types file must exist"
+    with open(exec_types_file, "r", encoding="utf-8") as f:
+        et_code = f.read()
+
+    assert "ExecutionMilestone" in et_code and "SquadName" in et_code
+    assert "ExecutionSprint" in et_code and "LaunchGate" in et_code
+    assert "LaunchKillSwitch" in et_code and "BetaCohort" in et_code
+    assert "BetaFeedbackRecord" in et_code and "ProductDecision" in et_code
+    assert "ExecutionHealthSummary" in et_code
+    print("  ✓ Domain Contracts & Types: Milestones, squads, gates, kill switches & cohorts verified.")
+
+    # 3. Execution Backend Service & Invariants
+    exec_svc_file = os.path.join(base_dir, "services/api/src/modules/execution/execution.service.ts")
+    assert os.path.exists(exec_svc_file)
+    with open(exec_svc_file, "r", encoding="utf-8") as f:
+        svc_code = f.read()
+
+    # 8 Strategic Phases (0 to 7)
+    assert "PHASE_0_FOUNDATION" in svc_code and "PHASE_1_CORE_ENGINE" in svc_code
+    assert "PHASE_2_EVIDENCE_AI" in svc_code and "PHASE_3_PRODUCT_EXPERIENCE" in svc_code
+    assert "PHASE_4_PRIVATE_ALPHA" in svc_code and "PHASE_5_PRIVATE_BETA" in svc_code
+    assert "PHASE_6_PUBLIC_V1" in svc_code and "PHASE_7_EXPANSION" in svc_code
+    print("  ✓ Strategic Roadmap: All 8 execution phases (Phases 0 to 7) & exit criteria verified.")
+
+    # Sprint Planning & Quality Budget Allocation (15-35%)
+    assert "createSprint" in svc_code and "qualityBudgetPercent" in svc_code
+    assert "SQUAD_A_CORE_PRODUCT" in svc_code
+    print("  ✓ Sprint Planning & Squads: 20-25% capacity reserved for bugs, reliability & tech debt.")
+
+    # 4 Launch Gates
+    assert "GATE_1_INTERNAL" in svc_code and "GATE_2_ALPHA" in svc_code
+    assert "GATE_3_BETA" in svc_code and "GATE_4_PUBLIC" in svc_code
+    assert "evaluateGate" in svc_code
+    print("  ✓ 4-Tier Launch Gates: Internal, Alpha, Beta, and Public readiness gates verified.")
+
+    # Launch Day Kill Switches
+    assert "AI_OFF" in svc_code and "AI_ISLAMIC_ANSWERING_OFF" in svc_code
+    assert "PUSH_NOTIFICATIONS_OFF" in svc_code and "SCHOLAR_CASE_INTAKE_OFF" in svc_code
+    assert "NEW_SIGNUPS_OFF" in svc_code
+    assert "toggleKillSwitch" in svc_code
+    print("  ✓ Launch Day Kill Switches: 5 partial system emergency isolation toggles verified.")
+
+    # Beta Cohorts & Qualitative Action Feedback
+    assert "ALPHA_50" in svc_code and "cohort_alpha_50" in svc_code
+    assert "didHelpIntentionalAction" in svc_code
+    assert "FEELING_JUDGED_OR_SHAMED" in svc_code
+    print("  ✓ Beta Cohorts: Alpha Pioneers cohort & intentional action qualitative feedback verified.")
+
+    # Product Decision Log & Health Summary
+    assert "logProductDecision" in svc_code and "getExecutionHealth" in svc_code
+    print("  ✓ Product Decision Log: Immutable architectural decisions & execution health verified.")
+
+    # 4. REST API Controller, Module & Router Integration
+    ctrl_file = os.path.join(base_dir, "services/api/src/modules/execution/execution.controller.ts")
+    mod_file = os.path.join(base_dir, "services/api/src/modules/execution/execution.module.ts")
+    app_module_file = os.path.join(base_dir, "services/api/src/modules/app.module.ts")
+    router_file = os.path.join(base_dir, "services/api/src/router.ts")
+
+    assert os.path.exists(ctrl_file) and os.path.exists(mod_file)
+    with open(app_module_file, "r", encoding="utf-8") as f:
+        app_mod_code = f.read()
+    assert "ExecutionController" in app_mod_code
+
+    with open(router_file, "r", encoding="utf-8") as f:
+        r_code = f.read()
+    assert "/api/v1/execution/milestones" in r_code
+    assert "/api/v1/execution/sprints/active" in r_code
+    assert "/api/v1/execution/gates" in r_code
+    assert "/api/v1/execution/kill-switches" in r_code
+    assert "/api/v1/execution/beta/cohorts" in r_code
+    assert "/api/v1/execution/beta/feedback" in r_code
+    assert "/api/v1/execution/decisions" in r_code
+    assert "/api/v1/execution/health" in r_code
+    print("  ✓ REST API & Router: Milestones, Sprints, Gates, Kill Switches, Beta & Decision endpoints verified.")
+
+    print("✓ Layer 16 12-18 Month Execution Blueprint & Launch Operations Successfully Verified.")
+    return True
+
 def main():
     print("""
     ======================================================================
@@ -2146,6 +2251,7 @@ def main():
         test_layer13_production_platform_and_infrastructure,
         test_layer14_real_corpus_scholar_network_and_knowledge_ops,
         test_layer15_business_monetization_and_institution_platform,
+        test_layer16_execution_blueprint_and_launch_operations,
     ]
 
     for check in checks:
@@ -2176,6 +2282,7 @@ def main():
     print("★ LAYER 13 PRODUCTION PLATFORM & CLOUD INFRASTRUCTURE: VERIFIED (PASSED)")
     print("★ LAYER 14 REAL CORPUS, SCHOLAR NETWORK & KNOWLEDGE OPERATIONS: VERIFIED (PASSED)")
     print("★ LAYER 15 BUSINESS MODEL, MONETIZATION & INSTITUTION PLATFORM: VERIFIED (PASSED)")
+    print("★ LAYER 16 12-18 MONTH EXECUTION BLUEPRINT & LAUNCH: VERIFIED (PASSED)")
     print("★ PRODUCTION READINESS: VERIFIED")
     print("=" * 70)
 

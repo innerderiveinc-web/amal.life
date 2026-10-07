@@ -21,3 +21,4 @@ export * from './trust.js';
 export * from './platform.js';
 export * from './knowledge-ops.js';
 export * from './billing.js';
+export * from './execution.js';
