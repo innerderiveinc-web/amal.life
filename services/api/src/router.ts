@@ -29,8 +29,10 @@ import {
 } from '@amal/service-ai';
 import { PrayerService } from './prayer-service.js';
 import { CommunicationsService } from './modules/notifications/communications.service.js';
+import { GovernanceService } from './modules/governance/governance.service.js';
 
 const commsService = new CommunicationsService();
+const govService = new GovernanceService();
 
 export interface RequestContext {
   userId: string;
@@ -863,6 +865,54 @@ export class ApiRouter {
       if (path === '/internal/communications/webhook' && method === 'POST') {
         const ack = await commsService.handleWebhook(body);
         return { success: true, data: ack, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 13. LAYER 12: TRUST ARCHITECTURE & GOVERNANCE CONTROL PLANE
+      // -----------------------------------------------------
+      if (path === '/api/v1/governance/trust-dashboard' && method === 'GET') {
+        const dashboard = govService.getTrustDashboard();
+        return { success: true, data: dashboard, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/user-trust-center' && method === 'GET') {
+        const trust = govService.getUserTrustCenter(ctx.userId);
+        return { success: true, data: trust, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/policy/evaluate' && method === 'POST') {
+        const decision = govService.evaluatePolicy(body);
+        return { success: true, data: decision, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/privacy-requests' && method === 'POST') {
+        const privReq = govService.createPrivacyRequest(ctx.userId, body.type);
+        return { success: true, data: privReq, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/circuit-breakers' && method === 'GET') {
+        const breakers = govService.getCircuitBreakers();
+        return { success: true, data: breakers, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/circuit-breakers/trip' && method === 'POST') {
+        govService.setCircuitBreaker(body.id, body.state, body.reason);
+        return { success: true, data: { id: body.id, state: body.state }, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/four-eyes/propose' && method === 'POST') {
+        const proposal = govService.proposeConfigChange(body.category, ctx.userId, body.before, body.after);
+        return { success: true, data: proposal, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/four-eyes/approve' && method === 'POST') {
+        const approved = govService.approveConfigChange(body.changeId, ctx.userId);
+        return { success: true, data: approved, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/governance/break-glass' && method === 'POST') {
+        const session = govService.grantBreakGlass(ctx.userId, body.approverId, body.justification, body.scope);
+        return { success: true, data: session, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------

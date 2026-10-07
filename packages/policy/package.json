@@ -1,0 +1,17 @@
+{
+  "name": "@amal/policy",
+  "version": "1.0.0",
+  "description": "AMAL OS Trust Architecture, AI Safety Firewall, Policy Decision Point, and Scholarly Governance",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
