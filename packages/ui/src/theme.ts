@@ -51,16 +51,17 @@ export const AmalTheme = {
       sans: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       serif: 'Merriweather, Georgia, Cambria, serif',
       arabic: '"Amiri", "Scheherazade New", "Traditional Arabic", serif',
+      urdu: '"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif',
     },
     sizes: {
-      xs: '0.75rem',    // 12px
-      sm: '0.875rem',   // 14px
-      base: '1rem',      // 16px
-      lg: '1.125rem',   // 18px
-      xl: '1.25rem',    // 20px
-      '2xl': '1.5rem',   // 24px
-      '3xl': '1.875rem', // 30px
-      '4xl': '2.25rem',  // 36px
+      xs: 12,
+      sm: 14,
+      base: 16,
+      lg: 18,
+      xl: 20,
+      '2xl': 24,
+      '3xl': 30,
+      '4xl': 36,
     },
     lineHeights: {
       tight: 1.25,
@@ -71,22 +72,54 @@ export const AmalTheme = {
   },
 
   spacing: {
-    1: '0.25rem',  // 4px
-    2: '0.5rem',   // 8px
-    3: '0.75rem',  // 12px
-    4: '1rem',     // 16px
-    5: '1.25rem',  // 20px
-    6: '1.5rem',   // 24px
-    8: '2rem',     // 32px
-    10: '2.5rem',  // 40px
-    12: '3rem',    // 48px
+    1: 4,
+    2: 8,
+    3: 12,
+    4: 16,
+    5: 20,
+    6: 24,
+    8: 32,
+    10: 40,
+    12: 48,
   },
 
   radii: {
-    sm: '0.375rem',  // 6px
-    md: '0.5rem',    // 8px
-    lg: '0.75rem',   // 12px
-    xl: '1rem',      // 16px
-    full: '9999px',
+    sm: 6,
+    md: 8,
+    lg: 12,
+    xl: 16,
+    full: 9999,
+  },
+
+  shadows: {
+    subtle: {
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.05,
+      shadowRadius: 3,
+      elevation: 1,
+    },
+    card: {
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 6,
+      elevation: 2,
+    },
   },
 };
+
+export function getThemePalette(isDark: boolean = false) {
+  return {
+    background: isDark ? AmalTheme.colors.surface.backgroundDark : AmalTheme.colors.surface.backgroundLight,
+    card: isDark ? AmalTheme.colors.surface.cardDark : AmalTheme.colors.surface.cardLight,
+    border: isDark ? AmalTheme.colors.surface.borderDark : AmalTheme.colors.surface.borderLight,
+    textPrimary: isDark ? AmalTheme.colors.text.primaryDark : AmalTheme.colors.text.primaryLight,
+    textSecondary: isDark ? AmalTheme.colors.text.secondaryDark : AmalTheme.colors.text.secondaryLight,
+    textTertiary: isDark ? AmalTheme.colors.text.tertiaryDark : AmalTheme.colors.text.tertiaryLight,
+    primary: AmalTheme.colors.primary,
+    primaryLight: AmalTheme.colors.primaryLight,
+    accent: AmalTheme.colors.accent,
+    status: AmalTheme.colors.status,
+  };
+}
