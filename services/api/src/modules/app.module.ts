@@ -4,6 +4,7 @@ import { GoalsController } from './goals/goals.controller.js';
 import { JourneysController } from './journeys/journeys.controller.js';
 import { ReflectionsController } from './reflections/reflections.controller.js';
 import { HealthController } from './health/health.controller.js';
+import { EvidenceController } from './evidence/evidence.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -13,5 +14,6 @@ export class AppModule {
     GoalsController,
     JourneysController,
     ReflectionsController,
+    EvidenceController,
   ];
 }
