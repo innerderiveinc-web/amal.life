@@ -146,4 +146,15 @@ export class PolicyEngine {
       auditRequired: req.requestedDataClasses?.includes('SENSITIVE') ?? false,
     };
   }
+
+  public static decide(req: any): any {
+    return PolicyEngine.evaluate(req);
+  }
+
+  public decide(req: any): any {
+    return PolicyEngine.evaluate(req);
+  }
 }
+
+export const policy = new PolicyEngine();
+

@@ -14,6 +14,7 @@ import { BillingController } from './billing/billing.controller.js';
 import { ExecutionController } from './execution/execution.controller.js';
 import { BlueprintController } from './blueprint/blueprint.controller.js';
 import { ExecutionPackController } from './execution-pack/execution-pack.controller.js';
+import { AuthController } from './auth/auth.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -33,5 +34,6 @@ export class AppModule {
     ExecutionController,
     BlueprintController,
     ExecutionPackController,
+    AuthController,
   ];
 }

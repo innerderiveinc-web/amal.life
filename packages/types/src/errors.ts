@@ -1,3 +1,27 @@
+export type ErrorCode =
+  | 'UNAUTHORIZED'
+  | 'FORBIDDEN'
+  | 'NOT_FOUND'
+  | 'VALIDATION_ERROR'
+  | 'CONFLICT'
+  | 'RATE_LIMITED'
+  | 'POLICY_DENIED'
+  | 'EVIDENCE_NOT_AVAILABLE'
+  | 'SCHOLAR_REQUIRED'
+  | 'SAFETY_BLOCKED'
+  | 'DEPENDENCY_UNAVAILABLE';
+
+export class AppError extends Error {
+  constructor(
+    public readonly code: ErrorCode,
+    message: string,
+    public readonly retryable = false
+  ) {
+    super(message);
+    this.name = 'AppError';
+  }
+}
+
 export class AmalError extends Error {
   constructor(message: string) {
     super(message);

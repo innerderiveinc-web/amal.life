@@ -132,6 +132,29 @@ export class ApiRouter {
         };
       }
 
+      if (path === '/api/v1/auth/refresh' && method === 'POST') {
+        const { refresh_token } = body;
+        return {
+          success: true,
+          data: {
+            access_token: `token_${ctx.userId || 'usr_refreshed'}`,
+            refresh_token: refresh_token || `ref_${Date.now()}`,
+            expires_in: 3600,
+          },
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
+      if (path === '/api/v1/auth/me' && method === 'GET') {
+        const user = db.users.get(ctx.userId) || Array.from(db.users.values())[0];
+        const profile = db.profiles.get(ctx.userId) || Array.from(db.profiles.values())[0];
+        return {
+          success: true,
+          data: { user, profile },
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
       if (path === '/api/v1/auth/passkey/register' && method === 'POST') {
         return {
           success: true,

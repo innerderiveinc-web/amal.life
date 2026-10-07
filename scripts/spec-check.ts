@@ -34,6 +34,7 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     '012_layer16_execution_blueprint_and_launch_operations.sql',
     '013_layer17_master_system_registry_and_certification.sql',
     '014_layer18_actual_build_execution_pack.sql',
+    '015_layer19_bootstrap_codebase_starter.sql',
   ];
 
   let missingMigrations: string[] = [];
@@ -45,7 +46,7 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
   }
 
   results.push({
-    checkName: 'Database Migrations Tracked (001-014)',
+    checkName: 'Database Migrations Tracked (001-015)',
     passed: missingMigrations.length === 0,
     details: missingMigrations.length === 0
       ? `All ${requiredMigrations.length} canonical migrations present.`
@@ -201,6 +202,44 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     details: implPlanOk && cujsSeeded
       ? 'IMPLEMENTATION_PLAN.md present and all 10 Critical User Journeys verified in migration 014.'
       : 'Missing implementation plan or CUJ definitions in migration 014.',
+  });
+
+  // 8. Check Bootstrap Starter Codebase & Base Contracts (Layer 19 / Sections 1-230)
+  const idTypesOk = fs.existsSync(path.join(baseDir, 'packages/types/src/id.ts'));
+  const envConfigOk = fs.existsSync(path.join(baseDir, 'packages/config/src/env.ts'));
+  const dbClientOk = fs.existsSync(path.join(baseDir, 'packages/database/src/client.ts'));
+  const goalRepoOk = fs.existsSync(path.join(baseDir, 'packages/database/src/repositories/goal.repository.ts'));
+  const authServiceOk = fs.existsSync(path.join(baseDir, 'packages/auth/src/auth.service.ts'));
+  const eventsBusOk = fs.existsSync(path.join(baseDir, 'packages/events/src/index.ts'));
+  const auditRedactionOk = fs.existsSync(path.join(baseDir, 'packages/audit/src/redaction.ts'));
+  const makefileOk = fs.existsSync(path.join(baseDir, 'Makefile'));
+  const mig15File = path.join(baseDir, 'packages/database/migrations/015_layer19_bootstrap_codebase_starter.sql');
+  let mig15Ok = false;
+  if (fs.existsSync(mig15File)) {
+    const mig15Content = fs.readFileSync(mig15File, 'utf-8');
+    mig15Ok =
+      mig15Content.includes('demo@amal.local') &&
+      mig15Content.includes('quran-restart') &&
+      mig15Content.includes('amal_templates');
+  }
+
+  const layer19Ok =
+    idTypesOk &&
+    envConfigOk &&
+    dbClientOk &&
+    goalRepoOk &&
+    authServiceOk &&
+    eventsBusOk &&
+    auditRedactionOk &&
+    makefileOk &&
+    mig15Ok;
+
+  results.push({
+    checkName: 'Bootstrap Starter Codebase & Base Contracts (Layer 19 / Sections 1-230)',
+    passed: layer19Ok,
+    details: layer19Ok
+      ? 'Ring 1 starter contracts, branded IDs, repositories, auth, events bus, redaction, Makefile, and migration 015 verified.'
+      : 'Missing one or more Layer 19 bootstrap components.',
   });
 
   return results;

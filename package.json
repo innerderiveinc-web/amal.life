@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "AMAL OS V1 - Muslim Life Intelligence Platform. From Niyyah to Amal.",
+  "packageManager": "pnpm@9.0.0",
   "workspaces": [
     "apps/*",
     "services/*",
@@ -17,8 +18,10 @@
     "test:redteam": "turbo run test:redteam",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "db:migrate": "pnpm --filter @amal/database run migrate",
     "db:seed": "pnpm --filter @amal/database run seed",
+    "db:reset": "pnpm --filter @amal/database run reset",
     "dev": "turbo run dev --parallel"
   },
   "devDependencies": {

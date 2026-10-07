@@ -148,3 +148,6 @@ export class InMemoryAmalDatabase {
 export const db = new InMemoryAmalDatabase();
 export * from './seeds/data.js';
 export * from './seeds/journeys.js';
+export * from './client.js';
+export * from './repositories/index.js';
+
