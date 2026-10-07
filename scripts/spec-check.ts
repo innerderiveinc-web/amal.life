@@ -35,6 +35,8 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     '013_layer17_master_system_registry_and_certification.sql',
     '014_layer18_actual_build_execution_pack.sql',
     '015_layer19_bootstrap_codebase_starter.sql',
+    '016_layer20_auth_sessions_and_idempotency.sql',
+    '017_layer20_privacy_requests.sql',
   ];
 
   let missingMigrations: string[] = [];
@@ -46,7 +48,7 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
   }
 
   results.push({
-    checkName: 'Database Migrations Tracked (001-015)',
+    checkName: 'Database Migrations Tracked (001-017)',
     passed: missingMigrations.length === 0,
     details: missingMigrations.length === 0
       ? `All ${requiredMigrations.length} canonical migrations present.`
@@ -240,6 +242,54 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     details: layer19Ok
       ? 'Ring 1 starter contracts, branded IDs, repositories, auth, events bus, redaction, Makefile, and migration 015 verified.'
       : 'Missing one or more Layer 19 bootstrap components.',
+  });
+
+  // 9. Check Backend Core Code Pack Runtime Foundation (Layer 20 / Sections 20.1-20.52)
+  const idsBrandOk = fs.existsSync(path.join(baseDir, 'packages/types/src/ids.ts'));
+  const errorCodesOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/errors/error-codes.ts'));
+  const amalErrorOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/errors/amal-error.ts'));
+  const httpFilterOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/errors/http-exception.filter.ts'));
+  const sessionServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/auth/session.service.ts'));
+  const policyEngineOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/policy/policy.engine.ts'));
+  const auditServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/audit/audit.service.ts'));
+  const idempotencyServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/common/idempotency/idempotency.service.ts'));
+  const pgClientOk = fs.existsSync(path.join(baseDir, 'services/api/src/infrastructure/database/pg.client.ts'));
+  const transactionOk = fs.existsSync(path.join(baseDir, 'services/api/src/infrastructure/database/transaction.ts'));
+  const outboxServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/infrastructure/outbox/outbox.service.ts'));
+  const outboxWorkerOk = fs.existsSync(path.join(baseDir, 'services/api/src/infrastructure/outbox/outbox.worker.ts'));
+  const goalsServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/goals/goals.service.ts'));
+  const journeysServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/journeys/journeys.service.ts'));
+  const amalServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/amal/amal.service.ts'));
+  const reflectionsServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/reflections/reflections.service.ts'));
+  const todayServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/today/today.service.ts'));
+  const privacyServiceOk = fs.existsSync(path.join(baseDir, 'services/api/src/modules/privacy/privacy.service.ts'));
+
+  const layer20Ok =
+    idsBrandOk &&
+    errorCodesOk &&
+    amalErrorOk &&
+    httpFilterOk &&
+    sessionServiceOk &&
+    policyEngineOk &&
+    auditServiceOk &&
+    idempotencyServiceOk &&
+    pgClientOk &&
+    transactionOk &&
+    outboxServiceOk &&
+    outboxWorkerOk &&
+    goalsServiceOk &&
+    journeysServiceOk &&
+    amalServiceOk &&
+    reflectionsServiceOk &&
+    todayServiceOk &&
+    privacyServiceOk;
+
+  results.push({
+    checkName: 'Backend Core Code Pack — Part 1: Runtime Foundation (Layer 20 / Sections 20.1-20.52)',
+    passed: layer20Ok,
+    details: layer20Ok
+      ? 'Layer 20 runtime foundation, PgClient, withTransaction, OutboxWorker, PolicyEngine, Idempotency, SessionService, and Core Domain Services verified.'
+      : 'Missing one or more Layer 20 core backend components.',
   });
 
   return results;

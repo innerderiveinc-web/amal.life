@@ -1,4 +1,5 @@
 export * from './id.js';
+export * from './ids.js';
 export * from './goal.js';
 export * from './context.js';
 export * from './policy.js';

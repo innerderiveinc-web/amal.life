@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Param, Body, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JourneysService } from './journeys.service.js';
-import { AuthGuard, AuthUser } from '../../common/guards/auth.guard.js';
+import { AuthGuard } from '../../common/auth/auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { IdempotencyInterceptor } from '../../common/interceptors/idempotency.interceptor.js';
 import { JourneyState } from '@amal/types';
+import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 
 export interface CreateJourneyDto {
   goalId: string;
@@ -19,24 +20,24 @@ export class JourneysController {
   constructor(private readonly service: JourneysService) {}
 
   @Get()
-  async list(@CurrentUser() user: AuthUser) {
-    return this.service.findActive(user.id);
+  async list(@CurrentUser() user: AuthenticatedUser) {
+    return this.service.findActive(user.userId);
   }
 
   @Post()
   async create(
-    @CurrentUser() user: AuthUser,
+    @CurrentUser() user: AuthenticatedUser,
     @Body() dto: CreateJourneyDto
   ) {
-    return this.service.create(user.id, dto);
+    return this.service.create(user, dto);
   }
 
   @Get(':id')
   async getById(
-    @CurrentUser() user: AuthUser,
+    @CurrentUser() user: AuthenticatedUser,
     @Param('id') id: string
   ) {
-    const journey = await this.service.findById(user.id, id);
+    const journey = await this.service.findById(user.userId, id);
     if (!journey) {
       return { error: 'Journey not found or access denied', status: 404 };
     }
@@ -44,27 +45,27 @@ export class JourneysController {
   }
 
   @Post(':id/start')
-  async start(@CurrentUser() user: AuthUser, @Param('id') id: string) {
-    return this.service.transition(user.id, id, JourneyState.ACTIVE);
+  async start(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    return this.service.start(user, id);
   }
 
   @Post(':id/pause')
-  async pause(@CurrentUser() user: AuthUser, @Param('id') id: string) {
-    return this.service.transition(user.id, id, JourneyState.PAUSED);
+  async pause(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    return this.service.transition(user, id, JourneyState.PAUSED);
   }
 
   @Post(':id/resume')
-  async resume(@CurrentUser() user: AuthUser, @Param('id') id: string) {
-    return this.service.transition(user.id, id, JourneyState.ACTIVE);
+  async resume(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    return this.service.transition(user, id, JourneyState.ACTIVE);
   }
 
   @Post(':id/complete')
-  async complete(@CurrentUser() user: AuthUser, @Param('id') id: string) {
-    return this.service.transition(user.id, id, JourneyState.COMPLETED);
+  async complete(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    return this.service.transition(user, id, JourneyState.COMPLETED);
   }
 
   @Get(':id/adaptations')
-  async listAdaptations(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async listAdaptations(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
     return [
       {
         id: `adp_${id}`,
@@ -78,7 +79,7 @@ export class JourneysController {
   }
 
   @Post(':id/adaptation-preview')
-  async previewAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async previewAdaptation(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
     return {
       currentPlan: '20 minutes evening recitation',
       suggestedPlan: '5 minutes morning recitation after Fajr',
@@ -88,7 +89,7 @@ export class JourneysController {
   }
 
   @Post(':id/adaptation-approve')
-  async approveAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async approveAdaptation(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
     return {
       applied: true,
       journeyId: id,
@@ -98,7 +99,7 @@ export class JourneysController {
   }
 
   @Post(':id/adaptation-reject')
-  async rejectAdaptation(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async rejectAdaptation(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
     return {
       applied: false,
       journeyId: id,

@@ -1,33 +1,109 @@
+/**
+ * AMAL OS — LAYER 20: REFLECTIONS SERVICE (Section 20.23)
+ * Manages strictly private user reflections with privacy guarantees,
+ * policy assertion, transactional outbox append, and audit logging.
+ */
+
 import { Injectable } from '@nestjs/common';
 import { PostgresReflectionsRepository, CreateReflectionInput } from './reflections.repository.js';
-import { OutboxService } from '../outbox/outbox.service.js';
+import { PolicyEngine } from '../../common/policy/policy.engine.js';
+import { AuditService } from '../../common/audit/audit.service.js';
+import { PgClient } from '../../infrastructure/database/pg.client.js';
+import { withTransaction } from '../../infrastructure/database/transaction.js';
+import { appendOutboxEvent } from '../../infrastructure/outbox/outbox.service.js';
+import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 import { Reflection } from '@amal/types';
+import { AmalError } from '../../common/errors/amal-error.js';
+import { ErrorCode } from '../../common/errors/error-codes.js';
 
 @Injectable()
 export class ReflectionsService {
-  private repo = new PostgresReflectionsRepository();
-  private outbox = new OutboxService();
+  constructor(
+    private readonly db: PgClient = new PgClient(),
+    private readonly repo: PostgresReflectionsRepository = new PostgresReflectionsRepository(),
+    private readonly policy: PolicyEngine = new PolicyEngine(),
+    private readonly audit: AuditService = new AuditService(new PgClient()),
+  ) {}
 
-  public async create(userId: string, input: Omit<CreateReflectionInput, 'userId'>): Promise<Reflection> {
-    const reflection = await this.repo.create({ ...input, userId });
+  public async create(actor: AuthenticatedUser, input: Omit<CreateReflectionInput, 'userId'>): Promise<Reflection> {
+    // 1. Enforce Policy (Adult reflection is strictly private to owner)
+    this.policy.assertAllowed({
+      actor: {
+        userId: actor.userId,
+        roles: actor.roles,
+        accountMode: actor.accountMode,
+      },
+      action: 'REFLECTION_CREATE',
+      purpose: 'REFLECTION',
+    });
 
-    // Publish anonymized friction event if friction is noted
-    if (reflection.frictionDetected) {
-      await this.outbox.recordEvent('reflection.friction_detected', reflection.id, {
-        userId,
-        journeyId: reflection.journeyId,
-        hasFriction: true,
+    const client = await this.db.connect();
+    try {
+      return await withTransaction(client, async (tx) => {
+        const reflection = await this.repo.create({ ...input, userId: actor.userId });
+
+        await appendOutboxEvent(tx, {
+          eventType: 'reflection.created',
+          aggregateType: 'reflection',
+          aggregateId: reflection.id,
+          payload: {
+            userId: actor.userId,
+            reflectionId: reflection.id,
+            hasFriction: !!reflection.frictionDetected,
+          },
+        });
+
+        await this.audit.record({
+          actorUserId: actor.userId,
+          action: 'REFLECTION_CREATE',
+          resourceType: 'reflection',
+          resourceId: reflection.id,
+          purpose: 'REFLECTION',
+          outcome: 'SUCCESS',
+        });
+
+        return reflection;
       });
+    } finally {
+      client.release();
+    }
+  }
+
+  public async findByUserId(actor: AuthenticatedUser): Promise<Reflection[]> {
+    this.policy.assertAllowed({
+      actor: {
+        userId: actor.userId,
+        roles: actor.roles,
+        accountMode: actor.accountMode,
+      },
+      action: 'REFLECTION_READ',
+      purpose: 'REFLECTION',
+    });
+
+    return this.repo.findByUserId(actor.userId);
+  }
+
+  public async findById(actor: AuthenticatedUser, reflectionId: string): Promise<Reflection | null> {
+    const ref = await this.repo.findById(actor.userId, reflectionId);
+    if (!ref) {
+      throw new AmalError(ErrorCode.NOT_FOUND, `Reflection ${reflectionId} not found`);
     }
 
-    return reflection;
-  }
+    this.policy.assertAllowed({
+      actor: {
+        userId: actor.userId,
+        roles: actor.roles,
+        accountMode: actor.accountMode,
+      },
+      action: 'REFLECTION_READ',
+      resource: {
+        type: 'reflection',
+        id: ref.id,
+        ownerUserId: ref.userId,
+      },
+      purpose: 'REFLECTION',
+    });
 
-  public async findByUserId(userId: string): Promise<Reflection[]> {
-    return this.repo.findByUserId(userId);
-  }
-
-  public async findById(userId: string, reflectionId: string): Promise<Reflection | null> {
-    return this.repo.findById(userId, reflectionId);
+    return ref;
   }
 }

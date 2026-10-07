@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Param, Body, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ReflectionsService } from './reflections.service.js';
-import { AuthGuard, AuthUser } from '../../common/guards/auth.guard.js';
+import { AuthGuard } from '../../common/auth/auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { IdempotencyInterceptor } from '../../common/interceptors/idempotency.interceptor.js';
+import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 
 export interface CreateReflectionDto {
   journeyId?: string;
@@ -20,16 +21,16 @@ export class ReflectionsController {
   constructor(private readonly service: ReflectionsService) {}
 
   @Get()
-  async list(@CurrentUser() user: AuthUser) {
-    return this.service.findByUserId(user.id);
+  async list(@CurrentUser() user: AuthenticatedUser) {
+    return this.service.findByUserId(user);
   }
 
   @Post()
   async create(
-    @CurrentUser() user: AuthUser,
+    @CurrentUser() user: AuthenticatedUser,
     @Body() dto: CreateReflectionDto
   ) {
-    return this.service.create(user.id, {
+    return this.service.create(user, {
       ...dto,
       reflectionType: dto.reflectionType || 'DAILY_MUHASABAH',
     });
@@ -37,10 +38,10 @@ export class ReflectionsController {
 
   @Get(':id')
   async getById(
-    @CurrentUser() user: AuthUser,
+    @CurrentUser() user: AuthenticatedUser,
     @Param('id') id: string
   ) {
-    const reflection = await this.service.findById(user.id, id);
+    const reflection = await this.service.findById(user, id);
     if (!reflection) {
       return { error: 'Reflection not found or access denied', status: 404 };
     }
@@ -48,8 +49,8 @@ export class ReflectionsController {
   }
 
   @Post(':id/analyze')
-  async analyze(@CurrentUser() user: AuthUser, @Param('id') id: string) {
-    const reflection = await this.service.findById(user.id, id);
+  async analyze(@CurrentUser() user: AuthenticatedUser, @Param('id') id: string) {
+    const reflection = await this.service.findById(user, id);
     if (!reflection) return { error: 'Reflection not found', status: 404 };
 
     return {
@@ -65,7 +66,7 @@ export class ReflectionsController {
 
   @Post(':id/confirm-insight')
   async confirmInsight(
-    @CurrentUser() user: AuthUser,
+    @CurrentUser() user: AuthenticatedUser,
     @Param('id') id: string,
     @Body() body: { confirmed: boolean; preferenceKey?: string }
   ) {
