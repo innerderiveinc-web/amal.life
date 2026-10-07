@@ -19,3 +19,4 @@ export * from './today.js';
 export * from './communication.js';
 export * from './trust.js';
 export * from './platform.js';
+export * from './knowledge-ops.js';

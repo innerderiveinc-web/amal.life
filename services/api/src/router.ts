@@ -31,10 +31,12 @@ import { PrayerService } from './prayer-service.js';
 import { CommunicationsService } from './modules/notifications/communications.service.js';
 import { GovernanceService } from './modules/governance/governance.service.js';
 import { PlatformService } from './modules/platform/platform.service.js';
+import { KnowledgeOpsService } from './modules/knowledge-ops/knowledge-ops.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
 const platformService = new PlatformService();
+const knowledgeOpsService = new KnowledgeOpsService();
 
 export interface RequestContext {
   userId: string;
@@ -948,6 +950,167 @@ export class ApiRouter {
       if (path === '/internal/platform/synthetic/run' && method === 'POST') {
         const syn = platformService.runSyntheticMonitoring();
         return { success: true, data: syn, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 15. LAYER 14: KNOWLEDGE OPERATIONS & SCHOLAR NETWORK
+      // -----------------------------------------------------
+      if (path === '/api/v1/knowledge/sources' && method === 'GET') {
+        const sources = knowledgeOpsService.getSources();
+        return { success: true, data: sources, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/sources/') && method === 'GET') {
+        const id = path.split('/')[5];
+        const src = knowledgeOpsService.getSourceById(id);
+        if (!src) throw new Error(`Source with ID ${id} not found.`);
+        return { success: true, data: src, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/ayahs/') && method === 'GET') {
+        const parts = path.split('/');
+        const surah = parseInt(parts[5], 10);
+        const ayah = parseInt(parts[6], 10);
+        const res = knowledgeOpsService.getAyah(surah, ayah);
+        return { success: true, data: res, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/hadith/') && method === 'GET') {
+        const parts = path.split('/');
+        const collection = decodeURIComponent(parts[5]);
+        const num = parseInt(parts[6], 10);
+        const res = knowledgeOpsService.getHadith(collection, num);
+        return { success: true, data: res, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/issues/') && method === 'GET') {
+        const issueId = path.split('/')[5];
+        const res = knowledgeOpsService.getIssueWithPlurality(issueId);
+        return { success: true, data: res, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/concepts/') && method === 'GET') {
+        const key = path.split('/')[5];
+        const res = knowledgeOpsService.getConcept(key);
+        if (!res) throw new Error(`Concept ${key} not found.`);
+        return { success: true, data: res, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/situations/') && method === 'GET') {
+        const key = path.split('/')[5];
+        const res = knowledgeOpsService.getLifeSituation(key);
+        if (!res) throw new Error(`Life situation ${key} not found.`);
+        return { success: true, data: res, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/knowledge/disputes' && method === 'POST') {
+        const dispute = knowledgeOpsService.openDispute({
+          contentId: body.contentId,
+          contentType: body.contentType,
+          reason: body.reason,
+          severity: body.severity,
+          reporterId: ctx.userId || 'usr_reporter',
+        });
+        return { success: true, data: dispute, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/knowledge/disputes/') && path.endsWith('/resolve') && method === 'POST') {
+        const disputeId = path.split('/')[5];
+        const dispute = knowledgeOpsService.resolveDispute(disputeId, body.resolution, body.notes);
+        return { success: true, data: dispute, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/scholars' && method === 'GET') {
+        const scholars = knowledgeOpsService.getScholars();
+        return { success: true, data: scholars, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/scholars/') && method === 'GET') {
+        const id = path.split('/')[4];
+        const scholar = knowledgeOpsService.getScholarById(id);
+        if (!scholar) throw new Error(`Scholar ${id} not found.`);
+        return { success: true, data: scholar, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/scholar/cases' && method === 'POST') {
+        const newCase = knowledgeOpsService.createScholarCase(
+          ctx.userId || body.userId,
+          body.question,
+          body.category,
+          body.context,
+          body.urgency
+        );
+        return { success: true, data: newCase, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/scholar/cases' && method === 'GET') {
+        const cases = knowledgeOpsService.getScholarCases();
+        return { success: true, data: cases, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/scholar/cases/') && path.endsWith('/answer') && method === 'POST') {
+        const caseId = path.split('/')[5];
+        const updated = knowledgeOpsService.answerScholarCase(
+          caseId,
+          body.scholarId,
+          body.answer,
+          body.evidenceRefs || [],
+          body.uncertaintyCondition
+        );
+        return { success: true, data: updated, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/scholar/cases/') && path.endsWith('/peer-review') && method === 'POST') {
+        const caseId = path.split('/')[5];
+        const updated = knowledgeOpsService.peerReviewScholarCase(
+          caseId,
+          body.secondScholarId,
+          body.approved,
+          body.peerNotes
+        );
+        return { success: true, data: updated, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/acquire' && method === 'POST') {
+        const acquired = knowledgeOpsService.acquireSource(body);
+        return { success: true, data: acquired, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/validate' && method === 'POST') {
+        const validation = knowledgeOpsService.validateSource(body.sourceId);
+        return { success: true, data: validation, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/approve' && method === 'POST') {
+        const approved = knowledgeOpsService.approveSource(body.sourceId, body.approverRole || 'SCHOLAR');
+        return { success: true, data: approved, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/releases' && method === 'POST') {
+        const rel = knowledgeOpsService.createRelease(body.releaseTag, body.approverId, body.notes);
+        return { success: true, data: rel, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/internal/knowledge/releases/') && path.endsWith('/publish') && method === 'POST') {
+        const relId = path.split('/')[4];
+        const published = knowledgeOpsService.publishRelease(relId);
+        return { success: true, data: published, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/internal/knowledge/releases/') && path.endsWith('/rollback') && method === 'POST') {
+        const relId = path.split('/')[4];
+        const rolledBack = knowledgeOpsService.rollbackRelease(relId);
+        return { success: true, data: rolledBack, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/benchmarks/run' && method === 'POST') {
+        const bench = knowledgeOpsService.runBenchmarks();
+        return { success: true, data: bench, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/knowledge/health' && method === 'GET') {
+        const health = knowledgeOpsService.getHealthScorecard();
+        return { success: true, data: health, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------
