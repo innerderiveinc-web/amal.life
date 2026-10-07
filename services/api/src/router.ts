@@ -291,19 +291,21 @@ export class ApiRouter {
       }
 
       if (path.includes('/chain') && method === 'GET') {
+        const evidenceId = path.split('/')[4] || 'act-winddown-10m';
+        const dynamicChain = await IslamicEvidenceGraph.buildEvidenceChain(evidenceId);
+
         const chain: EvidenceChainNode[] = [
           { step: 1, node_type: 'USER_QUESTION', title: 'User Inquiry', explanation: 'How to remain consistent and handle routine friction' },
-          { step: 2, node_type: 'ISLAMIC_CONCEPT', title: 'Niyyah & Sabr', explanation: 'Actions are grounded in sincere intention, accompanied by patient consistency.' },
-          { step: 3, node_type: 'QURAN_AYAH', title: 'Surah al-Isra', reference: 'Quran 17:78', explanation: 'Dawn prayer is accompanied and witnessed by angels.' },
-          { step: 4, node_type: 'TAFSIR', title: 'Tafsir Ibn Kathir', explanation: 'The angels of the day and night gather at Fajr recitation.' },
-          { step: 5, node_type: 'SCHOLARLY_INTERPRETATION', title: 'Prophetic Ease (Yusr)', reference: 'Sahih al-Bukhari 39', explanation: 'Religion is ease; small habits are preserved without burnout.' },
-          { step: 6, node_type: 'PRACTICAL_GUIDANCE', title: 'Amal Action', explanation: 'Evening wind-down 45 minutes prior to sleep.' },
+          { step: 2, node_type: 'ISLAMIC_CONCEPT', title: dynamicChain.conceptName, reference: dynamicChain.conceptReference, explanation: 'Actions are grounded in sincere intention, accompanied by patient consistency.' },
+          { step: 3, node_type: 'EVIDENCE_SOURCE', title: dynamicChain.authorityLevel, reference: dynamicChain.evidenceSourceReference, explanation: dynamicChain.evidenceText },
+          { step: 4, node_type: 'SCHOLARLY_JUSTIFICATION', title: 'Scholarly Grounding', explanation: dynamicChain.scholarlyJustification },
+          { step: 5, node_type: 'PRACTICAL_GUIDANCE', title: dynamicChain.actionTitle, explanation: 'Practical daily amal connected to authentic Sunnah.' },
         ];
 
         return {
           success: true,
           data: {
-            evidence_id: path.split('/')[4] || 'ev_001',
+            evidence_id: evidenceId,
             chain,
           },
           metadata: { timestamp, request_id: requestId, version },

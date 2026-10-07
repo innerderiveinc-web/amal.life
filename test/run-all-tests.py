@@ -241,6 +241,14 @@ def test_red_team_attacks():
     print("✓ All 5 adversarial Red-Team attacks successfully repelled.")
     return True
 
+def test_vertical_slice_integration():
+    log_header("TEST 8: FIRST WORKING VERTICAL SLICE (10-STEP LIFECYCLE)")
+    import vertical_slice_test
+    success = vertical_slice_test.run_vertical_slice()
+    assert success, "Vertical slice execution failed"
+    print("✓ End-to-End Vertical Slice 10-Step Lifecycle Verified.")
+    return True
+
 def main():
     print("""
     ======================================================================
@@ -258,7 +266,8 @@ def main():
         test_family_privacy_boundaries,
         test_citation_benchmark,
         test_evidence_graph_traversal,
-        test_red_team_attacks
+        test_red_team_attacks,
+        test_vertical_slice_integration
     ]
 
     for check in checks:
@@ -271,6 +280,7 @@ def main():
     print("★ FABRICATED CITATIONS: 0 TOLERATED (PASSED)")
     print("★ KNOWLEDGE GRAPH TRAVERSAL & PROVENANCE: 100% (PASSED)")
     print("★ FATWA FIREWALL & RED-TEAM EVALUATION: 100% DEFENDED (PASSED)")
+    print("★ END-TO-END VERTICAL SLICE (10-STEP PIPELINE): VERIFIED (PASSED)")
     print("★ PRODUCTION READINESS: VERIFIED")
     print("=" * 70)
 
