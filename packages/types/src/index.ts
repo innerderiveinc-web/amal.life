@@ -10,3 +10,5 @@ export * from './family.js';
 export * from './scholar.js';
 export * from './observability.js';
 export * from './api.js';
+export * from './runtime.js';
+export * from './memory.js';

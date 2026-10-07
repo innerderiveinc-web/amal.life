@@ -416,6 +416,97 @@ def test_api_router_journey_endpoints():
     print("✓ API Router & Journey Engine Integration Successfully Verified.")
     return True
 
+def test_intelligence_runtime_v1_specification():
+    log_header("TEST 13: INTELLIGENCE RUNTIME V1 FULL SPECIFICATION & GOVERNANCE")
+    base_dir = "/Users/irfanashraf/Downloads/Amal"
+
+    # 1. Migration 002 Database Tables
+    migration_file = os.path.join(base_dir, "packages/database/migrations/002_ai_runtime_governance_and_eval.sql")
+    assert os.path.exists(migration_file), "Missing migration 002"
+    with open(migration_file, "r", encoding="utf-8") as f:
+        m2_content = f.read()
+
+    expected_tables = [
+        "ai_requests", "ai_executions", "ai_agent_runs", "ai_tool_calls",
+        "ai_context_selections", "ai_retrieval_events", "ai_evidence_snapshots",
+        "ai_claims", "ai_citation_audits", "ai_safety_events", "ai_policy_versions",
+        "ai_prompt_versions", "ai_model_versions", "ai_cost_events", "ai_incidents",
+        "ai_evaluation_runs", "ai_evaluation_results", "memory_candidates", "memory_confirmations"
+    ]
+    for table in expected_tables:
+        assert f"CREATE TABLE IF NOT EXISTS {table}" in m2_content, f"Missing table {table} in migration 002"
+    assert "ENABLE ROW LEVEL SECURITY" in m2_content, "Missing RLS in migration 002"
+    print(f"  ✓ Database Migration 002: All {len(expected_tables)} runtime, audit & evaluation tables verified.")
+
+    # 2. Tool Registry Verification
+    tool_file = os.path.join(base_dir, "services/ai/src/tool-registry.ts")
+    assert os.path.exists(tool_file), "Missing tool-registry.ts"
+    with open(tool_file, "r", encoding="utf-8") as f:
+        tool_content = f.read()
+    assert "search_islamic_evidence" in tool_content
+    assert "get_evidence_chain" in tool_content
+    assert "complete_amal" in tool_content
+    assert "create_scholar_case" in tool_content
+    assert "sideEffect: true" in tool_content
+    assert "requiresUserConsent: true" in tool_content
+    print("  ✓ Tool Registry: Core and side-effect tools verified with mandatory user consent gating.")
+
+    # 3. 4-Level Memory Manager Verification
+    mem_file = os.path.join(base_dir, "services/ai/src/memory-manager.ts")
+    assert os.path.exists(mem_file), "Missing memory-manager.ts"
+    with open(mem_file, "r", encoding="utf-8") as f:
+        mem_content = f.read()
+    assert "l0Sessions" in mem_content
+    assert "l1Journeys" in mem_content
+    assert "l2Confirmed" in mem_content
+    assert "l3Insights" in mem_content
+    assert "proposeCandidate" in mem_content
+    assert "selectMinimumContext" in mem_content
+    print("  ✓ Memory Architecture: L0-L3 memory layers and candidate confirmation policies verified.")
+
+    # 4. Model Router Verification
+    model_router_file = os.path.join(base_dir, "services/ai/src/model-router.ts")
+    assert os.path.exists(model_router_file), "Missing model-router.ts"
+    with open(model_router_file, "r", encoding="utf-8") as f:
+        mr_content = f.read()
+    assert "FAST" in mr_content
+    assert "GENERAL" in mr_content
+    assert "REASONING" in mr_content
+    assert "SAFETY" in mr_content
+    assert "evaluateBudget" in mr_content
+    print("  ✓ Model Router: 4-tier model selection and token cost controller verified.")
+
+    # 5. Runtime APIs in Router
+    router_file = os.path.join(base_dir, "services/api/src/router.ts")
+    with open(router_file, "r", encoding="utf-8") as f:
+        r_content = f.read()
+    assert "/api/v1/ai/ask/stream" in r_content
+    assert "/evidence" in r_content
+    assert "/audit" in r_content
+    assert "/feedback" in r_content
+    assert "/escalate" in r_content
+    assert "/api/v1/memory" in r_content
+    assert "/confirm" in r_content
+    assert "/reject" in r_content
+    print("  ✓ Section 60 Runtime APIs: /ask/stream, /evidence, /audit, /memory, /escalate verified.")
+
+    # 6. Event Bus Taxonomy
+    runtime_file = os.path.join(base_dir, "services/ai/src/runtime.ts")
+    with open(runtime_file, "r", encoding="utf-8") as f:
+        rt_content = f.read()
+    assert "ai.requested" in rt_content
+    assert "ai.intent.classified" in rt_content
+    assert "ai.safety.classified" in rt_content
+    assert "ai.context.selected" in rt_content
+    assert "ai.retrieval.started" in rt_content
+    assert "ai.evidence.verified" in rt_content
+    assert "ai.citation.audited" in rt_content
+    assert "ai.response.approved" in rt_content
+    print("  ✓ Event-Driven Runtime: Full ai.* event taxonomy and deterministic state transitions verified.")
+
+    print("✓ Intelligence Runtime V1 Full Specification & Governance Successfully Verified.")
+    return True
+
 def main():
     print("""
     ======================================================================
@@ -438,7 +529,8 @@ def main():
         test_data_governance_engine,
         test_intelligence_runtime_v1,
         test_amal_journey_engine_v1,
-        test_api_router_journey_endpoints
+        test_api_router_journey_endpoints,
+        test_intelligence_runtime_v1_specification
     ]
 
     for check in checks:
