@@ -12,3 +12,6 @@ export * from './observability.js';
 export * from './api.js';
 export * from './runtime.js';
 export * from './memory.js';
+export * from './enums/index.js';
+export * from './errors.js';
+export * from './contracts.js';
