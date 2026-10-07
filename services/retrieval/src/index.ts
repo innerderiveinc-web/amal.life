@@ -24,6 +24,11 @@ export class HybridRetrievalEngine {
         continue; // Only approved sources pass the retrieval gate
       }
 
+      // Production Quarantine Gate: Quarantined content never leaks to retrieval
+      if (passage.sourceId.includes('quar') || source.verificationStatus === 'REJECTED') {
+        continue;
+      }
+
       let score = 0;
 
       // 1. Exact canonical reference match

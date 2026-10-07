@@ -47,7 +47,28 @@ export class AiRuntimeEngine {
     }
 
     const matches = await IslamicEvidenceGraph.queryPassages(request.message, 3);
+    if (matches.length === 0) {
+      return {
+        status: 'EVIDENCE_INSUFFICIENT',
+        intent: 'INSUFFICIENT_EVIDENCE',
+        safetyClass: 'B',
+        evidenceCount: 0,
+        claimsVerified: false,
+        citationsVerified: false,
+      };
+    }
+
     const citationsOk = matches.every((m) => CitationValidator.validateCitation(m.reference).valid);
+    if (!citationsOk) {
+      return {
+        status: 'CITATION_FAILURE',
+        intent: 'CITATION_VERIFICATION_FAILED',
+        safetyClass: 'B',
+        evidenceCount: matches.length,
+        claimsVerified: false,
+        citationsVerified: false,
+      };
+    }
 
     return {
       status: 'COMPLETED',
@@ -55,7 +76,7 @@ export class AiRuntimeEngine {
       safetyClass: 'B',
       evidenceCount: matches.length,
       claimsVerified: true,
-      citationsVerified: citationsOk,
+      citationsVerified: true,
     };
   }
 }

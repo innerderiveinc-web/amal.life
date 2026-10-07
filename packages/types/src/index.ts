@@ -31,4 +31,5 @@ export * from './master-blueprint.js';
 export * from './events.js';
 export * from './tools.js';
 export * from './execution-pack.js';
+export * from './knowledge-integrity.js';
 
