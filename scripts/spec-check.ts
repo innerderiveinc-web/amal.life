@@ -33,6 +33,7 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     '011_layer15_business_monetization_and_institution_platform.sql',
     '012_layer16_execution_blueprint_and_launch_operations.sql',
     '013_layer17_master_system_registry_and_certification.sql',
+    '014_layer18_actual_build_execution_pack.sql',
   ];
 
   let missingMigrations: string[] = [];
@@ -44,7 +45,7 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
   }
 
   results.push({
-    checkName: 'Database Migrations Tracked (001-013)',
+    checkName: 'Database Migrations Tracked (001-014)',
     passed: missingMigrations.length === 0,
     details: missingMigrations.length === 0
       ? `All ${requiredMigrations.length} canonical migrations present.`
@@ -172,6 +173,34 @@ export function runSpecCheck(baseDir: string = process.cwd()): SpecCheckResult[]
     details: masterDocOk
       ? 'Authoritative /docs/master/AMAL_MASTER_SPEC.md present.'
       : 'Master specification index missing.',
+  });
+
+  // 7. Check Execution Pack & Critical User Journeys (Layer 18 / Section 243-249)
+  const implPlanFile = path.join(baseDir, 'docs/master/IMPLEMENTATION_PLAN.md');
+  const implPlanOk = fs.existsSync(implPlanFile);
+  const mig14File = path.join(baseDir, 'packages/database/migrations/014_layer18_actual_build_execution_pack.sql');
+  let cujsSeeded = false;
+  if (fs.existsSync(mig14File)) {
+    const mig14Content = fs.readFileSync(mig14File, 'utf-8');
+    cujsSeeded =
+      mig14Content.includes('CUJ_01_ONBOARDING_CORE_LOOP') &&
+      mig14Content.includes('CUJ_02_GROUNDED_QUESTION_ANSWER') &&
+      mig14Content.includes('CUJ_03_PERSONALIZED_FIQH_ESCALATION') &&
+      mig14Content.includes('CUJ_04_FRICTION_ADAPTATION') &&
+      mig14Content.includes('CUJ_05_FAMILY_REFLECTION_ISOLATION') &&
+      mig14Content.includes('CUJ_06_ETHICAL_BILLING_UPGRADE') &&
+      mig14Content.includes('CUJ_07_FATIGUE_THROTTLED_NOTIFICATION') &&
+      mig14Content.includes('CUJ_08_REJECTED_INSIGHT_FORGETTING') &&
+      mig14Content.includes('CUJ_09_NOTIFICATION_REVOCATION_CASCADE') &&
+      mig14Content.includes('CUJ_10_GDPR_ACCOUNT_ERASURE');
+  }
+
+  results.push({
+    checkName: 'Execution Pack & Critical User Journeys (Layer 18 / Section 243-249)',
+    passed: implPlanOk && cujsSeeded,
+    details: implPlanOk && cujsSeeded
+      ? 'IMPLEMENTATION_PLAN.md present and all 10 Critical User Journeys verified in migration 014.'
+      : 'Missing implementation plan or CUJ definitions in migration 014.',
   });
 
   return results;

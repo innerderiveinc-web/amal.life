@@ -35,6 +35,7 @@ import { KnowledgeOpsService } from './modules/knowledge-ops/knowledge-ops.servi
 import { BillingService } from './modules/billing/billing.service.js';
 import { ExecutionService } from './modules/execution/execution.service.js';
 import { BlueprintService } from './modules/blueprint/blueprint.service.js';
+import { ExecutionPackService } from './modules/execution-pack/execution-pack.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
@@ -43,6 +44,7 @@ const knowledgeOpsService = new KnowledgeOpsService();
 const billingService = new BillingService();
 const executionService = new ExecutionService();
 const blueprintService = new BlueprintService();
+const executionPackService = new ExecutionPackService();
 
 export interface RequestContext {
   userId: string;
@@ -1355,6 +1357,43 @@ export class ApiRouter {
       if (path === '/api/v1/blueprint/export' && method === 'GET') {
         const exported = blueprintService.exportMasterBlueprint();
         return { success: true, data: exported, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 22. EXECUTION PACK DOMAIN
+      // -----------------------------------------------------
+      if (path === '/api/v1/execution-pack/modules' && method === 'GET') {
+        const modules = executionPackService.getModules();
+        return { success: true, data: modules, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution-pack/modules/') && method === 'GET') {
+        const code = path.replace('/api/v1/execution-pack/modules/', '');
+        const module = executionPackService.getModule(code);
+        if (!module) throw new Error(`Execution module ${code} not found.`);
+        return { success: true, data: module, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution-pack/cujs' && method === 'GET') {
+        const cujs = executionPackService.getCriticalUserJourneys();
+        return { success: true, data: cujs, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path.startsWith('/api/v1/execution-pack/cujs/') && method === 'GET') {
+        const cujId = path.replace('/api/v1/execution-pack/cujs/', '');
+        const cuj = executionPackService.getCriticalUserJourney(cujId);
+        if (!cuj) throw new Error(`Critical User Journey ${cujId} not found.`);
+        return { success: true, data: cuj, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution-pack/sprints' && method === 'GET') {
+        const sprints = executionPackService.getSprintPlans();
+        return { success: true, data: sprints, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/execution-pack/readiness' && method === 'GET') {
+        const readiness = executionPackService.getReadinessReport();
+        return { success: true, data: readiness, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------
