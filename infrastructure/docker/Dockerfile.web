@@ -1,0 +1,9 @@
+# Production Dockerfile for AMAL Web Apps (Next.js / Expo Web)
+FROM node:20-alpine AS runner
+WORKDIR /app
+RUN addgroup --system --gid 10001 nodejs && adduser --system --uid 10001 appuser
+USER appuser
+ENV NODE_ENV=production
+ENV PORT=3001
+EXPOSE 3001
+CMD ["node", "dist/server.js"]

@@ -30,9 +30,11 @@ import {
 import { PrayerService } from './prayer-service.js';
 import { CommunicationsService } from './modules/notifications/communications.service.js';
 import { GovernanceService } from './modules/governance/governance.service.js';
+import { PlatformService } from './modules/platform/platform.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
+const platformService = new PlatformService();
 
 export interface RequestContext {
   userId: string;
@@ -913,6 +915,39 @@ export class ApiRouter {
       if (path === '/api/v1/governance/break-glass' && method === 'POST') {
         const session = govService.grantBreakGlass(ctx.userId, body.approverId, body.justification, body.scope);
         return { success: true, data: session, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 14. LAYER 13: PRODUCTION PLATFORM & RELIABILITY
+      // -----------------------------------------------------
+      if (path === '/internal/platform/health' && method === 'GET') {
+        const health = platformService.getAggregatedHealth();
+        return { success: true, data: health, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/platform/slos' && method === 'GET') {
+        const slos = platformService.getSLODefinitions();
+        return { success: true, data: slos, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/platform/canary/advance' && method === 'POST') {
+        const canary = platformService.advanceCanary(body.serviceId, body.versionTag);
+        return { success: true, data: canary, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/platform/canary/rollback' && method === 'POST') {
+        const rollback = platformService.rollbackCanary(body.serviceId, body.reason);
+        return { success: true, data: rollback, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/platform/reconcile/outbox' && method === 'POST') {
+        const recon = platformService.reconcileOutbox();
+        return { success: true, data: recon, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/internal/platform/synthetic/run' && method === 'POST') {
+        const syn = platformService.runSyntheticMonitoring();
+        return { success: true, data: syn, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------
