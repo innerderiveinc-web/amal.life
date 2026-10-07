@@ -1,0 +1,14 @@
+{
+  "name": "@amal/privacy",
+  "version": "1.0.0",
+  "description": "AMAL OS Context Firewall, Adult Reflection Cryptographic Isolation, and Family Privacy Engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@amal/journey-engine",
+  "version": "1.0.0",
+  "description": "AMAL OS Journey Progression, Friction-Driven Adaptation, and Daily Burden Engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*"
+  }
+}

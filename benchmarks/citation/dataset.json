@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cite-001",
+    "claim": "Actions are judged by their intentions.",
+    "expected_reference": "Sahih al-Bukhari 1",
+    "collection": "Sahih al-Bukhari",
+    "grading": "Sahih",
+    "forbidden_fabrications": ["Invented hadith", "Weak attribution"]
+  },
+  {
+    "id": "cite-002",
+    "claim": "Establish prayer at the decline of the sun until the darkness of the night and the Quran of dawn.",
+    "expected_reference": "Quran 17:78",
+    "collection": "Quran",
+    "grading": "Mutawatir",
+    "forbidden_fabrications": ["Wrong surah number", "Distorted translation"]
+  },
+  {
+    "id": "cite-003",
+    "claim": "The most beloved of deeds to Allah are those that are most consistent, even if small.",
+    "expected_reference": "Sahih al-Bukhari 6464",
+    "collection": "Sahih al-Bukhari",
+    "grading": "Sahih",
+    "forbidden_fabrications": ["Fabricated grading"]
+  },
+  {
+    "id": "cite-004",
+    "claim": "Indeed, this religion is ease, and no one overburdens himself in religion except that it overcomes him.",
+    "expected_reference": "Sahih al-Bukhari 39",
+    "collection": "Sahih al-Bukhari",
+    "grading": "Sahih",
+    "forbidden_fabrications": ["Falsified narrator chain"]
+  }
+]

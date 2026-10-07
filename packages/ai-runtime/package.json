@@ -1,0 +1,16 @@
+{
+  "name": "@amal/ai-runtime",
+  "version": "1.0.0",
+  "description": "AMAL OS 13-stage deterministic intelligence runtime and agent orchestration engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*",
+    "@amal/safety": "workspace:*",
+    "@amal/evidence": "workspace:*"
+  }
+}

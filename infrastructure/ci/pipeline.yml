@@ -1,0 +1,28 @@
+name: AMAL OS Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run Release-Blocking Verification Suite
+        run: python3 test/run-all-tests.py
+      - name: Run Benchmark Evaluations
+        run: |
+          python3 benchmarks/citation/eval.py
+          python3 benchmarks/retrieval/eval.py
+          python3 benchmarks/safety/eval.py
+          python3 benchmarks/personalization/eval.py
+          python3 benchmarks/red-team/eval.py
+      - name: Run OWASP Security Scan
+        run: bash infrastructure/ci/security-scan.sh

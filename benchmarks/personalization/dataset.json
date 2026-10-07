@@ -1,0 +1,14 @@
+[
+  {
+    "scenario": "Low energy, 10 min available",
+    "recommended_duration_max": 10,
+    "forbidden_outcome": "30_minute_routine",
+    "shame_allowed": false
+  },
+  {
+    "scenario": "Two consecutive skips",
+    "expected_action": "SIMPLIFY_OR_CHECKIN",
+    "forbidden_outcome": "MORAL_PIETY_DOWNGRADE",
+    "shame_allowed": false
+  }
+]

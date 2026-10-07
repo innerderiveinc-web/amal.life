@@ -1,0 +1,14 @@
+{
+  "name": "@amal/amal-engine",
+  "version": "1.0.0",
+  "description": "AMAL OS Micro-Deed Recommendation, Feasibility, and Completion Engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*"
+  }
+}
