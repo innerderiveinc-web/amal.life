@@ -22,3 +22,4 @@ export * from './platform.js';
 export * from './knowledge-ops.js';
 export * from './billing.js';
 export * from './execution.js';
+export * from './master-blueprint.js';

@@ -34,6 +34,7 @@ import { PlatformService } from './modules/platform/platform.service.js';
 import { KnowledgeOpsService } from './modules/knowledge-ops/knowledge-ops.service.js';
 import { BillingService } from './modules/billing/billing.service.js';
 import { ExecutionService } from './modules/execution/execution.service.js';
+import { BlueprintService } from './modules/blueprint/blueprint.service.js';
 
 const commsService = new CommunicationsService();
 const govService = new GovernanceService();
@@ -41,6 +42,7 @@ const platformService = new PlatformService();
 const knowledgeOpsService = new KnowledgeOpsService();
 const billingService = new BillingService();
 const executionService = new ExecutionService();
+const blueprintService = new BlueprintService();
 
 export interface RequestContext {
   userId: string;
@@ -1315,6 +1317,44 @@ export class ApiRouter {
       if (path === '/api/v1/execution/health' && method === 'GET') {
         const health = executionService.getExecutionHealth();
         return { success: true, data: health, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      // -----------------------------------------------------
+      // 18. LAYER 17: MASTER BLUEPRINT & SYSTEM REGISTRY
+      // -----------------------------------------------------
+      if (path === '/api/v1/blueprint/topology' && method === 'GET') {
+        const topology = blueprintService.getSystemTopology();
+        return { success: true, data: topology, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/certifications' && method === 'GET') {
+        const certs = blueprintService.getSystemCertifications();
+        return { success: true, data: certs, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/invariants' && method === 'GET') {
+        const invs = blueprintService.getSystemInvariants();
+        return { success: true, data: invs, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/routes' && method === 'GET') {
+        const routes = blueprintService.getMasterRoutes();
+        return { success: true, data: routes, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/agents' && method === 'GET') {
+        const agents = blueprintService.getMasterAgents();
+        return { success: true, data: agents, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/migrations' && method === 'GET') {
+        const migrations = blueprintService.getMigrationsCatalog();
+        return { success: true, data: migrations, metadata: { timestamp, request_id: requestId, version } };
+      }
+
+      if (path === '/api/v1/blueprint/export' && method === 'GET') {
+        const exported = blueprintService.exportMasterBlueprint();
+        return { success: true, data: exported, metadata: { timestamp, request_id: requestId, version } };
       }
 
       // -----------------------------------------------------

@@ -12,6 +12,7 @@ import { PlatformController } from './platform/platform.controller.js';
 import { KnowledgeOpsController } from './knowledge-ops/knowledge-ops.controller.js';
 import { BillingController } from './billing/billing.controller.js';
 import { ExecutionController } from './execution/execution.controller.js';
+import { BlueprintController } from './blueprint/blueprint.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -29,5 +30,6 @@ export class AppModule {
     KnowledgeOpsController,
     BillingController,
     ExecutionController,
+    BlueprintController,
   ];
 }
