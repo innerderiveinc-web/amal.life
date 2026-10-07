@@ -1,0 +1,31 @@
+{
+  "name": "amal-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AMAL OS V1 - Muslim Life Intelligence Platform. From Niyyah to Amal.",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:unit": "turbo run test:unit",
+    "test:integration": "turbo run test:integration",
+    "test:benchmark": "turbo run test:benchmark",
+    "test:redteam": "turbo run test:redteam",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:migrate": "pnpm --filter @amal/database run migrate",
+    "db:seed": "pnpm --filter @amal/database run seed",
+    "dev": "turbo run dev --parallel"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

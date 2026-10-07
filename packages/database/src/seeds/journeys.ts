@@ -1,0 +1,306 @@
+import { Journey, JourneyType } from '@amal/types';
+
+export interface JourneyTemplate {
+  journeyType: JourneyType;
+  title: string;
+  goal: string;
+  description: string;
+  durationDays: number;
+  baselineDifficulty: 'VERY_EASY' | 'EASY' | 'MODERATE' | 'CHALLENGING';
+  days: {
+    dayNumber: number;
+    title: string;
+    learningPrompt: string;
+    reflectionPrompt: string;
+    actions: {
+      title: string;
+      description: string;
+      estimatedMinutes: number;
+      category: 'SALAH' | 'QURAN' | 'CHARACTER' | 'KNOWLEDGE' | 'FAMILY' | 'TIME_MANAGEMENT' | 'DHIKR' | 'SADAQAH';
+      primaryEvidenceReference: string;
+      difficulty: 'VERY_EASY' | 'EASY' | 'MODERATE' | 'CHALLENGING';
+    }[];
+  }[];
+}
+
+export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
+  // 1. FAJR RECOVERY (14 Days)
+  {
+    journeyType: 'FAJR_RECOVERY',
+    title: '14-Day Fajr Recovery',
+    goal: 'Wake up consistently for Fajr prayer by fixing evening habits, bedtime friction, and morning intention.',
+    description: 'A gentle, progressive 14-day routine that focuses on evening wind-down, screen discipline, and prophetic sleep habits rather than forceful willpower alone.',
+    durationDays: 14,
+    baselineDifficulty: 'MODERATE',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Resetting the Evening Anchor',
+        learningPrompt: 'Fajr begins the night before. The Prophet (pbuh) disliked sleeping before Isha and engaging in idle conversation after it.',
+        reflectionPrompt: 'What time did you put down your phone tonight? How did your sleep environment feel?',
+        actions: [
+          {
+            title: 'Complete Isha on Time & Wind Down',
+            description: 'Pray Isha, silence non-essential phone notifications 45 minutes before sleep.',
+            estimatedMinutes: 15,
+            category: 'SALAH',
+            primaryEvidenceReference: 'Sahih al-Bukhari 568',
+            difficulty: 'EASY',
+          },
+          {
+            title: 'Place Alarm Across the Room',
+            description: 'Set your morning alarm outside arm’s reach with a glass of water nearby.',
+            estimatedMinutes: 5,
+            category: 'TIME_MANAGEMENT',
+            primaryEvidenceReference: 'Sahih Muslim 776',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+      {
+        dayNumber: 2,
+        title: 'The Prophetic Adhkar Before Sleep',
+        learningPrompt: 'Reciting Ayat al-Kursi and Surah al-Ikhlas, al-Falaq, and an-Nas brings tranquility and angelic protection to your night.',
+        reflectionPrompt: 'Did you feel calmer falling asleep after reciting the bedtime adhkar?',
+        actions: [
+          {
+            title: 'Recite 3 Quls & Sleep on Right Side',
+            description: 'Make wudu before bed, recite the protective Surahs, and state your sincere intention (Niyyah) for Fajr.',
+            estimatedMinutes: 10,
+            category: 'DHIKR',
+            primaryEvidenceReference: 'Sahih al-Bukhari 5017',
+            difficulty: 'EASY',
+          },
+        ],
+      },
+      {
+        dayNumber: 3,
+        title: 'The Immediate Stand',
+        learningPrompt: 'When waking up, remembrance of Allah unties the first knot of sleep, wudu unties the second, and Salah unties the third.',
+        reflectionPrompt: 'Did you experience hesitation when the alarm sounded, or did you rise immediately?',
+        actions: [
+          {
+            title: 'Say Alhamdulillah and Wash Face Immediately',
+            description: 'Say "Alhamdu lillahil-ladhi ahyana ba\'da ma amatana", sit up within 30 seconds, and make wudu.',
+            estimatedMinutes: 10,
+            category: 'SALAH',
+            primaryEvidenceReference: 'Sahih al-Bukhari 1142',
+            difficulty: 'MODERATE',
+          },
+        ],
+      },
+      {
+        dayNumber: 4,
+        title: 'Check-In & Adaptation',
+        learningPrompt: 'Reviewing progress without guilt: every small adjustment builds permanent neurological habits.',
+        reflectionPrompt: 'If you struggled any day this week, what was the primary obstacle: bedtime, tiredness, or phone use?',
+        actions: [
+          {
+            title: '5-Minute Calm Muhasabah',
+            description: 'Review your wake-up times and adjust your target sleep hour by 15 minutes earlier if tired.',
+            estimatedMinutes: 5,
+            category: 'TIME_MANAGEMENT',
+            primaryEvidenceReference: 'Sahih al-Bukhari 6464',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 2. SALAH CONSISTENCY (21 Days)
+  {
+    journeyType: 'SALAH_CONSISTENCY',
+    title: '21-Day Salah Consistency',
+    goal: 'Establish steady, unhurried 5 daily prayers anchored to your actual daily routine.',
+    description: 'Transform prayer from a stressful obligation into an anchoring sanctuary throughout your workday.',
+    durationDays: 21,
+    baselineDifficulty: 'EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Anchoring Your Schedule Around Prayer',
+        learningPrompt: 'The believers are those who guard their prayers at their appointed times.',
+        reflectionPrompt: 'Which prayer in your day feels most rushed or vulnerable to disruption?',
+        actions: [
+          {
+            title: 'Calendar Check: Block 10 Min for Dhuhr & Asr',
+            description: 'Mark brief quiet pauses in your calendar for your midday prayers.',
+            estimatedMinutes: 5,
+            category: 'SALAH',
+            primaryEvidenceReference: 'Quran 4:103',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 3. QURAN RESTART (14 Days)
+  {
+    journeyType: 'QURAN_RESTART',
+    title: '14-Day Quran Restart',
+    goal: 'Reconnect with the words of Allah without feeling overwhelmed or inadequate.',
+    description: 'Small, deeply meaningful daily doses: 5 verses with translation and contemplation.',
+    durationDays: 14,
+    baselineDifficulty: 'VERY_EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Returning to Surah al-Fatihah with Fresh Eyes',
+        learningPrompt: 'Surah al-Fatihah is a direct intimate conversation between the servant and the Lord of the Worlds.',
+        reflectionPrompt: 'What meaning stood out to you when reading the translation today?',
+        actions: [
+          {
+            title: 'Read Al-Fatihah with English Translation',
+            description: 'Spend 7 quiet minutes reading Surah al-Fatihah with deep contemplation of each verse.',
+            estimatedMinutes: 7,
+            category: 'QURAN',
+            primaryEvidenceReference: 'Sahih Muslim 395',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 4. DAILY QURAN HABIT (30 Days)
+  {
+    journeyType: 'DAILY_QURAN_HABIT',
+    title: '30-Day Daily Quran Habit',
+    goal: 'Build an unbreakable daily 10-minute Quran reading and contemplation habit.',
+    description: 'Read measured portions daily, cultivating love, understanding, and peaceful consistency.',
+    durationDays: 30,
+    baselineDifficulty: 'EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'The Power of 10 Minutes',
+        learningPrompt: 'Consistency of small deeds is more beloved to Allah than occasional bursts followed by cessation.',
+        reflectionPrompt: 'When is your quietest 10 minutes in the day: after Fajr, lunch, or before bed?',
+        actions: [
+          {
+            title: 'Read 1 Page with Translation',
+            description: 'Open to Surah al-Baqarah or Surah Maryam and read 1 page slowly.',
+            estimatedMinutes: 10,
+            category: 'QURAN',
+            primaryEvidenceReference: 'Sahih al-Bukhari 6464',
+            difficulty: 'EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 5. ANGER & PATIENCE (7 Days)
+  {
+    journeyType: 'ANGER_AND_PATIENCE',
+    title: '7-Day Anger & Patience Journey',
+    goal: 'Master prophetic emotional regulation, speech restraint, and internal calmness during irritation.',
+    description: 'Learn physiological and spiritual reflexes when frustrated: posture shifts, wudu, and istiadha.',
+    durationDays: 7,
+    baselineDifficulty: 'EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'The Prophetic Pause',
+        learningPrompt: 'The strong person is the one who controls himself when angry.',
+        reflectionPrompt: 'What triggered frustration for you today, and did you remember to pause before reacting?',
+        actions: [
+          {
+            title: 'Practice the 3-Second Pause & Isti\'adha',
+            description: 'When feeling irritation, say "A\'udhu billahi minash-shaytanir-rajim" and delay your response by 3 seconds.',
+            estimatedMinutes: 5,
+            category: 'CHARACTER',
+            primaryEvidenceReference: 'Sahih al-Bukhari 6116',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 6. TIME & DEEN (14 Days)
+  {
+    journeyType: 'TIME_AND_DEEN',
+    title: '14-Day Time & Deen Alignment',
+    goal: 'Reclaim your hours from digital distractions and align your productivity with barakah.',
+    description: 'Conduct a gentle barakah audit, set smartphone boundaries, and build Salah-anchored focus blocks.',
+    durationDays: 14,
+    baselineDifficulty: 'MODERATE',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'The Barakah Audit',
+        learningPrompt: 'Take advantage of five before five: your youth before old age, health before illness, wealth before poverty, free time before preoccupation, and life before death.',
+        reflectionPrompt: 'Where did you notice unintentional time drain today?',
+        actions: [
+          {
+            title: 'Audit Screen Time & Set 1 Limit',
+            description: 'Check today’s screen time. Set a 30-minute limit on the most distracting non-work app.',
+            estimatedMinutes: 10,
+            category: 'TIME_MANAGEMENT',
+            primaryEvidenceReference: 'Al-Hakim in Al-Mustadrak 7831',
+            difficulty: 'EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 7. NEW MUSLIM FIRST 30 DAYS (30 Days)
+  {
+    journeyType: 'NEW_MUSLIM_FIRST_30_DAYS',
+    title: 'New Muslim: First 30 Days',
+    goal: 'A calm, supportive step-by-step introduction to living Islam without information overload.',
+    description: 'Designed specifically for reverts: learn one clear concept at a time, celebrate your journey, and build confidence.',
+    durationDays: 30,
+    baselineDifficulty: 'VERY_EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Welcome: Allah Knows Your Heart',
+        learningPrompt: 'Religion is ease and mercy. You do not need to learn everything on Day 1. Start with peaceful sincerity.',
+        reflectionPrompt: 'How are you feeling as you begin this journey? Remember you are not alone.',
+        actions: [
+          {
+            title: 'Learn the Meaning of Bismillah',
+            description: 'Understand the phrase "Bismillah ar-Rahman ar-Rahim" and practice saying it before eating or starting tasks.',
+            estimatedMinutes: 5,
+            category: 'KNOWLEDGE',
+            primaryEvidenceReference: 'Sahih al-Bukhari 39',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 8. RAMADAN PREPARATION (14 Days)
+  {
+    journeyType: 'RAMADAN_PREPARATION',
+    title: '14-Day Ramadan Preparation',
+    goal: 'Enter the blessed month with primed spiritual stamina, balanced routine, and clear intentions.',
+    description: 'Condition your appetite, sleep, and Quran routine before the crescent appears.',
+    durationDays: 14,
+    baselineDifficulty: 'EASY',
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Formulating Your Ramadan Niyyah',
+        learningPrompt: 'Whoever fasts Ramadan out of faith and hope of reward, all their past sins are forgiven.',
+        reflectionPrompt: 'What is your single most important hope for this coming Ramadan?',
+        actions: [
+          {
+            title: 'Write Down 3 Primary Ramadan Intentions',
+            description: 'Choose 1 worship goal, 1 character goal, and 1 relationship goal.',
+            estimatedMinutes: 10,
+            category: 'KNOWLEDGE',
+            primaryEvidenceReference: 'Sahih al-Bukhari 38',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+];

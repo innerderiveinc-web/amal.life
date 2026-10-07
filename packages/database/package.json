@@ -1,0 +1,20 @@
+{
+  "name": "@amal/database",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "migrate": "echo 'PostgreSQL migrations defined in migrations/'",
+    "seed": "node dist/seed.js"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*",
+    "@amal/config": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

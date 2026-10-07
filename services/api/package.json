@@ -1,0 +1,24 @@
+{
+  "name": "@amal/service-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*",
+    "@amal/config": "workspace:*",
+    "@amal/database": "workspace:*",
+    "@amal/evidence": "workspace:*",
+    "@amal/safety": "workspace:*",
+    "@amal/auth": "workspace:*",
+    "@amal/service-ai": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

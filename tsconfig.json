@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@amal/types": ["packages/types/src"],
+      "@amal/database": ["packages/database/src"],
+      "@amal/evidence": ["packages/evidence/src"],
+      "@amal/safety": ["packages/safety/src"],
+      "@amal/auth": ["packages/auth/src"],
+      "@amal/ui": ["packages/ui/src"],
+      "@amal/config": ["packages/config/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", "build"]
+}

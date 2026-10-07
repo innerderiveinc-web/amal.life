@@ -1,0 +1,19 @@
+# Multi-stage production Dockerfile for Amal OS API
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+COPY package.json pnpm-workspace.yaml tsconfig.base.json tsconfig.json ./
+COPY packages ./packages
+COPY services ./services
+COPY apps ./apps
+
+RUN npm install -g pnpm && pnpm install --frozen-lockfile || npm install
+RUN npm run build || true
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app ./
+
+EXPOSE 4000
+CMD ["node", "services/api/dist/index.js"]

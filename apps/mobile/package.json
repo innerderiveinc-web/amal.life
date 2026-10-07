@@ -1,0 +1,23 @@
+{
+  "name": "@amal/app-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@amal/types": "workspace:*",
+    "@amal/ui": "workspace:*",
+    "@amal/config": "workspace:*",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "expo": "^51.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

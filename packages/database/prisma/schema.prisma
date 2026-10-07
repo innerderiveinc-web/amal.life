@@ -1,0 +1,604 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ---------------------------------------------------------
+// 1. IDENTITY, PROFILE, PREFERENCES & CONSENT
+// ---------------------------------------------------------
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING_VERIFICATION
+  DELETED
+}
+
+enum UserRole {
+  USER
+  FAMILY_ADMIN
+  SCHOLAR
+  SCHOLAR_REVIEWER
+  CONTENT_EDITOR
+  CONTENT_REVIEWER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum LifeStage {
+  STUDENT
+  YOUNG_PROFESSIONAL
+  PARENT
+  MARRIED
+  ENTREPRENEUR
+  NEW_MUSLIM
+  OTHER
+}
+
+enum Madhhab {
+  HANAFI
+  SHAFI_I
+  MALIKI
+  HANBALI
+  GENERAL
+}
+
+enum CalculationMethod {
+  ISLAMIC_SOCIETY_OF_NORTH_AMERICA
+  MUSLIM_WORLD_LEAGUE
+  EGYPTIAN_GENERAL_AUTHORITY
+  UMM_AL_QURA
+  UNIVERSITY_OF_ISLAMIC_SCIENCES_KARACHI
+  DUBAI
+  CUSTOM
+}
+
+model User {
+  id           String       @id @default(uuid()) @db.Uuid
+  email        String       @unique
+  passwordHash String?
+  phone        String?
+  role         UserRole     @default(USER)
+  status       UserStatus   @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  deletedAt    DateTime?
+
+  profile      UserProfile?
+  preference   UserPreference?
+  consents     UserConsent[]
+  contexts     UserContext[]
+  memories     UserMemory[]
+  prayers      PrayerEvent[]
+  readings     ReadingSession[]
+  amalEvents   AmalEvent[]
+  reflections  Reflection[]
+  journeys     Journey[]
+  familyMember FamilyMember?
+  scholarProfile ScholarProfile?
+  cases        ScholarCase[]
+
+  @@index([email])
+  @@index([role])
+}
+
+model UserProfile {
+  id          String     @id @default(uuid()) @db.Uuid
+  userId      String     @unique @db.Uuid
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName String
+  language    String     @default("en")
+  country     String     @default("IN")
+  timezone    String     @default("Asia/Kolkata")
+  lifeStage   LifeStage?
+  bio         String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model UserPreference {
+  id                      String            @id @default(uuid()) @db.Uuid
+  userId                  String            @unique @db.Uuid
+  user                    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  madhhab                 Madhhab           @default(GENERAL)
+  prayerCalculationMethod CalculationMethod @default(MUSLIM_WORLD_LEAGUE)
+  reminderStyle           String            @default("CALM")
+  notificationPreferences Json              @default("{\"salah\":true,\"amal\":true,\"reflection\":true,\"journey\":true,\"scholar\":true,\"family\":true}")
+  contentPreferences      Json              @default("{\"preferredLanguage\":\"en\",\"showScholarlyDifferences\":true,\"primaryGoals\":[]}")
+  privacyPreferences      Json              @default("{\"allowAiMemory\":true,\"allowBehavioralContext\":true,\"allowFamilyProgressShare\":false,\"allowAnalytics\":false}")
+  updatedAt               DateTime          @updatedAt
+}
+
+model UserConsent {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consentType String    // e.g. "TERMS_OF_SERVICE", "AI_PERSONALIZATION", "SCHOLAR_CASE_SHARING"
+  version     String
+  granted     Boolean   @default(true)
+  grantedAt   DateTime  @default(now())
+  revokedAt   DateTime?
+
+  @@index([userId, consentType])
+}
+
+model UserContext {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contextType String   // "EXPLICIT", "BEHAVIORAL", "DERIVED"
+  category   String    // "SLEEP", "WORK_SCHEDULE", "STRESS_LEVEL"
+  key        String
+  value      String
+  source     String
+  confidence Float     @default(1.0)
+  visibility String    @default("USER_ONLY")
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId, category])
+}
+
+model UserMemory {
+  id            String    @id @default(uuid()) @db.Uuid
+  userId        String    @db.Uuid
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  level         String    // "SESSION", "JOURNEY", "LONG_TERM"
+  content       String
+  summary       String
+  relevanceTags String[]
+  userApproved  Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  expiresAt     DateTime?
+
+  @@index([userId, level])
+}
+
+// ---------------------------------------------------------
+// 2. ISLAMIC EVIDENCE & KNOWLEDGE GRAPH
+// ---------------------------------------------------------
+
+enum AuthorityLevel {
+  TIER_1_QURAN
+  TIER_2_AUTHENTIC_HADITH
+  TIER_3_CLASSICAL_TAFSIR
+  TIER_4_CONTEMPORARY
+  TIER_5_EDITORIAL
+  TIER_6_AI_SYNTHESIS
+}
+
+enum VerificationStatus {
+  INGESTED
+  PARSED
+  NORMALIZED
+  SOURCE_VERIFIED
+  EDITORIAL_REVIEW
+  SCHOLAR_REVIEW
+  APPROVED
+  REJECTED
+}
+
+model IslamicSource {
+  id                 String             @id @default(uuid()) @db.Uuid
+  sourceType         String             // "QURAN", "HADITH", "TAFSIR", "FIQH"
+  title              String
+  author             String
+  collection         String?
+  volume             Int?
+  bookNumber         Int?
+  chapterNumber      Int?
+  hadithNumber       Int?
+  language           String             @default("en")
+  publisher          String?
+  license            String             @default("OPEN_VERIFIED")
+  authorityLevel     AuthorityLevel
+  verificationStatus VerificationStatus @default(APPROVED)
+  version            String             @default("1.0")
+  provenance         Json
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  passages           SourcePassage[]
+  reviews            SourceReview[]
+
+  @@index([sourceType, authorityLevel])
+  @@index([verificationStatus])
+}
+
+model SourcePassage {
+  id             String        @id @default(uuid()) @db.Uuid
+  sourceId       String        @db.Uuid
+  source         IslamicSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  reference      String        // e.g. "2:286" or "Bukhari 52"
+  arabicText     String?
+  translatedText String
+  language       String        @default("en")
+  grading        String?       // "SAHIH", "HASAN", "DAIF", etc.
+  narratorChain  String[]
+  contextSummary String?
+  keywords       String[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([sourceId])
+  @@index([reference])
+}
+
+model SourceReview {
+  id           String        @id @default(uuid()) @db.Uuid
+  sourceId     String        @db.Uuid
+  source       IslamicSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  reviewerId   String        @db.Uuid
+  reviewerRole String
+  decision     String        // "APPROVED", "REQUEST_CHANGE", "REJECTED"
+  comments     String?
+  reviewedAt   DateTime      @default(now())
+
+  @@index([sourceId])
+}
+
+model EvidenceEdge {
+  id             String   @id @default(uuid()) @db.Uuid
+  fromEntityType String
+  fromEntityId   String
+  edgeType       String   // "PART_OF", "EXPLAINS", "REFERENCES", "SUPPORTS", "APPLIES_TO", etc.
+  toEntityType   String
+  toEntityId     String
+  confidence     Float    @default(1.0)
+  scholarlyNote  String?
+  isVerified     Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@index([fromEntityType, fromEntityId])
+  @@index([toEntityType, toEntityId])
+  @@index([edgeType])
+}
+
+model Topic {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  name        String
+  description String
+  parentSlug  String?
+  createdAt   DateTime @default(now())
+}
+
+model IslamicConcept {
+  id         String   @id @default(uuid()) @db.Uuid
+  termArabic String
+  termLatin  String   @unique
+  definition String
+  category   String   // "AQEEDAH", "IBADAH", "MUAMALAT", "AKHLAQ"
+  createdAt  DateTime @default(now())
+}
+
+// ---------------------------------------------------------
+// 3. WORSHIP, READING & REFLECTIONS
+// ---------------------------------------------------------
+
+model PrayerEvent {
+  id                   String    @id @default(uuid()) @db.Uuid
+  userId               String    @db.Uuid
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prayerName           String    // "FAJR", "DHUHR", "ASR", "MAGHRIB", "ISHA"
+  date                 String    // YYYY-MM-DD
+  status               String    // "ON_TIME", "LATE", "MISSED", "EXCUSED"
+  completedAt          DateTime?
+  prayedInCongregation Boolean   @default(false)
+  prayedSunnah         Boolean   @default(false)
+  notes                String?
+  createdAt            DateTime  @default(now())
+
+  @@index([userId, date])
+}
+
+model ReadingSession {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @db.Uuid
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  surahStart      Int
+  ayahStart       Int
+  surahEnd        Int
+  ayahEnd         Int
+  durationMinutes Int
+  pagesRead       Int
+  notes           String?
+  createdAt       DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model Reflection {
+  id                 String    @id @default(uuid()) @db.Uuid
+  userId             String    @db.Uuid
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  journeyId          String?   @db.Uuid
+  journey            Journey?  @relation(fields: [journeyId], references: [id], onDelete: SetNull)
+  dayNumber          Int?
+  reflectionType     String    // "DAILY_MUHASABAH", "WEEKLY_INSIGHT", "JOURNEY_CHECKPOINT"
+  wentWell           String
+  feltDifficult      String?
+  tomorrowIntention  String?
+  gratitude          String?
+  privateToUser      Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+
+  @@index([userId, createdAt])
+}
+
+// ---------------------------------------------------------
+// 4. JOURNEYS & AMAL
+// ---------------------------------------------------------
+
+model Journey {
+  id                 String        @id @default(uuid()) @db.Uuid
+  userId             String        @db.Uuid
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  journeyType        String        // "FAJR_RECOVERY", "SALAH_CONSISTENCY", etc.
+  title              String
+  goal               String
+  description        String
+  durationDays       Int
+  currentDay         Int           @default(1)
+  status             String        @default("ACTIVE") // "DRAFT", "ACTIVE", "PAUSED", "COMPLETED", "ADAPTED"
+  approvedByUser     Boolean       @default(true)
+  baselineDifficulty String        @default("MODERATE")
+  startDate          DateTime      @default(now())
+  endDate            DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  days               JourneyDay[]
+  reflections        Reflection[]
+
+  @@index([userId, status])
+}
+
+model JourneyDay {
+  id                String          @id @default(uuid()) @db.Uuid
+  journeyId         String          @db.Uuid
+  journey           Journey         @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  dayNumber         Int
+  title             String
+  learningPrompt    String
+  reflectionPrompt  String
+  isCompleted       Boolean         @default(false)
+
+  actions           JourneyAction[]
+
+  @@index([journeyId, dayNumber])
+}
+
+model JourneyAction {
+  id                       String     @id @default(uuid()) @db.Uuid
+  journeyDayId             String     @db.Uuid
+  journeyDay               JourneyDay @relation(fields: [journeyDayId], references: [id], onDelete: Cascade)
+  title                    String
+  description              String
+  estimatedMinutes         Int        @default(10)
+  category                 String     // "SALAH", "QURAN", "CHARACTER", "FAMILY"
+  primaryEvidenceReference String
+  difficulty               String     @default("EASY")
+  status                   String     @default("PENDING") // "PENDING", "COMPLETED", "SKIPPED", "ADAPTED"
+  userApproved             Boolean    @default(true)
+  completedAt              DateTime?
+  reflectionNotes          String?
+  createdAt                DateTime   @default(now())
+
+  @@index([journeyDayId])
+}
+
+model AmalEvent {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  category    String
+  evidenceRef String
+  status      String    @default("COMPLETED")
+  completedAt DateTime  @default(now())
+
+  @@index([userId, completedAt])
+}
+
+// ---------------------------------------------------------
+// 5. FAMILY SYSTEM
+// ---------------------------------------------------------
+
+model Family {
+  id         String         @id @default(uuid()) @db.Uuid
+  name       String
+  inviteCode String         @unique
+  createdById String        @db.Uuid
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  members    FamilyMember[]
+  journeys   FamilyJourney[]
+}
+
+model FamilyMember {
+  id        String   @id @default(uuid()) @db.Uuid
+  familyId  String   @db.Uuid
+  family    Family   @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  userId    String   @unique @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String   @default("ADULT_MEMBER") // "OWNER", "ADULT_MEMBER", "TEEN", "CHILD"
+  joinedAt  DateTime @default(now())
+
+  @@index([familyId])
+}
+
+model FamilyJourney {
+  id                         String   @id @default(uuid()) @db.Uuid
+  familyId                   String   @db.Uuid
+  family                     Family   @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  title                      String
+  goal                       String
+  totalDays                  Int
+  currentDay                 Int      @default(1)
+  aggregateCompletedActions  Int      @default(0)
+  totalTargetActions         Int
+  sharedActivityDescription  String
+  createdAt                  DateTime @default(now())
+}
+
+// ---------------------------------------------------------
+// 6. SCHOLAR SYSTEM & ESCALATION CASES
+// ---------------------------------------------------------
+
+model ScholarProfile {
+  id                 String   @id @default(uuid()) @db.Uuid
+  userId             String   @unique @db.Uuid
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName           String
+  title              String
+  institution        String
+  madhhab            Madhhab  @default(GENERAL)
+  specializations    String[]
+  verificationStatus String   @default("APPROVED")
+  bio                String
+  availableForCases  Boolean  @default(true)
+  activeCaseCount    Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  cases              ScholarCase[]
+}
+
+model ScholarCase {
+  id                 String               @id @default(uuid()) @db.Uuid
+  userId             String               @db.Uuid
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignedScholarId  String?              @db.Uuid
+  assignedScholar    ScholarProfile?      @relation(fields: [assignedScholarId], references: [id], onDelete: SetNull)
+  userQuestion       String
+  sanitizedContext   String
+  detectedFiqhIssue  String
+  relevantSources    Json                 @default("[]")
+  userConsentGranted Boolean              @default(true)
+  urgency            String               @default("NORMAL") // "NORMAL", "HIGH"
+  status             String               @default("PENDING_TRIAGE") // "PENDING_TRIAGE", "ASSIGNED", "ANSWERED", "CLOSED"
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  messages           ScholarCaseMessage[]
+
+  @@index([userId])
+  @@index([assignedScholarId])
+  @@index([status])
+}
+
+model ScholarCaseMessage {
+  id                     String      @id @default(uuid()) @db.Uuid
+  caseId                 String      @db.Uuid
+  scholarCase            ScholarCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  authorId               String      @db.Uuid
+  isScholar              Boolean
+  messageText            String
+  citedPassageReferences String[]    @default([])
+  sentAt                 DateTime    @default(now())
+
+  @@index([caseId])
+}
+
+// ---------------------------------------------------------
+// 7. AI SESSIONS, CITATIONS, SAFETY & AUDIT LOGS
+// ---------------------------------------------------------
+
+model AiSession {
+  id              String      @id @default(uuid()) @db.Uuid
+  userId          String      @db.Uuid
+  title           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  messages        AiMessage[]
+
+  @@index([userId])
+}
+
+model AiMessage {
+  id                String    @id @default(uuid()) @db.Uuid
+  sessionId         String    @db.Uuid
+  session           AiSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role              String    // "user", "assistant", "system"
+  content           String
+  answerType        String?
+  sourcesUsed       Json?
+  scholarRequired   Boolean   @default(false)
+  citationsVerified Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+
+  @@index([sessionId])
+}
+
+model RetrievalEvent {
+  id              String   @id @default(uuid()) @db.Uuid
+  traceId         String
+  query           String
+  retrievedCount  Int
+  topScore        Float
+  createdAt       DateTime @default(now())
+
+  @@index([traceId])
+}
+
+model CitationEvent {
+  id                 String   @id @default(uuid()) @db.Uuid
+  traceId            String
+  claimText          String
+  reference          String
+  supportedByPassage Boolean
+  auditPassed        Boolean
+  attemptNumber      Int      @default(1)
+  createdAt          DateTime @default(now())
+
+  @@index([traceId])
+}
+
+model SafetyEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  traceId        String
+  safetyClass    String   // "CLASS_A_...", "CLASS_D_PERSONALIZED_RULING", etc.
+  triggers       String[]
+  actionTaken    String   // "PROCEED", "SCHOLAR_ESCALATION", "CRISIS_INTERVENTION"
+  createdAt      DateTime @default(now())
+
+  @@index([traceId])
+}
+
+model Notification {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  category  String    // "SALAH", "AMAL", "JOURNEY", "SCHOLAR"
+  title     String
+  body      String
+  actionUrl String?
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  @@index([userId, isRead])
+}
+
+model AuditLog {
+  id           String   @id @default(uuid()) @db.Uuid
+  actorId      String
+  actorRole    String
+  action       String   // e.g. "VIEW_SCHOLAR_CASE", "EXPORT_USER_DATA", "DELETE_ACCOUNT"
+  resourceType String
+  resourceId   String
+  ipAddress    String?
+  userAgent    String?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  @@index([actorId])
+  @@index([resourceType, resourceId])
+  @@index([createdAt])
+}
