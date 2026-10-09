@@ -1,0 +1,5 @@
+{"id": "chr_001", "event_id": "SIR-EVT-0000001", "hijri_year": null, "gregorian_year": 610, "precision": "EXACT", "is_disputed": false, "expected_resolution": "Canonical: Ramadan 610 CE"}
+{"id": "chr_002", "event_id": "SIR-EVT-0000002", "hijri_year": 1, "gregorian_year": 622, "precision": "EXACT", "is_disputed": true, "expected_resolution": "Arrival Quba 8th vs 12th Rabi al-Awwal"}
+{"id": "chr_003", "event_id": "SIR-EVT-0000003", "hijri_year": 2, "gregorian_year": 624, "precision": "EXACT", "is_disputed": false, "expected_resolution": "17 Ramadan 2 AH (March 624 CE)"}
+{"id": "chr_004", "event_id": "SIR-EVT-0000004", "hijri_year": 6, "gregorian_year": 628, "precision": "EXACT", "is_disputed": false, "expected_resolution": "Dhu al-Qadah 6 AH (March 628 CE)"}
+{"id": "chr_005", "event_id": "SIR-EVT-0000005", "hijri_year": 8, "gregorian_year": 630, "precision": "EXACT", "is_disputed": false, "expected_resolution": "20 Ramadan 8 AH (January 630 CE)"}

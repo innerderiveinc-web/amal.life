@@ -10,17 +10,29 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@amal/types": "workspace:*",
+    "@amal/amal-engine": "workspace:*",
+    "@amal/audit": "workspace:*",
+    "@amal/auth": "workspace:*",
     "@amal/config": "workspace:*",
     "@amal/database": "workspace:*",
+    "@amal/events": "workspace:*",
     "@amal/evidence": "workspace:*",
+    "@amal/journey-engine": "workspace:*",
+    "@amal/policy": "workspace:*",
+    "@amal/privacy": "workspace:*",
     "@amal/safety": "workspace:*",
-    "@amal/auth": "workspace:*",
     "@amal/service-ai": "workspace:*",
+    "@amal/service-content-ingestion": "workspace:*",
     "@amal/service-notifications": "workspace:*",
-    "@amal/policy": "workspace:*"
+    "@amal/types": "workspace:*",
+    "@nestjs/common": "^12.1.2",
+    "@nestjs/core": "^12.1.2",
+    "class-validator": "^0.15.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "typescript": "^5.4.5"
   }
 }

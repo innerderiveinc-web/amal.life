@@ -6,19 +6,6 @@
       "outputs": ["dist/**", ".next/**", "build/**"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"]
-    },
-    "lint": {},
-    "test": {
-      "dependsOn": ["^build"]
-    }
-  },
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "build/**"]
-    },
-    "typecheck": {
       "dependsOn": ["^build"],
       "outputs": []
     },

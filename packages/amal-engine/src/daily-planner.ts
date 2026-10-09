@@ -27,7 +27,7 @@ export class DailyPlannerEngine {
     activeGoalTitle: string;
     preferredTime?: string;
   }): DailyPlanOutput {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0] ?? '';
 
     const primary: DailyAmalAction = {
       amalId: 'aml_daily_quran_primary',

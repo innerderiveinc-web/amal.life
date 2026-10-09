@@ -23,5 +23,8 @@ export interface PolicyRequest {
     | 'SCHOLAR_REVIEW'
     | 'FAMILY'
     | 'ANALYTICS'
-    | 'ADMIN';
+    | 'ADMIN'
+    | 'COMPLIANCE'
+    | 'REFLECTION'
+    | 'RECOMMENDATION';
 }

@@ -72,11 +72,11 @@ export class GovernanceService {
     if (decision.auditRequired) {
       TamperEvidentAuditService.recordEvent({
         actorId: req.actorId,
-        actorType: req.actorType,
+        actorType: req.actorType || 'UNKNOWN',
         action: req.action,
         resourceType: req.resourceType,
         resourceId: req.resourceId,
-        purpose: req.purpose,
+        purpose: req.purpose || 'PRODUCT',
         outcome: decision.effect === 'ALLOW' ? 'SUCCESS' : 'DENIED',
         metadata: { reasonCodes: decision.reasonCodes },
       });

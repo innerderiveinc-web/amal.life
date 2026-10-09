@@ -120,7 +120,7 @@ export interface AmalTool {
   auditLevel: 'LOW' | 'MEDIUM' | 'HIGH';
 }
 
-export interface EvidencePackItem {
+export interface RuntimeEvidencePackItem {
   evidence_id: string;
   source_type: 'QURAN' | 'HADITH' | 'TAFSIR' | 'SCHOLARLY_POSITION';
   reference: string;
@@ -131,9 +131,9 @@ export interface EvidencePackItem {
   verified: boolean;
 }
 
-export interface EvidencePack {
+export interface RuntimeEvidencePack {
   query: string;
-  evidence: EvidencePackItem[];
+  evidence: RuntimeEvidencePackItem[];
   scholarly_positions: {
     madhhab: string;
     position: string;
@@ -142,6 +142,7 @@ export interface EvidencePack {
   limitations: string[];
   missing_information: string[];
 }
+
 
 export interface ClaimRecord {
   claim_id: string;

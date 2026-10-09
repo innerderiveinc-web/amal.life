@@ -4,3 +4,8 @@ export * from './citation-validator.js';
 export * from './hadith-adapter.js';
 export * from './governance-engine.js';
 export * from './integrity/index.js';
+export * from './catalogue/pilot-source-catalogue.js';
+export * from './multilingual/multilingual-corpus-registry.js';
+export * from './multilingual/universal-multilingual-knowledge-engine.js';
+export * from './sirah/index.js';
+export * from './corpus/index.js';

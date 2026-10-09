@@ -105,11 +105,32 @@ export type EntityType =
   | 'SCHOLARLY_ISSUE'
   | 'FIQH_RULING'
   | 'ISLAMIC_CONCEPT'
+  | 'CONCEPT'
   | 'TOPIC'
   | 'LIFE_SITUATION'
   | 'GUIDANCE_PATTERN'
   | 'AMAL_ACTION'
   | 'JOURNEY';
+
+export interface Topic {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  parentSlug?: string;
+  createdAt: string;
+}
+
+
+export interface IslamicConcept {
+  id: string;
+  termArabic: string;
+  termLatin: string;
+  definition: string;
+  category: string;
+  createdAt: string;
+}
+
 
 export type AmalPracticeType =
   | 'QURANIC_PRACTICE'
@@ -161,12 +182,20 @@ export interface HadithGradingAssessment {
 export interface TafsirPassageRecord {
   id: string;
   ayahId: string;
-  work: string;
+  surahNumber?: number;
+  ayahNumber?: number;
+  tafsirWork?: string;
+  work?: string;
   author: string;
-  passage: string;
-  language: string;
+  passage?: string;
+  passageText?: string;
+  language?: string;
   methodology: string;
-  status: VerificationStatus;
+  volume?: number;
+  page?: number;
+  licenseStatus?: string;
+  reviewStatus?: string;
+  status?: VerificationStatus;
 }
 
 export interface ScholarlyOpinionRecord {
@@ -182,24 +211,34 @@ export interface ScholarlyOpinionRecord {
 
 export interface LifeSituationRecord {
   id: string;
+  situationKey?: string;
   name: string;
-  category: string;
+  category?: string;
   description: string;
-  crossDomainDomain: 'ISLAMIC_EVIDENCE' | 'LIFE_BEHAVIOR';
+  crossDomainDomain?: 'ISLAMIC_EVIDENCE' | 'LIFE_BEHAVIOR';
+  relevantConcepts?: string[];
+  relevantEvidenceIds?: string[];
+  potentialAmalIds?: string[];
+  behavioralNotes?: string;
 }
 
 export interface EvidenceEdge {
   id: string;
-  fromEntityType: EntityType;
-  fromEntityId: string;
-  edgeType: EvidenceEdgeType;
-  toEntityType: EntityType;
-  toEntityId: string;
-  confidence: number;
+  fromEntityType?: EntityType;
+  fromEntityId?: string;
+  edgeType?: EvidenceEdgeType;
+  toEntityType?: EntityType;
+  toEntityId?: string;
+  sourceNodeId?: string;
+  targetNodeId?: string;
+  relationship?: string;
+  metadata?: Record<string, any>;
+  confidence?: number;
   scholarlyNote?: string | null;
-  isVerified: boolean;
+  isVerified?: boolean;
   createdAt: string;
 }
+
 
 export interface EvidencePackItem {
   passageId: string;

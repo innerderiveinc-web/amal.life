@@ -139,3 +139,16 @@ export interface KnowledgeIncident {
   resolutionNotes?: string;
   postmortemUrl?: string;
 }
+
+export interface ScholarReviewSignoff {
+  reviewerScholarId: string;
+  isTwoPersonSignoff?: boolean;
+  verdict: 'APPROVED' | 'REJECTED';
+  notes?: string;
+  signedAt: string;
+}
+
+import type { VerifiedScholarRecord } from './knowledge-ops.js';
+export type { VerifiedScholarRecord };
+
+

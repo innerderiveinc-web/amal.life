@@ -23,7 +23,7 @@ export class ConfidenceLanguageController {
   private static readonly POLICIES: Record<FramingMode, FramingPolicy> = {
     DIRECT_REVELATION: {
       supportLevel: 'DIRECT',
-      authorizedLeadPhrase: 'The Holy Quran states:' || 'In authentic prophetic narration:',
+      authorizedLeadPhrase: 'The Holy Quran states:',
       forbiddenLeadPhrases: ['In my personal opinion', 'Scholars might say', 'Probably'],
       maxConfidenceLabel: 'DEFINITIVE',
     },

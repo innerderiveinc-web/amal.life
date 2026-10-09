@@ -15,26 +15,29 @@ export class EvidenceVerifier {
     const rejectedItems: Array<{ id: string; reason: string }> = [];
 
     for (const item of pack.items) {
-      const passage = db.passages.get(item.id);
+      const passageId = (item as any).id || item.passageId;
+      const passage = db.passages.get(passageId);
       if (!passage) {
-        rejectedItems.push({ id: item.id, reason: 'PASSAGE_NOT_FOUND' });
+        rejectedItems.push({ id: passageId, reason: 'PASSAGE_NOT_FOUND' });
         continue;
       }
 
       const source = db.sources.get(passage.sourceId);
       if (!source || source.verificationStatus !== 'APPROVED') {
-        rejectedItems.push({ id: item.id, reason: 'UNAPPROVED_SOURCE' });
+        rejectedItems.push({ id: passageId, reason: 'UNAPPROVED_SOURCE' });
         continue;
       }
 
-      if (source.licenseStatus === 'UNKNOWN' || source.licenseStatus === 'EXPIRED') {
-        rejectedItems.push({ id: item.id, reason: 'INVALID_LICENSE' });
+      const license = (source as any).licenseStatus || source.license;
+      if (license === 'UNKNOWN' || license === 'EXPIRED') {
+        rejectedItems.push({ id: passageId, reason: 'INVALID_LICENSE' });
         continue;
       }
 
-      // Check for user-provided poisoning (Section 52 & 53)
-      if (item.sourceType === ('USER_PROVIDED' as any)) {
-        rejectedItems.push({ id: item.id, reason: 'CITATION_POISONING_DEFENSE: USER_PROVIDED cannot be authoritative.' });
+      // Check for user-provided poisoning
+      const srcType = (item as any).sourceType || item.authorityLevel;
+      if (srcType === 'USER_PROVIDED') {
+        rejectedItems.push({ id: passageId, reason: 'CITATION_POISONING_DEFENSE: USER_PROVIDED cannot be authoritative.' });
         continue;
       }
 

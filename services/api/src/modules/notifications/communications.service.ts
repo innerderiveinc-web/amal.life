@@ -213,7 +213,24 @@ export class CommunicationsService {
     return updated;
   }
 
+  public getNotifications(userId: string) {
+    return this.inAppNotifications.get(userId) || [];
+  }
+
+  public snoozeNotification(userId: string, id: string, _untilMinutes = 60) {
+    const metrics = this.recordInteraction(userId, 'SNOOZED');
+    return { id, status: 'SNOOZED', fatigueMetrics: metrics };
+  }
+
+  public dismissNotification(userId: string, id: string) {
+    const metrics = this.recordInteraction(userId, 'DISMISSED');
+    const userNotifs = this.inAppNotifications.get(userId) || [];
+    this.inAppNotifications.set(userId, userNotifs.filter((n) => n.id !== id));
+    return { id, status: 'DISMISSED', fatigueMetrics: metrics };
+  }
+
   public async handleWebhook(payload: DeliveryWebhookPayload): Promise<{ acknowledged: boolean }> {
     return this.qsuraGateway.handleWebhook(payload);
   }
 }
+

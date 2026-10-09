@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Body, Param, Req, UseGuards } from '@nestjs/common';
 import { CommunicationsService } from './communications.service.js';
-import { AuthGuard } from '../../guards/auth.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
 
 @Controller()
 export class CommunicationsController {
@@ -76,6 +76,56 @@ export class CommunicationsController {
     };
   }
 
+  @Get('notifications')
+  @UseGuards(AuthGuard)
+  async getNotifications(@Req() req: any) {
+    const userId = req.user?.id || 'usr-sample-01';
+    return {
+      success: true,
+      data: this.commsService.getNotifications(userId),
+    };
+  }
+
+  @Get('notifications/preferences')
+  @UseGuards(AuthGuard)
+  async getNotificationPreferences(@Req() req: any) {
+    const userId = req.user?.id || 'usr-sample-01';
+    return {
+      success: true,
+      data: this.commsService.getPreferences(userId),
+    };
+  }
+
+  @Patch('notifications/preferences')
+  @UseGuards(AuthGuard)
+  async updateNotificationPreferences(@Req() req: any, @Body() body: any) {
+    const userId = req.user?.id || 'usr-sample-01';
+    return {
+      success: true,
+      data: this.commsService.updatePreferences(userId, body),
+    };
+  }
+
+  @Post('notifications/:id/snooze')
+  @UseGuards(AuthGuard)
+  async snoozeNotification(@Req() req: any, @Param('id') id: string) {
+    const userId = req.user?.id || 'usr-sample-01';
+    return {
+      success: true,
+      data: this.commsService.snoozeNotification(userId, id),
+    };
+  }
+
+  @Post('notifications/:id/dismiss')
+  @UseGuards(AuthGuard)
+  async dismissNotification(@Req() req: any, @Param('id') id: string) {
+    const userId = req.user?.id || 'usr-sample-01';
+    return {
+      success: true,
+      data: this.commsService.dismissNotification(userId, id),
+    };
+  }
+
   @Post('internal/communications/send')
   async internalSend(@Body() body: any) {
     const result = await this.commsService.orchestrateAndSend(body);
@@ -94,3 +144,4 @@ export class CommunicationsController {
     };
   }
 }
+

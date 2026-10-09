@@ -1,6 +1,7 @@
 export interface AskAiDto {
   message: string;
   surface: 'ASK_AMAL' | 'TODAY' | 'JOURNEY' | 'REFLECTION' | 'SEARCH' | 'SCHOLAR';
+  session_id?: string;
   context_policy?: {
     allow_personalization: boolean;
     allow_memory: boolean;

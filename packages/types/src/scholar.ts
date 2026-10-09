@@ -6,20 +6,32 @@ export type ScholarVerificationStatus =
   | 'CREDENTIALS_SUBMITTED'
   | 'UNDER_REVIEW'
   | 'APPROVED'
+  | 'VERIFIED'
+  | 'PENDING'
+  | 'SUSPENDED'
+  | 'REVOKED'
   | 'REJECTED';
+
+export type ContentDisputeStatus = 'OPEN' | 'UNDER_REVIEW' | 'RESOLVED' | 'DISPUTE_PRESERVED';
 
 export interface ScholarProfile {
   id: string;
   userId: string;
-  fullName: string;
-  title: string;
-  institution: string;
-  madhhab: Madhhab;
-  specializations: string[];
+  name?: string;
+  fullName?: string;
+  title?: string;
+  institution?: string;
+  institutions?: string[];
+  credentials?: string[];
+  fields?: string[];
+  madhhab?: Madhhab | string;
+  madhhabAffiliation?: string;
+  specializations?: string[];
   verificationStatus: ScholarVerificationStatus;
-  bio: string;
-  availableForCases: boolean;
-  activeCaseCount: number;
+  verifiedAt?: string;
+  bio?: string;
+  availableForCases?: boolean;
+  activeCaseCount?: number;
 }
 
 export type CaseStatus =

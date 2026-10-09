@@ -16,15 +16,8 @@ export type ActionCategory =
   | 'NEW_MUSLIM'
   | 'REFLECTION';
 
-export type GoalIntent =
-  | 'START'
-  | 'RESTART'
-  | 'IMPROVE'
-  | 'MAINTAIN'
-  | 'LEARN'
-  | 'UNDERSTAND'
-  | 'PREPARE'
-  | 'OVERCOME_FRICTION';
+import type { GoalIntent } from './goal.js';
+
 
 export type FrictionType =
   | 'FORGETTING'

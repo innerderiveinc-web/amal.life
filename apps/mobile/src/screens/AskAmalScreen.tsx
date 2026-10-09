@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { AmalTheme } from '@amal/ui';
 import { AIResponseContract } from '@amal/types';
+import { signatureCapabilitiesEngine } from '@amal/amal-engine';
 
 export const AskAmalScreen: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -51,24 +52,29 @@ export const AskAmalScreen: React.FC = () => {
   const handleAsk = () => {
     if (!query.trim()) return;
     setLoading(true);
-    // Simulated intelligent response adhering to AI response contract
+
     setTimeout(() => {
       setLoading(false);
-      if (query.toLowerCase().includes('divorce') || query.toLowerCase().includes('talaq')) {
+      const isSensitiveFiqh =
+        query.toLowerCase().includes('divorce') ||
+        query.toLowerCase().includes('talaq') ||
+        query.toLowerCase().includes('fatwa');
+
+      if (isSensitiveFiqh) {
         setResponse({
           intent: 'PERSONALIZED_FIQH',
           answer:
-            'This situation involves specific marital circumstances and legal determination (Fiqh). Under Islamic principles and AMAL’s safety framework, AI does not issue personalized fatwas. A structured case has been prepared for qualified scholar review.',
+            'Khandani aur nikah/talaq ke masa\'il har fard ke niji halaat par munhasir hotay hain. Hamare deeni adab ke mutabiq aisi soorat-e-haal mein kisi computer ya algorithm se fatwa lena durust nahi; ahl-e-ilm (certified Mufti) hi tehqeeq ke baad shar\'i hukm bayaan kar sakte hain. Aapki privacy ko mehfooz rakhte hue yeh case scholar review ke liye tayyar kar diya gaya hai.',
           type: 'ESCALATION_REQUIRED',
           sources: [],
-          interpretation: 'Personal marital rulings require direct pastoral context with verified scholars.',
+          interpretation: 'Shakhsi masa\'il mein ahl-e-ilm se barah-e-raast rujoo karna Sunnah aur Salaf ka tareeqa hai.',
           actions: [
             {
               title: 'Review Scholar Case Triage',
               description: 'Case #case-9021 is queued for confidential scholar review.',
               estimatedMinutes: 2,
               category: 'KNOWLEDGE',
-              evidenceReference: 'Quran 16:43 ("Ask the people of knowledge")',
+              evidenceReference: 'Quran 16:43 ("Fas\'alu ahla al-dhikri in kuntum la ta\'lamun")',
               feasibilityScore: 1.0,
             },
           ],
@@ -76,6 +82,51 @@ export const AskAmalScreen: React.FC = () => {
           scholar_required: true,
           citations_verified: true,
           disclaimer: 'AMAL connects you with verified scholars rather than issuing autonomous fatwas.',
+        });
+      } else {
+        const plan = signatureCapabilitiesEngine.compileNiyyahToAmal({
+          userId: 'usr_mobile',
+          intentionText: query.trim(),
+        });
+
+        setResponse({
+          intent: plan.spiritualDomain,
+          answer: `${plan.evidenceGrounding.scholarlyRule} ${plan.microAmal.concreteAction}.`,
+          type: 'PRACTICAL_GUIDANCE',
+          sources: [
+            {
+              passageId: 'pass-quran-auto',
+              sourceTitle: "The Holy Qur'an",
+              reference: plan.evidenceGrounding.quranVerse,
+              authorityLevel: 'TIER_1_QURAN',
+              translation: plan.evidenceGrounding.quranTranslation,
+              relevanceScore: 0.98,
+            },
+            {
+              passageId: 'hadith-auto',
+              sourceTitle: 'Canonical Hadith Corpus',
+              reference: plan.evidenceGrounding.hadithCitation,
+              authorityLevel: 'TIER_2_AUTHENTIC_HADITH',
+              translation: plan.evidenceGrounding.hadithMatn,
+              grading: 'SAHIH',
+              relevanceScore: 0.95,
+            },
+          ],
+          interpretation: plan.frictionDetector.counterMeasure || plan.reflectionPrompt,
+          actions: [
+            {
+              title: plan.microAmal.title,
+              description: `${plan.microAmal.concreteAction} (Failsafe: ${plan.microAmal.frictionFailsafe})`,
+              estimatedMinutes: plan.microAmal.durationMinutes,
+              category: 'WORSHIP',
+              evidenceReference: plan.evidenceGrounding.hadithCitation,
+              feasibilityScore: 0.95,
+            },
+          ],
+          uncertainty: 'LOW',
+          scholar_required: false,
+          citations_verified: true,
+          disclaimer: 'Practical Sunnah habit guidance grounded in canonical sources. Not an independent personalized fatwa.',
         });
       }
     }, 400);

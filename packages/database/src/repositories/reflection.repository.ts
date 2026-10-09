@@ -27,6 +27,8 @@ export class InMemoryReflectionRepository implements ReflectionRepository {
     const reflection: Reflection = {
       id,
       userId: input.userId,
+      reflectionType: 'DAILY_MUHASABAH',
+      wentWell: input.freeText || input.feeling || 'Reflection recorded',
       date: input.date,
       content: input.freeText || input.feeling || 'Reflection recorded',
       sentiment: (input.feeling as any) || 'PEACEFUL',

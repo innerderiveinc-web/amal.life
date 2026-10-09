@@ -11,7 +11,7 @@ export interface SelectedContext {
 
 export class ContextFirewall {
   /**
-   * Filters user profile and journey context down to Minimum Necessary Context
+   * Evaluates and minimizes user context based on ContextPolicy, Safety, and Intent
    */
   public static async select(
     request: AIRequest,
@@ -39,9 +39,13 @@ export class ContextFirewall {
 
       if (isRelevant) {
         selected.push({
+          id: `ctx_goal_${g.id}`,
+          type: 'EXPLICIT',
           key: `goal_${g.category}`,
           value: { title: g.title, status: g.status },
-          provenance: 'EXPLICIT_CHOICE',
+          confidence: 1.0,
+          userConfirmed: true,
+          sensitivity: 'NORMAL',
         });
       } else {
         filteredOutCount++;
@@ -51,11 +55,16 @@ export class ContextFirewall {
     // Active journey context
     if (request.contextPolicy?.allowJourneyContext) {
       for (const j of userJourneys) {
-        if (j.state === 'ACTIVE' || j.state === 'STARTED' || j.state === 'STRUGGLING') {
+        const jState = (j as any).state || j.status;
+        if (jState === 'ACTIVE' || jState === 'STARTED' || jState === 'STRUGGLING') {
           selected.push({
+            id: `ctx_jrn_${j.id}`,
+            type: 'CONFIRMED',
             key: `active_journey_${j.id}`,
-            value: { title: j.title, state: j.state, currentPhase: j.currentPhase },
-            provenance: 'CONFIRMED_PREFERENCE',
+            value: { title: j.title, state: jState, currentPhase: (j as any).currentPhase ?? 1 },
+            confidence: 0.95,
+            userConfirmed: true,
+            sensitivity: 'NORMAL',
           });
         }
       }

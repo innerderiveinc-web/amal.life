@@ -10,6 +10,6 @@ export async function bootstrap() {
   return true;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1]?.endsWith('main.js') || process.argv[1]?.endsWith('main.ts')) {
   bootstrap();
 }

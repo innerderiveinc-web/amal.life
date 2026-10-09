@@ -230,7 +230,7 @@ export class KnowledgeOpsService {
       potentialAmalIds: ['amal_dhikr_duha', 'amal_breathe_pause'],
       behavioralNotes: 'Cognitive reframing through Istighfar reduces cortisol; behavioral habit stacking should not be labeled Sunnah unless backed by authentic text.',
     };
-    this.situations.set(situationWorkStress.situationKey, situationWorkStress);
+    this.situations.set(situationWorkStress.situationKey!, situationWorkStress);
 
     // 7. Verified Scholars & Skill Matrix
     const scholar1: VerifiedScholarRecord = {

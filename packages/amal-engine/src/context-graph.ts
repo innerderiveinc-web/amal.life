@@ -63,7 +63,7 @@ export class PersonalContextGraph {
       return b.freshnessAt.getTime() - a.freshnessAt.getTime();
     });
 
-    return matching[0];
+    return matching[0] ?? null;
   }
 
   /**

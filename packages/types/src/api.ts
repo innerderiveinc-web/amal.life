@@ -92,7 +92,7 @@ export interface EvidenceSearchResultItem {
 
 export interface EvidenceChainNode {
   step: number;
-  node_type: 'USER_QUESTION' | 'ISLAMIC_CONCEPT' | 'QURAN_AYAH' | 'TAFSIR' | 'SCHOLARLY_INTERPRETATION' | 'PRACTICAL_GUIDANCE';
+  node_type: 'USER_QUESTION' | 'ISLAMIC_CONCEPT' | 'QURAN_AYAH' | 'TAFSIR' | 'SCHOLARLY_INTERPRETATION' | 'PRACTICAL_GUIDANCE' | 'EVIDENCE_SOURCE' | 'SCHOLARLY_JUSTIFICATION';
   title: string;
   reference?: string;
   explanation: string;

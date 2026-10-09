@@ -60,6 +60,8 @@ export class JourneyAgent {
           category: a.category,
           primaryEvidenceReference: a.primaryEvidenceReference,
           difficulty: a.difficulty,
+          targetMinutes: a.estimatedMinutes,
+          minimumMinutes: Math.max(1, Math.floor(a.estimatedMinutes / 2)),
           status: 'PENDING',
           userApproved: true,
           createdAt: new Date().toISOString(),
@@ -84,7 +86,7 @@ export class JourneyAgent {
     return {
       journeyId: journey.id,
       reason: 'CONSECUTIVE_SKIPS',
-      currentDifficulty: journey.baselineDifficulty,
+      currentDifficulty: journey.baselineDifficulty || 'MODERATE',
       proposedDifficulty: 'VERY_EASY',
       reductionPercentage: 50,
       recommendedChanges: [

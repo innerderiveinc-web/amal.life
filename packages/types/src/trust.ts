@@ -27,9 +27,13 @@ export type AccountMode = 'ADULT' | 'YOUNG_USER' | 'CHILD';
 export type TrustZone =
   | 'ZONE_A_EVIDENCE'
   | 'ZONE_B_PRODUCT_RULES'
+  | 'ZONE_B_PUBLIC_GUIDANCE'
   | 'ZONE_C_USER_INPUT'
+  | 'ZONE_C_PERSONAL_CONTEXT'
   | 'ZONE_D_EXTERNAL_UNTRUSTED'
-  | 'ZONE_E_MODEL_OUTPUT';
+  | 'ZONE_D_PASTORAL_CARE'
+  | 'ZONE_E_MODEL_OUTPUT'
+  | 'ZONE_E_CRISIS';
 
 export type PolicyActorType =
   | 'USER'
@@ -47,24 +51,29 @@ export type PolicyEffect = 'ALLOW' | 'DENY' | 'REDACT' | 'ESCALATE';
 
 export interface PolicyRequest {
   actorId: string;
-  actorType: PolicyActorType;
+  actorType?: PolicyActorType;
   action: string;
   resourceType: string;
   resourceId?: string;
   resourceOwnerId?: string;
-  purpose: DataPurpose | string;
+  purpose?: DataPurpose | string;
   requestedDataClasses?: DataClass[];
   accountMode?: AccountMode;
   context?: Record<string, unknown>;
+  environment?: Record<string, any>;
 }
 
 export interface PolicyDecision {
   effect: PolicyEffect;
-  reasonCodes: string[];
+  reasonCodes?: string[];
+  reason?: string;
   obligations?: string[];
   redactedFields?: string[];
-  auditRequired: boolean;
+  auditRequired?: boolean;
+  evaluatedAt?: string;
 }
+
+
 
 export interface AIDataEnvelope {
   requestId: string;
@@ -103,23 +112,13 @@ export interface AIDecisionRecord {
   createdAt: string;
 }
 
-export type ScholarVerificationStatus =
-  | 'PENDING'
-  | 'VERIFIED'
-  | 'SUSPENDED'
-  | 'REVOKED';
+import type { ScholarVerificationStatus, ScholarProfile } from './scholar.js';
+export type { ScholarVerificationStatus, ScholarProfile };
+export type TrustScholarVerificationStatus = ScholarVerificationStatus;
+export type TrustScholarProfile = ScholarProfile;
 
-export interface ScholarProfile {
-  id: string;
-  userId: string;
-  name: string;
-  credentials: string[];
-  institutions?: string[];
-  fields: string[];
-  madhhabAffiliation?: string;
-  verificationStatus: ScholarVerificationStatus;
-  verifiedAt?: string;
-}
+
+
 
 export type IncidentSeverity =
   | 'SEV_0'

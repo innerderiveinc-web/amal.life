@@ -2,7 +2,7 @@
 // AMAL OS — LAYER 14: KNOWLEDGE OPERATIONS & SCHOLAR NETWORK DOMAIN CONTRACTS
 // ==============================================================================
 
-export type SourceType =
+export type OpsSourceType =
   | 'QURAN'
   | 'HADITH'
   | 'TAFSIR'
@@ -37,7 +37,7 @@ export interface SourceRegistryRecord {
   sourceId: string;
   title: string;
   author?: string;
-  sourceType: SourceType;
+  sourceType: OpsSourceType;
   originalLanguage?: string;
   publisher?: string;
   edition?: string;
@@ -78,7 +78,7 @@ export interface QuranTranslationRecord {
   contentHash: string;
 }
 
-export interface TafsirPassageRecord {
+export interface OpsTafsirPassageRecord {
   id: string;
   ayahId: string;
   surahNumber: number;
@@ -154,7 +154,7 @@ export interface IslamicConceptRecord {
   relatedConcepts: string[];
 }
 
-export interface LifeSituationRecord {
+export interface OpsLifeSituationRecord {
   id: string;
   situationKey: string;
   name: string;

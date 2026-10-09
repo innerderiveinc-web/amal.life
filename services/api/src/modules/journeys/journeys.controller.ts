@@ -5,6 +5,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { IdempotencyInterceptor } from '../../common/interceptors/idempotency.interceptor.js';
 import { JourneyState } from '@amal/types';
 import { AuthenticatedUser } from '../../common/auth/auth.types.js';
+import { SEED_JOURNEY_TEMPLATES } from '@amal/database';
 
 export interface CreateJourneyDto {
   goalId: string;
@@ -30,6 +31,22 @@ export class JourneysController {
     @Body() dto: CreateJourneyDto
   ) {
     return this.service.create(user, dto);
+  }
+
+  @Get('templates')
+  async listTemplates() {
+    return SEED_JOURNEY_TEMPLATES;
+  }
+
+  @Get('templates/:type')
+  async getTemplate(@Param('type') type: string) {
+    const found = SEED_JOURNEY_TEMPLATES.find(
+      (t) => t.journeyType.toLowerCase() === type.toLowerCase()
+    );
+    if (!found) {
+      return { error: 'Template not found', status: 404 };
+    }
+    return found;
   }
 
   @Get(':id')

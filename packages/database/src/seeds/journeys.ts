@@ -360,4 +360,71 @@ export const SEED_JOURNEY_TEMPLATES: JourneyTemplate[] = [
       },
     ],
   },
+
+  // 9. DUA CONSISTENCY (14 Days)
+  {
+    journeyType: 'DUA_CONSISTENCY',
+    title: '14-Day Dua Consistency',
+    goal: 'Build an intimate, sustained daily supplication practice anchored to times of answer (Ijabah).',
+    description: 'Learn prophetic etiquette of dua, connect with personal vulnerability, and pray consistently between Adhan and Iqamah.',
+    durationDays: 14,
+    baselineDifficulty: 'VERY_EASY',
+    phases: [
+      { sequence: 1, title: 'Adhan & Iqamah Anchors', objective: 'Seize prime supplication windows', durationDays: 3, minimumActionMinutes: 3, targetActionMinutes: 5 },
+      { sequence: 2, title: 'Prophetic Praise Foundations', objective: 'Begin with Hamd and Salawat', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 3, title: 'Comprehensive Duas', objective: 'Memorize concise, comprehensive prophetic petitions', durationDays: 4, minimumActionMinutes: 5, targetActionMinutes: 10 },
+      { sequence: 4, title: 'Certainty & Tawakkul', objective: 'Make dua with certitude and calm reliance', durationDays: 3, minimumActionMinutes: 5, targetActionMinutes: 15 },
+    ],
+    days: [
+      {
+        dayNumber: 1,
+        title: 'The Dua Window Between Adhan & Iqamah',
+        learningPrompt: 'The supplication made between the Adhan and the Iqamah is not rejected.',
+        reflectionPrompt: 'Did you pause for 1 minute before starting prayer to make a personal dua?',
+        actions: [
+          {
+            title: '1-Minute Personal Dua Before Salah',
+            description: 'Before beginning your prayer, ask Allah for your greatest immediate need.',
+            estimatedMinutes: 3,
+            category: 'DHIKR',
+            primaryEvidenceReference: 'Sunan Abi Dawud 521',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
+
+  // 10. DHIKR RESTART (7 Days)
+  {
+    journeyType: 'DHIKR_RESTART',
+    title: '7-Day Dhikr Restart',
+    goal: 'Re-energize your tongue and heart with simple, continuous remembrance throughout daily routines.',
+    description: 'Effortless micro-remembrance habits during commutes, dishwashing, and quiet transitions.',
+    durationDays: 7,
+    baselineDifficulty: 'VERY_EASY',
+    phases: [
+      { sequence: 1, title: 'Morning & Evening Staples', objective: 'Say Subhanallah wa bihamdihi 100 times', durationDays: 2, minimumActionMinutes: 3, targetActionMinutes: 5 },
+      { sequence: 2, title: 'Transition Adhkar', objective: 'Remembrance when leaving home or riding vehicle', durationDays: 3, minimumActionMinutes: 2, targetActionMinutes: 5 },
+      { sequence: 3, title: 'Heart Presence', objective: 'Contemplating meanings of forgiveness and gratitude', durationDays: 2, minimumActionMinutes: 5, targetActionMinutes: 10 },
+    ],
+    days: [
+      {
+        dayNumber: 1,
+        title: 'Two Words Light on the Tongue',
+        learningPrompt: 'Two words are light on the tongue, heavy on the balance, and beloved to the Most Merciful: Subhanallahi wa bihamdihi, Subhanallahil-Azim.',
+        reflectionPrompt: 'When did you remember to recite this dhikr during your daily movements today?',
+        actions: [
+          {
+            title: 'Recite Subhanallahi wa bihamdihi 33 Times',
+            description: 'Recite during your morning commute or after Fajr prayer.',
+            estimatedMinutes: 3,
+            category: 'DHIKR',
+            primaryEvidenceReference: 'Sahih al-Bukhari 6406',
+            difficulty: 'VERY_EASY',
+          },
+        ],
+      },
+    ],
+  },
 ];

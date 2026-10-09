@@ -26,9 +26,11 @@ export class AmalApiServer {
       const path = url.pathname;
       const method = req.method || 'GET';
 
-      // Read JSON body if available
+      // Read JSON body if available, or parse query params for GET
       let body: any = {};
-      if (method === 'POST' || method === 'PUT') {
+      if (method === 'GET') {
+        body = Object.fromEntries(url.searchParams.entries());
+      } else if (method === 'POST' || method === 'PUT') {
         try {
           const buffers = [];
           for await (const chunk of req) {

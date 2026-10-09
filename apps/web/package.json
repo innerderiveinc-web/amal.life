@@ -8,14 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@amal/amal-engine": "workspace:*",
+    "@amal/config": "workspace:*",
+    "@amal/evidence": "workspace:*",
     "@amal/types": "workspace:*",
     "@amal/ui": "workspace:*",
-    "@amal/config": "workspace:*",
+    "next": "^14.2.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "next": "^14.2.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
     "typescript": "^5.4.5"
   }
 }

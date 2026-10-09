@@ -11,6 +11,8 @@ export class FatwaFirewall {
   // Triggers for Class D: Personalized Fiqh, divorce, talaq, marital dissolution, legal oaths
   private static readonly PERSONALIZED_FIQH_PATTERNS = [
     /\b(did i divorce|talaq three times|said talaq|is my marriage invalid|annulled my marriage)\b/i,
+    /\b(uttered (divorce|talaq)|words of (divorce|talaq)|pronounce(d)? (divorce|talaq))\b/i,
+    /\b(is my marriage (dissolved|over|valid|invalid|ended)|is our marriage (dissolved|valid|invalid))\b/i,
     /\b(my husband said (talaq|divorce)|my wife said (divorce|khula))\b/i,
     /\b(i broke an oath|expiation for my specific oath|kaffarah for breaking)\b/i,
     /\b(fatwa for me|is my specific contract halal|did i commit kufr|am i out of islam)\b/i,

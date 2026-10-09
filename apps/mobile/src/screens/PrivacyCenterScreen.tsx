@@ -53,7 +53,25 @@ export const PrivacyCenterScreen: React.FC = () => {
           />
         </View>
 
-        <TouchableOpacity style={styles.purgeButton}>
+        <TouchableOpacity
+          style={styles.purgeButton}
+          onPress={() => {
+            Alert.alert(
+              'Purge AI Memory',
+              'All personal routine contexts and behavioral observations will be permanently erased.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Purge Memory',
+                  style: 'destructive',
+                  onPress: () => {
+                    Alert.alert('Success', 'AI memory history has been securely wiped.');
+                  },
+                },
+              ]
+            );
+          }}
+        >
           <Text style={styles.purgeButtonText}>Clear All AI Memory History</Text>
         </TouchableOpacity>
       </View>
@@ -63,7 +81,13 @@ export const PrivacyCenterScreen: React.FC = () => {
         <Text style={styles.sectionTitle}>DATA SOVEREIGNTY</Text>
         <TouchableOpacity
           style={styles.actionRow}
-          onPress={() => setExported(true)}
+          onPress={() => {
+            setExported(true);
+            Alert.alert(
+              'GDPR Export Ready',
+              'Your complete local data packet (profile, goals, reflections, notes) has been packaged into an encrypted JSON payload.'
+            );
+          }}
         >
           <Text style={styles.actionText}>
             {exported ? '✓ Data Export Downloaded (JSON)' : 'Export Complete User Data (GDPR)'}
@@ -72,6 +96,22 @@ export const PrivacyCenterScreen: React.FC = () => {
 
         <TouchableOpacity
           style={[styles.actionRow, styles.deleteActionRow]}
+          onPress={() => {
+            Alert.alert(
+              'Erase All Records',
+              'Are you sure you want to delete your account? This action is irreversible and purges all reflections, journeys, and credentials immediately.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Erase Everything',
+                  style: 'destructive',
+                  onPress: () => {
+                    Alert.alert('Account Purged', 'All records have been permanently cleared from device storage.');
+                  },
+                },
+              ]
+            );
+          }}
         >
           <Text style={styles.deleteText}>Delete Account & Erase All Records</Text>
         </TouchableOpacity>

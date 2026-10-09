@@ -36,7 +36,15 @@ export class IslamicEvidenceGraph {
    */
   public static async queryPassages(query: string, limit = 5): Promise<SourcePassage[]> {
     const qLower = query.toLowerCase();
-    const tokens = qLower.split(/\s+/).filter((t) => t.length > 2);
+    const STOPWORDS = new Set([
+      'the', 'and', 'for', 'with', 'that', 'this', 'from', 'are', 'was', 'were',
+      'what', 'how', 'when', 'where', 'which', 'who', 'whom', 'can', 'you', 'your',
+      'about', 'all', 'any', 'tell', 'give', 'does', 'did', 'have', 'has', 'had'
+    ]);
+    const tokens = qLower
+      .replace(/[^\w\s:]/g, ' ')
+      .split(/\s+/)
+      .filter((t) => t.length > 2 && !STOPWORDS.has(t));
 
     const matches: { passage: SourcePassage; score: number }[] = [];
 
@@ -50,23 +58,24 @@ export class IslamicEvidenceGraph {
 
       // Keyword match
       for (const kw of passage.keywords) {
-        if (tokens.some((token) => kw.toLowerCase().includes(token))) {
+        if (tokens.some((token) => kw.toLowerCase() === token || kw.toLowerCase().includes(token))) {
           score += 3;
         }
       }
 
-      // Text match
+      // Exact phrase match in translated text
       if (passage.translatedText.toLowerCase().includes(qLower)) {
-        score += 2;
+        score += 4;
       } else {
         for (const token of tokens) {
-          if (passage.translatedText.toLowerCase().includes(token)) {
+          if (passage.translatedText.toLowerCase().includes(` ${token} `)) {
             score += 1;
           }
         }
       }
 
-      if (score > 0) {
+      // Only qualify if threshold score >= 3 (requires substantive keyword or reference match)
+      if (score >= 3) {
         matches.push({ passage, score });
       }
     }
@@ -168,7 +177,7 @@ export class IslamicEvidenceGraph {
 
       // Find outbound edges
       for (const edge of db.edges.values()) {
-        if (edge.fromEntityId === current.entityId && !visited.has(edge.toEntityId)) {
+        if (edge.fromEntityId === current.entityId && edge.toEntityId && !visited.has(edge.toEntityId)) {
           queue.push({
             entityId: edge.toEntityId,
             depth: current.depth + 1,

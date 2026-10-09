@@ -16,6 +16,9 @@ export interface User {
   phone?: string | null;
   role: UserRole;
   status: UserStatus;
+  accountMode?: string;
+  locale?: string;
+  timezone?: string;
   createdAt: string;
   updatedAt: string;
   deletedAt?: string | null;
@@ -120,7 +123,7 @@ export interface UserContext {
   updatedAt: string;
 }
 
-export type MemoryLevel =
+export type UserMemoryLevel =
   | 'SESSION'    // Ephemeral to active session
   | 'JOURNEY'    // Scoped to active journey
   | 'LONG_TERM'; // Persisted with explicit user consent
@@ -128,11 +131,12 @@ export type MemoryLevel =
 export interface UserMemory {
   id: string;
   userId: string;
-  level: MemoryLevel;
+  level: UserMemoryLevel;
   content: string;
   summary: string;
   relevanceTags: string[];
   userApproved: boolean;
+
   createdAt: string;
   expiresAt?: string | null;
 }

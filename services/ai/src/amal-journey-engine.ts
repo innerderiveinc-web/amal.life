@@ -198,7 +198,7 @@ export class AmalJourneyEngine {
       const proposal: JourneyAdaptationProposal = {
         journeyId: journey.id,
         reason: 'USER_REPORTED_OVERWHELM',
-        currentDifficulty: journey.baselineDifficulty,
+        currentDifficulty: journey.baselineDifficulty || 'MODERATE',
         proposedDifficulty: 'VERY_EASY',
         reductionPercentage: 50,
         recommendedChanges: [

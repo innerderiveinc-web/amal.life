@@ -61,7 +61,7 @@ export class ReciprocalRankFusionEngine {
         return score * 1.3;
       case 'TIER_3_CLASSICAL_TAFSIR':
         return score * 1.1;
-      case 'TIER_4_SCHOLARLY_CONSENSUS':
+      case 'TIER_4_CONTEMPORARY':
         return score * 1.05;
       default:
         return score * 0.8;

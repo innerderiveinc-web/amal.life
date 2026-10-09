@@ -36,3 +36,6 @@ export interface RevokeContextInput {
   signalId: ContextSignalId;
   reason?: string;
 }
+
+export type ContextSignal = ContextSignalRecord;
+export type ContextSource = ContextSignalSource;

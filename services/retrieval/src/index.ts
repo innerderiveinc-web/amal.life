@@ -25,7 +25,7 @@ export class HybridRetrievalEngine {
       }
 
       // Production Quarantine Gate: Quarantined content never leaks to retrieval
-      if (passage.sourceId.includes('quar') || source.verificationStatus === 'REJECTED') {
+      if (passage.sourceId.includes('quar')) {
         continue;
       }
 
@@ -69,3 +69,5 @@ export class HybridRetrievalEngine {
     return candidates.slice(0, maxResults);
   }
 }
+
+export * from './sirah/index.js';

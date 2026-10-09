@@ -1,5 +1,6 @@
 import { AmalAction } from './amal.js';
 import { EvidencePackItem } from './evidence.js';
+import { JourneyState } from './enums/index.js';
 
 export type JourneyType =
   | 'FAJR_RECOVERY'
@@ -10,6 +11,8 @@ export type JourneyType =
   | 'TIME_AND_DEEN'
   | 'NEW_MUSLIM_FIRST_30_DAYS'
   | 'RAMADAN_PREPARATION'
+  | 'DUA_CONSISTENCY'
+  | 'DHIKR_RESTART'
   | 'CUSTOM';
 
 export type JourneyStatus = 'DRAFT' | 'ACTIVE' | 'PAUSED' | 'COMPLETED' | 'ADAPTED';
@@ -46,21 +49,30 @@ export type JourneyHealthState =
 export interface Journey {
   id: string;
   userId: string;
-  journeyType: JourneyType;
+  journeyType?: JourneyType;
   title: string;
-  goal: string;
-  description: string;
-  durationDays: number;
-  currentDay: number;
+  goal?: string;
+  goalId?: string;
+  templateId?: string;
+  state?: JourneyState;
+  description?: string;
+  durationDays?: number;
+  currentDay?: number;
+  currentPhase?: number;
   currentPhaseSequence?: number;
   phases?: JourneyPhase[];
-  status: JourneyStatus;
+  status?: JourneyStatus;
   healthState?: JourneyHealthState;
-  approvedByUser: boolean;
-  baselineDifficulty: string;
-  startDate: string;
+  approvedByUser?: boolean;
+  baselineDifficulty?: string;
+  startDate?: string;
+  startedAt?: string;
   endDate?: string | null;
-  days: JourneyDay[];
+  completedAt?: string | null;
+  days?: JourneyDay[];
+  progress?: number;
+  totalDays?: number;
+  currentMilestone?: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -9,18 +9,30 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FAF9F6"
+      "backgroundColor": "#1B4332"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.amal.lifeos"
+      "bundleIdentifier": "com.amal.lifeos",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "AMAL OS needs your location to calculate accurate prayer times and the exact Qibla direction.",
+        "UIBackgroundModes": ["audio"]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FAF9F6"
+        "backgroundColor": "#1B4332"
       },
-      "package": "com.amal.lifeos"
+      "package": "com.amal.lifeos",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     }
   }
 }

@@ -1,0 +1,4 @@
+{"id": "qve_001", "quote": "Do not grieve; indeed Allah is with us", "claimed_source": "Surah At-Tawbah 9:40 / Sahih al-Bukhari #3905", "expected_verdict": "VERIFIED_EXACT", "expected_matched": true}
+{"id": "qve_002", "quote": "Go, for you are free (Idhhabu fa-antum al-tulaqa)", "claimed_source": "Sirat Ibn Hisham", "expected_verdict": "VERIFIED_EXACT", "expected_matched": true}
+{"id": "qve_003", "quote": "I seek knowledge even if I have to travel all the way to China", "claimed_source": "Unknown attribution", "expected_verdict": "NOT_FOUND", "expected_matched": false}
+{"id": "qve_004", "quote": "La tahzan inna Allaha maana", "claimed_source": "Quran 9:40", "expected_verdict": "VERIFIED_EXACT", "expected_matched": true}

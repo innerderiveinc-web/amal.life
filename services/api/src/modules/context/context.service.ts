@@ -5,9 +5,19 @@
  */
 
 import { Injectable } from '@nestjs/common';
-import { ContextSignal, ContextSource } from '@amal/types';
 import { PolicyEngine } from '../../common/policy/policy.engine.js';
 import { AuthenticatedUser } from '../../common/auth/auth.types.js';
+
+export type ContextSourceType = 'USER_CONFIRMED' | 'USER_EXPLICIT' | 'AI_INFERENCE' | 'ACTIVITY_DERIVED';
+
+export interface LocalContextSignal {
+  id: string;
+  source: ContextSourceType;
+  key: string;
+  value: any;
+  confidence: number;
+  timestamp: string;
+}
 
 export interface UserContextSnapshot {
   userId: string;
@@ -15,7 +25,7 @@ export interface UserContextSnapshot {
   timeAvailableMinutes: number;
   environment: 'HOME' | 'TRANSIT' | 'WORK';
   prayerProximity: string;
-  signals: ContextSignal[];
+  signals: LocalContextSignal[];
   updatedAt: string;
 }
 
@@ -50,7 +60,7 @@ export class ContextService {
       signals: [
         {
           id: `sig_default_${actor.userId}`,
-          source: ContextSource.USER_CONFIRMED,
+          source: 'USER_CONFIRMED',
           key: 'preferred_routine',
           value: 'morning_quiet',
           confidence: 0.95,
@@ -68,7 +78,7 @@ export class ContextService {
     actor: AuthenticatedUser,
     key: string,
     value: any,
-    source: ContextSource = ContextSource.USER_CONFIRMED,
+    source: ContextSourceType = 'USER_CONFIRMED',
     confidence = 1.0,
   ): Promise<UserContextSnapshot> {
     this.policy.assertAllowed({
@@ -82,7 +92,7 @@ export class ContextService {
     });
 
     const current = await this.getContext(actor);
-    const signal: ContextSignal = {
+    const signal: LocalContextSignal = {
       id: `sig_${Date.now()}`,
       source,
       key,
@@ -98,6 +108,14 @@ export class ContextService {
     if (key === 'energyLevel') {
       current.energyLevel = value;
     }
+    current.updatedAt = new Date().toISOString();
+    ContextService.userContexts.set(actor.userId, current);
+    return current;
+  }
+
+  public async deleteContextSignal(actor: AuthenticatedUser, signalId: string): Promise<UserContextSnapshot> {
+    const current = await this.getContext(actor);
+    current.signals = current.signals.filter((s) => s.id !== signalId);
     current.updatedAt = new Date().toISOString();
     ContextService.userContexts.set(actor.userId, current);
     return current;

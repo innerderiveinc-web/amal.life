@@ -22,6 +22,8 @@ import { ScholarsController } from './scholars/scholars.controller.js';
 import { QuranController } from './quran/quran.controller.js';
 import { HadithController } from './hadith/hadith.controller.js';
 import { AdminController } from './admin/admin.controller.js';
+import { ContextController } from './context/context.controller.js';
+import { MemoryController } from './context/memory.controller.js';
 
 export class AppModule {
   public static readonly controllers = [
@@ -49,5 +51,8 @@ export class AppModule {
     QuranController,
     HadithController,
     AdminController,
+    ContextController,
+    MemoryController,
   ];
 }
+

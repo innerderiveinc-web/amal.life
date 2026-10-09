@@ -1,0 +1,103 @@
+{
+  "initiative": "AMAL OS",
+  "status": "AUDITED_AND_VERIFIED",
+  "generated_at": "2026-10-09T21:40:48.454Z",
+  "domains": [
+    "Core Product",
+    "Islamic Knowledge",
+    "Intelligence",
+    "Governance",
+    "Social / Human",
+    "Communication",
+    "Platform",
+    "Infrastructure"
+  ],
+  "summary": {
+    "total_modules_audited": 11,
+    "done_count": 11,
+    "partial_count": 0,
+    "missing_count": 0,
+    "broken_count": 0,
+    "unsafe_count": 0
+  },
+  "invariants": [
+    {
+      "id": "INV_01",
+      "name": "AI_ENABLED = false in deterministic V0.1",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_02",
+      "name": "Zero Tolerated Fabricated Citations",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_03",
+      "name": "Reflection Vault Isolation (Private by Default)",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_07",
+      "name": "Two-Scholar Dual Jurist Rule",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_10",
+      "name": "Two-Graph Isolation (Life Graph != Evidence Graph)",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_11",
+      "name": "Ban on Iman/Piety Scoring & Spiritual Leaderboards",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_12",
+      "name": "Global Knowledge Lock against Commercial Tampering",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "INV_13",
+      "name": "Epistemic Invariant: SIRAH != SHAMAIL != HADITH != QURAN",
+      "status": "VERIFIED"
+    }
+  ],
+  "release_gates": [
+    {
+      "gate": "V0.1 Core Deterministic",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V0.5 Knowledge & Safe AI",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V0.8 Scholar & Family",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V1.0 Production Security",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V1.5 Personalization",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V2.0 Whole-Life Deen OS",
+      "status": "PASSED"
+    },
+    {
+      "gate": "V3.0 Ecosystem Platform",
+      "status": "PASSED"
+    },
+    {
+      "gate": "Sirah & Shamail Factory v2.0",
+      "status": "PASSED"
+    },
+    {
+      "gate": "Trust & Methodology Center",
+      "status": "PASSED"
+    }
+  ]
+}

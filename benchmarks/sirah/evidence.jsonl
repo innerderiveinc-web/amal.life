@@ -1,0 +1,5 @@
+{"id": "evd_001", "event_id": "SIR-EVT-0000004", "required_primary_ayah": "48:1", "required_hadith_ref": "Sahih al-Bukhari #2731", "min_evidence": 2}
+{"id": "evd_002", "event_id": "SIR-EVT-0000001", "required_primary_ayah": "96:1-5", "required_hadith_ref": "Sahih al-Bukhari #3", "min_evidence": 2}
+{"id": "evd_003", "event_id": "SIR-EVT-0000002", "required_primary_ayah": "9:40", "required_hadith_ref": "Sahih al-Bukhari #3905", "min_evidence": 2}
+{"id": "evd_004", "event_id": "SIR-EVT-0000003", "required_primary_ayah": "3:123", "required_hadith_ref": "Sahih al-Bukhari #3953", "min_evidence": 2}
+{"id": "evd_005", "event_id": "SIR-EVT-0000005", "required_primary_ayah": "110:1-3", "required_hadith_ref": "Sahih al-Bukhari #4288", "min_evidence": 2}

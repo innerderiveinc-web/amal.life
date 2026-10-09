@@ -13,7 +13,9 @@ export interface DatabaseClient {
 }
 
 export class AmalDatabaseClient implements DatabaseClient {
-  public readonly db: InMemoryAmalDatabase = db;
+  public get db(): InMemoryAmalDatabase {
+    return db;
+  }
 
   public async transaction<T>(fn: (tx: InMemoryAmalDatabase) => Promise<T>): Promise<T> {
     // In-memory atomic execution boundary

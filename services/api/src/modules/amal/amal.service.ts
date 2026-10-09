@@ -111,7 +111,7 @@ export class AmalService {
       resource: {
         type: 'amal',
         id: amal.id,
-        ownerUserId: amal.userId,
+        ownerUserId: amal.userId || actor.userId,
       },
       purpose: 'PRODUCT',
     });

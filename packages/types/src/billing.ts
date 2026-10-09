@@ -36,6 +36,7 @@ export type SubscriptionStatus =
   | 'TRIAL'
   | 'ACTIVE'
   | 'PAST_DUE'
+  | 'GRACE_PERIOD'
   | 'PAUSED'
   | 'CANCELLED'
   | 'EXPIRED'

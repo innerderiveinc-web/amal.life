@@ -51,6 +51,7 @@ export class TamperEvidentAuditService {
 
     for (let i = 0; i < this.events.length; i++) {
       const e = this.events[i];
+      if (!e) continue;
       if (e.previousEventHash !== expectedPrevHash) {
         return { isValid: false, brokenAtSequence: e.sequenceNumber };
       }

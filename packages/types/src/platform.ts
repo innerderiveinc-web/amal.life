@@ -4,6 +4,8 @@
  */
 
 export type ServiceCriticality = 'TIER_0' | 'TIER_1' | 'TIER_2' | 'TIER_3';
+export type CriticalityTier = ServiceCriticality;
+
 
 export interface ServiceCatalogEntry {
   id: string;

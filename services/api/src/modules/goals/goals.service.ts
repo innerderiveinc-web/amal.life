@@ -132,4 +132,54 @@ export class GoalsService {
 
     return { archived: true };
   }
+
+  private static readonly baselines = new Map<string, any>();
+
+  async setBaseline(actor: AuthenticatedUser, goalId: string, baselineDto: any) {
+    const goal = await this.get(actor, goalId);
+    const record = {
+      goalId: goal.id,
+      userId: actor.userId,
+      currentFrequency: baselineDto.currentFrequency ?? 1,
+      currentDurationMinutes: baselineDto.currentDurationMinutes ?? 15,
+      availableTimeMinutes: baselineDto.availableTimeMinutes ?? 20,
+      preferredTime: baselineDto.preferredTime ?? 'MORNING',
+      previousAttempts: baselineDto.previousAttempts ?? 0,
+      knownBarriers: baselineDto.knownBarriers ?? [],
+      confidence: baselineDto.confidence ?? 0.8,
+      preferredFormat: baselineDto.preferredFormat ?? 'PRACTICAL_ACTION',
+      capturedAt: new Date().toISOString(),
+    };
+    GoalsService.baselines.set(goalId, record);
+
+    await this.audit.record({
+      actorUserId: actor.userId,
+      action: 'GOAL_BASELINE_SET',
+      resourceType: 'goal_baseline',
+      resourceId: goalId,
+      purpose: 'PRODUCT',
+      outcome: 'SUCCESS',
+    });
+
+    return record;
+  }
+
+  async getBaseline(actor: AuthenticatedUser, goalId: string) {
+    await this.get(actor, goalId);
+    return (
+      GoalsService.baselines.get(goalId) || {
+        goalId,
+        userId: actor.userId,
+        currentFrequency: 1,
+        currentDurationMinutes: 15,
+        availableTimeMinutes: 20,
+        preferredTime: 'MORNING',
+        previousAttempts: 0,
+        knownBarriers: [],
+        confidence: 0.8,
+        preferredFormat: 'PRACTICAL_ACTION',
+        capturedAt: new Date().toISOString(),
+      }
+    );
+  }
 }

@@ -29,6 +29,8 @@ export class PostgresJourneyRepository implements JourneyRepository {
       currentPhase: 1,
       startedAt: new Date().toISOString(),
       phases: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     db.journeys.set(id, journey);
     return journey;

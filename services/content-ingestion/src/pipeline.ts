@@ -58,6 +58,12 @@ export class ProductionKnowledgeIngestionPipeline {
         QuarantineService.quarantine(input.sourceId, input.sourceId, qVal.reason!);
         return { success: false, quarantined: true, rejectionReason: qVal.reason };
       }
+    } else if (input.sourceType === 'HADITH') {
+      const hVal = ReferenceValidator.validateHadithReference(input.title, normalizedRef);
+      if (!hVal.valid) {
+        QuarantineService.quarantine(input.sourceId, input.sourceId, hVal.reason!);
+        return { success: false, quarantined: true, rejectionReason: hVal.reason };
+      }
     }
 
     // 5. Deduplication & Conflict Check

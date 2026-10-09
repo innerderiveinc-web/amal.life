@@ -1,0 +1,4 @@
+{"id": "shm_001", "category": "PHYSICAL_DESCRIPTION", "query": "physical features height build", "expected_has_reports": true, "expected_hadith_grade": "HASAN_SAHIH"}
+{"id": "shm_002", "category": "SPEECH_AND_ELOQUENCE", "query": "speech eloquence articulation", "expected_has_reports": true, "expected_hadith_grade": "SAHIH"}
+{"id": "shm_003", "category": "HUMILITY_AND_SIMPLICITY", "query": "humility sitting with the poor", "expected_has_reports": true, "expected_hadith_grade": "SAHIH"}
+{"id": "shm_004", "category": "MERCY_AND_COMPASSION", "query": "mercy forgiveness pardoning subordinates", "expected_has_reports": true, "expected_hadith_grade": "SAHIH"}

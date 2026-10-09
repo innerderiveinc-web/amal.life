@@ -165,4 +165,46 @@ export class MemoryManager {
 
     return minimal;
   }
+
+  /**
+   * Delete a confirmed memory by ID (user right to be forgotten / personal memory control)
+   */
+  public static deleteConfirmedMemory(userId: string, memoryId: string): boolean {
+    const list = this.l2Confirmed.get(userId) || [];
+    const filtered = list.filter((m) => m.id !== memoryId);
+    if (filtered.length !== list.length) {
+      this.l2Confirmed.set(userId, filtered);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Update a confirmed memory value/statement
+   */
+  public static updateConfirmedMemory(
+    userId: string,
+    memoryId: string,
+    newValue: string
+  ): L2ConfirmedPersonalMemory | null {
+    const list = this.l2Confirmed.get(userId) || [];
+    const memory = list.find((m) => m.id === memoryId);
+    if (memory) {
+      memory.value = newValue;
+      memory.confirmedAt = new Date().toISOString();
+      return memory;
+    }
+    return null;
+  }
+
+  /**
+   * Clear all memories for a user across all tiers
+   */
+  public static clearUserMemories(userId: string): void {
+    this.l1Journeys.delete(userId);
+    this.l2Confirmed.delete(userId);
+    this.l3Insights.delete(userId);
+    this.candidates.delete(userId);
+  }
 }
+

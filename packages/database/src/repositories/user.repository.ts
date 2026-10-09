@@ -18,7 +18,7 @@ export class InMemoryUserRepository implements UserRepository {
     const now = new Date().toISOString();
     const user: User = {
       id,
-      email: input.email,
+      email: input.email || `${id}@amal.local`,
       role: input.role || 'USER',
       status: input.status || 'ACTIVE',
       accountMode: (input as any).accountMode || 'ADULT',

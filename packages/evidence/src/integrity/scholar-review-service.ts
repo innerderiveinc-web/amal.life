@@ -74,7 +74,7 @@ export class ScholarReviewService {
       return {
         approved: existing.length >= (signoff.isTwoPersonSignoff ? 2 : 1),
         signoffsCount: existing.length,
-        requiresSecondReviewer: signoff.isTwoPersonSignoff && existing.length < 2,
+        requiresSecondReviewer: Boolean(signoff.isTwoPersonSignoff && existing.length < 2),
         error: 'DUPLICATE_SIGNOFF: Scholar has already signed off on this item.',
       };
     }
@@ -88,7 +88,7 @@ export class ScholarReviewService {
     return {
       approved: isApproved,
       signoffsCount: existing.length,
-      requiresSecondReviewer: isSensitive && existing.length < 2,
+      requiresSecondReviewer: Boolean(isSensitive && existing.length < 2),
     };
   }
 

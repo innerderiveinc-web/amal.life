@@ -15,8 +15,8 @@ export class ReferenceValidator {
       return { valid: false, reason: `Invalid reference format: '${reference}'. Expected 'surah:ayah'.` };
     }
 
-    const surah = parseInt(match[1], 10);
-    const ayah = parseInt(match[2], 10);
+    const surah = parseInt(match[1] ?? '0', 10);
+    const ayah = parseInt(match[2] ?? '0', 10);
 
     if (surah < 1 || surah > 114) {
       return { valid: false, reason: `Surah ${surah} out of range (1-114).` };
@@ -34,9 +34,20 @@ export class ReferenceValidator {
    * Validates canonical Hadith collection and book references
    */
   public static validateHadithReference(collection: string, reference: string): { valid: boolean; reason?: string } {
-    const allowed = ['Sahih al-Bukhari', 'Sahih Muslim', 'Sunan Abu Dawud', 'Jami` at-Tirmidhi', 'Sunan an-Nasa`i', 'Sunan Ibn Majah', 'Muwatta Malik', 'Musnad Ahmad'];
-    if (!allowed.some(c => c.toLowerCase() === collection.toLowerCase())) {
-      return { valid: false, reason: `Unknown Hadith collection: '${collection}'.` };
+    const normalized = collection.toLowerCase().replace(/[`'’\-\s]/g, '');
+    const canonicalNormalized = [
+      'sahihalbukhari', 'sahihbukhari', 'bukhari',
+      'sahihmuslim', 'muslim',
+      'sunanabudawud', 'sunanabidawud', 'abudawud', 'abidawud',
+      'jamiattirmidhi', 'jamiattirmizi', 'sunanattirmidhi', 'tirmidhi', 'tirmizi',
+      'sunanannasai', 'sunanannasai', 'nasai',
+      'sunanibnmajah', 'ibnmajah',
+      'muwattamalik', 'muwatta',
+      'musnadahmad', 'musnadahmadbinhanbal'
+    ];
+
+    if (!canonicalNormalized.some(c => normalized.includes(c) || c.includes(normalized))) {
+      return { valid: false, reason: `Unknown or unverified Hadith collection: '${collection}'.` };
     }
     if (!reference || reference.trim().length === 0) {
       return { valid: false, reason: 'Empty hadith reference identifier.' };

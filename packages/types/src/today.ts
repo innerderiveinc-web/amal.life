@@ -74,4 +74,5 @@ export interface TodayResponse {
   activeJourney?: TodayActiveJourney;
   reflectionStatus: TodayReflectionStatus;
   contextualMessage?: string;
+  dailyKnowledge?: any;
 }

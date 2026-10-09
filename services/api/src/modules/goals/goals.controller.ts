@@ -20,6 +20,17 @@ export interface UpdateGoalDto {
   status?: string;
 }
 
+import { AuthenticatedUser } from '../../common/auth/auth.types.js';
+
+function toActor(user: AuthUser): AuthenticatedUser {
+  return {
+    userId: user.id,
+    sessionId: `sess_${user.id}`,
+    accountMode: 'ADULT',
+    roles: (user.roles as any) || ['USER'],
+  };
+}
+
 @Controller('goals')
 @UseGuards(AuthGuard)
 @UseInterceptors(IdempotencyInterceptor)
@@ -31,12 +42,12 @@ export class GoalsController {
     @CurrentUser() user: AuthUser,
     @Body() dto: CreateGoalDto
   ) {
-    return this.service.create(user.id, dto);
+    return this.service.create(toActor(user), dto);
   }
 
   @Get()
   async list(@CurrentUser() user: AuthUser) {
-    return this.service.findActive(user.id);
+    return this.service.list(user.id);
   }
 
   @Get(':id')
@@ -44,7 +55,7 @@ export class GoalsController {
     @CurrentUser() user: AuthUser,
     @Param('id') id: string
   ) {
-    const goal = await this.service.findById(user.id, id);
+    const goal = await this.service.get(toActor(user), id);
     if (!goal) {
       return { error: 'Goal not found or access denied', status: 404 };
     }
@@ -57,7 +68,7 @@ export class GoalsController {
     @Param('id') id: string,
     @Body() dto: UpdateGoalDto
   ) {
-    return this.service.update(user.id, id, dto);
+    return this.service.update(toActor(user), id, dto);
   }
 
   @Delete(':id')
@@ -65,7 +76,24 @@ export class GoalsController {
     @CurrentUser() user: AuthUser,
     @Param('id') id: string
   ) {
-    await this.service.archive(user.id, id);
+    await this.service.delete(toActor(user), id);
     return { success: true };
+  }
+
+  @Post(':id/baseline')
+  async setBaseline(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Body() dto: any
+  ) {
+    return this.service.setBaseline(toActor(user), id, dto);
+  }
+
+  @Get(':id/baseline')
+  async getBaseline(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string
+  ) {
+    return this.service.getBaseline(toActor(user), id);
   }
 }

@@ -92,7 +92,7 @@ export interface ScholarlyPosition {
   status: 'APPROVED' | 'CONTESTED';
 }
 
-export interface EvidencePack {
+export interface ContractEvidencePack {
   query: string;
   evidence: EvidenceItem[];
   scholarlyPositions: ScholarlyPosition[];
@@ -111,13 +111,21 @@ export interface Amal {
   id: string;
   type: AmalType;
   title: string;
-  description: string;
-  minimumAction: ActionDefinition;
+  description?: string;
+  userId?: string;
+  journeyId?: string;
+  category?: any;
+  status?: string;
+  completionCount?: number;
+  lastCompletedAt?: string;
+  minimumAction?: ActionDefinition;
   targetAction?: ActionDefinition;
   durationMinutes?: number;
   frequency?: string;
-  evidenceIds: string[];
-  governanceStatus: 'APPROVED' | 'DRAFT';
+  evidenceIds?: string[];
+  governanceStatus?: 'APPROVED' | 'DRAFT';
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AmalRecommendation {
@@ -136,7 +144,7 @@ export interface AmalRecommendation {
   evidenceIds: string[];
 }
 
-export interface Journey {
+export interface ContractJourney {
   id: string;
   goalId: string;
   title: string;
@@ -215,7 +223,7 @@ export interface AIResponse {
   };
 }
 
-export interface DomainEvent<T = unknown> {
+export interface ContractDomainEvent<T = unknown> {
   id: string;
   type: string;
   aggregateId: string;

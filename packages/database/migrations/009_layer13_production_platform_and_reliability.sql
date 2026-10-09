@@ -87,3 +87,15 @@ CREATE TABLE IF NOT EXISTS platform_feature_flags (
     authorized_by VARCHAR(64) NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO platform_feature_flags (flag_key, enabled, rollout_percentage, environment, authorized_by) VALUES
+('AI_OPEN_CHAT', FALSE, 0, 'PRODUCTION', 'trust-officer'),
+('ADAPTIVE_AMAL', TRUE, 100, 'PRODUCTION', 'core-lead'),
+('ADVANCED_INSIGHTS', TRUE, 100, 'PRODUCTION', 'core-lead'),
+('VOICE_ASK', FALSE, 0, 'PRODUCTION', 'trust-officer'),
+('SCHOLAR_NETWORK', TRUE, 100, 'PRODUCTION', 'scholar-board'),
+('FAMILY_V2', TRUE, 100, 'PRODUCTION', 'core-lead'),
+('WHATSAPP', FALSE, 0, 'PRODUCTION', 'comms-lead'),
+('INSTITUTION', TRUE, 100, 'PRODUCTION', 'platform-lead')
+ON CONFLICT (flag_key) DO NOTHING;
+

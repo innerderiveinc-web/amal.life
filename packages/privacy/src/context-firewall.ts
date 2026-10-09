@@ -26,7 +26,7 @@ export class ContextFirewall {
       .filter((c) => !c.key.toLowerCase().includes('reflection'))
       .filter((c) => !c.key.toLowerCase().includes('secret'))
       .filter((c) => !c.key.toLowerCase().includes('confidential'))
-      .sort((a, b) => priorityWeights[b.source] - priorityWeights[a.source])
+      .sort((a, b) => (priorityWeights[b.source] ?? 0) - (priorityWeights[a.source] ?? 0))
       .slice(0, 5); // Return only minimum necessary context items
   }
 }

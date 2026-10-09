@@ -31,8 +31,8 @@ export class PostgresGoalRepository implements GoalRepository {
   public async create(input: CreateGoalInput): Promise<Goal> {
     const id = `goal_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const goal: Goal = {
-      id,
-      userId: input.userId,
+      id: id as any,
+      userId: input.userId as any,
       title: input.title,
       category: input.category,
       intent: input.intent,
@@ -68,7 +68,7 @@ export class PostgresGoalRepository implements GoalRepository {
     }
 
     if (input.title) goal.title = input.title;
-    if (input.status) goal.status = input.status;
+    if (input.status) goal.status = input.status as any;
     goal.updatedAt = new Date().toISOString();
 
     db.goals.set(goalId, goal);

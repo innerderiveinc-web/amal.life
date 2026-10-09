@@ -1,11 +1,29 @@
 import { EvidencePackItem } from './evidence.js';
 
 export type SafetyClass =
-  | 'CLASS_A_GENERAL_EDUCATIONAL'    // General educational question: answer with evidence
-  | 'CLASS_B_GENERAL_GUIDANCE'       // General life advice/habit: educational context + practical suggestions
-  | 'CLASS_C_SCHOLARLY_DISAGREEMENT' // Scholarly differences: must present legitimate diversity of opinion
-  | 'CLASS_D_PERSONALIZED_RULING'    // Specific fatwa/ruling for individual: ESCALATE TO SCHOLAR
-  | 'CLASS_E_HIGH_RISK_SITUATION';   // Self-harm, domestic abuse, medical emergency, illegal coercion: ESCALATE
+  | 'CLASS_A_GENERAL_EDUCATIONAL'
+  | 'CLASS_B_GENERAL_GUIDANCE'
+  | 'CLASS_C_SCHOLARLY_DISAGREEMENT'
+  | 'CLASS_D_PERSONALIZED_RULING'
+  | 'CLASS_E_HIGH_RISK_SITUATION'
+  | 'A'
+  | 'B'
+  | 'C'
+  | 'D'
+  | 'E';
+
+export const SafetyClass = {
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  CLASS_A_GENERAL_EDUCATIONAL: 'CLASS_A_GENERAL_EDUCATIONAL',
+  CLASS_B_GENERAL_GUIDANCE: 'CLASS_B_GENERAL_GUIDANCE',
+  CLASS_C_SCHOLARLY_DISAGREEMENT: 'CLASS_C_SCHOLARLY_DISAGREEMENT',
+  CLASS_D_PERSONALIZED_RULING: 'CLASS_D_PERSONALIZED_RULING',
+  CLASS_E_HIGH_RISK_SITUATION: 'CLASS_E_HIGH_RISK_SITUATION',
+} as const;
 
 export interface SafetyClassificationResult {
   safetyClass: SafetyClass;

@@ -9,6 +9,24 @@ import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 export class PrivacyController {
   constructor(private readonly service: PrivacyService) {}
 
+  @Get()
+  async getOverview(@CurrentUser() user: AuthenticatedUser) {
+    return this.service.getPrivacyOverview(user);
+  }
+
+  @Get('consents')
+  async getConsents(@CurrentUser() user: AuthenticatedUser) {
+    return this.service.getConsents(user);
+  }
+
+  @Post('consents')
+  async updateConsents(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: { consents: any[] }
+  ) {
+    return this.service.updateConsents(user, body.consents);
+  }
+
   @Post('export')
   async requestExport(@CurrentUser() user: AuthenticatedUser) {
     return this.service.requestExport(user);
@@ -16,6 +34,14 @@ export class PrivacyController {
 
   @Post('delete')
   async requestDeletion(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: { reason?: string }
+  ) {
+    return this.service.requestDeletion(user, body?.reason);
+  }
+
+  @Post('delete-request')
+  async requestDeletionAlias(
     @CurrentUser() user: AuthenticatedUser,
     @Body() body: { reason?: string }
   ) {

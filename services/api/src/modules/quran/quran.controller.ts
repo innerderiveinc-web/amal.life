@@ -25,15 +25,18 @@ export class QuranController {
   ) {
     const s = parseInt(surah, 10);
     const a = parseInt(ayah, 10);
-    const result = quranProvider.getAyah(s, a);
+    const result = await quranProvider.getAyah(s, a);
+    if (!result) {
+      return null;
+    }
 
     return {
       surah: s,
       ayah: a,
-      arabicText: result.arabicText,
-      provenanceHash: result.provenanceHash,
-      translation: result.translations[0]?.text || '',
-      translator: result.translations[0]?.translator || 'Sahih International',
+      arabicText: result.textArabic,
+      provenanceHash: `prov_${s}_${a}`,
+      translation: result.textTranslation,
+      translator: result.translationAuthor,
       immutableMakkahMedinaText: true,
     };
   }

@@ -44,12 +44,17 @@ export interface SafetyAuditEvent {
 export interface AuditLog {
   id: string;
   actorId: string;
-  actorRole: string;
+  actorRole?: string;
   action: string;
-  resourceType: string;
-  resourceId: string;
+  resourceType?: string;
+  resourceId?: string;
   ipAddress?: string;
   userAgent?: string;
   metadata?: Record<string, unknown>;
-  createdAt: string;
+  createdAt?: string;
+  timestamp?: string;
+  resource?: string;
+  details?: string;
+  status?: string;
 }
+

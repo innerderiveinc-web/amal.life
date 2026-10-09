@@ -12,6 +12,7 @@ import {
   TodayAmalAction,
   TodayPrayerTimeline,
 } from '@amal/types';
+import { DailyKnowledgeEngine } from '@amal/amal-engine';
 
 export interface PlanCandidate {
   id: string;
@@ -206,6 +207,7 @@ export class TodayService {
         prompt: 'What is one small blessing you noticed in your routine today?',
       },
       contextualMessage: 'Restarting gently: every consistent small step is beloved to Allah.',
+      dailyKnowledge: DailyKnowledgeEngine.getBroadcast(),
     };
   }
 }

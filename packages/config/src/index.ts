@@ -85,6 +85,9 @@ export const loadConfig = (): AppConfig => {
       amalFamilyAnnualInr: 4999,
     },
   };
+};
+
 export const config = loadConfig();
 export * from './env.js';
+
 

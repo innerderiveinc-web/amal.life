@@ -34,7 +34,7 @@ export class OutboxWorker {
         await outboxRepository.markProcessed(record.id);
         processed++;
       } catch (err: any) {
-        const nextBackoff = this.exponentialBackoff(record.retryCount || 1);
+        const nextBackoff = this.exponentialBackoff(record.attempts || 1);
         await outboxRepository.markFailed(record.id, err?.message);
       }
     }

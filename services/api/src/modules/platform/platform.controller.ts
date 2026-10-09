@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { PlatformService } from './platform.service.js';
-import { AuthGuard } from '../../guards/auth.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
 
 @Controller('internal/platform')
 export class PlatformController {

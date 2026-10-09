@@ -1,0 +1,1301 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AMAL OS Production API",
+    "version": "1.0.0",
+    "description": "AMAL OS V1.0 Master Production REST API Specification. From Niyyah to Amal."
+  },
+  "paths": {
+    "/api/v1/auth/register": {
+      "post": {
+        "summary": "Register User"
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "summary": "Authenticate User"
+      }
+    },
+    "/api/v1/today": {
+      "get": {
+        "summary": "Deterministic Today Schedule"
+      }
+    },
+    "/api/v1/amal/complete": {
+      "post": {
+        "summary": "Idempotent Amal Completion"
+      }
+    },
+    "/api/v1/reflections": {
+      "post": {
+        "summary": "Muhasabah Reflection"
+      }
+    },
+    "/api/v1/ai/ask": {
+      "post": {
+        "summary": "Governed AI Islamic Guidance"
+      }
+    },
+    "/api/v1/scholars/cases": {
+      "get": {
+        "summary": "List Triage Cases"
+      },
+      "post": {
+        "summary": "Submit Fatwa Inquiry"
+      }
+    },
+    "/api/v1/family": {
+      "get": {
+        "summary": "Family Workspace"
+      },
+      "post": {
+        "summary": "Create Household"
+      }
+    },
+    "/api/v1/journeys/:id/adaptations": {
+      "get": {
+        "summary": "Adaptive Amal Friction Relief"
+      }
+    },
+    "/api/v1/communications/consent": {
+      "get": {
+        "summary": "Channel Consent Status"
+      },
+      "post": {
+        "summary": "Set Consent"
+      }
+    },
+    "/api/v1/billing/plans": {
+      "get": {
+        "summary": "List Billing Plans"
+      }
+    },
+    "/api/v1/billing/webhooks/:provider": {
+      "post": {
+        "summary": "Process Signed Payment Webhook"
+      }
+    },
+    "/api/v1/personalization/preferences": {
+      "get": {
+        "summary": "List Learned Preferences"
+      },
+      "post": {
+        "summary": "Set Preference"
+      }
+    },
+    "/api/v1/personalization/settings": {
+      "get": {
+        "summary": "Personalization Controls"
+      },
+      "patch": {
+        "summary": "Update Personalization Controls"
+      }
+    },
+    "/api/v1/personalization/recommendations/feedback": {
+      "post": {
+        "summary": "Lightweight Recommendation Feedback"
+      }
+    },
+    "/api/v1/insights": {
+      "get": {
+        "summary": "Observed Habits & Behavioral Insights"
+      }
+    },
+    "/api/v1/journeys/:id/adaptation-preview": {
+      "post": {
+        "summary": "Preview Journey Friction Adaptation"
+      }
+    },
+    "/api/v1/journeys/:id/adaptation-approve": {
+      "post": {
+        "summary": "Approve Journey Friction Adaptation"
+      }
+    },
+    "/api/v1/planner/daily": {
+      "post": {
+        "summary": "Smart Daily Amal Planner"
+      }
+    },
+    "/api/v1/goals/collision-check": {
+      "post": {
+        "summary": "Goal Collision & Daily Burden Assessment"
+      }
+    },
+    "/api/v1/life/situation": {
+      "post": {
+        "summary": "Classify Multi-Domain Life Situation"
+      }
+    },
+    "/api/v1/life/domains": {
+      "get": {
+        "summary": "Supported Life Domains"
+      }
+    },
+    "/api/v1/life/dashboard": {
+      "get": {
+        "summary": "Cross-Domain Life OS Overview"
+      }
+    },
+    "/api/v1/decisions": {
+      "get": {
+        "summary": "List Life Decisions"
+      },
+      "post": {
+        "summary": "Create Structured Decision Draft"
+      }
+    },
+    "/api/v1/experts": {
+      "get": {
+        "summary": "List Verified Multi-Domain Experts"
+      }
+    },
+    "/api/v1/modes/ramadan": {
+      "get": {
+        "summary": "Ramadan OS Configuration"
+      }
+    },
+    "/api/v1/modes/travel": {
+      "get": {
+        "summary": "Travel Mode & Qasr Evaluation"
+      }
+    },
+    "/api/v1/life-graph/nodes": {
+      "get": {
+        "summary": "Personal Life Graph Nodes"
+      },
+      "post": {
+        "summary": "Add Personal Graph Node"
+      }
+    },
+    "/api/v1/ecosystem/tenants/{id}": {
+      "get": {
+        "summary": "Get Governed Tenant Record"
+      }
+    },
+    "/api/v1/ecosystem/scholars/cases": {
+      "post": {
+        "summary": "Create Scholar Triage Case V2"
+      }
+    },
+    "/api/v1/ecosystem/scholars/cases/{id}/respond": {
+      "post": {
+        "summary": "Two-Scholar Dual Jurist Case Response"
+      }
+    },
+    "/api/v1/ecosystem/scholars/disagreements/{id}": {
+      "get": {
+        "summary": "Scholarly Plurality & Disagreement Record"
+      }
+    },
+    "/api/v1/ecosystem/family/shares": {
+      "post": {
+        "summary": "Governed Family Resource Sharing"
+      }
+    },
+    "/api/v1/ecosystem/institutions/programs": {
+      "post": {
+        "summary": "Create Institutional Program"
+      }
+    },
+    "/api/v1/ecosystem/knowledge/releases/active": {
+      "get": {
+        "summary": "Active Immutable Knowledge Release"
+      }
+    },
+    "/api/v1/ecosystem/api/clients": {
+      "post": {
+        "summary": "Register Ecosystem API Client"
+      }
+    },
+    "/api/v1/ecosystem/api/oauth/token": {
+      "post": {
+        "summary": "Issue Least-Privilege OAuth Token"
+      }
+    },
+    "/api/v1/ecosystem/governance/safe-mode": {
+      "get": {
+        "summary": "Get Global Safe Mode Status"
+      },
+      "post": {
+        "summary": "Toggle Global Safe Mode"
+      }
+    },
+    "/api/v1/knowledge/madhhabs": {
+      "get": {
+        "summary": "All Four Sunni Madhhab Foundations & Canonical Manuals"
+      }
+    },
+    "/api/v1/knowledge/comparative-fiqh/{id}": {
+      "get": {
+        "summary": "Comparative Fiqh Case & Four-School Consensus/Divergence"
+      }
+    },
+    "/api/v1/knowledge/fiqh-guidance": {
+      "post": {
+        "summary": "Personalized Multi-Tier Fiqh Guidance Without Altering Evidence"
+      }
+    },
+    "/api/v1/knowledge/universal/source-card/{id}": {
+      "get": {
+        "summary": "Universal Multi-Dimension Verified Source Card and Verification Profile"
+      }
+    },
+    "/api/v1/knowledge/universal/disagreements/{id}": {
+      "get": {
+        "summary": "Universal Scholarly Disagreement Ledger Across Four Madhhabs"
+      }
+    },
+    "/api/v1/knowledge/universal/answer": {
+      "post": {
+        "summary": "Resolve Governed Structured Answer in Neutral Sunni or Preferred Mode"
+      }
+    },
+    "/api/v1/knowledge/universal/benchmark": {
+      "get": {
+        "summary": "Universal Knowledge Benchmark Metrics (0% Hallucination, 100% Attribution)"
+      }
+    },
+    "/api/v1/knowledge/catalogue": {
+      "get": {
+        "summary": "Retrieve Governed Master Source Catalogue Entries"
+      }
+    },
+    "/api/v1/knowledge/catalogue/summary": {
+      "get": {
+        "summary": "Retrieve Master Source Catalogue Summary and Domain/School Breakdown"
+      }
+    },
+    "/api/v1/knowledge/catalogue/coverage": {
+      "get": {
+        "summary": "Retrieve Measurable Production Knowledge Coverage Dashboard"
+      }
+    },
+    "/api/v1/knowledge/catalogue/debt": {
+      "get": {
+        "summary": "Retrieve Knowledge Debt and Unresolved Review Metrics"
+      }
+    },
+    "/api/v1/knowledge/catalogue/release-manifest": {
+      "get": {
+        "summary": "Generate Merkle-Anchored Production Knowledge Release Manifest"
+      }
+    },
+    "/api/v1/knowledge/catalogue/{id}": {
+      "get": {
+        "summary": "Retrieve Specific Verified Master Source Catalogue Entry"
+      }
+    },
+    "/api/v1/knowledge/ingestion": {
+      "post": {
+        "summary": "Intake Source Material into Ingestion Pipeline & Store Immutable Artifact"
+      }
+    },
+    "/api/v1/knowledge/ingestion/jobs": {
+      "get": {
+        "summary": "List All Active and Completed Ingestion Jobs"
+      }
+    },
+    "/api/v1/knowledge/ingestion/jobs/{id}": {
+      "get": {
+        "summary": "Get Ingestion Job Details and Current Pipeline Stage"
+      }
+    },
+    "/api/v1/knowledge/ingestion/identity": {
+      "post": {
+        "summary": "Verify Source Identity Against Recognized Bibliographic Catalogues"
+      }
+    },
+    "/api/v1/knowledge/ingestion/provenance": {
+      "post": {
+        "summary": "Record Unbroken Provenance Chain and Custody Verification"
+      }
+    },
+    "/api/v1/knowledge/ingestion/license": {
+      "post": {
+        "summary": "Verify Multi-Dimensional Rights and Licensing Profile"
+      }
+    },
+    "/api/v1/knowledge/ingestion/passages": {
+      "post": {
+        "summary": "Register Context-Preserving Passage with Quotation Extraction"
+      }
+    },
+    "/api/v1/knowledge/claims": {
+      "post": {
+        "summary": "Extract Atomic Knowledge Claim with Rigorous Support Classification"
+      }
+    },
+    "/api/v1/knowledge/references/verify": {
+      "post": {
+        "summary": "Execute Deterministic Reference Locator & Text-Matching Verification"
+      }
+    },
+    "/api/v1/knowledge/reviews": {
+      "post": {
+        "summary": "Submit Tiered Scholar Review (Mandatory Dual Jurist Review for High-Risk Fiqh)"
+      }
+    },
+    "/api/v1/knowledge/disputes": {
+      "post": {
+        "summary": "Register Legitimate Scholarly Dispute Preserving Divergence Without False Consensus"
+      }
+    },
+    "/api/v1/knowledge/publication/check": {
+      "post": {
+        "summary": "Evaluate Quality Scorecard and Trigger Hard Blocks Before Publication"
+      }
+    },
+    "/api/v1/knowledge/publication/publish": {
+      "post": {
+        "summary": "Publish Approved Knowledge Object into Production Knowledge Graph"
+      }
+    },
+    "/api/v1/knowledge/revoke": {
+      "post": {
+        "summary": "Emergency Revocation of Compromised Source, Passage, or Claim with Cascading Invalidation"
+      }
+    },
+    "/api/v1/knowledge/explorer/{id}": {
+      "get": {
+        "summary": "Retrieve Complete Source Provenance Explorer Tree (Artifact -> Passage -> Claim -> Review -> Dispute)"
+      }
+    },
+    "/api/v1/knowledge/quran/ayah/{surah}/{ayah}": {
+      "get": {
+        "summary": "Retrieve Multilingual Quran Ayah with Strictly Separated Translations and Tafasir"
+      }
+    },
+    "/api/v1/knowledge/quran/translation": {
+      "post": {
+        "summary": "Query Verified Translation in India/Global Languages (Returns Clean Unavailable for Gaps; AI Blocked)"
+      }
+    },
+    "/api/v1/knowledge/quran/tafsir": {
+      "post": {
+        "summary": "Query Verified Scholarly Tafsir by Language and Classical Commentary Work"
+      }
+    },
+    "/api/v1/knowledge/quran/personalized": {
+      "post": {
+        "summary": "Resolve Personalized Verse View Based on Decoupled Language & Scholarly Preferences"
+      }
+    },
+    "/api/v1/knowledge/universal/decoupled-answer": {
+      "post": {
+        "summary": "Resolve Governed Universal Answer Decoupling Language from Madhhab / Scholarly Tradition"
+      }
+    },
+    "/api/v1/knowledge/multilingual/summary": {
+      "get": {
+        "summary": "Retrieve Multilingual Corpus Summary (India Language Pack + Global Language Pack)"
+      }
+    },
+    "/api/v1/languages": {
+      "get": {
+        "summary": "Retrieve Supported India-First and Global Languages with Script and BIDI Metadata"
+      }
+    },
+    "/api/v1/quran/surahs": {
+      "get": {
+        "summary": "List Canonical Quran Surahs with Verses Count and Revelation Type"
+      }
+    },
+    "/api/v1/quran/ayahs/{id}": {
+      "get": {
+        "summary": "Retrieve Canonical Uthmanic Ayah by ID with Edition Hash Integrity"
+      }
+    },
+    "/api/v1/translations": {
+      "get": {
+        "summary": "List Verified Translation Works Across Supported Languages"
+      }
+    },
+    "/api/v1/translations/{id}": {
+      "get": {
+        "summary": "Retrieve Translation Work Details and Publication Metadata"
+      }
+    },
+    "/api/v1/tafsir": {
+      "get": {
+        "summary": "List Classical and Contemporary Tafsir Works by Methodology"
+      }
+    },
+    "/api/v1/tafsir/{id}": {
+      "get": {
+        "summary": "Retrieve Tafsir Work Details, Authority, and Commentary Type"
+      }
+    },
+    "/api/v1/scholars": {
+      "get": {
+        "summary": "List Classical and Contemporary Scholars in Master Authority Registry"
+      }
+    },
+    "/api/v1/madhhabs": {
+      "get": {
+        "summary": "List Four Sunni Madhhabs with Foundational Reference Texts and Usul"
+      }
+    },
+    "/api/v1/traditions": {
+      "get": {
+        "summary": "List Recognized Sunni Scholarly Traditions and Spiritual Formations"
+      }
+    },
+    "/api/v1/evidence/search": {
+      "get": {
+        "summary": "Multilingual Canonical Concept and Semantic Search Across Governed Corpus"
+      }
+    },
+    "/api/v1/evidence/{id}": {
+      "get": {
+        "summary": "Retrieve Verified Evidence Node by Canonical ID"
+      }
+    },
+    "/api/v1/evidence/compare": {
+      "post": {
+        "summary": "Cross-Madhhab Comparative Jurisprudential Evidence Analysis"
+      }
+    },
+    "/api/v1/sources/{id}": {
+      "get": {
+        "summary": "Retrieve Master Islamic Source Metadata and Attribution Verification"
+      }
+    },
+    "/api/v1/knowledge/releases": {
+      "get": {
+        "summary": "List Production Knowledge Releases with Cryptographic Merkle Proofs"
+      }
+    },
+    "/api/v1/legacy/spaces": {
+      "post": {
+        "summary": "Create User Legacy Space for Preserving Beneficial Knowledge"
+      }
+    },
+    "/api/v1/legacy/items": {
+      "post": {
+        "summary": "Create Legacy Item (Lesson, Dua Collection, Reflection, Resource)"
+      }
+    },
+    "/api/v1/legacy/items/{id}": {
+      "get": {
+        "summary": "Retrieve Legacy Item with Privacy Boundary Check (Default Private)"
+      }
+    },
+    "/api/v1/legacy/collections": {
+      "post": {
+        "summary": "Create Audience-Targeted Legacy Collection (For Children, Parents, Future Generations)"
+      }
+    },
+    "/api/v1/legacy/collections/{id}": {
+      "get": {
+        "summary": "Retrieve Legacy Collection with Audience Access Check"
+      }
+    },
+    "/api/v1/legacy/release": {
+      "post": {
+        "summary": "Controlled Release Transition (Draft -> Private -> Family Shared -> Released)"
+      }
+    },
+    "/api/v1/legacy/instructions": {
+      "get": {
+        "summary": "Retrieve Inactivity Legacy Instructions and Trusted Contact Settings"
+      },
+      "post": {
+        "summary": "Configure Inactivity Instructions with Identity Verification (Excludes Private Journal)"
+      }
+    },
+    "/api/v1/legacy/letters": {
+      "post": {
+        "summary": "Create Personal Legacy Letter (Advice Disclaimer: Personal Advice Not Shariah Ruling)"
+      }
+    },
+    "/api/v1/legacy/audio": {
+      "post": {
+        "summary": "Record Legacy Voice Message with Transcripts and Speaker Consent"
+      }
+    },
+    "/api/v1/legacy/export": {
+      "post": {
+        "summary": "Export Complete Legacy Archive with Citations and Integrity Checksum"
+      }
+    },
+    "/api/v1/legacy/audit": {
+      "get": {
+        "summary": "Retrieve Tamper-Evident Append-Only Legacy Access and Release Audit Logs"
+      }
+    },
+    "/api/v1/family/today": {
+      "get": {
+        "summary": "Calm Family Today View (Zero Religious Ranking, Zero Faith Scores, Zero Failure Highlights)"
+      }
+    },
+    "/api/v1/family/journeys/shared": {
+      "post": {
+        "summary": "Create Multi-Role Shared Family Journey with Individual Member Amals"
+      }
+    },
+    "/api/v1/family/child/profile": {
+      "post": {
+        "summary": "Register Child Account with Age Band and Shielded Safety Policies"
+      }
+    },
+    "/api/v1/community": {
+      "get": {
+        "summary": "Community Overview & Ecosystem Health Dashboard"
+      }
+    },
+    "/api/v1/community/nearby": {
+      "get": {
+        "summary": "Local Community & Mosque Discovery with Location Privacy"
+      }
+    },
+    "/api/v1/community/organizations": {
+      "get": {
+        "summary": "List Verified Community Organizations and Institutions"
+      },
+      "post": {
+        "summary": "Register Community Organization with Verification Flow"
+      }
+    },
+    "/api/v1/community/organizations/{id}": {
+      "get": {
+        "summary": "Retrieve Organization Details, Mosque Facilities, Programs and Events"
+      }
+    },
+    "/api/v1/community/programs": {
+      "get": {
+        "summary": "Educational Programs, Courses, and Halaqahs Directory"
+      }
+    },
+    "/api/v1/community/events": {
+      "get": {
+        "summary": "Community Events and Gathering Directory"
+      }
+    },
+    "/api/v1/community/events/{id}/register": {
+      "post": {
+        "summary": "Register for Community Event with Capacity Tracking"
+      }
+    },
+    "/api/v1/community/scholars": {
+      "get": {
+        "summary": "Verified Scholars Directory with Scholar OS Triage Routing"
+      }
+    },
+    "/api/v1/community/groups": {
+      "get": {
+        "summary": "List Verified Community Groups with Strict Non-Anonymous Posting"
+      },
+      "post": {
+        "summary": "Create Verified Community Group (No Anonymous Posting Allowed)"
+      }
+    },
+    "/api/v1/community/service": {
+      "get": {
+        "summary": "Civic Action Opportunities & Volunteer Skill Matching"
+      }
+    },
+    "/api/v1/community/service/{id}/signup": {
+      "post": {
+        "summary": "Sign Up for Community Volunteer Opportunity"
+      }
+    },
+    "/api/v1/community/reports": {
+      "post": {
+        "summary": "Submit Moderation & Safety Report with Priority Escalation for Child Safety, Takfir, Hate"
+      }
+    },
+    "/api/v1/community/resources": {
+      "get": {
+        "summary": "Verified Community Knowledge Resources with Two-Graph Firewall Tagging"
+      }
+    },
+    "/api/v1/community/zakat/calculate": {
+      "post": {
+        "summary": "Multi-Madhhab Zakat Calculator Across Hanafi, Maliki, Shafi'i, and Hanbali Traditions"
+      }
+    },
+    "/api/v1/scholars/{id}": {
+      "get": {
+        "summary": "Retrieve Scholar Profile and Verified Granular Credentials"
+      }
+    },
+    "/api/v1/scholars/{id}/verify": {
+      "post": {
+        "summary": "Administrative Transition of Scholar Verification State"
+      }
+    },
+    "/api/v1/cases": {
+      "post": {
+        "summary": "Create Scholar Case with Context Minimization and Algorithmic Routing"
+      }
+    },
+    "/api/v1/cases/{id}": {
+      "get": {
+        "summary": "Retrieve Scholar Case with Zero-Trust ABAC Access Defense"
+      }
+    },
+    "/api/v1/cases/{id}/accept": {
+      "post": {
+        "summary": "Assigned Scholar Accepts Case for In-Depth Review"
+      }
+    },
+    "/api/v1/cases/{id}/respond": {
+      "post": {
+        "summary": "Submit Structured Scholar Response (Evidence, Position, Conditions, Guidance)"
+      }
+    },
+    "/api/v1/cases/{id}/multi-review": {
+      "post": {
+        "summary": "Complete Multi-Scholar Review (Agreement, Qualified Agreement, Recognized Disagreement)"
+      }
+    },
+    "/api/v1/cases/{id}/close": {
+      "post": {
+        "summary": "Close Case and Release Active Workload Capacity"
+      }
+    },
+    "/api/v1/governance/sources": {
+      "post": {
+        "summary": "Register Immutable Source with SHA-256 Artifact Hash"
+      }
+    },
+    "/api/v1/governance/sources/{id}": {
+      "get": {
+        "summary": "Retrieve Source Registry Record and Verification Status"
+      }
+    },
+    "/api/v1/governance/sources/{id}/quarantine": {
+      "post": {
+        "summary": "Quarantine Source upon Integrity or Provenance Breach"
+      }
+    },
+    "/api/v1/governance/claims": {
+      "post": {
+        "summary": "Register Verified Claim into Machine-Readable Claim Ledger"
+      }
+    },
+    "/api/v1/governance/claims/{id}": {
+      "get": {
+        "summary": "Retrieve Verified Claim from Ledger"
+      }
+    },
+    "/api/v1/governance/claims/audit": {
+      "post": {
+        "summary": "Execute Pre-Delivery Claim Auditor with Hard-Blocks for Fabricated Citations/False Consensus"
+      }
+    },
+    "/api/v1/governance/issues": {
+      "get": {
+        "summary": "List Documented Ikhtilaf Disagreement Issues with Classical Relationships"
+      }
+    },
+    "/api/v1/governance/issues/{id}": {
+      "get": {
+        "summary": "Retrieve Specific Disagreement Issue and Multi-Madhhab Position Matrix"
+      }
+    },
+    "/api/v1/governance/releases": {
+      "post": {
+        "summary": "Stage Blue/Green Knowledge Release Candidate in NEXT Slot"
+      }
+    },
+    "/api/v1/governance/releases/{id}/publish": {
+      "post": {
+        "summary": "Promote NEXT Knowledge Release to CURRENT with Dual-Jurist Sign-off"
+      }
+    },
+    "/api/v1/governance/releases/{id}/rollback": {
+      "post": {
+        "summary": "Instant One-Operation Atomic Rollback to Previous Knowledge Snapshot"
+      }
+    },
+    "/api/v1/governance/emergency-controls": {
+      "get": {
+        "summary": "Retrieve Status of Independent Emergency Kill Switches"
+      },
+      "post": {
+        "summary": "Toggle Global Emergency Kill Switch Independently"
+      }
+    },
+    "/api/v1/governance/final-trust/{claimId}": {
+      "get": {
+        "summary": "Execute Final Trust Test Verifying Unbroken Provenance Chain to Physical Artifact"
+      }
+    },
+    "/api/v1/spiritual-figures": {
+      "get": {
+        "summary": "List Canonical Buzurg and Spiritual Figures in Registry"
+      },
+      "post": {
+        "summary": "Register New Buzurg Figure with Canonical Aliases and Lineages"
+      }
+    },
+    "/api/v1/spiritual-figures/resolve": {
+      "post": {
+        "summary": "Resolve Buzurg Identity via Multi-Lingual Alias Resolution Engine"
+      }
+    },
+    "/api/v1/spiritual-figures/{id}": {
+      "get": {
+        "summary": "Retrieve Detailed Spiritual Figure Record and Scholarly Classifications"
+      }
+    },
+    "/api/v1/silsilas": {
+      "get": {
+        "summary": "List Silsila Traditions in Registry"
+      },
+      "post": {
+        "summary": "Register New Silsila Tradition"
+      }
+    },
+    "/api/v1/silsilas/{id}": {
+      "get": {
+        "summary": "Retrieve Silsila Metadata"
+      }
+    },
+    "/api/v1/silsilas/{id}/lineage": {
+      "get": {
+        "summary": "Retrieve Complete Lineage Transmission Graph with Multi-Branching Edges"
+      }
+    },
+    "/api/v1/silsilas/transmissions": {
+      "post": {
+        "summary": "Add Transmission Edge Linking Master to Disciple in Silsila Graph"
+      }
+    },
+    "/api/v1/spiritual-works": {
+      "get": {
+        "summary": "List Spiritual Works in Literature Taxonomy"
+      },
+      "post": {
+        "summary": "Register New Spiritual Work Record"
+      }
+    },
+    "/api/v1/spiritual-works/{id}": {
+      "get": {
+        "summary": "Retrieve Spiritual Work Details and Textual Criticism Metadata"
+      }
+    },
+    "/api/v1/quotes/verify": {
+      "post": {
+        "summary": "Verify Aphorisms and Attributed Sayings with Surrounding Context Extraction"
+      }
+    },
+    "/api/v1/spiritual-concepts": {
+      "get": {
+        "summary": "List Controlled Spiritual Concepts (Sabr, Shukr, Tawakkul, Ikhlas, etc.)"
+      }
+    },
+    "/api/v1/spiritual-concepts/{id}": {
+      "get": {
+        "summary": "Retrieve Spiritual Concept Ontology and Correlated Quran/Hadith Anchors"
+      }
+    },
+    "/api/v1/spiritual-claims": {
+      "post": {
+        "summary": "Register Spiritual Heritage Claim in Ledger"
+      }
+    },
+    "/api/v1/spiritual-claims/{id}": {
+      "get": {
+        "summary": "Retrieve Spiritual Heritage Claim and Multi-Dimensional Badges"
+      }
+    },
+    "/api/v1/spiritual-practices": {
+      "get": {
+        "summary": "List Devotional Practices Protected by Amal Classification Firewall"
+      }
+    },
+    "/api/v1/spiritual-reviews": {
+      "post": {
+        "summary": "Submit Scholarly Review with Two-Reviewer Protocol for Sensitive Claims"
+      }
+    },
+    "/api/v1/spiritual-safety/evaluate": {
+      "post": {
+        "summary": "Evaluate Spiritual AI Safety Guardrails against Manipulation, Guaranteed Miracles, and Sainthood Claims"
+      }
+    },
+    "/api/v1/spiritual-heritage/audit/{claimId}": {
+      "get": {
+        "summary": "Execute Section 99 Definition of Done 10-Question Provenance Audit"
+      }
+    },
+    "/api/v1/knowledge/sources/candidates": {
+      "get": {
+        "summary": "List Ingestion Candidate Queue with Composite Priority Scores"
+      },
+      "post": {
+        "summary": "Enqueue Source Candidate with Multi-Factor Prioritization"
+      }
+    },
+    "/api/v1/knowledge/sources/triage": {
+      "post": {
+        "summary": "Triage Source Candidate (APPROVE, BLOCK, REJECT)"
+      }
+    },
+    "/api/v1/knowledge/sources/acquire": {
+      "post": {
+        "summary": "Acquire Source Artifact with Automatic SHA-256 and License Gate Enforcement"
+      }
+    },
+    "/api/v1/knowledge/sources/derivative": {
+      "post": {
+        "summary": "Create Immutable Artifact Derivative with Processor Version and Parent Checksum"
+      }
+    },
+    "/api/v1/knowledge/sources/custody/{artifactId}": {
+      "get": {
+        "summary": "Retrieve Artifact Cryptographic Chain of Custody"
+      }
+    },
+    "/api/v1/knowledge/processing/ocr": {
+      "post": {
+        "summary": "Process OCR with Anomaly Detection Flags and Page-Text Alignment"
+      }
+    },
+    "/api/v1/knowledge/processing/normalize": {
+      "post": {
+        "summary": "Execute Meaning-Preserving Unicode Normalization with Quranic Orthography Protection"
+      }
+    },
+    "/api/v1/knowledge/processing/structure": {
+      "post": {
+        "summary": "Register Document Hierarchical Structure Node"
+      }
+    },
+    "/api/v1/knowledge/passages": {
+      "post": {
+        "summary": "Segment and Register Permanent Immutable Passage with Checksum"
+      }
+    },
+    "/api/v1/knowledge/passages/{passageId}": {
+      "get": {
+        "summary": "Retrieve Permanent Passage by UUID"
+      }
+    },
+    "/api/v1/knowledge/references/quran/resolve": {
+      "post": {
+        "summary": "Deterministically Resolve Quranic Citations against Canonical Tanzil Reference"
+      }
+    },
+    "/api/v1/knowledge/references/hadith/resolve": {
+      "post": {
+        "summary": "Resolve Hadith References with Collection Numbering Edition Normalization"
+      }
+    },
+    "/api/v1/knowledge/citations": {
+      "post": {
+        "summary": "Register Cross-Source Citation Record"
+      }
+    },
+    "/api/v1/knowledge/citations/verify": {
+      "post": {
+        "summary": "Verify Cross-Source Citation with Matching Engine"
+      }
+    },
+    "/api/v1/knowledge/madhhab-matrix": {
+      "post": {
+        "summary": "Register Four-Madhhab Comparative Fiqh Issue Matrix"
+      }
+    },
+    "/api/v1/knowledge/madhhab-matrix/{issueId}": {
+      "get": {
+        "summary": "Retrieve Comparative Fiqh Issue Matrix with Explicit Missing School Tracking"
+      }
+    },
+    "/api/v1/knowledge/claims": {
+      "post": {
+        "summary": "Register Claim in Immutable Factory Knowledge Ledger"
+      }
+    },
+    "/api/v1/knowledge/claims/{claimId}": {
+      "get": {
+        "summary": "Retrieve Knowledge Claim with Evidence Support Hierarchy"
+      }
+    },
+    "/api/v1/knowledge/translations/align": {
+      "post": {
+        "summary": "Align Multilingual Translation Passage with AI_DRAFT Watermark Enforcement"
+      }
+    },
+    "/api/v1/knowledge/reviews": {
+      "post": {
+        "summary": "Submit Scholarly Review with Two-Reviewer High-Risk Protocol and Dispute Trigger"
+      }
+    },
+    "/api/v1/knowledge/disputes": {
+      "post": {
+        "summary": "Register Scholarly Dispute Preserving Disagreement"
+      }
+    },
+    "/api/v1/knowledge/disputes/{disputeId}/resolve": {
+      "post": {
+        "summary": "Resolve Dispute with Recognized Disagreement or Clarified Scope"
+      }
+    },
+    "/api/v1/knowledge/quarantine": {
+      "post": {
+        "summary": "Quarantine Corrupted, Fabricated, or Injected Entity"
+      }
+    },
+    "/api/v1/knowledge/quarantine/check/{entityId}": {
+      "get": {
+        "summary": "Check Quarantine Status of Entity"
+      }
+    },
+    "/api/v1/knowledge/releases": {
+      "post": {
+        "summary": "Create Immutable Blue/Green Knowledge Release Manifest"
+      }
+    },
+    "/api/v1/knowledge/releases/publish": {
+      "post": {
+        "summary": "Publish Knowledge Release with Gate Checklist Validation"
+      }
+    },
+    "/api/v1/knowledge/releases/rollback": {
+      "post": {
+        "summary": "Instant Single-Operation Rollback to Prior Release with Audit Preservation"
+      }
+    },
+    "/api/v1/knowledge/releases/active": {
+      "get": {
+        "summary": "Get Current Production Active Release Manifest"
+      }
+    },
+    "/api/v1/knowledge/evidence-pack": {
+      "post": {
+        "summary": "Assemble Comprehensive AI Evidence Pack with Full Provenance and Disagreements"
+      }
+    },
+    "/api/v1/knowledge/quality-scorecard/{sourceId}": {
+      "get": {
+        "summary": "Evaluate Multi-Dimensional Quality Scorecard without Single Compressed Scores"
+      }
+    },
+    "/api/v1/knowledge/security/scan-prompt-injection": {
+      "post": {
+        "summary": "Scan Ingested Document Text for Indirect Prompt Injection and Quarantining Threats"
+      }
+    },
+    "/api/v1/knowledge/audit/{claimId}": {
+      "get": {
+        "summary": "Audit Knowledge Object against Section 121 10-Question Provenance Trust Contract"
+      }
+    },
+    "/api/v1/acquisition/candidates": {
+      "get": {
+        "summary": "List Acquisition Candidate Queue sorted by 12-factor priority score"
+      },
+      "post": {
+        "summary": "Register new corpus acquisition candidate with 12-factor scoring"
+      }
+    },
+    "/api/v1/acquisition/candidates/{id}": {
+      "get": {
+        "summary": "Get candidate details and priority scorecard"
+      }
+    },
+    "/api/v1/acquisition/rights-check": {
+      "post": {
+        "summary": "Evaluate 9-component rights matrix under Rights-First architecture"
+      }
+    },
+    "/api/v1/acquisition/tier/{id}": {
+      "get": {
+        "summary": "Get Three-Tier corpus classification (Tier A, Tier B, Tier C)"
+      }
+    },
+    "/api/v1/acquisition/repositories": {
+      "get": {
+        "summary": "List registered manuscript and print repositories with trust levels"
+      }
+    },
+    "/api/v1/acquisition/repositories/{id}": {
+      "get": {
+        "summary": "Get repository profile and license policy"
+      }
+    },
+    "/api/v1/acquisition/packets": {
+      "post": {
+        "summary": "Assemble complete Source Packet with multi-edition and review plan"
+      }
+    },
+    "/api/v1/acquisition/packets/{id}": {
+      "get": {
+        "summary": "Get Source Packet manifest for candidate work"
+      }
+    },
+    "/api/v1/acquisition/works/{id}": {
+      "get": {
+        "summary": "Get canonical bibliographic work and edition metadata"
+      }
+    },
+    "/api/v1/acquisition/batches": {
+      "post": {
+        "summary": "Create controlled acquisition batch with assigned reviewers"
+      }
+    },
+    "/api/v1/acquisition/batches/{id}/validate": {
+      "post": {
+        "summary": "Validate batch release readiness against 8 verification gates"
+      }
+    },
+    "/api/v1/acquisition/capacity-planning": {
+      "get": {
+        "summary": "Evaluate scholar review capacity, safe acquisition rate, and backlog throttle"
+      }
+    },
+    "/api/v1/acquisition/withdrawals": {
+      "post": {
+        "summary": "Submit emergency source withdrawal request with full audit trail"
+      }
+    },
+    "/api/v1/acquisition/corrections": {
+      "post": {
+        "summary": "Submit scholarly textual correction ticket"
+      }
+    },
+    "/api/v1/acquisition/source-cards/public/{id}": {
+      "get": {
+        "summary": "Generate Amal Public Source Card (Why trust this? What is uncertain?)"
+      }
+    },
+    "/api/v1/acquisition/source-cards/scholar/{id}": {
+      "get": {
+        "summary": "Generate Scholar Extended Source Card with collation and witnesses"
+      }
+    },
+    "/api/v1/acquisition/tracks/madhhab": {
+      "get": {
+        "summary": "List Four-Madhhab acquisition tracks and canonical representation"
+      }
+    },
+    "/api/v1/acquisition/silsilas": {
+      "get": {
+        "summary": "List historical spiritual silsila registry with classical disclaimer"
+      }
+    },
+    "/api/v1/catalogue/works": {
+      "get": {
+        "summary": "List Canonical Works in Universal Master Catalogue with filters"
+      }
+    },
+    "/api/v1/catalogue/works/{id}": {
+      "get": {
+        "summary": "Get Canonical Work details by permanent AML-W ID"
+      }
+    },
+    "/api/v1/catalogue/authors": {
+      "get": {
+        "summary": "List Canonical Authors in Master Catalogue"
+      }
+    },
+    "/api/v1/catalogue/authors/{id}": {
+      "get": {
+        "summary": "Get Canonical Author identity by permanent AML-PER ID"
+      }
+    },
+    "/api/v1/catalogue/silsilas": {
+      "get": {
+        "summary": "List Documented Spiritual Silsila Orders with classical disclaimer"
+      }
+    },
+    "/api/v1/catalogue/silsilas/{id}": {
+      "get": {
+        "summary": "Get Spiritual Silsila Order details"
+      }
+    },
+    "/api/v1/catalogue/editions/{id}": {
+      "get": {
+        "summary": "Get Edition details by permanent AML-E ID"
+      }
+    },
+    "/api/v1/catalogue/gaps": {
+      "get": {
+        "summary": "Analyze Multi-school, tradition, and regional language gaps"
+      }
+    },
+    "/api/v1/catalogue/priorities": {
+      "get": {
+        "summary": "Get Next-Action Acquisition Recommendations (Next 10, Next 50, Next Batch)"
+      }
+    },
+    "/api/v1/catalogue/batches": {
+      "get": {
+        "summary": "List 20 Initial Master Acquisition Batches"
+      }
+    },
+    "/api/v1/catalogue/candidates": {
+      "post": {
+        "summary": "Register candidate work into Master Catalogue"
+      }
+    },
+    "/api/v1/catalogue/audit": {
+      "get": {
+        "summary": "Run Automated Catalogue Audit (checks duplicates, missing authors, orphan links)"
+      }
+    },
+    "/api/v1/catalogue/dashboard": {
+      "get": {
+        "summary": "Get Top-level Master Catalogue Dashboard metrics and distribution"
+      }
+    },
+    "/api/v1/catalogue/public-card/{id}": {
+      "get": {
+        "summary": "Get Public Source Screen with Granular Discovery Badges"
+      }
+    },
+    "/api/v1/catalogue/reconstruct/{id}": {
+      "get": {
+        "summary": "End-to-End Knowledge Reconstruction (work, author, editions, artifacts, scorecard)"
+      }
+    },
+    "/api/v1/atlas/ghuniyat-al-talibin": {
+      "get": {
+        "summary": "Section 91 Definition of Done: Canonical Ghuniyat al-Talibin Structured Knowledge Dossier"
+      }
+    },
+    "/api/v1/atlas/buzurg": {
+      "get": {
+        "summary": "List Major Historical Buzurg & Awliya in Global Heritage Atlas"
+      }
+    },
+    "/api/v1/atlas/buzurg/{id}": {
+      "get": {
+        "summary": "Get Canonical Buzurg Dossier with Epistemic Separation and Biographical Boundaries"
+      }
+    },
+    "/api/v1/atlas/buzurg/{id}/universe": {
+      "get": {
+        "summary": "Get Figure Complete Knowledge Universe (authenticated, attributed, disputed works, malfuzat, maktubat)"
+      }
+    },
+    "/api/v1/atlas/silsilas/{id}/graph": {
+      "get": {
+        "summary": "Get Silsila Lineage Graph with 9 Edge Types and Mandatory Disclaimer"
+      }
+    },
+    "/api/v1/atlas/practices": {
+      "get": {
+        "summary": "List Spiritual Practice Registry with Classical Grounding Classification"
+      }
+    },
+    "/api/v1/atlas/practices/{id}": {
+      "get": {
+        "summary": "Get Spiritual Practice with Classical Evidentiary Basis and Non-Equating Disclaimer"
+      }
+    },
+    "/api/v1/atlas/concepts": {
+      "get": {
+        "summary": "List Classical Tazkiyah Concepts with Quranic and Prophetic Foundation"
+      }
+    },
+    "/api/v1/atlas/concepts/{term}/compare": {
+      "get": {
+        "summary": "Compare Tazkiyah Concept Evolution Across Early Ascetic, Classical, and Four Sunni Madhhabs"
+      }
+    },
+    "/api/v1/atlas/quotes/verify": {
+      "post": {
+        "summary": "7-Stage Discrete Quote Verification Pipeline with Textual Provenance Check"
+      }
+    },
+    "/api/v1/atlas/spiritual-ai/ask": {
+      "post": {
+        "summary": "7-Part Structured Governed Spiritual AI Inquiry with Uncertainty Boundary"
+      }
+    },
+    "/api/v1/atlas/karamat": {
+      "get": {
+        "summary": "List Karamat and Dream Reports with Mandatory Attestation Disclaimers"
+      }
+    },
+    "/api/v1/trust-center/manifest": {
+      "get": {
+        "summary": "Retrieve Public Trust & Methodology Center Manifest and Epistemic Governance Stats"
+      }
+    },
+    "/api/v1/trust-center/disclaimer": {
+      "get": {
+        "summary": "Retrieve Canonical Non-Authority Disclaimer and Scholarly Supremacy Bounds"
+      }
+    },
+    "/api/v1/trust-center/policies/{slug}": {
+      "get": {
+        "summary": "Retrieve Comprehensive Trust Policy by Slug"
+      }
+    },
+    "/api/v1/trust-center/pipeline": {
+      "get": {
+        "summary": "Retrieve 7-Stage End-to-End Verification Pipeline with Mandatory Human Scholar Gates"
+      }
+    },
+    "/api/v1/trust-center/version-history": {
+      "get": {
+        "summary": "Retrieve Public Semantic Methodology Version Releases and Verification Benchmarks"
+      }
+    },
+    "/api/v1/sirah/sources": {
+      "get": {
+        "summary": "List Canonical Sirah and Shamail Sources with Provenance Tiers"
+      }
+    },
+    "/api/v1/sirah/sources/{id}": {
+      "get": {
+        "summary": "Get Canonical Sirah Source with Critical Edition Metadata"
+      }
+    },
+    "/api/v1/sirah/events": {
+      "get": {
+        "summary": "List Prophetic Life Events Filtered by Period or Type"
+      }
+    },
+    "/api/v1/sirah/events/{id}": {
+      "get": {
+        "summary": "Get Prophetic Life Event with Multi-Tier Evidence Ledger"
+      }
+    },
+    "/api/v1/sirah/events/{id}/evidence": {
+      "get": {
+        "summary": "Get Evidence Items for Prophetic Life Event"
+      }
+    },
+    "/api/v1/sirah/events/{id}/reports": {
+      "get": {
+        "summary": "Get Historical Report Variants and Disagreements for Prophetic Event"
+      }
+    },
+    "/api/v1/sirah/shamail": {
+      "get": {
+        "summary": "List Shamail Reports Across Physical Description, Worship, and Character"
+      }
+    },
+    "/api/v1/sirah/shamail/{id}": {
+      "get": {
+        "summary": "Get Detailed Shamail Report with Hadith Gradings and Adab Lessons"
+      }
+    },
+    "/api/v1/sirah/timeline": {
+      "get": {
+        "summary": "Retrieve Comprehensive Prophetic Chronology and Life Period Breakdown"
+      }
+    },
+    "/api/v1/sirah/graph": {
+      "get": {
+        "summary": "Retrieve Prophetic Life Graph Nodes and Typed Relational Edges"
+      }
+    },
+    "/api/v1/sirah/ai/ask": {
+      "post": {
+        "summary": "Governed Sirah Inquiry with 10-Field Auditable Internal Answer Contract"
+      }
+    },
+    "/api/v1/sirah/quotes/verify": {
+      "post": {
+        "summary": "Verbatim Quote Verification and Provenance Audit for Prophetic Statements"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 /**
  * AMAL OS — LAYER 20: PRIVACY SERVICE (Section 20.27 & 20.28)
  * Manages GDPR/Islamic privacy requests: full data export, account deletion,
- * and immutable privacy request auditing.
+ * user consent lifecycle, and immutable privacy request auditing.
  */
 
 import { Injectable } from '@nestjs/common';
@@ -11,6 +11,7 @@ import { AuditService } from '../../common/audit/audit.service.js';
 import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 import { AmalError } from '../../common/errors/amal-error.js';
 import { ErrorCode } from '../../common/errors/error-codes.js';
+import { db } from '@amal/database';
 
 export interface PrivacyRequestRecord {
   id: string;
@@ -32,6 +33,40 @@ export class PrivacyService {
     private readonly policy: PolicyEngine = new PolicyEngine(),
     private readonly audit: AuditService = new AuditService(new PgClient()),
   ) {}
+
+  public async getPrivacyOverview(actor: AuthenticatedUser) {
+    return {
+      userId: actor.userId,
+      dataRetentionDays: 365,
+      encryptionAtRest: true,
+      adultReflectionVault: 'ISOLATED',
+      consents: await this.getConsents(actor),
+    };
+  }
+
+  public async getConsents(actor: AuthenticatedUser) {
+    return (
+      db.consents.get(actor.userId) || [
+        { type: 'ANALYTICS', granted: false, updatedAt: new Date().toISOString() },
+        { type: 'COMMUNICATION', granted: true, updatedAt: new Date().toISOString() },
+        { type: 'MEMORY', granted: false, updatedAt: new Date().toISOString() },
+        { type: 'FAMILY_SHARE', granted: false, updatedAt: new Date().toISOString() },
+      ]
+    );
+  }
+
+  public async updateConsents(actor: AuthenticatedUser, consents: any[]) {
+    db.consents.set(actor.userId, consents as any);
+    await this.audit.record({
+      actorUserId: actor.userId,
+      action: 'CONSENT_UPDATE',
+      resourceType: 'consents',
+      resourceId: actor.userId,
+      purpose: 'COMPLIANCE',
+      outcome: 'SUCCESS',
+    });
+    return { success: true, consents };
+  }
 
   public async requestExport(actor: AuthenticatedUser): Promise<PrivacyRequestRecord> {
     this.policy.assertAllowed({

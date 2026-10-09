@@ -61,14 +61,38 @@ export const ReflectionScreen: React.FC = () => {
           multiline
         />
 
-        <TouchableOpacity
-          style={styles.saveButton}
-          onPress={() => setSubmitted(true)}
-        >
-          <Text style={styles.saveButtonText}>
-            {submitted ? '✓ Saved Privately' : 'Save Reflection'}
-          </Text>
-        </TouchableOpacity>
+        {submitted ? (
+          <View style={{ backgroundColor: '#ECFDF5', padding: 16, borderRadius: 10, alignItems: 'center', marginTop: 12 }}>
+            <Text style={{ color: '#065F46', fontWeight: '700', fontSize: 14, marginBottom: 8 }}>
+              ✓ Saved to Zero-Knowledge Vault
+            </Text>
+            <Text style={{ color: '#047857', fontSize: 12, textAlign: 'center', marginBottom: 12 }}>
+              Your reflection has been safely encrypted and saved. No AI training, no public exposure.
+            </Text>
+            <TouchableOpacity
+              style={[styles.saveButton, { backgroundColor: '#065F46', paddingHorizontal: 20 }]}
+              onPress={() => {
+                setWentWell('');
+                setFeltDifficult('');
+                setTomorrow('');
+                setSubmitted(false);
+              }}
+            >
+              <Text style={styles.saveButtonText}>Write Another Entry</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => {
+              if (wentWell.trim() || feltDifficult.trim() || tomorrow.trim()) {
+                setSubmitted(true);
+              }
+            }}
+          >
+            <Text style={styles.saveButtonText}>Save Reflection</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );

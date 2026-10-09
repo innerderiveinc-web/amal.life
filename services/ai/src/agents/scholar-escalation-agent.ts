@@ -10,7 +10,7 @@ export class ScholarEscalationAgent {
     userQuestion: string,
     sanitizedContext: string,
     detectedIssue: string,
-    relevantSources: EvidencePackItem[],
+    relevantSources: (EvidencePackItem | string)[],
     urgency: CaseUrgency = 'NORMAL'
   ): Promise<ScholarCase> {
     const caseId = `case-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
@@ -20,6 +20,12 @@ export class ScholarEscalationAgent {
       (s) => s.availableForCases && s.verificationStatus === 'APPROVED'
     );
 
+    const normalizedSources: EvidencePackItem[] = relevantSources.map((s: any) =>
+      typeof s === 'string'
+        ? { passageId: s, sourceTitle: 'Islamic Source', reference: s, authorityLevel: 'TIER_1_QURAN', translation: '', relevanceScore: 1 }
+        : s
+    );
+
     const scholarCase: ScholarCase = {
       id: caseId,
       userId,
@@ -27,7 +33,7 @@ export class ScholarEscalationAgent {
       userQuestion,
       sanitizedContext,
       detectedFiqhIssue: detectedIssue,
-      relevantSources,
+      relevantSources: normalizedSources,
       userConsentGranted: true,
       urgency,
       status: 'PENDING_TRIAGE',

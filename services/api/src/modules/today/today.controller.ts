@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { TodayService } from './today.service';
 import { TodayResponse } from '@amal/types';
-import { AuthGuard } from '../../guards/auth.guard';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
 
 @Controller('today')
 @UseGuards(AuthGuard)

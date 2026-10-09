@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { db } from '@amal/database';
+import { UniversalSearchEngine } from '@amal/amal-engine';
 
 export interface EvidenceChainResponse {
   claim: { id: string; text: string };
@@ -32,6 +33,19 @@ export class EvidenceService {
           translatedText: passage.translatedText,
         });
         if (results.length >= maxResults) break;
+      }
+    }
+
+    if (results.length < maxResults) {
+      const canonicalHits = UniversalSearchEngine.search(query, maxResults - results.length);
+      for (const hit of canonicalHits) {
+        results.push({
+          passageId: hit.id,
+          reference: hit.titleEn,
+          sourceTitle: hit.titleUr,
+          authorityLevel: hit.category === 'QURAN' ? 'TIER_1_QURAN' : 'TIER_2_CLASSICAL_CONSENSUS',
+          translatedText: `${hit.snippetEn} — ${hit.snippetUr}`,
+        });
       }
     }
 
@@ -86,5 +100,51 @@ export class EvidenceService {
       e => e.sourceNodeId === id || e.targetNodeId === id
     );
     return { nodeId: id, edges };
+  }
+
+  public async getNodeSources(nodeId: string) {
+    const node = db.nodes.get(nodeId);
+    if (!node) return [];
+    return Array.from(db.sources.values()).filter(
+      s => s.id === (node as any).sourceId || (node as any).metadata?.sourceId === s.id
+    );
+  }
+
+  public async query(queryText: string, options?: { limit?: number; minConfidence?: number }) {
+    const results = await this.search(queryText, options?.limit || 5);
+    return {
+      query: queryText,
+      totalMatched: results.length,
+      evidence: results,
+      retrievalTimestamp: new Date().toISOString(),
+    };
+  }
+
+  public async getClaim(claimId: string) {
+    // Lookup or synthesize canonical claim for passage
+    for (const passage of db.passages.values()) {
+      if (`claim_${passage.id}` === claimId || passage.id === claimId) {
+        return {
+          claimId,
+          text: `Canonical guidance grounded in ${passage.reference}`,
+          supportLevel: 'DIRECT',
+          verificationStatus: 'VERIFIED',
+          passageId: passage.id,
+          reference: passage.reference,
+          sourceId: passage.sourceId,
+        };
+      }
+    }
+    return null;
+  }
+
+  public async getClaimProvenance(claimId: string) {
+    const claim = await this.getClaim(claimId);
+    if (!claim) return null;
+    return this.getChain(claim.passageId);
+  }
+
+  public async getSource(sourceId: string) {
+    return db.sources.get(sourceId) || null;
   }
 }

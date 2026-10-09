@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: amal_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: amal_user
+      POSTGRES_PASSWORD: amal_password
+      POSTGRES_DB: amal_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./packages/database/migrations:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:7
+    container_name: amal_redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redisdata:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    container_name: amal_api
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://amal_user:amal_password@postgres:5432/amal_db?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: amal_production_jwt_secret_change_in_cloud
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+      - redis
+
+  ai:
+    build:
+      context: .
+      dockerfile: services/ai/Dockerfile
+    container_name: amal_ai
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 4001
+      REDIS_URL: redis://redis:6379
+    ports:
+      - '4001:4001'
+    depends_on:
+      - redis
+
+  retrieval:
+    build:
+      context: .
+      dockerfile: services/retrieval/Dockerfile
+    container_name: amal_retrieval
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 4002
+      DATABASE_URL: postgresql://amal_user:amal_password@postgres:5432/amal_db?schema=public
+    ports:
+      - '4002:4002'
+    depends_on:
+      - postgres
+
+  worker:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    container_name: amal_worker
+    restart: always
+    command: ["node", "services/api/dist/workers/daily-plan.worker.js"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://amal_user:amal_password@postgres:5432/amal_db?schema=public
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: amal_web
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      NEXT_PUBLIC_API_URL: http://api:4000/api/v1
+    ports:
+      - '3000:3000'
+    depends_on:
+      - api
+
+  scholar:
+    build:
+      context: .
+      dockerfile: apps/scholar/Dockerfile
+    container_name: amal_scholar
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      NEXT_PUBLIC_API_URL: http://api:4000/api/v1
+    ports:
+      - '3002:3002'
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  redisdata:

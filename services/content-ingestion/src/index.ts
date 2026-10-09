@@ -10,3 +10,5 @@ export * from './graph/graph-builder.js';
 export * from './quarantine/quarantine-service.js';
 export * from './review/review-service.js';
 export * from './pipeline.js';
+export * from './scholarly-ingestion-engine.js';
+export * from './sirah/index.js';

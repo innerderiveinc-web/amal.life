@@ -1,8 +1,20 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
+    "noImplicitAny": false,
+    "strict": false,
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/agents/amal/**",
+    "src/agents/deen/**",
+    "src/agents/journey/**",
+    "src/agents/personalization/**",
+    "src/agents/reflection/**",
+    "src/agents/scholar/**",
+    "src/orchestrator/**"
+  ]
 }

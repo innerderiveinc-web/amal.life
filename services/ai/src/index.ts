@@ -18,9 +18,11 @@ export * from './safety/final-safety-gate.js';
 export * from './runtime/response-composer.js';
 export * from './orchestrator/master-orchestrator.js';
 
-export * from './agents/deen/deen-explanation-agent.js';
-export * from './agents/amal/amal-planner-agent.js';
-export * from './agents/journey/journey-execution-agent.js';
-export * from './agents/reflection/reflection-intelligence-agent.js';
-export * from './agents/personalization/personalization-agent.js';
-export * from './agents/scholar/scholar-escalation-agent.js';
+export * from './agents/intent-router.js';
+export * from './agents/amal-planner.js';
+export * from './agents/journey-agent.js';
+export * from './agents/reflection-agent.js';
+export * from './agents/scholar-escalation-agent.js';
+export * from './sirah/index.js';
+
+

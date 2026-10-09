@@ -42,10 +42,13 @@ export class InMemoryAmalDatabase {
   sources: Map<string, IslamicSource> = new Map();
   passages: Map<string, SourcePassage> = new Map();
   edges: Map<string, EvidenceEdge> = new Map();
+  nodes: Map<string, any> = new Map();
   topics: Map<string, Topic> = new Map();
   concepts: Map<string, IslamicConcept> = new Map();
 
   journeys: Map<string, Journey> = new Map();
+  goals: Map<string, any> = new Map();
+  amals: Map<string, any> = new Map();
   reflections: Map<string, Reflection[]> = new Map();
   prayers: Map<string, PrayerEvent[]> = new Map();
 
@@ -150,4 +153,5 @@ export * from './seeds/data.js';
 export * from './seeds/journeys.js';
 export * from './client.js';
 export * from './repositories/index.js';
+export * from './sirah/index.js';
 

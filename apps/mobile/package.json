@@ -7,17 +7,27 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "build:android:apk": "eas build -p android --profile preview",
+    "build:android:aab": "eas build -p android --profile production",
+    "build:ios": "eas build -p ios --profile production"
   },
   "dependencies": {
+    "@amal/amal-engine": "workspace:*",
+    "@amal/config": "workspace:*",
+    "@amal/evidence": "workspace:*",
     "@amal/types": "workspace:*",
     "@amal/ui": "workspace:*",
-    "@amal/config": "workspace:*",
+    "expo": "^51.0.0",
     "react": "^18.2.0",
     "react-native": "^0.74.0",
-    "expo": "^51.0.0"
+    "@babel/runtime": "^7.20.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-class-static-block": "^7.24.0",
+    "@types/react": "^18.3.31",
+    "@types/react-native": "^0.73.0",
     "typescript": "^5.4.5"
   }
 }

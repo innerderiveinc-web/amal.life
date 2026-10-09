@@ -28,7 +28,7 @@ export class EvidenceGraphService {
     // Invariant: Behavioral science must never be labeled as Islamic evidence
     if (
       node.epistemicDomain === 'BEHAVIORAL_SCIENCE' &&
-      (node.entityType === 'QURAN' || node.entityType === 'HADITH' || node.entityType === 'TAFSIR')
+      ((node.entityType as any) === 'QURAN' || (node.entityType as any) === 'HADITH' || (node.entityType as any) === 'TAFSIR' || node.entityType === 'QURAN_AYAH' || node.entityType === 'HADITH_PASSAGE')
     ) {
       throw new Error('EPISTEMIC_DOMAIN_MISMATCH: Behavioral science cannot be classified as Revelation.');
     }

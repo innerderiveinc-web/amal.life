@@ -2,8 +2,18 @@ import { CitationReference, EvidencePackItem } from '@amal/types';
 import { db } from '@amal/database';
 
 export class CitationValidator {
+  public static validateCitation(reference: string): { valid: boolean; reference: string } {
+    const foundPassage = Array.from(db.passages.values()).find(
+      (p) => p.reference.toLowerCase().trim() === reference.toLowerCase().trim()
+    );
+    if (!foundPassage) return { valid: false, reference };
+    const parentSource = db.sources.get(foundPassage.sourceId);
+    return { valid: parentSource?.verificationStatus === 'APPROVED', reference };
+  }
+
   /**
    * Validate that cited references actually exist in the approved database
+
    * and that claims have direct provenance.
    */
   public static async validateCitations(

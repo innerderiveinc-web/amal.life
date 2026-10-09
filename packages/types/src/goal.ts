@@ -46,6 +46,8 @@ export interface GoalRecord {
   updatedAt: string;
 }
 
+export type Goal = GoalRecord;
+
 export interface GoalBaselineRecord {
   id: string;
   goalId: GoalId;

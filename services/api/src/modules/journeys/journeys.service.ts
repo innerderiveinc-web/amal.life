@@ -97,14 +97,14 @@ export class JourneysService {
       purpose: 'PRODUCT',
     });
 
-    if (!JourneyStateMachine.canTransition(journey.state, targetState)) {
+    if (!JourneyStateMachine.canTransition(journey.state!, targetState)) {
       throw new AmalError(
         ErrorCode.CONFLICT,
         `Cannot transition journey from ${journey.state} to ${targetState}`
       );
     }
 
-    const nextState = JourneyStateMachine.transition(journey.state, targetState);
+    const nextState = JourneyStateMachine.transition(journey.state!, targetState);
 
     const client = await this.db.connect();
     try {

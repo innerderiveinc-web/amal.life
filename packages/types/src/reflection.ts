@@ -2,6 +2,8 @@ export type ReflectionType =
   | 'DAILY_MUHASABAH'
   | 'WEEKLY_INSIGHT'
   | 'JOURNEY_CHECKPOINT'
+  | 'JOURNEY_CHECK_IN'
+  | 'PERSONAL_NOTE'
   | 'FREE_FORM';
 
 export interface Reflection {
@@ -12,11 +14,19 @@ export interface Reflection {
   reflectionType: ReflectionType;
   wentWell: string;
   feltDifficult?: string | null;
+  frictionDetected?: string | null;
   tomorrowIntention?: string | null;
   gratitude?: string | null;
-  privateToUser: boolean;
+  amalId?: string | null;
+  privateToUser?: boolean;
+  date?: string;
+  content?: string;
+  sentiment?: string;
+  tags?: string[];
+  isPrivate?: boolean;
   createdAt: string;
 }
+
 
 export interface PersonalInsight {
   id: string;

@@ -56,25 +56,25 @@ export class ReferenceValidator {
     // Check Quran patterns: "Quran 2:286", "Surah 2:286", "2:286", "Surah Al-Baqarah 286"
     const quranMatch = trimmed.match(/^(?:Quran|Qur'an|Surah|Sura)?\s*(\d{1,3})\s*[:\.]\s*(\d{1,3})$/i);
     if (quranMatch) {
-      const surah = parseInt(quranMatch[1], 10);
-      const ayah = parseInt(quranMatch[2], 10);
+      const surah = parseInt(quranMatch[1] ?? '0', 10);
+      const ayah = parseInt(quranMatch[2] ?? '0', 10);
       return this.validateQuranReference(surah, ayah);
     }
 
     // Check Hadith patterns: "Sahih al-Bukhari 1", "Muslim 2564"
     const hadithMatch = trimmed.match(/^([A-Za-z`'\s-]+?)\s+(\d{1,5})$/);
     if (hadithMatch) {
-      const collectionRaw = hadithMatch[1].trim().toLowerCase();
-      const hadithNum = parseInt(hadithMatch[2], 10);
+      const collectionRaw = (hadithMatch[1] ?? '').trim().toLowerCase();
+      const hadithNum = parseInt(hadithMatch[2] ?? '0', 10);
       return this.validateHadithReference(collectionRaw, hadithNum);
     }
 
     // Check Tafsir patterns: "Tafsir Ibn Kathir (2:286)"
     const tafsirMatch = trimmed.match(/^Tafsir\s+([A-Za-z\s]+)\s*\((?:Quran\s+)?(\d{1,3})\s*[:\.]\s*(\d{1,3})\)$/i);
     if (tafsirMatch) {
-      const author = tafsirMatch[1].trim();
-      const surah = parseInt(tafsirMatch[2], 10);
-      const ayah = parseInt(tafsirMatch[3], 10);
+      const author = (tafsirMatch[1] ?? '').trim();
+      const surah = parseInt(tafsirMatch[2] ?? '0', 10);
+      const ayah = parseInt(tafsirMatch[3] ?? '0', 10);
       const qVal = this.validateQuranReference(surah, ayah);
       if (!qVal.valid) return qVal;
       return {
@@ -100,7 +100,7 @@ export class ReferenceValidator {
       };
     }
 
-    const maxAyahs = this.SURAH_AYAH_COUNTS[surah - 1];
+    const maxAyahs = this.SURAH_AYAH_COUNTS[surah - 1] ?? 0;
     if (ayah < 1 || ayah > maxAyahs) {
       return {
         valid: false,

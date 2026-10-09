@@ -19,13 +19,16 @@ export class PostgresReflectionsRepository {
       userId: input.userId,
       journeyId: input.journeyId,
       amalId: input.amalId,
+      reflectionType: input.reflectionType,
       wentWell: input.wentWell,
       frictionDetected: input.frictionDetected,
       tomorrowIntention: input.tomorrowIntention,
       privateToUser: true, // Non-negotiable: strictly private to user
       createdAt: new Date().toISOString(),
     };
-    db.reflections.set(id, reflection);
+    const list = db.reflections.get(input.userId) || [];
+    list.push(reflection);
+    db.reflections.set(input.userId, list);
     return reflection;
   }
 
@@ -34,13 +37,12 @@ export class PostgresReflectionsRepository {
    * Admins and family members cannot bypass this.
    */
   public async findByUserId(userId: string): Promise<Reflection[]> {
-    return Array.from(db.reflections.values()).filter(
-      (r) => r.userId === userId
-    );
+    return db.reflections.get(userId) || [];
   }
 
   public async findById(userId: string, reflectionId: string): Promise<Reflection | null> {
-    const ref = db.reflections.get(reflectionId);
+    const list = db.reflections.get(userId) || [];
+    const ref = list.find((r) => r.id === reflectionId);
     if (!ref || ref.userId !== userId) {
       return null;
     }

@@ -19,6 +19,6 @@ export async function bootstrap() {
   };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (typeof process !== 'undefined' && process.argv[1]?.endsWith('main.js')) {
   bootstrap();
 }

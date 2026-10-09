@@ -24,15 +24,17 @@ export class KnowledgeGraphTraversalEngine {
       if (current.depth >= maxDepth) continue;
 
       for (const edge of db.edges.values()) {
-        if (edge.sourceNodeId === current.nodeId && !visited.has(edge.targetNodeId)) {
-          visited.add(edge.targetNodeId);
+        const sourceId = edge.sourceNodeId || edge.fromEntityId || '';
+        const targetId = edge.targetNodeId || edge.toEntityId || '';
+        if (sourceId === current.nodeId && targetId && !visited.has(targetId)) {
+          visited.add(targetId);
           paths.push({
-            sourceNodeId: edge.sourceNodeId,
-            targetNodeId: edge.targetNodeId,
-            relationship: edge.relationship,
+            sourceNodeId: sourceId,
+            targetNodeId: targetId,
+            relationship: edge.relationship || edge.edgeType || 'CONNECTED',
             depth: current.depth + 1,
           });
-          queue.push({ nodeId: edge.targetNodeId, depth: current.depth + 1 });
+          queue.push({ nodeId: targetId, depth: current.depth + 1 });
         }
       }
     }

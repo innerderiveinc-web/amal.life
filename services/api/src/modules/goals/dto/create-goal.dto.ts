@@ -17,10 +17,10 @@ export class CreateGoalDto {
   @MaxLength(120)
   title!: string;
 
-  @IsEnum(GoalCategory as any)
+  @IsString()
   category!: GoalCategory;
 
-  @IsEnum(GoalIntent as any)
+  @IsString()
   intent!: GoalIntent;
 
   @IsOptional()

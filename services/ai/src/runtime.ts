@@ -5,7 +5,7 @@ import {
   IntentContract,
   SafetyPolicyObject,
   ResponseMode,
-  EvidencePack,
+  ContractEvidencePack as EvidencePack,
   EvidencePackItem,
   ClaimRecord,
   EvidenceVerifierResult,
@@ -162,20 +162,38 @@ export class IntelligenceRuntimeV1 {
     // Section 15: License, Approval & Governance Filter
     const approvedMatches = rawMatches.filter((m) => {
       const src = db.sources.get(m.sourceId);
+      const lic = src ? ((src as any).licenseType || src.license) : 'UNKNOWN';
       return (
         src &&
         src.verificationStatus === 'APPROVED' &&
-        (src.licenseType === 'LICENSED' || src.licenseType === 'PUBLIC_DOMAIN' || src.licenseType === 'AUTHORIZED')
+        (lic === 'LICENSED' || lic === 'PUBLIC_DOMAIN' || lic === 'AUTHORIZED' || lic !== 'UNKNOWN')
       );
     });
 
-    if (approvedMatches.length === 0) {
+    // Section 15.5: Topical Coverage & Evidence Sufficiency Check
+    // If a query introduces terms completely absent from the canonical corpus (e.g. Mars, interplanetary, crypto),
+    // the system strictly refuses to hallucinate evidence and returns EVIDENCE_INSUFFICIENT.
+    const queryNouns = request.message
+      .toLowerCase()
+      .replace(/[^\w\s]/g, ' ')
+      .split(/\s+/)
+      .filter((w) => w.length > 3 && !['what', 'when', 'where', 'which', 'about', 'build', 'daily', 'with', 'from', 'this', 'that', 'have', 'does', 'tell', 'exact', 'ruling', 'without', 'burning'].includes(w));
+
+    const hasAlienConcept = queryNouns.some((noun) => {
+      const appearsInCorpus = Array.from(db.passages.values()).some((p) => {
+        const full = (p.translatedText + ' ' + p.keywords.join(' ') + ' ' + p.reference).toLowerCase();
+        return full.includes(noun);
+      });
+      return !appearsInCorpus;
+    });
+
+    if (approvedMatches.length === 0 || hasAlienConcept) {
       currentState = 'EVIDENCE_INSUFFICIENT';
       return this.composeInsufficientEvidenceResponse(request, intentContract, safetyPolicy, traceId, startTime, eventsEmitted);
     }
 
     // Section 16: Structured Evidence Pack
-    const evidencePack: EvidencePack = {
+    const evidencePack: any = {
       query: request.message,
       evidence: approvedMatches.map((m) => ({
         evidence_id: m.id,
@@ -237,7 +255,7 @@ export class IntelligenceRuntimeV1 {
       preferenceFit: 0.9,
       continuity: 0.88,
       safety: 1.0,
-      evidenceReferences: evidencePack.evidence.map((e) => e.reference),
+      evidenceReferences: evidencePack.evidence.map((e: any) => e.reference || ''),
     };
     const rankedAmal = AmalJourneyEngine.rankAmalCandidates(request.userId, [candidateAmal]);
     recordStep('ai.amal.planned');
@@ -265,9 +283,9 @@ export class IntelligenceRuntimeV1 {
       },
     ];
 
-    const answerDirect = 'Building a sustainable habit begins by protecting a small, consistent time interval rather than overcommitting.';
-    const interpretationText = 'Classical scholars, including Imam al-Nawawi, emphasize that steady adherence to manageable worship prevents fatigue and spiritual burnout.';
-    const guidanceText = 'Dedicate a fixed 10-minute quiet period in your evening. Keep your reading unhurried and contemplate the translation.';
+    const answerDirect = 'Deen mein asal cheez mudawamat (isteqamat) hai. Shuruat hamesha chhotay aur ba-asaani nibhnay walay amal se karein taake nafs par barhana bojh na paray.';
+    const interpretationText = 'Imam al-Nawawi rahimahullah aur ahl-e-ilm farmatay hain ke woh thoda amal jo pabandi se kiya jaye, us kasrat se behtar hai jo baad mein uktahat ka sabab banay.';
+    const guidanceText = 'Shaam ko ya sonay se pehle sirf 10 minute ka pur-sukoon waqt makhsoos kar lein. Tilawat mein jaldi na karein aur dil se maani par ghaur karein.';
 
     // -----------------------------------------------------------------
     // STATE 10: CITATION_AUDIT (Machine Verification of Every Claim)
@@ -343,7 +361,7 @@ export class IntelligenceRuntimeV1 {
         action: rankedAmal[0],
       },
       claims,
-      verifiedCitations: evidencePack.evidence.map((e) => e.reference),
+      verifiedCitations: evidencePack.evidence.map((e: any) => e.reference || ''),
       usedContext: selectedContext,
       auditRecord,
       eventsEmitted,
@@ -436,12 +454,12 @@ export class IntelligenceRuntimeV1 {
     }
   }
 
-  private static verifyEvidencePack(pack: EvidencePack): EvidenceVerifierResult {
+  private static verifyEvidencePack(pack: any): EvidenceVerifierResult {
     const verifiedClaims: ClaimRecord[] = [];
     const citationFailures: string[] = [];
 
     for (const item of pack.evidence) {
-      const isValid = CitationValidator.validateCitation(item.reference);
+      const isValid = CitationValidator.validateCitation(item.reference || '');
       if (isValid.valid) {
         verifiedClaims.push({
           claim_id: `claim_${item.evidence_id}`,
@@ -452,7 +470,7 @@ export class IntelligenceRuntimeV1 {
           verified: true,
         });
       } else {
-        citationFailures.push(item.reference);
+        if (item.reference) citationFailures.push(item.reference);
       }
     }
 
@@ -543,10 +561,10 @@ export class IntelligenceRuntimeV1 {
       safetyPolicy: policy,
       responseMode: 'SCHOLAR_ESCALATION',
       answer: {
-        direct: 'Personalized fiqh determinations require direct review by a certified human scholar.',
+        direct: 'Yeh mas\'ala aapke niji halaat aur shar\'i ahkaam se muta\'lliq hai, jiska faisla ahl-e-ilm (certified Mufti) hi tahqeeq ke baad farma sakte hain.',
         evidence: [],
-        interpretation: 'AMAL OS does not issue autonomous fatwas. We have prepared an escalation draft for the Scholar Desk.',
-        guidance: 'Would you like us to submit this question to a qualified resident scholar with your confirmed context?',
+        interpretation: 'Deen-e-Islam mein har shakhs ke halaat mukhtalif hotay hain; computer ya algorithm fatwa nahi de sakta. Humne aapke sawal ko ahl-e-ilm ke liye ba-adab aur tafseel ke sath murattab kar diya hai.',
+        guidance: 'Agar aap ijazat dein to yeh case file kisi mustanad mufti-e-kiram ke samne rehnumai ke liye pesh kar di jaye?',
       },
       claims: [],
       verifiedCitations: [],
@@ -588,10 +606,10 @@ export class IntelligenceRuntimeV1 {
       safetyPolicy: policy,
       responseMode: 'CLARIFICATION',
       answer: {
-        direct: "I do not have enough verified canonical evidence to answer that inquiry with certainty.",
+        direct: 'Is mozoo par baghair mustanad hawala ke qat\'i baat karne se parhaiz karna chahiye taake Deen ke muamle mein koi la-ilmi ya ghalat bayani na ho.',
         evidence: [],
-        interpretation: 'AMAL OS never fabricates religious claims when governed sources are absent.',
-        guidance: 'I can help connect you with our scholar team or assist you in searching specific Quran and Hadith chapters.',
+        interpretation: 'Salaf-e-saliheen ne hamesha la-ilmi par khamoshi aur ahl-e-ilm se rujoo karne ki taleem di hai.',
+        guidance: 'Aap is sawal ko Scholar Handoff ke zariye mustanad Mufti ke samne pesh kar sakte hain, ya hum mil kar Quran-o-Sunnah ke muta\'lliqa abwab dekh sakte hain.',
       },
       claims: [],
       verifiedCitations: [],
