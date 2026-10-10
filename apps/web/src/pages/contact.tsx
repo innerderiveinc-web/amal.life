@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
-import { Footer } from '../components/Footer';
 import { showAmalToast } from '../components/Toast';
 
 export default function ContactPage() {
@@ -223,8 +222,6 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

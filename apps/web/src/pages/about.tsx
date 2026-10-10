@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
-import { Footer } from '../components/Footer';
 import { AmalTheme } from '@amal/ui';
 
 export default function AboutPage() {
@@ -324,8 +323,6 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }
