@@ -4,9 +4,27 @@ export default function Document() {
   return (
     <Html lang="en" dir="ltr">
       <Head>
-        {/* Favicon & Meta */}
+        {/* Favicon & PWA Manifest */}
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1B4332" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="AMAL OS" />
+
+        {/* Global OpenGraph & Social Sharing Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="AMAL OS" />
+        <meta property="og:title" content="AMAL OS — Sovereign Muslim Life Intelligence" />
+        <meta property="og:description" content="Ad-free, zero-tracking Islamic Life OS. From Niyyah to Amal. Grounded in Sawad al-A'zam orthodoxy across the 4 Sunni Madhhabs." />
+        <meta property="og:image" content="https://amal.life/icon-512.png" />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="AMAL OS — Sovereign Muslim Life Intelligence" />
+        <meta name="twitter:description" content="Ad-free, zero-tracking Islamic Life OS. From Niyyah to Amal." />
+        <meta name="twitter:image" content="https://amal.life/icon-512.png" />
 
         {/* Preconnect to Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

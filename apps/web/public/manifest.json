@@ -1,0 +1,24 @@
+{
+  "name": "AMAL OS — Sovereign Muslim Life Intelligence",
+  "short_name": "AMAL OS",
+  "description": "Ad-free, zero-tracking Islamic operating system grounded in Sawad al-A'zam orthodoxy.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B4332",
+  "theme_color": "#1B4332",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

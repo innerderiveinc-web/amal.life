@@ -258,6 +258,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/contact" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
+                  Contact & Support (رابطہ و مدد)
+                </Link>
+              </li>
+              <li>
                 <Link href="/copyright" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
                   Copyright, Waqf & Attribution
                 </Link>
