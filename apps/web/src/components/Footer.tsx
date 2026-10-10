@@ -243,6 +243,11 @@ export const Footer: React.FC = () => {
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <li>
+                <Link href="/about" style={{ color: '#6EE7B7', textDecoration: 'none', fontSize: 13, fontWeight: 700 }}>
+                  About AMAL OS (تعارف و منہج)
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
                   Privacy Policy & Zero-Ad Pledge
                 </Link>

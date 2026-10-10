@@ -12,8 +12,9 @@ import { VaultScreen } from './screens/VaultScreen';
 import { LibraryScreen } from './screens/LibraryScreen';
 import { SirahScreen } from './screens/SirahScreen';
 import { AskAmalScreen } from './screens/AskAmalScreen';
+import { AboutScreen } from './screens/AboutScreen';
 
-type Tab = 'TODAY' | 'PRAYER' | 'CALCULATOR' | 'AUDIO' | 'CALENDAR' | 'REPLAY' | 'FAMILY' | 'VAULT' | 'LIBRARY' | 'SIRAH' | 'ASK_AMAL';
+type Tab = 'TODAY' | 'PRAYER' | 'CALCULATOR' | 'AUDIO' | 'CALENDAR' | 'REPLAY' | 'FAMILY' | 'VAULT' | 'LIBRARY' | 'SIRAH' | 'ASK_AMAL' | 'ABOUT';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('TODAY');
@@ -30,6 +31,7 @@ export const App: React.FC = () => {
     { id: 'LIBRARY', label: 'Library', icon: '📖' },
     { id: 'SIRAH', label: 'Sirah', icon: '🕌' },
     { id: 'ASK_AMAL', label: 'Ask AI', icon: '⚖️' },
+    { id: 'ABOUT', label: 'About', icon: 'ℹ️' },
   ];
 
   return (
@@ -37,9 +39,12 @@ export const App: React.FC = () => {
       {/* Top Header */}
       <View style={styles.header}>
         <Text style={styles.logo}>AMAL OS</Text>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>100% Sawad al-A'zam</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.badge}
+          onPress={() => setActiveTab('ABOUT')}
+        >
+          <Text style={styles.badgeText}>100% Sawad al-A'zam ℹ️</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Screen Container */}
@@ -55,6 +60,7 @@ export const App: React.FC = () => {
         {activeTab === 'LIBRARY' && <LibraryScreen />}
         {activeTab === 'SIRAH' && <SirahScreen />}
         {activeTab === 'ASK_AMAL' && <AskAmalScreen />}
+        {activeTab === 'ABOUT' && <AboutScreen />}
       </View>
 
       {/* Scrollable Bottom Navigation Bar */}

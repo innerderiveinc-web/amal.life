@@ -102,6 +102,7 @@ export const Navigation: React.FC = () => {
     ...ahkamItems,
     { title: 'Ask AMAL AI Guidance', titleUrdu: 'اسکالر اے آئی رہنمائی', href: '/ask', icon: '💬' },
     { title: 'Security & Trust Vault', titleUrdu: 'پرائیویسی و امانت سینٹر', href: '/privacy', icon: '🛡️' },
+    { title: 'About & Methodology', titleUrdu: 'تعارف و منہج عمل', href: '/about', icon: '🕌' },
   ];
 
   return (
@@ -542,6 +543,22 @@ export const Navigation: React.FC = () => {
             }}
           >
             {currentLang === 'ur' ? '💬 سوال پوچھیں' : '💬 Ask AMAL'}
+          </Link>
+
+          {/* Direct Link: About & Methodology */}
+          <Link
+            href="/about"
+            style={{
+              textDecoration: 'none',
+              fontSize: 13,
+              fontWeight: router.pathname === '/about' ? 700 : 600,
+              color: router.pathname === '/about' ? AmalTheme.colors.primary : '#374151',
+              padding: '6px 10px',
+              borderRadius: 6,
+              backgroundColor: router.pathname === '/about' ? '#F0FDF4' : 'transparent',
+            }}
+          >
+            {currentLang === 'ur' ? '🕌 تعارف' : '🕌 About'}
           </Link>
         </div>
 
