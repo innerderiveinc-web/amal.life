@@ -62,6 +62,9 @@ export class AmalApiClient {
 
       clearTimeout(timeoutId);
       const data = await res.json();
+      if (!data || !data.success) {
+        return this.handleLocalFallback<T>(path, method, body);
+      }
       return data;
     } catch (err: any) {
       // Graceful local resilience handling
