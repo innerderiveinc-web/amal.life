@@ -6,13 +6,25 @@ import { AmalTheme } from '@amal/ui';
 import { prayerQiblaEngine, MadhhabAsr, CalculationMethod, mosqueIqamahSyncEngine } from '@amal/amal-engine';
 import { GLOBAL_CITIES, GlobalCity, searchGlobalCities } from '../lib/global-locations';
 import { showAmalToast } from '../components/Toast';
-import { getLiveNextPrayer } from '../lib/prayer-utils';
+import {
+  getLiveNextPrayer,
+  getSavedOffsets,
+  applyOffsets,
+  calculateMakroohTimes,
+  detectDefaultCityFromTimezone,
+} from '../lib/prayer-utils';
 
 export default function PrayerTimesPage() {
-  // Default to Delhi / New Delhi (India)
-  const [selectedCity, setSelectedCity] = useState<GlobalCity>(GLOBAL_CITIES[0]!);
+  // Default to Delhi / New Delhi or auto-detected timezone city
+  const [selectedCity, setSelectedCity] = useState<GlobalCity>(() => {
+    return detectDefaultCityFromTimezone();
+  });
   const [madhhab, setMadhhab] = useState<MadhhabAsr>('HANAFI');
   const [method, setMethod] = useState<CalculationMethod>('KARACHI');
+
+  // Minute offsets for local masjid calibration (+/- min)
+  const [offsets, setOffsets] = useState<Record<string, number>>({ fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 });
+  const [isOffsetsModalOpen, setIsOffsetsModalOpen] = useState(false);
 
   // Search & Global Geocoding State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -27,10 +39,26 @@ export default function PrayerTimesPage() {
   const [manualLon, setManualLon] = useState(77.2090);
   const [manualCityName, setManualCityName] = useState('Delhi / New Delhi');
 
-  // Load saved location on mount
+  // Load saved location & preferences on mount, or auto-detect via GPS/Timezone
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('amal_user_location');
+      const savedMadhhab = localStorage.getItem('amal_user_madhhab');
+      const savedMethod = localStorage.getItem('amal_user_method');
+      const savedOffsets = localStorage.getItem('amal_user_prayer_offsets');
+
+      if (savedMadhhab === 'HANAFI' || savedMadhhab === 'STANDARD_JUMHUR') {
+        setMadhhab(savedMadhhab);
+      }
+      if (savedMethod) {
+        setMethod(savedMethod as CalculationMethod);
+      }
+      if (savedOffsets) {
+        try {
+          setOffsets(JSON.parse(savedOffsets));
+        } catch (_) {}
+      }
+
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -38,8 +66,37 @@ export default function PrayerTimesPage() {
           setManualLat(parsed.lat);
           setManualLon(parsed.lon);
           setManualCityName(parsed.name);
-          if (parsed.defaultMethod) setMethod(parsed.defaultMethod);
+          if (parsed.defaultMethod && !savedMethod) setMethod(parsed.defaultMethod);
         } catch (_) {}
+      } else {
+        // First visit: Auto-detect based on user's timezone!
+        const autoCity = detectDefaultCityFromTimezone();
+        setSelectedCity(autoCity);
+        setManualLat(autoCity.lat);
+        setManualLon(autoCity.lon);
+        setManualCityName(autoCity.name);
+        if (autoCity.defaultMethod && !savedMethod) setMethod(autoCity.defaultMethod);
+
+        // Also attempt non-blocking GPS detection if permission is already allowed
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const lat = Number(pos.coords.latitude.toFixed(4));
+              const lon = Number(pos.coords.longitude.toFixed(4));
+              const gpsCity: GlobalCity = {
+                name: 'Auto-Detected GPS Location',
+                country: autoCity.country,
+                region: 'Live GPS',
+                lat,
+                lon,
+                defaultMethod: autoCity.defaultMethod || 'KARACHI',
+              };
+              handleSelectCity(gpsCity);
+            },
+            () => {},
+            { timeout: 4000 }
+          );
+        }
       }
     }
   }, []);
@@ -49,14 +106,57 @@ export default function PrayerTimesPage() {
     setManualLat(city.lat);
     setManualLon(city.lon);
     setManualCityName(city.name);
-    if (city.defaultMethod) setMethod(city.defaultMethod);
+    if (city.defaultMethod) {
+      setMethod(city.defaultMethod);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('amal_user_method', city.defaultMethod);
+      }
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem('amal_user_location', JSON.stringify(city));
+      window.dispatchEvent(new Event('amal_prayer_settings_changed'));
     }
     setIsSearchOpen(false);
     setCitySearchQuery('');
     setExternalResults([]);
     showAmalToast(`Location updated to ${city.name}, ${city.country}`, 'success');
+  };
+
+  const handleMadhhabChange = (newMadhhab: MadhhabAsr) => {
+    setMadhhab(newMadhhab);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_user_madhhab', newMadhhab);
+      window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+    }
+    showAmalToast(`Asr calculation: ${newMadhhab === 'HANAFI' ? 'Hanafi (Mislayn 2x Shadow)' : "Jumhur: Shafi'i/Maliki/Hanbali (1x Shadow)"}`, 'info');
+  };
+
+  const handleMethodChange = (newMethod: CalculationMethod) => {
+    setMethod(newMethod);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_user_method', newMethod);
+      window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+    }
+    showAmalToast(`Calculation Method: ${newMethod}`, 'info');
+  };
+
+  const handleUpdateOffset = (prayerKey: string, delta: number) => {
+    const updated = { ...offsets, [prayerKey]: (offsets[prayerKey] || 0) + delta };
+    setOffsets(updated);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_user_prayer_offsets', JSON.stringify(updated));
+      window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+    }
+  };
+
+  const handleResetOffsets = () => {
+    const zero = { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 };
+    setOffsets(zero);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_user_prayer_offsets', JSON.stringify(zero));
+      window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+    }
+    showAmalToast('Minute offsets reset to astronomical default', 'info');
   };
 
   // Browser Geolocation / GPS Auto-Detection
@@ -152,7 +252,7 @@ export default function PrayerTimesPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const prayerTimes = useMemo(() => {
+  const rawPrayerTimes = useMemo(() => {
     return prayerQiblaEngine.calculatePrayerTimes(
       { latitude: selectedCity.lat, longitude: selectedCity.lon },
       now,
@@ -160,6 +260,14 @@ export default function PrayerTimesPage() {
       method
     );
   }, [selectedCity, madhhab, method, now]);
+
+  const prayerTimes = useMemo(() => {
+    return applyOffsets(rawPrayerTimes, offsets);
+  }, [rawPrayerTimes, offsets]);
+
+  const makroohTimes = useMemo(() => {
+    return calculateMakroohTimes(prayerTimes.sunrise, prayerTimes.dhuhr, prayerTimes.maghrib);
+  }, [prayerTimes]);
 
   const nextPrayer = useMemo(() => {
     try {
@@ -287,6 +395,26 @@ export default function PrayerTimesPage() {
             </button>
 
             <button
+              onClick={() => setIsOffsetsModalOpen(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '8px 14px',
+                borderRadius: 8,
+                backgroundColor: Object.values(offsets).some((v) => v !== 0) ? '#D97706' : 'rgba(255,255,255,0.15)',
+                color: '#FFFFFF',
+                border: '1px solid rgba(255,255,255,0.25)',
+                fontWeight: 600,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+            >
+              <span>⚙️</span>
+              <span>{Object.values(offsets).some((v) => v !== 0) ? 'Calibrated (± Min)' : 'Calibrate / ± Minutes'}</span>
+            </button>
+
+            <button
               onClick={() => setIsManualCoordsOpen(!isManualCoordsOpen)}
               style={{
                 display: 'flex',
@@ -393,7 +521,7 @@ export default function PrayerTimesPage() {
             </label>
             <select
               value={madhhab}
-              onChange={(e) => setMadhhab(e.target.value as MadhhabAsr)}
+              onChange={(e) => handleMadhhabChange(e.target.value as MadhhabAsr)}
               style={{
                 width: '100%',
                 padding: '10px 12px',
@@ -414,7 +542,7 @@ export default function PrayerTimesPage() {
             </label>
             <select
               value={method}
-              onChange={(e) => setMethod(e.target.value as CalculationMethod)}
+              onChange={(e) => handleMethodChange(e.target.value as CalculationMethod)}
               style={{
                 width: '100%',
                 padding: '10px 12px',
@@ -505,6 +633,44 @@ export default function PrayerTimesPage() {
               <div style={{ textAlign: 'right' }}>
                 <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>Tahajjud (Last 1/3)</span>
                 <span style={{ fontSize: 14, fontWeight: 700, color: '#15803D' }}>{prayerTimes.qiyamThird}</span>
+              </div>
+            </div>
+
+            {/* Auqat-e-Makrooha (Prohibited Prayer Windows) */}
+            <div style={{
+              marginTop: 18,
+              padding: '12px 14px',
+              borderRadius: 10,
+              backgroundColor: '#FEF2F2',
+              border: '1px solid #FCA5A5',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span>⚠️</span>
+                  <span style={{ fontWeight: 800, color: '#991B1B', fontSize: 13 }}>
+                    Auqat-e-Makrooha (مکروہ اوقات — نماز ممنوع ہے)
+                  </span>
+                </div>
+                <span style={{ fontSize: 11, color: '#DC2626', fontWeight: 700 }}>
+                  تحریمی
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: '#7F1D1D', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>طلوعِ آفتاب تا اشراق (Sunrise Window):</span>
+                  <strong>{makroohTimes.sunrise.start} — {makroohTimes.sunrise.end}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>نصف النہار / زوال (Zawal Window):</span>
+                  <strong>{makroohTimes.zawal.start} — {makroohTimes.zawal.end}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>غروبِ آفتاب (Sunset Window):</span>
+                  <strong>{makroohTimes.sunset.start} — {makroohTimes.sunset.end}</strong>
+                </div>
+              </div>
+              <div style={{ fontSize: 11, color: '#B91C1C', marginTop: 8, fontStyle: 'italic', borderTop: '1px dashed #FECACA', paddingTop: 6 }}>
+                * ان اوقات میں نفل، قضا، سجدۂ تلاوت اور نمازِ جنازہ پڑھنا مکروہِ تحریمی ہے (القدوری و فتاویٰ رضویہ)۔
               </div>
             </div>
           </div>
@@ -683,7 +849,225 @@ export default function PrayerTimesPage() {
             </div>
           </div>
         </div>
+
+        {/* EDUCATIONAL & FIQHI GUIDE: WHY PRAYER TIMES DIFFER */}
+        <div style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 12,
+          padding: 24,
+          border: '1px solid #E5E7EB',
+          marginTop: 24,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+            <span style={{ fontSize: 22 }}>📖</span>
+            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1B4332', margin: 0 }}>
+              نماز کے اوقات میں فرق کیوں ہوتا ہے؟ (Why Prayer Timings Differ Across Calendars)
+            </h3>
+          </div>
+          <p style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.6, marginBottom: 16 }}>
+            اگر آپ کو اپنی مسجد کے نقشۂ اوقات اور اس ایپ کے اوقات میں چند منٹ یا عصر کے وقت میں فرق محسوس ہو، تو اس کی بنیادی ۴ شرعی و فلکیاتی وجوہات درج ذیل ہیں:
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+            <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
+              <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
+                ۱. عصر کا وقت (حنفی مثلین بمقابلہ جمہور مثلِ اول)
+              </div>
+              <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
+                جمہور ائمہ (شافعی، مالکی، حنبلی) کے نزدیک سائے کا ایک گنا ہونا عصر کا وقت ہے، جبکہ امامِ اعظم ابو حنیفہؒ کے معتمد قول پر سایہ دو گنا (مثلین) ہونے پر عصر شروع ہوتی ہے۔ اس لیے حنفی وقت جمہور سے تقریباً ۵۰ تا ۶۵ منٹ بعد ہوتا ہے۔
+              </p>
+            </div>
+
+            <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
+              <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
+                ۲. فجر و عشاء کے زاویے (Calculation Angles)
+              </div>
+              <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
+                برصغیر (دیوبند، بریلی، کراچی) میں صبحِ صادق ۱۸ ڈگری پر تسلیم کی جاتی ہے۔ جبکہ مغربی ممالک میں بعض ادارے ۱۵ ڈگری (ISNA) اور سعودی عرب میں فجر ۱۸.۵ ڈگری اور عشاء مغرب کے ۹۰ منٹ بعد شمار کرتے ہیں۔
+              </p>
+            </div>
+
+            <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
+              <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
+                ۳. دخولِ وقت بمقابلہ جماعت کا وقت (Start vs Jama'at)
+              </div>
+              <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
+                یہ ایپ فلکیاتی اعتبار سے وقت شروع ہونے (دخولِ وقت) کا دقیق منٹ بتاتی ہے، جبکہ مساجد میں اقامت/جماعت کا وقت عام سہولت کے لیے مخصوص گول اوقات (مثلاً ۱:۳۰ یا ۵:۱۵) پر طے کیا جاتا ہے۔
+              </p>
+            </div>
+
+            <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
+              <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
+                ۴. احتیاطی منٹس (Local Precautionary Buffers)
+              </div>
+              <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
+                مختلف شہروں کے علماء افق اور بلندی کے لحاظ سے مغرب یا فجر میں ۱ تا ۳ احتیاطی منٹ شامل کرتے ہیں۔ اگر آپ کی مقامی مسجد میں ایسا ہو تو آپ اوپر دیے گئے بٹن <strong>"Calibrate / ± Minutes"</strong> سے آسانی سے منٹس سیٹ کر سکتے ہیں۔
+              </p>
+            </div>
+          </div>
+        </div>
       </main>
+
+      {/* MINUTE OFFSETS / LOCAL MASJID CALIBRATION MODAL */}
+      {isOffsetsModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.65)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: 16,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 16,
+              width: '100%',
+              maxWidth: 480,
+              padding: 24,
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 20 }}>⚙️</span>
+                <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1B4332', margin: 0 }}>
+                  Calibrate Prayer Minutes (منٹس درست کریں)
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsOffsetsModalOpen(false)}
+                style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer', color: '#9CA3AF' }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <p style={{ fontSize: 12, color: '#6B7280', margin: '0 0 16px', lineHeight: 1.5 }}>
+              اگر آپ کے محلے کی مسجد کے نقشے میں فلکیاتی حساب سے ۱ یا ۲ منٹ کا فرق ہو، تو آپ ہر نماز کے لیے احتیاطی منٹس بڑھا یا گھٹا سکتے ہیں:
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+              {[
+                { key: 'fajr', label: 'Fajr (نمازِ فجر)', raw: rawPrayerTimes.fajr, curr: prayerTimes.fajr },
+                { key: 'dhuhr', label: 'Dhuhr (نمازِ ظہر)', raw: rawPrayerTimes.dhuhr, curr: prayerTimes.dhuhr },
+                { key: 'asr', label: 'Asr (نمازِ عصر)', raw: rawPrayerTimes.asr, curr: prayerTimes.asr },
+                { key: 'maghrib', label: 'Maghrib (نمازِ مغرب)', raw: rawPrayerTimes.maghrib, curr: prayerTimes.maghrib },
+                { key: 'isha', label: 'Isha (نمازِ عشاء)', raw: rawPrayerTimes.isha, curr: prayerTimes.isha },
+              ].map((p) => {
+                const curOffset = offsets[p.key] || 0;
+                return (
+                  <div
+                    key={p.key}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px 14px',
+                      backgroundColor: '#F9FAFB',
+                      borderRadius: 10,
+                      border: '1px solid #E5E7EB',
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: '#1F2937' }}>{p.label}</div>
+                      <div style={{ fontSize: 11, color: '#6B7280' }}>
+                        Base: {p.raw} ➔ Calibrated: <strong style={{ color: '#059669' }}>{p.curr}</strong>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <button
+                        onClick={() => handleUpdateOffset(p.key, -1)}
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 6,
+                          border: '1px solid #D1D5DB',
+                          backgroundColor: '#FFFFFF',
+                          cursor: 'pointer',
+                          fontWeight: 800,
+                          fontSize: 14,
+                        }}
+                      >
+                        -
+                      </button>
+                      <span
+                        style={{
+                          minWidth: 44,
+                          textAlign: 'center',
+                          fontWeight: 800,
+                          fontSize: 13,
+                          color: curOffset !== 0 ? '#D97706' : '#374151',
+                        }}
+                      >
+                        {curOffset > 0 ? `+${curOffset}m` : curOffset < 0 ? `${curOffset}m` : '0m'}
+                      </span>
+                      <button
+                        onClick={() => handleUpdateOffset(p.key, 1)}
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 6,
+                          border: '1px solid #D1D5DB',
+                          backgroundColor: '#FFFFFF',
+                          cursor: 'pointer',
+                          fontWeight: 800,
+                          fontSize: 14,
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <button
+                onClick={handleResetOffsets}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#DC2626',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                Reset to Astronomical Default
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsOffsetsModalOpen(false);
+                  showAmalToast('Prayer times calibration saved successfully', 'success');
+                }}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: 8,
+                  backgroundColor: '#1B4332',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                }}
+              >
+                Save & Apply (محفوظ کریں)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* FULL WORLDWIDE CITY SEARCH MODAL */}
       {isSearchOpen && (

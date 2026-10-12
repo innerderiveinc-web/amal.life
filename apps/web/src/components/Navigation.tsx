@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AmalTheme } from '@amal/ui';
 import { hijriFastingEngine, prayerQiblaEngine } from '@amal/amal-engine';
-import { getLiveNextPrayer, getSavedLocation } from '../lib/prayer-utils';
+import { getLiveNextPrayer, getSavedLocation, getSavedMadhhab, getSavedMethod, getSavedOffsets, applyOffsets } from '../lib/prayer-utils';
 import { useAuth } from '../context/AuthContext';
 
 export const Navigation: React.FC = () => {
@@ -44,22 +44,32 @@ export const Navigation: React.FC = () => {
   }, []);
 
   const [now, setNow] = useState<Date>(() => new Date());
+  const [prayerConfigKey, setPrayerConfigKey] = useState(0);
 
   useEffect(() => {
     setNow(new Date());
     const interval = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(interval);
+    const handleConfigChange = () => setPrayerConfigKey((k) => k + 1);
+    window.addEventListener('amal_prayer_settings_changed', handleConfigChange);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('amal_prayer_settings_changed', handleConfigChange);
+    };
   }, []);
 
-  // Live Prayer calculation (using saved user location if present)
+  // Live Prayer calculation (using saved user location, madhhab, method, and offsets)
   const prayerTimes = useMemo(() => {
     try {
       const loc = getSavedLocation();
-      return prayerQiblaEngine.calculatePrayerTimes({ latitude: loc.lat, longitude: loc.lon }, now, 'HANAFI', 'KARACHI');
+      const madhhab = getSavedMadhhab();
+      const method = getSavedMethod();
+      const offsets = getSavedOffsets();
+      const raw = prayerQiblaEngine.calculatePrayerTimes({ latitude: loc.lat, longitude: loc.lon }, now, madhhab, method);
+      return applyOffsets(raw, offsets);
     } catch {
       return prayerQiblaEngine.calculatePrayerTimes({ latitude: 28.6139, longitude: 77.2090 }, now, 'HANAFI', 'KARACHI');
     }
-  }, [now]);
+  }, [now, prayerConfigKey]);
 
   const nextPrayer = useMemo(() => {
     try {

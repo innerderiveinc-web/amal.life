@@ -1,4 +1,5 @@
-import { prayerQiblaEngine, PrayerTimeResult } from '@amal/amal-engine';
+import { prayerQiblaEngine, PrayerTimeResult, MadhhabAsr, CalculationMethod } from '@amal/amal-engine';
+import { GLOBAL_CITIES, GlobalCity } from './global-locations';
 
 export interface NextPrayerInfo {
   key: 'fajr' | 'sunrise' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
@@ -49,6 +50,51 @@ export function formatCountdown(minutesLeft: number): { urdu: string; english: s
   return { urdu, english };
 }
 
+/**
+ * Intelligent automatic timezone to city mapper
+ * Guarantees zero-friction accurate prayer times for user's country on first visit
+ */
+export function detectDefaultCityFromTimezone(): GlobalCity {
+  if (typeof Intl === 'undefined') return GLOBAL_CITIES[0]!;
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    if (tz.includes('Kolkata') || tz.includes('Calcutta')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Delhi')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Karachi')) {
+      return GLOBAL_CITIES.find((c) => c.name === 'Karachi') || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Dhaka')) {
+      return GLOBAL_CITIES.find((c) => c.name === 'Dhaka') || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Dubai') || tz.includes('Muscat')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Dubai')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Riyadh')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Makkah') || c.name.includes('Riyadh')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('London')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('London')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('New_York')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('New York')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Chicago')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Chicago')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Toronto')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Toronto')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Istanbul')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Istanbul')) || GLOBAL_CITIES[0]!;
+    }
+    if (tz.includes('Cairo')) {
+      return GLOBAL_CITIES.find((c) => c.name.includes('Cairo')) || GLOBAL_CITIES[0]!;
+    }
+  } catch (_) {}
+  return GLOBAL_CITIES[0]!;
+}
+
 export function getSavedLocation(): { lat: number; lon: number; name: string } {
   if (typeof window !== 'undefined') {
     try {
@@ -60,8 +106,95 @@ export function getSavedLocation(): { lat: number; lon: number; name: string } {
         }
       }
     } catch (_) {}
+
+    // First-visit auto fallback based on system timezone
+    const autoCity = detectDefaultCityFromTimezone();
+    return { lat: autoCity.lat, lon: autoCity.lon, name: `${autoCity.name}, ${autoCity.country}` };
   }
   return { lat: 28.6139, lon: 77.2090, name: 'Delhi / New Delhi, India' };
+}
+
+export function getSavedMadhhab(): MadhhabAsr {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('amal_user_madhhab');
+    if (saved === 'HANAFI' || saved === 'STANDARD_JUMHUR') return saved;
+  }
+  return 'HANAFI';
+}
+
+export function getSavedMethod(): CalculationMethod {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('amal_user_method');
+    if (saved) return saved as CalculationMethod;
+  }
+  return 'KARACHI';
+}
+
+export function getSavedOffsets(): Record<string, number> {
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('amal_user_prayer_offsets');
+      if (saved) return JSON.parse(saved);
+    } catch (_) {}
+  }
+  return { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 };
+}
+
+export function applyOffsets(times: PrayerTimeResult, offsets: Record<string, number>): PrayerTimeResult {
+  const adjust = (timeStr: string, deltaMins: number) => {
+    if (!deltaMins) return timeStr;
+    const mins = parseTimeToMinutes(timeStr) + deltaMins;
+    const normalized = (mins % (24 * 60) + (24 * 60)) % (24 * 60);
+    const h = Math.floor(normalized / 60);
+    const m = normalized % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+  };
+
+  return {
+    ...times,
+    fajr: adjust(times.fajr, offsets.fajr || 0),
+    dhuhr: adjust(times.dhuhr, offsets.dhuhr || 0),
+    asr: adjust(times.asr, offsets.asr || 0),
+    maghrib: adjust(times.maghrib, offsets.maghrib || 0),
+    isha: adjust(times.isha, offsets.isha || 0),
+  };
+}
+
+export interface MakroohTimesInfo {
+  sunrise: { start: string; end: string; labelUrdu: string; labelEnglish: string };
+  zawal: { start: string; end: string; labelUrdu: string; labelEnglish: string };
+  sunset: { start: string; end: string; labelUrdu: string; labelEnglish: string };
+}
+
+export function calculateMakroohTimes(sunriseStr: string, dhuhrStr: string, maghribStr: string): MakroohTimesInfo {
+  const addMins = (timeStr: string, delta: number) => {
+    const total = parseTimeToMinutes(timeStr) + delta;
+    const normalized = (total % (24 * 60) + (24 * 60)) % (24 * 60);
+    const h = Math.floor(normalized / 60);
+    const m = normalized % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+  };
+
+  return {
+    sunrise: {
+      start: sunriseStr,
+      end: addMins(sunriseStr, 15),
+      labelUrdu: 'طلوعِ آفتاب تا اشراق (۱۵ منٹ — نماز مکروہِ تحریمی ہے)',
+      labelEnglish: 'Sunrise Window (First ~15 min post-sunrise — Prohibited for Salah)',
+    },
+    zawal: {
+      start: addMins(dhuhrStr, -10),
+      end: dhuhrStr,
+      labelUrdu: 'نصف النہار / زوال (ظہر سے ۱۰ منٹ قبل — نماز مکروہ ہے)',
+      labelEnglish: 'Zawal Window (~10 min before Dhuhr — Prohibited for Salah)',
+    },
+    sunset: {
+      start: addMins(maghribStr, -15),
+      end: maghribStr,
+      labelUrdu: 'غروبِ آفتاب (مغرب سے ۱۵ منٹ قبل — قضا یا نفل مکروہ ہے)',
+      labelEnglish: 'Sunset Window (~15 min prior to Maghrib — Prohibited except today\'s Asr)',
+    },
+  };
 }
 
 export function getLiveNextPrayer(
