@@ -16,13 +16,13 @@ export default function Document() {
         {/* Global OpenGraph & Social Sharing Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="AMAL OS" />
-        <meta property="og:title" content="AMAL OS — Sovereign Muslim Life Intelligence" />
+        <meta property="og:title" content="AMAL OS — Sovereign Muslim Life & Practice OS" />
         <meta property="og:description" content="Ad-free, zero-tracking Islamic Life OS. From Niyyah to Amal. Grounded in Sawad al-A'zam orthodoxy across the 4 Sunni Madhhabs." />
         <meta property="og:image" content="https://amal.life/icon-512.png" />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="AMAL OS — Sovereign Muslim Life Intelligence" />
+        <meta name="twitter:title" content="AMAL OS — Sovereign Muslim Life & Practice OS" />
         <meta name="twitter:description" content="Ad-free, zero-tracking Islamic Life OS. From Niyyah to Amal." />
         <meta name="twitter:image" content="https://amal.life/icon-512.png" />
 

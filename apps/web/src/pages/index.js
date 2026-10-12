@@ -51,7 +51,7 @@ function Home() {
     return (<div style={{ backgroundColor: ui_1.AmalTheme.colors.surface.backgroundLight, minHeight: '100vh', fontFamily: 'sans-serif' }}>
       <head_1.default>
         <title>AMAL OS — From Niyyah to Amal</title>
-        <meta name="description" content="Muslim Life Intelligence Platform"/>
+        <meta name="description" content="Sovereign Islamic Life & Practice System"/>
       </head_1.default>
 
       <main style={{ maxWidth: 860, margin: '0 auto', padding: '40px 20px' }}>

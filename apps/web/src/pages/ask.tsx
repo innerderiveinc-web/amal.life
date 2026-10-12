@@ -60,12 +60,14 @@ export default function AskAmalPage() {
 
       <main style={{ maxWidth: 880, margin: '0 auto', padding: '0 20px 60px' }}>
         <header style={{ marginBottom: 24 }}>
-          <span style={{ fontSize: 12, fontWeight: 700, color: AmalTheme.colors.primary, letterSpacing: 1 }}>EVIDENCE EXPLORER</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: AmalTheme.colors.primary, letterSpacing: 1 }}>
+            علمی و تحقیقی تلاش · SCHOLARLY EVIDENCE EXPLORER
+          </span>
           <h1 style={{ fontSize: 28, fontWeight: 800, margin: '6px 0 0', color: AmalTheme.colors.text.primaryLight }}>
-            Ask AMAL Islamic Intelligence
+            کتبِ معتبرہ سے تلاش و رہنمائی (Canonical Guidance & Evidence)
           </h1>
-          <p style={{ color: AmalTheme.colors.text.secondaryLight, fontSize: 14 }}>
-            Ground your life questions in verified primary Quran & Sunnah evidence. AMAL never fabricates citations or issues autonomous personal fatwas.
+          <p style={{ color: AmalTheme.colors.text.secondaryLight, fontSize: 14, marginTop: 6, lineHeight: 1.6 }}>
+            قرآن و سنت، احادیثِ مبارکہ اور فقہائے اربعہ کی مصدقہ کتب سے حوالہ جات دریافت کریں۔ امل کوئی مصنوعی یا خود ساختہ فتویٰ جاری نہیں کرتا، بلکہ صرف مستند کتب کے صحیح متون پیش کرتا ہے۔
           </p>
         </header>
 

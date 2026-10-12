@@ -43,11 +43,11 @@ export default function DecisionRoomPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
             <span style={{ fontSize: 28 }}>⚖️</span>
             <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-              Deen Decision Room
+              Deen Decision Room · کمرۂ مشاورت و تحقیق
             </h1>
           </div>
-          <p style={{ color: '#4B5563', margin: 0, fontSize: 14 }}>
-            AI does not issue binding unilateral fatwas. The Decision Room deconstructs your dilemma into ethical principles, highlights scholarly consensus vs disagreement, and prepares a structured case file for verified human scholarship (Dual Jurist Protocol).
+          <p style={{ color: '#4B5563', margin: 0, fontSize: 14, lineHeight: 1.6 }}>
+            شرعی فتویٰ اور حتمی فیصلہ صرف زندہ و مستند مفتیانِ کرام کا منصب ہے۔ یہ کمرۂ مشاورت آپ کے پیچیدہ معاملے (تجارت، خاندانی مسائل، نزاع) کو فقہی اصولوں کی روشنی میں مرتب کرتا ہے، متفقہ و اختلافی آراء کی وضاحت کرتا ہے، اور اہل علم سے رجوع کے لیے کیس فائل تیار کرتا ہے۔
           </p>
         </div>
 

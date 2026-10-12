@@ -103,7 +103,7 @@ export default function TermsPage() {
                 ⚠️ CRITICAL RELIGIOUS WARNING:
               </strong>
               <p style={{ fontSize: 13, color: '#7F1D1D', margin: 0, lineHeight: 1.6 }}>
-                AMAL OS, including its Artificial Intelligence agents, decision synthesis engines, and zakat/miras calculators, provides <strong>educational, informational, and contemplative guidance</strong> based on classical masterworks. <strong>AMAL OS IS NOT AN AUTONOMOUS MUFTI OR JUDICIAL AUTHORITY (QADI).</strong>
+                AMAL OS, including its evidence search modules, decision guidance tools, and zakat/miras calculators, provides <strong>educational, informational, and contemplative guidance</strong> based on accredited classical masterworks. <strong>AMAL OS IS NOT AN AUTONOMOUS MUFTI OR JUDICIAL AUTHORITY (QADI).</strong>
               </p>
             </div>
             <ul style={{ fontSize: 14, color: '#374151', lineHeight: 1.8, paddingLeft: 20, margin: 0 }}>

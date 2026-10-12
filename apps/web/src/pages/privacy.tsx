@@ -188,10 +188,10 @@ export default function PrivacyPage() {
 
               <div style={{ padding: 18, backgroundColor: '#F9FAFB', borderRadius: 12, border: '1px solid #E5E7EB' }}>
                 <h3 style={{ fontSize: 15, fontWeight: 700, margin: '0 0 8px', color: '#1B4332' }}>
-                  4. Artificial Intelligence Privacy
+                  4. Zero External Model Training & Private Research
                 </h3>
                 <p style={{ fontSize: 13, color: '#4B5563', margin: 0, lineHeight: 1.6 }}>
-                  Queries submitted to Ask AMAL or the Deen Decision Room are grounded in local classical knowledge vectors and are never sold to external model providers or used to train public generative LLMs.
+                  Queries submitted for evidence search or in the Deen Decision Room are grounded strictly in accredited classical texts and are never transmitted to external data brokers or used to train third-party machine learning models.
                 </p>
               </div>
             </div>

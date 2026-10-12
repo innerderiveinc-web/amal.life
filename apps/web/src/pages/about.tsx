@@ -14,9 +14,9 @@ export default function AboutPage() {
       a: 'AMAL OS is a sovereign, ad-free Muslim Life Operating System. Unlike conventional apps that merely serve as prayer alarm clocks or gamify worship with anxiety-inducing streak scores, AMAL OS converts intentional Niyyah into actionable micro-habits, protects private reflections in an isolated domestic vault, and grounds every piece of guidance in verified classical Islamic scholarship.',
     },
     {
-      q: 'Does AMAL OS or its AI issue independent Fatwas?',
-      qUrdu: 'کیا عمل کا اے آئی خود مختار فتویٰ جاری کرتا ہے؟',
-      a: 'Absolutely not. AMAL OS is equipped with a strict Fatwa Firewall. AI is fundamentally prohibited from declaring matters Halal or Haram or issuing personalized legal verdicts. For all personal Fiqh inquiries, the platform presents verified classical texts across the 4 Sunni Madhhabs and prepares a structured packet for certified human scholars (Muftis) to review.',
+      q: 'Does AMAL OS issue independent religious rulings or Fatwas?',
+      qUrdu: 'کیا امل او ایس کوئی خود ساختہ فتویٰ یا شرعی فیصلہ جاری کرتا ہے؟',
+      a: 'ہرگز نہیں۔ اسلامی شریعت میں فتویٰ دینا صرف زندہ اور باقاعدہ مستند مفتیانِ کرام کا حق ہے۔ امل ایک تحقیقی و معلوماتی پلیٹ فارم ہے جس میں کسی بھی مشین یا خودکار نظام کو نیا فتویٰ گھڑنے یا حلال و حرام کا خود فیصلہ کرنے کی قطعی اجازت نہیں۔ امل صرف قرآن، سنت اور فقہائے اربعہ کی معتبر کتب سے اصل متون و حوالہ جات پیش کرتا ہے اور ذاتی پیچیدہ مسائل میں مستند مفتیانِ کرام سے رجوع کرواتا ہے۔',
     },
     {
       q: 'How does AMAL OS treat the Four Sunni Madhhabs (Fiqh Schools)?',
@@ -43,7 +43,7 @@ export default function AboutPage() {
   return (
     <div style={{ backgroundColor: '#FAF9F6', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Head>
-        <title>About AMAL OS — Sovereign Muslim Life Intelligence & Methodology</title>
+        <title>About AMAL OS — Authentic Islamic Methodology & Scholarly Architecture</title>
         <meta
           name="description"
           content="Learn about AMAL OS: The sovereign, ad-free Islamic operating system grounded in Sawad al-A'zam orthodoxy across the 4 Sunni Madhhabs."
@@ -169,8 +169,8 @@ export default function AboutPage() {
               },
               {
                 icon: '⚖️',
-                title: 'Fatwa Firewall & Two-Scholar Consensus',
-                desc: 'AI is explicitly prohibited from generating novel religious verdicts or playing the role of a Mufti. Sensitive Fiqh questions are routed through certified classical sources and structured human scholar review.',
+                title: 'Fatwa Firewall & Scholar Oversight (اہلِ علم کی نگرانی)',
+                desc: 'شریعت کے حتمی فیصلے اور فتاویٰ صرف زندہ و مستند مفتیانِ کرام کا منصب ہیں۔ امل میں کسی خود ساختہ رائے کی قطعی ممانعت ہے؛ تمام فقہی مباحث صرف مستند کلاسیکی کتب سے پیش کیے جاتے ہیں اور پیچیدہ سوالات باقاعدہ اہل علم کے سپرد کیے جاتے ہیں۔',
               },
               {
                 icon: '🕌',

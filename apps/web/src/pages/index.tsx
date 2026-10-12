@@ -328,7 +328,7 @@ export default function Home() {
 
           <div style={{ position: 'relative', zIndex: 1 }}>
             <span style={{ fontSize: 11, fontWeight: 800, color: '#86EFAC', letterSpacing: 1.5, textTransform: 'uppercase' }}>
-              AMAL OS • LIFE INTELLIGENCE PLATFORM
+              AMAL OS • نظامِ حیات و عمل (SOVEREIGN MUSLIM LIFE OS)
             </span>
             <h1 style={{ fontSize: 30, fontWeight: 900, margin: '6px 0 6px', letterSpacing: -0.5 }}>
               From Niyyah to Amal.
