@@ -294,3 +294,61 @@ export function getLiveNextPrayer(
     formattedCountdownEnglish: english,
   };
 }
+
+export function getSavedHijriOffset(): number {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('amal_user_hijri_offset');
+    if (saved !== null) {
+      const parsed = parseInt(saved, 10);
+      if (!isNaN(parsed)) return parsed;
+    }
+  }
+  return 0;
+}
+
+export function setSavedHijriOffset(offset: number): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_hijri_offset', offset.toString());
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
+}
+
+export interface LocalMosqueSettings {
+  name: string;
+  iqamahOffsets: {
+    fajr: number;
+    dhuhr: number;
+    asr: number;
+    maghrib: number;
+    isha: number;
+    jumuah: string;
+  };
+}
+
+export function getSavedMosqueSettings(): LocalMosqueSettings {
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('amal_user_mosque_settings');
+      if (saved) return JSON.parse(saved);
+    } catch (_) {}
+  }
+  return {
+    name: 'Mohalla Jamia Masjid',
+    iqamahOffsets: {
+      fajr: 25,
+      dhuhr: 30,
+      asr: 20,
+      maghrib: 7,
+      isha: 30,
+      jumuah: '13:30',
+    },
+  };
+}
+
+export function saveMosqueSettings(settings: LocalMosqueSettings): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_mosque_settings', JSON.stringify(settings));
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
+}
+

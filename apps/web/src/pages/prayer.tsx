@@ -12,7 +12,17 @@ import {
   applyOffsets,
   calculateMakroohTimes,
   detectDefaultCityFromTimezone,
+  getSavedMosqueSettings,
+  saveMosqueSettings,
+  LocalMosqueSettings,
 } from '../lib/prayer-utils';
+import {
+  getSavedAzaanSettings,
+  saveAzaanSettings,
+  playAzaanAudio,
+  AzaanSettings,
+  AzaanSoundType,
+} from '../lib/azaan-audio';
 
 export default function PrayerTimesPage() {
   // Default to Delhi / New Delhi or auto-detected timezone city
@@ -25,6 +35,23 @@ export default function PrayerTimesPage() {
   // Minute offsets for local masjid calibration (+/- min)
   const [offsets, setOffsets] = useState<Record<string, number>>({ fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 });
   const [isOffsetsModalOpen, setIsOffsetsModalOpen] = useState(false);
+
+  // Azaan Audio & Push Notification State
+  const [azaanSettings, setAzaanSettings] = useState<AzaanSettings>(() => getSavedAzaanSettings());
+  const [isPlayingAzaan, setIsPlayingAzaan] = useState(false);
+
+  // Local Mosque Profile State
+  const [mosqueSettings, setMosqueSettings] = useState<LocalMosqueSettings>(() => getSavedMosqueSettings());
+  const [isMosqueModalOpen, setIsMosqueModalOpen] = useState(false);
+  const [editMosqueName, setEditMosqueName] = useState('Mohalla Jamia Masjid');
+  const [editIqamahOffsets, setEditIqamahOffsets] = useState({
+    fajr: 25,
+    dhuhr: 30,
+    asr: 20,
+    maghrib: 7,
+    isha: 30,
+    jumuah: '13:30',
+  });
 
   // Search & Global Geocoding State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -157,6 +184,59 @@ export default function PrayerTimesPage() {
       window.dispatchEvent(new Event('amal_prayer_settings_changed'));
     }
     showAmalToast('Minute offsets reset to astronomical default', 'info');
+  };
+
+  const handleToggleAzaan = () => {
+    const updated = { ...azaanSettings, enabled: !azaanSettings.enabled };
+    setAzaanSettings(updated);
+    saveAzaanSettings(updated);
+    showAmalToast(updated.enabled ? 'Azaan audio alerts enabled 🔊' : 'Azaan audio muted 🔇', 'info');
+  };
+
+  const handleTestPlayAzaan = () => {
+    setIsPlayingAzaan(true);
+    playAzaanAudio(azaanSettings.soundType, azaanSettings.volume);
+    showAmalToast(`Playing preview: ${azaanSettings.soundType}`, 'info');
+    setTimeout(() => setIsPlayingAzaan(false), 5500);
+  };
+
+  const handleSoundTypeChange = (soundType: AzaanSoundType) => {
+    const updated = { ...azaanSettings, soundType };
+    setAzaanSettings(updated);
+    saveAzaanSettings(updated);
+    playAzaanAudio(soundType, azaanSettings.volume);
+    showAmalToast(`Azaan tone set to: ${soundType}`, 'info');
+  };
+
+  const handleRequestBrowserNotification = async () => {
+    if (typeof window === 'undefined' || !('Notification' in window)) {
+      showAmalToast('Notifications not supported in this browser', 'warning');
+      return;
+    }
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+      const updated = { ...azaanSettings, notificationsEnabled: true };
+      setAzaanSettings(updated);
+      saveAzaanSettings(updated);
+      showAmalToast('Browser Prayer notifications enabled successfully! 🔔', 'success');
+      new Notification('AMAL OS — Azaan Alerts Active', {
+        body: 'You will receive timely alerts for each Salah.',
+        icon: '/favicon.ico',
+      });
+    } else {
+      showAmalToast('Notification permission was dismissed or blocked.', 'warning');
+    }
+  };
+
+  const handleSaveMosque = () => {
+    const updated: LocalMosqueSettings = {
+      name: editMosqueName.trim() || 'Mohalla Jamia Masjid',
+      iqamahOffsets: editIqamahOffsets,
+    };
+    setMosqueSettings(updated);
+    saveMosqueSettings(updated);
+    setIsMosqueModalOpen(false);
+    showAmalToast(`Local Mosque updated to: ${updated.name}`, 'success');
   };
 
   // Browser Geolocation / GPS Auto-Detection
@@ -504,6 +584,120 @@ export default function PrayerTimesPage() {
           </div>
         )}
 
+        {/* AUDIO AZAAN & BROWSER ALERT NOTIFICATIONS */}
+        <div style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 12,
+          padding: '16px 20px',
+          border: '1px solid #E5E7EB',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 16,
+          marginBottom: 20,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 26 }}>📢</span>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontWeight: 800, color: '#1B4332', fontSize: 15 }}>
+                  Azaan Audio & Prayer Alerts (اذان آڈیو و الرٹس)
+                </span>
+                <span style={{
+                  fontSize: 10,
+                  fontWeight: 800,
+                  padding: '2px 8px',
+                  borderRadius: 10,
+                  backgroundColor: azaanSettings.enabled ? '#DCFCE7' : '#F1F5F9',
+                  color: azaanSettings.enabled ? '#166534' : '#64748B',
+                }}>
+                  {azaanSettings.enabled ? 'ACTIVE 🔊' : 'MUTED 🔇'}
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
+                Web Audio synthesizer generates sacred Bayati melodic call when each Salah enters.
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+            <select
+              value={azaanSettings.soundType}
+              onChange={(e) => handleSoundTypeChange(e.target.value as AzaanSoundType)}
+              style={{
+                padding: '8px 12px',
+                borderRadius: 8,
+                border: '1px solid #D1D5DB',
+                fontSize: 13,
+                backgroundColor: '#F9FAFB',
+                fontWeight: 600,
+              }}
+            >
+              <option value="BAYATI_CALL">Maqam Bayati Sacred Call (مقام بیاتی)</option>
+              <option value="MECCA_TONE">Haram Makkah Reverberant Tone</option>
+              <option value="TAKBEER_CHIME">Gentle 3-Tone Takbeer Chime</option>
+            </select>
+
+            <button
+              onClick={handleTestPlayAzaan}
+              disabled={isPlayingAzaan}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '8px 14px',
+                borderRadius: 8,
+                backgroundColor: '#ECFDF5',
+                color: '#047857',
+                border: '1px solid #A7F3D0',
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+            >
+              <span>{isPlayingAzaan ? '⏳' : '▶'}</span>
+              <span>{isPlayingAzaan ? 'Playing...' : 'Test Sound'}</span>
+            </button>
+
+            <button
+              onClick={handleToggleAzaan}
+              style={{
+                padding: '8px 14px',
+                borderRadius: 8,
+                backgroundColor: azaanSettings.enabled ? '#FEF2F2' : '#F0FDF4',
+                color: azaanSettings.enabled ? '#B91C1C' : '#15803D',
+                border: azaanSettings.enabled ? '1px solid #FECACA' : '1px solid #BBF7D0',
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+            >
+              {azaanSettings.enabled ? 'Mute' : 'Enable Audio'}
+            </button>
+
+            <button
+              onClick={handleRequestBrowserNotification}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '8px 14px',
+                borderRadius: 8,
+                backgroundColor: '#1B4332',
+                color: '#FFFFFF',
+                border: 'none',
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+            >
+              <span>🔔</span>
+              <span>Push Alerts</span>
+            </button>
+          </div>
+        </div>
+
         {/* FIQH CONTROLS BAR: MADHHAB & METHOD */}
         <div style={{
           backgroundColor: '#FFFFFF',
@@ -750,34 +944,60 @@ export default function PrayerTimesPage() {
                   CONGREGATIONAL SYNC
                 </span>
                 <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1B4332', margin: '2px 0 0' }}>
-                  🕌 Local Mosque Iqamah Schedule
+                  🕌 {mosqueSettings.name}
                 </h3>
               </div>
-              <span style={{ fontSize: 11, backgroundColor: '#ECFDF5', color: '#065F46', padding: '3px 8px', borderRadius: 10, fontWeight: 700 }}>
-                Synced
-              </span>
+              <button
+                onClick={() => {
+                  setEditMosqueName(mosqueSettings.name);
+                  setEditIqamahOffsets({ ...mosqueSettings.iqamahOffsets });
+                  setIsMosqueModalOpen(true);
+                }}
+                style={{
+                  fontSize: 12,
+                  backgroundColor: '#ECFDF5',
+                  color: '#065F46',
+                  border: '1px solid #A7F3D0',
+                  padding: '6px 12px',
+                  borderRadius: 8,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>✏️</span>
+                <span>Customize Mosque / مسجد بدلیں</span>
+              </button>
             </div>
 
             <p style={{ fontSize: 13, color: '#4B5563', margin: '0 0 16px' }}>
-              Punctuality for Takbir al-Ula in Jam'ah:
+              Real-life Jama'at & Iqamah times calibrated to your Mohalla mosque:
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {(() => {
-                const schedule = mosqueIqamahSyncEngine.computeSynchronizedSchedule({
-                  fajr: prayerTimes.fajr,
-                  dhuhr: prayerTimes.dhuhr,
-                  asr: prayerTimes.asr,
-                  maghrib: prayerTimes.maghrib,
-                  isha: prayerTimes.isha,
-                });
-                return [
-                  { prayer: 'Fajr', adhanTime: schedule.fajr.adhan, iqamahTime: schedule.fajr.iqamah },
-                  { prayer: 'Dhuhr', adhanTime: schedule.dhuhr.adhan, iqamahTime: schedule.dhuhr.iqamah },
-                  { prayer: 'Asr', adhanTime: schedule.asr.adhan, iqamahTime: schedule.asr.iqamah },
-                  { prayer: 'Maghrib', adhanTime: schedule.maghrib.adhan, iqamahTime: schedule.maghrib.iqamah },
-                  { prayer: 'Isha', adhanTime: schedule.isha.adhan, iqamahTime: schedule.isha.iqamah },
-                ].map((item, idx) => (
+                const addMins = (timeStr: string, mins: number) => {
+                  const parts = (timeStr || '00:00').split(':').map(Number);
+                  const h = parts[0] ?? 0;
+                  const m = parts[1] ?? 0;
+                  const total = h * 60 + m + mins;
+                  const newH = Math.floor(total / 60) % 24;
+                  const newM = total % 60;
+                  return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+                };
+
+                const prayerList = [
+                  { prayer: 'Fajr', adhanTime: prayerTimes.fajr, iqamahTime: addMins(prayerTimes.fajr, mosqueSettings.iqamahOffsets.fajr), offset: `+${mosqueSettings.iqamahOffsets.fajr}m` },
+                  { prayer: 'Dhuhr', adhanTime: prayerTimes.dhuhr, iqamahTime: addMins(prayerTimes.dhuhr, mosqueSettings.iqamahOffsets.dhuhr), offset: `+${mosqueSettings.iqamahOffsets.dhuhr}m` },
+                  { prayer: 'Asr', adhanTime: prayerTimes.asr, iqamahTime: addMins(prayerTimes.asr, mosqueSettings.iqamahOffsets.asr), offset: `+${mosqueSettings.iqamahOffsets.asr}m` },
+                  { prayer: 'Maghrib', adhanTime: prayerTimes.maghrib, iqamahTime: addMins(prayerTimes.maghrib, mosqueSettings.iqamahOffsets.maghrib), offset: `+${mosqueSettings.iqamahOffsets.maghrib}m` },
+                  { prayer: 'Isha', adhanTime: prayerTimes.isha, iqamahTime: addMins(prayerTimes.isha, mosqueSettings.iqamahOffsets.isha), offset: `+${mosqueSettings.iqamahOffsets.isha}m` },
+                  { prayer: "Jumu'ah", adhanTime: prayerTimes.dhuhr, iqamahTime: mosqueSettings.iqamahOffsets.jumuah || '13:30', offset: 'Fixed' },
+                ];
+
+                return prayerList.map((item, idx) => (
                   <div
                     key={idx}
                     style={{
@@ -792,9 +1012,12 @@ export default function PrayerTimesPage() {
                     }}
                   >
                     <span style={{ fontWeight: 700, color: '#111827' }}>{item.prayer}</span>
-                    <div style={{ display: 'flex', gap: 14, color: '#4B5563' }}>
-                      <span>Adhan: <strong>{item.adhanTime}</strong></span>
-                      <span style={{ color: '#047857' }}>Iqamah: <strong>{item.iqamahTime}</strong></span>
+                    <div style={{ display: 'flex', gap: 14, color: '#4B5563', alignItems: 'center' }}>
+                      <span style={{ fontSize: 12 }}>Adhan: <strong>{item.adhanTime}</strong></span>
+                      <span style={{ color: '#047857', fontWeight: 700 }}>
+                        Iqamah: <strong>{item.iqamahTime}</strong>
+                        <span style={{ fontSize: 10, color: '#6B7280', marginLeft: 4 }}>({item.offset})</span>
+                      </span>
                     </div>
                   </div>
                 ));
@@ -1069,7 +1292,230 @@ export default function PrayerTimesPage() {
         </div>
       )}
 
-      {/* FULL WORLDWIDE CITY SEARCH MODAL */}
+      {/* LOCAL MOSQUE CUSTOMIZATION MODAL */}
+      {isMosqueModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(15, 23, 42, 0.75)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 10006,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onClick={() => setIsMosqueModalOpen(false)}
+        >
+          <div
+            style={{
+              width: '92%',
+              maxWidth: 540,
+              backgroundColor: '#FFFFFF',
+              borderRadius: 20,
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              padding: 28,
+              border: '1px solid #E2E8F0',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <div>
+                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1B4332', margin: 0 }}>
+                  🕌 Configure Your Mohalla Mosque
+                </h2>
+                <p style={{ fontSize: 12, color: '#64748B', margin: '4px 0 0' }}>
+                  اپنی مقامی مسجد کا نام اور جماعت (اقامت) کا وقت سیٹ کریں
+                </p>
+              </div>
+              <button
+                onClick={() => setIsMosqueModalOpen(false)}
+                style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer', color: '#94A3B8' }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Mosque Name Input */}
+            <div style={{ marginBottom: 18 }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#1F2937', marginBottom: 6 }}>
+                Mosque Name (مسجد کا نام):
+              </label>
+              <input
+                type="text"
+                value={editMosqueName}
+                onChange={(e) => setEditMosqueName(e.target.value)}
+                placeholder="e.g. Markaz Jamia Masjid, Noor Masjid Mohalla 4..."
+                style={{
+                  width: '100%',
+                  padding: '10px 14px',
+                  borderRadius: 8,
+                  border: '1px solid #D1D5DB',
+                  fontSize: 14,
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            {/* Iqamah Offsets */}
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#1F2937', marginBottom: 10 }}>
+                Iqamah Delay After Adhan (اذان کے بعد جماعت کا وقفہ):
+              </label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  { key: 'fajr', label: 'Fajr Iqamah (فجر)' },
+                  { key: 'dhuhr', label: 'Dhuhr Iqamah (ظہر)' },
+                  { key: 'asr', label: 'Asr Iqamah (عصر)' },
+                  { key: 'maghrib', label: 'Maghrib Iqamah (مغرب)' },
+                  { key: 'isha', label: 'Isha Iqamah (عشاء)' },
+                ].map((item) => {
+                  const val = editIqamahOffsets[item.key as keyof typeof editIqamahOffsets] as number ?? 20;
+                  return (
+                    <div
+                      key={item.key}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '10px 14px',
+                        backgroundColor: '#F9FAFB',
+                        borderRadius: 8,
+                        border: '1px solid #E5E7EB',
+                      }}
+                    >
+                      <span style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>{item.label}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditIqamahOffsets(prev => ({
+                              ...prev,
+                              [item.key]: Math.max(1, (prev[item.key as keyof typeof prev] as number || 0) - 1),
+                            }));
+                          }}
+                          style={{
+                            width: 30,
+                            height: 30,
+                            borderRadius: 6,
+                            border: '1px solid #D1D5DB',
+                            backgroundColor: '#FFFFFF',
+                            cursor: 'pointer',
+                            fontWeight: 800,
+                          }}
+                        >
+                          -
+                        </button>
+                        <span style={{ minWidth: 50, textAlign: 'center', fontWeight: 800, color: '#047857', fontSize: 13 }}>
+                          +{val} min
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditIqamahOffsets(prev => ({
+                              ...prev,
+                              [item.key]: Math.min(60, (prev[item.key as keyof typeof prev] as number || 0) + 1),
+                            }));
+                          }}
+                          style={{
+                            width: 30,
+                            height: 30,
+                            borderRadius: 6,
+                            border: '1px solid #D1D5DB',
+                            backgroundColor: '#FFFFFF',
+                            cursor: 'pointer',
+                            fontWeight: 800,
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Jumu'ah fixed time */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 14px',
+                    backgroundColor: '#ECFDF5',
+                    borderRadius: 8,
+                    border: '1px solid #A7F3D0',
+                  }}
+                >
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
+                    Jumu'ah Prayer Time (جمعہ کی نماز):
+                  </span>
+                  <input
+                    type="time"
+                    value={editIqamahOffsets.jumuah || '13:30'}
+                    onChange={(e) => setEditIqamahOffsets(prev => ({ ...prev, jumuah: e.target.value }))}
+                    style={{
+                      padding: '4px 8px',
+                      borderRadius: 6,
+                      border: '1px solid #059669',
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: '#065F46',
+                      backgroundColor: '#FFFFFF',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 24 }}>
+              <button
+                type="button"
+                onClick={() => setIsMosqueModalOpen(false)}
+                style={{
+                  padding: '10px 18px',
+                  borderRadius: 8,
+                  backgroundColor: '#F3F4F6',
+                  color: '#4B5563',
+                  border: 'none',
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                }}
+              >
+                Cancel (منسوخ)
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveMosque}
+                style={{
+                  padding: '10px 22px',
+                  borderRadius: 8,
+                  backgroundColor: '#1B4332',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>✓</span>
+                <span>Save Mosque Settings (محفوظ کریں)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {isSearchOpen && (
         <div
           style={{

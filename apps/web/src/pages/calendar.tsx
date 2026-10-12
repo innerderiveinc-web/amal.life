@@ -1,11 +1,23 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import { Navigation } from '../components/Navigation';
 import { hijriFastingEngine, HijriFastingEngine, HijriDate, FastingDayEvaluation } from '@amal/amal-engine';
+import { getSavedHijriOffset, setSavedHijriOffset } from '../lib/prayer-utils';
+import { showAmalToast } from '../components/Toast';
 
 export default function CalendarPage() {
   const [moonAdjustment, setMoonAdjustment] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]!);
+
+  useEffect(() => {
+    setMoonAdjustment(getSavedHijriOffset());
+  }, []);
+
+  const handleMoonAdjustmentChange = (val: number) => {
+    setMoonAdjustment(val);
+    setSavedHijriOffset(val);
+    showAmalToast(`Ru'yat-e-Hilal moon adjustment saved: ${val > 0 ? `+${val}` : val} day(s)`, 'success');
+  };
 
   const dateObj = useMemo(() => new Date(selectedDate), [selectedDate]);
 
@@ -85,15 +97,17 @@ export default function CalendarPage() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>Hilal Sighting Offset:</label>
+            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>🌙 Ru'yat-e-Hilal Sighting Offset:</label>
             <select
               value={moonAdjustment}
-              onChange={(e) => setMoonAdjustment(Number(e.target.value))}
-              style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #D1D5DB', fontSize: 14 }}
+              onChange={(e) => handleMoonAdjustmentChange(Number(e.target.value))}
+              style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #D1D5DB', fontSize: 14, backgroundColor: '#F9FAFB', fontWeight: 600 }}
             >
-              <option value={-1}>-1 Day (Late Sighting)</option>
-              <option value={0}>0 Days (Standard Astronomical)</option>
-              <option value={1}>+1 Day (Early Sighting)</option>
+              <option value={-2}>-2 Days (Regional Delayed Sighting)</option>
+              <option value={-1}>-1 Day (South Asia / India Local Crescent)</option>
+              <option value={0}>0 Days (Standard Astronomical Baseline)</option>
+              <option value={1}>+1 Day (Early Crescent Sighting)</option>
+              <option value={2}>+2 Days (Advanced Offset)</option>
             </select>
           </div>
         </div>

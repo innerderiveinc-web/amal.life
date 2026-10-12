@@ -3,7 +3,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AmalTheme } from '@amal/ui';
 import { hijriFastingEngine, prayerQiblaEngine } from '@amal/amal-engine';
-import { getLiveNextPrayer, getSavedLocation, getSavedMadhhab, getSavedMethod, getSavedOffsets, applyOffsets } from '../lib/prayer-utils';
+import {
+  getLiveNextPrayer,
+  getSavedLocation,
+  getSavedMadhhab,
+  getSavedMethod,
+  getSavedOffsets,
+  applyOffsets,
+  getSavedHijriOffset,
+} from '../lib/prayer-utils';
 import { useAuth } from '../context/AuthContext';
 
 export const Navigation: React.FC = () => {
@@ -34,17 +42,18 @@ export const Navigation: React.FC = () => {
     }
   };
 
-  // Live Hijri date calculation
+  const [now, setNow] = useState<Date>(() => new Date());
+  const [prayerConfigKey, setPrayerConfigKey] = useState(0);
+
+  // Live Hijri date calculation (with user Ru'yat-e-Hilal moon adjustment)
   const hijri = useMemo(() => {
     try {
-      return hijriFastingEngine.toHijri(new Date());
+      const offset = getSavedHijriOffset();
+      return hijriFastingEngine.toHijri(now, offset);
     } catch {
       return { day: 26, monthNameEnglish: 'Jumada al-Ula', monthNameUrdu: 'جمادی الاولیٰ', year: 1448 };
     }
-  }, []);
-
-  const [now, setNow] = useState<Date>(() => new Date());
-  const [prayerConfigKey, setPrayerConfigKey] = useState(0);
+  }, [now, prayerConfigKey]);
 
   useEffect(() => {
     setNow(new Date());
