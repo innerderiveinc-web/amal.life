@@ -1,14 +1,16 @@
 import { SafetyClass, SafetyClassificationResult } from '@amal/types';
 
 export class FatwaFirewall {
-  // Triggers for Class E: Crisis, emergency, self-harm, abuse
+  // Triggers for Class E: Crisis, emergency, self-harm, abuse (English, Roman Urdu, Urdu, Arabic)
   private static readonly CRISIS_PATTERNS = [
     /\b(kill myself|suicide|end my life|self[- ]harm|cut myself|overdose)\b/i,
     /\b(being beaten|domestic abuse|physical violence|hit me|assaulted me|trafficking)\b/i,
     /\b(emergency medical|poisoned|unconscious|cannot breathe)\b/i,
+    /\b(khudkushi|mar jana chahta|jaan dena chahta|apne aap ko khatam|gharelu tashaddud|maar peet)\b/i,
+    /(خودکشی|جان لے لوں|اپنے آپ کو مار|گھریلو تشدد|مار پیٹ|انتحار|أقتل نفسي|عنف أسري)/i,
   ];
 
-  // Triggers for Class D: Personalized Fiqh, divorce, talaq, marital dissolution, legal oaths
+  // Triggers for Class D: Personalized Fiqh, divorce, talaq, marital dissolution, legal oaths (English, Roman Urdu, Urdu, Arabic)
   private static readonly PERSONALIZED_FIQH_PATTERNS = [
     /\b(did i divorce|talaq three times|said talaq|is my marriage invalid|annulled my marriage)\b/i,
     /\b(uttered (divorce|talaq)|words of (divorce|talaq)|pronounce(d)? (divorce|talaq))\b/i,
@@ -17,6 +19,8 @@ export class FatwaFirewall {
     /\b(i broke an oath|expiation for my specific oath|kaffarah for breaking)\b/i,
     /\b(fatwa for me|is my specific contract halal|did i commit kufr|am i out of islam)\b/i,
     /\b(ruling on my case|verdict on my situation|declare me)\b/i,
+    /\b(talaq de di|talaq dedi|teen talaq|3 talaq|talaq bol diya|khula lena|qasam tod di|kaffara kitna|nikah toot gaya|fatwa chahiye|biwi haram ho gayi)\b/i,
+    /(طلاق|تین طلاق|طلاق واقع|خلع|نکاح ٹوٹ گیا|قسم کا کفارہ|فتویٰ چاہیے|کیا یہ حلال ہے یا حرام|هل وقع الطلاق|الخلع|كفارة اليمين|طلاق ثلاث|أفتوني)/i,
   ];
 
   // Triggers for Class C: Known scholarly disagreement topics
