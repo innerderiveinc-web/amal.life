@@ -3,8 +3,9 @@ import { showAmalToast } from '../components/Toast';
 
 export interface AuthUser {
   id: string;
+  username: string;
   name: string;
-  email: string;
+  email?: string;
   role: 'USER' | 'SCHOLAR' | 'ADMIN';
   madhhab: 'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali';
   city: string;
@@ -17,8 +18,15 @@ export interface AuthUser {
 interface AuthContextType {
   user: AuthUser | null;
   isLoading: boolean;
-  signIn: (email: string, password?: string) => Promise<boolean>;
-  register: (data: { name: string; email: string; password?: string; madhhab: 'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali'; city: string }) => Promise<boolean>;
+  signIn: (username: string, password?: string) => Promise<boolean>;
+  register: (data: {
+    username: string;
+    name: string;
+    password?: string;
+    madhhab: 'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali';
+    city: string;
+    email?: string;
+  }) => Promise<boolean>;
   continueAsGuest: () => void;
   signOut: () => void;
   updateProfile: (data: Partial<AuthUser>) => void;
@@ -27,6 +35,7 @@ interface AuthContextType {
 
 const DEFAULT_GUEST_USER: AuthUser = {
   id: 'guest_local_seeker',
+  username: 'sovereign_guest',
   name: 'Sovereign Seeker',
   email: 'local@device.vault',
   role: 'USER',
@@ -69,15 +78,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signIn = async (email: string, _password?: string): Promise<boolean> => {
+  const signIn = async (username: string, password?: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simulate authentication / local verification
+      const cleanUsername = username.trim().toLowerCase().replace(/^@/, '');
       const existingUser: AuthUser = {
         id: `usr_${Date.now()}`,
-        name: email.split('@')[0] || 'Seeker',
-        email,
-        role: email.includes('scholar') ? 'SCHOLAR' : 'USER',
+        username: cleanUsername,
+        name: cleanUsername.charAt(0).toUpperCase() + cleanUsername.slice(1),
+        email: `${cleanUsername}@amal.vault`,
+        role: cleanUsername.includes('scholar') ? 'SCHOLAR' : 'USER',
         madhhab: 'Hanafi',
         city: 'Delhi, India',
         isGuest: false,
@@ -86,10 +96,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         createdAt: new Date().toISOString(),
       };
       saveUser(existingUser);
-      showAmalToast(`Welcome back, ${existingUser.name}! Cloud sync active.`, 'success');
+      showAmalToast(`Welcome back, @${existingUser.username}! Cloud sync active.`, 'success');
       return true;
     } catch {
-      showAmalToast('Sign in failed. Please check your credentials.', 'warning');
+      showAmalToast('Sign in failed. Please check your username and password.', 'warning');
       return false;
     } finally {
       setIsLoading(false);
@@ -97,18 +107,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const register = async (data: {
+    username: string;
     name: string;
-    email: string;
     password?: string;
     madhhab: 'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali';
     city: string;
+    email?: string;
   }): Promise<boolean> => {
     setIsLoading(true);
     try {
+      const cleanUsername = data.username.trim().toLowerCase().replace(/[^a-z0-9_.-]/g, '');
       const newUser: AuthUser = {
         id: `usr_${Date.now()}`,
+        username: cleanUsername,
         name: data.name.trim(),
-        email: data.email.trim().toLowerCase(),
+        email: data.email?.trim() || `${cleanUsername}@amal.vault`,
         role: 'USER',
         madhhab: data.madhhab,
         city: data.city,
@@ -124,7 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('amal_user_madhhab', data.madhhab === 'Hanafi' ? 'HANAFI' : 'STANDARD_JUMHUR');
       }
 
-      showAmalToast(`Account created successfully! Welcome to AMAL OS, ${newUser.name}.`, 'success');
+      showAmalToast(`Account created successfully! Welcome @${newUser.username}.`, 'success');
       return true;
     } catch {
       showAmalToast('Registration failed. Please try again.', 'warning');

@@ -9,7 +9,7 @@ export default function AuthPage() {
   const { user, signIn, register, continueAsGuest, signOut, exportSovereignData } = useAuth();
   const [mode, setMode] = useState<'SIGNIN' | 'REGISTER'>('SIGNIN');
 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [madhhab, setMadhhab] = useState<'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali'>('Hanafi');
@@ -18,17 +18,23 @@ export default function AuthPage() {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!username.trim() || !password.trim()) {
+      showAmalToast('Please enter your username and password', 'warning');
+      return;
+    }
     setIsSubmitting(true);
-    await signIn(email, password);
+    await signIn(username, password);
     setIsSubmitting(false);
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
+    if (!username.trim() || !name.trim() || !password.trim()) {
+      showAmalToast('Please enter username, full name, and password', 'warning');
+      return;
+    }
     setIsSubmitting(true);
-    await register({ name, email, password, madhhab, city });
+    await register({ username, name, password, madhhab, city });
     setIsSubmitting(false);
   };
 
@@ -101,7 +107,7 @@ export default function AuthPage() {
                     {user.name.charAt(0).toUpperCase()}
                   </div>
                   <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#064E3B' }}>{user.name}</h3>
-                  <div style={{ fontSize: 13, color: '#047857', marginTop: 4 }}>{user.email}</div>
+                  <div style={{ fontSize: 13, color: '#047857', marginTop: 4, fontWeight: 600 }}>@{user.username || 'seeker'}</div>
                   <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 10 }}>
                     <span style={{ fontSize: 11, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '2px 8px', borderRadius: 12 }}>
                       {user.madhhab} Fiqh
@@ -204,17 +210,17 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Email Address
+                          Username
                         </label>
                         <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          ای میل ایڈریس
+                          صارف کا نام / شناختی نام
                         </span>
                       </div>
                       <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="name@example.com"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="ashraf786"
                         required
                         style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
                       />
@@ -225,7 +231,7 @@ export default function AuthPage() {
                           Password
                         </label>
                         <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          پاسورڈ
+                          پاسورڈ / خفیہ کوڈ
                         </span>
                       </div>
                       <input
@@ -233,6 +239,7 @@ export default function AuthPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
+                        required
                         style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
                       />
                     </div>
@@ -259,6 +266,24 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
+                          Username (Unique ID)
+                        </label>
+                        <span style={{ fontSize: 12, color: '#6B7280' }}>
+                          صارف کا شناختی نام (لاگ ان کے لیے)
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.-]/g, ''))}
+                        placeholder="ashraf786 (حروف و ہندسے)"
+                        required
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
+                      />
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                        <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
                           Full Name / Title
                         </label>
                         <span style={{ fontSize: 12, color: '#6B7280' }}>
@@ -277,17 +302,17 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Email Address
+                          Password
                         </label>
                         <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          ای میل ایڈریس
+                          پاسورڈ / خفیہ پن
                         </span>
                       </div>
                       <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="ashraf@example.com"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="•••••••• (کم از کم ۴ حروف یا ہندسے)"
                         required
                         style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
                       />

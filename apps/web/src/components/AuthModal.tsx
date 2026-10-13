@@ -14,7 +14,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   );
 
   // Form states
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [madhhab, setMadhhab] = useState<'Hanafi' | 'Shafi\'i' | 'Maliki' | 'Hanbali'>('Hanafi');
@@ -25,31 +25,36 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      showAmalToast('Please enter your email', 'warning');
+    if (!username.trim()) {
+      showAmalToast('Please enter your username', 'warning');
+      return;
+    }
+    if (!password.trim()) {
+      showAmalToast('Please enter your password', 'warning');
       return;
     }
     setIsSubmitting(true);
-    const success = await signIn(email, password);
+    const success = await signIn(username, password);
     setIsSubmitting(false);
     if (success) onClose();
   };
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) {
-      showAmalToast('Please enter your name and email', 'warning');
+    if (!username.trim()) {
+      showAmalToast('Please choose a username', 'warning');
+      return;
+    }
+    if (!name.trim()) {
+      showAmalToast('Please enter your full name', 'warning');
+      return;
+    }
+    if (!password.trim() || password.length < 4) {
+      showAmalToast('Please enter a password (min 4 characters)', 'warning');
       return;
     }
     setIsSubmitting(true);
-    const success = await register({ name, email, password, madhhab, city });
-    setIsSubmitting(false);
-    if (success) onClose();
-  };
-
-  const handleQuickDemo = async () => {
-    setIsSubmitting(true);
-    const success = await signIn('seeker@amal.local', 'amal2026');
+    const success = await register({ username, name, password, madhhab, city });
     setIsSubmitting(false);
     if (success) onClose();
   };
@@ -219,17 +224,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                   <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Email Address
+                    Username
                   </label>
                   <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    ای میل ایڈریس
+                    صارف کا نام / شناختی نام
                   </span>
                 </div>
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="ashraf786"
                   required
                   style={{
                     width: '100%',
@@ -249,7 +254,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     Password
                   </label>
                   <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    پاسورڈ
+                    پاسورڈ / خفیہ کوڈ
                   </span>
                 </div>
                 <input
@@ -257,6 +262,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
+                  required
                   style={{
                     width: '100%',
                     padding: '11px 14px',
@@ -321,6 +327,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                   <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
+                    Username (Unique ID)
+                  </label>
+                  <span style={{ fontSize: 12, color: '#6B7280' }}>
+                    صارف کا شناختی نام (لاگ ان کے لیے)
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.-]/g, ''))}
+                  placeholder="ashraf786 (حروف و ہندسے)"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    borderRadius: 10,
+                    border: '1.5px solid #D1D5DB',
+                    fontSize: 14,
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
                     Full Name / Title
                   </label>
                   <span style={{ fontSize: 12, color: '#6B7280' }}>
@@ -347,17 +379,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                   <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Email Address
+                    Password
                   </label>
                   <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    ای میل ایڈریس
+                    پاسورڈ / خفیہ پن
                   </span>
                 </div>
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ashraf@example.com"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="•••••••• (کم از کم ۴ حروف یا ہندسے)"
                   required
                   style={{
                     width: '100%',
@@ -485,7 +517,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 16, fontWeight: 800, color: '#064E3B' }}>{user.name}</div>
-                  <div style={{ fontSize: 12, color: '#047857' }}>{user.email}</div>
+                  <div style={{ fontSize: 12, color: '#047857', fontWeight: 600 }}>@{user.username || 'seeker'}</div>
                   <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '1px 6px', borderRadius: 4 }}>
                       {user.madhhab} Fiqh
