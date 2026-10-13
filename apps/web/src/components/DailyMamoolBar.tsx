@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { DailyMamoolEngine, DailyMamool, prayerQiblaEngine } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { AmalTheme } from '@amal/ui';
@@ -57,15 +58,23 @@ export const DailyMamoolBar: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const livePrayerInfo = useMemo(() => {
+  const fullPrayerTimes = useMemo(() => {
     try {
       const loc = getSavedLocation();
-      const pt = prayerQiblaEngine.calculatePrayerTimes({ latitude: loc.lat, longitude: loc.lon }, now, 'HANAFI', 'KARACHI');
-      return getLiveNextPrayer(pt, now);
+      return prayerQiblaEngine.calculatePrayerTimes({ latitude: loc.lat, longitude: loc.lon }, now, 'HANAFI', 'KARACHI');
     } catch {
       return null;
     }
   }, [now]);
+
+  const livePrayerInfo = useMemo(() => {
+    if (!fullPrayerTimes) return null;
+    try {
+      return getLiveNextPrayer(fullPrayerTimes, now);
+    } catch {
+      return null;
+    }
+  }, [fullPrayerTimes, now]);
 
   if (!mamool) return null;
 
@@ -171,6 +180,84 @@ export const DailyMamoolBar: React.FC = () => {
           </span>
         </div>
       </div>
+
+      {/* 5-Prayer Full Auqat Strip */}
+      {fullPrayerTimes && (
+        <div
+          style={{
+            marginTop: 14,
+            padding: '10px 14px',
+            backgroundColor: '#F8FAFC',
+            borderRadius: 12,
+            border: '1px solid #E2E8F0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 8,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#475569' }}>
+            <span>🕌</span>
+            <span>پانچوں نمازوں کے اوقات (Daily Auqat-e-Namaz):</span>
+          </div>
+
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+            {[
+              { key: 'fajr', label: 'فجر (Fajr)', time: fullPrayerTimes.fajr },
+              { key: 'sunrise', label: 'طلوع (Sunrise)', time: fullPrayerTimes.sunrise },
+              { key: 'dhuhr', label: 'ظہر (Dhuhr)', time: fullPrayerTimes.dhuhr },
+              { key: 'asr', label: 'عصر (Asr)', time: fullPrayerTimes.asr },
+              { key: 'maghrib', label: 'مغرب (Maghrib)', time: fullPrayerTimes.maghrib },
+              { key: 'isha', label: 'عشاء (Isha)', time: fullPrayerTimes.isha },
+            ].map((p) => {
+              const isNext = livePrayerInfo?.key === p.key;
+              return (
+                <div
+                  key={p.key}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 5,
+                    padding: '4px 10px',
+                    borderRadius: 8,
+                    fontSize: 12,
+                    fontWeight: isNext ? 800 : 600,
+                    backgroundColor: isNext ? '#ECFDF5' : '#FFFFFF',
+                    color: isNext ? '#065F46' : '#334155',
+                    border: isNext ? '1.5px solid #10B981' : '1px solid #E2E8F0',
+                    boxShadow: isNext ? '0 2px 6px rgba(16, 185, 129, 0.15)' : 'none',
+                  }}
+                >
+                  <span>{p.label}</span>
+                  <span style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
+                  {isNext && (
+                    <span style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
+                      اگلی
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+
+            <Link
+              href="/prayer"
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: '#059669',
+                textDecoration: 'none',
+                marginLeft: 4,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 2,
+              }}
+            >
+              تفصیل و قبلہ ➔
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Grid of 3 Essentials: Waqt Ka Amal | 1-Min Micro-Amal | 1-Tap Dua */}
       <div

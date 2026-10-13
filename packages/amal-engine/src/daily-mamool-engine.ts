@@ -146,6 +146,74 @@ export class DailyMamoolEngine {
       };
     }
 
+    if (slot === 'CHASHT') {
+      return {
+        currentSlotNameUrdu: 'چاشت و اشراق کا مبارک وقت (صلاۃ الضحیٰ)',
+        currentSlotNameEnglish: 'Mid-Morning Hours (Salat al-Duha / Chasht)',
+        nextPrayerName: nextPrayer,
+        minutesToNextPrayer: minsToNext,
+        timeSlotFadilahUrdu: 'انسان کے ہر جوڑ پر صدقہ لازم ہے، اور چاشت کی دو رکعتیں تمام جوڑوں کی طرف سے صدقہ ادا کر دیتی ہیں (مسلم)۔',
+        masnoonAmal: {
+          titleUrdu: 'نمازِ چاشت (صلاۃ الضحیٰ — ۲ تا ۸ رکعت)',
+          titleEnglish: 'Salat al-Duha (2 to 8 Rak\'ahs)',
+          descriptionUrdu: 'سورج بلندی پر آنے پر ۲، ۴ یا ۸ رکعت چاشت ادا فرمائیں، یہ رزق میں برکت اور اللہ کی شکر گزاری کا عظیم ذریعہ ہے۔',
+          descriptionEnglish: 'Pray 2 to 8 units of Duha prayer mid-morning as gratitude for the 360 joints of the human body.',
+          primarySource: 'Sahih Muslim 720',
+        },
+        microAmalOfTheDay: {
+          titleUrdu: 'رزق میں برکت و پاکیزگی کی دعا',
+          titleEnglish: 'Du\'a for Halal Sustenance & Barakah',
+          actionUrdu: 'دن کے کام کا آغاز کرتے ہوئے حلال کمائی اور حرام سے حفاظت کی مسنون دعا مانگیں۔',
+          actionEnglish: 'Make intention for pure halal sustenance and seek refuge from illicit wealth.',
+          estimatedMinutes: 1,
+          hadithProof: 'Sunan Ibn Majah 925 (Sahih)',
+        },
+        featuredDua: {
+          titleUrdu: 'علمِ نافع اور رزقِ طیب کی دعا',
+          titleEnglish: 'Du\'a for Beneficial Knowledge & Halal Sustenance',
+          arabicText: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا',
+          translationUrdu: 'اے اللہ! میں تجھ سے نفع بخش علم، پاکیزہ رزق اور قبول ہونے والے عمل کا سوال کرتا ہوں۔',
+          translationEnglish: 'O Allah, I ask You for knowledge that is of benefit, a good and lawful provision, and deeds that are accepted.',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/020114.mp3',
+          source: 'Sunan Ibn Majah 925',
+        },
+      };
+    }
+
+    if (slot === 'DHUHR') {
+      return {
+        currentSlotNameUrdu: 'ظہر کا وقت (نمازِ ظہر اور سنتِ مؤکدہ)',
+        currentSlotNameEnglish: 'Midday Hours (Dhuhr Prayer & Sunan)',
+        nextPrayerName: nextPrayer,
+        minutesToNextPrayer: minsToNext,
+        timeSlotFadilahUrdu: 'زوال کے بعد آسمان کے دروازے کھولے جاتے ہیں، پس رسول اللہ ﷺ ظہر سے قبل ۴ سنتیں پڑھنا پسند فرماتے تھے (ترمذی)۔',
+        masnoonAmal: {
+          titleUrdu: 'ظہر کی سنتِ مؤکدہ (۴ قبل اور ۲ بعد)',
+          titleEnglish: 'Sunan Mu\'akkadah of Dhuhr',
+          descriptionUrdu: 'فرض سے قبل ۴ رکعت اور فرض کے بعد ۲ رکعت سنتِ مؤکدہ کا خصوصی اہتمام فرمائیں (سنن مؤکدہ جنت میں محل کی بشارت ہیں)۔',
+          descriptionEnglish: 'Perform the 4 Sunnah units before Dhuhr and 2 after Dhuhr; these are emphasized Prophetic practices.',
+          primarySource: 'Jami\' at-Tirmidhi 478 (Sahih)',
+        },
+        microAmalOfTheDay: {
+          titleUrdu: 'مسجد میں اذان کا جواب اور درود و وسیلہ',
+          titleEnglish: 'Answering the Adhan & Wasilah Supplication',
+          actionUrdu: 'ظہر کی اذان کے بعد درود شریف اور مسنون دعائے وسیلہ پڑھیں، شفاعت واجب ہو جائے گی۔',
+          actionEnglish: 'Respond to the Adhan and recite the Wasilah prayer for the Prophet\'s ﷺ intercession.',
+          estimatedMinutes: 2,
+          hadithProof: 'Sahih al-Bukhari 614',
+        },
+        featuredDua: {
+          titleUrdu: 'اذان کے بعد کی مسنون دعا',
+          titleEnglish: 'Supplication After the Adhan',
+          arabicText: 'اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ',
+          translationUrdu: 'اے اللہ! اس کامل پکار اور قائم رہنے والی نماز کے رب! محمد ﷺ کو وسیلہ اور فضیلت عطا فرما اور انہیں مقامِ محمود پر فائز فرما۔',
+          translationEnglish: 'O Allah, Lord of this perfect call and established prayer, grant Muhammad the Wasilah and virtue, and resurrect him to the praised station You promised.',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/017079.mp3',
+          source: 'Sahih al-Bukhari 614',
+        },
+      };
+    }
+
     if (slot === 'ASR') {
       return {
         currentSlotNameUrdu: 'عصر تا مغرب (استغفار اور تسبیح کا وقت)',
@@ -180,16 +248,50 @@ export class DailyMamoolEngine {
       };
     }
 
+    if (slot === 'MAGHRIB') {
+      return {
+        currentSlotNameUrdu: 'مغرب کا وقت (غروبِ آفتاب و صلاۃ الاوابین)',
+        currentSlotNameEnglish: 'Sunset Hours (Maghrib & Salat al-Awwabin)',
+        nextPrayerName: nextPrayer,
+        minutesToNextPrayer: minsToNext,
+        timeSlotFadilahUrdu: 'مغرب کے بعد ۶ رکعات نفل (صلاۃ الاوابین) پڑھنے والے کے گناہ معاف کر دیے جاتے ہیں (ترمذی)۔',
+        masnoonAmal: {
+          titleUrdu: 'صلاۃ الاوابین (مغرب کے بعد ۶ رکعت)',
+          titleEnglish: 'Salat al-Awwabin (Post-Maghrib 6 Rak\'ahs)',
+          descriptionUrdu: 'مغرب کے فرض اور سنت کے بعد ۲، ۴ یا ۶ رکعت نفل ادا فرمائیں، یہ رجوع الی اللہ کی علامت ہے۔',
+          descriptionEnglish: 'Perform 2 to 6 voluntary units after Maghrib prayer as spiritual rejuvenation of the repentant.',
+          primarySource: 'Jami\' at-Tirmidhi 435 (Gharib/Hasan li Ghayrihi)',
+        },
+        microAmalOfTheDay: {
+          titleUrdu: 'شام کے وقت برائیوں سے پناہ کی دعا',
+          titleEnglish: 'Seeking Refuge from Evil at Nightfall',
+          actionUrdu: '۳ مرتبہ "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ" پڑھیں، کوئی نقصان نہیں پہنچے گا۔',
+          actionEnglish: 'Recite the prophetic refuge supplication 3 times for comprehensive physical and spiritual protection.',
+          estimatedMinutes: 1,
+          hadithProof: 'Sahih Muslim 2709',
+        },
+        featuredDua: {
+          titleUrdu: 'شام کی حفاظت کی دعا',
+          titleEnglish: 'Evening Protection Supplication',
+          arabicText: 'أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ',
+          translationUrdu: 'میں اللہ کے مکمل کلمات کی پناہ مانگتا ہوں اس کی پیدا کردہ تمام مخلوق کے شر سے۔',
+          translationEnglish: 'I seek refuge in the perfect words of Allah from the evil of that which He has created.',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/113001.mp3',
+          source: 'Sahih Muslim 2709',
+        },
+      };
+    }
+
     // Default Night / Isha Slot
     return {
-      currentSlotNameUrdu: 'رات کا وقت (سورۃ الملک اور محاسبہ)',
-      currentSlotNameEnglish: 'Night Hours (Surah al-Mulk & Rest)',
+      currentSlotNameUrdu: 'رات کا وقت (نمازِ عشاء، وتر، سورۃ الملک اور محاسبہ)',
+      currentSlotNameEnglish: 'Night Hours (Isha, Witr, Surah al-Mulk & Rest)',
       nextPrayerName: nextPrayer,
       minutesToNextPrayer: minsToNext,
       timeSlotFadilahUrdu: 'سونے سے قبل سورۃ الملک پڑھنا عذابِ قبر سے ڈھال ہے۔',
       masnoonAmal: {
-        titleUrdu: 'سورۃ الملک کی تلاوت اور بستر کے اذکار',
-        titleEnglish: 'Surah al-Mulk & Bedtime Du\'a',
+        titleUrdu: 'نمازِ وتر، سورۃ الملک کی تلاوت اور بستر کے اذکار',
+        titleEnglish: 'Salat al-Witr, Surah al-Mulk & Bedtime Du\'a',
         descriptionUrdu: 'رسول اللہ ﷺ سورۃ الملک اور السجدہ پڑھے بغیر آرام نہیں فرماتے تھے (ترمذی)۔',
         descriptionEnglish: 'The Prophet ﷺ would not sleep until he recited Surah al-Mulk and as-Sajdah.',
         primarySource: 'Jami\' at-Tirmidhi 2892 (Hasan)',
