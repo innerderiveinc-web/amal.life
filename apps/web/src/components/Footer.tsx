@@ -220,7 +220,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link href="/ask" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-                  Ask AMAL (Grounded AI Guidance)
+                  Ask AMAL (Canonical Evidence Explorer)
                 </Link>
               </li>
             </ul>

@@ -119,7 +119,7 @@ export const Navigation: React.FC = () => {
     ...ibadatItems,
     ...ilmItems,
     ...ahkamItems,
-    { title: 'Ask AMAL AI Guidance', titleUrdu: 'اسکالر اے آئی رہنمائی', href: '/ask', icon: '💬' },
+    { title: 'Canonical Evidence Explorer', titleUrdu: 'کتبِ معتبرہ سے تلاش و رہنمائی', href: '/ask', icon: '💬' },
     { title: 'Security & Trust Vault', titleUrdu: 'پرائیویسی و امانت سینٹر', href: '/privacy', icon: '🛡️' },
     { title: 'About & Methodology', titleUrdu: 'تعارف و منہج عمل', href: '/about', icon: '🕌' },
   ];
