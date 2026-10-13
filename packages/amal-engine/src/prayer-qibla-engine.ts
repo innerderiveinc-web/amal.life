@@ -208,29 +208,39 @@ export class PrayerQiblaEngine {
     // Dhuhr (Solar noon + 2-minute ihtiyat / safety margin)
     const dhuhrHours = 12 + tzHours - (coords.longitude / 15.0) - (solar.eqOfTime / 60) + (2 / 60);
 
-    const calcHourAngle = (altitude: number): number => {
-      const cosHA = (sinD(altitude) - sinD(coords.latitude) * sinD(solar.declination)) /
-                    (cosD(coords.latitude) * cosD(solar.declination));
+    // High-Latitude (Aqrab al-Balad) clamp: Clamped to 48.5° where normal 18° twilight always exists
+    const effectiveLat = Math.min(Math.max(coords.latitude, -48.5), 48.5);
+
+    const calcHourAngle = (altitude: number, allowClamp: boolean = false): number => {
+      const lat = allowClamp && Math.abs(coords.latitude) > 48.5 ? effectiveLat : coords.latitude;
+      const cosHA = (sinD(altitude) - sinD(lat) * sinD(solar.declination)) /
+                    (cosD(lat) * cosD(solar.declination));
       if (cosHA > 1) return 0; // Sun never rises
-      if (cosHA < -1) return 180; // Sun never sets
-      return acosD(cosHA) / 15.0;
+      if (cosHA < -1) return 12; // Sun never sets / midnight
+      return acosD(Math.min(Math.max(cosHA, -1), 1)) / 15.0;
     };
 
     // Sunrise & Sunset (geometric altitude -0.8333° for solar refraction and semi-diameter)
-    const sunHalfDay = calcHourAngle(-0.8333);
+    const sunHalfDay = Math.min(Math.max(calcHourAngle(-0.8333, true), 2), 10);
     const sunriseHours = dhuhrHours - sunHalfDay;
     const sunsetHours = dhuhrHours + sunHalfDay;
 
     // Fajr
     const params = CALCULATION_METHODS[method];
-    const fajrHA = calcHourAngle(-params.fajrAngle);
+    let fajrHA = calcHourAngle(-params.fajrAngle, false);
+    // If twilight does not occur or exceeds night capacity (Polar/High Latitude), use Shar'i 1/7th night rule
+    if (fajrHA <= 0 || fajrHA >= sunHalfDay || Math.abs(coords.latitude) > 48.5) {
+      const nightDurationHalf = Math.max(12 - sunHalfDay, 1.5);
+      const nightProportion = (nightDurationHalf * 2) / 7;
+      fajrHA = sunHalfDay + Math.max(nightProportion, 1.2);
+    }
     const fajrHours = dhuhrHours - fajrHA;
 
     // Asr (Shadow length: Hanafi = 2x, Jumhur = 1x)
     const shadowFactor = asrMadhhab === 'HANAFI' ? 2 : 1;
-    const noonShadow = Math.abs(tanD(coords.latitude - solar.declination));
+    const noonShadow = Math.abs(tanD(effectiveLat - solar.declination));
     const asrAltitude = atan2D(1, shadowFactor + noonShadow);
-    const asrHA = calcHourAngle(asrAltitude);
+    const asrHA = calcHourAngle(asrAltitude, true);
     const asrHours = dhuhrHours + asrHA;
 
     // Maghrib = Sunset + 2-minute ihtiyat
@@ -242,7 +252,12 @@ export class PrayerQiblaEngine {
       ishaHours = maghribHours + (params.ishaIntervalMinutes / 60);
     } else {
       const ishaAngle = params.ishaAngle || 18.0;
-      const ishaHA = calcHourAngle(-ishaAngle);
+      let ishaHA = calcHourAngle(-ishaAngle, false);
+      if (ishaHA <= 0 || ishaHA >= sunHalfDay || Math.abs(coords.latitude) > 48.5) {
+        const nightDurationHalf = Math.max(12 - sunHalfDay, 1.5);
+        const nightProportion = (nightDurationHalf * 2) / 7;
+        ishaHA = sunHalfDay + Math.max(nightProportion, 1.2);
+      }
       ishaHours = dhuhrHours + ishaHA;
     }
 

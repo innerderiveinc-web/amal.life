@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "test": "turbo run test",
+    "test": "tsx --tsconfig services/api/tsconfig.json scripts/verify-full-production-loop.ts",
+    "test:turbo": "turbo run test",
     "test:unit": "turbo run test:unit",
     "test:integration": "turbo run test:integration",
     "test:benchmark": "turbo run test:benchmark",
