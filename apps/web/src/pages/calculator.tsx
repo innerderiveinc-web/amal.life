@@ -29,9 +29,20 @@ export default function CalculatorPage() {
   const [silverGrams, setSilverGrams] = useState(100);
   const [businessStock, setBusinessStock] = useState(150000);
   const [receivables, setReceivables] = useState(50000);
+  const [tradingShares, setTradingShares] = useState(0); // 100% zakatable (Urud al-Tijarah)
+  const [longTermShares, setLongTermShares] = useState(0); // 25% zakatable on liquid assets
+  const [retirementAccessible, setRetirementAccessible] = useState(0); // PF / 401k accessible portion
+  const [cryptoAssets, setCryptoAssets] = useState(0); // Cryptocurrency / tokens
   const [debts, setDebts] = useState(30000);
 
   const zakatResult = useMemo(() => {
+    // Modern financial asset zakatable pool
+    const zakatableInvestments = 
+      tradingShares + 
+      Math.round(longTermShares * 0.25) + 
+      retirementAccessible + 
+      cryptoAssets;
+
     const input: ZakatInput = {
       currency,
       goldPricePerGram: goldPrice,
@@ -44,12 +55,28 @@ export default function CalculatorPage() {
       isPersonalWornJewelry: true,
       businessMerchandiseWholesale: businessStock,
       tradeReceivablesAndLoansGiven: receivables,
-      sharesAndInvestments: 0,
+      sharesAndInvestments: zakatableInvestments,
       immediateDebtsDue: debts,
       pendingEssentialBills: 0,
     };
     return zakatInheritanceEngine.calculateZakat(input);
-  }, [currency, goldPrice, silverPrice, nisabStandard, madhhab, cash, goldGrams, silverGrams, businessStock, receivables, debts]);
+  }, [
+    currency,
+    goldPrice,
+    silverPrice,
+    nisabStandard,
+    madhhab,
+    cash,
+    goldGrams,
+    silverGrams,
+    businessStock,
+    receivables,
+    tradingShares,
+    longTermShares,
+    retirementAccessible,
+    cryptoAssets,
+    debts,
+  ]);
 
   // Miras Form State
   const [estateValue, setEstateValue] = useState(10000000); // 10 Million
@@ -222,7 +249,9 @@ export default function CalculatorPage() {
                 </div>
 
                 <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Trade Merchandise (Wholesale Inventory)</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
+                    Trade Merchandise (Wholesale Inventory)
+                  </label>
                   <input
                     type="number"
                     value={businessStock}
@@ -232,7 +261,102 @@ export default function CalculatorPage() {
                 </div>
 
                 <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Immediate Debts Payable (Deductible)</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
+                    Loans Receivable (قرضہ جات جو واپس ملنے کی امید ہو)
+                  </label>
+                  <input
+                    type="number"
+                    value={receivables}
+                    onChange={(e) => setReceivables(Number(e.target.value))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
+                  />
+                </div>
+
+                {/* Modern Financial Assets Section */}
+                <div style={{
+                  padding: 14,
+                  backgroundColor: '#F8FAFC',
+                  borderRadius: 10,
+                  border: '1px solid #E2E8F0',
+                  marginTop: 6,
+                  marginBottom: 6,
+                }}>
+                  <div style={{ fontWeight: 800, fontSize: 13, color: '#1E293B', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span>📈</span>
+                    <span>Modern Financial Assets (جدید مالی اثاثے)</span>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
+                          Trading Shares / Short-term Resale Stocks (100% Zakatable)
+                        </label>
+                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>عروضِ تجارت</span>
+                      </div>
+                      <input
+                        type="number"
+                        value={tradingShares}
+                        onChange={(e) => setTradingShares(Number(e.target.value))}
+                        placeholder="Market value of shares bought for trading..."
+                        style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
+                      />
+                    </div>
+
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
+                          Long-Term Dividend Equity / Mutual Funds (~25% Liquid Zakatable)
+                        </label>
+                        <span style={{ fontSize: 10, color: '#0284C7', fontWeight: 700 }}>AAOIFI / عثمانی قاعدہ</span>
+                      </div>
+                      <input
+                        type="number"
+                        value={longTermShares}
+                        onChange={(e) => setLongTermShares(Number(e.target.value))}
+                        placeholder="Total investment (25% liquid assets will be taxed)..."
+                        style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
+                      />
+                      {longTermShares > 0 && (
+                        <div style={{ fontSize: 10, color: '#64748B', marginTop: 2 }}>
+                          Calculated Zakatable portion: <strong>{currency} {Math.round(longTermShares * 0.25).toLocaleString()}</strong> (fixed factories/machinery exempt).
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                      <div>
+                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155', display: 'block', marginBottom: 3 }}>
+                          Accessible Retirement (PF / 401k)
+                        </label>
+                        <input
+                          type="number"
+                          value={retirementAccessible}
+                          onChange={(e) => setRetirementAccessible(Number(e.target.value))}
+                          placeholder="Accessible balance..."
+                          style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155', display: 'block', marginBottom: 3 }}>
+                          Crypto &amp; Digital Wealth
+                        </label>
+                        <input
+                          type="number"
+                          value={cryptoAssets}
+                          onChange={(e) => setCryptoAssets(Number(e.target.value))}
+                          placeholder="Crypto value..."
+                          style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
+                    Immediate Debts Payable (Deductible)
+                  </label>
                   <input
                     type="number"
                     value={debts}

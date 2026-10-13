@@ -830,6 +830,50 @@ export default function PrayerTimesPage() {
               </div>
             </div>
 
+            {/* FASTING & ROZA TIMINGS (سحری و افطار) */}
+            <div style={{
+              marginTop: 16,
+              padding: '12px 16px',
+              borderRadius: 10,
+              backgroundColor: '#ECFDF5',
+              border: '1px solid #A7F3D0',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 800, color: '#065F46', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                  🌙 سحری کا احتیاطی وقت (Imsak / Sehri Cutoff)
+                </span>
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#065F46', marginTop: 2 }}>
+                  {(() => {
+                    const parts = (prayerTimes.fajr || '05:00').split(':').map(Number);
+                    const h = parts[0] ?? 5;
+                    const m = parts[1] ?? 0;
+                    const total = h * 60 + m - 3; // 3-minute Ihtiyat buffer before Subh Sadiq
+                    const newH = Math.floor((total < 0 ? total + 1440 : total) / 60) % 24;
+                    const newM = (total < 0 ? total + 1440 : total) % 60;
+                    return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+                  })()}
+                  <span style={{ fontSize: 11, fontWeight: 500, color: '#047857', marginLeft: 6 }}>
+                    (3m buffer before Fajr)
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: 11, fontWeight: 800, color: '#92400E', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                  🌅 افطار کا وقت (Iftar / Sunset)
+                </span>
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#92400E', marginTop: 2 }}>
+                  {prayerTimes.maghrib}
+                  <span style={{ fontSize: 11, fontWeight: 500, color: '#B45309', marginLeft: 6 }}>
+                    (Maghrib entry)
+                  </span>
+                </div>
+              </div>
+            </div>
+
             {/* Auqat-e-Makrooha (Prohibited Prayer Windows) */}
             <div style={{
               marginTop: 18,
