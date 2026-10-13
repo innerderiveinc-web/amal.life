@@ -29,6 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
       document.body.classList.add('theme-tahajjud');
     }
 
+    // Register Service Worker for offline PWA
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+
     // 2. Global Keyboard shortcuts:
     // Cmd+K: Search
     // Cmd+B: Bookmarks Drawer

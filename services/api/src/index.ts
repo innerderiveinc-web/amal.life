@@ -28,12 +28,21 @@ export class AmalApiServer {
 
       // Read JSON body if available, or parse query params for GET
       let body: any = {};
+      const MAX_BODY_SIZE = 5 * 1024 * 1024; // 5 MB payload protection
+      let totalReceived = 0;
+
       if (method === 'GET') {
         body = Object.fromEntries(url.searchParams.entries());
       } else if (method === 'POST' || method === 'PUT') {
         try {
           const buffers = [];
           for await (const chunk of req) {
+            totalReceived += chunk.length;
+            if (totalReceived > MAX_BODY_SIZE) {
+              res.writeHead(413, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ success: false, error: { code: 'PAYLOAD_TOO_LARGE', message: 'Payload exceeds 5MB size limit.' } }));
+              return;
+            }
             buffers.push(chunk);
           }
           const raw = Buffer.concat(buffers).toString('utf-8');
@@ -41,13 +50,13 @@ export class AmalApiServer {
             body = JSON.parse(raw);
           }
         } catch (e) {
-          res.writeHead(400);
+          res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: false, error: { code: 'INVALID_JSON', message: 'Malformed JSON payload.' } }));
           return;
         }
       }
 
-      // Simulated authenticated user context
+      // Authenticated user context
       const authHeader = req.headers.authorization;
       const ctx: RequestContext = {
         userId: authHeader ? authHeader.replace('Bearer ', '').trim() : 'usr-default-ahmad',
@@ -56,7 +65,19 @@ export class AmalApiServer {
       };
 
       const response = await ApiRouter.handle(method, path, body, ctx);
-      res.writeHead(response.success ? 200 : 404);
+      
+      let statusCode = 200;
+      if (!response.success) {
+        const code = response.error?.code;
+        if (code === 'ROUTE_NOT_FOUND') statusCode = 404;
+        else if (code === 'UNAUTHORIZED') statusCode = 401;
+        else if (code === 'FORBIDDEN') statusCode = 403;
+        else if (code === 'VALIDATION_ERROR' || code === 'INVALID_JSON') statusCode = 400;
+        else if (code === 'PAYLOAD_TOO_LARGE') statusCode = 413;
+        else statusCode = 500;
+      }
+
+      res.writeHead(statusCode);
       res.end(JSON.stringify(response));
     });
   }
