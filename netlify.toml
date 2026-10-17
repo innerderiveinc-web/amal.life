@@ -1,0 +1,12 @@
+[build]
+  command = "pnpm --filter @amal/amal-engine run build && pnpm --filter @amal/app-web run build"
+  publish = "apps/web/out"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
