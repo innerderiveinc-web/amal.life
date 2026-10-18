@@ -121,6 +121,7 @@ export const Navigation: React.FC = () => {
     ...ahkamItems,
     { title: 'Canonical Evidence Explorer', titleUrdu: 'کتبِ معتبرہ سے تلاش و رہنمائی', href: '/ask', icon: '💬' },
     { title: 'Security & Trust Vault', titleUrdu: 'پرائیویسی و امانت سینٹر', href: '/privacy', icon: '🛡️' },
+    { title: 'System Settings Control Center', titleUrdu: 'مرکزی ترتیبات', href: '/settings', icon: '⚙️' },
     { title: 'About & Methodology', titleUrdu: 'تعارف و منہج عمل', href: '/about', icon: '🕌' },
   ];
 
@@ -277,7 +278,29 @@ export const Navigation: React.FC = () => {
             </span>
           </button>
 
-          {/* 5. Language Selector */}
+          {/* 5. System Settings Control Center Link */}
+          <Link
+            href="/settings"
+            style={{
+              textDecoration: 'none',
+              border: router.pathname === '/settings' ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: 12,
+              padding: '2px 8px',
+              fontSize: 10,
+              fontWeight: 700,
+              backgroundColor: router.pathname === '/settings' ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+              color: router.pathname === '/settings' ? '#A7F3D0' : '#FFFFFF',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+            title="AMAL OS System Settings & Control Center"
+          >
+            <span>⚙️</span>
+            <span>{currentLang === 'ur' ? 'ترتیبات' : 'Settings'}</span>
+          </Link>
+
+          {/* 6. Language Selector */}
           <div style={{ display: 'flex', gap: 2, backgroundColor: 'rgba(255,255,255,0.1)', padding: '2px', borderRadius: 4 }}>
             {(['en', 'ur', 'ar'] as const).map((l) => (
               <button

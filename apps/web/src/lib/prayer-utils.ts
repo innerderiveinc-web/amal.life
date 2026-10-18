@@ -114,12 +114,30 @@ export function getSavedLocation(): { lat: number; lon: number; name: string } {
   return { lat: 28.6139, lon: 77.2090, name: 'Delhi / New Delhi, India' };
 }
 
+export function saveUserLocation(loc: { lat: number; lon: number; name?: string; city?: string; country?: string }): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_location', JSON.stringify({
+      lat: loc.lat,
+      lon: loc.lon,
+      name: loc.name || (loc.city ? `${loc.city}, ${loc.country || ''}` : 'Your Location'),
+    }));
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
+}
+
 export function getSavedMadhhab(): MadhhabAsr {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('amal_user_madhhab');
     if (saved === 'HANAFI' || saved === 'STANDARD_JUMHUR') return saved;
   }
   return 'HANAFI';
+}
+
+export function saveUserMadhhab(madhhab: MadhhabAsr): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_madhhab', madhhab);
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
 }
 
 export function getSavedMethod(): CalculationMethod {
@@ -130,6 +148,13 @@ export function getSavedMethod(): CalculationMethod {
   return 'KARACHI';
 }
 
+export function saveUserMethod(method: CalculationMethod): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_method', method);
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
+}
+
 export function getSavedOffsets(): Record<string, number> {
   if (typeof window !== 'undefined') {
     try {
@@ -138,6 +163,20 @@ export function getSavedOffsets(): Record<string, number> {
     } catch (_) {}
   }
   return { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 };
+}
+
+export function saveUserOffsets(offsets: Record<string, number>): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_prayer_offsets', JSON.stringify(offsets));
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
+}
+
+export function saveUserHijriOffset(offset: number): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('amal_user_hijri_offset', offset.toString());
+    window.dispatchEvent(new Event('amal_prayer_settings_changed'));
+  }
 }
 
 export function applyOffsets(times: PrayerTimeResult, offsets: Record<string, number>): PrayerTimeResult {

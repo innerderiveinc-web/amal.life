@@ -248,6 +248,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/settings" style={{ color: '#FDE68A', textDecoration: 'none', fontSize: 13, fontWeight: 700 }}>
+                  ⚙️ System Settings & Control Center (مرکزی ترتیبات)
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
                   Privacy Policy & Zero-Ad Pledge
                 </Link>
