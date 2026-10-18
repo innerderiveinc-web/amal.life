@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.cache
+dist
+*.log
+.DS_Store
+coverage
+scratch

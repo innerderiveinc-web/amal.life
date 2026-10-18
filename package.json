@@ -10,7 +10,12 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "node scripts/serve-railway.mjs",
+    "start:web": "SERVICE=web node scripts/serve-railway.mjs",
+    "start:api": "SERVICE=api node scripts/serve-railway.mjs",
     "build": "turbo run build",
+    "build:web": "pnpm --filter @amal/app-web... run build",
+    "build:api": "pnpm --filter @amal/service-api... run build",
     "test": "tsx --tsconfig services/api/tsconfig.json scripts/verify-full-production-loop.ts",
     "test:turbo": "turbo run test",
     "test:unit": "turbo run test:unit",
