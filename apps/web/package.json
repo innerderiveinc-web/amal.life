@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "cd ../.. && pnpm --filter @amal/app-web^... run build || true",
     "build": "next build",
     "start": "next start"
   },
