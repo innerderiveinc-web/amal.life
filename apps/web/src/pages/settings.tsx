@@ -280,13 +280,13 @@ export default function SettingsPage() {
         </div>
 
         {/* Tabbed Layout: Sidebar + Content */}
-        <div style={{
+        <div className="settings-grid" style={{
           display: 'grid',
           gridTemplateColumns: '260px 1fr',
           gap: 24,
         }}>
           {/* Left Tabs Sidebar */}
-          <div style={{
+          <div className="settings-tabs-container" style={{
             display: 'flex',
             flexDirection: 'column',
             gap: 6,

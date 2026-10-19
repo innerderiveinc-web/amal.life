@@ -19,8 +19,16 @@ export const Navigation: React.FC = () => {
   const { user } = useAuth();
   const [currentLang, setCurrentLang] = useState<'en' | 'ur' | 'ar'>('en');
   const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns & mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsAppsMenuOpen(false);
+    setActiveDropdown(null);
+  }, [router.asPath]);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -354,7 +362,7 @@ export const Navigation: React.FC = () => {
             </div>
           </Link>
 
-          <span style={{
+          <span className="desktop-only" style={{
             fontSize: 10,
             padding: '3px 10px',
             borderRadius: 14,
@@ -371,8 +379,8 @@ export const Navigation: React.FC = () => {
           </span>
         </div>
 
-        {/* Primary Hubs */}
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        {/* Primary Hubs (Desktop) */}
+        <div className="desktop-only" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           <Link
             href="/"
             style={{
@@ -639,7 +647,7 @@ export const Navigation: React.FC = () => {
                 borderRadius: 14,
                 boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08)',
                 border: '1px solid #E5E7EB',
-                width: 380,
+                width: 'min(380px, calc(100vw - 32px))',
                 padding: 16,
                 zIndex: 1200,
               }}>
@@ -683,11 +691,12 @@ export const Navigation: React.FC = () => {
             )}
           </div>
 
-          {/* Quick Action: Search (Cmd+K) */}
+          {/* Quick Action: Search (Cmd+K) - Desktop */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
             }}
+            className="desktop-only"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -707,11 +716,12 @@ export const Navigation: React.FC = () => {
             <kbd style={{ fontSize: 10, backgroundColor: '#E2E8F0', padding: '1px 4px', borderRadius: 3 }}>⌘K</kbd>
           </button>
 
-          {/* Quick Action: Reader Settings */}
+          {/* Quick Action: Reader Settings - Desktop */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-reader'));
             }}
+            className="desktop-only"
             style={{
               border: '1px solid #D1D5DB',
               borderRadius: 6,
@@ -727,11 +737,12 @@ export const Navigation: React.FC = () => {
             👓
           </button>
 
-          {/* Quick Action: Onboarding Wizard */}
+          {/* Quick Action: Onboarding Wizard - Desktop */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-onboarding'));
             }}
+            className="desktop-only"
             style={{
               border: '1px solid #D1D5DB',
               borderRadius: 6,
@@ -746,8 +757,241 @@ export const Navigation: React.FC = () => {
           >
             🧭
           </button>
+
+          {/* Mobile Hamburger Menu Toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="mobile-only"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid #D1D5DB',
+              borderRadius: 8,
+              padding: '6px 10px',
+              backgroundColor: isMobileMenuOpen ? '#1B4332' : '#F9FAFB',
+              color: isMobileMenuOpen ? '#FFFFFF' : '#374151',
+              fontSize: 18,
+              fontWeight: 700,
+              cursor: 'pointer',
+              minHeight: 38,
+              minWidth: 42,
+            }}
+            aria-label="Toggle Mobile Navigation Menu"
+          >
+            {isMobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
       </nav>
+
+      {/* 3. RESPONSIVE MOBILE MENU ACCORDION */}
+      {isMobileMenuOpen && (
+        <div
+          className="mobile-only"
+          style={{
+            borderTop: '1px solid #E5E7EB',
+            backgroundColor: '#FFFFFF',
+            padding: '16px 20px 24px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            maxHeight: 'calc(100vh - 120px)',
+            overflowY: 'auto',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {/* Primary Navigation Links */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              <Link
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 12px',
+                  borderRadius: 8,
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  backgroundColor: router.pathname === '/' ? '#ECFDF5' : '#F9FAFB',
+                  color: router.pathname === '/' ? '#065F46' : '#374151',
+                  border: `1px solid ${router.pathname === '/' ? '#A7F3D0' : '#E5E7EB'}`,
+                }}
+              >
+                <span>🌅</span>
+                <span>{currentLang === 'ur' ? 'آج (Today)' : 'Today'}</span>
+              </Link>
+
+              <Link
+                href="/settings"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 12px',
+                  borderRadius: 8,
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  backgroundColor: router.pathname === '/settings' ? '#ECFDF5' : '#F9FAFB',
+                  color: router.pathname === '/settings' ? '#065F46' : '#374151',
+                  border: `1px solid ${router.pathname === '/settings' ? '#A7F3D0' : '#E5E7EB'}`,
+                }}
+              >
+                <span>⚙️</span>
+                <span>{currentLang === 'ur' ? 'مرکزی ترتیبات' : 'Settings'}</span>
+              </Link>
+            </div>
+
+            {/* Hub 1: Ibadat */}
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: '#059669', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
+                🕋 {currentLang === 'ur' ? 'عبادات و معمولات' : 'Worship & Routine'}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                {ibadatItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 10px',
+                      borderRadius: 6,
+                      textDecoration: 'none',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      backgroundColor: '#F9FAFB',
+                      color: router.pathname === item.href ? '#065F46' : '#374151',
+                      border: '1px solid #E5E7EB',
+                    }}
+                  >
+                    <span>{item.icon}</span>
+                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {currentLang === 'ur' ? item.titleUrdu : item.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Hub 2: Ilm & Sirah */}
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: '#0284C7', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
+                📚 {currentLang === 'ur' ? 'علم، کتب و سیرت' : 'Ilm & Heritage'}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                {ilmItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 10px',
+                      borderRadius: 6,
+                      textDecoration: 'none',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      backgroundColor: '#F9FAFB',
+                      color: router.pathname === item.href ? '#0369A1' : '#374151',
+                      border: '1px solid #E5E7EB',
+                    }}
+                  >
+                    <span>{item.icon}</span>
+                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {currentLang === 'ur' ? item.titleUrdu : item.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Hub 3: Ahkam & Finance */}
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, color: '#D97706', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
+                ⚖️ {currentLang === 'ur' ? 'احکام و مالیات' : 'Ahkam & Finance'}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                {ahkamItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '8px 10px',
+                      borderRadius: 6,
+                      textDecoration: 'none',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      backgroundColor: '#F9FAFB',
+                      color: router.pathname === item.href ? '#B45309' : '#374151',
+                      border: '1px solid #E5E7EB',
+                    }}
+                  >
+                    <span>{item.icon}</span>
+                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {currentLang === 'ur' ? item.titleUrdu : item.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct Links */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
+              <Link
+                href="/ask"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '9px 12px',
+                  borderRadius: 6,
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  backgroundColor: '#F0FDF4',
+                  color: '#065F46',
+                  border: '1px solid #BBF7D0',
+                }}
+              >
+                <span>💬</span>
+                <span>{currentLang === 'ur' ? 'سوال پوچھیں' : 'Ask AMAL'}</span>
+              </Link>
+
+              <Link
+                href="/about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '9px 12px',
+                  borderRadius: 6,
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  backgroundColor: '#F9FAFB',
+                  color: '#374151',
+                  border: '1px solid #E5E7EB',
+                }}
+              >
+                <span>🕌</span>
+                <span>{currentLang === 'ur' ? 'تعارف و منہج' : 'About AMAL'}</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

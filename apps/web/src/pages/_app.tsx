@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import '../styles/globals.css';
 import { AudioPlayerProvider } from '../context/AudioPlayerContext';
 import { AuthProvider } from '../context/AuthContext';
@@ -104,6 +105,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <AudioPlayerProvider>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
+        </Head>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1 }}>
             <Component {...pageProps} />

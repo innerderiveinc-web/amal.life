@@ -333,7 +333,7 @@ export default function LibraryPage() {
         </section>
 
         {/* Main Grid: Book List + Detail Inspector */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.8fr', gap: 24 }}>
+        <div className="library-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.8fr', gap: 24 }}>
           {/* Book List Panel */}
           <div style={{
             backgroundColor: '#FFFFFF',

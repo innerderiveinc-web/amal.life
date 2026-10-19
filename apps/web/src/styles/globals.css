@@ -166,14 +166,82 @@ button:active, a:active {
 .eq-bar-3 { animation: eq-bounce-3 0.65s ease-in-out infinite; }
 .eq-bar-4 { animation: eq-bounce-4 0.95s ease-in-out infinite; }
 
-/* 6. Responsive Mobile Navigation Dock Helpers */
+/* 6. Universal Mobile Responsive Architecture */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, video, iframe, svg {
+  max-width: 100%;
+  height: auto;
+}
+
 @media (max-width: 768px) {
   body {
-    padding-bottom: 72px; /* Ensure space for mobile bottom bar */
+    padding-bottom: 76px; /* Ensure space for mobile bottom bar */
   }
 
   .desktop-only {
     display: none !important;
+  }
+
+  /* Responsive padding for main content containers */
+  main {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    padding-top: 16px !important;
+  }
+
+  /* Grid layout collapsing to single column on mobile */
+  .settings-grid,
+  .library-split-grid,
+  .responsive-grid-2,
+  .calc-grid-2,
+  .vault-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Mobile typography adjustments so text doesn't overflow */
+  h1 {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+  }
+  h2 {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Prevent Safari auto-zoom on form inputs by ensuring font-size >= 16px */
+  input[type="text"],
+  input[type="number"],
+  input[type="password"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: 16px !important;
+    max-width: 100% !important;
+  }
+
+  /* Touch-friendly interactive targets (minimum 40px) */
+  button, select {
+    min-height: 40px;
+  }
+
+  /* Top Ribbon compact layout */
+  .nav-ribbon {
+    padding: 6px 12px !important;
+    font-size: 10px !important;
+  }
+
+  /* Table / cards horizontal scroll safety */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
   }
 }
 

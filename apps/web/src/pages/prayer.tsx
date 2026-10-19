@@ -757,7 +757,7 @@ export default function PrayerTimesPage() {
         </div>
 
         {/* Grid: Prayer Schedule & Qibla Compass */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
           {/* Prayer Schedule Cards */}
           <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -974,7 +974,7 @@ export default function PrayerTimesPage() {
         </div>
 
         {/* LOCAL MOSQUE IQAMAH SYNC & JANAZAH SECTION */}
-        <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
+        <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
           {/* Mosque Iqamah Schedule */}
           <div style={{
             backgroundColor: '#FFFFFF',
