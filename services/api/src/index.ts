@@ -1,6 +1,7 @@
 import http from 'http';
 import { ApiRouter, RequestContext } from './router.js';
 import { config } from '@amal/config';
+import { JwtService } from './common/auth/jwt.service.js';
 
 export class AmalApiServer {
   private server: http.Server;
@@ -56,16 +57,19 @@ export class AmalApiServer {
         }
       }
 
-      // Authenticated user context (Never default to synthetic user)
+      // Authenticated user context (Cryptographically verified JWT token)
       const authHeader = req.headers.authorization;
       let userId = '';
       let userRole: 'USER' | 'SCHOLAR' | 'ADMIN' | 'ANONYMOUS' = 'ANONYMOUS';
 
       if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7).trim();
-        if (token && token.length >= 6) {
-          userId = token.startsWith('token_') ? token.substring(6) : token;
-          userRole = 'USER';
+        if (token) {
+          const verified = JwtService.verifyToken(token);
+          if (verified) {
+            userId = verified.sub;
+            userRole = (verified.role as any) || 'USER';
+          }
         }
       }
 

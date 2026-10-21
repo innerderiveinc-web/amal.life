@@ -33,6 +33,7 @@ import { SEED_JOURNEY_TEMPLATES } from './seeds/journeys.js';
 
 export class InMemoryAmalDatabase {
   users: Map<string, User> = new Map();
+  credentials: Map<string, { passwordHash: string; salt?: string }> = new Map();
   profiles: Map<string, UserProfile> = new Map();
   preferences: Map<string, UserPreference> = new Map();
   consents: Map<string, UserConsent[]> = new Map();

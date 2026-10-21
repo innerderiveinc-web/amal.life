@@ -11,6 +11,7 @@ import {
   EvidenceChainNode,
 } from '@amal/types';
 import { db, SEED_JOURNEY_TEMPLATES } from '@amal/database';
+import { JwtService } from './common/auth/jwt.service.js';
 import { quranProvider, IslamicEvidenceGraph, CitationValidator, MASTER_CANONICAL_CORPUS } from '@amal/evidence';
 import { PrivacyCenter } from '@amal/auth';
 import { FatwaFirewall } from '@amal/safety';
@@ -100,8 +101,30 @@ export class ApiRouter {
       // 1. AUTH DOMAIN
       // -----------------------------------------------------
       if (path === '/api/v1/auth/register' && method === 'POST') {
-        const { email, display_name } = body;
-        if (!email) throw new Error('Email is required.');
+        const { email, display_name, password } = body || {};
+        if (!email || !email.includes('@')) {
+          return {
+            success: false,
+            error: { code: 'VALIDATION_ERROR', message: 'Valid email address is required.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        if (password && password.length < 8) {
+          return {
+            success: false,
+            error: { code: 'VALIDATION_ERROR', message: 'Password must be at least 8 characters in length.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+
+        const existing = Array.from(db.users.values()).find((u) => u.email === email);
+        if (existing) {
+          return {
+            success: false,
+            error: { code: 'USER_EXISTS', message: 'An account with this email address already exists.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
 
         const userId = `usr_${Date.now()}`;
         const newUser: User = {
@@ -113,6 +136,11 @@ export class ApiRouter {
           updatedAt: timestamp,
         };
         db.users.set(userId, newUser);
+
+        if (password) {
+          const passwordHash = JwtService.hashPassword(password);
+          db.credentials.set(userId, { passwordHash });
+        }
 
         const newProfile: UserProfile = {
           userId,
@@ -126,13 +154,17 @@ export class ApiRouter {
         };
         db.profiles.set(userId, newProfile);
 
+        const accessToken = JwtService.signToken(userId, email, 'USER', 3600);
+        const refreshToken = `ref_${userId}_${Math.random().toString(36).slice(2, 10)}`;
+
         return {
           success: true,
           data: {
             user_id: userId,
             session_id: `sess_${Date.now()}`,
-            access_token: `token_${userId}`,
-            refresh_token: `refresh_${userId}`,
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            token_type: 'Bearer',
             expires_in: 3600,
           },
           metadata: { timestamp, request_id: requestId, version },
@@ -140,7 +172,7 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/auth/login' && method === 'POST') {
-        const { email } = body || {};
+        const { email, password } = body || {};
         if (!email) {
           return {
             success: false,
@@ -156,13 +188,30 @@ export class ApiRouter {
             metadata: { timestamp, request_id: requestId, version },
           };
         }
+
+        // Verify password if user has credentials saved
+        const creds = db.credentials.get(user.id);
+        if (creds && creds.passwordHash) {
+          if (!password || !JwtService.verifyPassword(password, creds.passwordHash)) {
+            return {
+              success: false,
+              error: { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password.' },
+              metadata: { timestamp, request_id: requestId, version },
+            };
+          }
+        }
+
+        const accessToken = JwtService.signToken(user.id, user.email, user.role || 'USER', 3600);
+        const refreshToken = `ref_${user.id}_${Math.random().toString(36).slice(2, 10)}`;
+
         return {
           success: true,
           data: {
             user_id: user.id,
             session_id: `sess_${Date.now()}`,
-            access_token: `token_${user.id}`,
-            refresh_token: `refresh_${user.id}`,
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            token_type: 'Bearer',
             expires_in: 3600,
           },
           metadata: { timestamp, request_id: requestId, version },
@@ -179,19 +228,30 @@ export class ApiRouter {
 
       if (path === '/api/v1/auth/refresh' && method === 'POST') {
         const { refresh_token } = body || {};
-        if (!refresh_token || !refresh_token.startsWith('refresh_')) {
+        if (!refresh_token || !refresh_token.startsWith('ref_')) {
           return {
             success: false,
             error: { code: 'INVALID_TOKEN', message: 'Valid refresh token required.' },
             metadata: { timestamp, request_id: requestId, version },
           };
         }
-        const targetUserId = refresh_token.replace('refresh_', '');
+        const parts = refresh_token.split('_');
+        const targetUserId = parts[1];
+        const user = targetUserId ? db.users.get(targetUserId) : null;
+        if (!user) {
+          return {
+            success: false,
+            error: { code: 'INVALID_TOKEN', message: 'Session expired or invalid user.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const newAccessToken = JwtService.signToken(user.id, user.email, user.role || 'USER', 3600);
         return {
           success: true,
           data: {
-            access_token: `token_${targetUserId}`,
-            refresh_token: `refresh_${targetUserId}`,
+            access_token: newAccessToken,
+            refresh_token,
+            token_type: 'Bearer',
             expires_in: 3600,
           },
           metadata: { timestamp, request_id: requestId, version },
@@ -639,7 +699,10 @@ export class ApiRouter {
       // 4H. V1.5 EXTENDED CAPABILITIES (REPLAY, FAMILY, VAULT)
       // -----------------------------------------------------
       if ((path === '/api/v1/replay/annual' || path.startsWith('/api/v1/replay/annual?')) && method === 'GET') {
-        const replay = deenReplayEngine.generateAnnualReplay(ctx.userId || 'usr_demo_1', 2026);
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required to access annual replay.' }, metadata: { timestamp, request_id: requestId, version } };
+        }
+        const replay = deenReplayEngine.generateAnnualReplay(ctx.userId, 2026);
         return { success: true, data: replay, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -654,13 +717,19 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/vault/notes' && method === 'GET') {
-        const notes = knowledgeVaultEngine.getUserNotes(ctx.userId || 'usr_demo_1');
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required to access personal vault notes.' }, metadata: { timestamp, request_id: requestId, version } };
+        }
+        const notes = knowledgeVaultEngine.getUserNotes(ctx.userId);
         return { success: true, data: notes, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/vault/notes' && method === 'POST') {
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required to create personal vault notes.' }, metadata: { timestamp, request_id: requestId, version } };
+        }
         const note = knowledgeVaultEngine.ingestAndAnalyzeNote(
-          ctx.userId || 'usr_demo_1',
+          ctx.userId,
           body.title || 'Untitled Note',
           body.sourceType || 'PERSONAL_THOUGHT',
           body.rawText || ''
@@ -687,13 +756,19 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/vault/security-config' && method === 'GET') {
-        const config = biometricVaultGuardEngine.getConfig(ctx.userId || 'usr_default');
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required to view vault security configuration.' }, metadata: { timestamp, request_id: requestId, version } };
+        }
+        const config = biometricVaultGuardEngine.getConfig(ctx.userId);
         return { success: true, data: config, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/vault/security-config' && method === 'POST') {
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required to update vault security configuration.' }, metadata: { timestamp, request_id: requestId, version } };
+        }
         const updated = biometricVaultGuardEngine.setSecurityMode(
-          ctx.userId || 'usr_default',
+          ctx.userId,
           body.securityMode || 'BIOMETRIC_FACE_ID',
           body.pin
         );
@@ -1986,9 +2061,21 @@ export class ApiRouter {
       }
 
       if ((path === '/api/v1/health' || path === '/health') && method === 'GET') {
+        const hasDbUrl = Boolean(process.env.DATABASE_URL || process.env.PGHOST);
         return {
           success: true,
-          data: { status: 'healthy', engines: 24, uptime: process.uptime(), timestamp: new Date().toISOString() },
+          data: {
+            status: 'healthy',
+            engines: 24,
+            uptime: process.uptime(),
+            timestamp: new Date().toISOString(),
+            database: {
+              driver: hasDbUrl ? 'postgresql' : 'in-memory-dev',
+              connected: hasDbUrl,
+              persistent: hasDbUrl,
+              warning: hasDbUrl ? undefined : 'Running in ephemeral in-memory dev mode. Provide DATABASE_URL for durable PostgreSQL persistence.'
+            }
+          },
           metadata: { timestamp, request_id: requestId, version }
         };
       }
