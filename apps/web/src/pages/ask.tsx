@@ -5,36 +5,45 @@ import { Navigation } from '../components/Navigation';
 import { AmalApiClient } from '../lib/api';
 import { AmalTheme } from '@amal/ui';
 import { UniversalSearchEngine } from '@amal/amal-engine';
+import { WebFatwaFirewall, SafetyClassification } from '../lib/safety';
 
 export default function AskAmalPage() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any[] | null>(null);
-  const [escalated, setEscalated] = useState(false);
+  const [safetyResult, setSafetyResult] = useState<SafetyClassification | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!query.trim()) return;
+    const cleanQuery = query.trim();
+    if (!cleanQuery) return;
 
-    // Check for high-risk / personalized fatwa queries locally as client-side pre-gate
-    const lower = query.toLowerCase();
-    if (lower.includes('divorce') || lower.includes('talaq') || lower.includes('fatwa for me')) {
-      setEscalated(true);
+    // Run Fatwa Safety Firewall classification
+    const classification = WebFatwaFirewall.classify(cleanQuery);
+    setSafetyResult(classification);
+
+    // Class E: Life emergency or psychological crisis — Immediate Crisis Intercept
+    if (classification.requiresCrisisIntervention) {
       setResults(null);
       return;
     }
 
-    setEscalated(false);
+    // Class D: Personalized Fiqh / Talaq / Oaths — Scholar Escalation
+    if (classification.requiresScholarEscalation) {
+      setResults(null);
+      return;
+    }
+
     setLoading(true);
-    const res = await AmalApiClient.searchEvidence(query.trim());
+    const res = await AmalApiClient.searchEvidence(cleanQuery);
     setLoading(false);
 
     if (res.success && res.data && (Array.isArray(res.data) ? res.data.length > 0 : true)) {
       setResults(Array.isArray(res.data) ? res.data : [res.data]);
     } else {
       // Local fallback using verified universal index
-      const localMatches = UniversalSearchEngine.search(query.trim(), 5);
+      const localMatches = UniversalSearchEngine.search(cleanQuery, 5);
       if (localMatches.length > 0) {
         setResults(
           localMatches.map((m) => ({
@@ -111,8 +120,76 @@ export default function AskAmalPage() {
           </form>
         </section>
 
-        {/* Scholar Escalation Banner */}
-        {escalated && (
+        {/* CLASS E: IMMEDIATE CRISIS INTERCEPT BANNER */}
+        {safetyResult?.requiresCrisisIntervention && (
+          <div style={{
+            backgroundColor: '#FEF2F2',
+            border: '2px solid #EF4444',
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 24,
+            color: '#991B1B',
+            boxShadow: '0 10px 15px -3px rgba(239, 68, 68, 0.1)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+              <span style={{ fontSize: 26 }}>🤲</span>
+              <div>
+                <h3 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: '#B91C1C' }}>
+                  آپ تنہا نہیں ہیں — اللہ تعالیٰ کی رحمت ہر شے پر وسیع ہے
+                </h3>
+                <div style={{ fontSize: 13, color: '#7F1D1D', fontWeight: 600 }}>
+                  Immediate Crisis & Emotional Safety Protocol (Class E Intercept)
+                </div>
+              </div>
+            </div>
+
+            {/* Sacred Ayah of Hope */}
+            <div style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 12,
+              padding: 16,
+              border: '1px solid #FCA5A5',
+              marginBottom: 16,
+              textAlign: 'right',
+              direction: 'rtl',
+            }}>
+              <div style={{ fontFamily: 'var(--font-arabic), serif', fontSize: 20, lineHeight: 2, color: '#1B4332', fontWeight: 700 }}>
+                ﴿قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنْفُسِهِمْ لَا تَقْنَطُوا مِنْ رَحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا﴾
+              </div>
+              <div style={{ fontSize: 13, color: '#4B5563', direction: 'ltr', textAlign: 'left', marginTop: 8 }}>
+                "Say: O My servants who have transgressed against themselves, despair not of the mercy of Allah. Indeed, Allah forgives all sins." [Surah Az-Zumar: 53]
+              </div>
+            </div>
+
+            <p style={{ fontSize: 14, lineHeight: 1.6, margin: '0 0 16px', color: '#7F1D1D' }}>
+              Your life, your safety, and your heart are sacred trusts (Amanah). No machine can replace human care, compassionate counseling, and immediate professional support. Please reach out right now to caring people who are ready to listen:
+            </p>
+
+            {/* Helplines Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+              {safetyResult.crisisHelplines?.map((line, idx) => (
+                <div key={idx} style={{
+                  backgroundColor: '#FFFFFF',
+                  padding: 14,
+                  borderRadius: 10,
+                  border: '1px solid #FECACA',
+                }}>
+                  <div style={{ fontWeight: 800, fontSize: 14, color: '#991B1B' }}>{line.name}</div>
+                  <div style={{ fontSize: 11, color: '#6B7280', margin: '2px 0 6px' }}>{line.region}</div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: '#1B4332' }}>{line.contact}</div>
+                  <div style={{ fontSize: 11, color: '#4B5563', marginTop: 4 }}>{line.description}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ fontSize: 12, color: '#7F1D1D', fontWeight: 600 }}>
+              ⚠️ If you are in immediate physical danger, please call your local emergency services (911 / 999 / 112) immediately.
+            </div>
+          </div>
+        )}
+
+        {/* CLASS D: SCHOLAR ESCALATION BANNER */}
+        {safetyResult?.requiresScholarEscalation && !safetyResult.requiresCrisisIntervention && (
           <div style={{
             backgroundColor: '#FFFBEB',
             border: '1px solid #FDE68A',
@@ -125,7 +202,7 @@ export default function AskAmalPage() {
               Direct Scholarly Guidance Needed (اہلِ علم سے رجوع)
             </h3>
             <p style={{ fontSize: 14, margin: '0 0 16px', lineHeight: 1.6, color: '#78350F' }}>
-              Personal legal matters, marital questions, and solemn oaths depend intimately upon your specific life context. In our sacred tradition, no automated machine or algorithm may issue a binding legal ruling (Fatwa). AMAL protects your Deen by preparing a confidential, structured case file for verified, living scholars to provide personalized counsel.
+              Personal legal matters, marital questions, divorce (talaq), solemn oaths, and binding contracts depend intimately upon your specific life context. In our sacred tradition, no automated machine or algorithm may issue a binding legal ruling (Fatwa). AMAL protects your Deen by preparing a confidential, structured case file for verified, living scholars to provide personalized counsel.
             </p>
             <button
               onClick={() => {
@@ -147,6 +224,22 @@ export default function AskAmalPage() {
             >
               Open Deen Decision Room & Prepare Scholar Case →
             </button>
+          </div>
+        )}
+
+        {/* CLASS C: SCHOLARLY DISAGREEMENT / IKHTILAF BANNER */}
+        {safetyResult?.safetyClass === 'CLASS_C_SCHOLARLY_DISAGREEMENT' && (
+          <div style={{
+            backgroundColor: '#EFF6FF',
+            border: '1px solid #BFDBFE',
+            borderRadius: 12,
+            padding: 16,
+            marginBottom: 20,
+            fontSize: 13,
+            lineHeight: 1.5,
+            color: '#1E40AF',
+          }}>
+            <strong>⚖️ Legitimate Scholarly Pluralism (اختلاف أئمة الفقه رحمة):</strong> This topic involves established legal divergence across the recognized Sunni schools (Hanafi, Maliki, Shafi'i, and Hanbali). AMAL presents classical citations transparently without forcing an artificial single ruling.
           </div>
         )}
 
