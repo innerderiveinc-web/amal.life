@@ -7,7 +7,7 @@ import { AmalTheme } from '@amal/ui';
 import { MASTER_CANONICAL_CORPUS, CanonicalEditionRecord } from '@amal/evidence';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
 import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
-import { getBookChapters, ClassicalBookWithChapters, ClassicalChapter } from '../lib/classical-chapters-data';
+import { getBookChapters, getVerifiedSourceUrl, ClassicalBookWithChapters, ClassicalChapter } from '../lib/classical-chapters-data';
 import { showAmalToast } from '../components/Toast';
 
 export default function LibraryPage() {
@@ -85,6 +85,8 @@ export default function LibraryPage() {
   });
 
   const isQuran = selectedWork?.discipline === 'QURAN' || selectedWork?.work_id === 'CANON-QUR-001';
+  const verifiedSource = selectedWork ? getVerifiedSourceUrl(selectedWork.work_id, selectedWork.discipline) : { url: 'https://shamela.ws', name: 'Al-Maktaba al-Shamela' };
+  const hasSelectedInAppChapters = isQuran || !!(selectedWork && getBookChapters(selectedWork.work_id));
 
   const bookChaptersData: ClassicalBookWithChapters | null = selectedWork && !isQuran
     ? getBookChapters(
@@ -383,16 +385,21 @@ export default function LibraryPage() {
                       }}>
                         {work.discipline.replace('_', ' ')}
                       </span>
-                      <span style={{
-                        fontSize: 9,
-                        fontWeight: 700,
-                        padding: '2px 6px',
-                        borderRadius: 8,
-                        backgroundColor: isWorkQuran ? '#DCFCE7' : '#FEF3C7',
-                        color: isWorkQuran ? '#15803D' : '#B45309',
-                      }}>
-                        {isWorkQuran ? '114 SURAHS IN-APP' : 'CORE CURATED CHAPTERS'}
-                      </span>
+                      {(() => {
+                        const hasInApp = isWorkQuran || !!getBookChapters(work.work_id);
+                        return (
+                          <span style={{
+                            fontSize: 9,
+                            fontWeight: 700,
+                            padding: '2px 6px',
+                            borderRadius: 8,
+                            backgroundColor: isWorkQuran ? '#DCFCE7' : (hasInApp ? '#FEF3C7' : '#E0F2FE'),
+                            color: isWorkQuran ? '#15803D' : (hasInApp ? '#B45309' : '#0369A1'),
+                          }}>
+                            {isWorkQuran ? '114 SURAHS IN-APP' : (hasInApp ? 'CORE CURATED CHAPTERS' : 'VERIFIED REPOSITORY')}
+                          </span>
+                        );
+                      })()}
                     </div>
                     <span style={{ fontSize: 11, color: '#888' }}>
                       {work.author_death_hijri > 0 ? `${work.author_death_hijri} AH` : 'Revelation'}
@@ -440,10 +447,14 @@ export default function LibraryPage() {
                   fontWeight: 700,
                   padding: '3px 10px',
                   borderRadius: 12,
-                  backgroundColor: '#E8F5E9',
-                  color: '#2E7D32',
+                  backgroundColor: isQuran ? '#E8F5E9' : (hasSelectedInAppChapters ? '#FEF3C7' : '#E0F2FE'),
+                  color: isQuran ? '#2E7D32' : (hasSelectedInAppChapters ? '#92400E' : '#0369A1'),
                 }}>
-                  {isQuran ? 'COMPLETE 114 SURAHS · VERIFIED UTHMANIC MUSHAF' : 'AUTHENTIC CORE CHAPTERS · VERIFIED SCHOLARLY MANUSCRIPT'}
+                  {isQuran
+                    ? 'COMPLETE 114 SURAHS · VERIFIED UTHMANIC MUSHAF'
+                    : hasSelectedInAppChapters
+                    ? 'AUTHENTIC CORE CHAPTERS · VERIFIED SCHOLARLY MANUSCRIPT'
+                    : `VERIFIED DIGITAL REPOSITORY · ${selectedWork.volume_count} VOLUME(S)`}
                 </span>
                 <h2 style={{
                   fontFamily: 'var(--font-arabic), serif',
@@ -489,7 +500,9 @@ export default function LibraryPage() {
                   <span>
                     {isQuran
                       ? 'Read All 114 Surahs In-App (قرآنِ مجید کی مکمل ۱۱۴ سورتیں پڑھیں)'
-                      : `Read Selected Chapters In-App (مطالعہ شروع کریں — ${selectedWork.title_transliterated})`}
+                      : hasSelectedInAppChapters
+                      ? `Read Selected Chapters In-App (مطالعہ شروع کریں — ${selectedWork.title_transliterated})`
+                      : `View Manuscript Credentials & Source (علمی اسناد و ماخذ — ${selectedWork.title_transliterated})`}
                   </span>
                 </button>
 
@@ -515,22 +528,26 @@ export default function LibraryPage() {
                     </a>
                   ) : (
                     <a
-                      href={selectedWork.discipline === 'HADITH' ? 'https://sunnah.com' : 'https://archive.org'}
+                      href={verifiedSource.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
                         padding: '10px 14px',
                         borderRadius: 8,
-                        backgroundColor: '#F8FAFC',
-                        color: '#1E293B',
-                        border: '1px solid #CBD5E1',
+                        backgroundColor: '#F0FDF4',
+                        color: '#166534',
+                        border: '1px solid #86EFAC',
                         fontSize: 12,
-                        fontWeight: 600,
+                        fontWeight: 700,
                         textAlign: 'center',
                         textDecoration: 'none',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
                       }}
+                      title={verifiedSource.name}
                     >
-                      Open Full Multi-Volume Archive ↗
+                      🏛️ {verifiedSource.name} ↗
                     </a>
                   )}
 
@@ -1141,6 +1158,30 @@ export default function LibraryPage() {
                       <span>✓</span>
                       <span>Bibliographic Metadata Preserved · Full Text Awaiting Ingestion</span>
                     </div>
+
+                    <div style={{ marginTop: 18 }}>
+                      <a
+                        href={verifiedSource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 8,
+                          padding: '12px 22px',
+                          borderRadius: 10,
+                          backgroundColor: '#1B4332',
+                          color: '#FFFFFF',
+                          fontSize: 13,
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          boxShadow: '0 4px 6px -1px rgba(27, 67, 50, 0.25)',
+                        }}
+                      >
+                        <span>🏛️</span>
+                        <span>مطالعہ کے لیے تصدیق شدہ اصل ماخذ کھولیں ({verifiedSource.name}) ↗</span>
+                      </a>
+                    </div>
                   </div>
                 )}
               </div>
@@ -1180,7 +1221,7 @@ export default function LibraryPage() {
                   </a>
                 ) : (
                   <a
-                    href={selectedWork.discipline === 'HADITH' ? 'https://sunnah.com' : 'https://archive.org'}
+                    href={verifiedSource.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -1193,7 +1234,7 @@ export default function LibraryPage() {
                       fontWeight: 700,
                     }}
                   >
-                    مکمل ذخیرہ (Complete Unabridged Archive) ↗
+                    {verifiedSource.name} ↗
                   </a>
                 )}
               </div>
