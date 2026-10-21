@@ -907,7 +907,7 @@ export class ApiRouter {
             journey_type: intentType === 'FAJR_STRUGGLE' ? 'fajr_recovery' : intentType === 'QURAN_HABIT' ? 'quran_restart' : undefined,
             journey_title: intentType === 'FAJR_STRUGGLE' ? '14-Day Fajr Recovery' : intentType === 'QURAN_HABIT' ? '14-Day Quran Restart' : undefined,
           },
-          confidence: 0.92,
+          confidence: aiResult.response.citations_verified ? 1.0 : 0.0,
           citations_verified: aiResult.response.citations_verified,
         };
 

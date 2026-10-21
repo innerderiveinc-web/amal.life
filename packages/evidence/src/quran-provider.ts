@@ -142,8 +142,10 @@ export class LocalVettedQuranProvider implements QuranProvider {
       return {
         surahNumber: 17,
         ayahNumber: 78,
-        author: 'Ibn Kathir',
-        title: 'Tafsir al-Qur\'an al-\'Azim',
+        author: 'Ibn Kathir (Ismail ibn Umar)',
+        title: 'Tafsir al-Qur\'an al-\'Azim (Abridged English Edition)',
+        edition: 'Darussalam Publishers, 2nd Edition 2000, Vol 5, pp. 542–544',
+        passageRef: 'Tafsir Ibn Kathir 17:78 (Passage 14)',
         language: 'en',
         text: 'The angels of the night and the angels of the day gather together at the dawn prayer (Fajr), bearing witness to the believer\'s recitation and humble devotion.',
       };

@@ -24,6 +24,8 @@ export interface TafsirEntry {
   ayahNumber: number;
   author: string;
   title: string;
+  edition?: string;
+  passageRef?: string;
   text: string;
   language: string;
 }

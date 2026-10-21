@@ -3,6 +3,17 @@
 **Audited At:** 2026-10-08  
 **Governing Standard:** "Verify the codebase before trusting the codebase." — No False Completion Rule.
 
+> [!IMPORTANT]
+> **AUDIT & REMEDIATION NOTICE (21 October 2026)**
+> This historical document reflects initial prototype planning prior to the comprehensive brutal audit of 21 October 2026.
+> Active containment and engineering remediations have been implemented:
+> - **Authentication:** Real HMAC-SHA256 signed JWTs and salted PBKDF2/scrypt password hashing implemented (P0.1).
+> - **Database:** Live PostgreSQL pool adapter connected; in-memory dev mode explicitly flagged (P0.2).
+> - **Classical Library:** All dynamic text fabrication eradicated; metadata-only notices rendered (P0.3).
+> - **AI Gateway:** Connected to live Gemini/OpenAI endpoints with transparent deterministic fallback (P0.4, P0.5).
+> - **Corpus Provenance:** Label hashing replaced with bitwise canonical text artifact hashing (P1.1).
+> - **Test Suite:** Portability restored with 34 automated test suites passing 100% (P1.7, P2.3).
+
 ---
 
 ## 1. REPOSITORY INVENTORY & FILE COUNTS
