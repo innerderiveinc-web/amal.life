@@ -15,3 +15,7 @@ coverage/
 .expo/
 *.pem
 *.map
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+services/*/src/**/*.js
+services/*/src/**/*.d.ts
