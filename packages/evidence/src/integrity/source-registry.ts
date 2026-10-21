@@ -39,13 +39,14 @@ export class SourceRegistry {
     rawArtifactContent?: Buffer | string;
     authorityDimensions?: Partial<SourceAuthorityDimensions>;
   }): RegisteredSource {
+    const hasArtifact = Boolean(data.rawArtifactContent);
     const raw = data.rawArtifactContent || `${data.title}:${data.author}:${data.edition || '1'}`;
     const hash = createHash('sha256').update(raw).digest('hex');
 
     const defaultDimensions: SourceAuthorityDimensions = {
       sourceType: data.sourceType,
       primaryStatus: data.sourceType === 'QURAN' || data.sourceType === 'HADITH' ? 'VERIFIED' : 'SECONDARY',
-      provenanceStatus: 'VERIFIED',
+      provenanceStatus: hasArtifact ? 'VERIFIED' : 'SECONDARY',
       referenceStatus: 'VERIFIED',
       attributionStatus: 'VERIFIED',
       licenseStatus: 'APPROVED',
@@ -72,7 +73,7 @@ export class SourceRegistry {
       publisher: data.publisher,
       edition: data.edition,
       publicationYear: data.publicationYear,
-      digitalArtifactHash: `sha256_${hash}`,
+      digitalArtifactHash: hasArtifact ? `sha256_${hash}` : `sha256_meta_${hash}`,
       authorityDimensions: defaultDimensions,
       verificationLevel: isFullyApproved ? 'LEVEL_7_PRODUCTION_PUBLISHED' : 'LEVEL_2_SOURCE_IDENTIFIED',
       locked: isFullyApproved,
