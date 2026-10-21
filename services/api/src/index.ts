@@ -56,11 +56,22 @@ export class AmalApiServer {
         }
       }
 
-      // Authenticated user context
+      // Authenticated user context (Never default to synthetic user)
       const authHeader = req.headers.authorization;
+      let userId = '';
+      let userRole: 'USER' | 'SCHOLAR' | 'ADMIN' | 'ANONYMOUS' = 'ANONYMOUS';
+
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7).trim();
+        if (token && token.length >= 6) {
+          userId = token.startsWith('token_') ? token.substring(6) : token;
+          userRole = 'USER';
+        }
+      }
+
       const ctx: RequestContext = {
-        userId: authHeader ? authHeader.replace('Bearer ', '').trim() : 'usr-default-ahmad',
-        userRole: 'USER',
+        userId,
+        userRole,
         ip: req.socket.remoteAddress,
       };
 

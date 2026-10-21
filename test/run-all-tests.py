@@ -17,6 +17,8 @@ import json
 import subprocess
 import time
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def log_header(title):
     print("\n" + "=" * 70)
     print(f" {title}")
@@ -100,10 +102,10 @@ def test_repository_structure():
         "docs/ARCHITECTURE.md",
         "docs/API.md",
         "docs/DATABASE.md",
-        ".github/workflows/ci.yml"
+        "infrastructure/ci/ci.yml"
     ]
 
-    base_dir = "/Users/irfanashraf/Downloads/Amal"
+    base_dir = REPO_ROOT
     missing = []
     for path in required_paths:
         full_path = os.path.join(base_dir, path)
@@ -423,7 +425,7 @@ def test_amal_journey_engine_v1():
 
 def test_api_router_journey_endpoints():
     log_header("TEST 12: API ROUTER & JOURNEY ENGINE INTEGRATION")
-    router_file = "/Users/irfanashraf/Downloads/Amal/services/api/src/router.ts"
+    router_file = os.path.join(REPO_ROOT, "services/api/src/router.ts")
     with open(router_file, "r", encoding="utf-8") as f:
         content = f.read()
 
@@ -437,7 +439,7 @@ def test_api_router_journey_endpoints():
     print("  ✓ Router Endpoints: /api/v1/goals, /api/v1/amal/recommend, /adapt, /burden verified.")
 
     # 2. Verify Seed Journey Templates have 4-Phase Progression
-    journeys_file = "/Users/irfanashraf/Downloads/Amal/packages/database/src/seeds/journeys.ts"
+    journeys_file = os.path.join(REPO_ROOT, "packages/database/src/seeds/journeys.ts")
     with open(journeys_file, "r", encoding="utf-8") as f:
         j_content = f.read()
 
@@ -454,7 +456,7 @@ def test_api_router_journey_endpoints():
 
 def test_intelligence_runtime_v1_specification():
     log_header("TEST 13: INTELLIGENCE RUNTIME V1 FULL SPECIFICATION & GOVERNANCE")
-    base_dir = "/Users/irfanashraf/Downloads/Amal"
+    base_dir = REPO_ROOT
 
     # 1. Migration 002 Database Tables
     migration_file = os.path.join(base_dir, "packages/database/migrations/002_ai_runtime_governance_and_eval.sql")
@@ -545,7 +547,7 @@ def test_intelligence_runtime_v1_specification():
 
 def test_monorepo_production_readiness_and_benchmarks():
     log_header("TEST 14: MONOREPO PRODUCTION READINESS & BENCHMARK SUITES")
-    base_dir = "/Users/irfanashraf/Downloads/Amal"
+    base_dir = REPO_ROOT
 
     # 1. Migration 003: All 27 Core Tables (Sections 4-30)
     m3_file = os.path.join(base_dir, "packages/database/migrations/003_production_relational_schema.sql")

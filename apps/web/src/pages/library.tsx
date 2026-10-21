@@ -959,22 +959,22 @@ export default function LibraryPage() {
             ) : (
               /* CLASSICAL BOOKS CHAPTER SELECTOR & VIEWER */
               <div>
-                {/* Scholarly Scope & Transparency Banner */}
-                <div style={{
-                  padding: '10px 14px',
-                  borderRadius: 8,
-                  backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#FEF3C7',
-                  border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#FDE68A'}`,
-                  fontSize: 12,
-                  color: readerTheme === 'DARK' ? '#CBD5E1' : '#92400E',
-                  marginBottom: 12,
-                  lineHeight: 1.5,
-                }}>
-                  <strong>📚 منتخب اساسی ابواب (Curated Core Chapters):</strong> اس کتاب کے بنیادی اور اہم ترین ابواب روزمرہ مطالعہ کے لیے براہِ راست ایپ میں شامل ہیں۔ مکمل ۷،۵۶۳ احادیث یا مکمل ضخیم مسودے کے لیے نیچے دیے گئے تصدیق شدہ آرکائیو لنک پر کلک کریں۔
-                </div>
-
-                {bookChaptersData && (
+                {bookChaptersData ? (
                   <div>
+                    {/* Scholarly Scope & Transparency Banner */}
+                    <div style={{
+                      padding: '10px 14px',
+                      borderRadius: 8,
+                      backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#FEF3C7',
+                      border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#FDE68A'}`,
+                      fontSize: 12,
+                      color: readerTheme === 'DARK' ? '#CBD5E1' : '#92400E',
+                      marginBottom: 12,
+                      lineHeight: 1.5,
+                    }}>
+                      <strong>📚 منتخب اساسی ابواب (Curated Core Chapters):</strong> اس کتاب کے بنیادی اور اہم ترین ابواب مستند ماخذ سے روزمرہ مطالعہ کے لیے براہِ راست ایپ میں شامل ہیں۔ مکمل متن اور شروحات کے لیے نیچے دیے گئے آرکائیو لنک سے استفادہ کیا جا سکتا ہے۔
+                    </div>
+
                     <label style={{ fontSize: 13, fontWeight: 700, color: '#1B4332', display: 'block', marginBottom: 10 }}>
                       📑 SELECT CHAPTER / کتاب و باب کا انتخاب فرمائیے:
                     </label>
@@ -1096,13 +1096,13 @@ export default function LibraryPage() {
                           }}
                         >
                           <div style={{ fontWeight: 700, color: '#10B981', marginBottom: 4, fontSize: 13 }}>
-                            THEMATIC OVERVIEW & LESSONS:
+                            THEMATIC OVERVIEW &amp; LESSONS:
                           </div>
                           <p style={{ margin: '0 0 10px', color: readerTheme === 'DARK' ? '#CBD5E1' : '#334155' }}>
                             {currentChapter.englishSynopsis}
                           </p>
                           <div style={{ fontWeight: 700, color: '#10B981', marginBottom: 4, fontSize: 13 }}>
-                            SCHOLARLY FIQH & SHARH NOTES:
+                            SCHOLARLY FIQH &amp; SHARH NOTES:
                           </div>
                           <p style={{ margin: 0, color: readerTheme === 'DARK' ? '#CBD5E1' : '#334155' }}>
                             {currentChapter.scholarlyNotes}
@@ -1110,6 +1110,37 @@ export default function LibraryPage() {
                         </div>
                       </div>
                     )}
+                  </div>
+                ) : (
+                  <div style={{
+                    padding: '36px 20px',
+                    textAlign: 'center',
+                    backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#F8FAFC',
+                    borderRadius: 12,
+                    border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
+                  }}>
+                    <div style={{ fontSize: 40, marginBottom: 12 }}>📜</div>
+                    <h3 style={{ fontSize: 17, fontWeight: 800, margin: '0 0 8px', color: readerTheme === 'DARK' ? '#F8FAFC' : '#1E293B' }}>
+                      کیٹلاگ ریکارڈ محفوظ ہے — ڈیجیٹل متن تصدیق کے مرحلے میں ہے
+                    </h3>
+                    <p style={{ fontSize: 13, color: readerTheme === 'DARK' ? '#94A3B8' : '#64748B', maxWidth: 600, margin: '0 auto 16px', lineHeight: 1.6 }}>
+                      اس تصنیف مبارک کا علمی اسناد، مؤلف اور بائبلوگرافک ریکارڈ رجسٹرڈ ہے۔ AMAL OS کی غیر لچکدار پالیسی ہے کہ کسی بھی اسلامی کتاب کا خود ساختہ (synthetic) یا غیر مصدقہ متن پیش نہ کیا جائے۔ اس کتاب کا ڈیجیٹل مسودہ سکالر ریویو کے بعد براہِ راست فعال ہوگا۔
+                    </p>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      fontSize: 12,
+                      color: '#059669',
+                      fontWeight: 700,
+                      backgroundColor: readerTheme === 'DARK' ? '#132E27' : '#ECFDF5',
+                      padding: '6px 14px',
+                      borderRadius: 20,
+                      border: '1px solid #A7F3D0',
+                    }}>
+                      <span>✓</span>
+                      <span>Bibliographic Metadata Preserved · Full Text Awaiting Ingestion</span>
+                    </div>
                   </div>
                 )}
               </div>

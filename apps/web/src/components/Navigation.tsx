@@ -191,7 +191,7 @@ export const Navigation: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           {/* 1. Offline Mode Indicator Pill */}
           <span
-            title="All 24 engines run 100% locally on your device without internet dependency"
+            title="Core calculation engines (Prayer times, Hijri calendar, Zakat, Miras) run locally on your device"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -207,7 +207,7 @@ export const Navigation: React.FC = () => {
             }}
           >
             <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
-            <span>100% Offline Ready · Synced</span>
+            <span>Local Device Mode</span>
           </span>
 
           {/* 2. Tahajjud Night Serenity Mode Toggle */}
@@ -655,7 +655,7 @@ export const Navigation: React.FC = () => {
                   <span style={{ fontSize: 13, fontWeight: 800, color: '#111827' }}>
                     AMAL OS SUITE (15 MODULES)
                   </span>
-                  <span style={{ fontSize: 11, color: '#047857', fontWeight: 600 }}>100% Offline Ready</span>
+                  <span style={{ fontSize: 11, color: '#047857', fontWeight: 600 }}>Local Offline Engines</span>
                 </div>
 
                 <div style={{

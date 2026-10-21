@@ -1,16 +1,17 @@
 /**
  * AMAL OS — Web Client API Adapter
- * Connects directly to http://localhost:4000/api/v1 (Amal API Server)
- * with 100% resilient offline and local fallback storage.
+ * Connects to configured AMAL Backend API with explicit local device storage mode.
+ * ZERO FABRICATION: Never sends default mock identity and never fakes remote sync.
  */
 
 const API_BASE_URL = typeof window !== 'undefined'
-  ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1')
-  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1');
+  ? (process.env.NEXT_PUBLIC_API_URL || '')
+  : (process.env.NEXT_PUBLIC_API_URL || '');
 
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
+  isLocalOnly?: boolean;
   error?: {
     code: string;
     message: string;
@@ -19,12 +20,16 @@ export interface ApiResponse<T = any> {
 }
 
 export class AmalApiClient {
-  private static token: string = 'usr-default-ahmad';
+  private static token: string = '';
 
   public static setAuthToken(token: string) {
     this.token = token;
     if (typeof window !== 'undefined') {
-      localStorage.setItem('amal_token', token);
+      if (token) {
+        localStorage.setItem('amal_token', token);
+      } else {
+        localStorage.removeItem('amal_token');
+      }
     }
   }
 
@@ -36,22 +41,37 @@ export class AmalApiClient {
     return this.token;
   }
 
+  public static clearAuth() {
+    this.token = '';
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('amal_token');
+    }
+  }
+
   public static async request<T = any>(
     path: string,
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET',
     body?: any
   ): Promise<ApiResponse<T>> {
+    // If no backend API URL is configured, operate directly in documented Local Device Mode
+    if (!API_BASE_URL) {
+      return this.handleLocalDeviceStorage<T>(path, method, body);
+    }
+
     const token = this.getAuthToken();
     const url = `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
     };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000); // 2s timeout before graceful local fallback
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
 
       const res = await fetch(url, {
         method,
@@ -63,59 +83,41 @@ export class AmalApiClient {
       clearTimeout(timeoutId);
       const data = await res.json();
       if (!data || !data.success) {
-        return this.handleLocalFallback<T>(path, method, body);
+        return this.handleLocalDeviceStorage<T>(path, method, body);
       }
       return data;
     } catch (err: any) {
-      // Graceful local resilience handling
-      return this.handleLocalFallback<T>(path, method, body);
+      // Return honest local device storage fallback
+      return this.handleLocalDeviceStorage<T>(path, method, body);
     }
   }
 
-  private static handleLocalFallback<T = any>(
+  /**
+   * Explicit local device storage handler.
+   * Clearly flags responses with `isLocalOnly: true` so the user is informed
+   * that records reside strictly in the local browser and are not cloud-synced.
+   */
+  private static handleLocalDeviceStorage<T = any>(
     path: string,
     method: string,
     body?: any
   ): ApiResponse<T> {
     if (typeof window === 'undefined') {
-      return { success: false, error: { code: 'OFFLINE', message: 'Offline server environment' } };
+      return { success: false, isLocalOnly: true, error: { code: 'OFFLINE', message: 'Offline server environment' } };
     }
 
-    // 1. Goals Fallback
+    // 1. Goals (Local Device Only)
     if (path === '/goals' && method === 'GET') {
       const stored = localStorage.getItem('amal_goals');
-      if (stored) {
-        try {
-          return { success: true, data: JSON.parse(stored) as T };
-        } catch (_) {}
-      }
-      const initialGoals = [
-        {
-          id: 'goal_fajr_init',
-          category: 'SALAH',
-          title: 'Establish Fajr in Congregation with Presence',
-          intent: 'IMPROVE',
-          desired_outcome: 'Perform Fajr prayer on time every morning with family or at local mosque.',
-          created_at: new Date().toISOString(),
-        },
-        {
-          id: 'goal_quran_init',
-          category: 'QURAN',
-          title: 'Daily Recitation & Tajweed Contemplation',
-          intent: 'MAINTAIN',
-          desired_outcome: 'Read at least 1-2 pages of the Quran with meaning and clear makharij.',
-          created_at: new Date().toISOString(),
-        },
-      ];
-      localStorage.setItem('amal_goals', JSON.stringify(initialGoals));
-      return { success: true, data: initialGoals as T };
+      const list = stored ? JSON.parse(stored) : [];
+      return { success: true, isLocalOnly: true, data: list as T };
     }
 
     if (path === '/goals' && method === 'POST') {
       const stored = localStorage.getItem('amal_goals');
       const existing = stored ? JSON.parse(stored) : [];
       const newGoal = {
-        id: `goal_${Date.now()}`,
+        id: `goal_local_${Date.now()}`,
         category: body?.category || 'GENERAL',
         title: body?.title || 'Untitled Goal',
         intent: body?.intent || 'IMPROVE',
@@ -124,7 +126,7 @@ export class AmalApiClient {
       };
       const updated = [newGoal, ...existing];
       localStorage.setItem('amal_goals', JSON.stringify(updated));
-      return { success: true, data: newGoal as T };
+      return { success: true, isLocalOnly: true, data: newGoal as T };
     }
 
     if (path.startsWith('/goals/') && method === 'DELETE') {
@@ -133,7 +135,7 @@ export class AmalApiClient {
       const existing = stored ? JSON.parse(stored) : [];
       const updated = existing.filter((g: any) => (g.id || g.goalId) !== id);
       localStorage.setItem('amal_goals', JSON.stringify(updated));
-      return { success: true, data: { deleted: true } as T };
+      return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
 
     if (path.startsWith('/goals/') && method === 'PATCH') {
@@ -142,31 +144,21 @@ export class AmalApiClient {
       const existing = stored ? JSON.parse(stored) : [];
       const updated = existing.map((g: any) => (g.id || g.goalId) === id ? { ...g, ...body } : g);
       localStorage.setItem('amal_goals', JSON.stringify(updated));
-      return { success: true, data: { updated: true } as T };
+      return { success: true, isLocalOnly: true, data: { updated: true } as T };
     }
 
-    // 2. Journeys Fallback
+    // 2. Journeys (Local Device Only)
     if (path === '/journeys' && method === 'GET') {
       const stored = localStorage.getItem('amal_journeys');
-      const list = stored ? JSON.parse(stored) : [
-        {
-          id: 'journey_active_1',
-          templateId: 'tmpl-salah-consistency',
-          templateVersionId: 'v1.0.0',
-          title: 'Salah Consistency & Presence',
-          state: 'ACTIVE',
-          currentPhase: 1,
-          startedAt: new Date().toISOString(),
-        },
-      ];
-      return { success: true, data: list as T };
+      const list = stored ? JSON.parse(stored) : [];
+      return { success: true, isLocalOnly: true, data: list as T };
     }
 
     if (path === '/journeys' && method === 'POST') {
       const stored = localStorage.getItem('amal_journeys');
       const existing = stored ? JSON.parse(stored) : [];
       const newJourney = {
-        id: `journey_${Date.now()}`,
+        id: `journey_local_${Date.now()}`,
         templateId: body?.template_id || 'tmpl-custom',
         templateVersionId: 'v1.0.0',
         title: body?.title || 'New Journey',
@@ -176,7 +168,7 @@ export class AmalApiClient {
       };
       const updated = [newJourney, ...existing];
       localStorage.setItem('amal_journeys', JSON.stringify(updated));
-      return { success: true, data: newJourney as T };
+      return { success: true, isLocalOnly: true, data: newJourney as T };
     }
 
     if (path.startsWith('/journeys/') && method === 'PATCH') {
@@ -185,34 +177,27 @@ export class AmalApiClient {
       const existing = stored ? JSON.parse(stored) : [];
       const updated = existing.map((j: any) => (j.id || j.journeyId) === id ? { ...j, ...body } : j);
       localStorage.setItem('amal_journeys', JSON.stringify(updated));
-      return { success: true, data: { updated: true } as T };
+      return { success: true, isLocalOnly: true, data: { updated: true } as T };
     }
 
-    // 3. Reflections Fallback
+    // 3. Reflections (Local Device Only — No Fake Pre-existing History)
     if (path === '/reflections' && method === 'GET') {
       const stored = localStorage.getItem('amal_reflections');
-      const existing = stored ? JSON.parse(stored) : [
-        {
-          id: 'refl_initial_1',
-          content: 'Alhamdulillah, completed morning Fajr on time. Reflecting on practicing sabr and mindfulness in speech.',
-          type: 'DAILY_MUHASABAH',
-          timestamp: new Date().toISOString(),
-        },
-      ];
-      return { success: true, data: existing as T };
+      const existing = stored ? JSON.parse(stored) : [];
+      return { success: true, isLocalOnly: true, data: existing as T };
     }
 
     if (path === '/reflections' && method === 'POST') {
       const stored = localStorage.getItem('amal_reflections');
       const existing = stored ? JSON.parse(stored) : [];
       const newReflection = {
-        id: `refl_${Date.now()}`,
+        id: `refl_local_${Date.now()}`,
         content: body?.content || '',
         type: body?.type || 'DAILY_MUHASABAH',
         timestamp: new Date().toISOString(),
       };
       localStorage.setItem('amal_reflections', JSON.stringify([newReflection, ...existing]));
-      return { success: true, data: newReflection as T };
+      return { success: true, isLocalOnly: true, data: newReflection as T };
     }
 
     if (path.startsWith('/reflections/') && method === 'DELETE') {
@@ -221,35 +206,34 @@ export class AmalApiClient {
       const existing = stored ? JSON.parse(stored) : [];
       const updated = existing.filter((r: any) => r.id !== id);
       localStorage.setItem('amal_reflections', JSON.stringify(updated));
-      return { success: true, data: { deleted: true } as T };
+      return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
 
-    // 4. Privacy Export Fallback
+    // 4. Privacy Export (Local Device Only)
     if (path === '/privacy/export' && method === 'GET') {
       const exportBlob = {
         exportedAt: new Date().toISOString(),
-        userId: 'usr_sovereign_local',
-        profile: JSON.parse(localStorage.getItem('amal_user_profile') || '{}'),
+        mode: 'LOCAL_BROWSER_SOVEREIGN_STORAGE',
         goals: JSON.parse(localStorage.getItem('amal_goals') || '[]'),
         journeys: JSON.parse(localStorage.getItem('amal_journeys') || '[]'),
         reflections: JSON.parse(localStorage.getItem('amal_reflections') || '[]'),
-        notes: JSON.parse(localStorage.getItem('amal_notes') || '[]'),
       };
-      return { success: true, data: exportBlob as T };
+      return { success: true, isLocalOnly: true, data: exportBlob as T };
     }
 
-    // 5. Account Deletion Fallback
+    // 5. Account/Data Purge
     if (path === '/privacy/delete-account' && method === 'POST') {
-      const keysToClear = ['amal_goals', 'amal_journeys', 'amal_reflections', 'amal_user_profile', 'amal_notes', 'amal_token'];
+      const keysToClear = ['amal_goals', 'amal_journeys', 'amal_reflections', 'amal_user_profile', 'amal_token'];
       keysToClear.forEach(k => localStorage.removeItem(k));
-      return { success: true, data: { purged: true, message: 'All local records successfully erased.' } as T };
+      return { success: true, isLocalOnly: true, data: { purged: true, message: 'All local device records cleared.' } as T };
     }
 
     return {
       success: false,
+      isLocalOnly: true,
       error: {
-        code: 'NETWORK_ERROR',
-        message: 'Amal offline resilience layer processed locally.',
+        code: 'ENDPOINT_UNAVAILABLE_OFFLINE',
+        message: 'This action requires an active, connected AMAL Backend API.',
       },
     };
   }

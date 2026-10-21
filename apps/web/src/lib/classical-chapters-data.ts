@@ -789,42 +789,19 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
 };
 
 /**
- * Fallback generator for other canonical works to guarantee multi-chapter reading
+ * Look up verified chapters for canonical works.
+ * Strictly returns null if full-text chapters are not yet ingested/verified.
+ * ZERO FABRICATION POLICY: Never generate synthetic Arabic or Urdu text.
  */
-export function getBookChapters(workId: string, titleArabic: string, titleTransliterated: string, author: string, discipline: string): ClassicalBookWithChapters {
+export function getBookChapters(
+  workId: string,
+  _titleArabic?: string,
+  _titleTransliterated?: string,
+  _author?: string,
+  _discipline?: string
+): ClassicalBookWithChapters | null {
   if (CLASSICAL_BOOKS_CHAPTERS[workId]) {
     return CLASSICAL_BOOKS_CHAPTERS[workId];
   }
-
-  return {
-    workId,
-    verifiedExternalUrl: 'https://archive.org',
-    verifiedExternalName: 'Classical Islamic Open Archives',
-    chapters: [
-      {
-        chapterId: 'chap_1',
-        chapterTitleArabic: 'مُقَدِّمَةُ الْمُصَنِّفِ (الْخُطْبَةُ وَالْمَنْهَجُ)',
-        chapterTitleUrdu: 'پہلا باب: مصنف کا خطبہ، مقصدِ تالیف اور منہج',
-        chapterTitleEnglish: 'Chapter 1: Author\'s Introduction & Scholarly Methodology',
-        arabicMatn: `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ الَّذِي هَدَانَا لِهَٰذَا وَمَا كُنَّا لِنَهْتَدِيَ لَوْلَا أَنْ هَدَانَا اللَّهُ.
-
-أَمَّا بَعْدُ: فَهَذَا مُصَنَّفٌ فِي ${discipline.replace('_', ' ')}، جَمَعَ فِيهِ الإِمَامُ ${author} أُصُولَ الْمَسَائِلِ وَدَلائِلَ الْكِتَابِ وَالسُّنَّةِ عَلَى وَفْقِ مَنْهَجِ السَّوَادِ الأَعْظَمِ مِنْ عُلَمَاءِ الأُمَّةِ، لِيَكُونَ عُمْدَةً لِلطَّالِبِ وَتَذْكِرَةً لِلْعَالِمِ.`,
-        urduTranslation: `شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ تمام تعریفیں اللہ کے لیے ہیں جس نے ہمیں اس کی ہدایت دی اور ہم ہرگز ہدایت نہ پا سکتے اگر اللہ ہمیں ہدایت نہ دیتا۔
-
-حمد و صلاۃ کے بعد: یہ تصنیف مبارک "${titleArabic}" فن ${discipline.replace('_', ' ')} میں امام ${author} کی معتمد کتاب ہے جس میں انہوں نے کتاب و سنت کے دلائل اور اہل سنت کے اجماعی اصولوں کو یکجا فرمایا ہے تاکہ یہ طالبِ علم کے لیے بنیاد اور اہل علم کے لیے یاد دہانی بنے۔`,
-        englishSynopsis: `The foundational opening of ${titleTransliterated} establishing the scholarly pedigree and methodology of Imam ${author}.`,
-        scholarlyNotes: `Preserved within the classical canonical curriculum of AMAL OS under Invariant INV_07.`,
-      },
-      {
-        chapterId: 'chap_2',
-        chapterTitleArabic: 'أُصُولُ الْبَابِ وَالأَحْكَامُ الْعِلْمِيَّةُ',
-        chapterTitleUrdu: 'دوسرا باب: بنیادی احکام، فقہی ضوابط اور شواہد',
-        chapterTitleEnglish: 'Chapter 2: Core Jurisprudential Principles & Textual Evidences',
-        arabicMatn: `«وَالأَصْلُ فِي هَذَا الْبَابِ الرُّجُوعُ إِلَى النُّصُوصِ الصَّحِيحَةِ، وَالتَّمَسُّكُ بِمَا عَلَيْهِ جَمَاعَةُ الصَّحَابَةِ وَالتَّابِعِينَ، وَعَدَمُ الْخُرُوجِ عَنْ أَقْوَالِ أَئِمَّةِ الْهُدَى الْمُتَّبَعِينَ، فَإِنَّ الْخَيْرَ كُلَّهُ فِي اتِّبَاعِ مَنْ سَلَفَ، وَالشَّرَّ فِي ابْتِدَاعِ مَنْ خَلَفَ».`,
-        urduTranslation: `"اور اس باب میں اصل بنیاد صحیح نصوص کی طرف رجوع کرنا ہے، اور ان باتوں پر مضبوطی سے جمے رہنا ہے جن پر صحابہ و تابعین کا عمل رہا، اور ائمہ اربعہ کے اجماعی اقوال سے باہر نہ نکلنا ہے، کیونکہ تمام بھلائی سلف صالحین کے اتباع میں ہے اور تمام خرابی بعد کے لوگوں کی خود ساختہ بدعات میں ہے"۔`,
-        englishSynopsis: `Key rulings emphasizing allegiance to verified transmission and avoiding sectarian isolationism.`,
-        scholarlyNotes: `Affirms the classical principle of consensus (Ijma) and adherence to the four orthodox Sunni schools.`,
-      },
-    ],
-  };
+  return null;
 }

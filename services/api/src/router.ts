@@ -140,16 +140,29 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/auth/login' && method === 'POST') {
-        const { email } = body;
+        const { email } = body || {};
+        if (!email) {
+          return {
+            success: false,
+            error: { code: 'VALIDATION_ERROR', message: 'Email address is required for login.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
         const user = Array.from(db.users.values()).find((u) => u.email === email);
-        const userId = user ? user.id : 'usr-default-ahmad';
+        if (!user) {
+          return {
+            success: false,
+            error: { code: 'INVALID_CREDENTIALS', message: 'No registered account found with this email address.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
         return {
           success: true,
           data: {
-            user_id: userId,
+            user_id: user.id,
             session_id: `sess_${Date.now()}`,
-            access_token: `token_${userId}`,
-            refresh_token: `refresh_${userId}`,
+            access_token: `token_${user.id}`,
+            refresh_token: `refresh_${user.id}`,
             expires_in: 3600,
           },
           metadata: { timestamp, request_id: requestId, version },
@@ -165,12 +178,20 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/auth/refresh' && method === 'POST') {
-        const { refresh_token } = body;
+        const { refresh_token } = body || {};
+        if (!refresh_token || !refresh_token.startsWith('refresh_')) {
+          return {
+            success: false,
+            error: { code: 'INVALID_TOKEN', message: 'Valid refresh token required.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const targetUserId = refresh_token.replace('refresh_', '');
         return {
           success: true,
           data: {
-            access_token: `token_${ctx.userId || 'usr_refreshed'}`,
-            refresh_token: refresh_token || `ref_${Date.now()}`,
+            access_token: `token_${targetUserId}`,
+            refresh_token: `refresh_${targetUserId}`,
             expires_in: 3600,
           },
           metadata: { timestamp, request_id: requestId, version },
@@ -178,8 +199,22 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/auth/me' && method === 'GET') {
-        const user = db.users.get(ctx.userId) || Array.from(db.users.values())[0];
-        const profile = db.profiles.get(ctx.userId) || Array.from(db.profiles.values())[0];
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return {
+            success: false,
+            error: { code: 'UNAUTHORIZED', message: 'Authentication required to access user profile.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const user = db.users.get(ctx.userId);
+        const profile = db.profiles.get(ctx.userId);
+        if (!user) {
+          return {
+            success: false,
+            error: { code: 'NOT_FOUND', message: 'Authenticated user record not found in system.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
         return {
           success: true,
           data: { user, profile },
@@ -196,9 +231,23 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/auth/passkey/authenticate' && method === 'POST') {
+        const { credential_id, client_data_json, authenticator_data, signature } = body || {};
+        if (!credential_id || !signature) {
+          return {
+            success: false,
+            error: {
+              code: 'NOT_IMPLEMENTED',
+              message: 'Hardware FIDO2 WebAuthn authentication requires configured RP origin and cryptographic assertion signature.',
+            },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
         return {
-          success: true,
-          data: { verified: true, access_token: `token_${ctx.userId}`, expires_in: 3600 },
+          success: false,
+          error: {
+            code: 'WEBAUTHN_UNAVAILABLE',
+            message: 'WebAuthn assertion verification service currently in staging.',
+          },
           metadata: { timestamp, request_id: requestId, version },
         };
       }
@@ -207,7 +256,14 @@ export class ApiRouter {
       // 2. ONBOARDING API
       // -----------------------------------------------------
       if (path === '/api/v1/onboarding' && method === 'POST') {
-        const { intent, life_stage, focus_areas, daily_available_minutes, notification_preference } = body;
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return {
+            success: false,
+            error: { code: 'UNAUTHORIZED', message: 'Authentication required for onboarding.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const { intent, life_stage, focus_areas, daily_available_minutes, notification_preference } = body || {};
 
         // Store explicit initial context
         const userContextList = db.contexts.get(ctx.userId) || [];
@@ -788,17 +844,11 @@ export class ApiRouter {
       }
 
       if (path === '/api/v1/ai/ask/stream' && method === 'POST') {
-        const { message } = body;
         return {
-          success: true,
-          data: {
-            stream_id: `stream_${Date.now()}`,
-            chunks: [
-              { sequence: 1, type: 'INTENT_CLASSIFIED', content: 'Grounded Islamic Inquiry' },
-              { sequence: 2, type: 'EVIDENCE_RETRIEVED', content: 'Quran 17:78, Sahih Muslim 657' },
-              { sequence: 3, type: 'AMAL_PROPOSED', content: '10-Minute Evening Wind-Down' },
-            ],
-            status: 'STREAM_COMPLETED',
+          success: false,
+          error: {
+            code: 'STREAM_UNAVAILABLE',
+            message: 'Live AI streaming is disabled until a production LLM provider is connected.',
           },
           metadata: { timestamp, request_id: requestId, version },
         };
@@ -807,14 +857,10 @@ export class ApiRouter {
       if (path.startsWith('/api/v1/ai/responses/') && path.endsWith('/evidence') && method === 'GET') {
         const responseId = path.split('/')[5];
         return {
-          success: true,
-          data: {
-            response_id: responseId,
-            evidence: [
-              { source_type: 'QURAN', reference: '17:78', verification_status: 'APPROVED' },
-              { source_type: 'HADITH', reference: 'Sahih Muslim 657', verification_status: 'APPROVED' },
-            ],
-            scholarly_positions: ['Consensus of scholars on preserving consistency over exhaustion.'],
+          success: false,
+          error: {
+            code: 'NOT_FOUND',
+            message: `No verified evidence audit found for response ID: ${responseId}`,
           },
           metadata: { timestamp, request_id: requestId, version },
         };
@@ -823,15 +869,10 @@ export class ApiRouter {
       if (path.startsWith('/api/v1/ai/responses/') && path.endsWith('/audit') && method === 'GET') {
         const responseId = path.split('/')[5];
         return {
-          success: true,
-          data: {
-            response_id: responseId,
-            trace_id: `trace_${responseId}`,
-            citations_verified: true,
-            claims_audited_count: 2,
-            unsupported_claims_count: 0,
-            privacy_isolation_passed: true,
-            final_status: 'APPROVED',
+          success: false,
+          error: {
+            code: 'AUDIT_UNAVAILABLE',
+            message: `Independent automated audit unavailable for response ${responseId}. Production citation auditor requires active model evaluation pipeline.`,
           },
           metadata: { timestamp, request_id: requestId, version },
         };
@@ -839,7 +880,7 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/ai/responses/') && path.endsWith('/feedback') && method === 'POST') {
         const responseId = path.split('/')[5];
-        const { helpful, citation_accuracy_feedback } = body;
+        const { helpful, citation_accuracy_feedback } = body || {};
         return {
           success: true,
           data: {
@@ -853,6 +894,16 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/ai/responses/') && path.endsWith('/escalate') && method === 'POST') {
         const responseId = path.split('/')[5];
+        if (!body || !body.user_confirmed) {
+          return {
+            success: false,
+            error: {
+              code: 'CONSENT_REQUIRED',
+              message: 'Explicit user confirmation is mandatory before personal inquiry context can be escalated to human scholars.',
+            },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
         const scholarCase = await ScholarEscalationAgent.prepareScholarCase(
           ctx.userId,
           body.question || 'User inquiry from AI response',
