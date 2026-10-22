@@ -430,9 +430,25 @@ export default function QuranWisdomPage() {
       setSurahWideAudioType('TAFSEER');
       tafseerAudioRef.current.src = tafseerUrl;
       tafseerAudioRef.current.playbackRate = playbackSpeed;
+
+      const watchdog = setTimeout(() => {
+        if (tafseerAudioRef.current && (tafseerAudioRef.current.paused || tafseerAudioRef.current.currentTime === 0)) {
+          console.warn('Tafseer remote buffering too slow, switching to continuous Urdu translation');
+          setSurahWideAudioType(null);
+          setAudioSyncMode('URDU_ONLY_CONTINUOUS');
+          handlePlayAyahAudio(1, 'URDU');
+          showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مستند تفسیری ترجمہ کنز الایمان شروع ہو گیا ہے۔`, 'info');
+        }
+      }, 2500);
+
+      tafseerAudioRef.current.onplaying = () => {
+        clearTimeout(watchdog);
+      };
+
       tafseerAudioRef.current.play().then(() => {
         showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`, 'info');
       }).catch((e) => {
+        clearTimeout(watchdog);
         console.warn('Tafseer studio error, falling back to continuous translation:', e);
         setSurahWideAudioType(null);
         setAudioSyncMode('URDU_ONLY_CONTINUOUS');
@@ -538,10 +554,12 @@ export default function QuranWisdomPage() {
           setSurahWideAudioType(null);
         }}
         onError={(e) => {
-          console.warn('Tafseer audio error:', e);
+          console.warn('Tafseer audio error, switching to continuous Urdu translation:', e);
           setActiveTafseerCardKey(null);
           setSurahWideAudioType(null);
-          showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ اردو ترجمہ جاری ہے۔', 'info');
+          setAudioSyncMode('URDU_ONLY_CONTINUOUS');
+          handlePlayAyahAudio(1, 'URDU');
+          showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ اردو تفسیری ترجمہ جاری ہے۔', 'info');
         }}
         style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />

@@ -91,7 +91,7 @@ export default function QuranWisdomDedicatedPage() {
     }
   };
 
-  // Tafseer Studio Audio: Plays authentic Dawat-e-Islami Sirat-ul-Jinan / Kanz-ul-Iman
+  // Tafseer Studio Audio: Plays authentic Dawat-e-Islami Sirat-ul-Jinan with instant EveryAyah CDN fallback
   const handlePlayTafseerAudio = (card: QuranAyahWisdomCard) => {
     const key = `${card.surahNumber}:${card.ayahNumber}:TAFSEER`;
     if (activeAudioKey === key && isPlayingAudio) {
@@ -106,10 +106,31 @@ export default function QuranWisdomDedicatedPage() {
     }
 
     const tafseerUrl = getSurahTafseerAudioUrl(card.surahNumber);
-    const audioToPlay = tafseerUrl || getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+    const fastAyahUrl = getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+    const audioToPlay = tafseerUrl || fastAyahUrl;
 
     if (audioRef.current) {
       audioRef.current.src = audioToPlay;
+
+      // 2.5s Watchdog: If remote studio file buffers too slowly due to ISP throttling, fall back to instant CDN audio
+      const watchdog = setTimeout(() => {
+        if (audioRef.current && (audioRef.current.paused || audioRef.current.currentTime === 0)) {
+          console.warn('Studio audio buffering slow, falling back to instant EveryAyah CDN audio');
+          if (audioRef.current && audioRef.current.src !== fastAyahUrl) {
+            audioRef.current.src = fastAyahUrl;
+            audioRef.current.play().then(() => {
+              setActiveAudioKey(key);
+              setIsPlayingAudio(true);
+              showAmalToast(`سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): مستند اردو ترجمہ و تفسیری قرأت جاری ہے۔`, 'info');
+            }).catch(() => {});
+          }
+        }
+      }, 2500);
+
+      audioRef.current.onplaying = () => {
+        clearTimeout(watchdog);
+      };
+
       audioRef.current.play().then(() => {
         setActiveAudioKey(key);
         setIsPlayingAudio(true);
@@ -120,11 +141,10 @@ export default function QuranWisdomDedicatedPage() {
           'info'
         );
       }).catch((err) => {
+        clearTimeout(watchdog);
         console.warn('Tafseer remote error, falling back to Ayah Urdu audio:', err);
-        // Fallback to high-speed EveryAyah Urdu recitation
-        const fallbackUrl = getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
         if (audioRef.current) {
-          audioRef.current.src = fallbackUrl;
+          audioRef.current.src = fastAyahUrl;
           audioRef.current.play().then(() => {
             setActiveAudioKey(key);
             setIsPlayingAudio(true);
@@ -214,6 +234,24 @@ export default function QuranWisdomDedicatedPage() {
         preload="auto"
         onEnded={handleAudioEnded}
         onError={() => {
+          if (activeAudioKey && activeAudioKey.endsWith(':TAFSEER') && audioRef.current) {
+            const parts = activeAudioKey.split(':');
+            const surah = parseInt(parts[0] || '1', 10);
+            const ayah = parseInt(parts[1] || '1', 10);
+            const fallbackUrl = getAyahUrduAudioUrl(surah, ayah);
+            if (audioRef.current.src !== fallbackUrl) {
+              console.warn('Tafseer remote stream failed, falling back to EveryAyah CDN');
+              audioRef.current.src = fallbackUrl;
+              audioRef.current.play().then(() => {
+                setIsPlayingAudio(true);
+                showAmalToast('مستند اردو ترجمہ و تفسیری قرأت (کنز الایمان) جاری ہے۔', 'info');
+              }).catch(() => {
+                setIsPlayingAudio(false);
+                setActiveAudioKey(null);
+              });
+              return;
+            }
+          }
           showAmalToast('آڈیو پلے بیک میں عارضی تعطل پیش آیا۔ دوبارہ کوشش کریں۔', 'warning');
           setIsPlayingAudio(false);
           setActiveAudioKey(null);
