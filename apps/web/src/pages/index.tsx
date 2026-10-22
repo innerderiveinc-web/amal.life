@@ -228,11 +228,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
             <Link
               href="/quran"
               style={{
-                padding: '10px 20px',
+                padding: '10px 18px',
                 borderRadius: 10,
                 backgroundColor: '#166534',
                 color: '#FFFFFF',
@@ -245,7 +245,27 @@ export default function Home() {
                 boxShadow: '0 2px 6px rgba(22, 101, 52, 0.25)',
               }}
             >
-              <span>قرآن و تدبر کھولیں</span>
+              <span>📖 قرآنِ کریم (سورتیں)</span>
+              <span>➔</span>
+            </Link>
+
+            <Link
+              href="/wisdom"
+              style={{
+                padding: '10px 18px',
+                borderRadius: 10,
+                backgroundColor: '#D97706',
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                fontWeight: 800,
+                fontSize: 13,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                boxShadow: '0 2px 6px rgba(217, 119, 6, 0.25)',
+              }}
+            >
+              <span>✨ قرآنی حکمت (۴۲ کارڈز)</span>
               <span>➔</span>
             </Link>
           </div>

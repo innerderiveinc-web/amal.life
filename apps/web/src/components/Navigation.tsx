@@ -397,7 +397,7 @@ export const Navigation: React.FC = () => {
             {currentLang === 'ur' ? '🌅 آج (Today)' : '🌅 Today'}
           </Link>
 
-          {/* Direct Premier Hub: Al-Quran & Wisdom */}
+          {/* Direct Premier Hub: Al-Quran (114 Surahs) */}
           <Link
             href="/quran"
             style={{
@@ -415,10 +415,31 @@ export const Navigation: React.FC = () => {
             }}
           >
             <span>📖</span>
-            <span>{currentLang === 'ur' ? 'قرآن و حکمت' : 'Quran & Wisdom'}</span>
+            <span>{currentLang === 'ur' ? 'قرآنِ کریم' : 'Al-Quran'}</span>
             <span style={{ fontSize: 9, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>
               Kanz-ul-Iman
             </span>
+          </Link>
+
+          {/* Dedicated Premier Hub: Quran Wisdom Cards */}
+          <Link
+            href="/wisdom"
+            style={{
+              textDecoration: 'none',
+              fontSize: 13,
+              fontWeight: router.pathname === '/wisdom' ? 700 : 600,
+              color: router.pathname === '/wisdom' ? '#92400E' : '#B45309',
+              padding: '6px 12px',
+              borderRadius: 6,
+              backgroundColor: router.pathname === '/wisdom' ? '#FEF3C7' : '#FFFBEB',
+              border: `1px solid ${router.pathname === '/wisdom' ? '#FCD34D' : '#FDE68A'}`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <span>✨</span>
+            <span>{currentLang === 'ur' ? 'قرآنی حکمت (۴۲)' : 'Wisdom (42)'}</span>
           </Link>
 
           {/* Hub 1: Ibadat Dropdown */}

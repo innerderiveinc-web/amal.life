@@ -39,10 +39,8 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   const tafseerStudioUrl = getSurahTafseerAudioUrl(surahNumber);
 
   let audioSrc = '';
-  if (selectedAudioType === 'urdu') {
+  if (selectedAudioType === 'urdu' || selectedAudioType === 'tafseer') {
     audioSrc = getAyahUrduAudioUrl(surahNumber, ayahNumber);
-  } else if (selectedAudioType === 'tafseer') {
-    audioSrc = tafseerStudioUrl || '';
   } else {
     audioSrc = getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
   }

@@ -443,33 +443,14 @@ export default function QuranWisdomPage() {
   };
 
   const handlePlaySurahTafseer = () => {
-    if (surahWideAudioType === 'TAFSEER') {
+    if (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) {
       handleStopAudio();
       return;
     }
     handleStopAudio();
-    
-    const surahCards = getSurahWisdomCards(selectedSurahNumber);
-    if (surahCards.length > 0 && surahCards[0]) {
-      setSurahWideAudioType('TAFSEER');
-      handlePlayContinuousTafseer(surahCards, 0);
-    } else {
-      const url = getSurahTafseerAudioUrl(selectedSurahNumber);
-      if (url && tafseerAudioRef.current) {
-        setSurahWideAudioType('TAFSEER');
-        tafseerAudioRef.current.src = url;
-        tafseerAudioRef.current.playbackRate = playbackSpeed;
-        tafseerAudioRef.current.play().then(() => {
-          showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مکمل اردو تفسیر آڈیو سماعت فرمائیں۔`, 'info');
-        }).catch((e) => {
-          console.warn('Tafseer audio error:', e);
-          setSurahWideAudioType(null);
-          showAmalToast('اس سورت کی تفسیری حکمت نیچے کارڈز میں ملاحظہ فرمائیں۔', 'warning');
-        });
-      } else {
-        showAmalToast('اس سورت کی تفسیری حکمت نیچے کارڈز میں ملاحظہ فرمائیں۔', 'warning');
-      }
-    }
+    setAudioSyncMode('URDU_ONLY_CONTINUOUS');
+    handlePlayAyahAudio(1, 'URDU');
+    showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مکمل اردو تفسیری ترجمہ (کنز الایمان) جاری ہے۔`, 'success');
   };
 
   // Lock-screen MediaSession API controls & notification display
@@ -727,427 +708,62 @@ export default function QuranWisdomPage() {
           </div>
         </header>
 
-        {/* SECTION 1: WISDOM & LISTENING CARDS (ADAPTIVE TO QUICK_2MIN, DAILY_5MIN, DEEP_15MIN) */}
-        <section style={{ marginBottom: 32 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        {/* BANNER TO DEDICATED QURAN WISDOM CARDS PAGE */}
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: 16,
+            border: '1px solid #BBF7D0',
+            padding: '18px 24px',
+            marginBottom: 24,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 16,
+            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.06)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <span style={{ fontSize: 32 }}>✨</span>
             <div>
-              <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: 0 }}>
-                {activeMode === 'QUICK_2MIN'
-                  ? '⚡ Quick Wisdom (2-Min Daily Divine Reflection)'
-                  : activeMode === 'DAILY_5MIN'
-                    ? '🌅 Daily Tilawat & Tarjuma Hub (5-Min Quran Audio)'
-                    : '📖 Deep Tafseer & Classical Evidence Hub (15-Min Study)'}
-              </h2>
-              <p style={{ fontSize: 13, color: '#64748B', margin: '4px 0 0' }}>
-                {activeMode === 'QUICK_2MIN'
-                  ? 'منتخب آیات، کنز الایمان کا ترجمہ، خزائن العرفان کی حکمت، مستند قاری کی آواز اور عملی زندگی کے لیے مسنون عمل'
-                  : activeMode === 'DAILY_5MIN'
-                    ? 'مستند قاری کی تلاوت کے بعد اعلیٰ حضرت کے کنز الایمان کا مستند انسانی آواز میں اردو ترجمہ خودکار تسلسل کے ساتھ سنیں'
-                    : 'صدر الافاضل نعیم الدین مراد آبادی کی تفسیری ابحاث، احیاء علوم الدین، کیمیائے سعادت، اور بہارِ شریعت کے مستند حوالہ جات'}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '2px 8px', borderRadius: 6 }}>
+                  مستقل صفحہ · DEDICATED PAGE
+                </span>
+                <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
+                  ۴۲ منتخب آیات مبارکہ (جزء عم)
+                </span>
+              </div>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#0F172A' }}>
+                قرآنی حکمت، تدبر و عمل (Quran Wisdom Cards)
+              </h3>
+              <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B' }}>
+                کنز الایمان کا ترجمہ، خزائن العرفان کی تفسیری ابحاث اور روزمرہ دینی زندگی کے لیے مسنون عمل
               </p>
             </div>
-            <span style={{ fontSize: 12, color: '#059669', fontWeight: 700, backgroundColor: '#DCFCE7', padding: '4px 10px', borderRadius: 8 }}>
-              {QURAN_WISDOM_COLLECTION.length} حکمت کارڈز دستیاب
-            </span>
           </div>
 
-            {/* Thematic Filter Pills & Continuous Tafseer Button */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10, marginBottom: 18 }}>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {[
-                  { id: 'ALL', label: 'تمام موضوعات (All Themes)' },
-                  { id: 'BOOKMARKED', label: `⭐ محفوظ کارڈز (${bookmarkedCardIds.length})` },
-                  { id: 'IKHLAS', label: '✨ اخلاص و نیت (Ikhlas)' },
-                  { id: 'TAWAKKUL', label: '🛡️ توکل و استقامت (Tawakkul)' },
-                  { id: 'SALAH', label: '🤲 نماز و مناجات (Salah)' },
-                  { id: 'AKHLAQ', label: '🌱 اخلاق و حسنِ معاملہ (Akhlaq)' },
-                  { id: 'HUQUQ_UL_IBAD', label: '🤝 حقوق العباد (Huquq)' },
-                  { id: 'TIME_MANAGEMENT', label: '⏳ وقت کی قدر و آخرت (Time)' },
-                ].map((theme) => {
-                  const isActive = selectedThemeFilter === theme.id;
-                  return (
-                    <button
-                      key={theme.id}
-                      onClick={() => setSelectedThemeFilter(theme.id)}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: 20,
-                        fontSize: 12,
-                        fontWeight: isActive ? 800 : 600,
-                        border: '1px solid',
-                        borderColor: isActive ? '#059669' : '#CBD5E1',
-                        backgroundColor: isActive ? '#ECFDF5' : '#FFFFFF',
-                        color: isActive ? '#065F46' : '#475569',
-                        cursor: 'pointer',
-                        transition: 'all 0.1s ease',
-                      }}
-                    >
-                      {theme.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Continuous Tafseer Play All Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  if (continuousTafseerIndex !== null) {
-                    handleStopAudio();
-                  } else {
-                    handlePlayContinuousTafseer(QURAN_WISDOM_COLLECTION);
-                  }
-                }}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: 20,
-                  fontSize: 12,
-                  fontWeight: 800,
-                  backgroundColor: continuousTafseerIndex !== null ? '#DC2626' : '#92400E',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  boxShadow: '0 2px 8px rgba(146, 64, 14, 0.25)',
-                }}
-                title="تمام ۴۲ آیات کی خزائن العرفان تفسیری حکمت ایک ساتھ مسلسل سماعت فرمائیں"
-              >
-                <span>{continuousTafseerIndex !== null ? '⏹' : '📖'}</span>
-                <span>
-                  {continuousTafseerIndex !== null
-                    ? `تفسیر جاری (${continuousTafseerIndex + 1}/${QURAN_WISDOM_COLLECTION.length}) — بند کریں`
-                    : 'تمام ۴۲ آیات کی تفسیر ایک ساتھ سنیں'}
-                </span>
-              </button>
-            </div>
-
-            {/* Empty state for filtered cards */}
-            {(() => {
-              const displayedWisdomCards = selectedThemeFilter === 'BOOKMARKED'
-                ? QURAN_WISDOM_COLLECTION.filter((c) => bookmarkedCardIds.includes(`${c.surahNumber}:${c.ayahNumber}`))
-                : (selectedThemeFilter === 'ALL'
-                    ? QURAN_WISDOM_COLLECTION
-                    : QURAN_WISDOM_COLLECTION.filter((c) => c.tadabburPrompt.theme === selectedThemeFilter));
-
-              if (displayedWisdomCards.length === 0) {
-                return (
-                  <div style={{ padding: '48px 24px', textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px dashed #CBD5E1', color: '#64748B' }}>
-                    <div style={{ fontSize: 36, marginBottom: 8 }}>⭐</div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: '#1E293B', marginBottom: 4 }}>
-                      کوئی محفوظ حکمت کارڈ موجود نہیں
-                    </div>
-                    <div style={{ fontSize: 13, maxWidth: 420, margin: '0 auto', lineHeight: 1.6 }}>
-                      کسی بھی حکمت کارڈ کے اوپر دائیں جانب موجود ستارے (☆) پر کلک کر کے اسے اپنی پسندیدہ فہرست میں محفوظ کریں۔
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 16 }}>
-                  {displayedWisdomCards.map((card) => {
-                    const isPlayingThis = playingAyahNumber === card.ayahNumber && selectedSurahNumber === card.surahNumber;
-                    const isBookmarked = bookmarkedCardIds.includes(`${card.surahNumber}:${card.ayahNumber}`);
-
-                    return (
-                      <div
-                        key={`${card.surahNumber}-${card.ayahNumber}`}
-                        style={{
-                          backgroundColor: '#FFFFFF',
-                          borderRadius: 16,
-                          border: isBookmarked ? '1px solid #FCD34D' : '1px solid #E2E8F0',
-                          padding: 20,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          boxShadow: isBookmarked ? '0 4px 14px rgba(245, 158, 11, 0.1)' : '0 2px 8px rgba(0,0,0,0.04)',
-                          transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-                        }}
-                      >
-                        <div>
-                          {/* Card Header */}
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                              <span
-                                style={{
-                                  fontSize: 11,
-                                  fontWeight: 800,
-                                  padding: '3px 8px',
-                                  borderRadius: 6,
-                                  backgroundColor: '#F0FDF4',
-                                  color: '#166534',
-                                  border: '1px solid #BBF7D0',
-                                }}
-                              >
-                                {card.surahNameTransliterated} ({card.surahNameUrdu}) · آیت {card.ayahNumber}
-                              </span>
-                              <span style={{ fontSize: 10, fontWeight: 700, color: '#854D0E', backgroundColor: '#FEF9C3', padding: '2px 6px', borderRadius: 6 }}>
-                                {card.tadabburPrompt.theme}
-                              </span>
-                            </div>
-
-                            {/* Bookmark Star Toggle */}
-                            <button
-                              onClick={() => toggleBookmarkCard(card.surahNumber, card.ayahNumber)}
-                              style={{
-                                border: 'none',
-                                background: isBookmarked ? '#FEF3C7' : '#F1F5F9',
-                                color: isBookmarked ? '#D97706' : '#94A3B8',
-                                cursor: 'pointer',
-                                fontSize: 16,
-                                width: 28,
-                                height: 28,
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.15s ease',
-                              }}
-                              title={isBookmarked ? 'محفوظ کردہ سے ہٹائیں' : 'اپنی پسندیدہ فہرست میں محفوظ کریں'}
-                            >
-                              {isBookmarked ? '★' : '☆'}
-                            </button>
-                          </div>
-
-                      {/* Arabic Verse */}
-                      <div
-                        dir="rtl"
-                        style={{
-                          fontFamily: 'var(--font-arabic), "Amiri", serif',
-                          fontSize: 22,
-                          lineHeight: 2.2,
-                          color: '#1E293B',
-                          textAlign: 'right',
-                          marginBottom: 10,
-                          backgroundColor: '#F8FAFC',
-                          padding: 12,
-                          borderRadius: 8,
-                          border: '1px solid #F1F5F9',
-                        }}
-                      >
-                        {card.textArabic}{' '}
-                        <span style={{ fontSize: 16, color: '#059669' }}>﴿{card.ayahNumber}﴾</span>
-                      </div>
-
-                      {/* Kanz-ul-Iman Tarjuma */}
-                      <div style={{ marginBottom: 10 }}>
-                        <div style={{ fontSize: 11, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                          کنز الایمان (اعلیٰ حضرت):
-                        </div>
-                        <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 16, lineHeight: 2.1, color: '#0F172A', textAlign: 'right' }}>
-                          {card.tarjumaKanzulIman}
-                        </div>
-                      </div>
-
-                      {/* Roman Urdu Transliteration & Tarjuma */}
-                      <div style={{ backgroundColor: '#F0F9FF', borderRadius: 8, padding: 10, border: '1px solid #BAE6FD', marginBottom: 12 }}>
-                        <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2 }}>
-                          🔤 Roman Transliteration (تلفظ):
-                        </div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: '#0C4A6E', marginBottom: 6 }}>
-                          {getAyahRomanTransliteration(card.surahNumber, card.ayahNumber, card.textArabic)}
-                        </div>
-                        <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2 }}>
-                          📖 Roman Urdu Tarjuma (Kanz-ul-Iman):
-                        </div>
-                        <div style={{ fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
-                          {getAyahRomanUrduTarjuma(card.surahNumber, card.ayahNumber, card.tarjumaKanzulIman)}
-                        </div>
-                      </div>
-
-                      {/* Khaza'in-ul-Irfan Insight Summary */}
-                      <div style={{ backgroundColor: '#FFFBEB', borderRadius: 8, padding: 10, border: '1px solid #FDE68A', marginBottom: 14 }}>
-                        <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', marginBottom: 4 }}>
-                          خزائن العرفان (صدر الافاضل):
-                        </div>
-                        <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 14, lineHeight: 2.0, color: '#78350F', textAlign: 'right' }}>
-                          {activeMode === 'DEEP_15MIN'
-                            ? card.tafseerKhazainUlIrfan.excerptUrdu
-                            : card.tafseerKhazainUlIrfan.excerptUrdu.length > 180
-                              ? card.tafseerKhazainUlIrfan.excerptUrdu.slice(0, 180) + '...'
-                              : card.tafseerKhazainUlIrfan.excerptUrdu}
-                        </div>
-                        {activeMode === 'DEEP_15MIN' && card.crossReferenceBook && (
-                          <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px dashed #FDE68A', fontSize: 12, color: '#92400E' }}>
-                            <strong>حوالہ کتبِ معتبرہ:</strong> {card.crossReferenceBook.workTitle} ({card.crossReferenceBook.citation}) — {card.crossReferenceBook.insightUrdu}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Active Tafseer Live Read-Along Banner */}
-                      {activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` && (
-                        <div style={{ backgroundColor: '#FEF3C7', padding: '10px 14px', borderRadius: 8, border: '2px solid #F59E0B', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <span style={{ fontSize: 16 }}>🔊</span>
-                            <span style={{ fontSize: 12, color: '#92400E', fontWeight: 800 }}>
-                              خزائن العرفان کی تفسیری عبارت سنی جا رہی ہے (صدر الافاضل نعیم الدین مراد آبادی)
-                            </span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={handleStopAudio}
-                            style={{ padding: '3px 8px', borderRadius: 6, backgroundColor: '#DC2626', color: '#FFFFFF', border: 'none', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
-                          >
-                            بند کریں ✕
-                          </button>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Dedicated 3-Track Audio Listening Bar */}
-                    <div style={{ backgroundColor: '#F8FAFC', borderRadius: 10, padding: '10px 12px', border: '1px solid #E2E8F0', marginTop: 12, marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, fontWeight: 800, color: '#475569', textTransform: 'uppercase', marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                          <span>🔊</span>
-                          <span>آڈیو سنیں (Audio Streams):</span>
-                        </span>
-                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>
-                          ✓ 100% Real Human Voice
-                        </span>
-                      </div>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
-                        {/* 1. Arabic Tilawat */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedSurahNumber(card.surahNumber);
-                            handlePlayAyahAudio(card.ayahNumber, 'ARABIC');
-                          }}
-                          style={{
-                            padding: '8px 4px',
-                            borderRadius: 6,
-                            fontSize: 11,
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            border: '1px solid',
-                            borderColor: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#166534' : '#BBF7D0',
-                            backgroundColor: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#166534' : '#F0FDF4',
-                            color: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#FFFFFF' : '#166534',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: 2,
-                          }}
-                          title="عربی تلاوت سنیں"
-                        >
-                          <span style={{ fontSize: 14 }}>{isPlayingThis && currentAudioSegment === 'ARABIC' ? '⏸' : '🎙️'}</span>
-                          <span>{isPlayingThis && currentAudioSegment === 'ARABIC' ? 'تلاوت جاری' : 'عربی تلاوت'}</span>
-                        </button>
-
-                        {/* 2. Urdu Tarjuma Audio */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedSurahNumber(card.surahNumber);
-                            handlePlayAyahAudio(card.ayahNumber, 'URDU');
-                          }}
-                          style={{
-                            padding: '8px 4px',
-                            borderRadius: 6,
-                            fontSize: 11,
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            border: '1px solid',
-                            borderColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#047857' : '#BAE6FD',
-                            backgroundColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#047857' : '#F0F9FF',
-                            color: isPlayingThis && currentAudioSegment === 'URDU' ? '#FFFFFF' : '#0369A1',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: 2,
-                          }}
-                          title="اردو ترجمہ کنز الایمان سماعت فرمائیں"
-                        >
-                          <span style={{ fontSize: 14 }}>{isPlayingThis && currentAudioSegment === 'URDU' ? '⏸' : '🎧'}</span>
-                          <span>{isPlayingThis && currentAudioSegment === 'URDU' ? 'ترجمہ جاری' : 'اردو ترجمہ'}</span>
-                        </button>
-
-                        {/* 3. Tafseer & Wisdom Audio */}
-                        <button
-                          type="button"
-                          onClick={() => handlePlayTafseerWisdomAudio(card)}
-                          style={{
-                            padding: '8px 4px',
-                            borderRadius: 6,
-                            fontSize: 11,
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            border: '1px solid',
-                            borderColor: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#92400E' : '#FDE68A',
-                            backgroundColor: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#92400E' : '#FFFBEB',
-                            color: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#FFFFFF' : '#92400E',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: 2,
-                          }}
-                          title="خزائن العرفان کی تفسیری حکمت کی صوتی عبارت سنیں"
-                        >
-                          <span style={{ fontSize: 14 }}>{activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '⏹' : '📖'}</span>
-                          <span>{activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? 'تفسیر جاری' : 'تفسیر و حکمت'}</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Actions: Open Full Wisdom Card & Reflect in Muhasabah */}
-                    <div style={{ display: 'flex', gap: 6, paddingTop: 10, borderTop: '1px solid #F1F5F9', flexWrap: 'wrap' }}>
-                      <button
-                        onClick={() => {
-                          setActiveWisdomAyah({ surahNumber: card.surahNumber, ayahNumber: card.ayahNumber });
-                        }}
-                        style={{
-                          flex: 1.5,
-                          minWidth: 140,
-                          padding: '8px 12px',
-                          borderRadius: 8,
-                          backgroundColor: '#1B4332',
-                          border: 'none',
-                          color: '#FFFFFF',
-                          fontSize: 12,
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: 6,
-                        }}
-                      >
-                        <span>📖</span>
-                        <span>مکمل تفسیری سند و عمل ➔</span>
-                      </button>
-
-                      <Link
-                        href={`/reflections?surah=${card.surahNumber}&ayah=${card.ayahNumber}`}
-                        style={{
-                          padding: '8px 10px',
-                          borderRadius: 8,
-                          backgroundColor: '#FEF3C7',
-                          border: '1px solid #FDE68A',
-                          color: '#92400E',
-                          fontSize: 12,
-                          fontWeight: 700,
-                          textDecoration: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: 4,
-                        }}
-                        title="اس قرآنی آیت پر اپنے نجی محاسبہ میں نیت اور تدبر قلمبند فرمائیں"
-                      >
-                        <span>✍️</span>
-                        <span>محاسبہ</span>
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })()}
-      </section>
+          <Link
+            href="/wisdom"
+            style={{
+              padding: '10px 20px',
+              borderRadius: 10,
+              backgroundColor: '#065F46',
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              fontWeight: 800,
+              fontSize: 13,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              boxShadow: '0 2px 6px rgba(6, 95, 70, 0.25)',
+            }}
+          >
+            <span>تمام ۴۲ حکمت کارڈز کھولیں</span>
+            <span>➔</span>
+          </Link>
+        </div>
 
         {/* SECTION 2 & 3: SURAHS DIRECTORY & IN-APP READER */}
         <section style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24, alignItems: 'start' }}>
