@@ -18,7 +18,8 @@ export class FatwaFirewall {
     /\b(my husband said (talaq|divorce)|my wife said (divorce|khula))\b/i,
     /\b(i broke an oath|expiation for my specific oath|kaffarah for breaking)\b/i,
     /\b(fatwa for me|is my specific contract halal|did i commit kufr|am i out of islam)\b/i,
-    /\b(ruling on my case|verdict on my situation|declare me)\b/i,
+    /\b(ruling on my case|verdict on my situation|declare me|binding fatwa|issue a fatwa|fatwa on my|give me a fatwa)\b/i,
+    /\b(inheritance dispute|ruling on my inheritance|divide my estate)\b/i,
     /\b(talaq de di|talaq dedi|teen talaq|3 talaq|talaq bol diya|khula lena|qasam tod di|kaffara kitna|nikah toot gaya|fatwa chahiye|biwi haram ho gayi)\b/i,
     /(طلاق|تین طلاق|طلاق واقع|خلع|نکاح ٹوٹ گیا|قسم کا کفارہ|فتویٰ چاہیے|کیا یہ حلال ہے یا حرام|هل وقع الطلاق|الخلع|كفارة اليمين|طلاق ثلاث|أفتوني)/i,
   ];
@@ -34,11 +35,12 @@ export class FatwaFirewall {
 
   // Triggers for prompt injection and roleplay manipulation
   private static readonly INJECTION_PATTERNS = [
-    /\b(ignore (all|your) (rules|instructions|safety|boundaries))\b/i,
-    /\b(act as (a mufti|a grand mufti|an all-knowing mufti))\b/i,
-    /\b(pretend you are a mufti|issue a fatwa anyway|forget your programming)\b/i,
-    /\b(invent a hadith|make up a source|give me a fake citation)\b/i,
-    /\b(what did my (wife|husband|child|parent) (privately reflect|write in reflection))\b/i,
+    /\bignore\s+(all\s+)?(your\s+)?(rules|instructions|safety|boundaries|guardrails)\b/i,
+    /\b(act as|pretend to be|pretend you are)\s+(a|an\s+)?(grand\s+|all-knowing\s+)?mufti\b/i,
+    /\b(issue\s+(a\s+|me\s+a\s+)?(binding\s+)?fatwa|give\s+me\s+a\s+fatwa|need\s+a\s+fatwa|fatwa\s+(on|for)\s+my)\b/i,
+    /\b(invent\s+(a\s+)?hadith|make\s+up\s+a\s+(hadith|source)|fake\s+citation)\b/i,
+    /\b(forget\s+your\s+programming|bypass\s+safety)\b/i,
+    /\bwhat\s+did\s+my\s+(wife|husband|child|parent|spouse)\s+(privately\s+reflect|write\s+in\s+reflection)\b/i,
   ];
 
   /**
