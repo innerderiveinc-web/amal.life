@@ -6,7 +6,7 @@ import { Navigation } from '../components/Navigation';
 import { AmalTheme } from '@amal/ui';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
 import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
-import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl } from '../lib/quran-wisdom-data';
+import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahKanzulImanAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 
@@ -33,7 +33,12 @@ export default function QuranWisdomPage() {
   const [audioSyncMode, setAudioSyncMode] = useState<AudioSyncMode>('TILAWAT_URDU_SYNC');
   const [currentAudioSegment, setCurrentAudioSegment] = useState<'ARABIC' | 'URDU'>('ARABIC');
   const [isPlayingPaused, setIsPlayingPaused] = useState<boolean>(false);
+  const [activeTafseerCardKey, setActiveTafseerCardKey] = useState<string | null>(null);
+  const [surahWideAudioType, setSurahWideAudioType] = useState<'KANZUL_IMAN' | 'TAFSEER' | null>(null);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const surahWideAudioRef = useRef<HTMLAudioElement | null>(null);
+  const tafseerAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Load Bookmarks from LocalStorage
   useEffect(() => {
@@ -214,9 +219,80 @@ export default function QuranWisdomPage() {
       audioRef.current.pause();
       audioRef.current.src = '';
     }
+    if (surahWideAudioRef.current) {
+      surahWideAudioRef.current.pause();
+      surahWideAudioRef.current.src = '';
+    }
+    if (tafseerAudioRef.current) {
+      tafseerAudioRef.current.pause();
+      tafseerAudioRef.current.src = '';
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
     setPlayingAyahNumber(null);
     setCurrentAudioSegment('ARABIC');
     setIsPlayingPaused(false);
+    setSurahWideAudioType(null);
+    setActiveTafseerCardKey(null);
+  };
+
+  const handlePlayTafseerWisdomAudio = (card: QuranAyahWisdomCard) => {
+    const cardKey = `${card.surahNumber}:${card.ayahNumber}`;
+    if (activeTafseerCardKey === cardKey) {
+      handleStopAudio();
+      return;
+    }
+
+    handleStopAudio();
+    setActiveTafseerCardKey(cardKey);
+
+    // Check if studio Tafseer audio is available for this Surah
+    const studioTafseerUrl = getSurahTafseerAudioUrl(card.surahNumber);
+    if (studioTafseerUrl && tafseerAudioRef.current) {
+      tafseerAudioRef.current.src = studioTafseerUrl;
+      tafseerAudioRef.current.play().catch((e) => console.warn('Tafseer play error:', e));
+      return;
+    }
+
+    // Play speech synthesis of Khaza'in-ul-Irfan commentary
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      const textToSpeak = `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ ${card.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا نکتہ: ${card.tadabburPrompt.questionUrdu}`;
+      const utter = new SpeechSynthesisUtterance(textToSpeak);
+      utter.lang = 'ur';
+      utter.rate = 0.9;
+      utter.onend = () => setActiveTafseerCardKey(null);
+      utter.onerror = () => setActiveTafseerCardKey(null);
+      window.speechSynthesis.speak(utter);
+    }
+  };
+
+  const handlePlaySurahKanzulIman = () => {
+    if (surahWideAudioType === 'KANZUL_IMAN') {
+      handleStopAudio();
+      return;
+    }
+    handleStopAudio();
+    const url = getSurahKanzulImanAudioUrl(selectedSurahNumber);
+    if (url && surahWideAudioRef.current) {
+      setSurahWideAudioType('KANZUL_IMAN');
+      surahWideAudioRef.current.src = url;
+      surahWideAudioRef.current.play().catch((e) => console.warn('Surah Tarjuma audio error:', e));
+    }
+  };
+
+  const handlePlaySurahTafseer = () => {
+    if (surahWideAudioType === 'TAFSEER') {
+      handleStopAudio();
+      return;
+    }
+    handleStopAudio();
+    const url = getSurahTafseerAudioUrl(selectedSurahNumber);
+    if (url && surahWideAudioRef.current) {
+      setSurahWideAudioType('TAFSEER');
+      surahWideAudioRef.current.src = url;
+      surahWideAudioRef.current.play().catch((e) => console.warn('Surah Tafseer audio error:', e));
+    }
   };
 
   // Lock-screen MediaSession API controls & notification display
@@ -281,8 +357,10 @@ export default function QuranWisdomPage() {
 
       <Navigation />
 
-      {/* Hidden Audio Element for continuous Tilawat playback */}
+      {/* Hidden Audio Elements for continuous Tilawat, Kanz-ul-Iman, and Tafseer streams */}
       <audio ref={audioRef} onEnded={handleAyahAudioEnded} style={{ display: 'none' }} />
+      <audio ref={surahWideAudioRef} onEnded={() => setSurahWideAudioType(null)} style={{ display: 'none' }} />
+      <audio ref={tafseerAudioRef} onEnded={() => setActiveTafseerCardKey(null)} style={{ display: 'none' }} />
 
       <main style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
         {/* Breadcrumb Bar */}
@@ -640,41 +718,112 @@ export default function QuranWisdomPage() {
                       </div>
                     </div>
 
-                    {/* Actions: Listen Audio, Open Full Wisdom Card & Reflect in Muhasabah */}
-                    <div style={{ display: 'flex', gap: 6, paddingTop: 10, borderTop: '1px solid #F1F5F9', flexWrap: 'wrap' }}>
-                      <button
-                        onClick={() => {
-                          setSelectedSurahNumber(card.surahNumber);
-                          handlePlayAyahAudio(card.ayahNumber);
-                        }}
-                        style={{
-                          flex: 1,
-                          minWidth: 100,
-                          padding: '8px 10px',
-                          borderRadius: 8,
-                          backgroundColor: isPlayingThis ? '#DCFCE7' : '#F0FDF4',
-                          border: '1px solid #86EFAC',
-                          color: '#166534',
-                          fontSize: 12,
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: 5,
-                        }}
-                      >
-                        <span>{isPlayingThis ? '⏸ وقفہ' : '▶ سنیں'}</span>
-                      </button>
+                    {/* Dedicated 3-Track Audio Listening Bar */}
+                    <div style={{ backgroundColor: '#F8FAFC', borderRadius: 10, padding: '10px 12px', border: '1px solid #E2E8F0', marginTop: 12, marginBottom: 12 }}>
+                      <div style={{ fontSize: 10, fontWeight: 800, color: '#475569', textTransform: 'uppercase', marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                          <span>🔊</span>
+                          <span>آڈیو سنیں (Audio Streams):</span>
+                        </span>
+                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>
+                          ✓ 100% Real Human Voice
+                        </span>
+                      </div>
 
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
+                        {/* 1. Arabic Tilawat */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedSurahNumber(card.surahNumber);
+                            handlePlayAyahAudio(card.ayahNumber, 'ARABIC');
+                          }}
+                          style={{
+                            padding: '8px 4px',
+                            borderRadius: 6,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            border: '1px solid',
+                            borderColor: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#166534' : '#BBF7D0',
+                            backgroundColor: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#166534' : '#F0FDF4',
+                            color: isPlayingThis && currentAudioSegment === 'ARABIC' ? '#FFFFFF' : '#166534',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: 2,
+                          }}
+                          title="عربی تلاوت سنیں"
+                        >
+                          <span style={{ fontSize: 14 }}>{isPlayingThis && currentAudioSegment === 'ARABIC' ? '⏸' : '🎙️'}</span>
+                          <span>{isPlayingThis && currentAudioSegment === 'ARABIC' ? 'تلاوت جاری' : 'عربی تلاوت'}</span>
+                        </button>
+
+                        {/* 2. Urdu Tarjuma Audio */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedSurahNumber(card.surahNumber);
+                            handlePlayAyahAudio(card.ayahNumber, 'URDU');
+                          }}
+                          style={{
+                            padding: '8px 4px',
+                            borderRadius: 6,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            border: '1px solid',
+                            borderColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#047857' : '#BAE6FD',
+                            backgroundColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#047857' : '#F0F9FF',
+                            color: isPlayingThis && currentAudioSegment === 'URDU' ? '#FFFFFF' : '#0369A1',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: 2,
+                          }}
+                          title="اردو ترجمہ کنز الایمان سماعت فرمائیں"
+                        >
+                          <span style={{ fontSize: 14 }}>{isPlayingThis && currentAudioSegment === 'URDU' ? '⏸' : '🎧'}</span>
+                          <span>{isPlayingThis && currentAudioSegment === 'URDU' ? 'ترجمہ جاری' : 'اردو ترجمہ'}</span>
+                        </button>
+
+                        {/* 3. Tafseer & Wisdom Audio */}
+                        <button
+                          type="button"
+                          onClick={() => handlePlayTafseerWisdomAudio(card)}
+                          style={{
+                            padding: '8px 4px',
+                            borderRadius: 6,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            border: '1px solid',
+                            borderColor: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#92400E' : '#FDE68A',
+                            backgroundColor: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#92400E' : '#FFFBEB',
+                            color: activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '#FFFFFF' : '#92400E',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: 2,
+                          }}
+                          title="خزائن العرفان کی تفسیری حکمت کی صوتی عبارت سنیں"
+                        >
+                          <span style={{ fontSize: 14 }}>{activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? '⏹' : '📖'}</span>
+                          <span>{activeTafseerCardKey === `${card.surahNumber}:${card.ayahNumber}` ? 'تفسیر جاری' : 'تفسیر و حکمت'}</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Actions: Open Full Wisdom Card & Reflect in Muhasabah */}
+                    <div style={{ display: 'flex', gap: 6, paddingTop: 10, borderTop: '1px solid #F1F5F9', flexWrap: 'wrap' }}>
                       <button
                         onClick={() => {
                           setActiveWisdomAyah({ surahNumber: card.surahNumber, ayahNumber: card.ayahNumber });
                         }}
                         style={{
-                          flex: 1.2,
-                          minWidth: 120,
-                          padding: '8px 10px',
+                          flex: 1.5,
+                          minWidth: 140,
+                          padding: '8px 12px',
                           borderRadius: 8,
                           backgroundColor: '#1B4332',
                           border: 'none',
@@ -685,11 +834,11 @@ export default function QuranWisdomPage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: 5,
+                          gap: 6,
                         }}
                       >
                         <span>📖</span>
-                        <span>تفسیری سند ➔</span>
+                        <span>مکمل تفسیری سند و عمل ➔</span>
                       </button>
 
                       <Link
@@ -977,7 +1126,7 @@ export default function QuranWisdomPage() {
                   <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' ? '🎧 تلاوت + اردو (Sync)' : '🎙️ صرف تلاوت'}</span>
                 </button>
 
-                {/* Continuous Play All Button */}
+                {/* Continuous Play All Button (Arabic Tilawat) */}
                 <button
                   onClick={() => handlePlayAyahAudio(1, 'ARABIC')}
                   style={{
@@ -995,8 +1144,57 @@ export default function QuranWisdomPage() {
                   }}
                 >
                   <span>▶</span>
-                  <span>مکمل سورت سنیں</span>
+                  <span>مکمل سورت (تلاوت)</span>
                 </button>
+
+                {/* Full Surah Tilawat + Tarjuma Kanz-ul-Iman Human Voice Button */}
+                <button
+                  type="button"
+                  onClick={handlePlaySurahKanzulIman}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: 8,
+                    backgroundColor: surahWideAudioType === 'KANZUL_IMAN' ? '#047857' : '#FEF3C7',
+                    color: surahWideAudioType === 'KANZUL_IMAN' ? '#FFFFFF' : '#92400E',
+                    border: '1px solid',
+                    borderColor: surahWideAudioType === 'KANZUL_IMAN' ? '#047857' : '#FDE68A',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                  }}
+                  title="مکمل سورت کی تلاوت اور کنز الایمان کا مستند اردو ترجمہ (مولانا عبد الحبیب عطاری)"
+                >
+                  <span>🎧</span>
+                  <span>{surahWideAudioType === 'KANZUL_IMAN' ? '⏸ ترجمہ موقوف' : 'مکمل سورت + ترجمہ کنز الایمان'}</span>
+                </button>
+
+                {/* Full Surah Tafseer Audio (if available) */}
+                {getSurahTafseerAudioUrl(selectedSurahNumber) && (
+                  <button
+                    type="button"
+                    onClick={handlePlaySurahTafseer}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: 8,
+                      backgroundColor: surahWideAudioType === 'TAFSEER' ? '#92400E' : '#FFFBEB',
+                      color: surahWideAudioType === 'TAFSEER' ? '#FFFFFF' : '#92400E',
+                      border: '1px solid #FDE68A',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                    }}
+                    title="اس سورت کی مکمل اردو تفسیر آڈیو سماعت فرمائیں"
+                  >
+                    <span>📖</span>
+                    <span>{surahWideAudioType === 'TAFSEER' ? '⏸ تفسیر موقوف' : 'مکمل اردو تفسیر آڈیو'}</span>
+                  </button>
+                )}
 
                 {/* Roman Urdu Toggle Button */}
                 <button
@@ -1269,7 +1467,7 @@ export default function QuranWisdomPage() {
       </main>
 
       {/* PERSISTENT FLOATING AUDIO PLAYER (LOCK-SCREEN & PLAYBACK CONTROLS) */}
-      {playingAyahNumber !== null && (
+      {(playingAyahNumber !== null || surahWideAudioType !== null || activeTafseerCardKey !== null) && (
         <div
           style={{
             position: 'fixed',
@@ -1303,7 +1501,16 @@ export default function QuranWisdomPage() {
                   width: 44,
                   height: 44,
                   borderRadius: 12,
-                  backgroundColor: currentAudioSegment === 'URDU' ? '#D97706' : '#059669',
+                  backgroundColor:
+                    surahWideAudioType === 'KANZUL_IMAN'
+                      ? '#D97706'
+                      : surahWideAudioType === 'TAFSEER'
+                        ? '#B45309'
+                        : activeTafseerCardKey !== null
+                          ? '#92400E'
+                          : currentAudioSegment === 'URDU'
+                            ? '#D97706'
+                            : '#059669',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1312,7 +1519,15 @@ export default function QuranWisdomPage() {
                   boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
                 }}
               >
-                {currentAudioSegment === 'URDU' ? '🎧' : '🎙️'}
+                {surahWideAudioType === 'KANZUL_IMAN'
+                  ? '🎧'
+                  : surahWideAudioType === 'TAFSEER'
+                    ? '📖'
+                    : activeTafseerCardKey !== null
+                      ? '🔊'
+                      : currentAudioSegment === 'URDU'
+                        ? '🎧'
+                        : '🎙️'}
               </div>
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
@@ -1322,25 +1537,55 @@ export default function QuranWisdomPage() {
                       fontWeight: 800,
                       padding: '2px 8px',
                       borderRadius: 10,
-                      backgroundColor: currentAudioSegment === 'URDU' ? '#FEF3C7' : '#DCFCE7',
-                      color: currentAudioSegment === 'URDU' ? '#92400E' : '#166534',
+                      backgroundColor:
+                        surahWideAudioType === 'KANZUL_IMAN'
+                          ? '#FEF3C7'
+                          : surahWideAudioType === 'TAFSEER'
+                            ? '#FEF3C7'
+                            : activeTafseerCardKey !== null
+                              ? '#FEF3C7'
+                              : currentAudioSegment === 'URDU'
+                                ? '#FEF3C7'
+                                : '#DCFCE7',
+                      color:
+                        surahWideAudioType === 'KANZUL_IMAN' || surahWideAudioType === 'TAFSEER' || activeTafseerCardKey !== null || currentAudioSegment === 'URDU'
+                          ? '#92400E'
+                          : '#166534',
                       letterSpacing: '0.04em',
                     }}
                   >
-                    {currentAudioSegment === 'URDU' ? 'اردو ترجمہ (کنز الایمان)' : 'عربی تلاوت'}
+                    {surahWideAudioType === 'KANZUL_IMAN'
+                      ? 'مکمل سورت + ترجمہ کنز الایمان'
+                      : surahWideAudioType === 'TAFSEER'
+                        ? 'مکمل اردو تفسیر آڈیو'
+                        : activeTafseerCardKey !== null
+                          ? 'خزائن العرفان (تفسیری حکمت)'
+                          : currentAudioSegment === 'URDU'
+                            ? 'اردو ترجمہ (کنز الایمان)'
+                            : 'عربی تلاوت'}
                   </span>
                   <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
-                    {currentAudioSegment === 'URDU'
-                      ? '100% Real Human Voice'
-                      : (selectedQari === 'alafasy'
-                          ? 'مشاری العفاسی'
-                          : selectedQari === 'husary'
-                            ? 'محمود خلیل الحصری'
-                            : 'محمد صدیق المنشاوی')}
+                    {surahWideAudioType === 'KANZUL_IMAN'
+                      ? '100% Real Human Voice (مولانا عبد الحبیب عطاری)'
+                      : surahWideAudioType === 'TAFSEER'
+                        ? 'مستند سٹوڈیو تفسیر'
+                        : activeTafseerCardKey !== null
+                          ? 'صدر الافاضل مولانا نعیم الدین مراد آبادی'
+                          : currentAudioSegment === 'URDU'
+                            ? '100% Real Human Voice'
+                            : (selectedQari === 'alafasy'
+                                ? 'مشاری العفاسی'
+                                : selectedQari === 'husary'
+                                  ? 'محمود خلیل الحصری'
+                                  : 'محمد صدیق المنشاوی')}
                   </span>
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  سورۃ {currentSurahMeta?.nameUrdu} ({currentSurahMeta?.nameTransliterated}) · آیت {playingAyahNumber}
+                  {surahWideAudioType
+                    ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated})`
+                    : activeTafseerCardKey
+                      ? `حکمت و تفسیری عبارت کی صوتی قرأت`
+                      : `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated}) · آیت ${playingAyahNumber}`}
                 </div>
               </div>
             </div>

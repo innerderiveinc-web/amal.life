@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl } from '../lib/quran-wisdom-data';
+import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { showAmalToast } from './Toast';
 
@@ -27,15 +27,47 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   fallbackEnglish,
 }) => {
   const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'KANZ' | 'ROMAN_URDU' | 'ENGLISH' | 'IBN_KATHIR' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
-  const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'minshawi' | 'urdu'>('alafasy');
+  const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'minshawi' | 'urdu' | 'tafseer'>('alafasy');
   const [userWisdomNote, setUserWisdomNote] = useState('');
+  const [isSpeakingTafseer, setIsSpeakingTafseer] = useState(false);
 
   if (!isOpen) return null;
 
   const wisdomCard = getAyahWisdomCard(surahNumber, ayahNumber);
-  const audioSrc = selectedAudioType === 'urdu'
-    ? getAyahUrduAudioUrl(surahNumber, ayahNumber)
-    : getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
+  const tafseerStudioUrl = getSurahTafseerAudioUrl(surahNumber);
+
+  let audioSrc = '';
+  if (selectedAudioType === 'urdu') {
+    audioSrc = getAyahUrduAudioUrl(surahNumber, ayahNumber);
+  } else if (selectedAudioType === 'tafseer') {
+    audioSrc = tafseerStudioUrl || '';
+  } else {
+    audioSrc = getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
+  }
+
+  const handleToggleSpeakTafseer = () => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      showAmalToast('آپ کے براؤزر میں آڈیو سپیچ سپورٹ دستیاب نہیں ہے۔', 'error');
+      return;
+    }
+    if (isSpeakingTafseer) {
+      window.speechSynthesis.cancel();
+      setIsSpeakingTafseer(false);
+    } else {
+      window.speechSynthesis.cancel();
+      const textToSpeak = wisdomCard
+        ? `خزائن العرفان، صدر الافاضل مولانا نعیم الدین مراد آبادی۔ ${wisdomCard.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${wisdomCard.tadabburPrompt.questionUrdu}`
+        : 'تفسیری حکمت کی تفصیل';
+      const utter = new SpeechSynthesisUtterance(textToSpeak);
+      utter.lang = 'ur';
+      utter.rate = 0.9;
+      utter.onend = () => setIsSpeakingTafseer(false);
+      utter.onerror = () => setIsSpeakingTafseer(false);
+      setIsSpeakingTafseer(true);
+      window.speechSynthesis.speak(utter);
+      showAmalToast('خزائن العرفان کی تفسیری عبارت کی باوقار قرأت شروع ہو گئی۔');
+    }
+  };
 
   return (
     <div
@@ -208,6 +240,26 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                   <span>🎧</span>
                   <span>اردو ترجمہ (Urdu Audio)</span>
                 </button>
+                <button
+                  onClick={() => setSelectedAudioType('tafseer')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid',
+                    borderColor: selectedAudioType === 'tafseer' ? '#92400E' : '#FDE68A',
+                    backgroundColor: selectedAudioType === 'tafseer' ? '#92400E' : '#FFFBEB',
+                    color: selectedAudioType === 'tafseer' ? '#FFFFFF' : '#92400E',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <span>📖</span>
+                  <span>تفسیر و حکمت آڈیو</span>
+                </button>
               </div>
             </div>
 
@@ -217,6 +269,34 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               key={audioSrc}
               style={{ width: '100%', height: 38, outline: 'none' }}
             />
+
+            {/* Tafseer Narration Bar */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFBEB', padding: '8px 12px', borderRadius: 8, border: '1px solid #FDE68A' }}>
+              <span style={{ fontSize: 11, color: '#78350F', fontWeight: 600 }}>
+                {selectedAudioType === 'tafseer' && tafseerStudioUrl
+                  ? '✓ سٹوڈیو اردو تفسیر دستیاب ہے (اوپر پلیئر میں سنیں)'
+                  : 'خزائن العرفان کی تفسیری عبارت کی صوتی قرأت:'}
+              </span>
+              <button
+                type="button"
+                onClick={handleToggleSpeakTafseer}
+                style={{
+                  padding: '4px 12px',
+                  borderRadius: 6,
+                  backgroundColor: isSpeakingTafseer ? '#DC2626' : '#166534',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>{isSpeakingTafseer ? '⏹ بند کریں' : '🔊 تفسیری عبارت سنیں'}</span>
+              </button>
+            </div>
           </div>
 
           {/* Arabic Matn Box */}

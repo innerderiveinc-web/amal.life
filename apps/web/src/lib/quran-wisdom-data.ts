@@ -81,7 +81,164 @@ export function getAyahAudioUrl(
 export function getAyahUrduAudioUrl(surahNumber: number, ayahNumber: number): string {
   const s = String(surahNumber).padStart(3, '0');
   const a = String(ayahNumber).padStart(3, '0');
-  return `https://everyayah.com/data/translations/ur.khan_128kbps/${s}${a}.mp3`;
+  return `https://everyayah.com/data/translations/urdu_shamshad_ali_khan_46kbps/${s}${a}.mp3`;
+}
+
+/**
+ * 114 Surahs Complete Tilawat + Kanz-ul-Iman Urdu Tarjuma Human Voice Audio Map
+ * (Recited by Qari Muhammad Asad Attari & Maulana Haji Abdul Habib Attari)
+ */
+const SURAH_KANZUL_IMAN_FILES: Record<number, string> = {
+  1: "001 Surah Fatiha.mp3",
+  2: "002SurahBaqarah.mp3",
+  3: "003SurahAlImran.mp3",
+  4: "004SurahNisa.mp3",
+  5: "005SurahMaidah.mp3",
+  6: "006SurahAnaam.mp3",
+  7: "007SurahAraf.mp3",
+  8: "008SurahAnfal.mp3",
+  9: "009SurahTauba.mp3",
+  10: "010SurahYunus.mp3",
+  11: "011SurahHood.mp3",
+  12: "012SurahYousuf.mp3",
+  13: "013SurahRad.mp3",
+  14: "014SurahIbrahim.mp3",
+  15: "015SurahHajar.mp3",
+  16: "016SurahNahl.mp3",
+  17: "017SurahBaniIsrael.mp3",
+  18: "018SurahKahf.mp3",
+  19: "019SurahMaryam.mp3",
+  20: "020SurahTaha.mp3",
+  21: "021SurahAnbiya.mp3",
+  22: "022SurahHajj.mp3",
+  23: "023SurahMuminoon.mp3",
+  24: "024SurahNoor.mp3",
+  25: "025SurahFurqan.mp3",
+  26: "026SurahShuara.mp3",
+  27: "027SurahNaml.mp3",
+  28: "028SurahQasas.mp3",
+  29: "029SurahAnkaboot.mp3",
+  30: "030SurahRoom.mp3",
+  31: "031SurahLuqman.mp3",
+  32: "032SurahSajda.mp3",
+  33: "033SurahAhzab.mp3",
+  34: "034SurahSaba.mp3",
+  35: "035SurahFatir.mp3",
+  36: "036SurahYa-seen.mp3",
+  37: "037SurahSaaffat.mp3",
+  38: "038SurahSad.mp3",
+  39: "039SurahZumar.mp3",
+  40: "040SurahMomin.mp3",
+  41: "041SurahHaMeemSajda.mp3",
+  42: "042SurahShura.mp3",
+  43: "043SurahZukhruf.mp3",
+  44: "044SurahDukhan.mp3",
+  45: "045SurahJasia.mp3",
+  46: "046SurahAhqaf.mp3",
+  47: "047SurahMuhammad.mp3",
+  48: "048SurahFatah.mp3",
+  49: "049SurahHujurat.mp3",
+  50: "050SurahQaf.mp3",
+  51: "051SurahZariyat.mp3",
+  52: "052SurahTur.mp3",
+  53: "053SurahNajam.mp3",
+  54: "054SurahQamar.mp3",
+  55: "055SurahRehman.mp3",
+  56: "056SurahWaqiah.mp3",
+  57: "057SurahHadid.mp3",
+  58: "058SurahMujadila.mp3",
+  59: "059SurahHashr.mp3",
+  60: "060SurahMumtahina.mp3",
+  61: "061SurahAsSaff.mp3",
+  62: "062SurahJumua.mp3",
+  63: "063SurahMunafiqun.mp3",
+  64: "064SurahTaghabun.mp3",
+  65: "065SurahTalaq.mp3",
+  66: "066SurahTahrim.mp3",
+  67: "067SurahMulk.mp3",
+  68: "068SurahQalam.mp3",
+  69: "069SurahHaqqa.mp3",
+  70: "070SurahMaarij.mp3",
+  71: "071SurahNuh.mp3",
+  72: "072SurahJinn.mp3",
+  73: "073SurahMuzzammil.mp3",
+  74: "074SurahMudassir.mp3",
+  75: "075SurahQiyamah.mp3",
+  76: "076SurahDahr.mp3",
+  77: "077SurahMursalat.mp3",
+  78: "078SurahNaba.mp3",
+  79: "079SurahNaziat.mp3",
+  80: "080SurahAbasa.mp3",
+  81: "081SurahTakwir.mp3",
+  82: "082SurahInfitar.mp3",
+  83: "083SurahMutaffifin.mp3",
+  84: "084SurahInshiqaq.mp3",
+  85: "085SurahBurooj.mp3",
+  86: "086SurahTariq.mp3",
+  87: "087SurahAl-ala.mp3",
+  88: "088SurahGhashiya.mp3",
+  89: "089SurahFajr.mp3",
+  90: "090SurahBalad.mp3",
+  91: "091SurahShams.mp3",
+  92: "092SurahAl-lail.mp3",
+  93: "093SurahDhuha.mp3",
+  94: "094SurahSharh.mp3",
+  95: "095SurahAt-tin.mp3",
+  96: "096SurahAl-alaq.mp3",
+  97: "097SurahQadr.mp3",
+  98: "098SurahBayyinah.mp3",
+  99: "099SurahZalzalah.mp3",
+  100: "100SurahAdiyat.mp3",
+  101: "101SurahAl-qariah.mp3",
+  102: "102SurahTakasur.mp3",
+  103: "103SurahAl-asr.mp3",
+  104: "104SurahHumazah.mp3",
+  105: "105SurahAl-fil.mp3",
+  106: "106SurahQuraish.mp3",
+  107: "107SurahAl-maun.mp3",
+  108: "108SurahKausar.mp3",
+  109: "109SurahKafirun.mp3",
+  110: "110SurahNasr.mp3",
+  111: "111SurahLahab.mp3",
+  112: "112SurahIkhlas.mp3",
+  113: "113SurahFalaq.mp3",
+  114: "114SurahNaas.mp3",
+};
+
+/**
+ * Returns certified streaming URL for full Surah recitation + Kanz-ul-Iman Tarjuma
+ */
+export function getSurahKanzulImanAudioUrl(surahNumber: number): string | null {
+  const f = SURAH_KANZUL_IMAN_FILES[surahNumber];
+  if (!f) return null;
+  return `https://archive.org/download/TilawaatEQuranByMuhammadAsadAttariAndTarjumaEKanzUlImanByAbdulHabibAttari/${encodeURIComponent(f)}`;
+}
+
+/**
+ * Available Studio Tafseer Audio Files (Juz 'Amma collection)
+ */
+const SURAH_TAFSEER_FILES: Record<number, string> = {
+  98: "098 - Surah Al-Bayyinah Ma Tafseer Siratul Jinan.mp3",
+  104: "104 - Surah Al-Humazah Ma Tafseer Siratul Jinan.mp3",
+  105: "105 - Surah Al-Feel Ma Tafseer Siratul Jinan.mp3",
+  106: "106 - Surah Quraysh Ma Tafseer Siratul Jinan.mp3",
+  107: "107 - Surah Al-Maoon Ma Tafseer Siratul Jinan.mp3",
+  108: "108 - Surah Al-Kawsar Ma Tafseer Siratul Jinan.mp3",
+  109: "109 - Surah Al-Kafiroon Ma Tafseer Siratul Jinan.mp3",
+  110: "110 - Surah An-Nasr Ma Tafseer Siratul Jinan.mp3",
+  111: "111 - Surah Al-Lahab Ma Tafseer Siratul Jinan.mp3",
+  112: "112 - Surah Al-Ikhlas Ma Tafseer Siratul Jinan.mp3",
+  113: "113 - Surah Al-Falaq Ma Tafseer Siratul Jinan.mp3",
+  114: "114 - Surah An-Naas Ma Tafseer Siratul Jinan.mp3",
+};
+
+/**
+ * Returns certified streaming URL for Surah Tafseer audio where available
+ */
+export function getSurahTafseerAudioUrl(surahNumber: number): string | null {
+  const f = SURAH_TAFSEER_FILES[surahNumber];
+  if (!f) return null;
+  return `https://archive.org/download/tilawatequranmatafseersiratuljinan/${encodeURIComponent(f)}`;
 }
 
 export const QURAN_WISDOM_COLLECTION: QuranAyahWisdomCard[] = [
