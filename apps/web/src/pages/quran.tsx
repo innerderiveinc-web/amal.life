@@ -23,6 +23,7 @@ export default function QuranWisdomPage() {
   const [revelationFilter, setRevelationFilter] = useState<'ALL' | 'MECCAN' | 'MEDINAN'>('ALL');
   const [fontSize, setFontSize] = useState<number>(24);
   const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(true);
+  const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
 
   // Reader & Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
@@ -33,6 +34,31 @@ export default function QuranWisdomPage() {
   const [currentAudioSegment, setCurrentAudioSegment] = useState<'ARABIC' | 'URDU'>('ARABIC');
   const [isPlayingPaused, setIsPlayingPaused] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Load Bookmarks from LocalStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('amal_bookmarked_quran_wisdom');
+        if (stored) setBookmarkedCardIds(JSON.parse(stored));
+      } catch (e) {
+        console.warn('Could not read bookmarks:', e);
+      }
+    }
+  }, []);
+
+  const toggleBookmarkCard = (surahNum: number, ayahNum: number) => {
+    const key = `${surahNum}:${ayahNum}`;
+    setBookmarkedCardIds((prev) => {
+      const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('amal_bookmarked_quran_wisdom', JSON.stringify(next));
+        } catch (e) {}
+      }
+      return next;
+    });
+  };
 
   // Surahs in-memory cache
   const [loadedSurahsCache, setLoadedSurahsCache] = useState<Record<number, QuranSurahData>>(() => {
@@ -435,6 +461,7 @@ export default function QuranWisdomPage() {
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 18 }}>
               {[
                 { id: 'ALL', label: 'تمام موضوعات (All Themes)' },
+                { id: 'BOOKMARKED', label: `⭐ محفوظ کارڈز (${bookmarkedCardIds.length})` },
                 { id: 'IKHLAS', label: '✨ اخلاص و نیت (Ikhlas)' },
                 { id: 'TAWAKKUL', label: '🛡️ توکل و استقامت (Tawakkul)' },
                 { id: 'SALAH', label: '🤲 نماز و مناجات (Salah)' },
@@ -466,48 +493,93 @@ export default function QuranWisdomPage() {
               })}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 16 }}>
-              {(selectedThemeFilter === 'ALL'
-                ? QURAN_WISDOM_COLLECTION
-                : QURAN_WISDOM_COLLECTION.filter((c) => c.tadabburPrompt.theme === selectedThemeFilter)
-              ).map((card) => {
-                const isPlayingThis = playingAyahNumber === card.ayahNumber && selectedSurahNumber === card.surahNumber;
+            {/* Empty state for filtered cards */}
+            {(() => {
+              const displayedWisdomCards = selectedThemeFilter === 'BOOKMARKED'
+                ? QURAN_WISDOM_COLLECTION.filter((c) => bookmarkedCardIds.includes(`${c.surahNumber}:${c.ayahNumber}`))
+                : (selectedThemeFilter === 'ALL'
+                    ? QURAN_WISDOM_COLLECTION
+                    : QURAN_WISDOM_COLLECTION.filter((c) => c.tadabburPrompt.theme === selectedThemeFilter));
 
+              if (displayedWisdomCards.length === 0) {
                 return (
-                  <div
-                    key={`${card.surahNumber}-${card.ayahNumber}`}
-                    style={{
-                      backgroundColor: '#FFFFFF',
-                      borderRadius: 16,
-                      border: '1px solid #E2E8F0',
-                      padding: 20,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                      transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-                    }}
-                  >
-                    <div>
-                      {/* Card Header */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                        <span
-                          style={{
-                            fontSize: 11,
-                            fontWeight: 800,
-                            padding: '3px 8px',
-                            borderRadius: 6,
-                            backgroundColor: '#F0FDF4',
-                            color: '#166534',
-                            border: '1px solid #BBF7D0',
-                          }}
-                        >
-                          {card.surahNameTransliterated} ({card.surahNameUrdu}) · آیت {card.ayahNumber}
-                        </span>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: '#854D0E', backgroundColor: '#FEF9C3', padding: '2px 8px', borderRadius: 6 }}>
-                          موضوع: {card.tadabburPrompt.theme}
-                        </span>
-                      </div>
+                  <div style={{ padding: '48px 24px', textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px dashed #CBD5E1', color: '#64748B' }}>
+                    <div style={{ fontSize: 36, marginBottom: 8 }}>⭐</div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: '#1E293B', marginBottom: 4 }}>
+                      کوئی محفوظ حکمت کارڈ موجود نہیں
+                    </div>
+                    <div style={{ fontSize: 13, maxWidth: 420, margin: '0 auto', lineHeight: 1.6 }}>
+                      کسی بھی حکمت کارڈ کے اوپر دائیں جانب موجود ستارے (☆) پر کلک کر کے اسے اپنی پسندیدہ فہرست میں محفوظ کریں۔
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 16 }}>
+                  {displayedWisdomCards.map((card) => {
+                    const isPlayingThis = playingAyahNumber === card.ayahNumber && selectedSurahNumber === card.surahNumber;
+                    const isBookmarked = bookmarkedCardIds.includes(`${card.surahNumber}:${card.ayahNumber}`);
+
+                    return (
+                      <div
+                        key={`${card.surahNumber}-${card.ayahNumber}`}
+                        style={{
+                          backgroundColor: '#FFFFFF',
+                          borderRadius: 16,
+                          border: isBookmarked ? '1px solid #FCD34D' : '1px solid #E2E8F0',
+                          padding: 20,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          boxShadow: isBookmarked ? '0 4px 14px rgba(245, 158, 11, 0.1)' : '0 2px 8px rgba(0,0,0,0.04)',
+                          transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+                        }}
+                      >
+                        <div>
+                          {/* Card Header */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                              <span
+                                style={{
+                                  fontSize: 11,
+                                  fontWeight: 800,
+                                  padding: '3px 8px',
+                                  borderRadius: 6,
+                                  backgroundColor: '#F0FDF4',
+                                  color: '#166534',
+                                  border: '1px solid #BBF7D0',
+                                }}
+                              >
+                                {card.surahNameTransliterated} ({card.surahNameUrdu}) · آیت {card.ayahNumber}
+                              </span>
+                              <span style={{ fontSize: 10, fontWeight: 700, color: '#854D0E', backgroundColor: '#FEF9C3', padding: '2px 6px', borderRadius: 6 }}>
+                                {card.tadabburPrompt.theme}
+                              </span>
+                            </div>
+
+                            {/* Bookmark Star Toggle */}
+                            <button
+                              onClick={() => toggleBookmarkCard(card.surahNumber, card.ayahNumber)}
+                              style={{
+                                border: 'none',
+                                background: isBookmarked ? '#FEF3C7' : '#F1F5F9',
+                                color: isBookmarked ? '#D97706' : '#94A3B8',
+                                cursor: 'pointer',
+                                fontSize: 16,
+                                width: 28,
+                                height: 28,
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.15s ease',
+                              }}
+                              title={isBookmarked ? 'محفوظ کردہ سے ہٹائیں' : 'اپنی پسندیدہ فہرست میں محفوظ کریں'}
+                            >
+                              {isBookmarked ? '★' : '☆'}
+                            </button>
+                          </div>
 
                       {/* Arabic Verse */}
                       <div
@@ -568,8 +640,8 @@ export default function QuranWisdomPage() {
                       </div>
                     </div>
 
-                    {/* Actions: Listen Audio & Open Full Wisdom Card */}
-                    <div style={{ display: 'flex', gap: 8, paddingTop: 10, borderTop: '1px solid #F1F5F9' }}>
+                    {/* Actions: Listen Audio, Open Full Wisdom Card & Reflect in Muhasabah */}
+                    <div style={{ display: 'flex', gap: 6, paddingTop: 10, borderTop: '1px solid #F1F5F9', flexWrap: 'wrap' }}>
                       <button
                         onClick={() => {
                           setSelectedSurahNumber(card.surahNumber);
@@ -577,7 +649,8 @@ export default function QuranWisdomPage() {
                         }}
                         style={{
                           flex: 1,
-                          padding: '8px 12px',
+                          minWidth: 100,
+                          padding: '8px 10px',
                           borderRadius: 8,
                           backgroundColor: isPlayingThis ? '#DCFCE7' : '#F0FDF4',
                           border: '1px solid #86EFAC',
@@ -588,10 +661,10 @@ export default function QuranWisdomPage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: 6,
+                          gap: 5,
                         }}
                       >
-                        <span>{isPlayingThis ? '⏸ وقفہ' : '▶ سنیں (آڈیو)'}</span>
+                        <span>{isPlayingThis ? '⏸ وقفہ' : '▶ سنیں'}</span>
                       </button>
 
                       <button
@@ -599,8 +672,9 @@ export default function QuranWisdomPage() {
                           setActiveWisdomAyah({ surahNumber: card.surahNumber, ayahNumber: card.ayahNumber });
                         }}
                         style={{
-                          flex: 1.3,
-                          padding: '8px 12px',
+                          flex: 1.2,
+                          minWidth: 120,
+                          padding: '8px 10px',
                           borderRadius: 8,
                           backgroundColor: '#1B4332',
                           border: 'none',
@@ -611,19 +685,43 @@ export default function QuranWisdomPage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: 6,
+                          gap: 5,
                         }}
                       >
                         <span>📖</span>
-                        <span>تفسیری سند و عمل ➔</span>
+                        <span>تفسیری سند ➔</span>
                       </button>
+
+                      <Link
+                        href={`/reflections?surah=${card.surahNumber}&ayah=${card.ayahNumber}`}
+                        style={{
+                          padding: '8px 10px',
+                          borderRadius: 8,
+                          backgroundColor: '#FEF3C7',
+                          border: '1px solid #FDE68A',
+                          color: '#92400E',
+                          fontSize: 12,
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: 4,
+                        }}
+                        title="اس قرآنی آیت پر اپنے نجی محاسبہ میں نیت اور تدبر قلمبند فرمائیں"
+                      >
+                        <span>✍️</span>
+                        <span>محاسبہ</span>
+                      </Link>
                     </div>
                   </div>
                 );
               })}
             </div>
-          </section>
-        )}
+          );
+        })()}
+      </section>
+    )}
 
         {/* SECTION 2 & 3: SURAHS DIRECTORY & IN-APP READER */}
         <section style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24, alignItems: 'start' }}>

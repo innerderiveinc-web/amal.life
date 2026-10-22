@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { AmalApiClient } from '../lib/api';
 import { AmalTheme } from '@amal/ui';
 import { showAmalToast } from '../components/Toast';
+import { getAyahWisdomCard, QURAN_WISDOM_COLLECTION } from '../lib/quran-wisdom-data';
 
 export default function ReflectionsPage() {
+  const router = useRouter();
   const [reflectionText, setReflectionText] = useState('');
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [reflections, setReflections] = useState<any[]>([]);
+
+  // Daily or Selected Quran Tadabbur Card
+  const activePromptCard = useMemo(() => {
+    if (router.query.surah && router.query.ayah) {
+      const s = parseInt(router.query.surah as string, 10);
+      const a = parseInt(router.query.ayah as string, 10);
+      const found = getAyahWisdomCard(s, a);
+      if (found) return found;
+    }
+    const day = new Date().getDate();
+    return QURAN_WISDOM_COLLECTION[day % QURAN_WISDOM_COLLECTION.length] || QURAN_WISDOM_COLLECTION[0];
+  }, [router.query.surah, router.query.ayah]);
+
+  const handleInsertTadabbur = () => {
+    if (!activePromptCard) return;
+    const template = `[قرآنی تدبر: ${activePromptCard.surahNameUrdu} (${activePromptCard.surahNameTransliterated}) · آیت ${activePromptCard.ayahNumber}]\nآیت: ${activePromptCard.textArabic}\nترجمہ کنز الایمان: ${activePromptCard.tarjumaKanzulIman}\n\nتدبر کا نکتہ: ${activePromptCard.tadabburPrompt.questionUrdu}\n\nمیری ذاتی نیت اور احتساب:\n`;
+    setReflectionText((prev) => (prev ? prev + '\n\n' + template : template));
+    showAmalToast('قرآنی تدبر کا نکتہ آپ کے نجی محاسبہ باکس میں شامل کر دیا گیا۔');
+  };
 
   const loadReflections = async () => {
     const res = await AmalApiClient.getReflections();
@@ -76,6 +99,128 @@ export default function ReflectionsPage() {
           <strong>Inviolable Privacy Guarantee:</strong> Your reflections are encrypted and strictly private to you.
           AMAL never generates spiritual health scores, never uses your reflections for public feeds, and never exposes them to family members.
         </div>
+
+        {/* Featured Quran Tadabbur & Divine Prompt */}
+        {activePromptCard && (
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 16,
+              border: '1px solid #86EFAC',
+              padding: '20px 24px',
+              marginBottom: 24,
+              boxShadow: '0 4px 15px rgba(22, 101, 52, 0.06)',
+              background: 'linear-gradient(to bottom, #F0FDF4 0%, #FFFFFF 100%)',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 800,
+                    padding: '3px 10px',
+                    borderRadius: 12,
+                    backgroundColor: '#166534',
+                    color: '#FFFFFF',
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  📖 قرآنی تدبر اور محاسبہ
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>
+                  {activePromptCard.surahNameUrdu} ({activePromptCard.surahNameTransliterated}) · آیت {activePromptCard.ayahNumber}
+                </span>
+              </div>
+
+              <Link
+                href={`/quran?surah=${activePromptCard.surahNumber}`}
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: '#166534',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>قرآن سنیں اور تفسیر دیکھیں ➔</span>
+              </Link>
+            </div>
+
+            {/* Arabic Matn & Kanz-ul-Iman Tarjuma */}
+            <div
+              dir="rtl"
+              style={{
+                fontFamily: 'var(--font-arabic), "Amiri", serif',
+                fontSize: 20,
+                color: '#0F172A',
+                lineHeight: 2.2,
+                textAlign: 'right',
+                marginBottom: 8,
+              }}
+            >
+              {activePromptCard.textArabic}{' '}
+              <span style={{ color: '#059669', fontSize: 16 }}>﴿{activePromptCard.ayahNumber}﴾</span>
+            </div>
+
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
+                کنز الایمان فی ترجمۃ القرآن (اعلیٰ حضرت):
+              </div>
+              <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 15, color: '#334155', lineHeight: 2.0, textAlign: 'right' }}>
+                {activePromptCard.tarjumaKanzulIman}
+              </div>
+            </div>
+
+            {/* Tadabbur Question Box */}
+            <div
+              style={{
+                backgroundColor: '#FEF3C7',
+                borderRadius: 10,
+                padding: '12px 16px',
+                border: '1px solid #FDE68A',
+                marginBottom: 14,
+              }}
+            >
+              <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', textTransform: 'uppercase', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>💡</span>
+                <span>فکر و تدبر کا نکتہ (Daily Tadabbur Prompt):</span>
+              </div>
+              <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 14, color: '#78350F', lineHeight: 1.9, textAlign: 'right', marginBottom: 4 }}>
+                {activePromptCard.tadabburPrompt.questionUrdu}
+              </div>
+              <div style={{ fontSize: 12, color: '#92400E', fontStyle: 'italic' }}>
+                "{activePromptCard.tadabburPrompt.questionEnglish}"
+              </div>
+            </div>
+
+            {/* Action: Insert into reflection */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={handleInsertTadabbur}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: 8,
+                  backgroundColor: '#166534',
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>✍️</span>
+                <span>اس قرآنی سوال کو اپنے محاسبہ نوٹ میں شامل کریں</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {saved ? (
           <div style={{
