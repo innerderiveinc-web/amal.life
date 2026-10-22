@@ -376,8 +376,8 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   // 9. UMDAT AL-FIQH (Hanbali Fiqh — عمدة الفقه للإمام ابن قدامة)
   // =========================================================================
-  'CANON-FIQ-HAN-001': {
-    workId: 'CANON-FIQ-HAN-001',
+  'CANON-FIQ-HNB-001': {
+    workId: 'CANON-FIQ-HNB-001',
     verifiedExternalUrl: 'https://archive.org',
     verifiedExternalName: 'Classical Hanbali Heritage (Umdat al-Fiqh)',
     chapters: [
@@ -598,9 +598,9 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   // 15. AL-HIDAYAH (امام برہان الدین المرغینانی)
   // =========================================================================
-  'CANON-FIQ-HNF-001': {
-    workId: 'CANON-FIQ-HNF-001',
-    verifiedExternalUrl: 'https://archive.org/details/hidayah-marghinani',
+  'CANON-FIQ-HAN-001': {
+    workId: 'CANON-FIQ-HAN-001',
+    verifiedExternalUrl: 'https://shamela.ws/book/11545',
     verifiedExternalName: 'Classical Hanafi Jurisprudence Archives (Al-Hidayah)',
     chapters: [
       {
@@ -621,12 +621,12 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   },
 
   // =========================================================================
-  // 16. BAHAR-E-SHARIAT (صدر الشریعہ علامہ مفتی امجد علی اعظمی)
+  // 16. BAHAR-E-SHARIAT (صدر الشریعہ علامہ مفتی امجد علی اعظمی — مکتبۃ المدینہ)
   // =========================================================================
-  'CANON-FIQ-HNF-003': {
-    workId: 'CANON-FIQ-HNF-003',
-    verifiedExternalUrl: 'https://archive.org/details/bahar-e-shariat-complete',
-    verifiedExternalName: 'Maktaba-tul-Madinah / Sunni Online Corpus (Bahar-e-Shariat)',
+  'CANON-FIQ-HNF-001': {
+    workId: 'CANON-FIQ-HNF-001',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/bahar-e-shariat',
+    verifiedExternalName: 'Maktaba-tul-Madina / Al-Majlis al-Madinat-ul-Ilmiyyah (Bahar-e-Shariat 3 Vols)',
     chapters: [
       {
         chapterId: 'bhs_1',
@@ -1020,6 +1020,56 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
       },
     ],
   },
+
+  // =========================================================================
+  // 31. FATAWA RAZAWIYYAH (امام اہل سنت احمد رضا خان — مکتبۃ المدینہ ۳۰ جلدیں)
+  // =========================================================================
+  'CANON-FIQ-HNF-006': {
+    workId: 'CANON-FIQ-HNF-006',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/fatawa-razawiyya',
+    verifiedExternalName: 'Maktaba-tul-Madina Official Research Desk (Fatawa Razawiyyah 30 Vols)',
+    chapters: [
+      {
+        chapterId: 'fat_raz_1',
+        chapterTitleArabic: 'كِتَابُ الطَّهَارَاتِ: فِي مَسَائِلِ الْوُضُوءِ وَالاسْتِقَامَةِ عَلَى السُّنَّةِ النَّبَوِيَّةِ',
+        chapterTitleUrdu: 'جلد اوّل: کتاب الطہارت — مسائلِ وضو، حقیقتِ غسل اور سنتِ نبوی پر استقامت',
+        chapterTitleEnglish: 'Volume 1: The Treatises on Purification, Wudu Validity, and Prophetic Sunnah Adherence',
+        arabicMatn: `قَالَ الإِمَامُ أَحْمَدُ رَضَا خَانْ رَضِيَ اللَّهُ عَنْهُ:
+«الْحَمْدُ لِلَّهِ الَّذِي جَعَلَ الطَّهَارَةَ شَطْرَ الإِيمَانِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ الَّذِي خَصَّهُ الرَّحْمَٰنُ بِأَعْظَمِ الشَّانِ، وَعَلَى آلِهِ وَأَصْحَابِهِ أَهْلِ الْعِرْفَانِ.
+مَسْأَلَةٌ: إِذَا قَامَ الْمُسْلِمُ إِلَى الصَّلَاةِ فَالْوَاجِبُ عَلَيْهِ تَحْقِيقُ الطَّهَارَةِ الشَّرْعِيَّةِ كَمَا أَمَرَ اللَّهُ تَعَالَى بِقَوْلِهِ: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ﴾، وَمَا لَمْ تَتِمَّ أَرْكَانُ الْوُضُوءِ وَشَرَائِطُهُ بِاسْتِيعَابِ الْغَسْلِ فَلَا تَصِحُّ الصَّلَاةُ إِجْمَاعًا، وَالْحَرَجُ مَرْفُوعٌ فِي الشَّرِيعَةِ الْمُطَهَّرَةِ».`,
+        urduTranslation: `امام اہل سنت مجدد دین و ملت الشاہ امام احمد رضا خان رحمۃ اللہ علیہ فرماتے ہیں:
+"سب تعریفیں اللہ کے لیے ہیں جس نے پاکیزگی کو نصف ایمان بنایا، اور درود و سلام ہوں ہمارے آقا سیدنا محمد ﷺ پر جنہیں خدائے رحمن نے بلند ترین شان عطا فرمائی، اور آپ کی آل و اصحاب پر جو معرفت والے ہیں۔
+مسئلہ: جب مسلمان نماز کے لیے کھڑا ہو تو اس پر واجب ہے کہ شرعی طہارت کی ایسی تکمیل کرے جس کا اللہ تعالیٰ نے قرآنِ مجید میں حکم فرمایا: ﴿اے ایمان والو! جب تم نماز کے لیے کھڑے ہو تو اپنے منہ اور کہنیوں تک ہاتھ دھو لو اور سروں کا مسح کرو اور ٹخنوں تک پاؤں دھو لو﴾۔ اور جب تک اعضائے وضو پر پانی کا اس طرح بہنا پایا نہ جائے کہ کوئی ایک بال کے برابر جگہ بھی خشک نہ رہے، بالاجماع نماز درست نہ ہوگی۔ اور شریعتِ مطہرہ میں وسوسہ اور بیجا سختی دونوں مردود ہیں بلکہ سنتِ نبوی پر میانہ روی کے ساتھ قائم رہنا ہی اصل دین ہے"۔`,
+        englishSynopsis: 'Ala Hazrat Imam Ahmad Raza\'s opening juristic fatwa from Volume 1 of Fatawa Razawiyyah, synthesizing the Qur\'anic prerequisites of ritual purification with severe warnings against both baseless doubts (waswasah) and laxity.',
+        scholarlyNotes: 'The 30-volume magnum opus of late classical Hanafi jurisprudence, with complete research, isnad authentication, and Arabic/Persian translation executed by Al-Majlis al-Madinat-ul-Ilmiyyah.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 32. SIRAT-E-MUSTAFA ﷺ (علامہ عبد المصطفیٰ اعظمی — مکتبۃ المدینہ)
+  // =========================================================================
+  'CANON-SIR-004': {
+    workId: 'CANON-SIR-004',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/seerat-e-mustafa',
+    verifiedExternalName: 'Maktaba-tul-Madina (Sirat-e-Mustafa - Allama Abdul Mustafa Azmi)',
+    chapters: [
+      {
+        chapterId: 'sir_mus_1',
+        chapterTitleArabic: 'الْبَابُ الأَوَّلُ فِي نَسَبِهِ الشَّرِيفِ ﷺ وَطَهَارَةِ آبَائِهِ وَأُمَّهَاتِهِ',
+        chapterTitleUrdu: 'پہلا باب: حضورِ اقدس ﷺ کے آباء و اجداد اور نسبِ مبارک کی پاکیزگی',
+        chapterTitleEnglish: 'Chapter 1: The Sublime Prophetic Lineage & Absolute Purity of His Ancestry',
+        arabicMatn: `قَالَ الشَّيْخُ عَبْدُ الْمُصْطَفَى الأَعْظَمِيُّ رَحِمَهُ اللَّهُ:
+قَالَ رَسُولُ اللَّهِ ﷺ: «إِنَّ اللَّهَ اصْطَفَى كِنَانَةَ مِنْ وَلَدِ إِسْمَاعِيلَ، وَاصْطَفَى قُرَيْشًا مِنْ كِنَانَةَ، وَاصْطَفَى مِنْ قُرَيْشٍ بَنِي هَاشِمٍ، وَاصْطَفَانِي مِنْ بَنِي هَاشِمٍ».
+فَنَسَبُهُ الشَّرِيفُ ﷺ: هُوَ سَيِّدُنَا مُحَمَّدٌ رَسُولُ اللَّهِ بْنُ عَبْدِ اللَّهِ بْنِ عَبْدِ الْمُطَّلِبِ بْنِ هَاشِمِ بْنِ عَبْدِ مَنَافِ بْنِ قُصَيِّ بْنِ كِلَابِ بْنِ مُرَّةَ بْنِ كَعْبِ بْنِ لُؤَيِّ بْنِ غَالِبِ بْنِ فِهْرِ بْنِ مَالِكِ بْنِ النَّضْرِ بْنِ كِنَانَةَ... إِلَى سَيِّدِنَا إِسْمَاعِيلَ وَإِبْرَاهِيمَ خَلِيلِ اللَّهِ عَلَيْهِمَا الصَّلَاةُ وَالسَّلَامُ، وَكُلُّ آبَائِهِ وَأُمَّهَاتِهِ طَاهِرُونَ وَطَاهِرَاتٌ بِإِجْمَاعِ أَهْلِ السُّنَّةِ.`,
+        urduTranslation: `شیخ الحدیث علامہ عبد المصطفیٰ اعظمی رحمۃ اللہ علیہ فرماتے ہیں:
+"رسول اللہ ﷺ نے ارشاد فرمایا: 'اللہ تعالیٰ نے اولادِ اسماعیل سے کنانہ کو چنا، اور کنانہ میں سے قریش کو چنا، اور قریش میں سے بنی ہاشم کو چنا، اور بنی ہاشم میں سے مجھے منتخب فرمایا' (صحیح مسلم)۔
+حضور ﷺ کا مبارک نسب نامہ یہ ہے: ہمارے آقا سیدنا محمد رسول اللہ بن عبد اللہ بن عبد المطلب بن ہاشم بن عبد مناف بن قصی بن کلاب بن مرہ بن کعب بن لؤی بن غالب بن فہر بن مالک بن نضر بن کنانہ... حضرت اسماعیل اور حضرت ابراہیم خلیل اللہ علیہما الصلوۃ والسلام تک۔ اور اہل سنت والجماعت کے اجماع کے مطابق حضور ﷺ کے تمام آباء و امہات حضرت آدم و حوا علیہم السلام سے لے کر حضرت عبد اللہ و آمنہ رضی اللہ عنہما تک سب کے سب شرک و کفر کی نجاست سے پاک اور طاہر و مطہر رہے ہیں"۔`,
+        englishSynopsis: 'Shaykh al-Hadith Allama Abdul Mustafa Azmi establishes the pristine prophetic lineage of the Final Messenger ﷺ through authentic transmissions from Sahih Muslim.',
+        scholarlyNotes: 'The premier orthodox Sirah compendium in the Urdu language, certified by contemporary scholars and published in verified critical editions by Maktaba-tul-Madina.',
+      },
+    ],
+  },
 };
 
 /**
@@ -1037,6 +1087,25 @@ export function getBookChapters(
   if (CLASSICAL_BOOKS_CHAPTERS[workId]) {
     return CLASSICAL_BOOKS_CHAPTERS[workId];
   }
+
+  // Canonical cross-catalog alias matching
+  if (_titleTransliterated) {
+    const t = _titleTransliterated.toLowerCase();
+    if (t.includes('bahar-e-shariat')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-001'] || null;
+    if (t.includes('fatawa razawiyyah') || t.includes('fatawa-e-razawiyyah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-006'] || null;
+    if (t.includes('sirat-e-mustafa')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-004'] || null;
+    if (t.includes('al-hidayah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HAN-001'] || null;
+    if (t.includes('nur al-idah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-004'] || null;
+    if (t.includes('ihya')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-001'] || null;
+    if (t.includes('salam-e-raza')) return CLASSICAL_BOOKS_CHAPTERS['CANON-DEV-002'] || null;
+    if (t.includes('burdah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-DEV-001'] || null;
+    if (t.includes('shifa')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-003'] || null;
+    if (t.includes('jalalayn')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAF-005'] || null;
+    if (t.includes('ayyuhal walad')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-003'] || null;
+    if (t.includes('safinat al-najah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-SHAF-002'] || null;
+    if (t.includes('raheeq')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-005'] || null;
+  }
+
   return null;
 }
 
@@ -1100,7 +1169,7 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-FIQ-MAL-005': { url: "https://shamela.ws/book/10838", name: "Al-Maktaba al-Shamela (Al-Tamhid - Ibn Abd al-Barr)" },
   'CANON-FIQ-SHA-003': { url: "https://shamela.ws/book/21590", name: "Al-Maktaba al-Shamela (Al-Majmu' Sharh al-Muhadhdhab - Al-Nawawi)" },
   'CANON-FIQ-HNB-003': { url: "https://shamela.ws/book/8461", name: "Al-Maktaba al-Shamela (Kashshaf al-Qina' - Al-Buhuti)" },
-  'CANON-SIR-004': { url: "https://shamela.ws/book/23834", name: "Al-Maktaba al-Shamela (Al-Rawd al-Unuf - Al-Suhayli)" },
+  'CANON-SIR-004': { url: "https://www.dawateislami.net/bookslibrary/ur/seerat-e-mustafa", name: "Maktaba-tul-Madina (Sirat-e-Mustafa - Allama Abdul Mustafa Azmi)" },
   'CANON-SIR-005': { url: "https://shamela.ws/book/11133", name: "Al-Maktaba al-Shamela (Ar-Raheeq al-Makhtum / Dala'il al-Nubuwwah)" },
   'CANON-SIR-006': { url: "https://shamela.ws/book/10840", name: "Al-Maktaba al-Shamela (Al-Mawahib al-Ladunniyyah - Al-Qastallani)" },
   'CANON-TAZ-005': { url: "https://archive.org/details/futuh-al-ghayb-jilani", name: "Classical Spiritual Archives (Futuh al-Ghayb - Shaykh Abdul Qadir Jilani)" },
@@ -1141,14 +1210,14 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-DUA-005': { url: "https://archive.org/details/dalail-al-khayrat-jazuli", name: "Classical Salawat Archives (Dala'il al-Khayrat - Al-Jazuli)" },
   'CANON-DUA-006': { url: "https://archive.org/details/manzil-shifa-hizb-bahr", name: "Classical Awrad Archives (Manzil al-Shifa & Hizb al-Bahr)" },
   'CANON-DEV-001': { url: "https://archive.org/details/qasida-burda-busiri", name: "Classical Devotional Archives (Qasidah al-Burdah - Al-Busiri)" },
-  'CANON-DEV-002': { url: "https://archive.org/details/hadaiq-bakhshish-salam-raza", name: "Classical Na'at Archives (Salam-e-Raza - Hadaiq-e-Bakhshish)" },
+  'CANON-DEV-002': { url: "https://www.dawateislami.net/bookslibrary/ur/hadaiq-e-bakhshish", name: "Maktaba-tul-Madina (Hadaiq-e-Bakhshish / Salam-e-Raza)" },
   'CANON-HAD-040': { url: "https://sunnah.com/nawawi40", name: "Sunnah.com (Al-Arba'un al-Nawawiyyah)" },
-  'CANON-FIQ-HNF-001': { url: "https://archive.org/details/bahar-e-shariat-complete", name: "Urdu Fiqh Archives (Bahar-e-Shariat - Sadr al-Shariah)" },
+  'CANON-FIQ-HNF-001': { url: "https://www.dawateislami.net/bookslibrary/ur/bahar-e-shariat", name: "Maktaba-tul-Madina / Al-Majlis al-Madinat-ul-Ilmiyyah (Bahar-e-Shariat 3 Vols)" },
   'CANON-FIQ-HNF-002': { url: "https://shamela.ws/book/11550", name: "Al-Maktaba al-Shamela (Tahtawi ala Maraqi al-Falah)" },
   'CANON-FIQ-HNF-003': { url: "https://shamela.ws/book/8355", name: "Al-Maktaba al-Shamela (Nur al-Idah - Al-Shurunbulali)" },
   'CANON-FIQ-HNF-004': { url: "https://shamela.ws/book/8356", name: "Al-Maktaba al-Shamela (Maraqi al-Falah - Al-Shurunbulali)" },
   'CANON-FIQ-HNF-005': { url: "https://shamela.ws/book/11551", name: "Al-Maktaba al-Shamela (Kanz al-Daqaiq - Al-Nasafi)" },
-  'CANON-FIQ-HNF-006': { url: "https://archive.org/details/fatawa-razawiyyah-complete", name: "Darul Uloom Bareilly Archives (Fatawa Razawiyyah 30 Vols)" },
+  'CANON-FIQ-HNF-006': { url: "https://www.dawateislami.net/bookslibrary/ur/fatawa-razawiyya", name: "Maktaba-tul-Madina Official Research Desk (Fatawa Razawiyyah 30 Vols)" },
   'CANON-FIQ-HNF-007': { url: "https://shamela.ws/book/1208", name: "Al-Maktaba al-Shamela (Radd al-Muhtar - Ibn Abidin)" },
   'CANON-FIQ-SHAF-001': { url: "https://shamela.ws/book/9550", name: "Al-Maktaba al-Shamela (Matn Abi Shuja' - Ghayat al-Ikhtisar)" },
   'CANON-FIQ-SHAF-002': { url: "https://shamela.ws/book/9551", name: "Al-Maktaba al-Shamela (Safinat al-Najah - Salim al-Hadrami)" },
