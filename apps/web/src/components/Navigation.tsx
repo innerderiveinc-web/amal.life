@@ -17,7 +17,12 @@ import { useAuth } from '../context/AuthContext';
 export const Navigation: React.FC = () => {
   const router = useRouter();
   const { user } = useAuth();
+  const [isMounted, setIsMounted] = useState(false);
   const [currentLang, setCurrentLang] = useState<'en' | 'ur' | 'ar'>('en');
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -159,21 +164,21 @@ export const Navigation: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ color: '#86EFAC' }}>🌙</span>
-            <span style={{ fontWeight: 700, color: '#F3F4F6' }}>
-              {hijri.day} {currentLang === 'ur' ? hijri.monthNameUrdu : hijri.monthNameEnglish} {hijri.year} AH
+            <span suppressHydrationWarning style={{ fontWeight: 700, color: '#F3F4F6' }}>
+              {isMounted ? `${hijri.day} ${currentLang === 'ur' ? hijri.monthNameUrdu : hijri.monthNameEnglish} ${hijri.year} AH` : '...'}
             </span>
           </div>
 
           <Link href="/prayer" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, color: '#A7F3D0' }}>
             <span>🕌</span>
-            <span>
-              {nextPrayer ? (
+            <span suppressHydrationWarning>
+              {isMounted && nextPrayer ? (
                 <>
                   {currentLang === 'ur'
                     ? `اگلی نماز: ${nextPrayer.nameUrdu}`
                     : `Next Salah: ${nextPrayer.nameEnglish}`}{' '}
-                  <strong>{nextPrayer.time}</strong>{' '}
-                  <span style={{ fontSize: 10, opacity: 0.9, fontWeight: 600, color: '#6EE7B7' }}>
+                  <strong suppressHydrationWarning>{nextPrayer.time}</strong>{' '}
+                  <span suppressHydrationWarning style={{ fontSize: 10, opacity: 0.9, fontWeight: 600, color: '#6EE7B7' }}>
                     ({currentLang === 'ur' ? nextPrayer.formattedCountdownUrdu : nextPrayer.formattedCountdownEnglish})
                   </span>
                 </>

@@ -215,13 +215,9 @@ export function getSurahKanzulImanAudioUrl(surahNumber: number): string | null {
 }
 
 /**
- * Available Studio Tafseer Audio Files (Juz 'Amma collection)
+ * Available Studio Tafseer Audio Files (Dawat-e-Islami Sirat-ul-Jinan collection)
  */
 const SURAH_TAFSEER_FILES: Record<number, string> = {
-  78: "078 - Surah An Naba Ma Tafseer Siratul Jinan.MP3",
-  87: "087 - Surah Al-Ala Ma Tafseer Siratul Jinan.MP3",
-  89: "089 - Surah Al-Fajr Ma Tafseer Siratul Jinan.MP3",
-  93: "093 - Surah Ad-Duha Ma Tafseer Siratul Jinan.MP3",
   98: "098 - Surah Al-Bayyinah Ma Tafseer Siratul Jinan.mp3",
   104: "104 - Surah Al-Humazah Ma Tafseer Siratul Jinan.mp3",
   105: "105 - Surah Al-Feel Ma Tafseer Siratul Jinan.mp3",
@@ -237,12 +233,14 @@ const SURAH_TAFSEER_FILES: Record<number, string> = {
 };
 
 /**
- * Returns certified streaming URL for Surah Tafseer audio where available
+ * Returns certified streaming URL for Surah Tafseer audio (Dawat-e-Islami Sirat-ul-Jinan / Kanz-ul-Iman)
  */
 export function getSurahTafseerAudioUrl(surahNumber: number): string | null {
   const f = SURAH_TAFSEER_FILES[surahNumber];
-  if (!f) return null;
-  return `https://archive.org/download/tilawatequranmatafseersiratuljinan/${encodeURIComponent(f)}`;
+  if (f) {
+    return `https://archive.org/download/tilawatequranmatafseersiratuljinan/${encodeURIComponent(f)}`;
+  }
+  return getSurahKanzulImanAudioUrl(surahNumber);
 }
 
 export const QURAN_WISDOM_COLLECTION: QuranAyahWisdomCard[] = [

@@ -443,14 +443,28 @@ export default function QuranWisdomPage() {
   };
 
   const handlePlaySurahTafseer = () => {
-    if (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) {
+    if (surahWideAudioType === 'TAFSEER') {
       handleStopAudio();
       return;
     }
     handleStopAudio();
-    setAudioSyncMode('URDU_ONLY_CONTINUOUS');
-    handlePlayAyahAudio(1, 'URDU');
-    showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مکمل اردو تفسیری ترجمہ (کنز الایمان) جاری ہے۔`, 'success');
+    const tafseerUrl = getSurahTafseerAudioUrl(selectedSurahNumber);
+    if (tafseerUrl && tafseerAudioRef.current) {
+      setSurahWideAudioType('TAFSEER');
+      tafseerAudioRef.current.src = tafseerUrl;
+      tafseerAudioRef.current.playbackRate = playbackSpeed;
+      tafseerAudioRef.current.play().then(() => {
+        showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`, 'info');
+      }).catch((e) => {
+        console.warn('Tafseer studio error, falling back to continuous translation:', e);
+        setSurahWideAudioType(null);
+        setAudioSyncMode('URDU_ONLY_CONTINUOUS');
+        handlePlayAyahAudio(1, 'URDU');
+      });
+    } else {
+      setAudioSyncMode('URDU_ONLY_CONTINUOUS');
+      handlePlayAyahAudio(1, 'URDU');
+    }
   };
 
   // Lock-screen MediaSession API controls & notification display

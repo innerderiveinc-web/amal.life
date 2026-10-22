@@ -163,10 +163,11 @@ export const DailyMamoolBar: React.FC = () => {
           }}
         >
           <span style={{ fontSize: 14 }}>⏳</span>
-          <span dir="rtl" style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
+          <span dir="rtl" suppressHydrationWarning style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
             <bdi style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
           </span>
           <span
+            suppressHydrationWarning
             style={{
               fontSize: 11,
               fontWeight: 600,
