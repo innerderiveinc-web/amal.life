@@ -77,17 +77,29 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
       setIsSpeakingTafseer(false);
     } else {
       window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
       const textToSpeak = wisdomCard
-        ? `خزائن العرفان، صدر الافاضل مولانا نعیم الدین مراد آبادی۔ ${wisdomCard.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${wisdomCard.tadabburPrompt.questionUrdu}`
+        ? `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ سورت ${surahNameUrdu || ''}، آیت ${ayahNumber}۔ ${wisdomCard.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${wisdomCard.tadabburPrompt.questionUrdu}`
         : 'تفسیری حکمت کی تفصیل';
       const utter = new SpeechSynthesisUtterance(textToSpeak);
-      utter.lang = 'ur';
-      utter.rate = 0.9;
+      
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice = voices.find((v) => 
+        v.lang.startsWith('ur') || v.lang.startsWith('ar') || v.lang.startsWith('hi')
+      );
+      if (preferredVoice) {
+        utter.voice = preferredVoice;
+      }
+      utter.lang = preferredVoice?.lang || 'ur-PK';
+      utter.rate = playbackSpeed ? Math.max(0.7, Math.min(1.4, playbackSpeed * 0.9)) : 0.9;
       utter.onend = () => setIsSpeakingTafseer(false);
-      utter.onerror = () => setIsSpeakingTafseer(false);
+      utter.onerror = (e) => {
+        console.warn('Speech error:', e);
+        setIsSpeakingTafseer(false);
+      };
       setIsSpeakingTafseer(true);
       window.speechSynthesis.speak(utter);
-      showAmalToast('خزائن العرفان کی تفسیری عبارت کی باوقار قرأت شروع ہو گئی۔');
+      showAmalToast('خزائن العرفان کی تفسیری عبارت کی باوقار قرأت شروع ہو گئی۔', 'info');
     }
   };
 
@@ -326,6 +338,14 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               controls
               src={audioSrc}
               key={audioSrc}
+              onError={() => {
+                if (selectedAudioType === 'tafseer') {
+                  showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ تفسیری عبارت سنی جا رہی ہے۔', 'info');
+                  handleToggleSpeakTafseer();
+                } else {
+                  showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔', 'warning');
+                }
+              }}
               style={{ width: '100%', height: 38, outline: 'none' }}
             />
 

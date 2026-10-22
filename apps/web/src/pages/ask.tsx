@@ -138,6 +138,10 @@ export default function AskAmalPage() {
       <audio
         ref={askAudioRef}
         onEnded={() => setActiveAudioKey(null)}
+        onError={(e) => {
+          console.warn('Ask audio error:', e);
+          setActiveAudioKey(null);
+        }}
         style={{ display: 'none' }}
       />
 
