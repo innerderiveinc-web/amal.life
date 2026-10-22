@@ -40,13 +40,14 @@ export default function Home() {
     signatureCapabilitiesEngine.getLifeOsProfile('STANDARD')
   );
 
-  // 5. Sakinah Focus Mode State (Tranquility vs Full Suite)
-  const [isFocusMode, setIsFocusMode] = useState<boolean>(false);
+  // 5. Sakinah Focus Mode State (Tranquility vs Full Suite) - Defaults to Tranquility (True) for serene user experience
+  const [isFocusMode, setIsFocusMode] = useState<boolean>(true);
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('amal_focus_mode');
-      if (saved === 'true') setIsFocusMode(true);
+      if (saved === 'false') setIsFocusMode(false);
+      else setIsFocusMode(true);
     }
   }, []);
 
@@ -325,6 +326,31 @@ export default function Home() {
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
                     مسنون اذکار، استغفار اور تسبیحات
+                  </p>
+                </div>
+              </Link>
+
+              <Link
+                href="/ask"
+                className="amal-card-hover"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 14,
+                  padding: 20,
+                  border: '1px solid #E9D5FF',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 14,
+                }}
+              >
+                <span style={{ fontSize: 32 }}>💬</span>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#7E22CE' }}>
+                    Ask AMAL (دینی رہنمائی)
+                  </h3>
+                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
+                    مستند کتبِ اہلسنت سے سوال و رہنمائی
                   </p>
                 </div>
               </Link>

@@ -41,6 +41,7 @@ export default function QuranWisdomPage() {
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isSurahCachedOffline, setIsSurahCachedOffline] = useState<boolean>(false);
   const [isCachingSurah, setIsCachingSurah] = useState<boolean>(false);
+  const [isSurahSettingsOpen, setIsSurahSettingsOpen] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const surahWideAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -1330,94 +1331,24 @@ export default function QuranWisdomPage() {
               </div>
 
               {/* Audio & Display Controls */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                {/* Qari Selector */}
-                <div style={{ display: 'flex', gap: 4, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
-                  <button
-                    onClick={() => setSelectedQari('alafasy')}
-                    style={{
-                      padding: '4px 8px',
-                      borderRadius: 4,
-                      fontSize: 11,
-                      fontWeight: selectedQari === 'alafasy' ? 800 : 500,
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: selectedQari === 'alafasy' ? '#166534' : 'transparent',
-                      color: selectedQari === 'alafasy' ? '#FFFFFF' : '#334155',
-                    }}
-                  >
-                    العفاسی
-                  </button>
-                  <button
-                    onClick={() => setSelectedQari('husary')}
-                    style={{
-                      padding: '4px 8px',
-                      borderRadius: 4,
-                      fontSize: 11,
-                      fontWeight: selectedQari === 'husary' ? 800 : 500,
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: selectedQari === 'husary' ? '#166534' : 'transparent',
-                      color: selectedQari === 'husary' ? '#FFFFFF' : '#334155',
-                    }}
-                  >
-                    الحصری
-                  </button>
-                  <button
-                    onClick={() => setSelectedQari('minshawi')}
-                    style={{
-                      padding: '4px 8px',
-                      borderRadius: 4,
-                      fontSize: 11,
-                      fontWeight: selectedQari === 'minshawi' ? 800 : 500,
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: selectedQari === 'minshawi' ? '#166534' : 'transparent',
-                      color: selectedQari === 'minshawi' ? '#FFFFFF' : '#334155',
-                    }}
-                  >
-                    المنشاوی
-                  </button>
-                </div>
-
-                {/* Audio Playback Sync Mode Toggle */}
-                <button
-                  onClick={() => setAudioSyncMode((prev) => (prev === 'TILAWAT_URDU_SYNC' ? 'TILAWAT_ONLY' : 'TILAWAT_URDU_SYNC'))}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: 6,
-                    fontSize: 11,
-                    fontWeight: 700,
-                    border: '1px solid',
-                    borderColor: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#10B981' : '#CBD5E1',
-                    backgroundColor: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#ECFDF5' : '#FFFFFF',
-                    color: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#065F46' : '#64748B',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 5,
-                  }}
-                  title="تلاوت کے بعد اردو ترجمہ کنز الایمان خودکار سنیں"
-                >
-                  <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' ? '🎧 تلاوت + اردو (Sync)' : '🎙️ صرف تلاوت'}</span>
-                </button>
-
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 {/* 1. Continuous Arabic Tilawat Only */}
                 <button
                   type="button"
                   onClick={handlePlaySurahTilawatOnly}
                   style={{
-                    padding: '6px 12px',
+                    padding: '8px 14px',
                     borderRadius: 8,
                     backgroundColor: (audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null) ? '#065F46' : '#166534',
                     color: '#FFFFFF',
                     border: 'none',
-                    fontSize: 12,
+                    fontSize: 13,
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: 6,
+                    boxShadow: '0 2px 4px rgba(22, 101, 52, 0.2)',
                   }}
                   title="مکمل سورت کی صرف عربی تلاوت مسلسل سنیں"
                 >
@@ -1425,18 +1356,42 @@ export default function QuranWisdomPage() {
                   <span>{audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null ? '⏸ تلاوت موقوف' : 'مکمل تلاوت (عربی)'}</span>
                 </button>
 
-                {/* 2. Full Surah Tilawat + Tarjuma Kanz-ul-Iman Sync */}
+                {/* 2. Entire Urdu Tarjuma Continuous in One Go */}
+                <button
+                  type="button"
+                  onClick={handlePlaySurahUrduOnly}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: 8,
+                    backgroundColor: (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) ? '#0369A1' : '#0284C7',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    boxShadow: '0 2px 4px rgba(2, 132, 199, 0.2)',
+                  }}
+                  title="پوری سورت کا صرف اردو ترجمہ کنز الایمان بغیر کسی وقفے کے ایک ساتھ سنیں"
+                >
+                  <span>🎙️</span>
+                  <span>{audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null ? '⏸ ترجمہ موقوف' : 'صرف اردو ترجمہ (ایک ساتھ)'}</span>
+                </button>
+
+                {/* 3. Full Surah Tilawat + Tarjuma Kanz-ul-Iman Sync */}
                 <button
                   type="button"
                   onClick={handlePlaySurahKanzulIman}
                   style={{
-                    padding: '6px 12px',
+                    padding: '8px 14px',
                     borderRadius: 8,
                     backgroundColor: (audioSyncMode === 'TILAWAT_URDU_SYNC' && playingAyahNumber !== null) ? '#047857' : '#FEF3C7',
                     color: (audioSyncMode === 'TILAWAT_URDU_SYNC' && playingAyahNumber !== null) ? '#FFFFFF' : '#92400E',
                     border: '1px solid',
                     borderColor: (audioSyncMode === 'TILAWAT_URDU_SYNC' && playingAyahNumber !== null) ? '#047857' : '#FDE68A',
-                    fontSize: 12,
+                    fontSize: 13,
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
@@ -1446,31 +1401,7 @@ export default function QuranWisdomPage() {
                   title="عربی تلاوت اور کنز الایمان کا مستند اردو ترجمہ آیت در آیت خودکار سنیں"
                 >
                   <span>🎧</span>
-                  <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' && playingAyahNumber !== null ? '⏸ ترجمہ موقوف' : 'تلاوت + اردو ترجمہ'}</span>
-                </button>
-
-                {/* 3. Entire Urdu Tarjuma Continuous in One Go */}
-                <button
-                  type="button"
-                  onClick={handlePlaySurahUrduOnly}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: 8,
-                    backgroundColor: (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) ? '#0284C7' : '#E0F2FE',
-                    color: (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) ? '#FFFFFF' : '#0369A1',
-                    border: '1px solid',
-                    borderColor: (audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null) ? '#0284C7' : '#BAE6FD',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                  }}
-                  title="پوری سورت کا صرف اردو ترجمہ کنز الایمان بغیر کسی وقفے کے ایک ساتھ سنیں"
-                >
-                  <span>🎙️</span>
-                  <span>{audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null ? '⏸ ترجمہ موقوف' : 'صرف اردو ترجمہ (ایک ساتھ)'}</span>
+                  <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' && playingAyahNumber !== null ? '⏸ موقوف' : 'تلاوت + اردو (Sync)'}</span>
                 </button>
 
                 {/* 4. Full Surah Continuous Tafseer Audio (Khaza'in-ul-Irfan) */}
@@ -1478,12 +1409,12 @@ export default function QuranWisdomPage() {
                   type="button"
                   onClick={handlePlaySurahTafseer}
                   style={{
-                    padding: '6px 12px',
+                    padding: '8px 14px',
                     borderRadius: 8,
                     backgroundColor: (surahWideAudioType === 'TAFSEER' || (audioSyncMode === 'TAFSEER_CONTINUOUS' && activeTafseerCardKey !== null)) ? '#92400E' : '#FFFBEB',
                     color: (surahWideAudioType === 'TAFSEER' || (audioSyncMode === 'TAFSEER_CONTINUOUS' && activeTafseerCardKey !== null)) ? '#FFFFFF' : '#92400E',
                     border: '1px solid #FDE68A',
-                    fontSize: 12,
+                    fontSize: 13,
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
@@ -1496,120 +1427,209 @@ export default function QuranWisdomPage() {
                   <span>{(surahWideAudioType === 'TAFSEER' || (audioSyncMode === 'TAFSEER_CONTINUOUS' && activeTafseerCardKey !== null)) ? '⏸ تفسیر موقوف' : 'مکمل تفسیر (ایک ساتھ)'}</span>
                 </button>
 
-                {/* Offline Caching & Download Buttons */}
+                {/* 5. Clean Settings & Download Drawer Toggle */}
                 <button
                   type="button"
-                  onClick={handleCacheSurahOffline}
-                  disabled={isCachingSurah}
+                  onClick={() => setIsSurahSettingsOpen(!isSurahSettingsOpen)}
                   style={{
-                    padding: '6px 12px',
+                    padding: '8px 12px',
                     borderRadius: 8,
-                    backgroundColor: isSurahCachedOffline ? '#DCFCE7' : '#F1F5F9',
-                    color: isSurahCachedOffline ? '#166534' : '#334155',
-                    border: '1px solid',
-                    borderColor: isSurahCachedOffline ? '#86EFAC' : '#CBD5E1',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: isCachingSurah ? 'wait' : 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                  }}
-                  title="اس سورت کی آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
-                >
-                  <span>{isSurahCachedOffline ? '✓' : '📥'}</span>
-                  <span>{isCachingSurah ? 'محفوظ ہو رہا ہے...' : isSurahCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن کیش'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleDownloadSurahAudio}
-                  style={{
-                    padding: '6px 10px',
-                    borderRadius: 8,
-                    backgroundColor: '#FFFFFF',
-                    color: '#334155',
+                    backgroundColor: isSurahSettingsOpen ? '#1E293B' : '#F1F5F9',
+                    color: isSurahSettingsOpen ? '#FFFFFF' : '#475569',
                     border: '1px solid #CBD5E1',
                     fontSize: 12,
                     fontWeight: 700,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 4,
+                    gap: 6,
                   }}
-                  title="سورت کی MP3 فائل اپنے کمپیوٹر یا موبائل میں ڈاؤنلوڈ کریں"
+                  title="قاری، رفتار، آف لائن کیش اور فونٹ ترتیبات"
                 >
-                  <span>💾</span>
-                  <span>MP3 ڈاؤنلوڈ</span>
+                  <span>⚙️</span>
+                  <span>{isSurahSettingsOpen ? 'اختیارات بند کریں ▲' : 'مزید اختیارات ▼'}</span>
                 </button>
-
-                {/* Playback Speed Selector */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#F8FAFC', padding: '3px 6px', borderRadius: 8, border: '1px solid #E2E8F0' }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>رفتار:</span>
-                  {[0.75, 1, 1.25, 1.5].map((speed) => (
-                    <button
-                      key={speed}
-                      type="button"
-                      onClick={() => setPlaybackSpeed(speed)}
-                      style={{
-                        padding: '2px 6px',
-                        borderRadius: 6,
-                        fontSize: 10,
-                        fontWeight: 800,
-                        border: 'none',
-                        backgroundColor: playbackSpeed === speed ? '#166534' : 'transparent',
-                        color: playbackSpeed === speed ? '#FFFFFF' : '#64748B',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {speed}x
-                    </button>
-                  ))}
-                </div>
-
-                {/* Roman Urdu Toggle Button */}
-                <button
-                  onClick={() => setShowRomanUrdu(!showRomanUrdu)}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: 6,
-                    fontSize: 11,
-                    fontWeight: 700,
-                    border: '1px solid',
-                    borderColor: showRomanUrdu ? '#0284C7' : '#CBD5E1',
-                    backgroundColor: showRomanUrdu ? '#E0F2FE' : '#FFFFFF',
-                    color: showRomanUrdu ? '#0369A1' : '#64748B',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 4,
-                  }}
-                  title="Toggle Roman Urdu Transliteration & Kanz-ul-Iman Tarjuma"
-                >
-                  <span>🔤</span>
-                  <span>{showRomanUrdu ? 'Roman Urdu: ON' : 'Roman Urdu: OFF'}</span>
-                </button>
-
-                {/* Font Size Adjusters */}
-                <div style={{ display: 'flex', gap: 2, alignItems: 'center', backgroundColor: '#F1F5F9', padding: '2px 6px', borderRadius: 6 }}>
-                  <button
-                    onClick={() => setFontSize((s) => Math.max(18, s - 2))}
-                    style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#475569' }}
-                    title="چھوٹا فونٹ"
-                  >
-                    A-
-                  </button>
-                  <span style={{ fontSize: 11, color: '#64748B', padding: '0 4px' }}>{fontSize}px</span>
-                  <button
-                    onClick={() => setFontSize((s) => Math.min(36, s + 2))}
-                    style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#475569' }}
-                    title="بڑا فونٹ"
-                  >
-                    A+
-                  </button>
-                </div>
               </div>
             </div>
+
+            {/* EXPANDABLE SERENE SETTINGS & OFFLINE PANEL */}
+            {isSurahSettingsOpen && (
+              <div
+                style={{
+                  padding: '16px 24px',
+                  backgroundColor: '#F8FAFC',
+                  borderBottom: '1px solid #E2E8F0',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 16,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                {/* Qari Selector */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>قاری:</span>
+                  <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
+                    <button
+                      onClick={() => setSelectedQari('alafasy')}
+                      style={{
+                        padding: '4px 8px',
+                        borderRadius: 4,
+                        fontSize: 11,
+                        fontWeight: selectedQari === 'alafasy' ? 800 : 500,
+                        border: 'none',
+                        cursor: 'pointer',
+                        backgroundColor: selectedQari === 'alafasy' ? '#166534' : 'transparent',
+                        color: selectedQari === 'alafasy' ? '#FFFFFF' : '#334155',
+                      }}
+                    >
+                      العفاسی
+                    </button>
+                    <button
+                      onClick={() => setSelectedQari('husary')}
+                      style={{
+                        padding: '4px 8px',
+                        borderRadius: 4,
+                        fontSize: 11,
+                        fontWeight: selectedQari === 'husary' ? 800 : 500,
+                        border: 'none',
+                        cursor: 'pointer',
+                        backgroundColor: selectedQari === 'husary' ? '#166534' : 'transparent',
+                        color: selectedQari === 'husary' ? '#FFFFFF' : '#334155',
+                      }}
+                    >
+                      الحصری
+                    </button>
+                    <button
+                      onClick={() => setSelectedQari('minshawi')}
+                      style={{
+                        padding: '4px 8px',
+                        borderRadius: 4,
+                        fontSize: 11,
+                        fontWeight: selectedQari === 'minshawi' ? 800 : 500,
+                        border: 'none',
+                        cursor: 'pointer',
+                        backgroundColor: selectedQari === 'minshawi' ? '#166534' : 'transparent',
+                        color: selectedQari === 'minshawi' ? '#FFFFFF' : '#334155',
+                      }}
+                    >
+                      المنشاوی
+                    </button>
+                  </div>
+                </div>
+
+                {/* Playback Speed Selector */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>رفتار:</span>
+                  <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
+                    {[0.75, 1, 1.25, 1.5].map((speed) => (
+                      <button
+                        key={speed}
+                        type="button"
+                        onClick={() => setPlaybackSpeed(speed)}
+                        style={{
+                          padding: '3px 7px',
+                          borderRadius: 4,
+                          fontSize: 11,
+                          fontWeight: 800,
+                          border: 'none',
+                          backgroundColor: playbackSpeed === speed ? '#166534' : 'transparent',
+                          color: playbackSpeed === speed ? '#FFFFFF' : '#64748B',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {speed}x
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Offline Caching & Download Buttons */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button
+                    type="button"
+                    onClick={handleCacheSurahOffline}
+                    disabled={isCachingSurah}
+                    style={{
+                      padding: '5px 12px',
+                      borderRadius: 6,
+                      backgroundColor: isSurahCachedOffline ? '#DCFCE7' : '#FFFFFF',
+                      color: isSurahCachedOffline ? '#166534' : '#334155',
+                      border: '1px solid',
+                      borderColor: isSurahCachedOffline ? '#86EFAC' : '#CBD5E1',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: isCachingSurah ? 'wait' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                    title="اس سورت کی آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
+                  >
+                    <span>{isSurahCachedOffline ? '✓' : '📥'}</span>
+                    <span>{isCachingSurah ? 'محفوظ ہو رہا ہے...' : isSurahCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن کیش'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDownloadSurahAudio}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: 6,
+                      backgroundColor: '#FFFFFF',
+                      color: '#334155',
+                      border: '1px solid #CBD5E1',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                    title="سورت کی MP3 فائل ڈاؤنلوڈ کریں"
+                  >
+                    <span>💾</span>
+                    <span>MP3 فائل</span>
+                  </button>
+                </div>
+
+                {/* Roman Urdu & Font Size */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button
+                    onClick={() => setShowRomanUrdu(!showRomanUrdu)}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: 6,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      border: '1px solid',
+                      borderColor: showRomanUrdu ? '#0284C7' : '#CBD5E1',
+                      backgroundColor: showRomanUrdu ? '#E0F2FE' : '#FFFFFF',
+                      color: showRomanUrdu ? '#0369A1' : '#64748B',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {showRomanUrdu ? 'Roman: ON' : 'Roman: OFF'}
+                  </button>
+
+                  <div style={{ display: 'flex', gap: 2, alignItems: 'center', backgroundColor: '#E2E8F0', padding: '2px 6px', borderRadius: 6 }}>
+                    <button
+                      onClick={() => setFontSize((s) => Math.max(18, s - 2))}
+                      style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 700, color: '#475569' }}
+                    >
+                      A-
+                    </button>
+                    <span style={{ fontSize: 11, color: '#475569', padding: '0 4px', fontWeight: 600 }}>{fontSize}px</span>
+                    <button
+                      onClick={() => setFontSize((s) => Math.min(36, s + 2))}
+                      style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 700, color: '#475569' }}
+                    >
+                      A+
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Bismillah Banner (for all except Surah At-Tawbah #9) */}
             {selectedSurahNumber !== 9 && (
