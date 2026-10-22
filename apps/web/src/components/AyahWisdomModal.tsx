@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getAyahWisdomCard, getAyahAudioUrl } from '../lib/quran-wisdom-data';
+import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { showAmalToast } from './Toast';
 
 export interface AyahWisdomModalProps {
@@ -25,7 +26,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   fallbackUrdu,
   fallbackEnglish,
 }) => {
-  const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'IBN_KATHIR' | 'KANZ' | 'ENGLISH' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
+  const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'KANZ' | 'ROMAN_URDU' | 'ENGLISH' | 'IBN_KATHIR' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
   const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary'>('alafasy');
   const [userWisdomNote, setUserWisdomNote] = useState('');
 
@@ -209,9 +210,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
           >
             {[
               { key: 'KHAZAIN', label: 'خزائن العرفان (تفسیر)' },
-              { key: 'IBN_KATHIR', label: 'تفسیر ابن کثیر' },
-              { key: 'KANZ', label: 'کنز الایمان (اردو ترجمہ)' },
+              { key: 'KANZ', label: 'کنز الایمان (اردو)' },
+              { key: 'ROMAN_URDU', label: 'رومن اردو (تلفظ و ترجمہ)' },
               { key: 'ENGLISH', label: 'English Rendering' },
+              { key: 'IBN_KATHIR', label: 'تفسیر ابن کثیر' },
               { key: 'REFERENCES', label: 'معتمد کتب کے حوالے' },
               { key: 'AMAL', label: 'تدبر و مستحب عمل' },
             ].map((tab) => {
@@ -325,6 +327,47 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                     }}
                   >
                     {wisdomCard.tarjumaKanzulIman}
+                  </div>
+                </div>
+              )}
+
+              {/* 3B. ROMAN URDU TAB (TRANSLITERATION & KANZ-UL-IMAN TARJUMA) */}
+              {wisdomTab === 'ROMAN_URDU' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {/* Roman Arabic Pronunciation Guide */}
+                  <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: '#1E40AF' }}>
+                        🔤 تلفظ و تجوید (Roman Arabic Transliteration)
+                      </span>
+                      <span style={{ fontSize: 11, backgroundColor: '#DBEAFE', color: '#1E40AF', padding: '2px 8px', borderRadius: 6, fontWeight: 700 }}>
+                        Tajweed Phonetics
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 19, fontWeight: 600, color: '#1E3A8A', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+                      {getAyahRomanTransliteration(surahNumber, ayahNumber, fallbackArabic || wisdomCard.textArabic)}
+                    </div>
+                    <div style={{ fontSize: 11, color: '#64748B', marginTop: 8, fontStyle: 'italic' }}>
+                      💡 Sahi Makharij ke sath adaigi ke liye upar diye gaye Qari audio ko dhyan se sunein.
+                    </div>
+                  </div>
+
+                  {/* Roman Urdu Kanz-ul-Iman Tarjuma */}
+                  <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
+                        📖 کنز الایمان فی ترجمۃ القرآن (Roman Urdu Translation)
+                      </span>
+                      <span style={{ fontSize: 11, backgroundColor: '#D1FAE5', color: '#065F46', padding: '2px 8px', borderRadius: 6, fontWeight: 700 }}>
+                        Ala Hazrat Imam Ahmad Raza
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 17, fontWeight: 600, color: '#064E3B', lineHeight: 1.9 }}>
+                      {getAyahRomanUrduTarjuma(surahNumber, ayahNumber, fallbackUrdu || wisdomCard.tarjumaKanzulIman)}
+                    </div>
+                    <div style={{ fontSize: 11, color: '#059669', marginTop: 8 }}>
+                      Authentic Roman Urdu transliteration of Kanz-ul-Iman for diaspora &amp; Roman Urdu readers.
+                    </div>
                   </div>
                 </div>
               )}
@@ -511,6 +554,22 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                 </div>
                 <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 18, lineHeight: 2.2, textAlign: 'right', color: '#1E293B' }}>
                   {fallbackUrdu || 'ترجمہ دستیاب نہیں ہے۔'}
+                </div>
+              </div>
+
+              {/* Roman Urdu Transliteration & Tarjuma Fallback */}
+              <div style={{ padding: 12, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#1E40AF', marginBottom: 4 }}>
+                  🔤 Roman Arabic Transliteration (تلفظ):
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#1E3A8A', lineHeight: 1.6, marginBottom: 8 }}>
+                  {getAyahRomanTransliteration(surahNumber, ayahNumber, fallbackArabic)}
+                </div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#065F46', marginBottom: 4 }}>
+                  📖 Roman Urdu Tarjuma (Kanz-ul-Iman):
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#064E3B', lineHeight: 1.6 }}>
+                  {getAyahRomanUrduTarjuma(surahNumber, ayahNumber, fallbackUrdu)}
                 </div>
               </div>
 

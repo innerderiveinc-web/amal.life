@@ -7,6 +7,7 @@ import { AmalTheme } from '@amal/ui';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
 import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
 import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl } from '../lib/quran-wisdom-data';
+import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 
 type ExperienceMode = 'QUICK_2MIN' | 'DAILY_5MIN' | 'DEEP_15MIN';
@@ -19,6 +20,7 @@ export default function QuranWisdomPage() {
   const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary'>('alafasy');
   const [revelationFilter, setRevelationFilter] = useState<'ALL' | 'MECCAN' | 'MEDINAN'>('ALL');
   const [fontSize, setFontSize] = useState<number>(24);
+  const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(true);
 
   // Reader & Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
@@ -409,12 +411,28 @@ export default function QuranWisdomPage() {
                       </div>
 
                       {/* Kanz-ul-Iman Tarjuma */}
-                      <div style={{ marginBottom: 12 }}>
+                      <div style={{ marginBottom: 10 }}>
                         <div style={{ fontSize: 11, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
                           کنز الایمان (اعلیٰ حضرت):
                         </div>
                         <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 16, lineHeight: 2.1, color: '#0F172A', textAlign: 'right' }}>
                           {card.tarjumaKanzulIman}
+                        </div>
+                      </div>
+
+                      {/* Roman Urdu Transliteration & Tarjuma */}
+                      <div style={{ backgroundColor: '#F0F9FF', borderRadius: 8, padding: 10, border: '1px solid #BAE6FD', marginBottom: 12 }}>
+                        <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2 }}>
+                          🔤 Roman Transliteration (تلفظ):
+                        </div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#0C4A6E', marginBottom: 6 }}>
+                          {getAyahRomanTransliteration(card.surahNumber, card.ayahNumber, card.textArabic)}
+                        </div>
+                        <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2 }}>
+                          📖 Roman Urdu Tarjuma (Kanz-ul-Iman):
+                        </div>
+                        <div style={{ fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
+                          {getAyahRomanUrduTarjuma(card.surahNumber, card.ayahNumber, card.tarjumaKanzulIman)}
                         </div>
                       </div>
 
@@ -726,6 +744,29 @@ export default function QuranWisdomPage() {
                   <span>مکمل سورت سنیں</span>
                 </button>
 
+                {/* Roman Urdu Toggle Button */}
+                <button
+                  onClick={() => setShowRomanUrdu(!showRomanUrdu)}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid',
+                    borderColor: showRomanUrdu ? '#0284C7' : '#CBD5E1',
+                    backgroundColor: showRomanUrdu ? '#E0F2FE' : '#FFFFFF',
+                    color: showRomanUrdu ? '#0369A1' : '#64748B',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  title="Toggle Roman Urdu Transliteration & Kanz-ul-Iman Tarjuma"
+                >
+                  <span>🔤</span>
+                  <span>{showRomanUrdu ? 'Roman Urdu: ON' : 'Roman Urdu: OFF'}</span>
+                </button>
+
                 {/* Font Size Adjusters */}
                 <div style={{ display: 'flex', gap: 2, alignItems: 'center', backgroundColor: '#F1F5F9', padding: '2px 6px', borderRadius: 6 }}>
                   <button
@@ -901,6 +942,33 @@ export default function QuranWisdomPage() {
                           {verse.textUrdu}
                         </div>
                       </div>
+
+                      {/* Roman Urdu Transliteration & Tarjuma (when enabled) */}
+                      {showRomanUrdu && (
+                        <div style={{ margin: '10px 0 10px', padding: '10px 14px', borderRadius: 10, backgroundColor: '#F0F9FF', border: '1px solid #BAE6FD' }}>
+                          {/* Transliteration */}
+                          <div style={{ marginBottom: 6 }}>
+                            <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                              <span>🔤</span>
+                              <span>Roman Transliteration (تلفظ و تجوید):</span>
+                            </div>
+                            <div style={{ fontSize: Math.max(14, fontSize - 8), fontWeight: 600, color: '#0C4A6E', lineHeight: 1.6 }}>
+                              {getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber, verse.textArabic)}
+                            </div>
+                          </div>
+
+                          {/* Roman Urdu Tarjuma */}
+                          <div>
+                            <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                              <span>📖</span>
+                              <span>Kanz-ul-Iman (Roman Urdu Tarjuma):</span>
+                            </div>
+                            <div style={{ fontSize: Math.max(13, fontSize - 9), color: '#064E3B', fontWeight: 600, lineHeight: 1.6 }}>
+                              {getAyahRomanUrduTarjuma(selectedSurahNumber, verse.ayahNumber, verse.textUrdu)}
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {/* English Translation */}
                       {verse.textEnglish && (
