@@ -2,6 +2,7 @@
  * AMAL OS — DATABASE PERSISTENCE ADAPTER
  * Provides zero-dependency durable snapshot serialization and file persistence
  * for offline and standalone execution without requiring an external PostgreSQL instance.
+ * Webpack/Browser safe: avoids static node protocol imports that break client-side bundlers.
  */
 
 import type { InMemoryAmalDatabase } from './index.js';
@@ -33,19 +34,40 @@ export interface AmalDatabaseSnapshot {
 const SNAPSHOT_VERSION = 1;
 
 /**
+ * Safely resolves Node.js fs and path without triggering Webpack client-side bundle errors
+ */
+function getNodeModules(): { fs: any; path: any } | null {
+  if (typeof process === 'undefined' || !process.versions?.node) {
+    return null;
+  }
+  try {
+    // eval('require') protects Webpack from bundling Node-only builtins into client bundles
+    const req = typeof (globalThis as any).__non_webpack_require__ === 'function'
+      ? (globalThis as any).__non_webpack_require__
+      : eval('require');
+    return {
+      fs: req('fs/promises'),
+      path: req('path'),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Returns default path for local snapshot storage when running in Node.js
  */
 export function getDefaultSnapshotPath(): string | null {
-  if (typeof process === 'undefined' || !process.versions?.node) {
+  const nodeMods = getNodeModules();
+  if (!nodeMods) {
     return null;
   }
   if (process.env.AMAL_STORAGE_PATH) {
     return process.env.AMAL_STORAGE_PATH;
   }
   try {
-    const path = require('node:path');
     const cwd = process.cwd();
-    return path.join(cwd, '.amal-data', 'amal-db.json');
+    return nodeMods.path.join(cwd, '.amal-data', 'amal-db.json');
   } catch {
     return null;
   }
@@ -116,15 +138,15 @@ export async function saveSnapshotToFile(
   const filePath = targetPath || getDefaultSnapshotPath();
   if (!filePath) return null;
 
-  try {
-    const fs = await import('node:fs/promises');
-    const path = await import('node:path');
+  const nodeMods = getNodeModules();
+  if (!nodeMods) return null;
 
-    const dir = path.dirname(filePath);
-    await fs.mkdir(dir, { recursive: true });
+  try {
+    const dir = nodeMods.path.dirname(filePath);
+    await nodeMods.fs.mkdir(dir, { recursive: true });
 
     const snapshot = exportSnapshot(database);
-    await fs.writeFile(filePath, JSON.stringify(snapshot, null, 2), 'utf-8');
+    await nodeMods.fs.writeFile(filePath, JSON.stringify(snapshot, null, 2), 'utf-8');
     return filePath;
   } catch (err) {
     console.warn(`[Amal Database] Failed to write persistent snapshot to ${filePath}:`, err);
@@ -142,9 +164,11 @@ export async function loadSnapshotFromFile(
   const filePath = targetPath || getDefaultSnapshotPath();
   if (!filePath) return false;
 
+  const nodeMods = getNodeModules();
+  if (!nodeMods) return false;
+
   try {
-    const fs = await import('node:fs/promises');
-    const content = await fs.readFile(filePath, 'utf-8');
+    const content = await nodeMods.fs.readFile(filePath, 'utf-8');
     const snapshot = JSON.parse(content) as AmalDatabaseSnapshot;
     importSnapshot(database, snapshot);
     return true;
