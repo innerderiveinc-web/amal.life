@@ -5,20 +5,24 @@
  */
 
 import { db, InMemoryAmalDatabase } from './index.js';
+import { getDefaultSnapshotPath, loadSnapshotFromFile, saveSnapshotToFile } from './persistence.js';
 
 export interface DatabaseHealthReport {
   healthy: boolean;
   latencyMs: number;
   poolStatus: string;
-  persistenceType: 'POSTGRESQL' | 'IN_MEMORY_DEV';
+  persistenceType: 'POSTGRESQL' | 'PERSISTENT_SNAPSHOT' | 'IN_MEMORY_DEV';
   isDurable: boolean;
   warning?: string;
+  snapshotPath?: string;
 }
 
 export interface DatabaseClient {
   db: InMemoryAmalDatabase;
   transaction<T>(fn: (tx: InMemoryAmalDatabase) => Promise<T>): Promise<T>;
   healthCheck(): Promise<DatabaseHealthReport>;
+  persistSnapshot(path?: string): Promise<string | null>;
+  loadSnapshot(path?: string): Promise<boolean>;
   shutdown(): Promise<void>;
 }
 
@@ -34,6 +38,14 @@ export class AmalDatabaseClient implements DatabaseClient {
     } catch (err) {
       throw err;
     }
+  }
+
+  public async persistSnapshot(path?: string): Promise<string | null> {
+    return saveSnapshotToFile(this.db, path);
+  }
+
+  public async loadSnapshot(path?: string): Promise<boolean> {
+    return loadSnapshotFromFile(this.db, path);
   }
 
   public async healthCheck(): Promise<DatabaseHealthReport> {
@@ -54,13 +66,30 @@ export class AmalDatabaseClient implements DatabaseClient {
       };
     }
 
+    const snapshotPath = getDefaultSnapshotPath();
+    const isSnapshotPersist = Boolean(
+      process.env.AMAL_STORAGE_PATH ||
+      process.env.AMAL_PERSIST_SNAPSHOT === 'true'
+    );
+
+    if (isSnapshotPersist && snapshotPath) {
+      return {
+        healthy: true,
+        latencyMs,
+        poolStatus: `DURABLE_LOCAL_SNAPSHOT (users: ${size})`,
+        persistenceType: 'PERSISTENT_SNAPSHOT',
+        isDurable: true,
+        snapshotPath,
+      };
+    }
+
     return {
       healthy: true,
       latencyMs,
       poolStatus: `STANDALONE_DEV_STORE (users: ${size})`,
       persistenceType: 'IN_MEMORY_DEV',
       isDurable: false,
-      warning: 'Running in ephemeral in-memory dev mode. Set DATABASE_URL for durable PostgreSQL persistence in production.',
+      warning: 'Running in ephemeral in-memory dev mode. Set DATABASE_URL for durable PostgreSQL persistence in production or AMAL_PERSIST_SNAPSHOT=true for local snapshot durability.',
     };
   }
 
@@ -72,3 +101,5 @@ export class AmalDatabaseClient implements DatabaseClient {
 export const databaseClient = new AmalDatabaseClient();
 export const transaction = <T>(fn: (tx: InMemoryAmalDatabase) => Promise<T>) => databaseClient.transaction(fn);
 export const healthCheck = () => databaseClient.healthCheck();
+export const persistSnapshot = (path?: string) => databaseClient.persistSnapshot(path);
+export const loadSnapshot = (path?: string) => databaseClient.loadSnapshot(path);
