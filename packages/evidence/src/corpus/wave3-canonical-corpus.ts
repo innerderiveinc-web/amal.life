@@ -255,7 +255,7 @@ export const WAVE_3_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
   // 4. CANONICAL HADITH COMPILATIONS & ASANID
   // ==========================================
   {
-    work_id: 'CANON-HAD-008',
+    work_id: 'CANON-HAD-013',
     title_arabic: 'سنن الدارمي (المسند الجامع)',
     title_transliterated: 'Sunan al-Darimi',
     author_name: 'Imam Abu Muhammad Abd Allah al-Darimi',

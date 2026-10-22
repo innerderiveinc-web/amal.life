@@ -1378,6 +1378,13 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   },
 };
 
+// Direct catalog ID aliases for uncollided Wave / Treasures mapping
+CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-008'] = CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-004']!;
+CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-009'] = CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-005']!;
+CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-012'] = CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-002']!;
+CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-016'] = CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-003']!;
+CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-MAL-007'] = CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-MAL-002']!;
+
 /**
  * Look up verified chapters for canonical works.
  * Strictly returns null if full-text chapters are not yet ingested/verified.
@@ -1559,6 +1566,14 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-TAZ-013': { url: "https://www.dawateislami.net/bookslibrary/ur/kimiya-e-saadat", name: "Maktaba-tul-Madina (Kimiya-e-Sa'adat - Imam al-Ghazali)" },
   'CANON-TAZ-015': { url: "https://www.dawateislami.net/bookslibrary/ur/tanbih-ul-ghafileen", name: "Maktaba-tul-Madina / Shamela (Tanbih al-Ghafilin - Faqih Abu al-Layth)" },
   'CANON-AQD-006': { url: "https://www.dawateislami.net/bookslibrary/ur/al-mutamad-al-mustanad", name: "Maktaba-tul-Madina (Al-Mu'taqad al-Muntaqad - Badayuni & Imam Ahmad Raza)" },
+  'CANON-SIR-008': { url: "https://www.dawateislami.net/bookslibrary/ur/seerat-e-mustafa", name: "Maktaba-tul-Madina (Sirat-e-Mustafa - Allama Abdul Mustafa Azmi)" },
+  'CANON-SIR-009': { url: "https://shamela.ws/book/11133", name: "Al-Maktaba al-Shamela (Ar-Raheeq al-Makhtum)" },
+  'CANON-TAZ-012': { url: "https://shamela.ws/book/21654", name: "Maktaba-tul-Madina / Shamela (Bidayat al-Hidayah - Imam al-Ghazali)" },
+  'CANON-TAZ-016': { url: "https://shamela.ws/book/21703", name: "Maktaba-tul-Madina / Shamela (Ayyuhal Walad - Imam al-Ghazali)" },
+  'CANON-TAZ-017': { url: "https://archive.org/details/gulistan-bostan-sadi", name: "Classical Heritage (Hikayat-e-Sa'di - Sa'di Shirazi)" },
+  'CANON-FIQ-MAL-006': { url: "https://shamela.ws/book/7522", name: "Al-Maktaba al-Shamela (Matn Ibn Ashir)" },
+  'CANON-FIQ-MAL-007': { url: "https://shamela.ws/book/7521", name: "Al-Maktaba al-Shamela (Risalah Ibn Abi Zayd al-Qayrawani)" },
+  'CANON-HAD-013': { url: "https://shamela.ws/book/1329", name: "Al-Maktaba al-Shamela (Sunan al-Darimi)" },
 };
 
 /**

@@ -307,7 +307,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
   // 5. MALIKI FIQH (3 MASTERWORKS)
   // =========================================================================
   {
-    work_id: 'CANON-FIQ-MAL-001',
+    work_id: 'CANON-FIQ-MAL-006',
     title_arabic: 'المرشد المعين على الضروري من علوم الدين (متن ابن عاشر)',
     title_transliterated: 'Matn Ibn Ashir (Al-Murshid al-Mu\'in)',
     author_name: 'Imam Abd al-Wahid ibn Ahmad Ibn Ashir al-Ansari',
@@ -322,7 +322,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
   },
   {
-    work_id: 'CANON-FIQ-MAL-002',
+    work_id: 'CANON-FIQ-MAL-007',
     title_arabic: 'رسالة ابن أبي زيد القيرواني (مالك الصغير)',
     title_transliterated: 'Risalah Ibn Abi Zayd al-Qayrawani',
     author_name: 'Imam Abu Muhammad Abdullah Ibn Abi Zayd al-Qayrawani',
@@ -409,7 +409,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
   // 8. PROPHETIC SEERAH
   // =========================================================================
   {
-    work_id: 'CANON-SIR-004',
+    work_id: 'CANON-SIR-008',
     title_arabic: 'سيرتِ مصطفى ﷺ (جامع سیرت نبوی)',
     title_transliterated: 'Sirat-e-Mustafa (Allama Abdul Mustafa Azmi)',
     author_name: 'Allama Abdul Mustafa al-A\'zami',
@@ -424,7 +424,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
   },
   {
-    work_id: 'CANON-SIR-005',
+    work_id: 'CANON-SIR-009',
     title_arabic: 'الرحيق المختوم (بحث في السيرة النبوية على صاحبها أفضل الصلاة والسلام)',
     title_transliterated: 'Ar-Raheeq al-Makhtum (The Sealed Nectar)',
     author_name: 'Shaykh Safiur-Rahman al-Mubarakpuri',
@@ -443,7 +443,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
   // 9. TAZKIYAH, WISDOM & HIKAYAT
   // =========================================================================
   {
-    work_id: 'CANON-TAZ-002',
+    work_id: 'CANON-TAZ-012',
     title_arabic: 'بداية الهداية في آداب السلوك والتقوى',
     title_transliterated: 'Bidayat al-Hidayah (Imam al-Ghazali)',
     author_name: 'Hujjat al-Islam Imam Abu Hamid al-Ghazali',
@@ -458,7 +458,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     scholarly_authority_level: 'TIER_B_EARLY_SIRAH',
   },
   {
-    work_id: 'CANON-TAZ-003',
+    work_id: 'CANON-TAZ-016',
     title_arabic: 'أيها الولد المحب (رسالة في العلم والعمل)',
     title_transliterated: 'Ayyuhal Walad (O Son! — Imam al-Ghazali)',
     author_name: 'Hujjat al-Islam Imam Abu Hamid al-Ghazali',
@@ -473,7 +473,7 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     scholarly_authority_level: 'TIER_B_EARLY_SIRAH',
   },
   {
-    work_id: 'CANON-TAZ-004',
+    work_id: 'CANON-TAZ-017',
     title_arabic: 'حكایاتِ سعدی (گلستان و بوستانِ حکمت)',
     title_transliterated: 'Hikayat-e-Sa\'di (Gulistan & Bostan of Sa\'di)',
     author_name: 'Shaykh Musharrif al-Din Sa\'di Shirazi',
