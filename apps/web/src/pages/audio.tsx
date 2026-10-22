@@ -97,6 +97,52 @@ export default function AudioPage() {
         {/* QURAN TAB */}
         {activeTab === 'QURAN' && (
           <div>
+            {/* Premier Quran Wisdom Module Jump Banner */}
+            <div
+              style={{
+                backgroundColor: '#F0FDF4',
+                borderRadius: 12,
+                padding: '14px 18px',
+                border: '1px solid #86EFAC',
+                marginBottom: 16,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 12,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 22 }}>📖</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: '#166534' }}>
+                    Looking for Verse-by-Verse Recitation with Kanz-ul-Iman &amp; Khaza&apos;in-ul-Irfan?
+                  </div>
+                  <div style={{ fontSize: 11, color: '#4B5563' }}>
+                    Listen to certified Qari tilawat synchronized with Urdu/English translations and daily wisdom cards.
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="/quran"
+                style={{
+                  padding: '7px 14px',
+                  borderRadius: 8,
+                  backgroundColor: '#166534',
+                  color: '#FFFFFF',
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>Open Quran &amp; Wisdom</span>
+                <span>➔</span>
+              </a>
+            </div>
             {/* Reciter Selector */}
             <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E5E7EB', marginBottom: 20 }}>
               <label style={{ fontSize: 12, fontWeight: 700, color: '#374151', display: 'block', marginBottom: 10 }}>

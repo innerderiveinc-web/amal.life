@@ -107,6 +107,7 @@ export const Navigation: React.FC = () => {
   ];
 
   const ilmItems = [
+    { title: 'Al-Quran & Wisdom (Kanz-ul-Iman)', titleUrdu: 'قرآن کریم، حکمت و تدبر', href: '/quran', icon: '📖' },
     { title: '106-Book Canonical Library', titleUrdu: 'کتب خانہ السواد الاعظم', href: '/library', icon: '📚' },
     { title: 'Living Sirah & Shama\'il', titleUrdu: 'سیرت النبی ﷺ و شمائل', href: '/sirah', icon: '🕊️' },
     { title: 'Quran Audios (4 Qurra)', titleUrdu: 'تلاوت قرآن (۴ قراء)', href: '/audio', icon: '🎧' },
@@ -394,6 +395,30 @@ export const Navigation: React.FC = () => {
             }}
           >
             {currentLang === 'ur' ? '🌅 آج (Today)' : '🌅 Today'}
+          </Link>
+
+          {/* Direct Premier Hub: Al-Quran & Wisdom */}
+          <Link
+            href="/quran"
+            style={{
+              textDecoration: 'none',
+              fontSize: 13,
+              fontWeight: router.pathname === '/quran' ? 700 : 600,
+              color: router.pathname === '/quran' ? '#065F46' : '#15803D',
+              padding: '6px 12px',
+              borderRadius: 6,
+              backgroundColor: router.pathname === '/quran' ? '#DCFCE7' : '#F0FDF4',
+              border: `1px solid ${router.pathname === '/quran' ? '#86EFAC' : '#BBF7D0'}`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <span>📖</span>
+            <span>{currentLang === 'ur' ? 'قرآن و حکمت' : 'Quran & Wisdom'}</span>
+            <span style={{ fontSize: 9, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>
+              Kanz-ul-Iman
+            </span>
           </Link>
 
           {/* Hub 1: Ibadat Dropdown */}
@@ -798,6 +823,34 @@ export const Navigation: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {/* Premier Quran Link (Mobile) */}
+            <Link
+              href="/quran"
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '12px 14px',
+                borderRadius: 10,
+                textDecoration: 'none',
+                fontSize: 14,
+                fontWeight: 800,
+                backgroundColor: router.pathname === '/quran' ? '#DCFCE7' : '#F0FDF4',
+                color: '#166534',
+                border: '1px solid #86EFAC',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 18 }}>📖</span>
+                <span>{currentLang === 'ur' ? 'قرآنِ کریم، حکمت و تدبر' : 'Al-Quran & Wisdom'}</span>
+              </div>
+              <span style={{ fontSize: 10, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+                Kanz-ul-Iman
+              </span>
+            </Link>
+
             {/* Primary Navigation Links */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               <Link

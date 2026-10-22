@@ -177,6 +177,79 @@ export default function Home() {
         {/* Automated Daily Knowledge Broadcast Stream */}
         <DailyKnowledgeBroadcastCard />
 
+        {/* PREMIER FEATURED QURAN WISDOM SHOWCASE */}
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: 16,
+            border: '1px solid #BBF7D0',
+            padding: '20px 24px',
+            marginBottom: 20,
+            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.08)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 16,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+            <div
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 12,
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 26,
+              }}
+            >
+              📖
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '2px 8px', borderRadius: 6 }}>
+                  NEW · نیا ماڈیول
+                </span>
+                <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
+                  Ahl al-Sunnah Verified Standards
+                </span>
+              </div>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
+                Al-Quran Al-Kareem &amp; Wisdom (قرآنِ کریم، حکمت و تدبر)
+              </h3>
+              <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4B5563', maxWidth: 580, lineHeight: 1.5 }}>
+                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) · <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) · 2-Min Quick Wisdom Cards
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <Link
+              href="/quran"
+              style={{
+                padding: '10px 20px',
+                borderRadius: 10,
+                backgroundColor: '#166534',
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                fontWeight: 800,
+                fontSize: 13,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                boxShadow: '0 2px 6px rgba(22, 101, 52, 0.25)',
+              }}
+            >
+              <span>قرآن و تدبر کھولیں</span>
+              <span>➔</span>
+            </Link>
+          </div>
+        </div>
+
         {isFocusMode ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
             {/* Tranquil 3-Card Sacred Essentials */}
@@ -207,7 +280,7 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/library?work=CANON-QUR-001"
+                href="/quran"
                 className="amal-card-hover"
                 style={{
                   backgroundColor: '#FFFFFF',
