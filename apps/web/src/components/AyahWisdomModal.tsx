@@ -27,7 +27,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   fallbackEnglish,
 }) => {
   const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'KANZ' | 'ROMAN_URDU' | 'ENGLISH' | 'IBN_KATHIR' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
-  const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'urdu'>('alafasy');
+  const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'minshawi' | 'urdu'>('alafasy');
   const [userWisdomNote, setUserWisdomNote] = useState('');
 
   if (!isOpen) return null;
@@ -171,6 +171,22 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                   }}
                 >
                   الحصری (Arabic)
+                </button>
+                <button
+                  onClick={() => setSelectedAudioType('minshawi')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid',
+                    borderColor: selectedAudioType === 'minshawi' ? '#15803D' : '#CBD5E1',
+                    backgroundColor: selectedAudioType === 'minshawi' ? '#15803D' : '#FFFFFF',
+                    color: selectedAudioType === 'minshawi' ? '#FFFFFF' : '#334155',
+                    cursor: 'pointer',
+                  }}
+                >
+                  المنشاوی (Arabic)
                 </button>
                 <button
                   onClick={() => setSelectedAudioType('urdu')}

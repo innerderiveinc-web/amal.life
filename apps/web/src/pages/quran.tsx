@@ -18,7 +18,8 @@ export default function QuranWisdomPage() {
   const [activeMode, setActiveMode] = useState<ExperienceMode>('QUICK_2MIN');
   const [selectedSurahNumber, setSelectedSurahNumber] = useState<number>(1);
   const [surahSearchFilter, setSurahSearchFilter] = useState<string>('');
-  const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary'>('alafasy');
+  const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary' | 'minshawi'>('alafasy');
+  const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('ALL');
   const [revelationFilter, setRevelationFilter] = useState<'ALL' | 'MECCAN' | 'MEDINAN'>('ALL');
   const [fontSize, setFontSize] = useState<number>(24);
   const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(true);
@@ -202,9 +203,14 @@ export default function QuranWisdomPage() {
         ? `ترجمہ کنز الایمان - آیت ${playingAyahNumber}`
         : `سورۃ ${currentSurahMeta?.nameArabic || ''} (${currentSurahMeta?.nameTransliterated || ''}) · آیت ${playingAyahNumber}`;
         
+      const qariDisplayMap = {
+        alafasy: 'Qari Mishary Rashid Alafasy',
+        husary: 'Shaykh Mahmoud Khalil Al-Husary',
+        minshawi: 'Shaykh Muhammad Siddiq Al-Minshawi',
+      };
       const artistName = isUrdu
         ? 'کنز الایمان (اعلیٰ حضرت امام احمد رضا خان) · 100% Human Voice'
-        : (selectedQari === 'alafasy' ? 'Qari Mishary Rashid Alafasy' : 'Shaykh Mahmoud Khalil Al-Husary');
+        : qariDisplayMap[selectedQari];
 
       navigator.mediaSession.metadata = new MediaMetadata({
         title: trackTitle,
@@ -425,8 +431,46 @@ export default function QuranWisdomPage() {
               </span>
             </div>
 
+            {/* Thematic Filter Pills */}
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 18 }}>
+              {[
+                { id: 'ALL', label: 'تمام موضوعات (All Themes)' },
+                { id: 'IKHLAS', label: '✨ اخلاص و نیت (Ikhlas)' },
+                { id: 'TAWAKKUL', label: '🛡️ توکل و استقامت (Tawakkul)' },
+                { id: 'SALAH', label: '🤲 نماز و مناجات (Salah)' },
+                { id: 'AKHLAQ', label: '🌱 اخلاق و حسنِ معاملہ (Akhlaq)' },
+                { id: 'HUQUQ_UL_IBAD', label: '🤝 حقوق العباد (Huquq)' },
+                { id: 'TIME_MANAGEMENT', label: '⏳ وقت کی قدر و آخرت (Time)' },
+              ].map((theme) => {
+                const isActive = selectedThemeFilter === theme.id;
+                return (
+                  <button
+                    key={theme.id}
+                    onClick={() => setSelectedThemeFilter(theme.id)}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: 20,
+                      fontSize: 12,
+                      fontWeight: isActive ? 800 : 600,
+                      border: '1px solid',
+                      borderColor: isActive ? '#059669' : '#CBD5E1',
+                      backgroundColor: isActive ? '#ECFDF5' : '#FFFFFF',
+                      color: isActive ? '#065F46' : '#475569',
+                      cursor: 'pointer',
+                      transition: 'all 0.1s ease',
+                    }}
+                  >
+                    {theme.label}
+                  </button>
+                );
+              })}
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 16 }}>
-              {QURAN_WISDOM_COLLECTION.map((card) => {
+              {(selectedThemeFilter === 'ALL'
+                ? QURAN_WISDOM_COLLECTION
+                : QURAN_WISDOM_COLLECTION.filter((c) => c.tadabburPrompt.theme === selectedThemeFilter)
+              ).map((card) => {
                 const isPlayingThis = playingAyahNumber === card.ayahNumber && selectedSurahNumber === card.surahNumber;
 
                 return (
@@ -795,6 +839,21 @@ export default function QuranWisdomPage() {
                     }}
                   >
                     الحصری
+                  </button>
+                  <button
+                    onClick={() => setSelectedQari('minshawi')}
+                    style={{
+                      padding: '4px 8px',
+                      borderRadius: 4,
+                      fontSize: 11,
+                      fontWeight: selectedQari === 'minshawi' ? 800 : 500,
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: selectedQari === 'minshawi' ? '#166534' : 'transparent',
+                      color: selectedQari === 'minshawi' ? '#FFFFFF' : '#334155',
+                    }}
+                  >
+                    المنشاوی
                   </button>
                 </div>
 
@@ -1175,7 +1234,11 @@ export default function QuranWisdomPage() {
                   <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
                     {currentAudioSegment === 'URDU'
                       ? '100% Real Human Voice'
-                      : (selectedQari === 'alafasy' ? 'مشاری العفاسی' : 'محمود خلیل الحصری')}
+                      : (selectedQari === 'alafasy'
+                          ? 'مشاری العفاسی'
+                          : selectedQari === 'husary'
+                            ? 'محمود خلیل الحصری'
+                            : 'محمد صدیق المنشاوی')}
                   </span>
                 </div>
                 <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

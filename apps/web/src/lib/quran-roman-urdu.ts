@@ -314,6 +314,70 @@ export const VERIFIED_ROMAN_QURAN: Record<string, RomanAyahData> = {
     transliteration: 'Minal-jinnati wan-nās',
     tarjumaRomanUrdu: 'Jinn aur aadmi.',
   },
+
+  // =========================================================================
+  // SURAH 94: ASH-SHARH (AL-INSHIRAH)
+  // =========================================================================
+  '94:1': {
+    transliteration: 'A-lam nashraḥ laka ṣadrak',
+    tarjumaRomanUrdu: 'Kya hum ne tumhara seena kushaada na kiya.',
+  },
+  '94:2': {
+    transliteration: "Wa waḍa'nā 'anka wizrak",
+    tarjumaRomanUrdu: 'Aur hum ne tum par se tumhara bojh utaar diya.',
+  },
+  '94:3': {
+    transliteration: 'Alladhī anqaḍa ẓahrak',
+    tarjumaRomanUrdu: 'Jis ne tumhari peeth par girani daal rakhi thi.',
+  },
+  '94:4': {
+    transliteration: "Wa rafa'nā laka dhikrak",
+    tarjumaRomanUrdu: 'Aur hum ne tumhari khaatir tumhara charcha buland kar diya.',
+  },
+  '94:5': {
+    transliteration: "Fa-inna ma'al-'usri yusrā",
+    tarjumaRomanUrdu: 'To beshak dushwari ke saath aasani hai.',
+  },
+  '94:6': {
+    transliteration: "Inna ma'al-'usri yusrā",
+    tarjumaRomanUrdu: 'Beshak dushwari ke saath aasani hai.',
+  },
+  '94:7': {
+    transliteration: 'Fa-idhā faraghta fanṣab',
+    tarjumaRomanUrdu: 'To jab tum farigh ho to mehnat karo (ibadat mein).',
+  },
+  '94:8': {
+    transliteration: 'Wa ilā Rabbika farghab',
+    tarjumaRomanUrdu: 'Aur apne Rab hi ki taraf raghbat karo.',
+  },
+
+  // =========================================================================
+  // SURAH 99: AZ-ZALZALAH
+  // =========================================================================
+  '99:7': {
+    transliteration: "Fa-may-ya'mal mithqāla dharratin khayray-yarah",
+    tarjumaRomanUrdu: 'To jo ek zarrah bhar bhalaai kare usey dekhega.',
+  },
+  '99:8': {
+    transliteration: "Wa may-ya'mal mithqāla dharratin sharray-yarah",
+    tarjumaRomanUrdu: 'Aur jo ek zarrah bhar buraai kare usey dekhega.',
+  },
+
+  // =========================================================================
+  // SURAH 102: AT-TAKATHUR
+  // =========================================================================
+  '102:1': {
+    transliteration: 'Alhākumut-takāthur',
+    tarjumaRomanUrdu: 'Tumhein ghaafil rakha ziyadati ki talab ne.',
+  },
+  '102:2': {
+    transliteration: 'Ḥattā zurtumul-maqābir',
+    tarjumaRomanUrdu: 'Yahan tak ke tum ne qabron ka munh dekha.',
+  },
+  '102:8': {
+    transliteration: "Thumma latus'alunna yawma'idhin 'anin-na'īm",
+    tarjumaRomanUrdu: "Phir beshak us din tum se na'ematon ki baabat zaroor poocha jayega.",
+  },
 };
 
 /**

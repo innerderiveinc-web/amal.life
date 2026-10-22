@@ -1279,6 +1279,223 @@ export const QURAN_WISDOM_COLLECTION: QuranAyahWisdomCard[] = [
       actionDescriptionUrdu: "ہر کھانے کے بعد 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ' پڑھیں اور کسی ضرورت مند کو کھانا کھلانے کا ارادہ کریں۔",
     },
   },
+
+  // =========================================================================
+  // SURAH 94: ASH-SHARH (AL-INSHIRAH) — MENTAL PEACE & OVERCOMING HARDSHIP
+  // =========================================================================
+  {
+    surahNumber: 94,
+    ayahNumber: 5,
+    surahNameArabic: 'الشَّرْح',
+    surahNameTransliterated: 'Ash-Sharh',
+    surahNameUrdu: 'سورۃ الشرح (الانشراح)',
+    revelationType: 'MECCAN',
+    textArabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',
+    tarjumaKanzulIman: 'تو بے شک دشواری کے ساتھ آسانی ہے۔',
+    tarjumaEnglish: 'For indeed, with hardship [will be] ease.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(94, 5, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(94, 5, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(94, 5),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۱۴",
+      excerptUrdu: "جب دنیا میں کوئی رنج یا تنگی پیش آئے تو مومن کو مایوس نہیں ہونا چاہیے کیونکہ اللہ تعالیٰ نے ہر تنگی کے ساتھ آسانی کا وعدہ فرمایا ہے، اور تنگی وقتی ہے جبکہ آسانی اور کشادگی مستقل ہے۔",
+      scholarlyNote: "عربی زبان کے قاعدے کے مطابق 'العسر' معرفہ (ایک ہی تنگی) اور 'یسراً' نکرہ ہے، یعنی ایک تنگی کے مقابلے میں کئی آسانیاں جلوہ گر ہوں گی۔",
+    },
+    crossReferenceBook: {
+      workTitle: "احیاء علوم الدین (کتاب الصبر والشکر)",
+      author: "حجۃ الاسلام امام محمد غزالی (وفات: ۵۰۵ھ)",
+      discipline: "TAZKIYAH",
+      citation: "احیاء علوم الدین، جلد ۴، ص ۶۵",
+      insightUrdu: "صبر کا مفہوم مصیبت کے وقت جزع فزع چھوڑ کر دل کو اللہ کے فیصلے پر مطمئن رکھنا اور آسانی کی امید رکھنا ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "جب مجھے کوئی ذہنی یا مالی پریشانی پیش آتی ہے تو کیا میں فوری مایوس ہو جاتا ہوں یا اللہ کے اس قطعی وعدے پر یقین رکھتا ہوں کہ آسانی قریب ہے؟",
+      questionEnglish: "When faced with anxiety or hardship, do I fall into despair, or do I anchor my heart in Allah's promise that ease is right beside it?",
+      theme: 'TAWAKKUL',
+    },
+    optionalAmal: {
+      titleUrdu: "پریشانی کے وقت استغفار اور انشراحِ قلب کی دعا",
+      titleEnglish: "Du'a for Inner Peace & Consolation",
+      classicalSource: "الحصن الحصین، باب دفع الکرب",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "جب بھی دل پریشان ہو، سورۃ الانشراح تلاوت کریں اور ۳ مرتبہ 'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي' پڑھ کر سینے پر دم کریں۔",
+    },
+  },
+  {
+    surahNumber: 94,
+    ayahNumber: 6,
+    surahNameArabic: 'الشَّرْح',
+    surahNameTransliterated: 'Ash-Sharh',
+    surahNameUrdu: 'سورۃ الشرح (الانشراح)',
+    revelationType: 'MECCAN',
+    textArabic: 'إِنَّ مَعَ الْعُسْرِ يُسْرًا',
+    tarjumaKanzulIman: 'بے شک دشواری کے ساتھ آسانی ہے۔',
+    tarjumaEnglish: 'Indeed, with hardship [will be] ease.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(94, 6, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(94, 6, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(94, 6),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۱۴",
+      excerptUrdu: "اس آیت میں تکرار تاکید کے لیے ہے تاکہ بندۂ مومن کا دل تقویت پائے اور وہ یقین کامل رکھے کہ ایک تنگی دو آسانیوں پر ہرگز غالب نہیں آ سکتی، جیسا کہ حدیث شریف میں وارد ہوا۔",
+      scholarlyNote: "صدر الافاضل نے ابن عباس رضی اللہ عنہما کا قول نقل فرمایا کہ ایک عسر کبھی دو یسر پر غالب نہیں آ سکتا۔",
+    },
+    crossReferenceBook: {
+      workTitle: "مرآۃ المناجیح شرح مشکوٰۃ المصابیح (کتاب الرقاق)",
+      author: "حکیم الامت مفتی احمد یار خان نعیمی (وفات: ۱۳۹۱ھ)",
+      discipline: "HADITH_COMMENTARY",
+      citation: "مرآۃ المناجیح، جلد ۷، ص ۱۸۰",
+      insightUrdu: "مومن کی زندگی میں سختی اور امتحان اس کے درجات کی بلندی اور گناہوں کے کفارے کا ذریعہ بنتے ہیں، اس لیے وہ ہر حال میں پرامید رہتا ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میں زندگی کی سختیوں کو عذاب سمجھتا ہوں یا انہیں اللہ کی طرف سے تربیت اور آئندہ آنے والی بڑی آسانی کا پیش خیمہ جانتا ہوں؟",
+      questionEnglish: "Do I perceive life's difficulties as punishment, or as divine training preceding an impending, greater ease?",
+      theme: 'TAWAKKUL',
+    },
+    optionalAmal: {
+      titleUrdu: "شکر گزاری اور وسعتِ قلب کا استحضار",
+      titleEnglish: "Cultivating Resilient Gratitude",
+      classicalSource: "تنبیہ الغافلین، باب الرضا بالقضاء",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "روزانہ سونے سے قبل موجودہ ۳ ایسی نعمتوں کو یاد کر کے الحمد للہ کہیں جو کسی سابقہ تنگی کے بعد اللہ نے آپ کو عطا فرمائیں۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 99: AZ-ZALZALAH — CONSCIENTIOUSNESS & WEIGHT OF TINY DEEDS
+  // =========================================================================
+  {
+    surahNumber: 99,
+    ayahNumber: 7,
+    surahNameArabic: 'الزَّلْزَلَة',
+    surahNameTransliterated: 'Az-Zalzalah',
+    surahNameUrdu: 'سورۃ الزلزلہ',
+    revelationType: 'MEDINAN',
+    textArabic: 'فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ',
+    tarjumaKanzulIman: 'تو جو ایک ذرّہ بھر بھلائی کرے اسے دیکھے گا۔',
+    tarjumaEnglish: 'So whoever does an atom\'s weight of good will see it.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(99, 7, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(99, 7, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(99, 7),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۱۸",
+      excerptUrdu: "ذرّہ چھوٹی چیونٹی یا دھوپ کے غبار کے ایک ادنیٰ ذرے کو کہتے ہیں۔ یعنی نیکی کتنی ہی چھوٹی کیوں نہ ہو، روزِ قیامت اس کا اجر وثواب نامۂ اعمال میں عیاں ہوگا۔ کسی چھوٹی نیکی کو حقیر نہ سمجھا جائے۔",
+      scholarlyNote: "اعلیٰ حضرت نے 'ذرّہ بھر بھلائی' کے کلمات سے انسان کو معمولی سے معمولی حسنِ سلوک اور اچھے اخلاق کی ترغیب دلائی ہے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "بہارِ شریعت (حصہ شانزدہم: اخلاق و آداب)",
+      author: "صدر الشریعہ مفتی محمد امجد علی اعظمی (وفات: ۱۳۶۷ھ)",
+      discipline: "FIQH",
+      citation: "بہارِ شریعت، جلد ۳، ص ۵۴۰",
+      insightUrdu: "راستے سے تکلیف دہ چیز ہٹا دینا، کسی مسلمان سے مسکرا کر ملنا یا ایک میٹھا بول بولنا بھی صدقہ اور ذرّہ بھر نیکی ہے جو نجات کا سبب بن سکتی ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میں دن بھر میں چھوٹی چھوٹی نیکیوں (جیسے مسکراہٹ، سلام میں پہل، پانی پلانا) کو معمولی سمجھ کر چھوڑ دیتا ہوں؟",
+      questionEnglish: "Do I neglect small good deeds throughout the day—like a smile, offering water, or initiating greeting—thinking they are negligible?",
+      theme: 'AKHLAQ',
+    },
+    optionalAmal: {
+      titleUrdu: "روزانہ کا ایک خفیہ 'ذرّہ خیر'",
+      titleEnglish: "Daily Micro-Deed of Unnoticed Khayr",
+      classicalSource: "بہارِ شریعت، باب الصدقات",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "آج کے دن راستے سے کوئی کوڑا یا کانٹا ہٹا دیں، یا کسی کا بوجھ ہلکا کریں جس کا علم اللہ کے سوا کسی بندے کو نہ ہو۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 102: AT-TAKATHUR — DIGITAL MINIMALISM & MINDFULNESS OF ETERNITY
+  // =========================================================================
+  {
+    surahNumber: 102,
+    ayahNumber: 1,
+    surahNameArabic: 'التَّكَاثُر',
+    surahNameTransliterated: 'At-Takathur',
+    surahNameUrdu: 'سورۃ التکاثر',
+    revelationType: 'MECCAN',
+    textArabic: 'أَلْهَاكُمُ التَّكَاثُرُ',
+    tarjumaKanzulIman: 'تمہیں غافل رکھا زیادتی کی طلب نے۔',
+    tarjumaEnglish: 'Competition in [worldly] increase diverts you.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(102, 1, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(102, 1, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(102, 1),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۲۰",
+      excerptUrdu: "تکاثر کے معنی ہیں ایک دوسرے پر کثرتِ مال، جاہ و منصب اور فخر و غرور میں بازی لے جانے کی کوشش کرنا۔ انسان اسی میں لگا رہتا ہے اور فکرِ آخرت اور طاعتِ الٰہی سے غافل ہو جاتا ہے۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ دنیاوی اشیاء کا جمع کرنا اور ان پر اترانا بندے کو اس کے اصل مقصدِ تخلیق سے دور کر دیتا ہے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "کیمیائے سعادت (ہلاکتِ حرص و طمع)",
+      author: "امام غزالی (وفات: ۵۰۵ھ)",
+      discipline: "TAZKIYAH",
+      citation: "کیمیائے سعادت، ص ۵۱۵",
+      insightUrdu: "اگر ابنِ آدم کے پاس سونے کی دو وادیاں ہوں تو وہ تیسری کی تمنا کرے گا، اس کے پیٹ کو سوائے مٹی کے کوئی چیز نہیں بھر سکتی۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میری زندگی کا زیادہ تر وقت سوشل میڈیا کے لائکس، دنیاوی مقابلے یا مال کی حرص میں صرف ہو رہا ہے، اور میں قبر کی حقیقت بھول چکا ہوں؟",
+      questionEnglish: "Is the majority of my waking day spent chasing digital validation, financial competition, and consumption, distracting me from the reality of the grave?",
+      theme: 'TIME_MANAGEMENT',
+    },
+    optionalAmal: {
+      titleUrdu: "ڈیجیٹل مراقبہ و فکرِ آخرت کا ۱۰ منٹ وقفہ",
+      titleEnglish: "10-Minute Digital Detox & Eternity Contemplation",
+      classicalSource: "احیاء علوم الدین، ذکر الموت",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "آج ۱۰ منٹ کے لیے فون سائیڈ پر رکھ کر تنہائی میں اپنی زندگی کے اصل مقصد اور آخرت کی پہلی منزل (قبر) کا تفکر کریں۔",
+    },
+  },
+  {
+    surahNumber: 102,
+    ayahNumber: 8,
+    surahNameArabic: 'التَّكَاثُر',
+    surahNameTransliterated: 'At-Takathur',
+    surahNameUrdu: 'سورۃ التکاثر',
+    revelationType: 'MECCAN',
+    textArabic: 'ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ',
+    tarjumaKanzulIman: 'پھر بے شک اس دن تم سے نعمتوں کی بابت ضرور پوچھا جائے گا۔',
+    tarjumaEnglish: 'Then you will surely be asked that Day about pleasure.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(102, 8, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(102, 8, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(102, 8),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۲۰",
+      excerptUrdu: "نعیم سے مراد امن، صحت، فراغت، آنکھ، کان، ٹھنڈا پانی اور ہر وہ نعمت ہے جو اللہ نے بندے کو عطا فرمائی۔ قیامت کے دن سوال ہوگا کہ ان نعمتوں کو اللہ کی رضا میں خرچ کیا یا نافرمانی اور غفلت میں؟",
+      scholarlyNote: "صدر الافاضل نے حضرت عبداللہ بن مسعود رضی اللہ عنہ کی روایت نقل فرمائی کہ امن و صحت سب سے بڑی نعمتیں ہیں جن کا حساب ہوگا۔",
+    },
+    crossReferenceBook: {
+      workTitle: "مرآۃ المناجیح شرح مشکوٰۃ المصابیح (حسابِ نعمت)",
+      author: "حکیم الامت مفتی احمد یار خان نعیمی (وفات: ۱۳۹۱ھ)",
+      discipline: "HADITH_COMMENTARY",
+      citation: "مرآۃ المناجیح، جلد ۷، ص ۲۵۰",
+      insightUrdu: "جو شخص اللہ کی دی ہوئی صحت اور وقت کو عبادت اور نیکی میں لگائے اس کا حساب آسان ہوگا، اور جو غفلت میں برباد کرے اس کی پکڑ ہوگی۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "آنکھیں، کان، عقل، وقت اور صحت اللہ کی امانت ہیں، کیا میں ان کا شکر عملی اطاعت کے ساتھ ادا کر رہا ہوں؟",
+      questionEnglish: "Sight, hearing, intellect, time, and vitality are divine trusts; am I thanking Allah through practical obedience?",
+      theme: 'TIME_MANAGEMENT',
+    },
+    optionalAmal: {
+      titleUrdu: "صحت اور فراغتِ وقت پر دو رکعت شکرانہ",
+      titleEnglish: "Two Rakat Gratitude Prayer for Health & Free Time",
+      classicalSource: "بہارِ شریعت، نفل نمازیں",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "دو رکعت نفل شکرانہ ادا کریں اور اللہ کی دی ہوئی نعمتِ صحت و وقت کو کسی نافرمانی میں ضائع نہ کرنے کا عزم کریں۔",
+    },
+  },
 ];
 
 /**
