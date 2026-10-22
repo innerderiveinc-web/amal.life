@@ -68,6 +68,30 @@ export const VERIFIED_ROMAN_QURAN: Record<string, RomanAyahData> = {
   },
 
   // =========================================================================
+  // SURAH 97: AL-QADR
+  // =========================================================================
+  '97:1': {
+    transliteration: "Innā anzalnāhu fī laylatil-qadr",
+    tarjumaRomanUrdu: 'Beshak hum ne usey shab-e-qadr mein utaara.',
+  },
+  '97:2': {
+    transliteration: "Wa mā adrāka mā laylatul-qadr",
+    tarjumaRomanUrdu: 'Aur tum ne kya jaana kya hai shab-e-qadr.',
+  },
+  '97:3': {
+    transliteration: "Laylatul-qadri khayrum-min alfi shahr",
+    tarjumaRomanUrdu: 'Shab-e-qadr hazaar maheeno se behtar hai.',
+  },
+  '97:4': {
+    transliteration: "Tanazzalul-malā'ikatu war-rūḥu fīhā bi-idhni Rabbihim min kulli amr",
+    tarjumaRomanUrdu: 'Is mein farishte aur Jibreel utarte hain apne Rab ke hukm se har kaam ke liye.',
+  },
+  '97:5': {
+    transliteration: "Salāmun hiya ḥattā maṭla'il-fajr",
+    tarjumaRomanUrdu: 'Woh salamati hai subah chamakne tak.',
+  },
+
+  // =========================================================================
   // SURAH 103: AL-ASR
   // =========================================================================
   '103:1': {
@@ -113,6 +137,110 @@ export const VERIFIED_ROMAN_QURAN: Record<string, RomanAyahData> = {
   '107:7': {
     transliteration: "Wa yamna'ūnal-mā'ūn",
     tarjumaRomanUrdu: 'Aur baratne ki cheez maange nahi dete.',
+  },
+
+  // =========================================================================
+  // SURAH 108: AL-KAWTHAR
+  // =========================================================================
+  '108:1': {
+    transliteration: "Innā a'ṭaynākal-kawthar",
+    tarjumaRomanUrdu: 'Aye Mahboob beshak hum ne tumhein be-shumaar khoobiyan ata farmayein.',
+  },
+  '108:2': {
+    transliteration: 'Faṣalli li-Rabbika wan-ḥar',
+    tarjumaRomanUrdu: 'To tum apne Rab ke liye namaz padho aur qurbani karo.',
+  },
+  '108:3': {
+    transliteration: 'Inna shāni\'aka huwal-abtar',
+    tarjumaRomanUrdu: 'Beshak jo tumhara dushman hai wahi har khair se mehroom hai.',
+  },
+
+  // =========================================================================
+  // SURAH 109: AL-KAFIRUN
+  // =========================================================================
+  '109:1': {
+    transliteration: "Qul yā ayyuhal-kāfirūn",
+    tarjumaRomanUrdu: 'Tum farmao aye kaafiro!',
+  },
+  '109:2': {
+    transliteration: "Lā a'budu mā ta'budūn",
+    tarjumaRomanUrdu: 'Main nahi poojta jinhein tum poojte ho.',
+  },
+  '109:3': {
+    transliteration: "Wa lā antum 'ābidūna mā a'bud",
+    tarjumaRomanUrdu: 'Aur na tum poojte ho jis ki main ibadat karta hoon.',
+  },
+  '109:4': {
+    transliteration: "Wa lā ana 'ābidum-mā 'abattum",
+    tarjumaRomanUrdu: 'Aur na main poojunga jinhein tum ne pooja.',
+  },
+  '109:5': {
+    transliteration: "Wa lā antum 'ābidūna mā a'bud",
+    tarjumaRomanUrdu: 'Aur na tum poojo ge jis ki main ibadat karta hoon.',
+  },
+  '109:6': {
+    transliteration: 'Lakum dīnukum wa liya dīn',
+    tarjumaRomanUrdu: 'Tumhare liye tumhara deen aur mere liye mera deen.',
+  },
+
+  // =========================================================================
+  // SURAH 110: AN-NASR
+  // =========================================================================
+  '110:1': {
+    transliteration: "Idhā jā'a naṣrullāhi wal-fatḥ",
+    tarjumaRomanUrdu: 'Jab Allah ki madad aur fateh aaye,',
+  },
+  '110:2': {
+    transliteration: "Wa ra'aytan-nāsa yadkhulūna fī dīnillāhi afwājā",
+    tarjumaRomanUrdu: 'Aur tum logon ko dekho ke Allah ke deen mein jhoq dar jhoq daakhil hote hain,',
+  },
+  '110:3': {
+    transliteration: 'Fasabbiḥ bi-ḥamdi Rabbika wastaghfirh, innahū kāna tawwābā',
+    tarjumaRomanUrdu: 'To apne Rab ki sana karte hue us ki paaki bolo aur us se bakhshish chaaho, beshak woh bahut taubah qabool farmane wala hai.',
+  },
+
+  // =========================================================================
+  // SURAH 105: AL-FIL
+  // =========================================================================
+  '105:1': {
+    transliteration: "A-lam tara kayfa fa'ala Rabbuka bi-aṣ-ḥābil-fīl",
+    tarjumaRomanUrdu: 'Kya tum ne na dekha tumhare Rab ne haathi walon ka kya haal kiya.',
+  },
+  '105:2': {
+    transliteration: 'A-lam yaj\'al kaydahum fī taḍlīl',
+    tarjumaRomanUrdu: 'Kya un ka daav tabaahi mein na daala.',
+  },
+  '105:3': {
+    transliteration: "Wa arsala 'alayhim ṭayran abābīl",
+    tarjumaRomanUrdu: 'Aur un par parindon ke jhund ke jhund bheje.',
+  },
+  '105:4': {
+    transliteration: 'Tarmīhim bi-ḥijāratim-min sijjīl',
+    tarjumaRomanUrdu: 'Ke unhein kankariyon ke pathar maarte the.',
+  },
+  '105:5': {
+    transliteration: "Faja'alahum ka-'aṣfim-ma'kūl",
+    tarjumaRomanUrdu: 'To unhein kar daala jaise khaya hua bhoosa.',
+  },
+
+  // =========================================================================
+  // SURAH 106: QURAYSH
+  // =========================================================================
+  '106:1': {
+    transliteration: 'Li-īlāfi Quraysh',
+    tarjumaRomanUrdu: 'Is liye ke Quraish ko maanoos kiya.',
+  },
+  '106:2': {
+    transliteration: 'Īlāfihim riḥlatash-shitā\'i waṣ-ṣayf',
+    tarjumaRomanUrdu: 'Unhein sardi aur garmi dono ke kooch se maanoos kiya.',
+  },
+  '106:3': {
+    transliteration: 'Falya\'budū Rabba hādhāl-bayt',
+    tarjumaRomanUrdu: 'To unhein chahiye ke is ghar (Kaaba) ke Rab ki ibadat karein.',
+  },
+  '106:4': {
+    transliteration: "Alladhī aṭ'amahum min jū'iw-wa āmanahum min khawf",
+    tarjumaRomanUrdu: 'Jis ne unhein bhook mein khana diya aur ek bade khauf se aman bakhshi.',
   },
 
   // =========================================================================

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getAyahWisdomCard, getAyahAudioUrl } from '../lib/quran-wisdom-data';
+import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { showAmalToast } from './Toast';
 
@@ -27,13 +27,15 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   fallbackEnglish,
 }) => {
   const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'KANZ' | 'ROMAN_URDU' | 'ENGLISH' | 'IBN_KATHIR' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
-  const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary'>('alafasy');
+  const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'urdu'>('alafasy');
   const [userWisdomNote, setUserWisdomNote] = useState('');
 
   if (!isOpen) return null;
 
   const wisdomCard = getAyahWisdomCard(surahNumber, ayahNumber);
-  const audioSrc = getAyahAudioUrl(surahNumber, ayahNumber, selectedQari);
+  const audioSrc = selectedAudioType === 'urdu'
+    ? getAyahUrduAudioUrl(surahNumber, ayahNumber)
+    : getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
 
   return (
     <div
@@ -131,40 +133,64 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 700, color: '#166534' }}>
                 <span>🎙️</span>
-                <span>Certified Medina Qari Tilawat (100% Real Human Reciter)</span>
+                <span>
+                  {selectedAudioType === 'urdu'
+                    ? 'اردو ترجمہ کنز الایمان (100% Real Human Voice)'
+                    : 'Certified Medina Qari Tilawat (100% Real Human Reciter)'}
+                </span>
               </div>
-              <div style={{ display: 'flex', gap: 6 }}>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 <button
-                  onClick={() => setSelectedQari('alafasy')}
+                  onClick={() => setSelectedAudioType('alafasy')}
                   style={{
                     padding: '4px 10px',
                     borderRadius: 6,
                     fontSize: 11,
                     fontWeight: 700,
                     border: '1px solid',
-                    borderColor: selectedQari === 'alafasy' ? '#15803D' : '#CBD5E1',
-                    backgroundColor: selectedQari === 'alafasy' ? '#15803D' : '#FFFFFF',
-                    color: selectedQari === 'alafasy' ? '#FFFFFF' : '#334155',
+                    borderColor: selectedAudioType === 'alafasy' ? '#15803D' : '#CBD5E1',
+                    backgroundColor: selectedAudioType === 'alafasy' ? '#15803D' : '#FFFFFF',
+                    color: selectedAudioType === 'alafasy' ? '#FFFFFF' : '#334155',
                     cursor: 'pointer',
                   }}
                 >
-                  مشاری العفاسی (Alafasy)
+                  العفاسی (Arabic)
                 </button>
                 <button
-                  onClick={() => setSelectedQari('husary')}
+                  onClick={() => setSelectedAudioType('husary')}
                   style={{
                     padding: '4px 10px',
                     borderRadius: 6,
                     fontSize: 11,
                     fontWeight: 700,
                     border: '1px solid',
-                    borderColor: selectedQari === 'husary' ? '#15803D' : '#CBD5E1',
-                    backgroundColor: selectedQari === 'husary' ? '#15803D' : '#FFFFFF',
-                    color: selectedQari === 'husary' ? '#FFFFFF' : '#334155',
+                    borderColor: selectedAudioType === 'husary' ? '#15803D' : '#CBD5E1',
+                    backgroundColor: selectedAudioType === 'husary' ? '#15803D' : '#FFFFFF',
+                    color: selectedAudioType === 'husary' ? '#FFFFFF' : '#334155',
                     cursor: 'pointer',
                   }}
                 >
-                  محمود خلیل الحصری (Husary)
+                  الحصری (Arabic)
+                </button>
+                <button
+                  onClick={() => setSelectedAudioType('urdu')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid',
+                    borderColor: selectedAudioType === 'urdu' ? '#047857' : '#FDE68A',
+                    backgroundColor: selectedAudioType === 'urdu' ? '#047857' : '#FEF3C7',
+                    color: selectedAudioType === 'urdu' ? '#FFFFFF' : '#92400E',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <span>🎧</span>
+                  <span>اردو ترجمہ (Urdu Audio)</span>
                 </button>
               </div>
             </div>

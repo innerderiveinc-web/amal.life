@@ -6,11 +6,12 @@ import { Navigation } from '../components/Navigation';
 import { AmalTheme } from '@amal/ui';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
 import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
-import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl } from '../lib/quran-wisdom-data';
+import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 
 type ExperienceMode = 'QUICK_2MIN' | 'DAILY_5MIN' | 'DEEP_15MIN';
+type AudioSyncMode = 'TILAWAT_URDU_SYNC' | 'TILAWAT_ONLY';
 
 export default function QuranWisdomPage() {
   const router = useRouter();
@@ -25,8 +26,11 @@ export default function QuranWisdomPage() {
   // Reader & Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
 
-  // Audio Playback State for In-App Reader
+  // Audio Playback & Sync State
   const [playingAyahNumber, setPlayingAyahNumber] = useState<number | null>(null);
+  const [audioSyncMode, setAudioSyncMode] = useState<AudioSyncMode>('TILAWAT_URDU_SYNC');
+  const [currentAudioSegment, setCurrentAudioSegment] = useState<'ARABIC' | 'URDU'>('ARABIC');
+  const [isPlayingPaused, setIsPlayingPaused] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Surahs in-memory cache
@@ -132,21 +136,28 @@ export default function QuranWisdomPage() {
     { num: 114, label: 'الناس' },
   ];
 
-  const handlePlayAyahAudio = (ayahNum: number) => {
-    if (playingAyahNumber === ayahNum) {
+  const handlePlayAyahAudio = (ayahNum: number, segment: 'ARABIC' | 'URDU' = 'ARABIC') => {
+    if (playingAyahNumber === ayahNum && currentAudioSegment === segment) {
       if (audioRef.current) {
         if (audioRef.current.paused) {
           audioRef.current.play();
+          setIsPlayingPaused(false);
         } else {
           audioRef.current.pause();
-          setPlayingAyahNumber(null);
+          setIsPlayingPaused(true);
         }
       }
       return;
     }
 
     setPlayingAyahNumber(ayahNum);
-    const url = getAyahAudioUrl(selectedSurahNumber, ayahNum, selectedQari);
+    setCurrentAudioSegment(segment);
+    setIsPlayingPaused(false);
+
+    const url = segment === 'URDU'
+      ? getAyahUrduAudioUrl(selectedSurahNumber, ayahNum)
+      : getAyahAudioUrl(selectedSurahNumber, ayahNum, selectedQari);
+
     if (audioRef.current) {
       audioRef.current.src = url;
       audioRef.current.play().catch((e) => console.warn('Audio play prevented:', e));
@@ -154,13 +165,77 @@ export default function QuranWisdomPage() {
   };
 
   const handleAyahAudioEnded = () => {
-    if (playingAyahNumber !== null && currentSurah && playingAyahNumber < currentSurah.verses.length) {
-      // Auto-advance to next Ayah
-      handlePlayAyahAudio(playingAyahNumber + 1);
+    if (playingAyahNumber === null) return;
+
+    if (audioSyncMode === 'TILAWAT_URDU_SYNC' && currentAudioSegment === 'ARABIC') {
+      // Transition from Arabic recitation to authentic Urdu Tarjuma (Human Voice)
+      handlePlayAyahAudio(playingAyahNumber, 'URDU');
     } else {
-      setPlayingAyahNumber(null);
+      // Transition to next Ayah Arabic recitation
+      if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
+        handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+      } else {
+        setPlayingAyahNumber(null);
+        setCurrentAudioSegment('ARABIC');
+        setIsPlayingPaused(false);
+      }
     }
   };
+
+  const handleStopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+    }
+    setPlayingAyahNumber(null);
+    setCurrentAudioSegment('ARABIC');
+    setIsPlayingPaused(false);
+  };
+
+  // Lock-screen MediaSession API controls & notification display
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'mediaSession' in navigator && playingAyahNumber !== null) {
+      const isUrdu = currentAudioSegment === 'URDU';
+      const verse = currentSurah?.verses?.find((v) => v.ayahNumber === playingAyahNumber);
+      
+      const trackTitle = isUrdu
+        ? `ترجمہ کنز الایمان - آیت ${playingAyahNumber}`
+        : `سورۃ ${currentSurahMeta?.nameArabic || ''} (${currentSurahMeta?.nameTransliterated || ''}) · آیت ${playingAyahNumber}`;
+        
+      const artistName = isUrdu
+        ? 'کنز الایمان (اعلیٰ حضرت امام احمد رضا خان) · 100% Human Voice'
+        : (selectedQari === 'alafasy' ? 'Qari Mishary Rashid Alafasy' : 'Shaykh Mahmoud Khalil Al-Husary');
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: trackTitle,
+        artist: artistName,
+        album: 'Al-Quran Al-Kareem & Wisdom · AMAL OS',
+      });
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (audioRef.current) {
+          audioRef.current.play();
+          setIsPlayingPaused(false);
+        }
+      });
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          setIsPlayingPaused(true);
+        }
+      });
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        if (playingAyahNumber > 1) {
+          handlePlayAyahAudio(playingAyahNumber - 1, 'ARABIC');
+        }
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
+          handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+        }
+      });
+    }
+  }, [playingAyahNumber, currentAudioSegment, selectedSurahNumber, selectedQari, currentSurah, currentSurahMeta]);
 
   return (
     <div style={{ backgroundColor: '#F8FAF9', minHeight: '100vh', paddingBottom: 100 }}>
@@ -723,9 +798,31 @@ export default function QuranWisdomPage() {
                   </button>
                 </div>
 
+                {/* Audio Playback Sync Mode Toggle */}
+                <button
+                  onClick={() => setAudioSyncMode((prev) => (prev === 'TILAWAT_URDU_SYNC' ? 'TILAWAT_ONLY' : 'TILAWAT_URDU_SYNC'))}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid',
+                    borderColor: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#10B981' : '#CBD5E1',
+                    backgroundColor: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#ECFDF5' : '#FFFFFF',
+                    color: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#065F46' : '#64748B',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 5,
+                  }}
+                  title="تلاوت کے بعد اردو ترجمہ کنز الایمان خودکار سنیں"
+                >
+                  <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' ? '🎧 تلاوت + اردو (Sync)' : '🎙️ صرف تلاوت'}</span>
+                </button>
+
                 {/* Continuous Play All Button */}
                 <button
-                  onClick={() => handlePlayAyahAudio(1)}
+                  onClick={() => handlePlayAyahAudio(1, 'ARABIC')}
                   style={{
                     padding: '6px 12px',
                     borderRadius: 8,
@@ -860,7 +957,7 @@ export default function QuranWisdomPage() {
                           </span>
 
                           <button
-                            onClick={() => handlePlayAyahAudio(verse.ayahNumber)}
+                            onClick={() => handlePlayAyahAudio(verse.ayahNumber, currentAudioSegment)}
                             style={{
                               padding: '3px 8px',
                               borderRadius: 6,
@@ -876,8 +973,37 @@ export default function QuranWisdomPage() {
                               gap: 4,
                             }}
                           >
-                            <span>{isPlayingThis ? '⏸' : '▶'}</span>
-                            <span>{isPlayingThis ? 'جاری ہے' : 'تلاوت سنیں'}</span>
+                            <span>{isPlayingThis ? (isPlayingPaused ? '▶' : '⏸') : '▶'}</span>
+                            <span>
+                              {isPlayingThis
+                                ? (currentAudioSegment === 'URDU'
+                                    ? (isPlayingPaused ? 'ترجمہ موقوف' : '🎧 ترجمہ جاری')
+                                    : (isPlayingPaused ? 'تلاوت موقوف' : '🎙️ تلاوت جاری'))
+                                : 'تلاوت سنیں'}
+                            </span>
+                          </button>
+
+                          {/* Quick Urdu Tarjuma Audio button for this verse */}
+                          <button
+                            onClick={() => handlePlayAyahAudio(verse.ayahNumber, 'URDU')}
+                            style={{
+                              padding: '3px 8px',
+                              borderRadius: 6,
+                              fontSize: 10,
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              border: '1px solid',
+                              borderColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#047857' : '#E2E8F0',
+                              backgroundColor: isPlayingThis && currentAudioSegment === 'URDU' ? '#FEF3C7' : '#F8FAFC',
+                              color: isPlayingThis && currentAudioSegment === 'URDU' ? '#92400E' : '#64748B',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 3,
+                            }}
+                            title="صرف اردو ترجمہ سماعت فرمائیں"
+                          >
+                            <span>🎧</span>
+                            <span>اردو آڈیو</span>
                           </button>
                         </div>
 
@@ -984,6 +1110,219 @@ export default function QuranWisdomPage() {
           </div>
         </section>
       </main>
+
+      {/* PERSISTENT FLOATING AUDIO PLAYER (LOCK-SCREEN & PLAYBACK CONTROLS) */}
+      {playingAyahNumber !== null && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1100,
+            background: 'linear-gradient(135deg, #064E3B 0%, #0F291E 100%)',
+            color: '#FFFFFF',
+            boxShadow: '0 -8px 30px rgba(0, 0, 0, 0.35)',
+            borderTop: '2px solid #10B981',
+            padding: '12px 20px',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1140,
+              margin: '0 auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 12,
+            }}
+          >
+            {/* Left: Current Track Meta */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 260, flex: 1 }}>
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  backgroundColor: currentAudioSegment === 'URDU' ? '#D97706' : '#059669',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 22,
+                  flexShrink: 0,
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+                }}
+              >
+                {currentAudioSegment === 'URDU' ? '🎧' : '🎙️'}
+              </div>
+              <div style={{ overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      padding: '2px 8px',
+                      borderRadius: 10,
+                      backgroundColor: currentAudioSegment === 'URDU' ? '#FEF3C7' : '#DCFCE7',
+                      color: currentAudioSegment === 'URDU' ? '#92400E' : '#166534',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    {currentAudioSegment === 'URDU' ? 'اردو ترجمہ (کنز الایمان)' : 'عربی تلاوت'}
+                  </span>
+                  <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
+                    {currentAudioSegment === 'URDU'
+                      ? '100% Real Human Voice'
+                      : (selectedQari === 'alafasy' ? 'مشاری العفاسی' : 'محمود خلیل الحصری')}
+                  </span>
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  سورۃ {currentSurahMeta?.nameUrdu} ({currentSurahMeta?.nameTransliterated}) · آیت {playingAyahNumber}
+                </div>
+              </div>
+            </div>
+
+            {/* Center: Playback Controls (Prev, Play/Pause, Next) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
+              <button
+                onClick={() => {
+                  if (playingAyahNumber > 1) {
+                    handlePlayAyahAudio(playingAyahNumber - 1, 'ARABIC');
+                  }
+                }}
+                disabled={playingAyahNumber <= 1}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  backgroundColor: playingAyahNumber <= 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                  color: playingAyahNumber <= 1 ? '#6B7280' : '#FFFFFF',
+                  border: 'none',
+                  fontSize: 14,
+                  cursor: playingAyahNumber <= 1 ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                title="پچھلی آیت"
+              >
+                ⏮
+              </button>
+
+              <button
+                onClick={() => handlePlayAyahAudio(playingAyahNumber, currentAudioSegment)}
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  backgroundColor: '#10B981',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontSize: 20,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
+                }}
+                title={isPlayingPaused ? 'چلائیں' : 'وقفہ'}
+              >
+                {isPlayingPaused ? '▶' : '⏸'}
+              </button>
+
+              <button
+                onClick={() => {
+                  if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
+                    handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+                  }
+                }}
+                disabled={!currentSurah || playingAyahNumber >= currentSurah.verses.length}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  backgroundColor: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                  color: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? '#6B7280' : '#FFFFFF',
+                  border: 'none',
+                  fontSize: 14,
+                  cursor: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                title="اگلی آیت"
+              >
+                ⏭
+              </button>
+            </div>
+
+            {/* Right: Audio Sync Mode Switch & Wisdom & Close */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setAudioSyncMode((prev) => (prev === 'TILAWAT_URDU_SYNC' ? 'TILAWAT_ONLY' : 'TILAWAT_URDU_SYNC'))}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: 20,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  backgroundColor: audioSyncMode === 'TILAWAT_URDU_SYNC' ? '#10B981' : 'rgba(255,255,255,0.15)',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+                title="تلاوت اور اردو ترجمہ خودکار سنیں"
+              >
+                <span>{audioSyncMode === 'TILAWAT_URDU_SYNC' ? '🎧 Sync: تلاوت + اردو' : '🎙️ صرف تلاوت'}</span>
+              </button>
+
+              <button
+                onClick={() => setActiveWisdomAyah({ surahNumber: selectedSurahNumber, ayahNumber: playingAyahNumber })}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: 20,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  backgroundColor: '#FEF3C7',
+                  color: '#92400E',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>📖</span>
+                <span>حکمت و تفسیر</span>
+              </button>
+
+              <button
+                onClick={handleStopAudio}
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  color: '#E2E8F0',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                title="بند کریں"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* DEDICATED AYAH WISDOM & LISTENING CARD MODAL */}
       {activeWisdomAyah && (
