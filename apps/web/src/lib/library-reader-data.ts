@@ -152,29 +152,13 @@ export const CLASSICAL_EXCERPTS: Record<string, ClassicalBookExcerpt> = {
 };
 
 /**
- * Fallback generator for classical corpus works not explicitly hardcoded
+ * Retrieve verified classical book excerpt.
+ * STRICT ZERO-FABRICATION POLICY: Strictly returns null if not ingested.
+ * Never generates synthetic or interpolated Arabic or Urdu text.
  */
-export function getBookExcerpt(workId: string, titleArabic: string, titleTransliterated: string, author: string, discipline: string): ClassicalBookExcerpt {
+export function getBookExcerpt(workId: string): ClassicalBookExcerpt | null {
   if (CLASSICAL_EXCERPTS[workId]) {
     return CLASSICAL_EXCERPTS[workId];
   }
-
-  const encodedArabic = encodeURIComponent(titleArabic.replace(/\(.*?\)/g, '').trim());
-
-  return {
-    workId,
-    arabicMatn: `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ خَاتَمِ النَّبِيِّينَ، وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.
-
-أَمَّا بَعْدُ: فَهَذَا مُصَنَّفٌ مُعْتَمَدٌ فِي ${discipline.replace('_', ' ')}، أَلَّفَهُ الإِمَامُ ${author}، لِبَيَانِ أُصُولِ الشَّرِيعَةِ وَفُرُوعِهَا عَلَى مَنْهَجِ أَهْلِ السُّنَّةِ وَالْجَمَاعَةِ (السَّوَادِ الأَعْظَمِ).`,
-    urduTranslation: `شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔ تمام تعریفیں اللہ رب العزت کے لیے ہیں اور درود و سلام نازل ہوں سیدنا محمد خاتم النبیین ﷺ پر اور آپ کی آل و اصحاب پر۔
-
-حمد و صلاۃ کے بعد: یہ تصنیف مبارک "${titleArabic}" فن ${discipline.replace('_', ' ')} کی معتمد ترین کتابوں میں سے ہے، جسے امام ${author} نے اہل سنت والجماعت (السواد الأعظم) کے مستند اور متوارث طریقے پر تالیف فرمایا۔`,
-    englishSynopsis: `Canonical masterwork in ${discipline.replace('_', ' ')} by ${author}. Verified as part of the 76-book classical curriculum preserved under AMAL OS Invariant INV_07.`,
-    scholarlyCommentaryUrdu: `یہ کتاب امت کے اکابر فقہاء اور محدثین کے نزدیک مستند مرجع تسلیم کی گئی ہے۔ اس کے متن اور ابواب کا مطالعہ مکتبہ شاملہ اور وقف کتب خانوں کے ذریعے براہ راست کیا جا سکتا ہے۔`,
-    scholarlyCommentaryEnglish: `Recognized as an authoritative classical reference by the consensus of Ahl al-Sunnah. Its complete physical manuscript and multi-volume edition can be browsed directly on open digital Waqf libraries.`,
-    externalLinks: {
-      shamelaUrl: `https://shamela.ws/search?q=${encodedArabic}`,
-      waqfeyaPdfUrl: `https://waqfeya.net/search.php?q=${encodedArabic}`,
-    },
-  };
+  return null;
 }
