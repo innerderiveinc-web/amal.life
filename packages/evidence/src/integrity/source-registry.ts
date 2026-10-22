@@ -46,7 +46,7 @@ export class SourceRegistry {
     const defaultDimensions: SourceAuthorityDimensions = {
       sourceType: data.sourceType,
       primaryStatus: data.sourceType === 'QURAN' || data.sourceType === 'HADITH' ? 'VERIFIED' : 'SECONDARY',
-      provenanceStatus: hasArtifact ? 'VERIFIED' : 'SECONDARY',
+      provenanceStatus: hasArtifact ? 'VERIFIED' : 'PARTIAL',
       referenceStatus: 'VERIFIED',
       attributionStatus: 'VERIFIED',
       licenseStatus: 'APPROVED',

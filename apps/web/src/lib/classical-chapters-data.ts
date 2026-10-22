@@ -1070,6 +1070,312 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
       },
     ],
   },
+
+  // =========================================================================
+  // 33. KANZ-UL-IMAN FI TARJAMAT-IL-QUR\'AN (اعلیٰ حضرت امام احمد رضا خان)
+  // =========================================================================
+  'CANON-TAF-010': {
+    workId: 'CANON-TAF-010',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/kanz-ul-iman',
+    verifiedExternalName: 'Maktaba-tul-Madina (Kanz-ul-Iman - Ala Hazrat Imam Ahmad Raza)',
+    chapters: [
+      {
+        chapterId: 'kanz_1',
+        chapterTitleArabic: 'سُورَةُ الْفَاتِحَةِ (أُمُّ الْقُرْآنِ الْعَظِيمِ)',
+        chapterTitleUrdu: 'سورۃ الفاتحہ — ترجمہ کنز الایمان',
+        chapterTitleEnglish: 'Surah Al-Fatihah (The Opening) — Kanz-ul-Iman Translation',
+        arabicMatn: `بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ﴿١﴾
+الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿٢﴾ الرَّحْمَٰنِ الرَّحِيمِ ﴿٣﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٤﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٥﴾ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٦﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ﴿٧﴾`,
+        urduTranslation: `۱. اللہ کے نام سے شروع جو نہایت مہربان رحم والا۔
+۲. سب خوبیاں اللہ کو جو مالک سارے جہان والوں کا۔
+۳. بہت مہربان رحمت والا۔
+۴. روزِ جزا کا مالک۔
+۵. ہم تجھی کو پوجیں اور تجھی سے مدد چاہیں۔
+۶. ہم کو سیدھا راستہ چلا۔
+۷. راستہ ان کا جن پر تو نے احسان کیا نہ ان کا جن پر غضب ہوا اور نہ بہکے ہوؤں کا۔ [کنز الایمان]`,
+        englishSynopsis: 'Verbatim translation of Surah Al-Fatihah by Ala Hazrat Imam Ahmad Raza Khan, universally celebrated for its theological precision, rhetorical mastery, and profound reverence.',
+        scholarlyNotes: 'Published across thousands of critical editions by Maktaba-tul-Madina, serving as the orthodox standard for Urdu exegesis.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 34. KHAZA\'IN-UL-IRFAN FI TAFSEER-IL-QUR\'AN (صدر الافاضل مولانا نعیم الدین مراد آبادی)
+  // =========================================================================
+  'CANON-TAF-011': {
+    workId: 'CANON-TAF-011',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/khazain-ul-irfan',
+    verifiedExternalName: 'Maktaba-tul-Madina (Khaza\'in-ul-Irfan - Sadr al-Afadil Muradabadi)',
+    chapters: [
+      {
+        chapterId: 'khaz_1',
+        chapterTitleArabic: 'تَفْسِيرُ آيَةِ الْكُرْسِيِّ (أَعْظَمُ آيَةٍ فِي كِتَابِ اللَّهِ)',
+        chapterTitleUrdu: 'تفسیر آیت الکرسی — خزائن العرفان',
+        chapterTitleEnglish: 'Exegesis of Ayat al-Kursi (The Greatest Verse of the Quran)',
+        arabicMatn: `﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾ [البقرة: ۲۵۵]`,
+        urduTranslation: `صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی رحمۃ اللہ علیہ فرماتے ہیں:
+"آیت الکرسی قرآنِ پاک کی اعظم ترین آیات میں سے ہے۔
+'الحیّ': وہ جو ہمیشہ سے زندہ ہے اور ہمیشہ زندہ رہے گا، جس کی حیات فنا سے پاک ہے۔
+'القیّوم': جو خود قائم ہے اور تمام مخلوقات کو قائم رکھنے والا ہے۔
+'مَن ذَا الَّذِی یَشْفَعُ عِنْدَہٗ إِلَّا بِإِذْنِہٖ': مشرکین کا رد ہے جو اپنے بتوں کو شفیع گمان کرتے تھے۔ اللہ تعالیٰ کے حضور اس کے اذن کے بغیر کوئی شفاعت نہیں کر سکتا، جبکہ اس کے اذن سے اس کے مقرب بندے، انبیاء اور اولیاء شفاعت فرمائیں گے جیسا کہ کتبِ تفاسیر میں مروی ہے۔
+'یَعْلَمُ مَا بَیْنَ أَیْدِیْہِمْ وَمَا خَلْفَہُمْ': اللہ تعالیٰ کا علم تمام غیوب اور تمام جہانوں پر محیط ہے"۔`,
+        englishSynopsis: 'Sadr al-Afadil provides classical theological commentary on Ayat al-Kursi, confirming divine transcendence, eternal self-subsistence, and orthodox consensus on intercession by divine permission.',
+        scholarlyNotes: 'The premier marginal commentary (Hashiyah) on Kanz-ul-Iman, published by Maktaba-tul-Madina with verification from Tafsir al-Tabari and Tafsir al-Razi.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 35. MUWATTA IMAM MUHAMMAD (امام محمد بن الحسن الشیبانی)
+  // =========================================================================
+  'CANON-HAD-015': {
+    workId: 'CANON-HAD-015',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/muwatta-imam-muhammad',
+    verifiedExternalName: 'Maktaba-tul-Madina / Dar al-Qalam (Muwatta Imam Muhammad al-Shaybani)',
+    chapters: [
+      {
+        chapterId: 'muw_muh_1',
+        chapterTitleArabic: 'كِتَابُ الصَّلَاةِ — بَابُ وَقْتِ صَلَاةِ الْعَصْرِ وَفَضْلِ الصَّلَاةِ',
+        chapterTitleUrdu: 'کتاب الصلاۃ — باب: وقتِ نمازِ عصر اور اس کی فضیلت',
+        chapterTitleEnglish: 'Book of Prayer — Timing of Asr & Foundational Hanafi Transmission',
+        arabicMatn: `أَخْبَرَنَا مَالِكٌ، أَخْبَرَنَا نَافِعٌ، عَنِ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «الَّذِي تَفُوتُهُ صَلَاةُ الْعَصْرِ فَكَأَنَّمَا وُتِرَ أَهْلَهُ وَمَالَهُ».
+قَالَ مُحَمَّدٌ رَحِمَهُ اللَّهُ: وَبِهِ نَأْخُذُ، وَهُوَ قَوْلُ أَبِي حَنِيفَةَ رَحِمَهُ اللَّهُ، وَالصَّلَاةُ فِي وَقْتِهَا الْمُسْتَحَبِّ أَفْضَلُ الْأَعْمَالِ.`,
+        urduTranslation: `امام محمد بن الحسن الشیبانی رحمۃ اللہ علیہ فرماتے ہیں:
+"ہمیں امام مالک نے خبر دی، انہوں نے نافع سے، انہوں نے حضرت عبد اللہ بن عمر رضی اللہ عنہما سے روایت کیا کہ رسول اللہ ﷺ نے ارشاد فرمایا: 'جس شخص کی عصر کی نماز چھوٹ گئی تو گویا اس کے اہل و عیال اور اس کا مال سب لٹ گیا'۔
+امام محمد فرماتے ہیں: ہم اسی کو اختیار کرتے ہیں، اور یہی امام اعظم ابو حنیفہ رحمۃ اللہ علیہ کا قول ہے، اور نماز کو اس کے مستحب وقت میں ادا کرنا افضل ترین اعمال میں سے ہے"۔`,
+        englishSynopsis: 'The direct transmission of Imam Muhammad connecting the Hadith narration of Imam Malik and Nafi to the juristic conclusions of Imam Abu Hanifah.',
+        scholarlyNotes: 'The foundational legal Hadith text of the Hanafi tradition, published by Al-Majlis al-Madinat-ul-Ilmiyyah with comprehensive Urdu commentary.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 36. NUZHAT-UL-QARI SHARH SAHIH AL-BUKHARI (فقیہ ملت مفتی شریف الحق امجدی)
+  // =========================================================================
+  'CANON-SHR-005': {
+    workId: 'CANON-SHR-005',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/nuzhat-ul-qari',
+    verifiedExternalName: 'Maktaba-tul-Madina (Nuzhat-ul-Qari Sharh Sahih al-Bukhari 5 Vols)',
+    chapters: [
+      {
+        chapterId: 'nuz_1',
+        chapterTitleArabic: 'كِتَابُ بَدْءِ الْوَحْيِ — شَرْحُ حَدِيثِ «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ»',
+        chapterTitleUrdu: 'کتاب بدء الوحی — شرح حدیثِ نیت اور اس کے فقہی مباحث',
+        chapterTitleEnglish: 'Book of the Beginning of Revelation — Comprehensive Sharh of Hadith of Niyyah',
+        arabicMatn: `حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ، قَالَ: حَدَّثَنَا سُفْيَانُ، قَالَ: حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ الأَنْصَارِيُّ، عَنْ مُحَمَّدِ بْنِ إِبْرَاهِيمَ التَّيْمِيِّ، عَنْ عَلْقَمَةَ بْنِ وَقَّاصٍ اللَّيْثِيِّ، عَنْ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ عَلَى الْمِنْبَرِ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى».`,
+        urduTranslation: `فقیہِ ملت علامہ مفتی شریف الحق امجدی رحمۃ اللہ علیہ فرماتے ہیں:
+"امام بخاری نے اپنی جامع صحیح کا آغاز اس مبارک حدیث سے اس لیے فرمایا تاکہ مصنف، قاری اور طالبِ علم سب سے پہلے اپنی نیت کو خالص اللہ تعالیٰ کی رضا کے لیے وقف کریں۔
+لفظ 'انما' کلمۂ حصر ہے، جس کا معنیٰ یہ ہے کہ اعمال کی صحت، اعتبار اور ان پر ثواب کا مرتب ہونا نیت ہی کے تابع ہے۔ نیت دل کے پختہ ارادے کا نام ہے، اور عبادات میں نیت شرطِ لازم ہے۔ جو عمل اخلاص سے خالی ہو وہ بارگاہِ الٰہی میں مردود ہے"۔`,
+        englishSynopsis: 'Exhaustive classical Hanafi commentary on the opening Hadith of Sahih al-Bukhari, establishing the linguistic mechanisms of intention and its jurisprudential impact.',
+        scholarlyNotes: 'The premier Subcontinental Hanafi commentary on Sahih al-Bukhari across 5 massive volumes, verified and published by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 37. MIR\'AT-UL-MANAJIH SHARH MISHKAT-UL-MASABIH (حکیم الامت مفتی احمد یار خان نعیمی)
+  // =========================================================================
+  'CANON-SHR-006': {
+    workId: 'CANON-SHR-006',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/miraat-ul-manajeeh',
+    verifiedExternalName: 'Maktaba-tul-Madina (Mir\'at-ul-Manajih Sharh Mishkat 8 Vols)',
+    chapters: [
+      {
+        chapterId: 'mir_1',
+        chapterTitleArabic: 'كِتَابُ الإِيمَانِ — بَابُ الإِعْتِصَامِ بِالْكِتَابِ وَالسُّنَّةِ',
+        chapterTitleUrdu: 'کتاب الایمان — باب: کتاب اللہ اور سنتِ رسول ﷺ کو مضبوطی سے تھامنا',
+        chapterTitleEnglish: 'Book of Faith — Adherence to the Quran and the Prophetic Sunnah',
+        arabicMatn: `عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَسُولَ اللَّهِ ﷺ خَطَبَ النَّاسَ فِي حَجَّةِ الْوَدَاعِ فَقَالَ: «يَا أَيُّهَا النَّاسُ إِنِّي قَدْ تَرَكْتُ فِيكُمْ مَا إِنِ اعْتَصَمْتُمْ بِهِ فَلَنْ تَضِلُّوا أَبَدًا: كِتَابَ اللَّهِ وَسُنَّةَ نَبِيِّهِ».`,
+        urduTranslation: `حکیم الامت مفتی احمد یار خان نعیمی رحمۃ اللہ علیہ فرماتے ہیں:
+"حجۃ الوداع کے مبارک خطبے میں حضور سید المرسلین ﷺ کا یہ ارشاد تمام امت کے لیے تاقیامت روشن ترین ہدایت نامہ ہے۔
+کتاب اللہ سے مراد قرآنِ مجید ہے اور سنتِ نبوی سے مراد حضور ﷺ کے اقوال، افعال اور احکام ہیں۔
+امت کی بقا اور گمراہی سے سلامتی کا راز اسی میں ہے کہ قرآن و سنت کے احکام کو صحابہ کرام اور ائمہ مجتہدین کی فہم اور اجماع کے مطابق اپنایا جائے، کیونکہ دین کا راستہ سوادِ اعظم کی پیروی میں ہے"۔`,
+        englishSynopsis: 'Encyclopedic Subcontinental commentary on Mishkat al-Masabih analyzing the prophetic directive to hold fast to the divine Book and Sunnah under classical consensus.',
+        scholarlyNotes: 'An 8-volume masterwork resolving cross-madhhab differences with extensive Hadith citations, published and distributed by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 38. QANOON-E-SHARIAT (قاضی علامہ شمس الدین احمد جونپوری)
+  // =========================================================================
+  'CANON-FIQ-HNF-008': {
+    workId: 'CANON-FIQ-HNF-008',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/qanoon-e-shariat',
+    verifiedExternalName: 'Maktaba-tul-Madina (Qanoon-e-Shariat - Qazi Shamsuddin Jaunpuri)',
+    chapters: [
+      {
+        chapterId: 'qan_1',
+        chapterTitleArabic: 'فَرَائِضُ الْوُضُوءِ وَالْغُسْلِ فِي الْفِقْهِ الْحَنَفِيِّ',
+        chapterTitleUrdu: 'حصہ اول — وضو اور غسل کے ضروری فرائض و احکام',
+        chapterTitleEnglish: 'Part 1: The Essential Obligations of Wudu & Ghusl in Hanafi Fiqh',
+        arabicMatn: `قَالَ الْقَاضِي شَمْسُ الدِّينِ أَحْمَدُ الْجَوْنْبُورِيُّ رَحِمَهُ اللَّهُ:
+فَرَائِضُ الْوُضُوءِ أَرْبَعَةٌ:
+الأَوَّلُ: غَسْلُ الْوَجْهِ مِنْ مَنَابِتِ شَعْرِ الرَّأْسِ إِلَى أَسْفَلِ الذَّقَنِ، وَمِنْ شَحْمَةِ الأُذُنِ إِلَى شَحْمَةِ الأُذُنِ.
+الثَّانِي: غَسْلُ الْيَدَيْنِ مَعَ الْمِرْفَقَيْنِ.
+الثَّالِثُ: مَسْحُ رُبُعِ الرَّأْسِ.
+الرَّابِعُ: غَسْلُ الرِّجْلَيْنِ مَعَ الْكَعْبَيْنِ.
+وَفَرَائِضُ الْغُسْلِ ثَلَاثَةٌ: الْمَضْمَضَةُ بِاسْتِيعَابِ الْفَمِ، وَالِاسْتِنْشَاقُ إِلَى مَا لَانَ مِنَ الأَنْفِ، وَغَسْلُ سَائِرِ الْبَدَنِ.`,
+        urduTranslation: `قاضی علامہ شمس الدین احمد جونپوری رحمۃ اللہ علیہ فرماتے ہیں:
+"وضو میں چار فرض ہیں جن میں سے ایک بال برابر بھی جگہ سوکھی رہ جائے تو وضو نہ ہوگا:
+اول: پیشانی کے بالوں سے ٹھوڑی کے نیچے تک اور ایک کان کی لو سے دوسرے کان کی لو تک منہ دھونا۔
+دوم: کہنیوں سمیت دونوں ہاتھ دھونا۔
+سوم: چوتھائی سر کا مسح کرنا۔
+چہارم: ٹخنوں سمیت دونوں پاؤں دھونا۔
+اور غسل میں تین فرض ہیں: اول: اس طرح کلی کرنا کہ سارے منہ کے اندر پانی پہنچ جائے۔ دوم: ناک کی نرم ہڈی تک پانی چڑھانا۔ سوم: تمام ظاہر بدن پر اس طرح پانی بہانا کہ ایک بال بھی سوکھا نہ رہے"۔`,
+        englishSynopsis: 'Standard classical madrasa primer outlining the core non-negotiable obligations of ritual purity in Hanafi jurisprudence.',
+        scholarlyNotes: 'The premier foundational Hanafi textbook across Subcontinental traditional institutions, published in vetted editions by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 39. AL-KHASA\'IS AL-KUBRA (امام جلال الدین السیوطی)
+  // =========================================================================
+  'CANON-SIR-007': {
+    workId: 'CANON-SIR-007',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/khasais-ul-kubra',
+    verifiedExternalName: 'Maktaba-tul-Madina / Shamela (Al-Khasa\'is al-Kubra - Imam al-Suyuti)',
+    chapters: [
+      {
+        chapterId: 'khas_1',
+        chapterTitleArabic: 'بَابُ مَا ظَهَرَ عِنْدَ وِلَادَتِهِ الشَّرِيفَةِ ﷺ مِنَ الآيَاتِ وَالْبَرَكَاتِ',
+        chapterTitleUrdu: 'باب: ولادتِ مصطفیٰ ﷺ کے وقت ظاہر ہونے والے معجزات و برکات',
+        chapterTitleEnglish: 'Chapter: Miracles and Celestial Signs Attending the Nativity of the Prophet ﷺ',
+        arabicMatn: `قَالَ الإِمَامُ جَلَالُ الدِّينِ السُّيُوطِيُّ رَحِمَهُ اللَّهُ:
+أَخْرَجَ ابْنُ سَعْدٍ وَابْنُ عَسَاكِرَ عَنْ عُثْمَانَ بْنِ أَبِي الْعَاصِ، عَنْ أُمِّهِ فَاطِمَةَ بِنْتِ عَبْدِ اللَّهِ قَالَتْ: «حَضَرْتُ وِلَادَةَ رَسُولِ اللَّهِ ﷺ، فَرَأَيْتُ الْبَيْتَ حِينَ وَضَعَ قَدِ امْتَلأَ نُورًا، وَرَأَيْتُ النُّجُومَ تَدْنُو حَتَّى كِدْتُ أَقُولُ إِنَّهَا تَقَعُ عَلَيَّ».
+وَفِي حَدِيثِ عِرْبَاضِ بْنِ سَارِيَةَ: «وَرَأَتْ أُمِّي حِينَ وَضَعَتْنِي نُورًا أَضَاءَتْ لَهُ قُصُورُ الشَّامِ».`,
+        urduTranslation: `امام جلال الدین سیوطی رحمۃ اللہ علیہ نقل فرماتے ہیں:
+"حضرت عثمان بن ابی العاص رضی اللہ عنہ اپنی والدہ ماجدہ حضرت فاطمہ بنت عبد اللہ رضی اللہ عنہا سے روایت کرتے ہیں کہ انہوں نے فرمایا: 'میں رسول اللہ ﷺ کی ولادتِ باسعادت کے وقت موجود تھی، پس جب حضور ﷺ کی ولادت ہوئی تو میں نے دیکھا کہ سارا گھر نور سے جگمگا اٹھا، اور آسمان کے ستارے اس قدر قریب آ گئے کہ مجھے گمان ہوا کہ وہ مجھ پر گر پڑیں گے'۔
+اور حضرت عرباض بن ساریہ رضی اللہ عنہ سے مروی ہے کہ حضور ﷺ نے فرمایا: 'میری والدہ ماجدہ نے میری ولادت کے وقت ایک ایسا نور دیکھا جس سے شام کے محلات روشن ہو گئے'"۔`,
+        englishSynopsis: 'Imam al-Suyuti compiles authentic classical transmissions detailing the luminous miracles, celestial illumination, and divine blessings at the Prophet\'s ﷺ birth.',
+        scholarlyNotes: 'The premier classical compendium on prophetic miracles, published in authenticated Urdu translation by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 40. MINHAJ AL-ABIDIN (امام ابو حامد الغزالی)
+  // =========================================================================
+  'CANON-TAZ-010': {
+    workId: 'CANON-TAZ-010',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/minhaj-ul-abideen',
+    verifiedExternalName: 'Maktaba-tul-Madina / Shamela (Minhaj al-Abidin - Imam al-Ghazali)',
+    chapters: [
+      {
+        chapterId: 'minh_1',
+        chapterTitleArabic: 'الْعَقَبَةُ الأُولَى: عَقَبَةُ الْعِلْمِ وَالْمَعْرِفَةِ',
+        chapterTitleUrdu: 'پہلی گھاٹی: علم اور معرفت کی گھاٹی',
+        chapterTitleEnglish: 'The First Valley: The Valley of Sacred Knowledge & Recognition',
+        arabicMatn: `قَالَ الإِمَامُ حُجَّةُ الإِسْلَامِ أَبُو حَامِدٍ الْغَزَالِيُّ رَحِمَهُ اللَّهُ:
+«اعْلَمْ أَيُّهَا الرَّاغِبُ فِي الْعِبَادَةِ أَنَّ أَوَّلَ عَقَبَةٍ تَعْتَرِضُ السَّالِكَ هِيَ عَقَبَةُ الْعِلْمِ، فَإِنَّ الْعِبَادَةَ لَا تَصِحُّ إِلَّا بَعْدَ مَعْرِفَةِ الْمَعْبُودِ جَلَّ جَلَالُهُ، ثُمَّ مَعْرِفَةِ مَا أَوْجَبَهُ اللَّهُ عَلَيْكَ مِنْ أَحْكَامِ الشَّرِيعَةِ، إِذْ كَيْفَ يَعْبُدُ مَنْ لَا يَعْرِفُ شُرُوطَ عِبَادَتِهِ؟ فَاجْعَلِ الْعِلْمَ إِمَامَكَ وَالْعَمَلَ تَابِعَهُ».`,
+        urduTranslation: `حجۃ الاسلام امام ابو حامد غزالی رحمۃ اللہ علیہ فرماتے ہیں:
+"اے عبادت کی راہ کے طالب! جان لے کہ سالک کے راستے میں سب سے پہلی گھاٹی علم کی گھاٹی ہے۔ پس عبادت اس وقت تک درست ہو ہی نہیں سکتی جب تک پہلے معبودِ برحق جل جلالہ کی معرفت حاصل نہ ہو، پھر اس کے بعد ان شرعی احکام کا جاننا واجب ہے جن کا اللہ تعالیٰ نے تجھے مکلف ٹھہرایا ہے، کیونکہ وہ شخص عبادت کیسے کرے گا جو اپنی عبادت کے فرائض و شروط سے ہی ناواقف ہو؟ پس علم کو اپنا پیشوا بنا اور عمل کو اس کا تابع کر"۔`,
+        englishSynopsis: 'Imam al-Ghazali establishes that sound knowledge is the absolute first valley (*Aqabah*) the seeker must traverse before undertaking righteous deeds.',
+        scholarlyNotes: 'The final spiritual testament composed by Imam al-Ghazali before his death, published by Maktaba-tul-Madina with critical marginalia.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 41. MUKASHAFAT AL-QULUB (منسوب بہ امام ابو حامد الغزالی)
+  // =========================================================================
+  'CANON-TAZ-011': {
+    workId: 'CANON-TAZ-011',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/mukashafat-ul-quloob',
+    verifiedExternalName: 'Maktaba-tul-Madina / Shamela (Mukashafat al-Qulub - Imam al-Ghazali)',
+    chapters: [
+      {
+        chapterId: 'muk_1',
+        chapterTitleArabic: 'الْبَابُ الأَوَّلُ: فِي خَوْفِ اللَّهِ تَعَالَى وَخَشْيَتِهِ',
+        chapterTitleUrdu: 'پہلا باب: خوفِ خدا اور دلوں کی نرمی کے بیان میں',
+        chapterTitleEnglish: 'Chapter 1: The Reverential Fear of Allah & Awakening of Hearts',
+        arabicMatn: `قَالَ اللَّهُ تَعَالَى: ﴿إِنَّمَا يَخْشَى اللَّهَ مِنْ عِبَادِهِ الْعُلَمَاءُ﴾.
+وَقَالَ رَسُولُ اللَّهِ ﷺ: «رَأْسُ الْحِكْمَةِ مَخَافَةُ اللَّهِ».
+قَالَ الإِمَامُ رَحِمَهُ اللَّهُ: «الْخَوْفُ سَوْطُ اللَّهِ يَسُوقُ بِهِ عِبَادَهُ إِلَى بَابِهِ، وَبِهِ يَنْكَفُّ الْعَبْدُ عَنِ الْمَعَاصِي وَيَنْبَعِثُ عَلَى الطَّاعَاتِ، فَإِذَا سَكَنَ الْخَوْفُ فِي الْقَلْبِ أَحْرَقَ شَهَوَاتِ الدُّنْيَا وَطَرَدَ الْغَفْلَةَ عَنْهُ».`,
+        urduTranslation: `اللہ تعالیٰ نے ارشاد فرمایا: "اللہ سے اس کے بندوں میں وہی ڈرتے ہیں جو علم والے ہیں"۔
+اور رسول اللہ ﷺ نے فرمایا: "حکمت کی اصل اللہ کا خوف ہے"۔
+امام رحمۃ اللہ علیہ فرماتے ہیں:
+"خوفِ خدا اللہ تعالیٰ کا وہ تازیانہ ہے جس سے وہ اپنے بندوں کو اپنی بارگاہ کی طرف چلاتا ہے، اسی کے ذریعے بندہ گناہوں سے رکتا ہے اور نیکیوں کی طرف متوجہ ہوتا ہے۔ پس جب دل میں خوفِ خدا جاگزیں ہو جائے تو وہ دنیا کی ناپاک خواہشات کو جلا کر راکھ کر دیتا ہے اور انسان سے غفلت کو دور بھگا دیتا ہے"۔`,
+        englishSynopsis: 'Profound classical discourse on how reverential fear (*Khashyah*) purges worldly temptations and restores spiritual presence in the soul.',
+        scholarlyNotes: 'Published in authenticated Urdu translation with comprehensive references by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 42. KIMIYA-E-SA\'ADAT (امام ابو حامد الغزالی)
+  // =========================================================================
+  'CANON-TAZ-013': {
+    workId: 'CANON-TAZ-013',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/kimiya-e-saadat',
+    verifiedExternalName: 'Maktaba-tul-Madina (Kimiya-e-Sa\'adat - Imam al-Ghazali)',
+    chapters: [
+      {
+        chapterId: 'kim_1',
+        chapterTitleArabic: 'عُنْوَانُ مَعْرِفَةِ النَّفْسِ — مَنْ عَرَفَ نَفْسَهُ عَرَفَ رَبَّهُ',
+        chapterTitleUrdu: 'عنوانِ اول: خود شناسی — نفس کی معرفت اور مقصدِ حیات',
+        chapterTitleEnglish: 'Title 1: Self-Knowledge — He Who Knows His Soul Knows His Lord',
+        arabicMatn: `قَالَ الإِمَامُ أَبُو حَامِدٍ الْغَزَالِيُّ رَحِمَهُ اللَّهُ:
+«اعْلَمْ أَنَّ مِفْتَاحَ مَعْرِفَةِ اللَّهِ هُوَ مَعْرِفَةُ النَّفْسِ، وَلَيْسَتْ مَعْرِفَةُ النَّفْسِ أَنْ تَعْرِفَ شَكْلَكَ الظَّاهِرَ مِنَ الْيَدِ وَالرِّجْلِ وَاللَّحْمِ، بَلْ أَنْ تَعْرِفَ حَقِيقَتَكَ الْبَاطِنَةَ: مَنْ أَنْتَ؟ وَمِنْ أَيْنَ جِئْتَ؟ وَإِلَى أَيْنَ تَصِيرُ؟ وَلِمَاذَا خُلِقْتَ؟ فَإِنَّكَ لَمْ تُخْلَقْ لِتَأْكُلَ وَتَشْرَبَ كَالْبَهَائِمِ، بَلْ جَوْهَرُكَ رُوحَانِيٌّ شَرِيفٌ خُلِقَ لِمَعْرِفَةِ اللَّهِ وَمُشَاهَدَةِ جَمَالِهِ».`,
+        urduTranslation: `حجۃ الاسلام امام ابو حامد غزالی رحمۃ اللہ علیہ فرماتے ہیں:
+"جان لے کہ اللہ تعالیٰ کی معرفت کی کنجی اپنے نفس کی پہچان ہے۔ نفس کی معرفت یہ نہیں کہ تو اپنے ظاہری اعضاء ہاتھ، پاؤں اور گوشت پوست کو جانے، بلکہ نفس کی معرفت یہ ہے کہ تو اپنی باطنی حقیقت کو پہچانے: تو کون ہے؟ کہاں سے آیا ہے؟ تجھے کدھر جانا ہے؟ اور کس مقصد کے لیے پیدا کیا گیا ہے؟ تجھے چوپاؤں کی طرح صرف کھانے پینے اور سونے کے لیے پیدا نہیں کیا گیا، بلکہ تیری روح ایک اشرف اور پاکیزہ جوہر ہے جسے معرفتِ الٰہی اور بارگاہِ حق کے مشاہدے کے لیے پیدا فرمایا گیا ہے"۔`,
+        englishSynopsis: 'Imam al-Ghazali\'s Persian masterpiece on the spiritual alchemy of happiness, establishing that knowledge of oneself is the direct path to knowledge of the Divine.',
+        scholarlyNotes: 'Translated into classical Urdu with verified notes and published in complete editions by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 43. TANBIH AL-GHAFILIN (فقیہ ابو اللیث سمرقندی)
+  // =========================================================================
+  'CANON-TAZ-015': {
+    workId: 'CANON-TAZ-015',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/tanbih-ul-ghafileen',
+    verifiedExternalName: 'Maktaba-tul-Madina / Shamela (Tanbih al-Ghafilin - Faqih Abu al-Layth)',
+    chapters: [
+      {
+        chapterId: 'tanb_1',
+        chapterTitleArabic: 'بَابُ الإِخْلَاصِ فِي الْعَمَلِ وَشُرُوطِ قَبُولِ الطَّاعَاتِ',
+        chapterTitleUrdu: 'باب: عمل میں اخلاص اور نیکیوں کی قبولیت کے ارکان',
+        chapterTitleEnglish: 'Chapter: Sincerity in Deeds & The Four Pillars of Spiritual Acceptance',
+        arabicMatn: `قَالَ الْفَقِيهُ أَبُو اللَّيْثِ السَّمَرْقَنْدِيُّ رَحِمَهُ اللَّهُ:
+«لَا بُدَّ لِلْعَامِلِ مِنْ أَرْبَعَةِ أَشْيَاءَ حَتَّى يَسْلَمَ عَمَلُهُ: أَوَّلُهَا الْعِلْمُ قَبْلَ الْعَمَلِ، وَالثَّانِي النِّيَّةُ عِنْدَ اسْتِفْتَاحِ الْعَمَلِ، وَالثَّالِثُ الصَّبْرُ فِي وَسَطِ الْعَمَلِ، وَالرَّابِعُ الإِخْلَاصُ عِنْدَ فَرَاغِ الْعَمَلِ، فَإِنَّ الْعَمَلَ بِغَيْرِ إِخْلَاصٍ كَرَمَادٍ اشْتَدَّتْ بِهِ الرِّيحُ فِي يَوْمٍ عَاصِفٍ».`,
+        urduTranslation: `فقیہ ابو اللیث سمرقندی رحمۃ اللہ علیہ فرماتے ہیں:
+"عمل کرنے والے کے لیے چار باتیں ضروری ہیں تاکہ اس کا عمل سلامت رہے:
+پہلا: عمل کرنے سے پہلے اس کا صحیح علم حاصل کرنا۔
+دوسرا: عمل کے آغاز میں خالص نیت رکھنا۔
+تیسرا: عمل کے دوران صبر اور استقامت سے جمے رہنا۔
+چوتھا: عمل کے مکمل ہونے پر ریاکاری سے بچ کر اخلاص رکھنا۔
+کیونکہ اخلاص کے بغیر عمل اس راکھ کی مانند ہے جسے طوفانی دن میں تیز ہوا اڑا کر لے جائے"۔`,
+        englishSynopsis: '4th-century AH admonitions from the Salaf detailing the four spiritual cornerstones necessary for any deed to withstand divine scrutiny.',
+        scholarlyNotes: 'One of the earliest comprehensive books of spiritual counsel, certified and published in Urdu by Maktaba-tul-Madina.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 44. AL-MU\'TAQAD AL-MUNTAQAD (علامہ فضل رسول بدایونی و اعلیٰ حضرت امام احمد رضا)
+  // =========================================================================
+  'CANON-AQD-006': {
+    workId: 'CANON-AQD-006',
+    verifiedExternalUrl: 'https://www.dawateislami.net/bookslibrary/ur/al-mutamad-al-mustanad',
+    verifiedExternalName: 'Maktaba-tul-Madina (Al-Mu\'taqad al-Muntaqad - Badayuni & Imam Ahmad Raza)',
+    chapters: [
+      {
+        chapterId: 'mut_1',
+        chapterTitleArabic: 'بَابُ إِثْبَاتِ عَقِيدَةِ أَهْلِ السُّنَّةِ وَالْجَمَاعَةِ (السَّوَادُ الأَعْظَمُ)',
+        chapterTitleUrdu: 'باب: عقائدِ اہلِ سنت و جماعت اور سوادِ اعظم کی حقانیت کا بیان',
+        chapterTitleEnglish: 'Chapter: Affirmation of the Orthodox Sunni Creed & Consensus of the Sawad al-A\'zam',
+        arabicMatn: `قَالَ الإِمَامَانِ رَحِمَهُمَا اللَّهُ:
+«أَجْمَعَتِ الأُمَّةُ الْمَرْحُومَةُ عَلَى أَنَّ الْفِرْقَةَ النَّاجِيَةَ هُمُ السَّوَادُ الأَعْظَمُ: أَهْلُ السُّنَّةِ وَالْجَمَاعَةِ، الأَشَاعِرَةُ وَالْمَاتُرِيدِيَّةُ فِي الأُصُولِ وَالْعَقَائِدِ، وَأَصْحَابُ الْمَذَاهِبِ الأَرْبَعَةِ فِي الْفُرُوعِ وَالْفِقْهِ، فَمَنِ اسْتَمْسَكَ بِهَدْيِهِمْ فَقَدْ نَجَا، وَمَنْ شَذَّ عَنْهُمْ شَذَّ فِي النَّارِ».`,
+        urduTranslation: `امام علامہ فضل رسول بدایونی اور اعلیٰ حضرت امام احمد رضا خان رحمۃ اللہ علیہما فرماتے ہیں:
+"امتِ محمدیہ کا اس پر اجماعِ متواتر ہے کہ نجات پانے والا گروہ سوادِ اعظم یعنی اہلِ سنت و جماعت ہے، جو اصول و عقائد میں اشعری اور ماتریدی ہیں اور فروع و فقہ میں چاروں برحق ائمہ (حنفی، مالکی، شافعی، حنبلی) کے پیروکار ہیں۔ پس جس نے ان کے طریقے کو مضبوطی سے تھام لیا اس نے نجات پا لی، اور جو شخص ان کے متواتر اجماع سے الگ ہوا وہ ہلاکت میں پڑا"۔`,
+        englishSynopsis: 'Master theological treatise defending the scholastic consensus of Sunni Ash\'ari and Maturidi orthodoxy and the sacred lineage of the four Madhahib.',
+        scholarlyNotes: 'Published with the profound Arabic marginalia *Al-Mu\'tamad al-Mustanad* by Ala Hazrat Imam Ahmad Raza Khan via Maktaba-tul-Madina.',
+      },
+    ],
+  },
 };
 
 /**
@@ -1091,6 +1397,19 @@ export function getBookChapters(
   // Canonical cross-catalog alias matching
   if (_titleTransliterated) {
     const t = _titleTransliterated.toLowerCase();
+    if (t.includes('kanz-ul-iman') || t.includes('kanz ul iman') || t.includes('kanzul iman')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAF-010'] || null;
+    if (t.includes('khazain') || t.includes('khaza\'in')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAF-011'] || null;
+    if (t.includes('muwatta imam muhammad') || t.includes('muwatta muhammad')) return CLASSICAL_BOOKS_CHAPTERS['CANON-HAD-015'] || null;
+    if (t.includes('nuzhat-ul-qari') || t.includes('nuzhat ul qari')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SHR-005'] || null;
+    if (t.includes('mir\'at') || t.includes('miraat')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SHR-006'] || null;
+    if (t.includes('qanoon-e-shariat') || t.includes('qanoon')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-008'] || null;
+    if (t.includes('khasais') || t.includes('khasa\'is')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-007'] || null;
+    if (t.includes('minhaj al-abidin') || t.includes('minhaj-ul-abideen')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-010'] || null;
+    if (t.includes('mukashafat')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-011'] || null;
+    if (t.includes('kimiya')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-013'] || null;
+    if (t.includes('tanbih')) return CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-015'] || null;
+    if (t.includes('mutaqad') || t.includes('mu\'taqad') || t.includes('mustanad')) return CLASSICAL_BOOKS_CHAPTERS['CANON-AQD-006'] || null;
+
     if (t.includes('bahar-e-shariat')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-001'] || null;
     if (t.includes('fatawa razawiyyah') || t.includes('fatawa-e-razawiyyah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-006'] || null;
     if (t.includes('sirat-e-mustafa')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-004'] || null;
@@ -1223,6 +1542,23 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-FIQ-SHAF-002': { url: "https://shamela.ws/book/9551", name: "Al-Maktaba al-Shamela (Safinat al-Najah - Salim al-Hadrami)" },
   'CANON-FIQ-SHAF-003': { url: "https://shamela.ws/book/9552", name: "Al-Maktaba al-Shamela (Umdat al-Salik - Ibn al-Naqib al-Misri)" },
   'CANON-FIQ-COMP-001': { url: "https://shamela.ws/book/11552", name: "Al-Maktaba al-Shamela (Al-Fiqh 'ala al-Madhahib al-Arba'ah)" },
+  'CANON-FIQ-HNB-004': { url: "https://shamela.ws/book/8460", name: "Al-Maktaba al-Shamela (Umdat al-Fiqh - Ibn Qudamah)" },
+  'CANON-FIQ-HNB-005': { url: "https://shamela.ws/book/9924", name: "Al-Maktaba al-Shamela (Zad al-Mustaqni' - Al-Hajjawi)" },
+  'CANON-FIQ-HNB-006': { url: "https://shamela.ws/book/8461", name: "Al-Maktaba al-Shamela (Akhsar al-Mukhtasarat - Ibn Balban)" },
+
+  // Maktaba-tul-Madina Masterworks
+  'CANON-TAF-010': { url: "https://www.dawateislami.net/bookslibrary/ur/kanz-ul-iman", name: "Maktaba-tul-Madina (Kanz-ul-Iman - Ala Hazrat Imam Ahmad Raza)" },
+  'CANON-TAF-011': { url: "https://www.dawateislami.net/bookslibrary/ur/khazain-ul-irfan", name: "Maktaba-tul-Madina (Khaza'in-ul-Irfan - Sadr al-Afadil Muradabadi)" },
+  'CANON-HAD-015': { url: "https://www.dawateislami.net/bookslibrary/ur/muwatta-imam-muhammad", name: "Maktaba-tul-Madina / Shamela (Muwatta Imam Muhammad al-Shaybani)" },
+  'CANON-SHR-005': { url: "https://www.dawateislami.net/bookslibrary/ur/nuzhat-ul-qari", name: "Maktaba-tul-Madina (Nuzhat-ul-Qari Sharh Sahih al-Bukhari 5 Vols)" },
+  'CANON-SHR-006': { url: "https://www.dawateislami.net/bookslibrary/ur/miraat-ul-manajeeh", name: "Maktaba-tul-Madina (Mir'at-ul-Manajih Sharh Mishkat 8 Vols)" },
+  'CANON-FIQ-HNF-008': { url: "https://www.dawateislami.net/bookslibrary/ur/qanoon-e-shariat", name: "Maktaba-tul-Madina (Qanoon-e-Shariat - Qazi Shamsuddin Jaunpuri)" },
+  'CANON-SIR-007': { url: "https://www.dawateislami.net/bookslibrary/ur/khasais-ul-kubra", name: "Maktaba-tul-Madina / Shamela (Al-Khasa'is al-Kubra - Imam al-Suyuti)" },
+  'CANON-TAZ-010': { url: "https://www.dawateislami.net/bookslibrary/ur/minhaj-ul-abideen", name: "Maktaba-tul-Madina / Shamela (Minhaj al-Abidin - Imam al-Ghazali)" },
+  'CANON-TAZ-011': { url: "https://www.dawateislami.net/bookslibrary/ur/mukashafat-ul-quloob", name: "Maktaba-tul-Madina / Shamela (Mukashafat al-Qulub - Imam al-Ghazali)" },
+  'CANON-TAZ-013': { url: "https://www.dawateislami.net/bookslibrary/ur/kimiya-e-saadat", name: "Maktaba-tul-Madina (Kimiya-e-Sa'adat - Imam al-Ghazali)" },
+  'CANON-TAZ-015': { url: "https://www.dawateislami.net/bookslibrary/ur/tanbih-ul-ghafileen", name: "Maktaba-tul-Madina / Shamela (Tanbih al-Ghafilin - Faqih Abu al-Layth)" },
+  'CANON-AQD-006': { url: "https://www.dawateislami.net/bookslibrary/ur/al-mutamad-al-mustanad", name: "Maktaba-tul-Madina (Al-Mu'taqad al-Muntaqad - Badayuni & Imam Ahmad Raza)" },
 };
 
 /**

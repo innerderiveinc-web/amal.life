@@ -128,7 +128,7 @@ export class UniversalMultilingualKnowledgeEngine {
     }
 
     // Compute real cryptographic hash over canonical Uthmanic Ayah texts
-    const allAyahText = Array.from(this.ayahs.values()).map((a) => a.uthmani_text).join('|');
+    const allAyahText = Array.from(this.ayahs.values()).map((a) => (a as any).uthmani_text || a.text_arabic_uthmani).join('|');
     const editionHash = crypto.createHash('sha256').update(allAyahText || 'Uthmanic-Tawatur-Consensus-Sacred-Text').digest('hex');
 
     const edition: QuranEditionRecord = {
@@ -553,7 +553,7 @@ export class UniversalMultilingualKnowledgeEngine {
   private seedKnowledgeRelease(): void {
     // Compute cryptographic Merkle root of loaded canonical passages and sources
     const corpusPayload = Array.from(this.ayahs.values())
-      .map((a) => `${a.canonical_key}:${a.uthmani_text}`)
+      .map((a) => `${a.canonical_key}:${(a as any).uthmani_text || a.text_arabic_uthmani}`)
       .join('#');
     const merkleRoot = crypto.createHash('sha256').update(corpusPayload || 'CANONICAL-SACRED-CORPUS-ROOT-V1').digest('hex');
 
