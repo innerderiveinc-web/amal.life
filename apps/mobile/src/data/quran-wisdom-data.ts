@@ -216,9 +216,42 @@ export function getSurahKanzulImanAudioUrl(surahNumber: number): string | null {
 
 /**
  * Available Studio Tafseer Audio Files (Dawat-e-Islami Sirat-ul-Jinan collection)
+ * Exact verified filenames on Archive.org collection 'tilawatequranmatafseersiratuljinan'
  */
 const SURAH_TAFSEER_FILES: Record<number, string> = {
+  1: "001 - Surah Al-Fatiha Ma Tafseer Siratul Jinan.MP3",
+  18: "018 - Surah Al-Kahaf Ma Tafseer Siratul Jinan.MP3",
+  36: "036 - Surah Yaseen Ma Tafseer Siratul Jinan.MP3",
+  44: "044 - Surah Al Dukhan Ma Tafseer Siratul Jinan.MP3",
+  55: "055 - Surah Al-Rahman Ma Tafseer Siratul Jinan.MP3",
+  56: "056 - Surah Al-Waaqi’ah Ma Tafseer Siratul Jinan.MP3",
+  67: "067 - Surah Mulk Ma Tafseer Siratul Jinan.MP3",
+  78: "078 - Surah An Naba Ma Tafseer Siratul Jinan.MP3",
+  79: "079 - Surah An Naziaat Ma Tafseer Siratul Jinan.MP3",
+  80: "080 - Surah Abas Ma Tafseer Siratul Jinan.MP3",
+  81: "081 - Surah At-Takweer Ma Tafseer Siratul Jinan.MP3",
+  82: "082 - Surah Al-Infitaar Ma Tafseer Siratul Jinan.MP3",
+  83: "083 - Surah Al-Mutaffifeen Ma Tafseer Siratul Jinan.MP3",
+  84: "084 - Surah Al-Inshiqaq Ma Tafseer Siratul Jinan.MP3",
+  85: "085 - Surah Al-Burooj Ma Tafseer Siratul Jinan.MP3",
+  86: "086 - Surah At-Taariq Ma Tafseer Siratul Jinan.MP3",
+  87: "087 - Surah Al-Ala Ma Tafseer Siratul Jinan.MP3",
+  88: "088 - Surah Al-Ghaashiyah Ma Tafseer Siratul Jinan.MP3",
+  89: "089 - Surah Al-Fajr Ma Tafseer Siratul Jinan.MP3",
+  90: "090 - Surah Al-Balad Ma Tafseer Siratul Jinan.MP3",
+  91: "091 - Surah Ash-Shams Ma Tafseer Siratul Jinan.MP3",
+  92: "092 - Surah Al-Layl Ma Tafseer Siratul Jinan.MP3",
+  93: "093 - Surah Ad-Duha Ma Tafseer Siratul Jinan.MP3",
+  94: "094 - Surah Alam Nashrah Ma Tafseer Siratul Jinan.MP3",
+  95: "095 - Surah At-Teen Ma Tafseer Siratul Jinan.MP3",
+  96: "096 - Surah Al-Alaq Ma Tafseer Siratul Jinan.MP3",
+  97: "097 - Surah Al-Qadr Ma Tafseer Siratul Jinan.MP3",
   98: "098 - Surah Al-Bayyinah Ma Tafseer Siratul Jinan.mp3",
+  99: "099 - Surah Az-Zilzaal Ma Tafseer Siratul Jinan.MP3",
+  100: "100 - Surah Al-Aadiyaat Ma Tafseer Siratul Jinan.MP3",
+  101: "101 - Surah Al-Qaariah Ma Tafseer Siratul Jinan.MP3",
+  102: "102 - Surah At-Takasur Ma Tafseer Siratul Jinan.MP3",
+  103: "103 - Surah Al-Asr Ma Tafseer Siratul Jinan.MP3",
   104: "104 - Surah Al-Humazah Ma Tafseer Siratul Jinan.mp3",
   105: "105 - Surah Al-Feel Ma Tafseer Siratul Jinan.mp3",
   106: "106 - Surah Quraysh Ma Tafseer Siratul Jinan.mp3",
@@ -241,6 +274,15 @@ export function getSurahTafseerAudioUrl(surahNumber: number): string | null {
     return `https://archive.org/download/tilawatequranmatafseersiratuljinan/${encodeURIComponent(f)}`;
   }
   return getSurahKanzulImanAudioUrl(surahNumber);
+}
+
+/**
+ * Returns genuine human Urdu audio for an Ayah with high-speed CDN fallback
+ */
+export function getAyahTafseerAudioUrl(surahNumber: number, ayahNumber: number): string {
+  const surahTafseer = getSurahTafseerAudioUrl(surahNumber);
+  if (surahTafseer) return surahTafseer;
+  return getAyahUrduAudioUrl(surahNumber, ayahNumber);
 }
 
 export const QURAN_WISDOM_COLLECTION: QuranAyahWisdomCard[] = [

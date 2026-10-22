@@ -4,9 +4,6 @@ export default function Document() {
   return (
     <Html lang="en" dir="ltr">
       <Head>
-        {/* Responsive Mobile Viewport */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
-
         {/* Favicon & PWA Manifest */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />

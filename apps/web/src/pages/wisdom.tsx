@@ -9,6 +9,7 @@ import {
   QuranAyahWisdomCard,
   getAyahAudioUrl,
   getAyahUrduAudioUrl,
+  getSurahTafseerAudioUrl,
 } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { showAmalToast } from '../components/Toast';
@@ -90,56 +91,53 @@ export default function QuranWisdomDedicatedPage() {
     }
   };
 
-  // Tafseer Spoken Audio with foolproof fallback
+  // Tafseer Studio Audio: Plays authentic Dawat-e-Islami Sirat-ul-Jinan / Kanz-ul-Iman
   const handlePlayTafseerAudio = (card: QuranAyahWisdomCard) => {
     const key = `${card.surahNumber}:${card.ayahNumber}:TAFSEER`;
     if (activeAudioKey === key && isPlayingAudio) {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
       if (audioRef.current) audioRef.current.pause();
       setActiveAudioKey(null);
       setIsPlayingAudio(false);
       return;
     }
 
-    // Try SpeechSynthesis with voice unfreeze
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.resume();
-        const textToSpeak = `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ سورت ${card.surahNameUrdu}، آیت ${card.ayahNumber}۔ ${card.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${card.tadabburPrompt.questionUrdu}`;
-        const utter = new SpeechSynthesisUtterance(textToSpeak);
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find((v) =>
-          v.lang.startsWith('ur') || v.lang.startsWith('ar') || v.lang.startsWith('hi')
-        );
-        if (preferredVoice) utter.voice = preferredVoice;
-        utter.lang = preferredVoice?.lang || 'ur-PK';
-        utter.rate = 0.9;
-
-        utter.onend = () => {
-          setActiveAudioKey(null);
-          setIsPlayingAudio(false);
-        };
-
-        utter.onerror = () => {
-          // Fallback to playing human Urdu recitation
-          handlePlayAyahAudio(card, 'URDU');
-        };
-
-        window.speechSynthesis.speak(utter);
-        setActiveAudioKey(key);
-        setIsPlayingAudio(true);
-        showAmalToast(`تفسیر خزائن العرفان (آیت ${card.ayahNumber}) کی تفسیری حکمت جاری ہے`, 'info');
-        return;
-      } catch (err) {
-        console.warn('SpeechSynthesis failed, falling back to human Urdu audio:', err);
-      }
+    if (audioRef.current) {
+      audioRef.current.pause();
     }
 
-    // Direct fallback to EveryAyah Urdu recitation
-    handlePlayAyahAudio(card, 'URDU');
+    const tafseerUrl = getSurahTafseerAudioUrl(card.surahNumber);
+    const audioToPlay = tafseerUrl || getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+
+    if (audioRef.current) {
+      audioRef.current.src = audioToPlay;
+      audioRef.current.play().then(() => {
+        setActiveAudioKey(key);
+        setIsPlayingAudio(true);
+        showAmalToast(
+          tafseerUrl
+            ? `سورۃ ${card.surahNameUrdu}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`
+            : `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
+          'info'
+        );
+      }).catch((err) => {
+        console.warn('Tafseer remote error, falling back to Ayah Urdu audio:', err);
+        // Fallback to high-speed EveryAyah Urdu recitation
+        const fallbackUrl = getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+        if (audioRef.current) {
+          audioRef.current.src = fallbackUrl;
+          audioRef.current.play().then(() => {
+            setActiveAudioKey(key);
+            setIsPlayingAudio(true);
+            showAmalToast(`سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): اردو تفسیری ترجمہ جاری ہے۔`, 'info');
+          }).catch((fallbackErr) => {
+            console.error('Final fallback error:', fallbackErr);
+            showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
+            setActiveAudioKey(null);
+            setIsPlayingAudio(false);
+          });
+        }
+      });
+    }
   };
 
   // Continuous Playback across all 42 Cards
@@ -210,15 +208,17 @@ export default function QuranWisdomDedicatedPage() {
 
       <Navigation />
 
-      {/* Hidden Audio Element */}
+      {/* Unconstrained Audio Element (Avoids mobile background suspension) */}
       <audio
         ref={audioRef}
+        preload="auto"
         onEnded={handleAudioEnded}
         onError={() => {
-          showAmalToast('آڈیو پلے بیک میں عارضی تعطل پیش آیا۔', 'warning');
+          showAmalToast('آڈیو پلے بیک میں عارضی تعطل پیش آیا۔ دوبارہ کوشش کریں۔', 'warning');
           setIsPlayingAudio(false);
+          setActiveAudioKey(null);
         }}
-        style={{ display: 'none' }}
+        style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />
 
       <main style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>

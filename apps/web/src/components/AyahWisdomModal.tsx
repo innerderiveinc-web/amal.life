@@ -39,8 +39,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   const tafseerStudioUrl = getSurahTafseerAudioUrl(surahNumber);
 
   let audioSrc = '';
-  if (selectedAudioType === 'urdu' || selectedAudioType === 'tafseer') {
+  if (selectedAudioType === 'urdu') {
     audioSrc = getAyahUrduAudioUrl(surahNumber, ayahNumber);
+  } else if (selectedAudioType === 'tafseer') {
+    audioSrc = tafseerStudioUrl || getAyahUrduAudioUrl(surahNumber, ayahNumber);
   } else {
     audioSrc = getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
   }
@@ -66,38 +68,35 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   if (!isOpen) return null;
 
   const handleToggleSpeakTafseer = () => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      showAmalToast('آپ کے براؤزر میں آڈیو سپیچ سپورٹ دستیاب نہیں ہے۔', 'warning');
-      return;
-    }
-    if (isSpeakingTafseer) {
-      window.speechSynthesis.cancel();
-      setIsSpeakingTafseer(false);
-    } else {
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.resume();
-      const textToSpeak = wisdomCard
-        ? `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ سورت ${surahNameUrdu || ''}، آیت ${ayahNumber}۔ ${wisdomCard.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${wisdomCard.tadabburPrompt.questionUrdu}`
-        : 'تفسیری حکمت کی تفصیل';
-      const utter = new SpeechSynthesisUtterance(textToSpeak);
-      
-      const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find((v) => 
-        v.lang.startsWith('ur') || v.lang.startsWith('ar') || v.lang.startsWith('hi')
-      );
-      if (preferredVoice) {
-        utter.voice = preferredVoice;
-      }
-      utter.lang = preferredVoice?.lang || 'ur-PK';
-      utter.rate = playbackSpeed ? Math.max(0.7, Math.min(1.4, playbackSpeed * 0.9)) : 0.9;
-      utter.onend = () => setIsSpeakingTafseer(false);
-      utter.onerror = (e) => {
-        console.warn('Speech error:', e);
+    setSelectedAudioType('tafseer');
+    const targetUrl = tafseerStudioUrl || getAyahUrduAudioUrl(surahNumber, ayahNumber);
+    if (modalAudioRef.current) {
+      if (isSpeakingTafseer) {
+        modalAudioRef.current.pause();
         setIsSpeakingTafseer(false);
-      };
-      setIsSpeakingTafseer(true);
-      window.speechSynthesis.speak(utter);
-      showAmalToast('خزائن العرفان کی تفسیری عبارت کی باوقار قرأت شروع ہو گئی۔', 'info');
+      } else {
+        modalAudioRef.current.src = targetUrl;
+        modalAudioRef.current.play().then(() => {
+          setIsSpeakingTafseer(true);
+          showAmalToast(
+            tafseerStudioUrl
+              ? 'دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔'
+              : `آیت ${ayahNumber} کا مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
+            'info'
+          );
+        }).catch((e) => {
+          console.warn('Audio play error in modal, trying Ayah Urdu audio:', e);
+          const fallback = getAyahUrduAudioUrl(surahNumber, ayahNumber);
+          if (modalAudioRef.current) {
+            modalAudioRef.current.src = fallback;
+            modalAudioRef.current.play().then(() => {
+              setIsSpeakingTafseer(true);
+            }).catch(() => {
+              showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
+            });
+          }
+        });
+      }
     }
   };
 
@@ -336,13 +335,20 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               controls
               src={audioSrc}
               key={audioSrc}
+              onPlay={() => setIsSpeakingTafseer(selectedAudioType === 'tafseer')}
+              onPause={() => setIsSpeakingTafseer(false)}
+              onEnded={() => setIsSpeakingTafseer(false)}
               onError={() => {
                 if (selectedAudioType === 'tafseer') {
-                  showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ تفسیری عبارت سنی جا رہی ہے۔', 'info');
-                  handleToggleSpeakTafseer();
-                } else {
-                  showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔', 'warning');
+                  const fallback = getAyahUrduAudioUrl(surahNumber, ayahNumber);
+                  if (modalAudioRef.current && modalAudioRef.current.src !== fallback) {
+                    modalAudioRef.current.src = fallback;
+                    modalAudioRef.current.play().catch(() => {});
+                    showAmalToast('مستند اردو تفسیری ترجمہ جاری ہے۔', 'info');
+                    return;
+                  }
                 }
+                showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔', 'warning');
               }}
               style={{ width: '100%', height: 38, outline: 'none' }}
             />
@@ -426,9 +432,9 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             {/* Tafseer Narration Bar */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFBEB', padding: '8px 12px', borderRadius: 8, border: '1px solid #FDE68A' }}>
               <span style={{ fontSize: 11, color: '#78350F', fontWeight: 600 }}>
-                {selectedAudioType === 'tafseer' && tafseerStudioUrl
-                  ? '✓ سٹوڈیو اردو تفسیر دستیاب ہے (اوپر پلیئر میں سنیں)'
-                  : 'خزائن العرفان کی تفسیری عبارت کی صوتی قرأت:'}
+                {tafseerStudioUrl
+                  ? '✓ دعوتِ اسلامی صراط الجنان / کنز الایمان تفسیری آڈیو:'
+                  : 'مستند اردو ترجمہ و تفسیری قرأت (کنز الایمان):'}
               </span>
               <button
                 type="button"
@@ -447,7 +453,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                   gap: 4,
                 }}
               >
-                <span>{isSpeakingTafseer ? '⏹ بند کریں' : '🔊 تفسیری عبارت سنیں'}</span>
+                <span>{isSpeakingTafseer ? '⏹ موقوف کریں' : '🔊 صوتی تفسیر سنیں (Sirat-ul-Jinan)'}</span>
               </button>
             </div>
           </div>

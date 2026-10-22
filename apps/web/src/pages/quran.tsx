@@ -335,37 +335,30 @@ export default function QuranWisdomPage() {
     handleStopAudio();
     setActiveTafseerCardKey(cardKey);
 
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.resume();
-        const textToSpeak = `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ سورت ${card.surahNameUrdu}، آیت ${card.ayahNumber}۔ ${card.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${card.tadabburPrompt.questionUrdu}`;
-        const utter = new SpeechSynthesisUtterance(textToSpeak);
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find((v) => 
-          v.lang.startsWith('ur') || v.lang.startsWith('ar') || v.lang.startsWith('hi')
+    const tafseerUrl = getSurahTafseerAudioUrl(card.surahNumber);
+    const audioUrl = tafseerUrl || getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+
+    if (tafseerAudioRef.current) {
+      tafseerAudioRef.current.src = audioUrl;
+      tafseerAudioRef.current.playbackRate = playbackSpeed;
+      tafseerAudioRef.current.play().then(() => {
+        showAmalToast(
+          tafseerUrl
+            ? `سورۃ ${card.surahNameUrdu}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`
+            : `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
+          'info'
         );
-        if (preferredVoice) utter.voice = preferredVoice;
-        utter.lang = preferredVoice?.lang || 'ur-PK';
-        utter.rate = playbackSpeed ? Math.max(0.7, Math.min(1.4, playbackSpeed * 0.9)) : 0.9;
-
-        utter.onend = () => {
-          setActiveTafseerCardKey(null);
-        };
-        utter.onerror = (e) => {
-          console.warn('Speech error:', e);
-          setActiveTafseerCardKey(null);
-        };
-
-        window.speechSynthesis.speak(utter);
-        showAmalToast(`تفسیر خزائن العرفان (آیت ${card.ayahNumber}) کی صوتی تلاوت شروع ہو گئی`, 'info');
-      } catch (err) {
-        console.error('Failed to trigger speech synthesis:', err);
-        setActiveTafseerCardKey(null);
-        showAmalToast('معذرت! اس ڈیوائس پر تفسیر آڈیو کی سہولت فعال نہیں ہو سکی۔', 'warning');
-      }
-    } else {
-      showAmalToast('معذرت! آپ کے براؤزر میں آڈیو تقریر کی سہولت دستیاب نہیں ہے۔', 'warning');
+      }).catch((err) => {
+        console.warn('Tafseer play error, trying Ayah Urdu audio:', err);
+        const fallback = getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
+        if (tafseerAudioRef.current) {
+          tafseerAudioRef.current.src = fallback;
+          tafseerAudioRef.current.play().catch(() => {
+            showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔', 'warning');
+            setActiveTafseerCardKey(null);
+          });
+        }
+      });
     }
   };
 
@@ -385,35 +378,19 @@ export default function QuranWisdomPage() {
     setAudioSyncMode('TAFSEER_CONTINUOUS');
     setActiveTafseerCardKey(`${currentCard.surahNumber}:${currentCard.ayahNumber}`);
 
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.resume();
-        const textToSpeak = `خزائن العرفان، صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی۔ سورت ${currentCard.surahNameUrdu}، آیت ${currentCard.ayahNumber}۔ ${currentCard.tafseerKhazainUlIrfan.excerptUrdu}۔ تدبر کا سوال: ${currentCard.tadabburPrompt.questionUrdu}`;
-        const utter = new SpeechSynthesisUtterance(textToSpeak);
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find((v) => 
-          v.lang.startsWith('ur') || v.lang.startsWith('ar') || v.lang.startsWith('hi')
-        );
-        if (preferredVoice) utter.voice = preferredVoice;
-        utter.lang = preferredVoice?.lang || 'ur-PK';
-        utter.rate = playbackSpeed ? Math.max(0.7, Math.min(1.4, playbackSpeed * 0.9)) : 0.9;
-        
-        utter.onend = () => {
-          handlePlayContinuousTafseer(cardsToPlay, startIndex + 1);
-        };
-        utter.onerror = (e) => {
-          console.warn('Continuous tafseer error:', e);
-          setActiveTafseerCardKey(null);
-          setContinuousTafseerIndex(null);
-        };
-        window.speechSynthesis.speak(utter);
-        showAmalToast(`خزائن العرفان تفسیری بیان: کارڈ ${startIndex + 1} از ${cardsToPlay.length} سنا جا رہا ہے...`, 'info');
-      } catch (err) {
-        console.warn('Speech error:', err);
-        setActiveTafseerCardKey(null);
-        setContinuousTafseerIndex(null);
-      }
+    const audioUrl = getAyahUrduAudioUrl(currentCard.surahNumber, currentCard.ayahNumber);
+    if (tafseerAudioRef.current) {
+      tafseerAudioRef.current.src = audioUrl;
+      tafseerAudioRef.current.playbackRate = playbackSpeed;
+      tafseerAudioRef.current.onended = () => {
+        handlePlayContinuousTafseer(cardsToPlay, startIndex + 1);
+      };
+      tafseerAudioRef.current.play().then(() => {
+        showAmalToast(`اردو ترجمہ و حکمت: کارڈ ${startIndex + 1} از ${cardsToPlay.length} سنا جا رہا ہے...`, 'info');
+      }).catch((e) => {
+        console.warn('Continuous tafseer error:', e);
+        handlePlayContinuousTafseer(cardsToPlay, startIndex + 1);
+      });
     }
   };
 
@@ -529,19 +506,21 @@ export default function QuranWisdomPage() {
 
       <Navigation />
 
-      {/* Hidden Audio Elements for continuous Tilawat, Kanz-ul-Iman, and Tafseer streams */}
+      {/* Audio Elements with unconstrained layout (Prevents mobile background pausing) */}
       <audio
         ref={audioRef}
+        preload="auto"
         onEnded={handleAyahAudioEnded}
         onError={(e) => {
           console.warn('Ayah audio element error:', e);
           showAmalToast('آڈیو لوڈ کرنے میں عارضی تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
           setIsPlayingPaused(true);
         }}
-        style={{ display: 'none' }}
+        style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />
       <audio
         ref={surahWideAudioRef}
+        preload="auto"
         onEnded={() => setSurahWideAudioType(null)}
         onError={(e) => {
           console.warn('Surah wide audio error, falling back to sync mode:', e);
@@ -549,10 +528,11 @@ export default function QuranWisdomPage() {
           setAudioSyncMode('TILAWAT_URDU_SYNC');
           handlePlayAyahAudio(1, 'ARABIC');
         }}
-        style={{ display: 'none' }}
+        style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />
       <audio
         ref={tafseerAudioRef}
+        preload="auto"
         onEnded={() => {
           setActiveTafseerCardKey(null);
           setSurahWideAudioType(null);
@@ -561,9 +541,9 @@ export default function QuranWisdomPage() {
           console.warn('Tafseer audio error:', e);
           setActiveTafseerCardKey(null);
           setSurahWideAudioType(null);
-          showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ براہِ راست تفسیری عبارت سنیں۔', 'info');
+          showAmalToast('سٹوڈیو آڈیو ریموٹ سرور تعطل کا شکار ہے۔ اردو ترجمہ جاری ہے۔', 'info');
         }}
-        style={{ display: 'none' }}
+        style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />
 
       <main style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
