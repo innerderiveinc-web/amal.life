@@ -218,6 +218,10 @@ export function getSurahKanzulImanAudioUrl(surahNumber: number): string | null {
  * Available Studio Tafseer Audio Files (Juz 'Amma collection)
  */
 const SURAH_TAFSEER_FILES: Record<number, string> = {
+  78: "078 - Surah An Naba Ma Tafseer Siratul Jinan.MP3",
+  87: "087 - Surah Al-Ala Ma Tafseer Siratul Jinan.MP3",
+  89: "089 - Surah Al-Fajr Ma Tafseer Siratul Jinan.MP3",
+  93: "093 - Surah Ad-Duha Ma Tafseer Siratul Jinan.MP3",
   98: "098 - Surah Al-Bayyinah Ma Tafseer Siratul Jinan.mp3",
   104: "104 - Surah Al-Humazah Ma Tafseer Siratul Jinan.mp3",
   105: "105 - Surah Al-Feel Ma Tafseer Siratul Jinan.mp3",
@@ -1651,6 +1655,309 @@ export const QURAN_WISDOM_COLLECTION: QuranAyahWisdomCard[] = [
       classicalSource: "بہارِ شریعت، نفل نمازیں",
       classification: 'MUSTAHABB_SUNNAH',
       actionDescriptionUrdu: "دو رکعت نفل شکرانہ ادا کریں اور اللہ کی دی ہوئی نعمتِ صحت و وقت کو کسی نافرمانی میں ضائع نہ کرنے کا عزم کریں۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 78: AN-NABA — THE SOLEMN MAJESTY OF THE DAY OF ACCOUNT
+  // =========================================================================
+  {
+    surahNumber: 78,
+    ayahNumber: 38,
+    surahNameArabic: 'النَّبَإ',
+    surahNameTransliterated: 'An-Naba',
+    surahNameUrdu: 'سورۃ النباء',
+    revelationType: 'MECCAN',
+    textArabic: 'يَوْمَ يَقُومُ الرُّوحُ وَالْمَلَائِكَةُ صَفًّا ۖ لَّا يَتَكَلَّمُونَ إِلَّا مَنْ أَذِنَ لَهُ الرَّحْمَٰنُ وَقَالَ صَوَابًا',
+    tarjumaKanzulIman: 'جس دن روح اور فرشتے صف باندھ کر کھڑے ہوں گے، کوئی نہ بولے گا مگر جسے رحمن نے اذن دیا اور اس نے درست بات کہی۔',
+    tarjumaEnglish: 'The Day that the Spirit and the angels will stand in rows, they will not speak except for one whom the Most Merciful permits, and he will say what is correct.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(78, 38, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(78, 38, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(78, 38),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۰۴۴",
+      excerptUrdu: "روح سے مراد حضرت جبرائیل علیہ السلام یا فرشتوں کی ایک عظیم فوج ہے۔ قیامت کی ہیبت کے سبب کوئی بغیر اجازت بات نہ کر سکے گا۔ اذن صرف ان کو ملے گا جنہیں اللہ تعالیٰ شفاعت کا حکم فرمائے گا جیسے انبیاء اور اولیاء، اور جنہوں نے دنیا میں کلمۂ توحید کی سچی گواہی دی ہوگی۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ اس دن صرف وہی کلام نفع دے گا جو حق اور توحید و اخلاص پر مبنی تھا، اور اذنِ شفاعت اللہ کے پیاروں کو عطا ہوگا۔",
+    },
+    crossReferenceBook: {
+      workTitle: "تنبیہ الغافلین (باب ذکر القیامۃ والشفاعۃ)",
+      author: "فقیہ ابو اللیث سمرقندی (وفات: ۳۷۳ھ)",
+      discipline: "TAZKIYAH",
+      citation: "تنبیہ الغافلین، ص ۲۸۰",
+      insightUrdu: "قیامت کے ۵۰ ہزار سال طویل دن کی ہولناکیوں سے وہی محفوظ رہے گا جس نے دنیا میں سچی بندگی، انصاف اور زبان کی حفاظت کو لازم پکڑا۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "جس دن ملائکہ بھی رب کے جلال کے سامنے صف باندھے خاموش ہوں گے، کیا میں نے اس دن کے حساب کے لیے کوئی سچا ذخیرہ تیار کیا ہے؟",
+      questionEnglish: "On the Day when even the Archangels stand in solemn silence before Divine Majesty, have I prepared truthful deeds worthy of being presented?",
+      theme: 'TIME_MANAGEMENT',
+    },
+    optionalAmal: {
+      titleUrdu: "زبان کی حفاظت اور کلمۂ توحید کی تجدید",
+      titleEnglish: "Guarding Speech and Renewing the Kalimah of Tawhid",
+      classicalSource: "تنبیہ الغافلین، باب حفظ اللسان",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "آج کے دن فضول اور لایعنی باتوں سے پرہیز کریں اور ۷۰ مرتبہ 'لَا إِلٰهَ إِلَّا اللهُ مُحَمَّدٌ رَّسُولُ اللهِ' پڑھ کر ایمان کی تجدید کریں۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 87: AL-A'LA — PURIFICATION & MINDFUL PRAYER
+  // =========================================================================
+  {
+    surahNumber: 87,
+    ayahNumber: 14,
+    surahNameArabic: 'الأَعْلَى',
+    surahNameTransliterated: "Al-A'la",
+    surahNameUrdu: 'سورۃ الاعلیٰ',
+    revelationType: 'MECCAN',
+    textArabic: 'قَدْ أَفْلَحَ مَن تَزَكَّىٰ',
+    tarjumaKanzulIman: 'بیشک مراد کو پہنچا جو ستھرا ہوا۔',
+    tarjumaEnglish: 'He has certainly succeeded who purifies himself.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(87, 14, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(87, 14, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(87, 14),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۰۷۸",
+      excerptUrdu: "تزکیٰ کے معنی ہیں شرک اور معاصی سے پاک ہوا، یا صدقۂ فطر ادا کیا اور زکوٰۃ دی تاکہ مال اور نفس پاک ہو جائیں۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ باطنی پاکیزگی (اخلاقِ رذیلہ جیسے کبر، حسد اور ریا سے طہارت) ہی اصل فلاح اور ابدی کامیابی کی کنجی ہے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "بہارِ شریعت (حصہ پنجم: زکوٰۃ و صدقات)",
+      author: "صدر الشریعہ مفتی محمد امجد علی اعظمی (وفات: ۱۳۶۷ھ)",
+      discipline: "FIQH",
+      citation: "بہارِ شریعت، جلد ۱، ص ۹۰۲",
+      insightUrdu: "زکوٰۃ و صدقہ دینے سے مال کم نہیں ہوتا بلکہ پاک اور بابرکت ہوتا ہے اور دل میں مال کی محبت کی نجاست دھل جاتی ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میں نے اپنے دل کو کینہ، حسد، ریاکاری اور دنیا کی محبت جیسی باطنی نجاستوں سے پاک کرنے کی کوشش کی ہے؟",
+      questionEnglish: "Have I taken active steps today to cleanse my inner spiritual state from malice, envy, vanity, and transactional worldly attachments?",
+      theme: 'SALAH',
+    },
+    optionalAmal: {
+      titleUrdu: "تطہیرِ قلب و نیت کا محاسبہ",
+      titleEnglish: "Heart Purification and Intention Audit",
+      classicalSource: "احیاء علوم الدین، کتاب الاخلاص والصدق",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "اپنے دل کا جائزہ لیں اور اگر کسی مسلمان کے خلاف دل میں کینہ یا رنجش ہو تو اللہ کی رضا کی خاطر اسے معاف کر دیں۔",
+    },
+  },
+  {
+    surahNumber: 87,
+    ayahNumber: 15,
+    surahNameArabic: 'الأَعْلَى',
+    surahNameTransliterated: "Al-A'la",
+    surahNameUrdu: 'سورۃ الاعلیٰ',
+    revelationType: 'MECCAN',
+    textArabic: 'وَذَكَرَ اسْمَ رَبِّهِ فَصَلَّىٰ',
+    tarjumaKanzulIman: 'اور اپنے رب کا نام لے کر نماز پڑھی۔',
+    tarjumaEnglish: 'And mentions the name of his Lord and prays.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(87, 15, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(87, 15, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(87, 15),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۰۷۸",
+      excerptUrdu: "اپنے رب کی عظمت و جلال کا ذکر کیا، تکبیر کہی اور فرض نماز یا عید کی نماز ادا کی۔ نماز روح کی غذا اور بندگی کا سب سے اعلیٰ مظہر ہے۔",
+      scholarlyNote: "صدر الافاضل نے فرمایا کہ ذکر کے ساتھ نماز ادا کرنا مومن کی فلاح کی تکمیل ہے۔ نماز میں دل کا حاضر ہونا ہی اصل جان ہے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "بہارِ شریعت (حصہ سوم: نماز کا بیان)",
+      author: "صدر الشریعہ مفتی محمد امجد علی اعظمی (وفات: ۱۳۶۷ھ)",
+      discipline: "FIQH",
+      citation: "بہارِ شریعت، جلد ۱، ص ۴۵۰",
+      insightUrdu: "نماز دین کا ستون ہے، اور جو شخص خشوع و خضوع کے ساتھ اپنے رب کے حضور کھڑا ہوتا ہے اس کے تمام گناہ جھڑ جاتے ہیں۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میری نماز محض اعضاء کی حرکت ہے یا میں اپنے رب کی عظمت کے شعور کے ساتھ باحضور دل نماز ادا کرتا ہوں؟",
+      questionEnglish: "Is my prayer merely mechanical physical posture, or do I stand with an attentive heart cognizant of standing before the Lord of Majesty?",
+      theme: 'SALAH',
+    },
+    optionalAmal: {
+      titleUrdu: "نماز میں خشوع کی ۲ رکعت نفل تحیۃ الوضو",
+      titleEnglish: "Tahiyyat al-Wudu with Complete Inner Presence",
+      classicalSource: "بہارِ شریعت، نفل نمازیں",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "تازہ وضو کر کے دو رکعت نفل تحیۃ الوضو اس طرح ادا کریں کہ دھیان صرف اور صرف اللہ کی عظمت پر رہے۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 89: AL-FAJR — THE SERENE & REASSURED SOUL
+  // =========================================================================
+  {
+    surahNumber: 89,
+    ayahNumber: 27,
+    surahNameArabic: 'الفَجْر',
+    surahNameTransliterated: 'Al-Fajr',
+    surahNameUrdu: 'سورۃ الفجر',
+    revelationType: 'MECCAN',
+    textArabic: 'يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ',
+    tarjumaKanzulIman: 'اے اطمینان والی جان!',
+    tarjumaEnglish: '[To the righteous it will be said], "O reassured soul,"',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(89, 27, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(89, 27, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(89, 27),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۰۸۵",
+      excerptUrdu: "نفسِ مطمئنہ وہ نفس ہے جو اللہ کی توحید اور اس کے احکام پر جم گیا، شک و شبہ کی بیماریوں سے پاک ہو گیا اور تقدیرِ الٰہی پر راضی رہا۔",
+      scholarlyNote: "صدر الافاضل نقل فرماتے ہیں کہ موت کے وقت اور قیامت کے دن مومن صالح کو فرشتے اس پیارے خطاب سے نوازتے ہیں۔",
+    },
+    crossReferenceBook: {
+      workTitle: "کیمیائے سعادت (اصل چہارم: صفاتِ نفس)",
+      author: "امام غزالی (وفات: ۵۰۵ھ)",
+      discipline: "TAZKIYAH",
+      citation: "کیمیائے سعادت، ص ۴۲۰",
+      insightUrdu: "نفس کی تین حالتیں ہیں: امارہ (جو برائی کا حکم دیتا ہے)، لوامہ (جو گناہ پر ملامت کرتا ہے)، اور مطمئنہ (جو ذکرِ الٰہی سے سکون پا لیتا ہے اور طاعت پر قائم ہو جاتا ہے)۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میری روح گناہوں اور دنیا کی عارضی چمک سے بے قرار ہے، یا ذکرِ الٰہی اور طاعت کے ذریعے نفسِ مطمئنہ بننے کی جدوجہد کر رہی ہے؟",
+      questionEnglish: "Is my soul agitated by impulsive desires, or am I cultivating the tranquil soul that finds supreme rest only in Allah's remembrance?",
+      theme: 'IKHLAS',
+    },
+    optionalAmal: {
+      titleUrdu: "تزکیۂ نفس کا ۵ منٹ ذکر و مراقبہ",
+      titleEnglish: "5-Minute Soul Purification Meditation & Dhikr",
+      classicalSource: "کیمیائے سعادت، ریاضتِ نفس",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "عشاء کے بعد تنہائی میں ۵ منٹ کے لیے دل پر ہاتھ رکھ کر 'لَا إِلٰهَ إِلَّا اللهُ' کا مراقبہ کریں اور اپنے نفس کو برائیوں سے باز رہنے کی تلقین کریں۔",
+    },
+  },
+  {
+    surahNumber: 89,
+    ayahNumber: 28,
+    surahNameArabic: 'الفَجْر',
+    surahNameTransliterated: 'Al-Fajr',
+    surahNameUrdu: 'سورۃ الفجر',
+    revelationType: 'MECCAN',
+    textArabic: 'ارْجِعِي إِلَىٰ رَبِّكِ رَاضِيَةً مَّرْضِيَّةً',
+    tarjumaKanzulIman: 'اپنے رب کی طرف واپس چل یوں کہ تو اس سے راضی وہ تجھ سے راضی۔',
+    tarjumaEnglish: '"Return to your Lord, well-pleased and pleasing [to Him],"',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(89, 28, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(89, 28, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(89, 28),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۰۸۶",
+      excerptUrdu: "راضیہ کا مطلب ہے کہ اللہ کے دیے ہوئے ثواب اور انعامات پر دل سے خوش، اور مرضیہ کا مطلب ہے کہ اللہ اس کے اعمال اور بندگی سے راضی ہے۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ بندگی کی معراج یہ ہے کہ بندہ اپنے رب کے ہر فیصلے اور تقدیر پر راضی ہو جائے تاکہ رب اس سے راضی ہو جائے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "احیاء علوم الدین (کتاب المحبۃ والشوق والرضا)",
+      author: "امام غزالی (وفات: ۵۰۵ھ)",
+      discipline: "TAZKIYAH",
+      citation: "احیاء علوم الدین، جلد ۴، ص ۳۳۰",
+      insightUrdu: "رضا بالقضاء بندگی کا اعلیٰ ترین مقام ہے۔ جو مصیبت پر شکوہ نہ کرے اور نعمت پر خود پسندی میں نہ پڑے، اللہ اس سے راضی ہوتا ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میں زندگی کے ہر موڑ پر اللہ کی تقدیر اور فیصلوں پر راضی رہتا ہوں، یا شکوہ و شکایت میری عادت بن چکی ہے؟",
+      questionEnglish: "Do I actively accept Allah's decrees with serene contentment, or does complaining become my instinctive reaction to setbacks?",
+      theme: 'IKHLAS',
+    },
+    optionalAmal: {
+      titleUrdu: "رضا باللہ کا اقرار و ذکرِ استرجاع",
+      titleEnglish: "Daily Reaffirmation of Divine Contentment",
+      classicalSource: "حصنِ حصین، دعواتِ رضا",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "دن میں ۳ مرتبہ پڑھیں: 'رَضِيتُ بِاللَّهِ رَبًّا، وَبِالإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا' اور دل سے اس پر راضی ہوں۔",
+    },
+  },
+
+  // =========================================================================
+  // SURAH 93: AD-DUHA — DIVINE CARE & THE PROMISE OF SATISFACTION
+  // =========================================================================
+  {
+    surahNumber: 93,
+    ayahNumber: 3,
+    surahNameArabic: 'الضُّحَى',
+    surahNameTransliterated: 'Ad-Duha',
+    surahNameUrdu: 'سورۃ الضحیٰ',
+    revelationType: 'MECCAN',
+    textArabic: 'مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ',
+    tarjumaKanzulIman: 'تمہارے رب نے تمہیں نہ چھوڑا اور نہ ناپسند کیا۔',
+    tarjumaEnglish: 'Your Lord has not taken leave of you, nor has He detested [you].',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(93, 3, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(93, 3, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(93, 3),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۰۰",
+      excerptUrdu: "جب کچھ مدت وحی نازل نہ ہوئی تو مشرکین نے طعنہ دیا کہ ان کے رب نے انہیں چھوڑ دیا۔ اس پر یہ سورت نازل ہوئی جس میں اللہ تعالیٰ نے قسم فرما کر اپنے حبیب صلی اللہ علیہ واٰلہٖ وسلم کی رفعت اور اپنی دائمی عنایت کا اظہار فرمایا۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ ابتلاء اور ظاہری خاموشی کا مطلب اللہ کی ناراضگی نہیں ہوتی، بلکہ محبوب کی تربیت اور مزید قرب کی تیاری ہوتی ہے۔",
+    },
+    crossReferenceBook: {
+      workTitle: "احیاء علوم الدین (کتاب الصبر والشکر)",
+      author: "امام غزالی (وفات: ۵۰۵ھ)",
+      discipline: "TAZKIYAH",
+      citation: "احیاء علوم الدین، جلد ۴، ص ۷۴",
+      insightUrdu: "جب بندہ جان لے کہ اس کا رب اس پر ماں سے زیادہ مہربان ہے، تو وہ مصیبت و آزمائش کے لمحوں میں بھی بدگمانی سے بچتا ہے اور صبر و رضا کی چادر اوڑھ لیتا ہے۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "جب میری دعاؤں کی قبولیت میں تاخیر ہوتی ہے یا میں مشکل وقت سے گزرتا ہوں، تو کیا میں اللہ کی رحمت سے مایوس ہونے لگتا ہوں؟",
+      questionEnglish: "When my prayers seem unanswered or I face a difficult season, do I allow whispering doubts about Allah's care to enter my heart?",
+      theme: 'TAWAKKUL',
+    },
+    optionalAmal: {
+      titleUrdu: "مایوسی کے خاتمے اور شکرانے کی ۲ رکعت صلوۃ الشکر",
+      titleEnglish: "Two Rakat Prayer of Gratitude and Expelling Despair",
+      classicalSource: "احیاء علوم الدین، کتاب الصبر",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "تنہائی میں دو رکعت نفل ادا کریں اور اللہ کے احسانات کا شمار کر کے دل سے شکر ادا کریں، اور ہر قسم کی مایوسی سے استغفار کریں۔",
+    },
+  },
+  {
+    surahNumber: 93,
+    ayahNumber: 5,
+    surahNameArabic: 'الضُّحَى',
+    surahNameTransliterated: 'Ad-Duha',
+    surahNameUrdu: 'سورۃ الضحیٰ',
+    revelationType: 'MECCAN',
+    textArabic: 'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ',
+    tarjumaKanzulIman: 'اور بیشک قریب ہے کہ تمہارا رب تمہیں اتنا دے گا کہ تم راضی ہو جاؤ گے۔',
+    tarjumaEnglish: 'And your Lord is going to give you, and you will be satisfied.',
+    audioRecitation: {
+      alafasyUrl: getAyahAudioUrl(93, 5, 'alafasy'),
+      husaryUrl: getAyahAudioUrl(93, 5, 'husary'),
+      urduTarjumaUrl: getAyahUrduAudioUrl(93, 5),
+    },
+    tafseerKhazainUlIrfan: {
+      author: "صدر الافاضل علامہ مولانا سید محمد نعیم الدین مراد آبادی (وفات: ۱۳۶۷ھ)",
+      citation: "خزائن العرفان، ص ۱۱۰۱",
+      excerptUrdu: "یہ آیتِ کریمہ حضور پرنور صلی اللہ علیہ واٰلہٖ وسلم کے لیے قرآنِ مجید کی سب سے زیادہ امید افزا آیت ہے۔ حضرت ابن عباس رضی اللہ عنہما نے فرمایا کہ حضور کی رضا یہ ہے کہ آپ کی امت میں سے ایک بھی شخص جہنم میں نہ رہے۔",
+      scholarlyNote: "صدر الافاضل فرماتے ہیں کہ دنیا میں فتح و نصرت اور آخرت میں شفاعتِ کبریٰ اور درجاتِ عالیہ سب اس وعدۂ رضا میں داخل ہیں۔",
+    },
+    crossReferenceBook: {
+      workTitle: "مرآۃ المناجیح شرح مشکوٰۃ المصابیح (کتاب الفضائل و الشفاعۃ)",
+      author: "حکیم الامت مفتی احمد یار خان نعیمی (وفات: ۱۳۹۱ھ)",
+      discipline: "HADITH_COMMENTARY",
+      citation: "مرآۃ المناجیح، جلد ۸، ص ۲۱۵",
+      insightUrdu: "سرکارِ دو عالم صلی اللہ علیہ واٰلہٖ وسلم کی رضا اللہ کی رضا ہے اور اللہ تعالیٰ قیامت کے دن اپنے حبیب کو شفاعت کے ذریعے راضی فرمائے گا۔",
+    },
+    tadabburPrompt: {
+      questionUrdu: "کیا میرا دل اللہ کے اس وعدے پر مطمئن ہے کہ صبر کے بعد ملنے والا اجر ہر عارضی محرومی کی تلافی کر دے گا؟",
+      questionEnglish: "Is my heart deeply anchored in Allah's promise that divine compensation in eternity will far exceed every worldly loss?",
+      theme: 'TAWAKKUL',
+    },
+    optionalAmal: {
+      titleUrdu: "درودِ شریعت کی کثرت برائے اطمینانِ قلب",
+      titleEnglish: "Salawat Recitation for Inner Peace and Serenity",
+      classicalSource: "الدر المنضود فی الصلاۃ والسلام علی صاحب المقام المحمود",
+      classification: 'MUSTAHABB_SUNNAH',
+      actionDescriptionUrdu: "آج کے دن ۱۰۰ مرتبہ درودِ پاک (اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلِّمْ) پڑھ کر سکونِ قلب اور شفاعت کی دعا مانگیں۔",
     },
   },
 ];

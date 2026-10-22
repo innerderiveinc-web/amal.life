@@ -9,6 +9,7 @@ import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
 import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahKanzulImanAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
+import { showAmalToast } from '../components/Toast';
 
 type ExperienceMode = 'QUICK_2MIN' | 'DAILY_5MIN' | 'DEEP_15MIN';
 type AudioSyncMode = 'TILAWAT_URDU_SYNC' | 'TILAWAT_ONLY';
@@ -36,9 +37,83 @@ export default function QuranWisdomPage() {
   const [activeTafseerCardKey, setActiveTafseerCardKey] = useState<string | null>(null);
   const [surahWideAudioType, setSurahWideAudioType] = useState<'KANZUL_IMAN' | 'TAFSEER' | null>(null);
 
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
+  const [isSurahCachedOffline, setIsSurahCachedOffline] = useState<boolean>(false);
+  const [isCachingSurah, setIsCachingSurah] = useState<boolean>(false);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const surahWideAudioRef = useRef<HTMLAudioElement | null>(null);
   const tafseerAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Sync playback rate across all active audio elements
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.playbackRate = playbackSpeed;
+    if (surahWideAudioRef.current) surahWideAudioRef.current.playbackRate = playbackSpeed;
+    if (tafseerAudioRef.current) tafseerAudioRef.current.playbackRate = playbackSpeed;
+  }, [playbackSpeed]);
+
+  // Check if current Surah Kanz-ul-Iman / Tilawat audio is cached offline
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'caches' in window) {
+      const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
+      if (kanzulImanUrl) {
+        caches.open('amal-quran-audio-v1').then((cache) => {
+          cache.match(kanzulImanUrl).then((res) => {
+            setIsSurahCachedOffline(!!res);
+          });
+        }).catch(() => {});
+      } else {
+        setIsSurahCachedOffline(false);
+      }
+    }
+  }, [selectedSurahNumber]);
+
+  const handleCacheSurahOffline = async () => {
+    if (typeof window === 'undefined' || !('caches' in window)) {
+      showAmalToast('آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔', 'warning');
+      return;
+    }
+    setIsCachingSurah(true);
+    try {
+      const cache = await caches.open('amal-quran-audio-v1');
+      const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
+      if (kanzulImanUrl) {
+        await cache.add(kanzulImanUrl);
+      }
+      // Also cache first 3 verses of the selected Surah
+      const p1 = cache.add(getAyahAudioUrl(selectedSurahNumber, 1, selectedQari)).catch(() => {});
+      const p2 = cache.add(getAyahUrduAudioUrl(selectedSurahNumber, 1)).catch(() => {});
+      await Promise.all([p1, p2]);
+      
+      setIsSurahCachedOffline(true);
+      showAmalToast('سورۃ مبارکہ کی آڈیو کامیابی سے آف لائن محفوظ کر لی گئی ہے! (Surah cached offline)', 'success');
+    } catch (e) {
+      console.warn('Failed to cache surah audio:', e);
+      showAmalToast('آف لائن محفوظ کرنے میں خرابی پیش آئی۔', 'warning');
+    } finally {
+      setIsCachingSurah(false);
+    }
+  };
+
+  const handleDownloadSurahAudio = () => {
+    const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
+    if (!kanzulImanUrl) {
+      showAmalToast('اس سورت کا مکمل آڈیو لنک دستیاب نہیں ہے۔', 'warning');
+      return;
+    }
+    try {
+      const a = document.createElement('a');
+      a.href = kanzulImanUrl;
+      a.download = `Amal_Surah_${selectedSurahNumber}_KanzulIman.mp3`;
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showAmalToast('مکمل سورت کی آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔', 'success');
+    } catch (e) {
+      showAmalToast('ڈاؤنلوڈ میں خرابی پیش آئی۔', 'warning');
+    }
+  };
 
   // Load Bookmarks from LocalStorage
   useEffect(() => {
@@ -1196,6 +1271,77 @@ export default function QuranWisdomPage() {
                   </button>
                 )}
 
+                {/* Offline Caching & Download Buttons */}
+                <button
+                  type="button"
+                  onClick={handleCacheSurahOffline}
+                  disabled={isCachingSurah}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: 8,
+                    backgroundColor: isSurahCachedOffline ? '#DCFCE7' : '#F1F5F9',
+                    color: isSurahCachedOffline ? '#166534' : '#334155',
+                    border: '1px solid',
+                    borderColor: isSurahCachedOffline ? '#86EFAC' : '#CBD5E1',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: isCachingSurah ? 'wait' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                  }}
+                  title="اس سورت کی آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
+                >
+                  <span>{isSurahCachedOffline ? '✓' : '📥'}</span>
+                  <span>{isCachingSurah ? 'محفوظ ہو رہا ہے...' : isSurahCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن کیش'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleDownloadSurahAudio}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    backgroundColor: '#FFFFFF',
+                    color: '#334155',
+                    border: '1px solid #CBD5E1',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  title="سورت کی MP3 فائل اپنے کمپیوٹر یا موبائل میں ڈاؤنلوڈ کریں"
+                >
+                  <span>💾</span>
+                  <span>MP3 ڈاؤنلوڈ</span>
+                </button>
+
+                {/* Playback Speed Selector */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, backgroundColor: '#F8FAFC', padding: '3px 6px', borderRadius: 8, border: '1px solid #E2E8F0' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>رفتار:</span>
+                  {[0.75, 1, 1.25, 1.5].map((speed) => (
+                    <button
+                      key={speed}
+                      type="button"
+                      onClick={() => setPlaybackSpeed(speed)}
+                      style={{
+                        padding: '2px 6px',
+                        borderRadius: 6,
+                        fontSize: 10,
+                        fontWeight: 800,
+                        border: 'none',
+                        backgroundColor: playbackSpeed === speed ? '#166534' : 'transparent',
+                        color: playbackSpeed === speed ? '#FFFFFF' : '#64748B',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {speed}x
+                    </button>
+                  ))}
+                </div>
+
                 {/* Roman Urdu Toggle Button */}
                 <button
                   onClick={() => setShowRomanUrdu(!showRomanUrdu)}
@@ -1594,20 +1740,20 @@ export default function QuranWisdomPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
               <button
                 onClick={() => {
-                  if (playingAyahNumber > 1) {
+                  if (playingAyahNumber !== null && playingAyahNumber > 1) {
                     handlePlayAyahAudio(playingAyahNumber - 1, 'ARABIC');
                   }
                 }}
-                disabled={playingAyahNumber <= 1}
+                disabled={playingAyahNumber === null || playingAyahNumber <= 1}
                 style={{
                   width: 38,
                   height: 38,
                   borderRadius: '50%',
-                  backgroundColor: playingAyahNumber <= 1 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                  color: playingAyahNumber <= 1 ? '#6B7280' : '#FFFFFF',
+                  backgroundColor: (playingAyahNumber === null || playingAyahNumber <= 1) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                  color: (playingAyahNumber === null || playingAyahNumber <= 1) ? '#6B7280' : '#FFFFFF',
                   border: 'none',
                   fontSize: 14,
-                  cursor: playingAyahNumber <= 1 ? 'not-allowed' : 'pointer',
+                  cursor: (playingAyahNumber === null || playingAyahNumber <= 1) ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1618,7 +1764,15 @@ export default function QuranWisdomPage() {
               </button>
 
               <button
-                onClick={() => handlePlayAyahAudio(playingAyahNumber, currentAudioSegment)}
+                onClick={() => {
+                  if (playingAyahNumber !== null) {
+                    handlePlayAyahAudio(playingAyahNumber, currentAudioSegment);
+                  } else if (surahWideAudioType === 'KANZUL_IMAN') {
+                    handlePlaySurahKanzulIman();
+                  } else if (surahWideAudioType === 'TAFSEER') {
+                    handlePlaySurahTafseer();
+                  }
+                }}
                 style={{
                   width: 48,
                   height: 48,
@@ -1640,20 +1794,20 @@ export default function QuranWisdomPage() {
 
               <button
                 onClick={() => {
-                  if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
+                  if (playingAyahNumber !== null && currentSurah && playingAyahNumber < currentSurah.verses.length) {
                     handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
                   }
                 }}
-                disabled={!currentSurah || playingAyahNumber >= currentSurah.verses.length}
+                disabled={playingAyahNumber === null || !currentSurah || playingAyahNumber >= currentSurah.verses.length}
                 style={{
                   width: 38,
                   height: 38,
                   borderRadius: '50%',
-                  backgroundColor: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
-                  color: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? '#6B7280' : '#FFFFFF',
+                  backgroundColor: (playingAyahNumber === null || !currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.2)',
+                  color: (playingAyahNumber === null || !currentSurah || playingAyahNumber >= currentSurah.verses.length) ? '#6B7280' : '#FFFFFF',
                   border: 'none',
                   fontSize: 14,
-                  cursor: (!currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'not-allowed' : 'pointer',
+                  cursor: (playingAyahNumber === null || !currentSurah || playingAyahNumber >= currentSurah.verses.length) ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1664,8 +1818,55 @@ export default function QuranWisdomPage() {
               </button>
             </div>
 
-            {/* Right: Audio Sync Mode Switch & Wisdom & Close */}
+            {/* Right: Audio Speed, Sync Mode Switch, Cache, Wisdom & Close */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              {/* Playback Speed Pill Group */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 2, backgroundColor: 'rgba(255,255,255,0.12)', padding: '2px 4px', borderRadius: 16 }}>
+                {[0.75, 1, 1.25, 1.5].map((speed) => (
+                  <button
+                    key={speed}
+                    type="button"
+                    onClick={() => setPlaybackSpeed(speed)}
+                    style={{
+                      padding: '2px 6px',
+                      borderRadius: 10,
+                      fontSize: 10,
+                      fontWeight: 800,
+                      border: 'none',
+                      backgroundColor: playbackSpeed === speed ? '#10B981' : 'transparent',
+                      color: '#FFFFFF',
+                      cursor: 'pointer',
+                    }}
+                    title={`رفتار ${speed}x`}
+                  >
+                    {speed}x
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCacheSurahOffline}
+                disabled={isCachingSurah}
+                style={{
+                  padding: '6px 10px',
+                  borderRadius: 20,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  backgroundColor: isSurahCachedOffline ? '#065F46' : 'rgba(255,255,255,0.15)',
+                  color: '#FFFFFF',
+                  border: isSurahCachedOffline ? '1px solid #34D399' : 'none',
+                  cursor: isCachingSurah ? 'wait' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+                title="سورت کو آف لائن کیش کریں"
+              >
+                <span>{isSurahCachedOffline ? '✓' : '📥'}</span>
+                <span>{isSurahCachedOffline ? 'محفوظ ہے' : 'آف لائن کیش'}</span>
+              </button>
+
               <button
                 onClick={() => setAudioSyncMode((prev) => (prev === 'TILAWAT_URDU_SYNC' ? 'TILAWAT_ONLY' : 'TILAWAT_URDU_SYNC'))}
                 style={{
@@ -1687,7 +1888,7 @@ export default function QuranWisdomPage() {
               </button>
 
               <button
-                onClick={() => setActiveWisdomAyah({ surahNumber: selectedSurahNumber, ayahNumber: playingAyahNumber })}
+                onClick={() => setActiveWisdomAyah({ surahNumber: selectedSurahNumber, ayahNumber: playingAyahNumber || 1 })}
                 style={{
                   padding: '6px 12px',
                   borderRadius: 20,

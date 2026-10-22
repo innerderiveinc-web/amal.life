@@ -378,6 +378,54 @@ export const VERIFIED_ROMAN_QURAN: Record<string, RomanAyahData> = {
     transliteration: "Thumma latus'alunna yawma'idhin 'anin-na'īm",
     tarjumaRomanUrdu: "Phir beshak us din tum se na'ematon ki baabat zaroor poocha jayega.",
   },
+
+  // =========================================================================
+  // SURAH 78: AN-NABA
+  // =========================================================================
+  '78:38': {
+    transliteration: "Yawma yaqūmur-rūḥu wal-malā'ikatu ṣaffā, lā yatakallamūna illā man adhina lahur-Raḥmānu wa qāla ṣawābā",
+    tarjumaRomanUrdu: "Jis din rooh aur farishte saf baandh kar khade honge, koi na bolega magar jise Rehman ne izn diya aur us ne durust baat kahi.",
+  },
+
+  // =========================================================================
+  // SURAH 87: AL-A'LA
+  // =========================================================================
+  '87:14': {
+    transliteration: "Qad aflaḥa man tazakkā",
+    tarjumaRomanUrdu: "Beshak muraad ko pohncha jo suthra hua.",
+  },
+  '87:15': {
+    transliteration: "Wa dhakarasma Rabbihī faṣallā",
+    tarjumaRomanUrdu: "Aur apne Rab ka naam le kar namaz padhi.",
+  },
+
+  // =========================================================================
+  // SURAH 89: AL-FAJR
+  // =========================================================================
+  '89:27': {
+    transliteration: "Yā ayyatuhan-nafsul-muṭma'innah",
+    tarjumaRomanUrdu: "Aye itminan wali jaan!",
+  },
+  '89:28': {
+    transliteration: "Irji'ī ilā Rabbiki rāḍiyatam-marḍiyyah",
+    tarjumaRomanUrdu: "Apne Rab ki taraf wapas chal yun ke tu us se raazi woh tujh se raazi.",
+  },
+
+  // =========================================================================
+  // SURAH 93: AD-DUHA
+  // =========================================================================
+  '93:3': {
+    transliteration: "Mā wadda'aka Rabbuka wa mā qalā",
+    tarjumaRomanUrdu: "Tumhare Rab ne tumhein na chhodha aur na na-pasand kiya.",
+  },
+  '93:4': {
+    transliteration: "Wa lal-ākhiratu khayrul-laka minal-ūlā",
+    tarjumaRomanUrdu: "Aur beshak pichli tumhare liye pehli se behtar hai.",
+  },
+  '93:5': {
+    transliteration: "Wa lasawfa yu'ṭīka Rabbuka fatarḍā",
+    tarjumaRomanUrdu: "Aur beshak qareeb hai ke tumhara Rab tumhein itna dega ke tum raazi ho jao ge.",
+  },
 };
 
 /**
@@ -402,7 +450,7 @@ export function transliterateArabicToRoman(text: string): string {
   let out = '';
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
-    if (ARABIC_TO_ROMAN_MAP[ch] !== undefined) {
+    if (ch && ARABIC_TO_ROMAN_MAP[ch] !== undefined) {
       out += ARABIC_TO_ROMAN_MAP[ch];
     } else if (ch === ' ' || ch === '\n' || ch === '\t') {
       out += ' ';

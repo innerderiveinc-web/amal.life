@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { showAmalToast } from './Toast';
@@ -30,8 +30,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'minshawi' | 'urdu' | 'tafseer'>('alafasy');
   const [userWisdomNote, setUserWisdomNote] = useState('');
   const [isSpeakingTafseer, setIsSpeakingTafseer] = useState(false);
-
-  if (!isOpen) return null;
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
+  const [isCachedOffline, setIsCachedOffline] = useState<boolean>(false);
+  const [isCaching, setIsCaching] = useState<boolean>(false);
+  const modalAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const wisdomCard = getAyahWisdomCard(surahNumber, ayahNumber);
   const tafseerStudioUrl = getSurahTafseerAudioUrl(surahNumber);
@@ -45,9 +47,29 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
     audioSrc = getAyahAudioUrl(surahNumber, ayahNumber, selectedAudioType);
   }
 
+  // Check if current audio stream is already cached offline
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'caches' in window && audioSrc) {
+      caches.open('amal-quran-audio-v1').then((cache) => {
+        cache.match(audioSrc).then((res) => {
+          setIsCachedOffline(!!res);
+        });
+      }).catch(() => {});
+    }
+  }, [audioSrc, isOpen]);
+
+  // Sync playback speed to modal audio ref
+  useEffect(() => {
+    if (modalAudioRef.current) {
+      modalAudioRef.current.playbackRate = playbackSpeed;
+    }
+  }, [playbackSpeed, audioSrc]);
+
+  if (!isOpen) return null;
+
   const handleToggleSpeakTafseer = () => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      showAmalToast('آپ کے براؤزر میں آڈیو سپیچ سپورٹ دستیاب نہیں ہے۔', 'error');
+      showAmalToast('آپ کے براؤزر میں آڈیو سپیچ سپورٹ دستیاب نہیں ہے۔', 'warning');
       return;
     }
     if (isSpeakingTafseer) {
@@ -66,6 +88,42 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
       setIsSpeakingTafseer(true);
       window.speechSynthesis.speak(utter);
       showAmalToast('خزائن العرفان کی تفسیری عبارت کی باوقار قرأت شروع ہو گئی۔');
+    }
+  };
+
+  const handleCacheAudioOffline = async () => {
+    if (!audioSrc) return;
+    if (typeof window === 'undefined' || !('caches' in window)) {
+      showAmalToast('آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔', 'warning');
+      return;
+    }
+    setIsCaching(true);
+    try {
+      const cache = await caches.open('amal-quran-audio-v1');
+      await cache.add(audioSrc);
+      setIsCachedOffline(true);
+      showAmalToast('✓ آڈیو کامیابی سے آف لائن محفوظ ہو گئی! (Cached offline)', 'success');
+    } catch (e) {
+      console.warn('Cache error:', e);
+      showAmalToast('آف لائن محفوظ کرنے میں خرابی پیش آئی۔', 'warning');
+    } finally {
+      setIsCaching(false);
+    }
+  };
+
+  const handleDownloadAudioFile = () => {
+    if (!audioSrc) return;
+    try {
+      const a = document.createElement('a');
+      a.href = audioSrc;
+      a.download = `Amal_Quran_S${surahNumber}_A${ayahNumber}_${selectedAudioType}.mp3`;
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showAmalToast('آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔ (Download started)', 'success');
+    } catch (e) {
+      showAmalToast('ڈاؤنلوڈ میں خرابی پیش آئی۔', 'warning');
     }
   };
 
@@ -264,11 +322,88 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             </div>
 
             <audio
+              ref={modalAudioRef}
               controls
               src={audioSrc}
               key={audioSrc}
               style={{ width: '100%', height: 38, outline: 'none' }}
             />
+
+            {/* Audio Speed Controls & Offline Actions */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, padding: '4px 2px' }}>
+              {/* Playback Speed Buttons */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#166534' }}>رفتار (Speed):</span>
+                {[0.75, 1, 1.25, 1.5].map((speed) => (
+                  <button
+                    key={speed}
+                    type="button"
+                    onClick={() => setPlaybackSpeed(speed)}
+                    style={{
+                      padding: '2px 8px',
+                      borderRadius: 12,
+                      fontSize: 11,
+                      fontWeight: 800,
+                      border: '1px solid',
+                      borderColor: playbackSpeed === speed ? '#166534' : '#CBD5E1',
+                      backgroundColor: playbackSpeed === speed ? '#166534' : '#FFFFFF',
+                      color: playbackSpeed === speed ? '#FFFFFF' : '#475569',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {speed}x
+                  </button>
+                ))}
+              </div>
+
+              {/* Offline Cache & Download Controls */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <button
+                  type="button"
+                  onClick={handleCacheAudioOffline}
+                  disabled={isCaching}
+                  style={{
+                    padding: '3px 10px',
+                    borderRadius: 12,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid #10B981',
+                    backgroundColor: isCachedOffline ? '#DCFCE7' : '#FFFFFF',
+                    color: isCachedOffline ? '#166534' : '#047857',
+                    cursor: isCaching ? 'wait' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  title="اس آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
+                >
+                  <span>{isCachedOffline ? '✓' : '📥'}</span>
+                  <span>{isCaching ? 'محفوظ ہو رہا ہے...' : isCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن محفوظ کریں'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleDownloadAudioFile}
+                  style={{
+                    padding: '3px 10px',
+                    borderRadius: 12,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: '1px solid #CBD5E1',
+                    backgroundColor: '#FFFFFF',
+                    color: '#334155',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  title="MP3 فائل اپنے آلے میں ڈاؤنلوڈ کریں"
+                >
+                  <span>💾</span>
+                  <span>MP3 ڈاؤنلوڈ</span>
+                </button>
+              </div>
+            </div>
 
             {/* Tafseer Narration Bar */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFBEB', padding: '8px 12px', borderRadius: 8, border: '1px solid #FDE68A' }}>
