@@ -28,10 +28,13 @@ export const QuranScreen: React.FC = () => {
   const [selectedSurah, setSelectedSurah] = useState<QuranSurahMeta | null>(null);
   const [surahVerses, setSurahVerses] = useState<Array<{ ayahNumber: number; textArabic: string; textUrdu: string }>>([]);
   const [isLoadingVerses, setIsLoadingVerses] = useState<boolean>(false);
+  const [modalMode, setModalMode] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
+  const [focusedIndex, setFocusedIndex] = useState<number>(0);
 
   const openSurahReader = async (meta: QuranSurahMeta) => {
     setSelectedSurah(meta);
     setSurahVerses([]);
+    setFocusedIndex(0);
     setIsLoadingVerses(true);
     try {
       const res = await fetch(`https://api.alquran.cloud/v1/surah/${meta.number}/editions/quran-uthmani,ur.kanzuliman`);
@@ -265,7 +268,7 @@ export const QuranScreen: React.FC = () => {
           <View style={styles.modalOverlay}>
             <View style={[styles.modalContent, { maxHeight: '90%' }]}>
               <View style={styles.modalHeader}>
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text style={styles.modalTitle}>
                     {selectedSurah.nameArabic} ({selectedSurah.nameTransliterated})
                   </Text>
@@ -273,18 +276,116 @@ export const QuranScreen: React.FC = () => {
                     {selectedSurah.nameUrdu} • {selectedSurah.ayahsCount} آیات • ترجمہ کنز الایمان
                   </Text>
                 </View>
+
+                {/* View Mode Toggle Pill */}
+                <View style={{ flexDirection: 'row', backgroundColor: '#E2E8F0', borderRadius: 8, padding: 2, marginRight: 10 }}>
+                  <TouchableOpacity
+                    onPress={() => setModalMode('FOCUS')}
+                    style={{
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                      borderRadius: 6,
+                      backgroundColor: modalMode === 'FOCUS' ? '#064E3B' : 'transparent',
+                    }}
+                  >
+                    <Text style={{ fontSize: 11, fontWeight: '700', color: modalMode === 'FOCUS' ? '#FFF' : '#64748B' }}>
+                      ایک آیت
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setModalMode('SCROLL')}
+                    style={{
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                      borderRadius: 6,
+                      backgroundColor: modalMode === 'SCROLL' ? '#064E3B' : 'transparent',
+                    }}
+                  >
+                    <Text style={{ fontSize: 11, fontWeight: '700', color: modalMode === 'SCROLL' ? '#FFF' : '#64748B' }}>
+                      سکرول
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity onPress={() => setSelectedSurah(null)}>
                   <Text style={styles.modalClose}>✕</Text>
                 </TouchableOpacity>
               </View>
 
-              <ScrollView style={styles.modalBody}>
-                {isLoadingVerses ? (
-                  <View style={{ padding: 30, alignItems: 'center' }}>
-                    <Text style={{ color: '#065F46', fontWeight: 'bold' }}>سورت مبارکہ لوڈ ہو رہی ہے...</Text>
+              {isLoadingVerses ? (
+                <View style={{ padding: 40, alignItems: 'center' }}>
+                  <Text style={{ color: '#065F46', fontWeight: 'bold' }}>سورت مبارکہ لوڈ ہو رہی ہے...</Text>
+                </View>
+              ) : modalMode === 'FOCUS' && surahVerses.length > 0 ? (
+                /* SINGLE AYAH FOCUS & SLIDE MODE */
+                <View style={{ padding: 20 }}>
+                  {/* Counter and Progress */}
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                    <Text style={{ fontSize: 12, fontWeight: '700', color: '#064E3B', backgroundColor: '#DCFCE7', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10 }}>
+                      آیت مبارکہ {surahVerses[focusedIndex]?.ayahNumber} از {surahVerses.length}
+                    </Text>
+                    <Text style={{ fontSize: 11, color: '#64748B' }}>
+                      {Math.round(((focusedIndex + 1) / surahVerses.length) * 100)}% مکمل
+                    </Text>
                   </View>
-                ) : (
-                  surahVerses.map((v) => (
+
+                  {/* Main Verse Card */}
+                  <View style={{ backgroundColor: '#F8FAFC', borderRadius: 16, padding: 20, borderWidth: 1, borderColor: '#E2E8F0', marginBottom: 20 }}>
+                    <Text style={[styles.modalArabic, { textAlign: 'center', fontSize: 22, lineHeight: 38, marginBottom: 16 }]}>
+                      {surahVerses[focusedIndex]?.textArabic}
+                    </Text>
+
+                    <View style={{ backgroundColor: '#FFFBEB', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: '#FEF3C7' }}>
+                      <Text style={{ fontSize: 10, fontWeight: '800', color: '#92400E', textAlign: 'center', marginBottom: 4 }}>
+                        کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان):
+                      </Text>
+                      <Text style={[styles.modalUrdu, { textAlign: 'center', fontSize: 16, lineHeight: 28 }]}>
+                        {surahVerses[focusedIndex]?.textUrdu}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {/* Slider Buttons */}
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
+                    <TouchableOpacity
+                      onPress={() => setFocusedIndex((i) => Math.max(0, i - 1))}
+                      disabled={focusedIndex === 0}
+                      style={{
+                        flex: 1,
+                        paddingVertical: 12,
+                        borderRadius: 10,
+                        backgroundColor: focusedIndex === 0 ? '#F1F5F9' : '#FFFFFF',
+                        borderWidth: 1,
+                        borderColor: '#CBD5E1',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Text style={{ fontWeight: '700', color: focusedIndex === 0 ? '#94A3B8' : '#0F172A' }}>
+                        ⬅️ پچھلی آیت
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() => setFocusedIndex((i) => Math.min(surahVerses.length - 1, i + 1))}
+                      disabled={focusedIndex >= surahVerses.length - 1}
+                      style={{
+                        flex: 1,
+                        paddingVertical: 12,
+                        borderRadius: 10,
+                        backgroundColor: focusedIndex >= surahVerses.length - 1 ? '#F1F5F9' : '#064E3B',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Text style={{ fontWeight: '700', color: focusedIndex >= surahVerses.length - 1 ? '#94A3B8' : '#FFFFFF' }}>
+                        اگلی آیت ➔
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ) : (
+                /* CONTINUOUS SCROLL VIEW */
+                <ScrollView style={styles.modalBody}>
+                  {surahVerses.map((v) => (
                     <View key={v.ayahNumber} style={[styles.modalSection, { paddingBottom: 16, borderBottomWidth: 1, borderBottomColor: '#E2E8F0' }]}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
                         <Text style={{ fontSize: 11, fontWeight: '700', color: '#065F46' }}>آیت {v.ayahNumber}</Text>
@@ -292,9 +393,9 @@ export const QuranScreen: React.FC = () => {
                       <Text style={[styles.modalArabic, { textAlign: 'right', marginBottom: 8 }]}>{v.textArabic}</Text>
                       <Text style={[styles.modalUrdu, { textAlign: 'right', color: '#1E293B' }]}>{v.textUrdu}</Text>
                     </View>
-                  ))
-                )}
-              </ScrollView>
+                  ))}
+                </ScrollView>
+              )}
             </View>
           </View>
         </Modal>

@@ -260,6 +260,42 @@ export default function QuranWisdomPage() {
   const currentSurah = loadedSurahsCache[selectedSurahNumber] || loadedSurahsCache[1]!;
   const currentSurahMeta = ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || ALL_114_SURAHS[0]!;
 
+  // Reader View Mode: Continuous Scroll vs Single Ayah Focus Mode
+  const [viewMode, setViewMode] = useState<'SCROLL' | 'FOCUS'>('SCROLL');
+  const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
+
+  // Sync focused Ayah with audio playback so Focus Mode auto-advances seamlessly
+  useEffect(() => {
+    if (playingAyahNumber !== null) {
+      setFocusedAyahNumber(playingAyahNumber);
+    }
+  }, [playingAyahNumber]);
+
+  // Reset focused Ayah to 1 when a new Surah is selected
+  useEffect(() => {
+    setFocusedAyahNumber(1);
+  }, [selectedSurahNumber]);
+
+  // Keyboard navigation for Focus Mode (Arrow Right/Left)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+
+      if (viewMode === 'FOCUS') {
+        const totalVerses = currentSurah?.verses?.length || 1;
+        if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'j') {
+          e.preventDefault();
+          setFocusedAyahNumber((prev) => Math.min(totalVerses, prev + 1));
+        } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          setFocusedAyahNumber((prev) => Math.max(1, prev - 1));
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [viewMode, currentSurah]);
+
   // Filtered Surahs List
   const filteredSurahs = useMemo(() => {
     return ALL_114_SURAHS.filter((s) => {
@@ -967,6 +1003,10 @@ export default function QuranWisdomPage() {
             handlePlaySurahTilawatOnly={handlePlaySurahTilawatOnly}
             handlePlayAyahAudio={handlePlayAyahAudio}
             onOpenWisdomModal={(sNum, aNum) => setActiveWisdomAyah({ surahNumber: sNum, ayahNumber: aNum })}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
+            focusedAyahNumber={focusedAyahNumber}
+            setFocusedAyahNumber={setFocusedAyahNumber}
           />
         </section>
       </main>
