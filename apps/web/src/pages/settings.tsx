@@ -68,6 +68,45 @@ export default function SettingsPage() {
   // --- SYSTEM DIAGNOSTICS STATE ---
   const [apiHealth, setApiHealth] = useState<'checking' | 'online' | 'offline'>('checking');
   const [storageUsage, setStorageUsage] = useState<string>('Calculated on load');
+  const [cachingProgress, setCachingProgress] = useState<{ active: boolean; current: number; total: number } | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleSwMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'CACHE_PROGRESS') {
+        setCachingProgress({
+          active: true,
+          current: event.data.current,
+          total: event.data.total,
+        });
+      } else if (event.data?.type === 'CACHE_COMPLETE') {
+        setCachingProgress(null);
+        showAmalToast('تمام 114 سورتیں آف لائن استعمال کے لیے کامیابی سے کیش کر دی گئی ہیں!', 'success');
+      }
+    };
+    navigator.serviceWorker?.addEventListener('message', handleSwMessage);
+    return () => {
+      navigator.serviceWorker?.removeEventListener('message', handleSwMessage);
+    };
+  }, []);
+
+  const handlePrecacheAllQuran = () => {
+    if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) {
+      showAmalToast('سروس ورکر فعال نہیں ہے، برائے مہربانی صفحہ دوبارہ لوڈ کریں۔', 'info');
+      return;
+    }
+    setCachingProgress({ active: true, current: 0, total: 114 });
+    navigator.serviceWorker.controller.postMessage({ type: 'CACHE_ALL_SURAHS' });
+    showAmalToast('قرآنِ پاک کی تمام 114 سورتیں آف لائن ڈاؤن لوڈ ہونا شروع ہو گئی ہیں...', 'info');
+  };
+
+  const handleClearCache = async () => {
+    if (typeof window !== 'undefined' && 'caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+      showAmalToast('کیش کامیابی سے صاف کر دیا گیا۔ نیا ڈیٹا لوڈ کرنے کے لیے صفحہ ریفریش کریں۔', 'success');
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -1253,6 +1292,95 @@ export default function SettingsPage() {
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#111827', marginTop: 4 }}>
                       V1.0.0 (Production Release 2026.10.18)
                     </div>
+                  </div>
+                </div>
+
+                {/* Progressive Web App & Offline Corpus Controls */}
+                <div
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid #D1D5DB',
+                    borderRadius: 12,
+                    padding: 20,
+                    marginBottom: 24,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                  }}
+                >
+                  <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 800, color: '#111827', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span>📲</span>
+                    <span>PWA Installation & Offline Corpus Sentinel</span>
+                  </h3>
+                  <p style={{ margin: '0 0 16px', fontSize: 13, color: '#6B7280', lineHeight: 1.5 }}>
+                    AMAL OS can operate 100% offline without any internet connection. You can install it on your home screen or precache the complete Quran corpus locally on this device.
+                  </p>
+
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <button
+                      onClick={() => {
+                        if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-install'));
+                      }}
+                      style={{
+                        padding: '10px 18px',
+                        backgroundColor: '#064E3B',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        borderRadius: 8,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                      }}
+                    >
+                      <span>📲</span>
+                      <span>Install AMAL OS on Device (ہوم اسکرین)</span>
+                    </button>
+
+                    <button
+                      onClick={handlePrecacheAllQuran}
+                      disabled={Boolean(cachingProgress?.active)}
+                      style={{
+                        padding: '10px 18px',
+                        backgroundColor: cachingProgress?.active ? '#E5E7EB' : '#F0FDF4',
+                        color: cachingProgress?.active ? '#9CA3AF' : '#166534',
+                        border: '1px solid #86EFAC',
+                        borderRadius: 8,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: cachingProgress?.active ? 'default' : 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                      }}
+                    >
+                      <span>📥</span>
+                      <span>
+                        {cachingProgress?.active
+                          ? `Downloading: Surah ${cachingProgress.current}/${cachingProgress.total}...`
+                          : 'Precache All 114 Surahs for 100% Offline Access'}
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={handleClearCache}
+                      style={{
+                        padding: '10px 16px',
+                        backgroundColor: '#FEF2F2',
+                        color: '#991B1B',
+                        border: '1px solid #FECACA',
+                        borderRadius: 8,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                      }}
+                    >
+                      <span>🧹</span>
+                      <span>Clear Service Worker Cache</span>
+                    </button>
                   </div>
                 </div>
 

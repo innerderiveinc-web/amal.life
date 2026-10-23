@@ -1,13 +1,27 @@
-// AMAL OS — Service Worker (Offline Resilience, Audio Caching & PWA)
-const CACHE_NAME = 'amal-os-cache-v2';
+// AMAL OS — Service Worker (Offline Resilience, Sacred Corpus Caching & PWA)
+const CACHE_NAME = 'amal-os-cache-v3';
 const AUDIO_CACHE_NAME = 'amal-os-audio-v1';
+
 const PRECACHE_ASSETS = [
   '/',
   '/prayer',
   '/quran',
-  '/calendar',
+  '/wisdom',
   '/library',
+  '/adhkar',
+  '/sirah',
   '/tasbih',
+  '/vault',
+  '/family',
+  '/reflections',
+  '/ask',
+  '/calculator',
+  '/goals',
+  '/journeys',
+  '/decision-room',
+  '/hajj',
+  '/tajweed',
+  '/calendar',
   '/settings',
   '/about',
   '/manifest.json',
@@ -45,6 +59,39 @@ self.addEventListener('activate', (event) => {
     })
   );
   self.clients.claim();
+});
+
+// 4. Background Sacred Corpus Precache Messaging
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+
+  if (event.data && event.data.type === 'CACHE_ALL_SURAHS') {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then(async (cache) => {
+        const total = 114;
+        for (let i = 1; i <= total; i++) {
+          try {
+            const url = `/data/quran/surahs/${i}.json`;
+            const matched = await cache.match(url);
+            if (!matched) {
+              const res = await fetch(url);
+              if (res.ok) {
+                await cache.put(url, res);
+              }
+            }
+          } catch (e) {}
+          if (event.source) {
+            event.source.postMessage({ type: 'CACHE_PROGRESS', current: i, total });
+          }
+        }
+        if (event.source) {
+          event.source.postMessage({ type: 'CACHE_COMPLETE' });
+        }
+      })
+    );
+  }
 });
 
 self.addEventListener('fetch', (event) => {

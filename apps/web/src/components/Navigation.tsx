@@ -326,6 +326,32 @@ export const Navigation: React.FC = () => {
             </span>
           </button>
 
+          {/* Install PWA Button */}
+          <button
+            onClick={() => {
+              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-install'));
+            }}
+            aria-label="Install AMAL OS on your device or home screen"
+            style={{
+              border: '1px solid rgba(52, 211, 153, 0.4)',
+              borderRadius: 14,
+              padding: '3px 10px',
+              fontSize: 11,
+              fontWeight: 700,
+              backgroundColor: 'rgba(52, 211, 153, 0.15)',
+              color: '#6EE7B7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              transition: 'all 0.15s ease',
+            }}
+            title="Install AMAL OS on Home Screen / Desktop"
+          >
+            <span>📲</span>
+            <span>{currentLang === 'ur' ? 'ایپ انسٹال کریں' : 'Install App'}</span>
+          </button>
+
           {/* Settings */}
           <Link
             href="/settings"

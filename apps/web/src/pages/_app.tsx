@@ -10,6 +10,7 @@ import { ReaderSettingsModal } from '../components/ReaderSettingsModal';
 import { OnboardingWizardModal } from '../components/OnboardingWizardModal';
 import { BookmarksQuickDrawer } from '../components/BookmarksQuickDrawer';
 import { AuthModal } from '../components/AuthModal';
+import { PWAInstallModal } from '../components/PWAInstallModal';
 import { Footer } from '../components/Footer';
 import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isInstallOpen, setIsInstallOpen] = useState(false);
   const [isTahajjudMode, setIsTahajjudMode] = useState(false);
 
   useEffect(() => {
@@ -31,6 +33,18 @@ export default function App({ Component, pageProps }: AppProps) {
       setIsTahajjudMode(true);
       document.body.classList.add('theme-tahajjud');
     }
+
+    // PWA Install Prompt Handlers
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      (window as any).deferredPrompt = e;
+      window.dispatchEvent(new CustomEvent('amal-pwa-installable'));
+    };
+
+    const handleAppInstalled = () => {
+      (window as any).deferredPrompt = null;
+      window.dispatchEvent(new CustomEvent('amal-pwa-installed'));
+    };
 
     // Register Service Worker for offline PWA & Request Persistent Storage Protection
     if (typeof window !== 'undefined') {
@@ -49,11 +63,29 @@ export default function App({ Component, pageProps }: AppProps) {
         } catch {}
       }, 5000);
 
-      if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+      // Register Service Worker with intelligent update detection
+      if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then((reg) => {
+              reg.onupdatefound = () => {
+                const installingWorker = reg.installing;
+                if (installingWorker) {
+                  installingWorker.onstatechange = () => {
+                    if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      showAmalToast('نیا ورژن دستیاب ہے! ایپ خودکار طور پر اپڈیٹ ہو گئی ہے۔', 'info');
+                    }
+                  };
+                }
+              };
+            })
+            .catch(() => {});
         });
       }
+
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.addEventListener('appinstalled', handleAppInstalled);
     }
 
     // 2. Global Keyboard shortcuts:
@@ -84,6 +116,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const handleOpenOnboarding = () => setIsOnboardingOpen(true);
     const handleOpenBookmarks = () => setIsBookmarksOpen(true);
     const handleOpenAuth = () => setIsAuthOpen(true);
+    const handleOpenInstall = () => setIsInstallOpen(true);
     const handleToggleTahajjud = () => {
       setIsTahajjudMode((prev) => {
         const next = !prev;
@@ -102,6 +135,7 @@ export default function App({ Component, pageProps }: AppProps) {
     window.addEventListener('amal-open-onboarding', handleOpenOnboarding);
     window.addEventListener('amal-open-bookmarks', handleOpenBookmarks);
     window.addEventListener('amal-open-auth', handleOpenAuth);
+    window.addEventListener('amal-open-install', handleOpenInstall);
     window.addEventListener('amal-toggle-tahajjud', handleToggleTahajjud);
 
     // 4. Auto-show gentle onboarding if first time visit
@@ -117,7 +151,10 @@ export default function App({ Component, pageProps }: AppProps) {
       window.removeEventListener('amal-open-onboarding', handleOpenOnboarding);
       window.removeEventListener('amal-open-bookmarks', handleOpenBookmarks);
       window.removeEventListener('amal-open-auth', handleOpenAuth);
+      window.removeEventListener('amal-open-install', handleOpenInstall);
       window.removeEventListener('amal-toggle-tahajjud', handleToggleTahajjud);
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
@@ -152,6 +189,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
           {/* Global Account & Cloud Sync Modal */}
           <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+
+          {/* Global PWA Home Screen Install Modal */}
+          <PWAInstallModal isOpen={isInstallOpen} onClose={() => setIsInstallOpen(false)} />
 
           {/* Floating Quick Bookmark Tab (Right Screen Edge) */}
           <button
