@@ -155,25 +155,55 @@ export default function QuranWisdomPage() {
   const [isLoadingSurah, setIsLoadingSurah] = useState<boolean>(false);
   const [surahFetchError, setSurahFetchError] = useState<string | null>(null);
 
-  // Surah selector on URL query or click
+  // Smart Resume / Bookmark Persistence State
+  const [lastReadPosition, setLastReadPosition] = useState<{
+    surahNumber: number;
+    ayahNumber: number;
+    surahNameArabic?: string;
+    surahNameUrdu?: string;
+    surahNameTransliterated?: string;
+    viewMode: 'SCROLL' | 'FOCUS';
+    timestamp: number;
+  } | null>(null);
+
+  const isInitialResumeChecked = useRef(false);
+
+  // Restore Last Read Quran Position or Deep Link Query
   useEffect(() => {
+    if (!router.isReady || isInitialResumeChecked.current) return;
+    isInitialResumeChecked.current = true;
+
     if (router.query.surah) {
       const s = parseInt(router.query.surah as string, 10);
       if (!isNaN(s) && s >= 1 && s <= 114) {
-        handleSelectSurah(s);
-        if (router.query.ayah) {
-          const a = parseInt(router.query.ayah as string, 10);
-          if (!isNaN(a) && a >= 1) {
-            setFocusedAyahNumber(a);
+        const a = router.query.ayah ? parseInt(router.query.ayah as string, 10) : undefined;
+        handleSelectSurah(s, a && !isNaN(a) && a >= 1 ? a : 1);
+        if (router.query.mode === 'scroll') setViewModeState('SCROLL');
+        else if (router.query.mode === 'focus') setViewModeState('FOCUS');
+      }
+    } else if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('amal_last_read_quran');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed.surahNumber === 'number' && parsed.surahNumber >= 1 && parsed.surahNumber <= 114) {
+            setLastReadPosition(parsed);
+            handleSelectSurah(parsed.surahNumber, parsed.ayahNumber || 1);
+            if (parsed.viewMode === 'SCROLL' || parsed.viewMode === 'FOCUS') {
+              setViewModeState(parsed.viewMode);
+            }
+            showAmalToast(`✨ آخری تلاوت بحال کر دی گئی: ${parsed.surahNameUrdu || parsed.surahNameTransliterated || 'سورۃ'} (آیت ${parsed.ayahNumber || 1})`, 'info');
           }
         }
+      } catch (e) {
+        console.warn('Could not restore last read position:', e);
       }
     }
-  }, [router.query.surah, router.query.ayah]);
+  }, [router.isReady, router.query.surah, router.query.ayah, router.query.mode]);
 
-  const handleSelectSurah = async (surahNum: number) => {
+  const handleSelectSurah = async (surahNum: number, targetAyahNumber?: number) => {
     setSelectedSurahNumber(surahNum);
-    setFocusedAyahNumber(1);
+    setFocusedAyahNumber(targetAyahNumber && targetAyahNumber >= 1 ? targetAyahNumber : 1);
     setSurahFetchError(null);
     setPlayingAyahNumber(null);
 
@@ -297,10 +327,26 @@ export default function QuranWisdomPage() {
     }
   }, [playingAyahNumber]);
 
-  // Reset focused Ayah to 1 when a new Surah is selected
+  // Persist Last Read Position to LocalStorage for Smart Resume
   useEffect(() => {
-    setFocusedAyahNumber(1);
-  }, [selectedSurahNumber]);
+    if (typeof window === 'undefined' || !isInitialResumeChecked.current) return;
+    try {
+      const meta = ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber);
+      const payload = {
+        surahNumber: selectedSurahNumber,
+        ayahNumber: focusedAyahNumber,
+        surahNameArabic: meta?.nameArabic || '',
+        surahNameUrdu: meta?.nameUrdu || '',
+        surahNameTransliterated: meta?.nameTransliterated || '',
+        viewMode,
+        timestamp: Date.now(),
+      };
+      localStorage.setItem('amal_last_read_quran', JSON.stringify(payload));
+      setLastReadPosition(payload);
+    } catch (e) {
+      console.warn('Failed to save last read quran state:', e);
+    }
+  }, [selectedSurahNumber, focusedAyahNumber, viewMode]);
 
   // Keyboard navigation for Focus Mode (Arrow Right/Left)
   useEffect(() => {
@@ -724,6 +770,34 @@ export default function QuranWisdomPage() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            {lastReadPosition && (
+              <button
+                onClick={() => {
+                  handleSelectSurah(lastReadPosition.surahNumber, lastReadPosition.ayahNumber);
+                  if (lastReadPosition.viewMode) setViewMode(lastReadPosition.viewMode);
+                  showAmalToast(`✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`, 'success');
+                }}
+                style={{
+                  fontSize: 11,
+                  padding: '4px 10px',
+                  borderRadius: 8,
+                  backgroundColor: '#ECFDF5',
+                  color: '#065F46',
+                  fontWeight: 800,
+                  border: '1px solid #A7F3D0',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+                  transition: 'all 0.15s ease',
+                }}
+                title="آخری تلاوت یا سنے گئے مقام پر فوری جائیں (Resume last recitation)"
+              >
+                <span>🔖</span>
+                <span>آخری مقام: {lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} ({lastReadPosition.ayahNumber})</span>
+              </button>
+            )}
             <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#DCFCE7', color: '#166534', fontWeight: 800, border: '1px solid #BBF7D0' }}>
               ✓ مصحف مدینہ منورہ (Uthmanic Medina)
             </span>

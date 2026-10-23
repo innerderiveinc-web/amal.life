@@ -41,6 +41,32 @@ export default function LibraryPage() {
   // Multi-Chapter Classical Book Sub-State
   const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
 
+  // Smart Resume / Bookmark Persistence State
+  const [libraryLastRead, setLibraryLastRead] = useState<{
+    workId: string;
+    chapterIndex: number;
+    workTitleArabic: string;
+    workTitleTransliterated: string;
+    chapterTitleUrdu?: string;
+    timestamp: number;
+  } | null>(null);
+
+  // Restore Last Read Classical Library Book on Mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = localStorage.getItem('amal_last_read_library');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.workId) {
+          setLibraryLastRead(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load last read library position:', e);
+    }
+  }, []);
+
   // Quran Ayah Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
   const [wisdomTab, setWisdomTab] = useState<'KHAZAIN' | 'KANZ' | 'IBN_KATHIR' | 'ENGLISH' | 'REFERENCES' | 'AMAL'>('KHAZAIN');
@@ -133,6 +159,37 @@ export default function LibraryPage() {
   const handleOpenReader = () => {
     setIsReaderModalOpen(true);
     showAmalToast(`Opened Reader for ${selectedWork?.title_transliterated}`, 'info');
+  };
+
+  // Persist Last Read Book & Chapter in Library
+  useEffect(() => {
+    if (typeof window === 'undefined' || !selectedWork || !isReaderModalOpen) return;
+    try {
+      const chap = bookChaptersData?.chapters[selectedChapterIndex];
+      const payload = {
+        workId: selectedWork.work_id,
+        chapterIndex: selectedChapterIndex,
+        workTitleArabic: selectedWork.title_arabic,
+        workTitleTransliterated: selectedWork.title_transliterated,
+        chapterTitleUrdu: chap?.chapterTitleUrdu || chap?.chapterTitleArabic || '',
+        timestamp: Date.now(),
+      };
+      localStorage.setItem('amal_last_read_library', JSON.stringify(payload));
+      setLibraryLastRead(payload);
+    } catch (e) {
+      console.warn('Failed to save last read library state:', e);
+    }
+  }, [selectedWork, selectedChapterIndex, isReaderModalOpen, bookChaptersData]);
+
+  const handleResumeLastRead = () => {
+    if (!libraryLastRead) return;
+    const work = MASTER_CANONICAL_CORPUS.find((w) => w.work_id === libraryLastRead.workId);
+    if (work) {
+      setSelectedWork(work);
+      setSelectedChapterIndex(libraryLastRead.chapterIndex || 0);
+      setIsReaderModalOpen(true);
+      showAmalToast(`📖 آخری مطالعہ بحال ہو گیا: ${work.title_transliterated} · باب ${(libraryLastRead.chapterIndex || 0) + 1}`, 'success');
+    }
   };
 
   // Dynamic Surah Fetcher for All 114 Surahs
@@ -343,6 +400,60 @@ export default function LibraryPage() {
             <span>➔</span>
           </Link>
         </div>
+
+        {/* Smart Resume Last Read Classical Work Banner */}
+        {libraryLastRead && (
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 14,
+              padding: '14px 20px',
+              border: '1px solid #A7F3D0',
+              marginBottom: 20,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 12,
+              boxShadow: '0 2px 6px rgba(16, 185, 129, 0.06)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 22 }}>🔖</span>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
+                  آخری مطالعہ بحال کریں (Resume Last Read): {libraryLastRead.workTitleArabic} ({libraryLastRead.workTitleTransliterated})
+                </div>
+                {libraryLastRead.chapterTitleUrdu && (
+                  <div style={{ fontSize: 12, color: '#047857', marginTop: 2 }}>
+                    باب: {libraryLastRead.chapterTitleUrdu} · Chapter {(libraryLastRead.chapterIndex || 0) + 1}
+                  </div>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={handleResumeLastRead}
+              style={{
+                padding: '8px 18px',
+                borderRadius: 8,
+                backgroundColor: '#065F46',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                fontSize: 12,
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span>مطالعہ جاری رکھیں (Resume Reader)</span>
+              <span>➔</span>
+            </button>
+          </div>
+        )}
 
         {/* Search & Filter Controls */}
         <section style={{

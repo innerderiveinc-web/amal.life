@@ -90,6 +90,19 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
     englishTranslation?: string;
   } | null>(null);
 
+  // Auto-scroll to focused Ayah in Continuous Scroll view when resuming or jumping
+  React.useEffect(() => {
+    if (viewMode === 'SCROLL' && focusedAyahNumber && focusedAyahNumber > 1) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`ayah-${focusedAyahNumber}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [focusedAyahNumber, viewMode, selectedSurahNumber]);
+
   return (
     <div
       style={{
@@ -895,18 +908,29 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
         <div style={{ padding: '8px 24px', display: 'flex', flexDirection: 'column' }}>
           {currentSurah.verses.map((verse) => {
             const isPlayingThis = playingAyahNumber === verse.ayahNumber;
+            const isFocusedThis = focusedAyahNumber === verse.ayahNumber;
             const hasWisdom = !!getAyahWisdomCard(selectedSurahNumber, verse.ayahNumber);
 
             return (
               <div
                 key={verse.ayahNumber}
                 id={`ayah-${verse.ayahNumber}`}
+                onClick={() => {
+                  if (setFocusedAyahNumber && focusedAyahNumber !== verse.ayahNumber) {
+                    setFocusedAyahNumber(verse.ayahNumber);
+                  }
+                }}
                 style={{
-                  padding: '20px 0',
+                  padding: '18px 14px',
+                  margin: '4px 0',
                   borderBottom: '1px solid #F1F5F9',
-                  backgroundColor: isPlayingThis ? '#F0FDF4' : 'transparent',
-                  borderRadius: isPlayingThis ? 12 : 0,
-                  transition: 'background-color 0.2s ease',
+                  backgroundColor: isPlayingThis ? '#F0FDF4' : (isFocusedThis ? '#F8FAFC' : 'transparent'),
+                  borderRadius: isPlayingThis || isFocusedThis ? 12 : 0,
+                  border: isPlayingThis
+                    ? '1.5px solid #86EFAC'
+                    : (isFocusedThis ? '1.5px solid #10B981' : '1.5px solid transparent'),
+                  transition: 'all 0.2s ease',
+                  cursor: 'pointer',
                 }}
               >
                 {/* Top Ayah Meta & Actions */}
@@ -917,8 +941,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                         width: 28,
                         height: 28,
                         borderRadius: '50%',
-                        backgroundColor: isPlayingThis ? '#166534' : '#E2E8F0',
-                        color: isPlayingThis ? '#FFFFFF' : '#334155',
+                        backgroundColor: isPlayingThis ? '#166534' : (isFocusedThis ? '#065F46' : '#E2E8F0'),
+                        color: isPlayingThis || isFocusedThis ? '#FFFFFF' : '#334155',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -929,8 +953,27 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                       {verse.ayahNumber}
                     </span>
 
+                    {isFocusedThis && !isPlayingThis && (
+                      <span
+                        style={{
+                          fontSize: 10,
+                          padding: '2px 8px',
+                          borderRadius: 6,
+                          backgroundColor: '#ECFDF5',
+                          color: '#065F46',
+                          fontWeight: 700,
+                          border: '1px solid #A7F3D0',
+                        }}
+                      >
+                        🔖 منتخب آیت / نشانی (Current Position)
+                      </span>
+                    )}
+
                     <button
-                      onClick={() => handlePlayAyahAudio(verse.ayahNumber, 'ARABIC')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePlayAyahAudio(verse.ayahNumber, 'ARABIC');
+                      }}
                       aria-label={`Play Arabic Recitation for Ayah ${verse.ayahNumber}`}
                       style={{
                         padding: '3px 8px',
@@ -957,7 +1000,10 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
 
                     {/* Quick Urdu Tarjuma Audio button for this verse */}
                     <button
-                      onClick={() => handlePlayAyahAudio(verse.ayahNumber, 'URDU')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePlayAyahAudio(verse.ayahNumber, 'URDU');
+                      }}
                       aria-label={`Play Urdu Tarjuma for Ayah ${verse.ayahNumber}`}
                       style={{
                         padding: '3px 8px',
@@ -982,7 +1028,10 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
 
                   {/* Wisdom Card Action Button */}
                   <button
-                    onClick={() => onOpenWisdomModal(selectedSurahNumber, verse.ayahNumber)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenWisdomModal(selectedSurahNumber, verse.ayahNumber);
+                    }}
                     aria-label={`Open Wisdom Card for Ayah ${verse.ayahNumber}`}
                     style={{
                       padding: '4px 12px',
@@ -1004,7 +1053,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
 
                   {/* Share Image Card Button */}
                   <button
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setShareModalAyah({
                         surahNumber: selectedSurahNumber,
                         surahNameArabic: currentSurahMeta.nameArabic,
@@ -1014,8 +1064,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                         arabicText: verse.textArabic,
                         urduTranslation: verse.textUrdu,
                         englishTranslation: verse.textEnglish,
-                      })
-                    }
+                      });
+                    }}
                     aria-label={`Generate Image Card for Ayah ${verse.ayahNumber}`}
                     style={{
                       padding: '4px 10px',
