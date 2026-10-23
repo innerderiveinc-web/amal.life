@@ -1008,10 +1008,10 @@ export default function QuranWisdomPage() {
                     gap: 6,
                     boxShadow: '0 2px 6px rgba(22, 101, 52, 0.3)',
                   }}
-                  title="عربی تلاوت اور کنز الایمان کا مستند اردو ترجمہ آیت در آیت خودکار سنیں"
+                  title="Arabic Tilawat + Authentic Urdu Tarjuma verse-by-verse sync"
                 >
                   <span>🎧</span>
-                  <span>{(audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') && playingAyahNumber !== null ? '⏸ تلاوت و ترجمہ موقوف' : 'تلاوت + اردو ترجمہ (Sync)'}</span>
+                  <span>{(audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') && playingAyahNumber !== null ? '⏸ Pause Sync' : 'Tilawat + Urdu Tarjuma (Sync)'}</span>
                 </button>
 
                 {/* 2. Entire Urdu Tarjuma Continuous in One Go */}
@@ -1032,10 +1032,10 @@ export default function QuranWisdomPage() {
                     gap: 6,
                     boxShadow: '0 2px 4px rgba(2, 132, 199, 0.2)',
                   }}
-                  title="پوری سورت کا صرف اردو ترجمہ کنز الایمان بغیر کسی وقفے کے ایک ساتھ سنیں"
+                  title="Listen to full Urdu Tarjuma Kanz-ul-Iman continuously"
                 >
                   <span>🎙️</span>
-                  <span>{audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null ? '⏸ ترجمہ موقوف' : 'صرف اردو ترجمہ (ایک ساتھ)'}</span>
+                  <span>{audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null ? '⏸ Pause Urdu' : 'Urdu Tarjuma (Continuous)'}</span>
                 </button>
 
                 {/* 3. Full Surah Studio Tafseer Audio (Dawat-e-Islami Sirat-ul-Jinan) */}
@@ -1055,10 +1055,10 @@ export default function QuranWisdomPage() {
                     alignItems: 'center',
                     gap: 6,
                   }}
-                  title="دعوتِ اسلامی کی مستند تفسیر صراط الجنان سٹوڈیو آڈیو ایک ساتھ سنیں"
+                  title="Listen to full studio Tafseer Sirat-ul-Jinan"
                 >
                   <span>📖</span>
-                  <span>{(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST') ? (isPlayingPaused ? '▶ جاری رکھیں' : '⏸ تفسیر موقوف') : 'مکمل تفسیر صراط الجنان (ایک ساتھ)'}</span>
+                  <span>{(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST') ? (isPlayingPaused ? '▶ Resume Tafseer' : '⏸ Pause Tafseer') : 'Full Tafseer (Sirat-ul-Jinan)'}</span>
                 </button>
 
                 {/* 4. Continuous Arabic Tilawat Only */}
@@ -1078,10 +1078,10 @@ export default function QuranWisdomPage() {
                     alignItems: 'center',
                     gap: 6,
                   }}
-                  title="مکمل سورت کی صرف عربی تلاوت مسلسل سنیں"
+                  title="Continuous Arabic Tilawat of the full Surah"
                 >
                   <span>▶</span>
-                  <span>{audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null ? '⏸ تلاوت موقوف' : 'صرف عربی تلاوت'}</span>
+                  <span>{audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null ? '⏸ Pause Tilawat' : 'Arabic Tilawat Only'}</span>
                 </button>
 
                 {/* 5. Clean Settings & Download Drawer Toggle */}
@@ -1394,9 +1394,9 @@ export default function QuranWisdomPage() {
                             <span>
                               {isPlayingThis
                                 ? (currentAudioSegment === 'URDU'
-                                    ? (isPlayingPaused ? 'ترجمہ موقوف' : '🎧 ترجمہ جاری')
-                                    : (isPlayingPaused ? 'تلاوت موقوف' : '🎙️ تلاوت جاری'))
-                                : 'تلاوت سنیں'}
+                                    ? (isPlayingPaused ? 'Resume Urdu' : '🎧 Urdu Playing')
+                                    : (isPlayingPaused ? 'Resume Tilawat' : '🎙️ Tilawat Playing'))
+                                : 'Recitation (تلاوت)'}
                             </span>
                           </button>
 
@@ -1431,10 +1431,10 @@ export default function QuranWisdomPage() {
                               alignItems: 'center',
                               gap: 3,
                             }}
-                            title="صرف اردو ترجمہ سماعت فرمائیں"
+                            title="Listen to Urdu Tarjuma Kanz-ul-Iman"
                           >
                             <span>🎧</span>
-                            <span>اردو آڈیو</span>
+                            <span>Urdu Audio</span>
                           </button>
                         </div>
 
@@ -1458,7 +1458,7 @@ export default function QuranWisdomPage() {
                           }}
                         >
                           <span>📖</span>
-                          <span>{hasWisdom ? 'تدبر، حکمت و تفسیری سند (Wisdom Card)' : 'تفسیری حاشیہ و ترجمہ'}</span>
+                          <span>{hasWisdom ? 'Wisdom Card (حکمت و تفسیر)' : 'Tafseer Notes (تفسیر)'}</span>
                         </button>
                       </div>
 
