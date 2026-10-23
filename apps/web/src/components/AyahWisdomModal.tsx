@@ -360,7 +360,6 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               ref={modalAudioRef}
               controls
               src={audioSrc}
-              key={audioSrc}
               onPlay={() => setIsSpeakingTafseer(selectedAudioType === 'tafseer')}
               onPause={() => setIsSpeakingTafseer(false)}
               onEnded={() => setIsSpeakingTafseer(false)}

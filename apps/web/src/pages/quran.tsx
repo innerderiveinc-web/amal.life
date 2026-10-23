@@ -38,7 +38,7 @@ export default function QuranWisdomPage() {
 
   // Audio Playback & Sync State
   const [playingAyahNumber, setPlayingAyahNumber] = useState<number | null>(null);
-  const [audioSyncMode, setAudioSyncMode] = useState<AudioSyncMode>('FULL_SYNC');
+  const [audioSyncMode, setAudioSyncMode] = useState<AudioSyncMode>('TILAWAT_URDU_SYNC');
   const [currentAudioSegment, setCurrentAudioSegment] = useState<AudioSegment>('ARABIC');
   const [isPlayingPaused, setIsPlayingPaused] = useState<boolean>(false);
   const [activeTafseerCardKey, setActiveTafseerCardKey] = useState<string | null>(null);
@@ -447,30 +447,17 @@ export default function QuranWisdomPage() {
 
     const totalVerses = currentSurah?.verses?.length || 0;
 
-    if (audioSyncMode === 'FULL_SYNC') {
-      // 3-Stage: ARABIC -> URDU -> TAFSEER -> Next Ayah
-      if (currentAudioSegment === 'ARABIC') {
-        handlePlayAyahAudio(playingAyahNumber, 'URDU');
-      } else if (currentAudioSegment === 'URDU') {
-        handlePlayAyahAudio(playingAyahNumber, 'TAFSEER');
-      } else if (currentAudioSegment === 'TAFSEER') {
-        if (playingAyahNumber < totalVerses) {
-          handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
-        } else {
-          handleStopAudio();
-          showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مکمل تلاوت، ترجمہ و تفسیری سلسلہ مکمل ہو گیا۔`, 'success');
-        }
-      }
-    } else if (audioSyncMode === 'TILAWAT_URDU_SYNC') {
-      // 2-Stage: ARABIC -> URDU -> Next Ayah
+    if (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') {
+      // 2-Stage Authentic Sequential Sync: ARABIC -> URDU -> Next Ayah (Zero repetition)
       if (currentAudioSegment === 'ARABIC') {
         handlePlayAyahAudio(playingAyahNumber, 'URDU');
       } else {
+        // Urdu Tarjuma finished -> Advance to next Ayah Arabic recitation
         if (playingAyahNumber < totalVerses) {
           handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
         } else {
           handleStopAudio();
-          showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت و ترجمہ مکمل ہو گیا۔`, 'success');
+          showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت و مستند ترجمہ مکمل ہو گیا۔`, 'success');
         }
       }
     } else if (audioSyncMode === 'URDU_ONLY_CONTINUOUS') {
@@ -553,9 +540,9 @@ export default function QuranWisdomPage() {
 
   const handlePlaySurahFullSync = () => {
     handleStopAudio();
-    setAudioSyncMode('FULL_SYNC');
+    setAudioSyncMode('TILAWAT_URDU_SYNC');
     handlePlayAyahAudio(1, 'ARABIC');
-    showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت + ترجمہ + تفسیری حکمت (3-Step Sync) شروع ہو گیا۔`, 'success');
+    showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت اور مستند اردو ترجمہ (Sync) شروع ہو گیا۔`, 'success');
   };
 
   const handlePlaySurahKanzulIman = () => {

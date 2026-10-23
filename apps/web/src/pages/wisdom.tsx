@@ -29,6 +29,17 @@ export default function QuranWisdomDedicatedPage() {
   const [continuousIndex, setContinuousIndex] = useState<number | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const watchdogRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear watchdog on unmount
+  useEffect(() => {
+    return () => {
+      if (watchdogRef.current) {
+        clearTimeout(watchdogRef.current);
+        watchdogRef.current = null;
+      }
+    };
+  }, []);
 
   // Load bookmarks from localStorage
   useEffect(() => {
@@ -55,6 +66,11 @@ export default function QuranWisdomDedicatedPage() {
 
   // Play audio for an Ayah: plays authentic human voice audio
   const handlePlayAyahAudio = (card: QuranAyahWisdomCard, type: 'ARABIC' | 'URDU') => {
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+
     const key = `${card.surahNumber}:${card.ayahNumber}:${type}`;
     if (activeAudioKey === key && isPlayingAudio) {
       if (audioRef.current) {
@@ -95,6 +111,11 @@ export default function QuranWisdomDedicatedPage() {
 
   // Tafseer Studio Audio: Plays authentic Dawat-e-Islami Sirat-ul-Jinan with instant EveryAyah CDN fallback
   const handlePlayTafseerAudio = (card: QuranAyahWisdomCard) => {
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+
     const key = `${card.surahNumber}:${card.ayahNumber}:TAFSEER`;
     if (activeAudioKey === key && isPlayingAudio) {
       if (audioRef.current) audioRef.current.pause();
@@ -114,8 +135,8 @@ export default function QuranWisdomDedicatedPage() {
     if (audioRef.current) {
       audioRef.current.src = audioToPlay;
 
-      // 2.5s Watchdog: If remote studio file buffers too slowly due to ISP throttling, fall back to instant CDN audio
-      const watchdog = setTimeout(() => {
+      // 3.5s Watchdog: If remote studio file buffers too slowly due to ISP throttling, fall back to instant CDN audio
+      watchdogRef.current = setTimeout(() => {
         if (audioRef.current && (audioRef.current.paused || audioRef.current.currentTime === 0)) {
           console.warn('Studio audio buffering slow, falling back to instant EveryAyah CDN audio');
           if (audioRef.current && audioRef.current.src !== fastAyahUrl) {
@@ -127,10 +148,13 @@ export default function QuranWisdomDedicatedPage() {
             }).catch(() => {});
           }
         }
-      }, 2500);
+      }, 3500);
 
       audioRef.current.onplaying = () => {
-        clearTimeout(watchdog);
+        if (watchdogRef.current) {
+          clearTimeout(watchdogRef.current);
+          watchdogRef.current = null;
+        }
       };
 
       audioRef.current.play().then(() => {
@@ -143,7 +167,10 @@ export default function QuranWisdomDedicatedPage() {
           'info'
         );
       }).catch((err) => {
-        clearTimeout(watchdog);
+        if (watchdogRef.current) {
+          clearTimeout(watchdogRef.current);
+          watchdogRef.current = null;
+        }
         console.warn('Tafseer remote error, falling back to Ayah Urdu audio:', err);
         if (audioRef.current) {
           audioRef.current.src = fastAyahUrl;
@@ -164,6 +191,11 @@ export default function QuranWisdomDedicatedPage() {
 
   // Continuous Playback across all 42 Cards
   const handlePlayContinuousAll = (startIndex: number = 0) => {
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+
     if (startIndex >= QURAN_WISDOM_COLLECTION.length) {
       setContinuousIndex(null);
       setActiveAudioKey(null);
@@ -189,6 +221,11 @@ export default function QuranWisdomDedicatedPage() {
   };
 
   const handleAudioEnded = () => {
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+
     if (continuousIndex !== null && continuousIndex < QURAN_WISDOM_COLLECTION.length - 1) {
       handlePlayContinuousAll(continuousIndex + 1);
     } else {
