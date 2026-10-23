@@ -15,13 +15,11 @@ import { FloatingQuranAudioPlayer, AudioSyncMode, AudioSegment } from '../compon
 import { showAmalToast } from '../components/Toast';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
-type ExperienceMode = 'QUICK_2MIN' | 'DAILY_5MIN' | 'DEEP_15MIN';
 export type { AudioSyncMode, AudioSegment };
 
 export default function QuranWisdomPage() {
   const router = useRouter();
   const { pause: pauseGlobalPlayer } = useAudioPlayer();
-  const [activeMode, setActiveMode] = useState<ExperienceMode>('QUICK_2MIN');
   const [selectedSurahNumber, setSelectedSurahNumber] = useState<number>(1);
   const [surahSearchFilter, setSurahSearchFilter] = useState<string>('');
   const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary' | 'minshawi'>('alafasy');
@@ -717,306 +715,44 @@ export default function QuranWisdomPage() {
       />
 
       <main style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-        {/* Breadcrumb Bar */}
-        <div style={{ padding: '12px 0 8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#666' }}>
-            <Link href="/" style={{ color: AmalTheme.colors.primary, textDecoration: 'none', fontWeight: 600 }}>Home</Link>
-            <span>/</span>
-            <span style={{ color: '#0F172A', fontWeight: 700 }}>Al-Quran Al-Kareem &amp; Quran Wisdom (قرآنِ کریم، حکمت و تدبر)</span>
+        {/* Noble Header & Scholarly Credentials Bar */}
+        <div style={{ padding: '16px 0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderBottom: '1px solid #E2E8F0', marginBottom: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Link href="/" style={{ color: AmalTheme.colors.primary, textDecoration: 'none', fontWeight: 700, fontSize: 13 }}>Home</Link>
+            <span style={{ color: '#94A3B8' }}>/</span>
+            <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 16 }}>القرآن الكريم (The Holy Quran)</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 12, backgroundColor: '#DCFCE7', color: '#166534', fontWeight: 800 }}>
-              ✓ 100% Real Human Voice Recitation
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#DCFCE7', color: '#166534', fontWeight: 800, border: '1px solid #BBF7D0' }}>
+              ✓ مصحف مدینہ منورہ (Uthmanic Medina)
             </span>
-            <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 12, backgroundColor: '#FEF3C7', color: '#92400E', fontWeight: 800 }}>
-              کنز الایمان فی ترجمۃ القرآن
+            <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#FEF3C7', color: '#92400E', fontWeight: 800, border: '1px solid #FDE68A' }}>
+              ترجمہ: کنز الایمان فی ترجمۃ القرآن
             </span>
-          </div>
-        </div>
-
-        {/* Hero Section */}
-        <header
-          style={{
-            background: 'linear-gradient(135deg, #0F291E 0%, #1B4332 60%, #2D6A4F 100%)',
-            borderRadius: 20,
-            padding: '32px 36px',
-            color: '#FFFFFF',
-            marginBottom: 24,
-            boxShadow: '0 10px 25px -5px rgba(15, 41, 30, 0.25)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 20, position: 'relative', zIndex: 1 }}>
-            <div style={{ maxWidth: 720 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 800,
-                    letterSpacing: 1.2,
-                    textTransform: 'uppercase',
-                    color: '#6EE7B7',
-                    backgroundColor: 'rgba(110, 231, 183, 0.15)',
-                    padding: '4px 12px',
-                    borderRadius: 14,
-                    border: '1px solid rgba(110, 231, 183, 0.3)',
-                  }}
-                >
-                  THE SACRED WORD OF ALLAH · کلامِ الٰہی
-                </span>
-                <span style={{ color: '#A7F3D0', fontSize: 12 }}>•</span>
-                <span style={{ color: '#D1FAE5', fontSize: 12, fontWeight: 700 }}>
-                  Ahl al-Sunnah Verified Standards
-                </span>
-              </div>
-
-              <h1 style={{ fontSize: 32, fontWeight: 900, margin: '6px 0 12px', letterSpacing: -0.5 }}>
-                قرآنِ کریم، حکمت و تدبر
-              </h1>
-              <p style={{ fontSize: 15, color: '#E2E8F0', lineHeight: 1.6, margin: '0 0 18px', maxWidth: 660 }}>
-                صحیح مدینہ عثمانی اعراب کے ساتھ تلاوت، <strong>کنز الایمان</strong> (امام احمد رضا خان)،
-                اور <strong>خزائن العرفان</strong> (علامہ نعیم الدین مراد آبادی) کی تفسیری حکمت کے ساتھ روزمرہ دینی زندگی کا روحانی سفر۔
-              </p>
-
-              {/* Time-Mode Selectors */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                <button
-                  onClick={() => setActiveMode('QUICK_2MIN')}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 10,
-                    fontSize: 13,
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    border: activeMode === 'QUICK_2MIN' ? '2px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
-                    backgroundColor: activeMode === 'QUICK_2MIN' ? '#34D399' : 'rgba(255, 255, 255, 0.1)',
-                    color: activeMode === 'QUICK_2MIN' ? '#064E3B' : '#FFFFFF',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <span>⚡</span>
-                  <span>Quick Wisdom (2 min)</span>
-                  <span style={{ fontSize: 10, opacity: 0.85, fontWeight: 600 }}>— منتخب حکمت و عمل</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveMode('DAILY_5MIN')}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 10,
-                    fontSize: 13,
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    border: activeMode === 'DAILY_5MIN' ? '2px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
-                    backgroundColor: activeMode === 'DAILY_5MIN' ? '#34D399' : 'rgba(255, 255, 255, 0.1)',
-                    color: activeMode === 'DAILY_5MIN' ? '#064E3B' : '#FFFFFF',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <span>🌅</span>
-                  <span>Daily Tilawat &amp; Tarjuma (5 min)</span>
-                  <span style={{ fontSize: 10, opacity: 0.85, fontWeight: 600 }}>— سورت و ترجمہ</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveMode('DEEP_15MIN')}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 10,
-                    fontSize: 13,
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    border: activeMode === 'DEEP_15MIN' ? '2px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
-                    backgroundColor: activeMode === 'DEEP_15MIN' ? '#34D399' : 'rgba(255, 255, 255, 0.1)',
-                    color: activeMode === 'DEEP_15MIN' ? '#064E3B' : '#FFFFFF',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <span>📖</span>
-                  <span>Deep Tafseer &amp; Evidence (15 min)</span>
-                  <span style={{ fontSize: 10, opacity: 0.85, fontWeight: 600 }}>— تفصیلی خزائن العرفان</span>
-                </button>
-              </div>
-
-              {/* Prominent Visual View Mode Switcher */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, backgroundColor: 'rgba(0, 0, 0, 0.35)', padding: '6px 12px', borderRadius: 12, border: '1px solid rgba(52, 211, 153, 0.4)', width: 'fit-content', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 12, color: '#A7F3D0', fontWeight: 800 }}>مطالعہ کا انداز (Display Mode):</span>
-                <button
-                  type="button"
-                  onClick={() => setViewMode('FOCUS')}
-                  style={{
-                    padding: '6px 14px',
-                    borderRadius: 8,
-                    border: 'none',
-                    fontSize: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    backgroundColor: viewMode === 'FOCUS' ? '#34D399' : 'transparent',
-                    color: viewMode === 'FOCUS' ? '#064E3B' : '#FFFFFF',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    boxShadow: viewMode === 'FOCUS' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none',
-                  }}
-                >
-                  <span>🎯</span>
-                  <span>ایک ایک آیت فوکس (Single Ayah Focus)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setViewMode('SCROLL')}
-                  style={{
-                    padding: '6px 14px',
-                    borderRadius: 8,
-                    border: 'none',
-                    fontSize: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    backgroundColor: viewMode === 'SCROLL' ? '#34D399' : 'transparent',
-                    color: viewMode === 'SCROLL' ? '#064E3B' : '#FFFFFF',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    boxShadow: viewMode === 'SCROLL' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none',
-                  }}
-                >
-                  <span>📜</span>
-                  <span>روایتی سکرول موڈ (Scroll View)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Card / Scholar Badges */}
-            <div
+            <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#EFF6FF', color: '#1E40AF', fontWeight: 800, border: '1px solid #BFDBFE' }}>
+              تفسیر: خزائن العرفان
+            </span>
+            <Link
+              href="/wisdom"
               style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.25)',
-                borderRadius: 14,
-                padding: '16px 20px',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                minWidth: 260,
+                fontSize: 11,
+                padding: '4px 12px',
+                borderRadius: 8,
+                backgroundColor: '#065F46',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
               }}
+              title="۴۲ منتخب قرآنی حکمت کارڈز کھولیں"
             >
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#A7F3D0', marginBottom: 10, textTransform: 'uppercase' }}>
-                معتبر علمی اسناد (Canon Evidence)
-              </div>
-              <ul style={{ margin: 0, padding: '0 0 0 16px', fontSize: 12, color: '#E2E8F0', lineHeight: 1.8 }}>
-                <li><strong>ترجمہ:</strong> کنز الایمان فی ترجمۃ القرآن (۱۳۴۰ھ)</li>
-                <li><strong>تفسیر:</strong> خزائن العرفان (مولانا نعیم الدین مراد آبادی)</li>
-                <li><strong>انگریزی:</strong> دار العلوم امجدیہ (۱۹۸۸) / مکتبۃ المدینہ (۲۰۲۳)</li>
-                <li><strong>تلاوت:</strong> شیخ مشاری راشد / شیخ محمود خلیل الحصری</li>
-              </ul>
-            </div>
+              <span>✨</span>
+              <span>حکمت کارڈز (Wisdom Cards)</span>
+            </Link>
           </div>
-        </header>
-
-        {/* SCHOLARLY CORPUS TRANSPARENCY NOTICE */}
-        <div
-          style={{
-            backgroundColor: '#064E3B',
-            borderRadius: 14,
-            padding: '14px 20px',
-            marginBottom: 20,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 12,
-            border: '1px solid #10B981',
-            color: '#F0FDF4',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: 22 }}>📜</span>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 13, fontWeight: 800, color: '#A7F3D0' }}>
-                  Juz &apos;Amma &amp; Essential Surahs (37 Chapters) Complete Exegesis Edition
-                </span>
-                <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: '#059669', color: '#FFF', padding: '2px 8px', borderRadius: 10 }}>
-                  37 FULL EXEGESIS SURAHS
-                </span>
-                <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: 'rgba(255,255,255,0.15)', color: '#D1FAE5', padding: '2px 8px', borderRadius: 10 }}>
-                  114 SURAHS COMPLETE HUMAN AUDIO
-                </span>
-              </div>
-              <p style={{ margin: '4px 0 0', fontSize: 12, color: '#D1D5DB', lineHeight: 1.5 }}>
-                All 114 Surahs feature certified human recitation &amp; Kanz-ul-Iman translation audio. Surahs 1, 2, 36, 55, 56, 67, and 78–114 currently include comprehensive verse-by-verse Khaza&apos;in-ul-Irfan &amp; Bahar-e-Shariat cross-references; the remaining chapters are in active scholarly digitization.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 700 }}>
-              جزء عم و سورتیں: مکمل تفسیر
-            </span>
-          </div>
-        </div>
-
-        {/* BANNER TO DEDICATED QURAN WISDOM CARDS PAGE */}
-        <div
-          style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: 16,
-            border: '1px solid #BBF7D0',
-            padding: '18px 24px',
-            marginBottom: 24,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 16,
-            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.06)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <span style={{ fontSize: 32 }}>✨</span>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
-                <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '2px 8px', borderRadius: 6 }}>
-                  مستقل صفحہ · DEDICATED PAGE
-                </span>
-                <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
-                  ۴۲ منتخب آیات مبارکہ (جزء عم)
-                </span>
-              </div>
-              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#0F172A' }}>
-                قرآنی حکمت، تدبر و عمل (Quran Wisdom Cards)
-              </h3>
-              <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B' }}>
-                کنز الایمان کا ترجمہ، خزائن العرفان کی تفسیری ابحاث اور روزمرہ دینی زندگی کے لیے مسنون عمل
-              </p>
-            </div>
-          </div>
-
-          <Link
-            href="/wisdom"
-            style={{
-              padding: '10px 20px',
-              borderRadius: 10,
-              backgroundColor: '#065F46',
-              color: '#FFFFFF',
-              textDecoration: 'none',
-              fontWeight: 800,
-              fontSize: 13,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              boxShadow: '0 2px 6px rgba(6, 95, 70, 0.25)',
-            }}
-          >
-            <span>تمام ۴۲ حکمت کارڈز کھولیں</span>
-            <span>➔</span>
-          </Link>
         </div>
 
         {/* SECTION 2 & 3: SURAHS DIRECTORY & IN-APP READER */}
