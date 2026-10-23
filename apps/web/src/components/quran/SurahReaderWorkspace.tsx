@@ -491,8 +491,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
         </div>
       )}
 
-      {/* Bismillah Banner (for all except Surah At-Tawbah #9) */}
-      {selectedSurahNumber !== 9 && (
+      {/* Bismillah Opening Header (Not shown for Surah 1 where Bismillah is Ayah 1, nor for Surah 9 At-Tawbah) */}
+      {selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && (
         <div
           dir="rtl"
           style={{
