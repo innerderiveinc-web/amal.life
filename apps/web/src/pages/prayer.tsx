@@ -26,6 +26,7 @@ import {
 import { PrayerOffsetsModal } from '../components/prayer/PrayerOffsetsModal';
 import { MosqueIqamahModal } from '../components/prayer/MosqueIqamahModal';
 import { CitySearchModal } from '../components/prayer/CitySearchModal';
+import { TahajjudSmartHub } from '../components/prayer/TahajjudSmartHub';
 
 export default function PrayerTimesPage() {
   // Default to Delhi / New Delhi or auto-detected timezone city
@@ -976,6 +977,15 @@ export default function PrayerTimesPage() {
             </div>
           </div>
         </div>
+
+        {/* TAHAJJUD & SACRED LAST THIRD OF NIGHT (SULUS AL-AKHIR) SMART HUB */}
+        <TahajjudSmartHub
+          maghribTime={prayerTimes.maghrib}
+          fajrTime={prayerTimes.fajr}
+          qiyamThirdTime={prayerTimes.qiyamThird}
+          midnightTime={prayerTimes.midnight}
+          cityName={selectedCity.name}
+        />
 
         {/* LOCAL MOSQUE IQAMAH SYNC & JANAZAH SECTION */}
         <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>

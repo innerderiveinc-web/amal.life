@@ -123,6 +123,7 @@ export const Navigation: React.FC = () => {
   // Categorized Hubs for topbar
   const ibadatItems = [
     { title: 'Auqat-e-Namaz & Qibla', titleUrdu: 'نماز کے اوقات و قبلہ', href: '/prayer', icon: '🕋' },
+    { title: 'Morning & Evening Adhkar', titleUrdu: 'صبح و شام کے اذکار', href: '/adhkar', icon: '🌅' },
     { title: 'Digital Masnoon Tasbih', titleUrdu: 'مسنون تسبیح کاؤنٹر', href: '/tasbih', icon: '📿' },
     { title: 'Hijri Calendar & Fasting', titleUrdu: 'ہجری کیلنڈر و روزے', href: '/calendar', icon: '🌙' },
     { title: 'Tajweed & Makharij Audio', titleUrdu: 'تجوید و مخارج آڈیو', href: '/tajweed', icon: '🎙️' },

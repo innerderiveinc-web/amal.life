@@ -4,6 +4,7 @@ import { QuranSurahData } from '../../lib/quran-surahs-data';
 import { getAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { AudioSyncMode, AudioSegment } from './FloatingQuranAudioPlayer';
+import { AyahShareCardModal } from './AyahShareCardModal';
 
 export interface SurahReaderWorkspaceProps {
   currentSurahMeta: QuranSurahMeta;
@@ -78,6 +79,17 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
   focusedAyahNumber = 1,
   setFocusedAyahNumber,
 }) => {
+  const [shareModalAyah, setShareModalAyah] = React.useState<{
+    surahNumber: number;
+    surahNameArabic: string;
+    surahNameEnglish: string;
+    surahNameUrdu: string;
+    ayahNumber: number;
+    arabicText: string;
+    urduTranslation: string;
+    englishTranslation?: string;
+  } | null>(null);
+
   return (
     <div
       style={{
@@ -768,6 +780,41 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                       <span>خزائن العرفان و حکمت</span>
                     </button>
                   )}
+
+                  {/* 1-Click Sacred Ayah Card Generator */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setShareModalAyah({
+                        surahNumber: selectedSurahNumber,
+                        surahNameArabic: currentSurahMeta.nameArabic,
+                        surahNameEnglish: currentSurahMeta.nameEnglish,
+                        surahNameUrdu: currentSurahMeta.nameUrdu,
+                        ayahNumber: currentAyah.ayahNumber,
+                        arabicText: currentAyah.textArabic,
+                        urduTranslation: currentAyah.textUrdu,
+                        englishTranslation: currentAyah.textEnglish,
+                      })
+                    }
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: 10,
+                      backgroundColor: '#064E3B',
+                      color: '#FDE68A',
+                      border: '1px solid #D97706',
+                      fontSize: 13,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      boxShadow: '0 2px 6px rgba(6,78,59,0.2)',
+                    }}
+                    title="اس آیت کا خوبصورت امیج کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا"
+                  >
+                    <span>📸</span>
+                    <span>امیج کارڈ بنائیں (Share Card)</span>
+                  </button>
                 </div>
               </div>
 
@@ -945,6 +992,40 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                     <span>📖</span>
                     <span>{hasWisdom ? 'Wisdom Card (حکمت و تفسیر)' : 'Tafseer Notes (تفسیر)'}</span>
                   </button>
+
+                  {/* Share Image Card Button */}
+                  <button
+                    onClick={() =>
+                      setShareModalAyah({
+                        surahNumber: selectedSurahNumber,
+                        surahNameArabic: currentSurahMeta.nameArabic,
+                        surahNameEnglish: currentSurahMeta.nameEnglish,
+                        surahNameUrdu: currentSurahMeta.nameUrdu,
+                        ayahNumber: verse.ayahNumber,
+                        arabicText: verse.textArabic,
+                        urduTranslation: verse.textUrdu,
+                        englishTranslation: verse.textEnglish,
+                      })
+                    }
+                    aria-label={`Generate Image Card for Ayah ${verse.ayahNumber}`}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      backgroundColor: '#ECFDF5',
+                      color: '#064E3B',
+                      border: '1px solid #A7F3D0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                    title="اس آیت کا خوبصورت تصویری کارڈ بنائیں"
+                  >
+                    <span>📸</span>
+                    <span>کارڈ</span>
+                  </button>
                 </div>
 
                 {/* Arabic Text */}
@@ -1021,6 +1102,22 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
             );
           })}
         </div>
+      )}
+
+      {/* Sacred Ayah Share Card Modal */}
+      {shareModalAyah && (
+        <AyahShareCardModal
+          isOpen={!!shareModalAyah}
+          onClose={() => setShareModalAyah(null)}
+          surahNumber={shareModalAyah.surahNumber}
+          surahNameArabic={shareModalAyah.surahNameArabic}
+          surahNameEnglish={shareModalAyah.surahNameEnglish}
+          surahNameUrdu={shareModalAyah.surahNameUrdu}
+          ayahNumber={shareModalAyah.ayahNumber}
+          arabicText={shareModalAyah.arabicText}
+          urduTranslation={shareModalAyah.urduTranslation}
+          englishTranslation={shareModalAyah.englishTranslation}
+        />
       )}
     </div>
   );
