@@ -9,9 +9,11 @@ import { UniversalSearchEngine } from '@amal/amal-engine';
 import { WebFatwaFirewall, SafetyClassification } from '../lib/safety';
 import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AskAmalPage() {
   const router = useRouter();
+  const { t, isUrdu } = useLanguage();
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<any[] | null>(null);
@@ -317,7 +319,7 @@ export default function AskAmalPage() {
             lineHeight: 1.5,
             color: '#1E40AF',
           }}>
-            <strong>⚖️ Legitimate Scholarly Pluralism (اختلاف أئمة الفقه رحمة):</strong> This topic involves established legal divergence across the recognized Sunni schools (Hanafi, Maliki, Shafi'i, and Hanbali). AMAL presents classical citations transparently without forcing an artificial single ruling.
+            <strong>⚖️ {t('Legitimate Scholarly Pluralism:', 'اختلاف ائمہ فقہ رحمت ہے:')}</strong> {t('This topic involves established legal divergence across the recognized Sunni schools (Hanafi, Maliki, Shafi\'i, and Hanbali). AMAL presents classical citations transparently without forcing an artificial single ruling.', 'اس مسئلے میں معتبر سنی فقہی مذاہب (حنفی، شافعی، مالکی، حنبلی) کے مابین دلائل پر مبنی علمی اختلاف موجود ہے۔ امل تمام آراء کو بلا تعصب پیش کرتا ہے۔')}
           </div>
         )}
 
@@ -328,7 +330,7 @@ export default function AskAmalPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 20 }}>📖</span>
                 <h2 style={{ fontSize: 18, fontWeight: 800, margin: 0, color: '#064E3B' }}>
-                  قرآنی رہنمائی و تفسیری حکمت (Quranic Ayah Wisdom &amp; Tafsir)
+                  {t('Quranic Ayah Wisdom & Tafsir', 'قرآنی رہنمائی و تفسیری حکمت')}
                 </h2>
               </div>
               <Link
@@ -340,7 +342,7 @@ export default function AskAmalPage() {
                   textDecoration: 'none',
                 }}
               >
-                قرآن ریڈر پر جائیں →
+                {t('Open Quran Reader →', 'قرآن ریڈر پر جائیں →')}
               </Link>
             </div>
 
@@ -386,11 +388,13 @@ export default function AskAmalPage() {
                             color: '#92400E',
                           }}
                         >
-                          کنز الایمان فی ترجمۃ القرآن
+                          {t('Translation: Kanz-ul-Iman', 'کنز الایمان فی ترجمۃ القرآن')}
                         </span>
                       </div>
                       <span style={{ fontSize: 12, fontWeight: 800, color: '#0F172A' }}>
-                        سورۃ {card.surahNameUrdu} ({card.surahNameTransliterated}) · آیت {card.ayahNumber}
+                        {isUrdu
+                          ? `سورۃ ${card.surahNameUrdu} (${card.surahNameTransliterated}) · آیت ${card.ayahNumber}`
+                          : `${card.surahNameTransliterated} (${card.surahNameArabic}) · Verse ${card.ayahNumber}`}
                       </span>
                     </div>
 
@@ -425,7 +429,7 @@ export default function AskAmalPage() {
                         textAlign: 'right',
                       }}
                     >
-                      <strong>ترجمہ کنز الایمان:</strong> {card.tarjumaKanzulIman}
+                      <strong>{t('Translation (Kanz-ul-Iman):', 'ترجمہ کنز الایمان:')}</strong> {card.tarjumaKanzulIman}
                     </div>
 
                     {/* English Translation */}
@@ -446,7 +450,7 @@ export default function AskAmalPage() {
                       }}
                     >
                       <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', marginBottom: 4 }}>
-                        📖 خزائن العرفان (صدر الافاضل مولانا نعیم الدین مراد آبادی):
+                        {t('📖 Khaza\'in-ul-Irfan Tafsir Excerpt:', '📖 خزائن العرفان (صدر الافاضل مولانا نعیم الدین مراد آبادی):')}
                       </div>
                       <div style={{ fontSize: 13, color: '#78350F', lineHeight: 1.7 }}>
                         {card.tafseerKhazainUlIrfan.excerptUrdu}
@@ -474,7 +478,7 @@ export default function AskAmalPage() {
                           }}
                         >
                           <span>{isPlayingArabic ? '⏸' : '🎙️'}</span>
-                          <span>عربی تلاوت</span>
+                          <span>{t('Arabic Audio', 'عربی تلاوت')}</span>
                         </button>
 
                         <button
@@ -495,7 +499,7 @@ export default function AskAmalPage() {
                           }}
                         >
                           <span>{isPlayingUrdu ? '⏸' : '🎧'}</span>
-                          <span>اردو ترجمہ آڈیو</span>
+                          <span>{t('Urdu Audio', 'اردو ترجمہ آڈیو')}</span>
                         </button>
                       </div>
 
@@ -518,7 +522,7 @@ export default function AskAmalPage() {
                           }}
                         >
                           <span>✨</span>
-                          <span>مکمل تدبر و نیت کارڈ</span>
+                          <span>{t('View Tadabbur Card', 'مکمل تدبر و نیت کارڈ')}</span>
                         </button>
 
                         <Link
@@ -538,7 +542,7 @@ export default function AskAmalPage() {
                           }}
                         >
                           <span>📖</span>
-                          <span>سورت دیکھیں →</span>
+                          <span>{t('View Surah →', 'سورت دیکھیں →')}</span>
                         </Link>
                       </div>
                     </div>

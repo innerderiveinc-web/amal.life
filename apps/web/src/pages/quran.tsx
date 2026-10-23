@@ -14,19 +14,34 @@ import { SurahReaderWorkspace } from '../components/quran/SurahReaderWorkspace';
 import { FloatingQuranAudioPlayer, AudioSyncMode, AudioSegment } from '../components/quran/FloatingQuranAudioPlayer';
 import { showAmalToast } from '../components/Toast';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export type { AudioSyncMode, AudioSegment };
 
 export default function QuranWisdomPage() {
   const router = useRouter();
   const { pause: pauseGlobalPlayer } = useAudioPlayer();
+  const { t, isUrdu } = useLanguage();
   const [selectedSurahNumber, setSelectedSurahNumber] = useState<number>(1);
   const [surahSearchFilter, setSurahSearchFilter] = useState<string>('');
   const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary' | 'minshawi'>('alafasy');
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('ALL');
   const [revelationFilter, setRevelationFilter] = useState<'ALL' | 'MECCAN' | 'MEDINAN'>('ALL');
   const [fontSize, setFontSize] = useState<number>(24);
-  const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(false);
+  const [showRomanUrdu, setShowRomanUrduState] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('amal_show_roman_urdu');
+      if (saved !== null) return saved === 'true';
+    }
+    return true; // Default ON for global accessibility
+  });
+
+  const setShowRomanUrdu = (show: boolean) => {
+    setShowRomanUrduState(show);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_show_roman_urdu', String(show));
+    }
+  };
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
   const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
   const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
@@ -654,20 +669,22 @@ export default function QuranWisdomPage() {
   // Lock-screen MediaSession API controls & notification display
   useEffect(() => {
     if (typeof window !== 'undefined' && 'mediaSession' in navigator && playingAyahNumber !== null) {
-      const isUrdu = currentAudioSegment === 'URDU';
+      const isUrduAudio = currentAudioSegment === 'URDU';
       const verse = currentSurah?.verses?.find((v) => v.ayahNumber === playingAyahNumber);
       
-      const trackTitle = isUrdu
-        ? `ترجمہ کنز الایمان - آیت ${playingAyahNumber}`
-        : `سورۃ ${currentSurahMeta?.nameArabic || ''} (${currentSurahMeta?.nameTransliterated || ''}) · آیت ${playingAyahNumber}`;
+      const trackTitle = isUrduAudio
+        ? t(`Kanz-ul-Iman Translation · Verse ${playingAyahNumber}`, `ترجمہ کنز الایمان - آیت ${playingAyahNumber}`)
+        : (isUrdu
+            ? `سورۃ ${currentSurahMeta?.nameArabic || ''} (${currentSurahMeta?.nameTransliterated || ''}) · آیت ${playingAyahNumber}`
+            : `Surah ${currentSurahMeta?.nameTransliterated || ''} (${currentSurahMeta?.nameArabic || ''}) · Ayah ${playingAyahNumber}`);
         
       const qariDisplayMap = {
         alafasy: 'Qari Mishary Rashid Alafasy',
         husary: 'Shaykh Mahmoud Khalil Al-Husary',
         minshawi: 'Shaykh Muhammad Siddiq Al-Minshawi',
       };
-      const artistName = isUrdu
-        ? 'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice'
+      const artistName = isUrduAudio
+        ? t('Kanz-ul-Iman Translation · 100% Human Voice', 'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice')
         : qariDisplayMap[selectedQari];
 
       navigator.mediaSession.metadata = new MediaMetadata({
@@ -704,7 +721,7 @@ export default function QuranWisdomPage() {
   return (
     <div style={{ backgroundColor: '#F8FAF9', minHeight: '100vh', paddingBottom: 100 }}>
       <Head>
-        <title>Al-Quran Al-Kareem & Wisdom (قرآنِ کریم، حکمت و تدبر) | AMAL OS</title>
+        <title>{t('Al-Quran Al-Kareem & Wisdom | AMAL OS', 'قرآنِ کریم، حکمت و تدبر | امل او ایس')}</title>
         <meta
           name="description"
           content="AMAL Quran Wisdom & Listening Experience with Kanz-ul-Iman Tarjuma, Khaza'in-ul-Irfan Tafsir, 100% Real Human Voice Recitation, and 2-Minute Quick Wisdom."
@@ -766,7 +783,7 @@ export default function QuranWisdomPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <Link href="/" style={{ color: AmalTheme.colors.primary, textDecoration: 'none', fontWeight: 700, fontSize: 13 }}>Home</Link>
             <span style={{ color: '#94A3B8' }}>/</span>
-            <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 16 }}>القرآن الكريم (The Holy Quran)</span>
+            <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 16 }}>{t('The Holy Quran', 'القرآن الکریم', 'القرآن الكريم')}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -775,7 +792,7 @@ export default function QuranWisdomPage() {
                 onClick={() => {
                   handleSelectSurah(lastReadPosition.surahNumber, lastReadPosition.ayahNumber);
                   if (lastReadPosition.viewMode) setViewMode(lastReadPosition.viewMode);
-                  showAmalToast(`✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`, 'success');
+                  showAmalToast(t(`✨ Resumed: ${lastReadPosition.surahNameTransliterated} (Verse ${lastReadPosition.ayahNumber})`, `✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`), 'success');
                 }}
                 style={{
                   fontSize: 11,
@@ -792,20 +809,20 @@ export default function QuranWisdomPage() {
                   boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
                   transition: 'all 0.15s ease',
                 }}
-                title="آخری تلاوت یا سنے گئے مقام پر فوری جائیں (Resume last recitation)"
+                title={t('Resume last recitation', 'آخری تلاوت یا سنے گئے مقام پر فوری جائیں')}
               >
                 <span>🔖</span>
-                <span>آخری مقام: {lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} ({lastReadPosition.ayahNumber})</span>
+                <span>{t(`Last Read: ${lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`, `آخری مقام: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`)}</span>
               </button>
             )}
             <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#DCFCE7', color: '#166534', fontWeight: 800, border: '1px solid #BBF7D0' }}>
-              ✓ مصحف مدینہ منورہ (Uthmanic Medina)
+              {t('✓ Uthmanic Medina Script', '✓ مصحف مدینہ منورہ')}
             </span>
             <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#FEF3C7', color: '#92400E', fontWeight: 800, border: '1px solid #FDE68A' }}>
-              ترجمہ: کنز الایمان فی ترجمۃ القرآن
+              {t('Translation: Kanz-ul-Iman', 'ترجمہ: کنز الایمان فی ترجمۃ القرآن')}
             </span>
             <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 8, backgroundColor: '#EFF6FF', color: '#1E40AF', fontWeight: 800, border: '1px solid #BFDBFE' }}>
-              تفسیر: خزائن العرفان
+              {t('Tafsir: Khaza\'in-ul-Irfan', 'تفسیر: خزائن العرفان')}
             </span>
             <Link
               href="/wisdom"
@@ -821,10 +838,10 @@ export default function QuranWisdomPage() {
                 alignItems: 'center',
                 gap: 5,
               }}
-              title="۴۲ منتخب قرآنی حکمت کارڈز کھولیں"
+              title={t('Open 42 Curated Quranic Wisdom Cards', '۴۲ منتخب قرآنی حکمت کارڈز کھولیں')}
             >
               <span>✨</span>
-              <span>حکمت کارڈز (Wisdom Cards)</span>
+              <span>{t('Wisdom Cards', 'حکمت کارڈز')}</span>
             </Link>
           </div>
         </div>

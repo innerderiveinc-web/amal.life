@@ -81,7 +81,7 @@ export default function CopyrightPage() {
           {/* Section 2: Attribution of Master Quranic & Hadith Corpora */}
           <div style={{ backgroundColor: '#FFFFFF', borderRadius: 14, border: '1px solid #E5E7EB', padding: 28 }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1B4332', display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 16px' }}>
-              <span>🏛️</span> Scholarly Attribution & Data Sources (الإسناد والاعتراف بالفضل)
+              <span>🏛️</span> Scholarly Attribution & Data Sources
             </h2>
             <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.7, marginBottom: 16 }}>
               In accordance with the Prophetic maxim, <em>"Whoever does not thank the people does not thank Allah"</em> (Sunan Abi Dawud), we humbly acknowledge and attribute the following foundational projects:

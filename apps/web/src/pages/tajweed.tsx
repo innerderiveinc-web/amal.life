@@ -110,7 +110,7 @@ export default function TajweedPage() {
                 }}
               >
                 <span>{isPlaying && currentTrack?.id === currentPassage.passageId ? '⏸' : '▶'}</span>
-                <span>تلاوت سنیں (Listen Audio)</span>
+                <span>Listen Audio</span>
               </button>
 
               <div style={{ display: 'flex', gap: 6, backgroundColor: '#F3F4F6', padding: 4, borderRadius: 8 }}>

@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { DailyKnowledgeEngine, DailyKnowledgeBroadcast } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../context/LanguageContext';
 
 export const DailyKnowledgeBroadcastCard: React.FC = () => {
+  const { t, isUrdu } = useLanguage();
   const [broadcast, setBroadcast] = useState<DailyKnowledgeBroadcast | null>(() => DailyKnowledgeEngine.getBroadcast());
   const [activeTab, setActiveTab] = useState<'AYAH' | 'HADITH' | 'DUA' | 'HIKMAT'>('AYAH');
   const [copied, setCopied] = useState(false);
@@ -109,12 +111,12 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
                   fontWeight: 700,
                 }}
               >
-                🕌 جمعۃ المبارک
+                {t('🕌 Blessed Friday', '🕌 جمعۃ المبارک')}
               </span>
             )}
           </div>
           <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1E293B', margin: '4px 0 0' }}>
-            روزانہ نشریۂ نورِ علم و عمل (Daily Deen Stream)
+            {t('Daily Deen Knowledge Stream', 'روزانہ نشریۂ نورِ علم و عمل')}
           </h2>
         </div>
 
@@ -132,21 +134,21 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
             color: '#475569',
           }}
         >
-          <span>🕒 وقت:</span>
+          <span>{t('🕒 Window:', '🕒 وقت:')}</span>
           <strong style={{ color: '#065F46' }}>
             {broadcast.activeTimeSlot === 'FAJR'
-              ? 'صبح فجر'
+              ? t('Fajr / Dawn', 'صبح فجر')
               : broadcast.activeTimeSlot === 'CHASHT'
-              ? 'چاشت'
+              ? t('Chasht / Forenoon', 'چاشت')
               : broadcast.activeTimeSlot === 'DHUHR'
-              ? 'ظہر'
+              ? t('Dhuhr / Midday', 'ظہر')
               : broadcast.activeTimeSlot === 'ASR'
-              ? 'عصر'
+              ? t('Asr / Afternoon', 'عصر')
               : broadcast.activeTimeSlot === 'MAGHRIB'
-              ? 'مغرب'
-              : 'عشاء و رات'}
+              ? t('Maghrib / Sunset', 'مغرب')
+              : t('Isha & Night', 'عشاء و رات')}
           </strong>
-          <span>• دن {broadcast.dayOfYear}</span>
+          <span>• {t(`Day ${broadcast.dayOfYear}`, `دن ${broadcast.dayOfYear}`)}</span>
         </div>
       </div>
 
@@ -178,7 +180,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>📖</span>
-          <span>آیتِ مبارکہ (کنز الایمان)</span>
+          <span>{t('Quranic Verse', 'آیتِ مبارکہ (کنز الایمان)')}</span>
         </button>
 
         <button
@@ -198,7 +200,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>📜</span>
-          <span>حدیثِ نبوی ﷺ (نووی و شمائل)</span>
+          <span>{t('Prophetic Hadith', 'حدیثِ نبوی ﷺ (نووی و شمائل)')}</span>
         </button>
 
         <button
@@ -218,7 +220,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>🤲</span>
-          <span>مسنون و ربانی دعا (حصن المسلم)</span>
+          <span>{t('Prophetic Dua', 'مسنون و ربانی دعا (حصن المسلم)')}</span>
         </button>
 
         <button
@@ -238,7 +240,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>💎</span>
-          <span>تزکیہ و حکمت (امام غزالی و سعدی)</span>
+          <span>{t('Spiritual Wisdom', 'تزکیہ و حکمت (امام غزالی و سعدی)')}</span>
         </button>
       </div>
 

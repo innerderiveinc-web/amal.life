@@ -11,8 +11,10 @@ import {
   ZakatClearancePayload,
 } from '@amal/amal-engine';
 import { showAmalToast } from '../components/Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CalculatorPage() {
+  const { t, isUrdu } = useLanguage();
   const [activeTab, setActiveTab] = useState<'ZAKAT' | 'MIRAS'>('ZAKAT');
   const [mirasCert, setMirasCert] = useState<MirasPdfCertificatePayload | null>(null);
   const [zakatCert, setZakatCert] = useState<ZakatClearancePayload | null>(null);
@@ -283,7 +285,7 @@ export default function CalculatorPage() {
                 }}>
                   <div style={{ fontWeight: 800, fontSize: 13, color: '#1E293B', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span>📈</span>
-                    <span>Modern Financial Assets (جدید مالی اثاثے)</span>
+                    <span>{t('Modern Financial Assets', 'جدید مالی اثاثے')}</span>
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -292,7 +294,7 @@ export default function CalculatorPage() {
                         <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
                           Trading Shares / Short-term Resale Stocks (100% Zakatable)
                         </label>
-                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>عروضِ تجارت</span>
+                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>{t('Trading Assets (`Urood al-Tijarah)', 'عروضِ تجارت')}</span>
                       </div>
                       <input
                         type="number"
@@ -308,7 +310,7 @@ export default function CalculatorPage() {
                         <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
                           Long-Term Dividend Equity / Mutual Funds (~25% Liquid Zakatable)
                         </label>
-                        <span style={{ fontSize: 10, color: '#0284C7', fontWeight: 700 }}>AAOIFI / عثمانی قاعدہ</span>
+                        <span style={{ fontSize: 10, color: '#0284C7', fontWeight: 700 }}>{t('AAOIFI Standard / Usmani Rule', 'AAOIFI / عثمانی قاعدہ')}</span>
                       </div>
                       <input
                         type="number"
@@ -603,7 +605,7 @@ export default function CalculatorPage() {
               )}
 
               <div style={{ marginTop: 14, padding: 12, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE', fontSize: 12, color: '#1E40AF', lineHeight: 1.5 }}>
-                ⚖️ <strong>علمی و قانونی رہنمائی (Scholarly Guidance):</strong> یہ تخمینہ قرآن و سنت کے بنیادی اصولوں پر مبنی ہے۔ خاندانی پیچیدہ وراثت، تنازعات یا عدالتی تقسیم سے قبل اپنے مقامی دار الافتاء یا مستند مفتی کرام سے حتمی توثیق ضرور حاصل فرمائیں۔
+                ⚖️ <strong>{t('Scholarly & Legal Guidance:', 'علمی و شرعی رہنمائی:')}</strong> {t('This calculation is based on classical Quranic principles and authenticated jurisprudence. For complex disputes or court distributions, please verify with your local certified Dar-ul-Ifta.', 'یہ تخمینہ قرآن و سنت کے بنیادی اصولوں پر مبنی ہے۔ خاندانی پیچیدہ وراثت، تنازعات یا عدالتی تقسیم سے قبل اپنے مقامی دار الافتاء یا مستند مفتی کرام سے حتمی توثیق ضرور حاصل فرمائیں۔')}
               </div>
 
               <button

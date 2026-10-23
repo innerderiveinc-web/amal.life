@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { useAuth } from '../context/AuthContext';
 import { showAmalToast } from '../components/Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AuthPage() {
   const { user, signIn, register, continueAsGuest, signOut, exportSovereignData } = useAuth();
+  const { t, isUrdu } = useLanguage();
   const [mode, setMode] = useState<'SIGNIN' | 'REGISTER'>('SIGNIN');
 
   const [username, setUsername] = useState('');
@@ -258,7 +260,7 @@ export default function AuthPage() {
                         cursor: 'pointer',
                       }}
                     >
-                      {isSubmitting ? 'تصدیق ہو رہی ہے...' : 'Sign In · لاگ ان کریں'}
+                      {isSubmitting ? t('Signing In...', 'تصدیق ہو رہی ہے...') : t('Sign In', 'لاگ ان کریں')}
                     </button>
                   </form>
                 ) : (
@@ -266,17 +268,19 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Username (Unique ID)
+                          {t('Username (Unique ID)', 'صارف کا شناختی نام')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          صارف کا شناختی نام (لاگ ان کے لیے)
-                        </span>
+                        {isUrdu && (
+                          <span style={{ fontSize: 12, color: '#6B7280' }}>
+                            صارف کا شناختی نام (لاگ ان کے لیے)
+                          </span>
+                        )}
                       </div>
                       <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.-]/g, ''))}
-                        placeholder="ashraf786 (حروف و ہندسے)"
+                        placeholder={t('e.g. ashraf786 (letters & numbers)', 'ashraf786 (حروف و ہندسے)')}
                         required
                         style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
                       />
@@ -284,11 +288,8 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Full Name / Title
+                          {t('Full Name / Title', 'پورا نام')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          پورا نام
-                        </span>
                       </div>
                       <input
                         type="text"
@@ -302,17 +303,19 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Password
+                          {t('Password', 'پاسورڈ')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          پاسورڈ / خفیہ پن
-                        </span>
+                        {isUrdu && (
+                          <span style={{ fontSize: 12, color: '#6B7280' }}>
+                            پاسورڈ / خفیہ پن
+                          </span>
+                        )}
                       </div>
                       <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="•••••••• (کم از کم ۴ حروف یا ہندسے)"
+                        placeholder={t('•••••••• (minimum 4 characters)', '•••••••• (کم از کم ۴ حروف یا ہندسے)')}
                         required
                         style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '1.5px solid #D1D5DB', fontSize: 14, boxSizing: 'border-box' }}
                       />
@@ -321,11 +324,8 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Primary Fiqh School (Madhhab)
+                          {t('Primary Fiqh School (Madhhab)', 'فقہی مسلک')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          فقہی مسلک
-                        </span>
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
                         {(['Hanafi', 'Shafi\'i', 'Maliki', 'Hanbali'] as const).map((m) => (
@@ -344,7 +344,9 @@ export default function AuthPage() {
                               cursor: 'pointer',
                             }}
                           >
-                            {m === 'Hanafi' ? 'Hanafi · حنفی' : m === 'Shafi\'i' ? 'Shafi\'i · شافعی' : m === 'Maliki' ? 'Maliki · مالکی' : 'Hanbali · حنبلی'}
+                            {isUrdu
+                              ? (m === 'Hanafi' ? 'حنفی' : m === 'Shafi\'i' ? 'شافعی' : m === 'Maliki' ? 'مالکی' : 'حنبلی')
+                              : m}
                           </button>
                         ))}
                       </div>
@@ -353,11 +355,8 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          City &amp; Country (Prayer Times)
+                          {t('City & Country (Prayer Times)', 'شہر و ملک')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          شہر و ملک
-                        </span>
                       </div>
                       <input
                         type="text"
@@ -382,7 +381,7 @@ export default function AuthPage() {
                         cursor: 'pointer',
                       }}
                     >
-                      {isSubmitting ? 'اکاؤنٹ بن رہا ہے...' : 'نیا اکاؤنٹ بنائیں · Create Account'}
+                      {isSubmitting ? t('Creating account...', 'اکاؤنٹ بن رہا ہے...') : t('Create Account', 'نیا اکاؤنٹ بنائیں')}
                     </button>
                   </form>
                 )}

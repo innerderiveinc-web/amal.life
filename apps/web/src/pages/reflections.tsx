@@ -7,9 +7,11 @@ import { AmalApiClient } from '../lib/api';
 import { AmalTheme } from '@amal/ui';
 import { showAmalToast } from '../components/Toast';
 import { getAyahWisdomCard, QURAN_WISDOM_COLLECTION } from '../lib/quran-wisdom-data';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ReflectionsPage() {
   const router = useRouter();
+  const { t, isUrdu } = useLanguage();
   const [reflectionText, setReflectionText] = useState('');
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -126,10 +128,12 @@ export default function ReflectionsPage() {
                     letterSpacing: '0.04em',
                   }}
                 >
-                  📖 قرآنی تدبر اور محاسبہ
+                  {t('📖 Quranic Tadabbur', '📖 قرآنی تدبر اور محاسبہ')}
                 </span>
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>
-                  {activePromptCard.surahNameUrdu} ({activePromptCard.surahNameTransliterated}) · آیت {activePromptCard.ayahNumber}
+                  {isUrdu
+                    ? `${activePromptCard.surahNameUrdu} (${activePromptCard.surahNameTransliterated}) · آیت ${activePromptCard.ayahNumber}`
+                    : `${activePromptCard.surahNameTransliterated} (${activePromptCard.surahNameArabic}) · Verse ${activePromptCard.ayahNumber}`}
                 </span>
               </div>
 
@@ -145,7 +149,7 @@ export default function ReflectionsPage() {
                   gap: 4,
                 }}
               >
-                <span>قرآن سنیں اور تفسیر دیکھیں ➔</span>
+                <span>{t('Listen Quran & View Tafsir ➔', 'قرآن سنیں اور تفسیر دیکھیں ➔')}</span>
               </Link>
             </div>
 
@@ -167,7 +171,7 @@ export default function ReflectionsPage() {
 
             <div style={{ marginBottom: 14 }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
+                {t('Translation (Kanz-ul-Iman):', 'اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):')}
               </div>
               <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 15, color: '#334155', lineHeight: 2.0, textAlign: 'right' }}>
                 {activePromptCard.tarjumaKanzulIman}
@@ -186,14 +190,17 @@ export default function ReflectionsPage() {
             >
               <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', textTransform: 'uppercase', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span>💡</span>
-                <span>فکر و تدبر کا نکتہ (Daily Tadabbur Prompt):</span>
+                <span>{t('Daily Tadabbur Reflection Prompt:', 'فکر و تدبر کا نکتہ:')}</span>
               </div>
-              <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 14, color: '#78350F', lineHeight: 1.9, textAlign: 'right', marginBottom: 4 }}>
-                {activePromptCard.tadabburPrompt.questionUrdu}
-              </div>
-              <div style={{ fontSize: 12, color: '#92400E', fontStyle: 'italic' }}>
-                "{activePromptCard.tadabburPrompt.questionEnglish}"
-              </div>
+              {isUrdu ? (
+                <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 14, color: '#78350F', lineHeight: 1.9, textAlign: 'right', marginBottom: 4 }}>
+                  {activePromptCard.tadabburPrompt.questionUrdu}
+                </div>
+              ) : (
+                <div style={{ fontSize: 13, color: '#78350F', fontWeight: 600, marginBottom: 4 }}>
+                  "{activePromptCard.tadabburPrompt.questionEnglish}"
+                </div>
+              )}
             </div>
 
             {/* Action: Insert into reflection */}
@@ -216,7 +223,7 @@ export default function ReflectionsPage() {
                 }}
               >
                 <span>✍️</span>
-                <span>اس قرآنی سوال کو اپنے محاسبہ نوٹ میں شامل کریں</span>
+                <span>{t('Add this reflection prompt to daily journal', 'اس قرآنی سوال کو اپنے محاسبہ نوٹ میں شامل کریں')}</span>
               </button>
             </div>
           </div>

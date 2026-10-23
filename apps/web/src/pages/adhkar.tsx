@@ -5,8 +5,10 @@ import { Navigation } from '../components/Navigation';
 import { SUNNAH_ADHKAR_LIST, DhikrItem } from '../lib/adhkar-data';
 import { showAmalToast } from '../components/Toast';
 import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AdhkarPage() {
+  const { t, isUrdu } = useLanguage();
   // Determine default mode based on current local time
   const [activeTab, setActiveTab] = useState<'MORNING' | 'EVENING'>(() => {
     if (typeof window !== 'undefined') {
@@ -126,11 +128,11 @@ export default function AdhkarPage() {
 
   // Reset Entire Session
   const handleResetAll = () => {
-    if (confirm('کیا آپ آج کے تمام اذکار کا کاؤنٹر دوبارہ صفر کرنا چاہتے ہیں؟')) {
+    if (confirm(t('Reset all adhkar counters for today?', 'کیا آپ آج کے تمام اذکار کا کاؤنٹر دوبارہ صفر کرنا چاہتے ہیں؟'))) {
       setCounts({});
       setCompletedIds({});
       saveProgress({}, {});
-      showAmalToast('تمام اذکار دوبارہ ری سیٹ ہو گئے', 'info');
+      showAmalToast(t('All counters have been reset', 'تمام اذکار دوبارہ ری سیٹ ہو گئے'), 'info');
     }
   };
 
@@ -144,7 +146,7 @@ export default function AdhkarPage() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F8FAF9' }}>
       <Head>
-        <title>Morning &amp; Evening Sunnah Adhkar | صبح و شام کے مسنون اذکار | AMAL OS</title>
+        <title>{t('Morning & Evening Sunnah Adhkar | AMAL OS', 'صبح و شام کے مسنون اذکار | امل او ایس')}</title>
         <meta
           name="description"
           content="Authentic Morning and Evening prophetic Adhkar (Hisn al-Hasin, Bahar-e-Shariat, Sahih Hadith) with interactive digital tap ring, virtues, and progress tracking."
@@ -159,18 +161,27 @@ export default function AdhkarPage() {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, backgroundColor: '#ECFDF5', padding: '6px 16px', borderRadius: 20, marginBottom: 12, border: '1px solid #A7F3D0' }}>
             <span style={{ fontSize: 16 }}>🌿</span>
             <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
-              مستند مسنون معمولات برائے حفظ و برکت (حصنِ حصین و بہارِ شریعت)
+              {t('Authentic Sunnah Adhkar for Protection & Blessing (Al-Hisn al-Hasin & Bahar-e-Shariat)', 'مستند مسنون معمولات برائے حفظ و برکت (حصنِ حصین و بہارِ شریعت)')}
             </span>
           </div>
 
           <h1 style={{ fontSize: 32, fontWeight: 900, color: '#064E3B', margin: '0 0 8px', letterSpacing: -0.5 }}>
-            Morning &amp; Evening Sunnah Adhkar
+            {t('Morning & Evening Sunnah Adhkar', 'صبح و شام کے مسنون اذکار و دعائیں')}
           </h1>
-          <div dir="rtl" className="font-urdu" style={{ fontSize: 22, color: '#92400E', fontWeight: 700, marginBottom: 10 }}>
-            صبح و شام کے مسنون اذکار و دعائیں
-          </div>
+          {isUrdu ? (
+            <div dir="rtl" className="font-urdu" style={{ fontSize: 22, color: '#92400E', fontWeight: 700, marginBottom: 10 }}>
+              صبح و شام کے مسنون اذکار و دعائیں
+            </div>
+          ) : (
+            <div style={{ fontSize: 14, color: '#065F46', fontWeight: 700, marginBottom: 10 }}>
+              Prophetic Protection & Daily Remembrances
+            </div>
+          )}
           <p style={{ maxWidth: 640, margin: '0 auto', fontSize: 14, color: '#475569', lineHeight: 1.6 }}>
-            Prophetic invocations prescribed for the start of the morning (after Fajr) and evening (after Asr/Maghrib) for complete spiritual protection, forgiveness, and peace of heart.
+            {t(
+              'Prophetic invocations prescribed for the start of the morning (after Fajr) and evening (after Asr/Maghrib) for complete spiritual protection, forgiveness, and peace of heart.',
+              'حضور نبی کریم ﷺ کے ارشادات کے مطابق صبح (بعد نمازِ فجر) اور شام (بعد نمازِ عصر/مغرب) کے مسنون اذکار برائے روحانی حفاظت، مغفرت اور قلبی سکون۔'
+            )}
           </p>
         </div>
 
@@ -208,7 +219,7 @@ export default function AdhkarPage() {
                 }}
               >
                 <span>🌅</span>
-                <span>صبح کے اذکار (Morning)</span>
+                <span>{t('Morning Adhkar', 'صبح کے اذکار')}</span>
               </button>
 
               <button
@@ -231,7 +242,7 @@ export default function AdhkarPage() {
                 }}
               >
                 <span>🌙</span>
-                <span>شام کے اذکار (Evening)</span>
+                <span>{t('Evening Adhkar', 'شام کے اذکار')}</span>
               </button>
             </div>
 
@@ -315,10 +326,15 @@ export default function AdhkarPage() {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, fontSize: 13, fontWeight: 700 }}>
               <span style={{ color: '#064E3B' }}>
-                آج کے مکمل اذکار ({activeTab === 'MORNING' ? 'صبح' : 'شام'}): {completedInCurrentTab} از {totalInCurrentTab} ({completionPercentage}%)
+                {t(
+                  `Completed (${activeTab === 'MORNING' ? 'Morning' : 'Evening'}): ${completedInCurrentTab} of ${totalInCurrentTab} (${completionPercentage}%)`,
+                  `آج کے مکمل اذکار (${activeTab === 'MORNING' ? 'صبح' : 'شام'}): ${completedInCurrentTab} از ${totalInCurrentTab} (${completionPercentage}%)`
+                )}
               </span>
               <span style={{ color: completionPercentage === 100 ? '#166534' : '#64748B' }}>
-                {completionPercentage === 100 ? '🎉 مبارک! آج کا پورا معمول مکمل ہو گیا' : `${totalInCurrentTab - completedInCurrentTab} اذکار باقی ہیں`}
+                {completionPercentage === 100
+                  ? t('🎉 Complete! Today\'s adhkar routine finished', '🎉 مبارک! آج کا پورا معمول مکمل ہو گیا')
+                  : t(`${totalInCurrentTab - completedInCurrentTab} remaining`, `${totalInCurrentTab - completedInCurrentTab} اذکار باقی ہیں`)}
               </span>
             </div>
 
@@ -380,10 +396,10 @@ export default function AdhkarPage() {
 
                     <div>
                       <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#0F172A' }}>
-                        {item.titleUrdu}
+                        {isUrdu ? item.titleUrdu : item.titleEnglish}
                       </h3>
                       <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-                        {item.titleEnglish} • {item.sourceHadith}
+                        {isUrdu ? item.titleEnglish : (item.titleArabic || item.titleUrdu)} • {item.sourceHadith}
                       </div>
                     </div>
                   </div>
@@ -458,7 +474,7 @@ export default function AdhkarPage() {
                           cursor: 'pointer',
                         }}
                       >
-                        صفر ↺
+                        {t('Reset', 'صفر ↺')}
                       </button>
                     )}
 
@@ -477,10 +493,10 @@ export default function AdhkarPage() {
                           primaryTextUrdu: item.translationUrdu,
                           secondaryTextEnglish: item.translationEnglish,
                           sourceCitation: item.sourceHadith,
-                          badgeContext: `${item.targetCount} مرتبہ · فضیلت و برکت`,
+                          badgeContext: isUrdu ? `${item.targetCount} مرتبہ · فضیلت و برکت` : `${item.targetCount}x · Virtue & Merits`,
                         });
                       }}
-                      title="اس دعا کا خوبصورت کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا"
+                      title={t('Create shareable visual card for this Dua', 'اس دعا کا خوبصورت کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا')}
                       style={{
                         padding: '4px 10px',
                         borderRadius: 6,
@@ -496,7 +512,7 @@ export default function AdhkarPage() {
                       }}
                     >
                       <span>📸</span>
-                      <span>کارڈ</span>
+                      <span>{t('Card', 'کارڈ')}</span>
                     </button>
                   </div>
                 </div>
@@ -528,36 +544,73 @@ export default function AdhkarPage() {
                   </div>
                 )}
 
-                {/* URDU TRANSLATION */}
-                <div
-                  dir="rtl"
-                  className="font-urdu"
-                  style={{
-                    fontSize: 16,
-                    lineHeight: 2.1,
-                    textAlign: 'right',
-                    color: '#1E293B',
-                    marginBottom: 12,
-                    backgroundColor: '#FFFBEB',
-                    padding: '12px 18px',
-                    borderRadius: 10,
-                    border: '1px solid #FEF3C7',
-                  }}
-                >
-                  <strong style={{ color: '#92400E', fontSize: 13, display: 'block', marginBottom: 4 }}>
-                    ترجمہ و مفہوم:
-                  </strong>
-                  {item.translationUrdu}
-                </div>
-
-                {/* English Translation */}
-                {showEnglish && (
-                  <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6, marginBottom: 14 }}>
-                    <strong>English: </strong>{item.translationEnglish}
+                {/* PRIMARY TRANSLATION BOX */}
+                {isUrdu ? (
+                  <div
+                    dir="rtl"
+                    className="font-urdu"
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 2.1,
+                      textAlign: 'right',
+                      color: '#1E293B',
+                      marginBottom: 12,
+                      backgroundColor: '#FFFBEB',
+                      padding: '12px 18px',
+                      borderRadius: 10,
+                      border: '1px solid #FEF3C7',
+                    }}
+                  >
+                    <strong style={{ color: '#92400E', fontSize: 13, display: 'block', marginBottom: 4 }}>
+                      ترجمہ و مفہوم:
+                    </strong>
+                    {item.translationUrdu}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      fontSize: 14,
+                      lineHeight: 1.6,
+                      color: '#1E293B',
+                      marginBottom: 12,
+                      backgroundColor: '#F8FAFC',
+                      padding: '12px 18px',
+                      borderRadius: 10,
+                      border: '1px solid #E2E8F0',
+                    }}
+                  >
+                    <strong style={{ color: '#064E3B', fontSize: 13, display: 'block', marginBottom: 4 }}>
+                      English Meaning:
+                    </strong>
+                    {item.translationEnglish}
                   </div>
                 )}
 
-                {/* VIRTUES & SPIRITUAL MERITS (فضیلت و برکت) */}
+                {/* SECONDARY TRANSLATION (URDU FOR NON-URDU MODE IF DESIRED) */}
+                {!isUrdu && showEnglish && item.translationUrdu && (
+                  <details style={{ marginBottom: 12, fontSize: 12, color: '#64748B' }}>
+                    <summary style={{ cursor: 'pointer', fontWeight: 600, color: '#92400E' }}>
+                      Show Urdu Translation (اردو ترجمہ)
+                    </summary>
+                    <div
+                      dir="rtl"
+                      className="font-urdu"
+                      style={{
+                        marginTop: 6,
+                        padding: '10px 14px',
+                        backgroundColor: '#FFFBEB',
+                        borderRadius: 8,
+                        color: '#1E293B',
+                        lineHeight: 1.9,
+                        fontSize: 14,
+                      }}
+                    >
+                      {item.translationUrdu}
+                    </div>
+                  </details>
+                )}
+
+                {/* VIRTUES & SPIRITUAL MERITS */}
                 <div
                   style={{
                     padding: '10px 14px',
@@ -569,15 +622,17 @@ export default function AdhkarPage() {
                     lineHeight: 1.6,
                   }}
                 >
-                  <span style={{ fontWeight: 800, color: '#065F46' }}>✨ فضیلت و برکت: </span>
-                  <span>{item.virtueUrdu}</span>
+                  <span style={{ fontWeight: 800, color: '#065F46' }}>
+                    {t('✨ Spiritual Merit & Virtue: ', '✨ فضیلت و برکت: ')}
+                  </span>
+                  <span>{isUrdu ? item.virtueUrdu : (item.virtueEnglish || item.virtueUrdu)}</span>
                 </div>
 
                 {/* Tap Helper Hint */}
                 <div style={{ marginTop: 12, textAlign: 'center', fontSize: 11, color: isCompleted ? '#166534' : '#94A3B8', fontWeight: 600 }}>
                   {isCompleted
-                    ? '✓ یہ دعا مکمل ہو چکی ہے (ٹپ جاری رکھ سکتے ہیں)'
-                    : `👆 کاؤنٹر بڑھانے کے لیے کارڈ پر کہیں بھی ٹپ کریں (باقی: ${Math.max(0, item.targetCount - currentCount)})`}
+                    ? t('✓ Completed (You may continue tapping)', '✓ یہ دعا مکمل ہو چکی ہے (ٹپ جاری رکھ سکتے ہیں)')
+                    : t(`👆 Tap anywhere on card to count (${Math.max(0, item.targetCount - currentCount)} remaining)`, `👆 کاؤنٹر بڑھانے کے لیے کارڈ پر کہیں بھی ٹپ کریں (باقی: ${Math.max(0, item.targetCount - currentCount)})`)}
                 </div>
               </div>
             );

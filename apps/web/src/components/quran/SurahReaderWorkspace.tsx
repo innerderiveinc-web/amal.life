@@ -709,7 +709,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                       {translit && (
                         <div>
                           <div style={{ fontSize: 11, fontWeight: 700, color: '#64748B', marginBottom: 4, letterSpacing: 0.5 }}>
-                            Transliteration (تلفظ و تجوید):
+                            Roman Transliteration (Pronunciation):
                           </div>
                           <div style={{ fontSize: 14, color: '#334155', fontStyle: 'italic', lineHeight: 1.6 }}>
                             {translit}
@@ -729,7 +729,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                 {/* Urdu Translation: Kanz-ul-Iman */}
                 <div style={{ marginBottom: 24, textAlign: 'center', backgroundColor: '#FDFBF7', padding: '20px 24px', borderRadius: 12, border: '1px solid #FEF3C7' }}>
                   <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', marginBottom: 8, letterSpacing: 0.5 }}>
-                    اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
+                    Kanz-ul-Iman (Urdu Translation):
                   </div>
                   <div
                     dir="rtl"
@@ -1140,7 +1140,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                 {/* Urdu Tarjuma (Kanz-ul-Iman) */}
                 <div style={{ marginBottom: 8 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                    اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
+                    Kanz-ul-Iman (Urdu):
                   </div>
                   <div
                     dir="rtl"
@@ -1167,7 +1167,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                         <div style={{ marginBottom: 6 }}>
                           <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
                             <span>🔤</span>
-                            <span>Roman Transliteration (تلفظ و تجوید):</span>
+                            <span>Roman Transliteration:</span>
                           </div>
                           <div style={{ fontSize: Math.max(14, fontSize - 8), fontWeight: 600, color: '#0C4A6E', lineHeight: 1.6 }}>
                             {translit}
@@ -1180,7 +1180,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                         <div>
                           <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
                             <span>📖</span>
-                            <span>Kanz-ul-Iman (Roman Urdu Tarjuma):</span>
+                            <span>Roman Urdu Translation:</span>
                           </div>
                           <div style={{ fontSize: Math.max(13, fontSize - 9), color: '#064E3B', fontWeight: 600, lineHeight: 1.6 }}>
                             {romanTarjuma}

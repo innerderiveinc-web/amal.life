@@ -3,8 +3,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AboutPage() {
+  const { t, isUrdu } = useLanguage();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const faqs = [
@@ -16,7 +18,8 @@ export default function AboutPage() {
     {
       q: 'Does AMAL OS issue independent religious rulings or Fatwas?',
       qUrdu: 'کیا امل او ایس کوئی خود ساختہ فتویٰ یا شرعی فیصلہ جاری کرتا ہے؟',
-      a: 'ہرگز نہیں۔ اسلامی شریعت میں فتویٰ دینا صرف زندہ اور باقاعدہ مستند مفتیانِ کرام کا حق ہے۔ امل ایک تحقیقی و معلوماتی پلیٹ فارم ہے جس میں کسی بھی مشین یا خودکار نظام کو نیا فتویٰ گھڑنے یا حلال و حرام کا خود فیصلہ کرنے کی قطعی اجازت نہیں۔ امل صرف قرآن، سنت اور فقہائے اربعہ کی معتبر کتب سے اصل متون و حوالہ جات پیش کرتا ہے اور ذاتی پیچیدہ مسائل میں مستند مفتیانِ کرام سے رجوع کرواتا ہے۔',
+      a: 'Absolutely not. In classical Islamic jurisprudence, issuing a legal verdict (Fatwa) is the exclusive preserve of qualified, living human Muftis with continuous sanad (scholarly lineage). AMAL OS is strictly a research, educational, and workflow companion. Machines and automated systems are strictly prohibited from deriving new verdicts or ruling on halal and haram. AMAL OS presents verbatim classical primary sources and directs complex personal inquiries directly to recognized Dar-ul-Ifta institutions.',
+      aUrdu: 'ہرگز نہیں۔ اسلامی شریعت میں فتویٰ دینا صرف زندہ اور باقاعدہ مستند مفتیانِ کرام کا حق ہے۔ امل ایک تحقیقی و معلوماتی پلیٹ فارم ہے جس میں کسی بھی مشین یا خودکار نظام کو نیا فتویٰ گھڑنے یا حلال و حرام کا خود فیصلہ کرنے کی قطعی اجازت نہیں۔ امل صرف قرآن، سنت اور فقہائے اربعہ کی معتبر کتب سے اصل متون و حوالہ جات پیش کرتا ہے اور ذاتی پیچیدہ مسائل میں مستند مفتیانِ کرام سے رجوع کرواتا ہے۔',
     },
     {
       q: 'What is AMAL OS\'s policy on technology and automated algorithms?',
@@ -82,7 +85,7 @@ export default function AboutPage() {
             textTransform: 'uppercase',
             letterSpacing: 1,
           }}>
-            <span>🕌</span> تعارف و منہج · ABOUT & METHODOLOGY
+            <span>🕌</span> {t('About & Methodology', 'تعارف و منہج')}
           </div>
 
           <h1 style={{
@@ -175,8 +178,11 @@ export default function AboutPage() {
               },
               {
                 icon: '⚖️',
-                title: 'Fatwa Firewall & Scholar Oversight (اہلِ علم کی نگرانی)',
-                desc: 'شریعت کے حتمی فیصلے اور فتاویٰ صرف زندہ و مستند مفتیانِ کرام کا منصب ہیں۔ امل میں کسی خود ساختہ رائے کی قطعی ممانعت ہے؛ تمام فقہی مباحث صرف مستند کلاسیکی کتب سے پیش کیے جاتے ہیں اور پیچیدہ سوالات باقاعدہ اہل علم کے سپرد کیے جاتے ہیں۔',
+                title: t('Fatwa Firewall & Scholar Oversight', 'اہلِ علم کی نگرانی اور فتویٰ فائر وال'),
+                desc: t(
+                  'Issuing legal verdicts (Fatwas) belongs exclusively to living, qualified Islamic jurists (Muftis). AMAL OS strictly prohibits machine-generated rulings; all fiqh discussions cite canonical classical texts, and complex inquiries are routed directly to living scholars.',
+                  'شریعت کے حتمی فیصلے اور فتاویٰ صرف زندہ و مستند مفتیانِ کرام کا منصب ہیں۔ امل میں کسی خود ساختہ رائے کی قطعی ممانعت ہے؛ تمام فقہی مباحث صرف مستند کلاسیکی کتب سے پیش کیے جاتے ہیں اور پیچیدہ سوالات باقاعدہ اہل علم کے سپرد کیے جاتے ہیں۔'
+                ),
               },
               {
                 icon: '🕌',
@@ -288,7 +294,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                        Pillar 1 · تلاش و رہنمائی
+                        {t('Pillar 1 · Search & Guidance', 'بنیاد ۱ · تلاش و رہنمائی')}
                       </span>
                       <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                         Semantic Evidence Retrieval
@@ -296,7 +302,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
-                    (&quot;Ask AMAL&quot; — احساس و ضرورت کی بنیاد پر قرآنی نصوص کی تلاش)
+                    {t('("Ask AMAL" — Emotional & Practical Retrieval)', '("Ask AMAL" — احساس و ضرورت کی بنیاد پر قرآنی نصوص کی تلاش)')}
                   </div>
                   <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
                     When a user writes: <em>&ldquo;I feel overwhelmed by workplace pressure and cannot focus during prayer,&rdquo;</em> the semantic search engine identifies the exact Ayahs on Sakinah (peace) and Sabr (patience) directly from the verified classical corpus—<strong>without altering a single word or letter of Islamic text</strong>.
@@ -346,7 +352,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                        Pillar 2 · نیت سے عمل تک
+                        {t('Pillar 2 · Niyyah to Action', 'بنیاد ۲ · نیت سے عمل تک')}
                       </span>
                       <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                         Adaptive Daily Amal Habits
@@ -354,7 +360,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
-                    (Niyyah to Action — نیت کو مسنون معمولات میں ڈھالنا)
+                    {t('(Niyyah to Action — Structuring Daily Sunnah Habits)', '(نیت کو مسنون معمولات میں ڈھالنا)')}
                   </div>
                   <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
                     The platform organizes high-level intentions into manageable daily Sunnah micro-habits tailored to the user&apos;s schedule (e.g. reminding a busy commuter to recite Ayat-ul-Kursi or do 3 minutes of Istighfar during transit). Rooted in the Prophetic guidance: <em>&ldquo;The deeds most loved by Allah are those done regularly, even if small&rdquo;</em> (Bukhari).
@@ -404,7 +410,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                        Pillar 3 · مراجع کا باہمی ربط
+                        {t('Pillar 3 · Cross-Referencing Corpus', 'بنیاد ۳ · مراجع کا باہمی ربط')}
                       </span>
                       <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                         Classical Corpus Cross-Referencing
@@ -412,7 +418,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
-                    (کنز الایمان، خزائن العرفان و بہارِ شریعت کا الحاق)
+                    {t('(Bridging Kanz-ul-Iman, Khazain-ul-Irfan & Bahar-e-Shariat)', '(کنز الایمان، خزائن العرفان و بہارِ شریعت کا الحاق)')}
                   </div>
                   <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
                     The platform instantly links an Ayah in <strong>Kanz-ul-Iman</strong> (Imam Ahmad Raza) to its commentary in <strong>Khaza&apos;in-ul-Irfan</strong> (Allama Muradabadi) and related classical rulings in <strong>Bahar-e-Shariat</strong> (Allama Amjadi), saving students of knowledge hours of manual searching across multi-volume physical tomes.
@@ -462,7 +468,7 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                        Pillar 4 · فتویٰ سیکریٹریٹ
+                        {t('Pillar 4 · Mufti Secretariat', 'بنیاد ۴ · فتویٰ سیکریٹریٹ')}
                       </span>
                       <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                         Mufti Query Dossier Preparation
@@ -470,7 +476,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
-                    (مفتیانِ کرام کے لیے سوال و حالات کی باقاعدہ فائل بندی)
+                    {t('(Organized Dossier Structuring for Human Muftis)', '(مفتیانِ کرام کے لیے سوال و حالات کی باقاعدہ فائل بندی)')}
                   </div>
                   <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
                     When a user submits a complex question, the system structures the background details (context, timeline, parties involved) into an organized case brief for a qualified human Mufti to review, speeding up authentic scholarly response times without ever attempting to issue the verdict itself.
@@ -561,7 +567,7 @@ export default function AboutPage() {
                       color: isOpen ? '#166534' : '#111827',
                     }}
                   >
-                    <span>{faq.q}</span>
+                    <span>{isUrdu ? faq.qUrdu : faq.q}</span>
                     <span style={{ fontSize: 18, color: '#9CA3AF', marginLeft: 12 }}>
                       {isOpen ? '▲' : '▼'}
                     </span>
@@ -569,12 +575,15 @@ export default function AboutPage() {
 
                   {isOpen && (
                     <div style={{ padding: '0 20px 18px', borderTop: '1px solid #F3F4F6' }}>
-                      <p style={{ fontSize: 12, fontWeight: 700, color: '#047857', marginBottom: 6, marginTop: 10 }}>
-                        {faq.qUrdu}
-                      </p>
-                      <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.6, margin: 0 }}>
-                        {faq.a}
-                      </p>
+                      {isUrdu ? (
+                        <p style={{ fontSize: 15, color: '#1E293B', lineHeight: 1.8, margin: '10px 0 0', textAlign: 'right' }} dir="rtl" className="font-urdu">
+                          {faq.aUrdu || faq.a}
+                        </p>
+                      ) : (
+                        <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.6, margin: '10px 0 0' }}>
+                          {faq.a}
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
@@ -599,7 +608,7 @@ export default function AboutPage() {
                 Engineering &amp; Stewardship by Qsura India Pvt Ltd
               </h2>
               <span style={{ fontSize: 12, color: '#059669', fontWeight: 700 }}>
-                پبلک بینیفٹ و شرعی امانت · Public Benefit Islamic Technology
+                {t('Public Benefit Islamic Technology', 'پبلک بینیفٹ و شرعی امانت')}
               </span>
             </div>
           </div>

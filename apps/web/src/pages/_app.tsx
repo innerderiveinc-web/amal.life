@@ -4,6 +4,7 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import { AudioPlayerProvider } from '../context/AudioPlayerContext';
 import { AuthProvider } from '../context/AuthContext';
+import { LanguageProvider, useLanguage } from '../context/LanguageContext';
 import { PersistentAudioPlayer } from '../components/PersistentAudioPlayer';
 import { UniversalSearchModal } from '../components/UniversalSearchModal';
 import { ReaderSettingsModal } from '../components/ReaderSettingsModal';
@@ -55,8 +56,11 @@ export default function App({ Component, pageProps }: AppProps) {
         try {
           const health = await checkStorageHealth();
           if (health.shouldPromptBackup) {
+            const isUrdu = localStorage.getItem('amal_app_language') === 'ur';
             showAmalToast(
-              'روحانی ڈیٹا کی حفاظت: آپ کے اعمال و نوٹس محفوظ ہیں۔ ترتیبات (Settings) میں جا کر بیک اپ ایکسپورٹ کر لیں تاکہ براؤزر کیش صاف ہونے سے ڈیٹا ضائع نہ ہو۔',
+              isUrdu
+                ? 'روحانی ڈیٹا کی حفاظت: آپ کے اعمال و نوٹس محفوظ ہیں۔ ترتیبات (Settings) میں جا کر بیک اپ ایکسپورٹ کر لیں تاکہ براؤزر کیش صاف ہونے سے ڈیٹا ضائع نہ ہو۔'
+                : 'Data Protection: Your personal notes and habits are safely stored. Consider exporting a backup in Settings.',
               'info'
             );
           }
@@ -74,7 +78,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 if (installingWorker) {
                   installingWorker.onstatechange = () => {
                     if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                      showAmalToast('نیا ورژن دستیاب ہے! ایپ خودکار طور پر اپڈیٹ ہو گئی ہے۔', 'info');
+                      const isUrdu = localStorage.getItem('amal_app_language') === 'ur';
+                      showAmalToast(
+                        isUrdu
+                          ? 'نیا ورژن دستیاب ہے! ایپ خودکار طور پر اپڈیٹ ہو گئی ہے۔'
+                          : 'New version available! App updated automatically.',
+                        'info'
+                      );
                     }
                   };
                 }
@@ -159,9 +169,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <AuthProvider>
-      <AudioPlayerProvider>
-        <Head>
+    <LanguageProvider>
+      <AuthProvider>
+        <AudioPlayerProvider>
+          <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         </Head>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -194,37 +205,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <PWAInstallModal isOpen={isInstallOpen} onClose={() => setIsInstallOpen(false)} />
 
           {/* Floating Quick Bookmark Tab (Right Screen Edge) */}
-          <button
-            onClick={() => setIsBookmarksOpen(true)}
-            className="desktop-only"
-            style={{
-              position: 'fixed',
-              right: 0,
-              top: '42%',
-              transform: 'translateY(-50%)',
-              zIndex: 900,
-              backgroundColor: '#064E3B',
-              color: '#FFFFFF',
-              border: 'none',
-              borderTopLeftRadius: 10,
-              borderBottomLeftRadius: 10,
-              padding: '12px 9px',
-              cursor: 'pointer',
-              boxShadow: '-3px 4px 14px rgba(0, 0, 0, 0.18)',
-              writingMode: 'vertical-rl',
-              textOrientation: 'mixed',
-              fontSize: 11,
-              fontWeight: 800,
-              letterSpacing: 1,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-            }}
-            title="محفوظ دعائیں کھولیں (Cmd+B)"
-          >
-            <span>⭐</span>
-            <span>محفوظ دعائیں</span>
-          </button>
+          <FloatingBookmarkTab onOpen={() => setIsBookmarksOpen(true)} />
 
           {/* Global Non-Intrusive Toast Feedback */}
           <ToastContainer />
@@ -234,5 +215,43 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
       </AudioPlayerProvider>
     </AuthProvider>
+  </LanguageProvider>
+);
+}
+
+function FloatingBookmarkTab({ onOpen }: { onOpen: () => void }) {
+  const { t } = useLanguage();
+  return (
+    <button
+      onClick={onOpen}
+      className="desktop-only"
+      style={{
+        position: 'fixed',
+        right: 0,
+        top: '42%',
+        transform: 'translateY(-50%)',
+        zIndex: 900,
+        backgroundColor: '#064E3B',
+        color: '#FFFFFF',
+        border: 'none',
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
+        padding: '12px 9px',
+        cursor: 'pointer',
+        boxShadow: '-3px 4px 14px rgba(0, 0, 0, 0.18)',
+        writingMode: 'vertical-rl',
+        textOrientation: 'mixed',
+        fontSize: 11,
+        fontWeight: 800,
+        letterSpacing: 1,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+      }}
+      title={t('Open Saved Duas (Cmd+B)', 'محفوظ دعائیں کھولیں (Cmd+B)')}
+    >
+      <span>⭐</span>
+      <span>{t('Saved Duas', 'محفوظ دعائیں')}</span>
+    </button>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { QuranSurahData } from '../../lib/quran-surahs-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 export type AudioSyncMode = 'FULL_SYNC' | 'TILAWAT_URDU_SYNC' | 'TILAWAT_ONLY' | 'URDU_ONLY_CONTINUOUS' | 'TAFSEER_BROADCAST';
 export type AudioSegment = 'ARABIC' | 'URDU' | 'TAFSEER';
@@ -50,6 +51,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
   onOpenWisdomModal,
   selectedSurahNumber,
 }) => {
+  const { t, isUrdu } = useLanguage();
   if (playingAyahNumber === null && surahWideAudioType === null && activeTafseerCardKey === null) {
     return null;
   }
@@ -145,37 +147,41 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
                 }}
               >
                 {surahWideAudioType === 'KANZUL_IMAN'
-                  ? 'مکمل سورت + ترجمہ کنز الایمان'
+                  ? t('Full Surah + Translation', 'مکمل سورت + ترجمہ کنز الایمان')
                   : surahWideAudioType === 'TAFSEER'
-                    ? 'مکمل اردو تفسیر آڈیو'
+                    ? t('Full Tafsir Audio', 'مکمل اردو تفسیر آڈیو')
                     : activeTafseerCardKey !== null
-                      ? 'خزائن العرفان (تفسیری حکمت)'
+                      ? t('Khaza\'in-ul-Irfan Tafsir', 'خزائن العرفان (تفسیری حکمت)')
                       : currentAudioSegment === 'URDU'
-                        ? 'اردو ترجمہ (کنز الایمان)'
-                        : 'عربی تلاوت'}
+                        ? t('Translation (Kanz-ul-Iman)', 'اردو ترجمہ (کنز الایمان)')
+                        : t('Arabic Recitation', 'عربی تلاوت')}
               </span>
               <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
                 {surahWideAudioType === 'KANZUL_IMAN'
-                  ? '100% Real Human Voice (مولانا عبد الحبیب عطاری)'
+                  ? t('100% Real Human Voice', '100% Real Human Voice (مولانا عبد الحبیب عطاری)')
                   : surahWideAudioType === 'TAFSEER'
-                    ? 'مستند سٹوڈیو تفسیر'
+                    ? t('Studio Tafsir Audio', 'مستند سٹوڈیو تفسیر')
                     : activeTafseerCardKey !== null
-                      ? 'صدر الافاضل مولانا نعیم الدین مراد آبادی'
+                      ? t('Allama Muradabadi', 'صدر الافاضل مولانا نعیم الدین مراد آبادی')
                       : currentAudioSegment === 'URDU'
                         ? '100% Real Human Voice'
                         : (selectedQari === 'alafasy'
-                            ? 'مشاری العفاسی'
+                            ? (isUrdu ? 'مشاری العفاسی' : 'Mishary Alafasy')
                             : selectedQari === 'husary'
-                              ? 'محمود خلیل الحصری'
-                              : 'محمد صدیق المنشاوی')}
+                              ? (isUrdu ? 'محمود خلیل الحصری' : 'Mahmoud Al-Husary')
+                              : (isUrdu ? 'محمد صدیق المنشاوی' : 'Siddiq Al-Minshawi'))}
               </span>
             </div>
             <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {surahWideAudioType
-                ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated})`
+                ? (isUrdu
+                    ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated})`
+                    : `Surah ${currentSurahMeta?.nameTransliterated} (${currentSurahMeta?.nameArabic})`)
                 : activeTafseerCardKey
-                  ? `حکمت و تفسیری عبارت کی صوتی قرأت`
-                  : `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated}) · آیت ${playingAyahNumber}`}
+                  ? t('Wisdom & Commentary Audio Recitation', 'حکمت و تفسیری عبارت کی صوتی قرأت')
+                  : (isUrdu
+                      ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated}) · آیت ${playingAyahNumber}`
+                      : `Surah ${currentSurahMeta?.nameTransliterated} (${currentSurahMeta?.nameArabic}) · Verse ${playingAyahNumber}`)}
             </div>
           </div>
         </div>
@@ -203,7 +209,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            title="پچھلی آیت"
+            title={t('Previous Ayah', 'پچھلی آیت')}
           >
             ⏮
           </button>
@@ -225,7 +231,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
               justifyContent: 'center',
               boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
             }}
-            title={isPlayingPaused ? 'چلائیں' : 'وقفہ'}
+            title={isPlayingPaused ? t('Play', 'چلائیں') : t('Pause', 'وقفہ')}
           >
             {isPlayingPaused ? '▶' : '⏸'}
           </button>
@@ -251,7 +257,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            title="اگلی آیت"
+            title={t('Next Ayah', 'اگلی آیت')}
           >
             ⏭
           </button>
@@ -328,16 +334,16 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
               alignItems: 'center',
               gap: 4,
             }}
-            title="آڈیو موڈ تبدیل کریں (تلاوت + اردو / صرف اردو / صرف تلاوت)"
+            title={t('Change Audio Mode', 'آڈیو موڈ تبدیل کریں')}
           >
             <span>
               {audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC'
-                ? '🎧 تلاوت + اردو (Sync)'
+                ? t('🎧 Recitation + Translation (Sync)', '🎧 تلاوت + اردو (Sync)')
                 : audioSyncMode === 'URDU_ONLY_CONTINUOUS'
-                  ? '🎙️ صرف اردو ترجمہ'
+                  ? t('🎙️ Translation Only', '🎙️ صرف اردو ترجمہ')
                   : audioSyncMode === 'TAFSEER_BROADCAST'
-                    ? '📖 تفسیر سٹوڈیو'
-                    : '🎙️ صرف عربی تلاوت'}
+                    ? t('📖 Tafsir Studio', '📖 تفسیر سٹوڈیو')
+                    : t('🎙️ Recitation Only', '🎙️ صرف عربی تلاوت')}
             </span>
           </button>
 
@@ -359,7 +365,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
             }}
           >
             <span>📖</span>
-            <span>حکمت و تفسیر</span>
+            <span>{t('Wisdom & Tafsir', 'حکمت و تفسیر')}</span>
           </button>
 
           <button
@@ -378,7 +384,7 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            title="بند کریں"
+            title={t('Close', 'بند کریں')}
           >
             ✕
           </button>

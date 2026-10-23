@@ -27,8 +27,10 @@ import { PrayerOffsetsModal } from '../components/prayer/PrayerOffsetsModal';
 import { MosqueIqamahModal } from '../components/prayer/MosqueIqamahModal';
 import { CitySearchModal } from '../components/prayer/CitySearchModal';
 import { TahajjudSmartHub } from '../components/prayer/TahajjudSmartHub';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PrayerTimesPage() {
+  const { t, isUrdu } = useLanguage();
   // Default to Delhi / New Delhi or auto-detected timezone city
   const [selectedCity, setSelectedCity] = useState<GlobalCity>(() => {
     return detectDefaultCityFromTimezone();
@@ -606,7 +608,7 @@ export default function PrayerTimesPage() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontWeight: 800, color: '#1B4332', fontSize: 15 }}>
-                  Azaan Audio & Prayer Alerts (اذان آڈیو و الرٹس)
+                  {t('Azaan Audio & Prayer Alerts', 'اذان آڈیو و الرٹس')}
                 </span>
                 <span style={{
                   fontSize: 10,
@@ -638,7 +640,7 @@ export default function PrayerTimesPage() {
                 fontWeight: 600,
               }}
             >
-              <option value="BAYATI_CALL">Maqam Bayati Sacred Call (مقام بیاتی)</option>
+              <option value="BAYATI_CALL">{t('Maqam Bayati Sacred Call', 'مقام بیاتی اذان')}</option>
               <option value="MECCA_TONE">Haram Makkah Reverberant Tone</option>
               <option value="TAKBEER_CHIME">Gentle 3-Tone Takbeer Chime</option>
             </select>
@@ -806,12 +808,12 @@ export default function PrayerTimesPage() {
                               borderRadius: 12,
                               letterSpacing: 0.3,
                             }}>
-                              اگلی نماز · {nextPrayer.formattedCountdownEnglish}
+                              {t('Next Prayer', 'اگلی نماز')} · {nextPrayer.formattedCountdownEnglish}
                             </span>
                           )}
                         </div>
                         <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
-                          {p.nameArabic} • {p.nameUrdu}
+                          {p.nameArabic} • {isUrdu ? p.nameUrdu : p.name}
                         </div>
                       </div>
                     </div>
@@ -835,7 +837,7 @@ export default function PrayerTimesPage() {
               </div>
             </div>
 
-            {/* FASTING & ROZA TIMINGS (سحری و افطار) */}
+            {/* FASTING & ROZA TIMINGS */}
             <div style={{
               marginTop: 16,
               padding: '12px 16px',
@@ -848,7 +850,7 @@ export default function PrayerTimesPage() {
             }}>
               <div>
                 <span style={{ fontSize: 11, fontWeight: 800, color: '#065F46', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                  🌙 سحری کا احتیاطی وقت (Imsak / Sehri Cutoff)
+                  {t('🌙 Imsak / Sehri Cutoff (Precautionary)', '🌙 سحری کا احتیاطی وقت')}
                 </span>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#065F46', marginTop: 2 }}>
                   {(() => {
@@ -861,19 +863,19 @@ export default function PrayerTimesPage() {
                     return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
                   })()}
                   <span style={{ fontSize: 11, fontWeight: 500, color: '#047857', marginLeft: 6 }}>
-                    (3m buffer before Fajr)
+                    {t('(3m buffer before Fajr)', '(فجر سے ۳ منٹ قبل)')}
                   </span>
                 </div>
               </div>
 
               <div style={{ textAlign: 'right' }}>
                 <span style={{ fontSize: 11, fontWeight: 800, color: '#92400E', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                  🌅 افطار کا وقت (Iftar / Sunset)
+                  {t('🌅 Iftar / Sunset', '🌅 افطار کا وقت')}
                 </span>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#92400E', marginTop: 2 }}>
                   {prayerTimes.maghrib}
                   <span style={{ fontSize: 11, fontWeight: 500, color: '#B45309', marginLeft: 6 }}>
-                    (Maghrib entry)
+                    {t('(Maghrib entry)', '(دخولِ مغرب)')}
                   </span>
                 </div>
               </div>
@@ -891,29 +893,32 @@ export default function PrayerTimesPage() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span>⚠️</span>
                   <span style={{ fontWeight: 800, color: '#991B1B', fontSize: 13 }}>
-                    Auqat-e-Makrooha (مکروہ اوقات — نماز ممنوع ہے)
+                    {t('Prohibited Prayer Times (Auqat-e-Makrooha)', 'مکروہ اوقات (نماز ممنوع ہے)')}
                   </span>
                 </div>
                 <span style={{ fontSize: 11, color: '#DC2626', fontWeight: 700 }}>
-                  تحریمی
+                  {t('Strict Prohibition', 'تحریمی')}
                 </span>
               </div>
               <div style={{ fontSize: 12, color: '#7F1D1D', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>طلوعِ آفتاب تا اشراق (Sunrise Window):</span>
+                  <span>{t('Sunrise to Ishraq Window:', 'طلوعِ آفتاب تا اشراق:')}</span>
                   <strong>{makroohTimes.sunrise.start} — {makroohTimes.sunrise.end}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>نصف النہار / زوال (Zawal Window):</span>
+                  <span>{t('Solar Noon / Zawal Window:', 'نصف النہار / زوال:')}</span>
                   <strong>{makroohTimes.zawal.start} — {makroohTimes.zawal.end}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>غروبِ آفتاب (Sunset Window):</span>
+                  <span>{t('Sunset Window:', 'غروبِ آفتاب:')}</span>
                   <strong>{makroohTimes.sunset.start} — {makroohTimes.sunset.end}</strong>
                 </div>
               </div>
               <div style={{ fontSize: 11, color: '#B91C1C', marginTop: 8, fontStyle: 'italic', borderTop: '1px dashed #FECACA', paddingTop: 6 }}>
-                * ان اوقات میں نفل، قضا، سجدۂ تلاوت اور نمازِ جنازہ پڑھنا مکروہِ تحریمی ہے (القدوری و فتاویٰ رضویہ)۔
+                {t(
+                  '* Voluntary, missed prayers (Qada), Sajdah Tilawat, and Janazah are strictly prohibited during these windows (Mukhtasar al-Quduri & Fatawa Razawiyya).',
+                  '* ان اوقات میں نفل، قضا، سجدۂ تلاوت اور نمازِ جنازہ پڑھنا مکروہِ تحریمی ہے (القدوری و فتاویٰ رضویہ)۔'
+                )}
               </div>
             </div>
           </div>
@@ -1026,7 +1031,7 @@ export default function PrayerTimesPage() {
                 }}
               >
                 <span>✏️</span>
-                <span>Customize Mosque / مسجد بدلیں</span>
+                <span>{t('Customize Mosque', 'مسجد کی ترتیبات')}</span>
               </button>
             </div>
 
@@ -1142,47 +1147,62 @@ export default function PrayerTimesPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
             <span style={{ fontSize: 22 }}>📖</span>
             <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-              نماز کے اوقات میں فرق کیوں ہوتا ہے؟ (Why Prayer Timings Differ Across Calendars)
+              {t('Why Prayer Timings Differ Across Calendars', 'نماز کے اوقات میں فرق کیوں ہوتا ہے؟')}
             </h3>
           </div>
           <p style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.6, marginBottom: 16 }}>
-            اگر آپ کو اپنی مسجد کے نقشۂ اوقات اور اس ایپ کے اوقات میں چند منٹ یا عصر کے وقت میں فرق محسوس ہو، تو اس کی بنیادی ۴ شرعی و فلکیاتی وجوہات درج ذیل ہیں:
+            {t(
+              'If you notice a difference of a few minutes or Asr timing between this app and your local mosque timetable, it stems from four valid jurisprudential and astronomical factors:',
+              'اگر آپ کو اپنی مسجد کے نقشۂ اوقات اور اس ایپ کے اوقات میں چند منٹ یا عصر کے وقت میں فرق محسوس ہو، تو اس کی بنیادی ۴ شرعی و فلکیاتی وجوہات درج ذیل ہیں:'
+            )}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
             <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
               <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-                ۱. عصر کا وقت (حنفی مثلین بمقابلہ جمہور مثلِ اول)
+                {t('1. Asr Start Time (Hanafi Mithlayn vs Jumhur)', '۱. عصر کا وقت (حنفی مثلین بمقابلہ جمہور مثلِ اول)')}
               </div>
               <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
-                جمہور ائمہ (شافعی، مالکی، حنبلی) کے نزدیک سائے کا ایک گنا ہونا عصر کا وقت ہے، جبکہ امامِ اعظم ابو حنیفہؒ کے معتمد قول پر سایہ دو گنا (مثلین) ہونے پر عصر شروع ہوتی ہے۔ اس لیے حنفی وقت جمہور سے تقریباً ۵۰ تا ۶۵ منٹ بعد ہوتا ہے۔
+                {t(
+                  'The majority of Sunni schools (Shafi\'i, Maliki, Hanbali) mark Asr when an object\'s shadow equals its length (ratio 1:1). In the Hanafi school (authoritative position of Imam Abu Hanifa), Asr begins when the shadow reaches twice its length (ratio 2:1), roughly 50 to 65 minutes later.',
+                  'جمہور ائمہ (شافعی، مالکی، حنبلی) کے نزدیک سائے کا ایک گنا ہونا عصر کا وقت ہے، جبکہ امامِ اعظم ابو حنیفہؒ کے معتمد قول پر سایہ دو گنا (مثلین) ہونے پر عصر شروع ہوتی ہے۔ اس لیے حنفی وقت جمہور سے تقریباً ۵۰ تا ۶۵ منٹ بعد ہوتا ہے۔'
+                )}
               </p>
             </div>
 
             <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
               <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-                ۲. فجر و عشاء کے زاویے (Calculation Angles)
+                {t('2. Fajr & Isha Calculation Angles', '۲. فجر و عشاء کے زاویے (Calculation Angles)')}
               </div>
               <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
-                برصغیر (دیوبند، بریلی، کراچی) میں صبحِ صادق ۱۸ ڈگری پر تسلیم کی جاتی ہے۔ جبکہ مغربی ممالک میں بعض ادارے ۱۵ ڈگری (ISNA) اور سعودی عرب میں فجر ۱۸.۵ ڈگری اور عشاء مغرب کے ۹۰ منٹ بعد شمار کرتے ہیں۔
+                {t(
+                  'Subcontinent authorities (Karachi, Deoband, Bareilly) recognize Subh Sadiq at 18 degrees below horizon. North America (ISNA) often utilizes 15 degrees, while Umm al-Qura fixes Isha 90 minutes after Maghrib.',
+                  'برصغیر (دیوبند، بریلی، کراچی) میں صبحِ صادق ۱۸ ڈگری پر تسلیم کی جاتی ہے۔ جبکہ مغربی ممالک میں بعض ادارے ۱۵ ڈگری (ISNA) اور سعودی عرب میں فجر ۱۸.۵ ڈگری اور عشاء مغرب کے ۹۰ منٹ بعد شمار کرتے ہیں۔'
+                )}
               </p>
             </div>
 
             <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
               <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-                ۳. دخولِ وقت بمقابلہ جماعت کا وقت (Start vs Jama'at)
+                {t('3. Prayer Start Time vs Mosque Jama\'at Time', '۳. دخولِ وقت بمقابلہ جماعت کا وقت (Start vs Jama\'at)')}
               </div>
               <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
-                یہ ایپ فلکیاتی اعتبار سے وقت شروع ہونے (دخولِ وقت) کا دقیق منٹ بتاتی ہے، جبکہ مساجد میں اقامت/جماعت کا وقت عام سہولت کے لیے مخصوص گول اوقات (مثلاً ۱:۳۰ یا ۵:۱۵) پر طے کیا جاتا ہے۔
+                {t(
+                  'AMAL OS shows the exact astronomical moment when a prayer enters (Dukhul-e-Waqt). Mosques set congregations at round community times (e.g. 1:30 PM or 5:15 PM) for congregation convenience.',
+                  'یہ ایپ فلکیاتی اعتبار سے وقت شروع ہونے (دخولِ وقت) کا دقیق منٹ بتاتی ہے، جبکہ مساجد میں اقامت/جماعت کا وقت عام سہولت کے لیے مخصوص گول اوقات (مثلاً ۱:۳۰ یا ۵:۱۵) پر طے کیا جاتا ہے۔'
+                )}
               </p>
             </div>
 
             <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
               <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-                ۴. احتیاطی منٹس (Local Precautionary Buffers)
+                {t('4. Local Precautionary Buffers (Ihtiyat)', '۴. احتیاطی منٹس (Local Precautionary Buffers)')}
               </div>
               <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
-                مختلف شہروں کے علماء افق اور بلندی کے لحاظ سے مغرب یا فجر میں ۱ تا ۳ احتیاطی منٹ شامل کرتے ہیں۔ اگر آپ کی مقامی مسجد میں ایسا ہو تو آپ اوپر دیے گئے بٹن <strong>"Calibrate / ± Minutes"</strong> سے آسانی سے منٹس سیٹ کر سکتے ہیں۔
+                {t(
+                  'Scholars in many cities add 1-3 precautionary minutes to sunset or Fajr for horizon assurance. You can calibrate this easily using the "Calibrate / ± Minutes" button above.',
+                  'مختلف شہروں کے علماء افق اور بلندی کے لحاظ سے مغرب یا فجر میں ۱ تا ۳ احتیاطی منٹ شامل کرتے ہیں۔ اگر آپ کی مقامی مسجد میں ایسا ہو تو آپ اوپر دیے گئے بٹن "Calibrate / ± Minutes" سے آسانی سے منٹس سیٹ کر سکتے ہیں۔'
+                )}
               </p>
             </div>
           </div>

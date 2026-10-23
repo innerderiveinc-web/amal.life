@@ -13,14 +13,15 @@ import {
   getSavedHijriOffset,
 } from '../lib/prayer-utils';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { AppsLauncherPopover } from './navigation/AppsLauncherPopover';
 import { NavigationMobileMenu } from './navigation/NavigationMobileMenu';
 
 export const Navigation: React.FC = () => {
   const router = useRouter();
   const { user } = useAuth();
+  const { language: currentLang, setLanguage: switchLanguage } = useLanguage();
   const [isMounted, setIsMounted] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'en' | 'ur' | 'ar'>('en');
 
   useEffect(() => {
     setIsMounted(true);
@@ -48,14 +49,6 @@ export const Navigation: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const switchLanguage = (lang: 'en' | 'ur' | 'ar') => {
-    setCurrentLang(lang);
-    if (typeof document !== 'undefined') {
-      document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
-      document.documentElement.lang = lang;
-    }
-  };
 
   const [now, setNow] = useState<Date>(() => new Date());
   const [prayerConfigKey, setPrayerConfigKey] = useState(0);

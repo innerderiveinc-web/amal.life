@@ -62,7 +62,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           }}
         >
           <span>📲</span>
-          <span>{currentLang === 'ur' ? 'ہوم اسکرین پر انسٹال کریں (100% Offline)' : 'Install App on Phone (100% Offline)'}</span>
+          <span>{currentLang === 'ur' ? 'ہوم اسکرین پر انسٹال کریں' : 'Install App (100% Offline)'}</span>
         </button>
 
         {/* Premier Quran Link (Mobile) */}
@@ -86,10 +86,10 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 18 }}>📖</span>
-            <span>{currentLang === 'ur' ? 'قرآنِ کریم، حکمت و تدبر' : 'Al-Quran & Wisdom'}</span>
+            <span>{currentLang === 'ur' ? 'قرآنِ کریم و حکمت' : 'Holy Quran & Wisdom'}</span>
           </div>
           <span style={{ fontSize: 10, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-            Kanz-ul-Iman
+            {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz'}
           </span>
         </Link>
 
@@ -113,7 +113,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             }}
           >
             <span>🌅</span>
-            <span>{currentLang === 'ur' ? 'آج (Today)' : 'Today'}</span>
+            <span>{currentLang === 'ur' ? 'آج' : 'Today'}</span>
           </Link>
 
           <Link

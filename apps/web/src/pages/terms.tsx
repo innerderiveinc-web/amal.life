@@ -108,7 +108,7 @@ export default function TermsPage() {
             </div>
             <ul style={{ fontSize: 14, color: '#374151', lineHeight: 1.8, paddingLeft: 20, margin: 0 }}>
               <li>
-                <strong>No Fatwa Issuance (عدمِ صدورِ فتویٰ):</strong> Search results, references, and synthesized summaries do NOT constitute a binding personal fatwa. AMAL OS is an educational research and clerical index, not a Mufti. Every individual's personal circumstance (<em>Hal</em>) may alter legal dispensations (<em>Rukhsah</em>).
+                <strong>No Fatwa Issuance:</strong> Search results, references, and synthesized summaries do NOT constitute a binding personal fatwa. AMAL OS is an educational research and clerical index, not a Mufti. Every individual's personal circumstance (<em>Hal</em>) may alter legal dispensations (<em>Rukhsah</em>).
               </li>
               <li>
                 <strong>Life-or-Death, Talaq & High-Stakes Litigation:</strong> Complex disputes regarding divorce (<em>Talaq / Khula</em>), criminal litigation, medical bioethics, or contentious probate inheritance MUST be submitted to qualified, living human scholars and recognized Dar al-Ifta institutions.
@@ -122,7 +122,7 @@ export default function TermsPage() {
           {/* Section 3 */}
           <section style={{ marginBottom: 40 }}>
             <h2 style={{ fontSize: 20, fontWeight: 800, color: '#111827', marginBottom: 14 }}>
-              3. Sacred Decorum & Acceptable Use (الأدب الشرعي)
+              3. Sacred Decorum & Acceptable Use
             </h2>
             <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.7 }}>
               Users pledge to interact with AMAL OS within the bounds of Islamic decorum (<em>Adab al-Mu'amalat</em>). You expressly agree NOT to:

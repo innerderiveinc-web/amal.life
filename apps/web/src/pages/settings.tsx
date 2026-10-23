@@ -20,15 +20,17 @@ import {
 import { biometricVaultGuardEngine, VaultSecurityMode } from '@amal/amal-engine';
 import { AmalApiClient } from '../lib/api';
 import { recordSuccessfulBackup } from '../lib/storage-guard';
+import { useLanguage } from '../context/LanguageContext';
 
 type SettingsTab = 'GENERAL' | 'FIQH' | 'SCHOLARSHIP' | 'PRIVACY' | 'READER' | 'SYSTEM';
 
 export default function SettingsPage() {
+  const { language, setLanguage, t, isUrdu } = useLanguage();
   const [activeTab, setActiveTab] = useState<SettingsTab>('GENERAL');
   const [mounted, setMounted] = useState(false);
 
   // --- GENERAL TAB STATE ---
-  const [appLanguage, setAppLanguage] = useState<'en' | 'ur' | 'ar'>('en');
+  const [appLanguage, setAppLanguage] = useState<'en' | 'ur' | 'ar'>(language);
   const [tahajjudMode, setTahajjudMode] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string>('Delhi / New Delhi');
@@ -162,6 +164,7 @@ export default function SettingsPage() {
 
   // Save General
   const handleSaveGeneral = () => {
+    setLanguage(appLanguage);
     localStorage.setItem('amal_app_language', appLanguage);
     localStorage.setItem('amal_tahajjud_mode', String(tahajjudMode));
     localStorage.setItem('amal_high_contrast', String(highContrast));
@@ -518,7 +521,7 @@ export default function SettingsPage() {
                   {/* Language */}
                   <div>
                     <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-                      System Language (زبان کا انتخاب)
+                      {t('System Language', 'زبان کا انتخاب')}
                     </label>
                     <select
                       value={appLanguage}
@@ -533,7 +536,7 @@ export default function SettingsPage() {
                         backgroundColor: '#F9FAFB',
                       }}
                     >
-                      <option value="en">English (UK / US)</option>
+                      <option value="en">English (Global Default)</option>
                       <option value="ur">اردو (Urdu)</option>
                       <option value="ar">العربية (Arabic)</option>
                     </select>
@@ -542,7 +545,7 @@ export default function SettingsPage() {
                   {/* Primary Location */}
                   <div>
                     <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-                      Primary Geographic City (شہر کا تعین)
+                      {t('Primary Geographic City', 'شہر کا تعین')}
                     </label>
                     <select
                       value={selectedCity}
@@ -653,15 +656,15 @@ export default function SettingsPage() {
                         backgroundColor: '#F9FAFB',
                       }}
                     >
-                      <option value="HANAFI">Hanafi (حنفی) — Mithlayn (Shadow ratio 2:1 for Asr)</option>
-                      <option value="STANDARD_JUMHUR">Shafi'i / Maliki / Hanbali — Mithl Awwal (Shadow ratio 1:1)</option>
+                      <option value="HANAFI">{t('Hanafi — Mithlayn (Shadow ratio 2:1 for Asr)', 'حنفی — مثلین (عصر کا وقت)')}</option>
+                      <option value="STANDARD_JUMHUR">{t('Shafi\'i / Maliki / Hanbali — Mithl Awwal (Shadow ratio 1:1)', 'جمہور فقہاء (شافعی، مالکی، حنبلی) — مثلِ اول')}</option>
                     </select>
                   </div>
 
                   {/* Calculation Method */}
                   <div>
                     <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-                      Astronomical Calculation Method (طریقہ حساب)
+                      {t('Astronomical Calculation Method', 'فلکیاتی طریقہ حساب')}
                     </label>
                     <select
                       value={calcMethod}
@@ -1122,8 +1125,8 @@ export default function SettingsPage() {
                         backgroundColor: '#F9FAFB',
                       }}
                     >
-                      <option value="indopak">Indo-Pak / Subcontinent Script (رسم الخط برصغیر - نستعلیق / نسخ)</option>
-                      <option value="uthmani">Madani Uthmani Script (المصحف المدني - رسم عثماني)</option>
+                      <option value="indopak">{t('Indo-Pak / Subcontinent Script (Nastaliq / Naskh)', 'رسم الخط برصغیر (نستعلیق / نسخ)')}</option>
+                      <option value="uthmani">{t('Madani Uthmani Script', 'المصحف المدني (رسم عثماني)')}</option>
                     </select>
                   </div>
 
@@ -1334,7 +1337,7 @@ export default function SettingsPage() {
                       }}
                     >
                       <span>📲</span>
-                      <span>Install AMAL OS on Device (ہوم اسکرین)</span>
+                      <span>{t('Install AMAL OS on Device', 'امل او ایس ہوم اسکرین پر انسٹال کریں')}</span>
                     </button>
 
                     <button

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AmalTheme } from '@amal/ui';
 import { Navigation } from '../components/Navigation';
+import { useLanguage } from '../context/LanguageContext';
 import {
   QURAN_WISDOM_COLLECTION,
   QuranAyahWisdomCard,
@@ -39,6 +40,7 @@ export default function QuranWisdomDedicatedPage() {
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
   const [activeModalCard, setActiveModalCard] = useState<QuranAyahWisdomCard | null>(null);
   const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
+  const { isUrdu } = useLanguage();
 
   // Sync category from URL query (?category=hadith, etc.)
   useEffect(() => {
@@ -400,7 +402,9 @@ export default function QuranWisdomDedicatedPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#666' }}>
             <Link href="/" style={{ color: AmalTheme.colors.primary, textDecoration: 'none', fontWeight: 600 }}>Home</Link>
             <span>/</span>
-            <span style={{ color: '#0F172A', fontWeight: 700 }}>قرآنی حکمت و تدبر (Quran Wisdom Cards)</span>
+            <span style={{ color: '#0F172A', fontWeight: 700 }}>
+              {isUrdu ? 'قرآنی حکمت و تدبر' : 'Quran Wisdom & Classical Cards'}
+            </span>
           </div>
 
           <Link
@@ -420,7 +424,7 @@ export default function QuranWisdomDedicatedPage() {
             }}
           >
             <span>📖</span>
-            <span>مکمل قرآنِ کریم تلاوت و سورتیں (114 Surahs) ➔</span>
+            <span>{isUrdu ? 'مکمل قرآنِ کریم (114 سورتیں) ➔' : 'Full Quran Reader (114 Surahs) ➔'}</span>
           </Link>
         </div>
 
@@ -441,11 +445,12 @@ export default function QuranWisdomDedicatedPage() {
                 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
               </div>
               <h1 style={{ fontSize: 28, fontWeight: 900, margin: '4px 0 8px' }}>
-                قرآنی حکمت، تدبر و عمل (Quran Wisdom Cards)
+                {isUrdu ? 'قرآنی حکمت، تدبر و عمل' : 'Sacred Knowledge & Wisdom Cards'}
               </h1>
               <p style={{ fontSize: 14, color: '#E2E8F0', lineHeight: 1.6, margin: 0 }}>
-                جزء عم (Juz &apos;Amma) کی ۴۲ منتخب آیات مبارکہ، <strong>کنز الایمان</strong> فی ترجمۃ القرآن،
-                اور <strong>خزائن العرفان</strong> کی تفسیری حکمت کے ساتھ روزمرہ زندگی کے لیے عملی رہنمائی۔
+                {isUrdu
+                  ? '۴۲ منتخب قرآنی آیات، مستند احادیث، شمائل اور فقہی معمولات روزمرہ زندگی کے لیے عملی رہنمائی کے ساتھ۔'
+                  : 'Curated Quranic verses, authentic Ahadith, and classical Sunni guidance with English and Roman transliteration.'}
               </p>
             </div>
 
@@ -479,8 +484,8 @@ export default function QuranWisdomDedicatedPage() {
               <span>{continuousIndex !== null ? '⏹' : '🎧'}</span>
               <span>
                 {continuousIndex !== null
-                  ? `جاری ہے (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length}) — موقوف کریں`
-                  : 'تمام ۴۲ آیات کا ترجمہ ایک ساتھ سنیں'}
+                  ? (isUrdu ? `جاری ہے (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length})` : `Playing (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length}) — Pause`)
+                  : (isUrdu ? 'تمام آیات کی تلاوت سنیں' : 'Play All 42 Verses Consecutively')}
               </span>
             </button>
           </div>
@@ -489,12 +494,12 @@ export default function QuranWisdomDedicatedPage() {
         {/* Category Switcher Tabs */}
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6, marginBottom: 20 }}>
           {[
-            { id: 'QURAN', label: '📖 قرآنی حکمت (Quran Wisdom)', count: 42 },
-            { id: 'HADITH', label: '📜 احادیثِ مبارکہ (Hadith Cards)', count: 14 },
-            { id: 'SHAMAIL', label: '🌹 شمائلِ مصطفیٰ ﷺ (Prophetic Character)', count: 12 },
-            { id: 'TASAWWUF', label: '💎 تزکیہ و تصوف (Spiritual Wisdom)', count: 12 },
-            { id: 'FIQH', label: '⚖️ احکامِ فقہ (Daily Fiqh Guidance)', count: 10 },
-            { id: 'DUA', label: '🤲 ادعیہ و اذکار (Prophetic Prayers)', count: 15 },
+            { id: 'QURAN', labelEn: '📖 Quran Wisdom (42)', labelUr: '📖 قرآنی حکمت (42)' },
+            { id: 'HADITH', labelEn: '📜 Hadith Cards (14)', labelUr: '📜 احادیثِ مبارکہ (14)' },
+            { id: 'SHAMAIL', labelEn: '🌹 Prophetic Shama\'il (12)', labelUr: '🌹 شمائلِ مصطفیٰ ﷺ (12)' },
+            { id: 'TASAWWUF', labelEn: '💎 Spiritual Wisdom (12)', labelUr: '💎 تزکیہ و تصوف (12)' },
+            { id: 'FIQH', labelEn: '⚖️ Daily Fiqh Guidance (10)', labelUr: '⚖️ احکامِ فقہ (10)' },
+            { id: 'DUA', labelEn: '🤲 Prophetic Duas (15)', labelUr: '🤲 ادعیہ و اذکار (15)' },
           ].map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
@@ -522,7 +527,7 @@ export default function QuranWisdomDedicatedPage() {
                   gap: 6,
                 }}
               >
-                <span>{cat.label}</span>
+                <span>{isUrdu ? cat.labelUr : cat.labelEn}</span>
               </button>
             );
           })}

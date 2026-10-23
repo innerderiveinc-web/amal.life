@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { DailyMamoolEngine, DailyMamool, prayerQiblaEngine } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
-import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../context/LanguageContext';
 import { getLiveNextPrayer, getSavedLocation, formatCountdown } from '../lib/prayer-utils';
 
 const PRAYER_NAMES_URDU: Record<string, string> = {
@@ -19,6 +19,7 @@ export const DailyMamoolBar: React.FC = () => {
   const [microAmalDone, setMicroAmalDone] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { playTrack } = useAudioPlayer();
+  const { isUrdu } = useLanguage();
 
   useEffect(() => {
     setIsMounted(true);
@@ -44,8 +45,8 @@ export const DailyMamoolBar: React.FC = () => {
     if (!mamool) return;
     playTrack({
       id: `dua-${mamool.nextPrayerName}`,
-      title: mamool.featuredDua.titleUrdu,
-      subtitle: mamool.featuredDua.titleEnglish,
+      title: isUrdu ? mamool.featuredDua.titleUrdu : mamool.featuredDua.titleEnglish,
+      subtitle: isUrdu ? mamool.featuredDua.titleEnglish : mamool.featuredDua.translationEnglish,
       audioUrl: mamool.featuredDua.audioUrl,
       reciter: 'Masnoon Supplication',
       arabicSnippet: mamool.featuredDua.arabicText,
@@ -130,7 +131,7 @@ export const DailyMamoolBar: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <h2 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: -0.2 }}>
-                آج کا معمول و اوقاتِ عبادت
+                {isUrdu ? 'آج کا معمول و اوقاتِ عبادت' : 'Daily Worship & Prayer Routine'}
               </h2>
               <span
                 style={{
@@ -142,11 +143,11 @@ export const DailyMamoolBar: React.FC = () => {
                   borderRadius: 20,
                 }}
               >
-                Daily Routine
+                {isUrdu ? 'روزمرہ معمول' : 'Daily Routine'}
               </span>
             </div>
             <div suppressHydrationWarning style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
-              {mamool.currentSlotNameUrdu} · {mamool.currentSlotNameEnglish}
+              {isUrdu ? mamool.currentSlotNameUrdu : mamool.currentSlotNameEnglish}
             </div>
           </div>
         </div>
@@ -168,22 +169,15 @@ export const DailyMamoolBar: React.FC = () => {
           }}
         >
           <span style={{ fontSize: 14 }}>⏳</span>
-          <span dir="rtl" suppressHydrationWarning style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
-            <bdi suppressHydrationWarning style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
-          </span>
-          <span
-            suppressHydrationWarning
-            style={{
-              fontSize: 11,
-              fontWeight: 600,
-              color: '#047857',
-              borderLeft: '1px solid #86EFAC',
-              paddingLeft: 8,
-              marginLeft: 2,
-            }}
-          >
-            {formattedCountdown.english}
-          </span>
+          {isUrdu ? (
+            <span dir="rtl" suppressHydrationWarning style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
+              <bdi suppressHydrationWarning style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
+            </span>
+          ) : (
+            <span suppressHydrationWarning>
+              Next: <strong style={{ color: '#064E3B' }}>{livePrayerInfo?.nameEnglish || mamool.nextPrayerName}</strong> in {formattedCountdown.english}
+            </span>
+          )}
         </div>
       </div>
 
@@ -206,17 +200,17 @@ export const DailyMamoolBar: React.FC = () => {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#475569' }}>
             <span>🕌</span>
-            <span>پانچوں نمازوں کے اوقات (Daily Auqat-e-Namaz):</span>
+            <span>{isUrdu ? 'پانچوں نمازوں کے اوقات:' : 'Prayer Times:'}</span>
           </div>
 
           <div suppressHydrationWarning style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
             {[
-              { key: 'fajr', label: 'فجر (Fajr)', time: fullPrayerTimes.fajr },
-              { key: 'sunrise', label: 'طلوع (Sunrise)', time: fullPrayerTimes.sunrise },
-              { key: 'dhuhr', label: 'ظہر (Dhuhr)', time: fullPrayerTimes.dhuhr },
-              { key: 'asr', label: 'عصر (Asr)', time: fullPrayerTimes.asr },
-              { key: 'maghrib', label: 'مغرب (Maghrib)', time: fullPrayerTimes.maghrib },
-              { key: 'isha', label: 'عشاء (Isha)', time: fullPrayerTimes.isha },
+              { key: 'fajr', labelEn: 'Fajr', labelUr: 'فجر', time: fullPrayerTimes.fajr },
+              { key: 'sunrise', labelEn: 'Sunrise', labelUr: 'طلوع', time: fullPrayerTimes.sunrise },
+              { key: 'dhuhr', labelEn: 'Dhuhr', labelUr: 'ظہر', time: fullPrayerTimes.dhuhr },
+              { key: 'asr', labelEn: 'Asr', labelUr: 'عصر', time: fullPrayerTimes.asr },
+              { key: 'maghrib', labelEn: 'Maghrib', labelUr: 'مغرب', time: fullPrayerTimes.maghrib },
+              { key: 'isha', labelEn: 'Isha', labelUr: 'عشاء', time: fullPrayerTimes.isha },
             ].map((p) => {
               const isNext = livePrayerInfo?.key === p.key;
               return (
@@ -237,11 +231,11 @@ export const DailyMamoolBar: React.FC = () => {
                     boxShadow: isNext ? '0 2px 6px rgba(16, 185, 129, 0.15)' : 'none',
                   }}
                 >
-                  <span suppressHydrationWarning>{p.label}</span>
+                  <span suppressHydrationWarning>{isUrdu ? p.labelUr : p.labelEn}</span>
                   <span suppressHydrationWarning style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
                   {isNext && (
                     <span suppressHydrationWarning style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
-                      اگلی
+                      {isUrdu ? 'اگلی' : 'NEXT'}
                     </span>
                   )}
                 </div>
@@ -263,10 +257,10 @@ export const DailyMamoolBar: React.FC = () => {
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="صبح و شام کے مسنون اذکار"
+              title={isUrdu ? 'صبح و شام کے مسنون اذکار' : 'Morning & Evening Sunnah Adhkar'}
             >
               <span>🌅</span>
-              <span>مسنون اذکار</span>
+              <span>{isUrdu ? 'مسنون اذکار' : 'Daily Adhkar'}</span>
             </Link>
 
             <Link
@@ -284,10 +278,10 @@ export const DailyMamoolBar: React.FC = () => {
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="تفصیلات، تہجد کیلکولیٹر و قبلہ کمپاس"
+              title={isUrdu ? 'تفصیلات، تہجد کیلکولیٹر و قبلہ کمپاس' : 'Qibla Compass & Full Schedule'}
             >
               <span>🕋</span>
-              <span>تفصیل و قبلہ ➔</span>
+              <span>{isUrdu ? 'تفصیل و قبلہ ➔' : 'Qibla & Times ➔'}</span>
             </Link>
           </div>
         </div>
@@ -319,18 +313,18 @@ export const DailyMamoolBar: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8 }}>
               <span style={{ fontSize: 16 }}>📖</span>
               <span style={{ fontSize: 12, fontWeight: 700, color: '#0284C7', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                مسنون عمل · Sunnah of the Hour
+                {isUrdu ? 'مسنون عمل' : 'Sunnah of the Hour'}
               </span>
             </div>
             <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6, lineHeight: 1.4 }}>
-              {mamool.masnoonAmal.titleUrdu}
+              {isUrdu ? mamool.masnoonAmal.titleUrdu : (mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu)}
             </div>
             <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6 }}>
-              {mamool.masnoonAmal.descriptionUrdu}
+              {isUrdu ? mamool.masnoonAmal.descriptionUrdu : (mamool.masnoonAmal.descriptionEnglish || mamool.masnoonAmal.descriptionUrdu)}
             </div>
           </div>
           <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
-            سند: {mamool.masnoonAmal.primarySource}
+            {isUrdu ? `سند: ${mamool.masnoonAmal.primarySource}` : `Source: ${mamool.masnoonAmal.primarySource}`}
           </div>
         </div>
 
@@ -353,7 +347,7 @@ export const DailyMamoolBar: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                 <span style={{ fontSize: 16 }}>🌱</span>
                 <span style={{ fontSize: 12, fontWeight: 700, color: '#16A34A', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                  ۱ منٹ کا عمل · Micro-Amal
+                  {isUrdu ? '۱ منٹ کا عمل' : '1-Minute Micro-Amal'}
                 </span>
               </div>
               <button
@@ -370,18 +364,20 @@ export const DailyMamoolBar: React.FC = () => {
                   boxShadow: microAmalDone ? '0 2px 5px rgba(22, 163, 74, 0.3)' : 'none',
                 }}
               >
-                {microAmalDone ? '✓ مکمل ہوا' : 'مکمل کریں'}
+                {microAmalDone
+                  ? (isUrdu ? '✓ مکمل ہوا' : '✓ Completed')
+                  : (isUrdu ? 'مکمل کریں' : 'Mark Done')}
               </button>
             </div>
             <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6, lineHeight: 1.4 }}>
-              {mamool.microAmalOfTheDay.titleUrdu}
+              {isUrdu ? mamool.microAmalOfTheDay.titleUrdu : (mamool.microAmalOfTheDay.titleEnglish || mamool.microAmalOfTheDay.titleUrdu)}
             </div>
             <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6 }}>
-              {mamool.microAmalOfTheDay.actionUrdu}
+              {isUrdu ? mamool.microAmalOfTheDay.actionUrdu : (mamool.microAmalOfTheDay.actionEnglish || mamool.microAmalOfTheDay.actionUrdu)}
             </div>
           </div>
           <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
-            اجر: {mamool.microAmalOfTheDay.hadithProof}
+            {isUrdu ? `اجر: ${mamool.microAmalOfTheDay.hadithProof}` : `Reward: ${mamool.microAmalOfTheDay.hadithProof}`}
           </div>
         </div>
 
@@ -402,11 +398,11 @@ export const DailyMamoolBar: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8 }}>
               <span style={{ fontSize: 16 }}>🤲</span>
               <span style={{ fontSize: 12, fontWeight: 700, color: '#7C3AED', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                مسنون دعا · Daily Invocations
+                {isUrdu ? 'مسنون دعا' : 'Daily Invocation'}
               </span>
             </div>
             <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
-              {mamool.featuredDua.titleUrdu}
+              {isUrdu ? mamool.featuredDua.titleUrdu : (mamool.featuredDua.titleEnglish || mamool.featuredDua.titleUrdu)}
             </div>
             <div
               className="font-arabic"
@@ -444,7 +440,7 @@ export const DailyMamoolBar: React.FC = () => {
             }}
           >
             <span>▶</span>
-            <span>دعا کی تلاوت سنیں · Listen</span>
+            <span>{isUrdu ? 'دعا کی تلاوت سنیں' : 'Listen to Recitation'}</span>
           </button>
         </div>
       </div>

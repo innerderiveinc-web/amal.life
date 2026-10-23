@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { showAmalToast } from './Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface SavedBookmarkItem {
   id: string;
@@ -96,6 +97,7 @@ interface BookmarksQuickDrawerProps {
 }
 
 export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOpen, onClose }) => {
+  const { t, isUrdu } = useLanguage();
   const [bookmarks, setBookmarks] = useState<SavedBookmarkItem[]>(DEFAULT_BELOVED_BOOKMARKS);
   const [activeCategory, setActiveCategory] = useState<'ALL' | 'DUA' | 'AYAH' | 'ADHKAR'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -191,10 +193,10 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
             <span style={{ fontSize: 24 }}>⭐</span>
             <div>
               <h3 style={{ fontSize: 17, fontWeight: 800, margin: 0, letterSpacing: -0.2 }}>
-                محفوظ معمولات و دعائیں
+                {t('Saved Invocations & Duas', 'محفوظ معمولات و دعائیں')}
               </h3>
               <div style={{ fontSize: 12, color: '#A7F3D0', marginTop: 2 }}>
-                Saved Invocations &amp; Classical Duas
+                {t('Classical Prophetic Duas & Adhkar', 'مسنون دعائیں اور قرآنی معمولات')}
               </div>
             </div>
           </div>
@@ -226,7 +228,7 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="تلاش کریں (مثلاً: آیت الکرسی، استغفار، نیند)..."
+            placeholder={t('Search saved duas (e.g. Ayat al-Kursi, Istighfar)...', 'تلاش کریں (مثلاً: آیت الکرسی، استغفار، نیند)...')}
             style={{
               width: '100%',
               padding: '10px 14px',
@@ -257,12 +259,12 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
                 }}
               >
                 {cat === 'ALL'
-                  ? 'سبھی (All)'
+                  ? t('All', 'سبھی')
                   : cat === 'DUA'
-                  ? 'دعائیں (Duas)'
+                  ? t('Duas', 'دعائیں')
                   : cat === 'AYAH'
-                  ? 'آیات (Ayahs)'
-                  : 'اذکار (Adhkar)'}
+                  ? t('Ayahs', 'آیات')
+                  : t('Adhkar', 'اذکار')}
               </button>
             ))}
           </div>
@@ -273,8 +275,8 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
           {filteredBookmarks.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px 20px', color: '#94A3B8' }}>
               <div style={{ fontSize: 36, marginBottom: 8 }}>📿</div>
-              <div style={{ fontSize: 14, fontWeight: 600 }}>کوئی محفوظ دعا نہیں ملی</div>
-              <div style={{ fontSize: 12, marginTop: 4 }}>تلاش تبدیل کریں یا نئی دعا شامل کریں</div>
+              <div style={{ fontSize: 14, fontWeight: 600 }}>{t('No saved duas found', 'کوئی محفوظ دعا نہیں ملی')}</div>
+              <div style={{ fontSize: 12, marginTop: 4 }}>{t('Change search filter or add a new bookmark', 'تلاش تبدیل کریں یا نئی دعا شامل کریں')}</div>
             </div>
           ) : (
             filteredBookmarks.map((bm) => (
@@ -294,9 +296,11 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.4 }}>
-                      {bm.titleUrdu}
+                      {isUrdu ? bm.titleUrdu : bm.titleEnglish}
                     </h4>
-                    <span style={{ fontSize: 11, color: '#64748B' }}>{bm.titleEnglish}</span>
+                    <span style={{ fontSize: 11, color: '#64748B' }}>
+                      {isUrdu ? bm.titleEnglish : (bm.titleUrdu || '')}
+                    </span>
                   </div>
                   <span
                     style={{

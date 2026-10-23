@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Navigation } from '../components/Navigation';
+import { useLanguage } from '../context/LanguageContext';
 
 // Dynamically import real-time client clock & location dependent widgets to eliminate React hydration mismatch errors
 const DailyMamoolBar = dynamic(
@@ -57,6 +58,7 @@ export default function Home() {
 
   // 5. Sakinah Focus Mode State (Tranquility vs Full Suite) - Defaults to Tranquility (True) for serene user experience
   const [isFocusMode, setIsFocusMode] = useState<boolean>(true);
+  const { isUrdu } = useLanguage();
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -137,10 +139,14 @@ export default function Home() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 16 }}>{isFocusMode ? '🌿' : '🧭'}</span>
             <span style={{ fontSize: 13, fontWeight: 700, color: '#1B4332' }}>
-              {isFocusMode ? 'سکینہ موڈ (Sakinah Focus Active)' : 'مکمل دینی نظام (Full AMAL Suite)'}
+              {isUrdu
+                ? (isFocusMode ? 'سکینہ موڈ' : 'مکمل دینی نظام')
+                : (isFocusMode ? 'Sakinah Focus Mode' : 'Full AMAL OS Suite')}
             </span>
             <span style={{ fontSize: 11, color: '#64748B' }}>
-              {isFocusMode ? '— پرسکون روزمرہ معمول' : '— تمام ۲۴ ماڈیولز و احکام'}
+              {isUrdu
+                ? (isFocusMode ? '— پرسکون روزمرہ معمول' : '— تمام ۲۴ ماڈیولز و احکام')
+                : (isFocusMode ? '— Calm Daily Essentials' : '— All 24 Modules & Tools')}
             </span>
           </div>
 
@@ -168,7 +174,7 @@ export default function Home() {
                 transition: 'all 0.15s ease',
               }}
             >
-              🌿 Sakinah Calm
+              🌿 {isUrdu ? 'سکینہ' : 'Sakinah Calm'}
             </button>
             <button
               onClick={() => toggleFocusMode(false)}
@@ -184,7 +190,7 @@ export default function Home() {
                 transition: 'all 0.15s ease',
               }}
             >
-              🧭 Full Suite
+              🧭 {isUrdu ? 'مکمل نظام' : 'Full Suite'}
             </button>
           </div>
         </div>
@@ -230,17 +236,19 @@ export default function Home() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '2px 8px', borderRadius: 6 }}>
-                  NEW · نیا ماڈیول
+                  {isUrdu ? 'مستند شرعی ورثہ' : 'CANONICAL HERITAGE'}
                 </span>
                 <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
-                  Ahl al-Sunnah wal-Jama&apos;ah (Sawad al-A&apos;zam) · 4 Sunni Madhhabs Grounded
+                  Ahl al-Sunnah wal-Jama&apos;ah (Sawad al-A&apos;zam) · 4 Sunni Madhhabs
                 </span>
               </div>
               <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
-                Al-Quran Al-Kareem &amp; Wisdom (قرآنِ کریم، حکمت و تدبر)
+                {isUrdu ? 'قرآنِ کریم، حکمت و تدبر' : 'Al-Quran Al-Kareem & Wisdom'}
               </h3>
               <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4B5563', maxWidth: 580, lineHeight: 1.5 }}>
-                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (امام احمد رضا) · <strong>Khaza&apos;in-ul-Irfan</strong> (علامہ نعیم الدین مراد آبادی) · Hanafi, Shafi&apos;i, Maliki &amp; Hanbali Fiqh Concordance
+                {isUrdu
+                  ? 'مستند تلاوت، کنز الایمان ترجمہ، خزائن العرفان تفسیر اور رومن اردو ٹرانسلٹریشن'
+                  : '100% Real Human Voice Recitation · Kanz-ul-Iman & Khaza\'in-ul-Irfan Tafsir · Roman Transliteration'}
               </p>
             </div>
           </div>
@@ -262,7 +270,7 @@ export default function Home() {
                 boxShadow: '0 2px 6px rgba(22, 101, 52, 0.25)',
               }}
             >
-              <span>📖 قرآنِ کریم (سورتیں)</span>
+              <span>{isUrdu ? '📖 قرآنِ کریم (سورتیں)' : '📖 Read Holy Quran'}</span>
               <span>➔</span>
             </Link>
 
@@ -282,7 +290,7 @@ export default function Home() {
                 boxShadow: '0 2px 6px rgba(217, 119, 6, 0.25)',
               }}
             >
-              <span>✨ قرآنی حکمت (۴۲ کارڈز)</span>
+              <span>{isUrdu ? '✨ قرآنی حکمت کارڈز' : '✨ Sacred Wisdom Cards'}</span>
               <span>➔</span>
             </Link>
           </div>
@@ -309,10 +317,10 @@ export default function Home() {
                 <span style={{ fontSize: 32 }}>🕋</span>
                 <div>
                   <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#166534' }}>
-                    Auqat-e-Namaz &amp; Qibla
+                    {isUrdu ? 'اوقاتِ نماز و قبلہ' : 'Prayer Times & Qibla'}
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    اوقاتِ نماز، قبلہ رخ اور سنت اذکار
+                    {isUrdu ? 'اوقاتِ نماز، قبلہ رخ اور سنت اذکار' : 'Precise solar prayer times, Qibla & sunnah routines'}
                   </p>
                 </div>
               </Link>
@@ -334,10 +342,10 @@ export default function Home() {
                 <span style={{ fontSize: 32 }}>📖</span>
                 <div>
                   <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#1E40AF' }}>
-                    Al-Quran Al-Kareem
+                    {isUrdu ? 'قرآنِ کریم' : 'Al-Quran Al-Kareem'}
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    ۱۱۴ سورتیں، اردو و انگریزی ترجمہ اور قراء
+                    {isUrdu ? '۱۱۴ سورتیں، اردو و انگریزی ترجمہ اور قراء' : '114 Surahs, English & Roman transliteration'}
                   </p>
                 </div>
               </Link>
@@ -359,10 +367,10 @@ export default function Home() {
                 <span style={{ fontSize: 32 }}>📿</span>
                 <div>
                   <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#92400E' }}>
-                    Digital Masnoon Tasbih
+                    {isUrdu ? 'مسنون تسبیح' : 'Digital Masnoon Tasbih'}
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    مسنون اذکار، استغفار اور تسبیحات
+                    {isUrdu ? 'مسنون اذکار، استغفار اور تسبیحات' : 'Daily sunnah wird, counter & morning/evening adhkar'}
                   </p>
                 </div>
               </Link>
@@ -384,10 +392,10 @@ export default function Home() {
                 <span style={{ fontSize: 32 }}>💬</span>
                 <div>
                   <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#7E22CE' }}>
-                    Ask AMAL (دینی رہنمائی)
+                    {isUrdu ? 'دینی سوال و رہنمائی' : 'Ask AMAL (Evidence Inquiries)'}
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    مستند کتبِ اہلسنت سے سوال و رہنمائی
+                    {isUrdu ? 'مستند کتبِ اہلسنت سے سوال و رہنمائی' : 'Canonical Islamic evidence from 106 masterworks'}
                   </p>
                 </div>
               </Link>

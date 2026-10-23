@@ -170,7 +170,7 @@ export default function HajjUmrahOfflinePage() {
                     }}
                   >
                     <span>▶</span>
-                    <span>دعا سنیں (Audio)</span>
+                    <span>Listen Dua Audio</span>
                   </button>
                 </div>
               </div>

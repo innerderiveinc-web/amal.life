@@ -4,8 +4,10 @@ import { Navigation } from '../components/Navigation';
 import { MasnoonTasbihEngine, TasbihPreset, TasbihSessionState } from '@amal/amal-engine';
 import { AmalTheme } from '@amal/ui';
 import { showAmalToast } from '../components/Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function TasbihPage() {
+  const { t, isUrdu } = useLanguage();
   const presets = MasnoonTasbihEngine.getAllPresets();
   const [selectedPresetId, setSelectedPresetId] = useState<string>(presets[0]?.id || 'subhanallah');
   const [session, setSession] = useState<TasbihSessionState>(
@@ -77,7 +79,7 @@ export default function TasbihPage() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 100 }}>
       <Head>
-        <title>AMAL OS - Digital Masnoon Tasbih | مسنون تسبیح و ذکر</title>
+        <title>{t('Digital Masnoon Tasbih | AMAL OS', 'مسنون تسبیح و ذکر | امل او ایس')}</title>
       </Head>
 
       <Navigation />
@@ -87,10 +89,10 @@ export default function TasbihPage() {
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <span style={{ fontSize: 32 }}>📿</span>
           <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1E293B', margin: '8px 0 4px 0' }}>
-            مسنون تسبیح و ذکر کاؤنٹر
+            {t('Digital Masnoon Tasbih', 'مسنون تسبیح و ذکر کاؤنٹر')}
           </h1>
           <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>
-            Digital Masnoon Tasbih with Gentle Haptic Feedback &amp; Authentic Sunnah Azkar
+            {t('Digital Masnoon Tasbih with Gentle Haptic Feedback & Authentic Sunnah Adhkar', 'مسنون تسبیحات و اذکار مع لائیو فیڈبیک اور سنت کے مطابق شمار')}
           </p>
         </div>
 
@@ -164,12 +166,25 @@ export default function TasbihPage() {
             </div>
 
             {/* Urdu & English Translations */}
-            <div style={{ fontSize: 15, color: '#334155', marginBottom: 4, fontWeight: 500 }}>
-              {activePreset.urduTranslation}
-            </div>
-            <div style={{ fontSize: 12, color: '#64748B', maxWidth: 500, marginBottom: 28 }}>
-              {activePreset.englishTranslation}
-            </div>
+            {isUrdu ? (
+              <>
+                <div style={{ fontSize: 16, color: '#1B4332', marginBottom: 4, fontWeight: 700 }} className="font-urdu">
+                  {activePreset.urduTranslation}
+                </div>
+                <div style={{ fontSize: 12, color: '#64748B', maxWidth: 500, marginBottom: 28 }}>
+                  {activePreset.englishTranslation}
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ fontSize: 15, color: '#1E293B', marginBottom: 4, fontWeight: 600 }}>
+                  {activePreset.englishTranslation}
+                </div>
+                <div style={{ fontSize: 13, color: '#64748B', maxWidth: 500, marginBottom: 28 }} className="font-urdu">
+                  {activePreset.urduTranslation}
+                </div>
+              </>
+            )}
 
             {/* BIG TAP CIRCLE */}
             <div
@@ -199,10 +214,10 @@ export default function TasbihPage() {
                 {session.currentCount}
               </div>
               <div style={{ fontSize: 14, color: '#D8F3DC', marginTop: 4, fontWeight: 600 }}>
-                ہدف: {target} (Target)
+                {t(`Target: ${target}`, `ہدف: ${target}`)}
               </div>
               <div style={{ fontSize: 11, color: '#95D5B2', marginTop: 8 }}>
-                کلک کریں یا اسکرین چھوئیں (TAP)
+                {t('Tap anywhere to count', 'کلک کریں یا اسکرین چھوئیں')}
               </div>
             </div>
 
@@ -244,14 +259,14 @@ export default function TasbihPage() {
               }}
             >
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>دور / مکمل چکر (Rounds):</div>
+                <div style={{ fontSize: 11, color: '#64748B' }}>{t('Rounds Completed:', 'مکمل چکر (دور):')}</div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: '#1E293B' }}>
                   {session.roundsCompleted}
                 </div>
               </div>
 
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>اس نشست کی کل گنتی (Total):</div>
+                <div style={{ fontSize: 11, color: '#64748B' }}>{t('Session Total:', 'اس نشست کی کل گنتی:')}</div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: AmalTheme.colors.primary }}>
                   {session.totalCountsInSession}
                 </div>
