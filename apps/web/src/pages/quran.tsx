@@ -249,7 +249,8 @@ export default function QuranWisdomPage() {
   const handleStopAudio = () => {
     if (masterAudioRef.current) {
       masterAudioRef.current.pause();
-      masterAudioRef.current.src = '';
+      masterAudioRef.current.removeAttribute('src');
+      masterAudioRef.current.load();
     }
     setPlayingAyahNumber(null);
     setCurrentAudioSegment('ARABIC');
@@ -300,6 +301,9 @@ export default function QuranWisdomPage() {
       masterAudioRef.current.src = url;
       masterAudioRef.current.playbackRate = playbackSpeed;
       masterAudioRef.current.play().catch((e) => {
+        if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) {
+          return; // Intentionally paused/interrupted by user
+        }
         console.warn('Audio play error, trying CDN fallback:', e);
         const fallbackUrl = `https://cdn.islamic.network/quran/audio/64/ur.khan/${ayahNum}.mp3`;
         if (masterAudioRef.current && segment !== 'ARABIC') {
@@ -384,6 +388,7 @@ export default function QuranWisdomPage() {
       masterAudioRef.current.play().then(() => {
         showAmalToast(`سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): اردو تفسیری ترجمہ و حکمت جاری ہے۔`, 'info');
       }).catch((err) => {
+        if (err && (err.name === 'AbortError' || err.message?.includes('interrupted'))) return;
         console.warn('Tafseer play error:', err);
         setActiveTafseerCardKey(null);
       });
@@ -417,6 +422,7 @@ export default function QuranWisdomPage() {
       masterAudioRef.current.play().then(() => {
         showAmalToast(`اردو ترجمہ و حکمت: کارڈ ${startIndex + 1} از ${cardsToPlay.length} سنا جا رہا ہے...`, 'info');
       }).catch((e) => {
+        if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) return;
         console.warn('Continuous tafseer error:', e);
         handlePlayContinuousTafseer(cardsToPlay, startIndex + 1);
       });
@@ -457,7 +463,17 @@ export default function QuranWisdomPage() {
 
   const handlePlaySurahTafseer = () => {
     if (surahWideAudioType === 'TAFSEER') {
-      handleStopAudio();
+      if (masterAudioRef.current) {
+        if (masterAudioRef.current.paused) {
+          masterAudioRef.current.play().catch((e) => {
+            if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) return;
+          });
+          setIsPlayingPaused(false);
+        } else {
+          masterAudioRef.current.pause();
+          setIsPlayingPaused(true);
+        }
+      }
       return;
     }
     handleStopAudio();
@@ -467,12 +483,14 @@ export default function QuranWisdomPage() {
     if (tafseerUrl && masterAudioRef.current) {
       setSurahWideAudioType('TAFSEER');
       setAudioSyncMode('TAFSEER_BROADCAST');
+      setIsPlayingPaused(false);
       masterAudioRef.current.src = tafseerUrl;
       masterAudioRef.current.playbackRate = playbackSpeed;
       masterAudioRef.current.play().then(() => {
         showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`, 'info');
       }).catch((e) => {
-        console.warn('Tafseer studio error, falling back to 3-step sync:', e);
+        if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) return;
+        console.warn('Tafseer studio error, falling back to sync mode:', e);
         handlePlaySurahFullSync();
       });
     } else {
@@ -548,12 +566,29 @@ export default function QuranWisdomPage() {
         preload="auto"
         onEnded={handleMasterAudioEnded}
         onError={(e) => {
-          console.warn('Master audio error, recovering cleanly:', e);
+          // If no src attribute or src is empty/reset, ignore completely!
+          const currentSrc = masterAudioRef.current?.getAttribute('src');
+          if (!currentSrc || currentSrc.trim() === '' || currentSrc === window.location.href) {
+            return;
+          }
+
+          console.warn('Master audio error on source:', currentSrc, e);
+
+          // Safely pause and unload without triggering recursive onError
+          if (masterAudioRef.current) {
+            masterAudioRef.current.pause();
+            masterAudioRef.current.removeAttribute('src');
+          }
+
           if (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') {
             handleMasterAudioEnded();
           } else {
-            handleStopAudio();
-            showAmalToast('آڈیو پلے بیک میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
+            setPlayingAyahNumber(null);
+            setIsPlayingPaused(false);
+            setSurahWideAudioType(null);
+            setActiveTafseerCardKey(null);
+            setContinuousTafseerIndex(null);
+            showAmalToast('آڈیو سرور سے رابطہ میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
           }
         }}
         style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
@@ -1023,7 +1058,7 @@ export default function QuranWisdomPage() {
                   title="دعوتِ اسلامی کی مستند تفسیر صراط الجنان سٹوڈیو آڈیو ایک ساتھ سنیں"
                 >
                   <span>📖</span>
-                  <span>{(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST') ? '⏸ تفسیر موقوف' : 'مکمل تفسیر صراط الجنان (ایک ساتھ)'}</span>
+                  <span>{(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST') ? (isPlayingPaused ? '▶ جاری رکھیں' : '⏸ تفسیر موقوف') : 'مکمل تفسیر صراط الجنان (ایک ساتھ)'}</span>
                 </button>
 
                 {/* 4. Continuous Arabic Tilawat Only */}

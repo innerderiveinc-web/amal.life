@@ -6,8 +6,20 @@ export interface ToastMessage {
   type: 'success' | 'info' | 'warning';
 }
 
+// Global deduplication cache to prevent cascading duplicate toasts
+let lastToastMessage = '';
+let lastToastTimestamp = 0;
+
 export function showAmalToast(message: string, type: 'success' | 'info' | 'warning' = 'success') {
   if (typeof window !== 'undefined') {
+    const now = Date.now();
+    // Ignore identical messages dispatched within 2500ms
+    if (message === lastToastMessage && (now - lastToastTimestamp) < 2500) {
+      return;
+    }
+    lastToastMessage = message;
+    lastToastTimestamp = now;
+
     window.dispatchEvent(
       new CustomEvent('amal-toast', {
         detail: { message, type },
@@ -27,7 +39,11 @@ export const ToastContainer: React.FC = () => {
         type: e.detail.type || 'success',
       };
 
-      setToasts((prev) => [...prev, newToast]);
+      // Cap at maximum 2 simultaneous toasts to ensure clean serene UI
+      setToasts((prev) => {
+        const filtered = prev.filter((t) => t.message !== newToast.message);
+        return [...filtered.slice(-1), newToast];
+      });
 
       // Auto dismiss after 3200ms
       setTimeout(() => {
