@@ -33,8 +33,16 @@ export class AmalApiClient {
     if (typeof window !== 'undefined') {
       if (sanitized) {
         localStorage.setItem('amal_token', sanitized);
+        // Also mirror to cookie with SameSite=Strict protection
+        try {
+          const isSecure = window.location.protocol === 'https:' ? '; Secure' : '';
+          document.cookie = `amal_token=${sanitized}; Path=/; SameSite=Strict; Max-Age=2592000${isSecure}`;
+        } catch {}
       } else {
         localStorage.removeItem('amal_token');
+        try {
+          document.cookie = 'amal_token=; Path=/; SameSite=Strict; Max-Age=0';
+        } catch {}
       }
     }
   }
@@ -43,6 +51,15 @@ export class AmalApiClient {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('amal_token');
       if (stored) return stored.replace(/[^a-zA-Z0-9_\-\.]/g, '');
+
+      // Check cookie fallback if localStorage was cleared
+      try {
+        const match = document.cookie.split(';').map((c) => c.trim()).find((c) => c.startsWith('amal_token='));
+        if (match) {
+          const val = match.split('=')[1]?.replace(/[^a-zA-Z0-9_\-\.]/g, '');
+          if (val) return val;
+        }
+      } catch {}
     }
     return this.token;
   }
@@ -51,6 +68,9 @@ export class AmalApiClient {
     this.token = '';
     if (typeof window !== 'undefined') {
       localStorage.removeItem('amal_token');
+      try {
+        document.cookie = 'amal_token=; Path=/; SameSite=Strict; Max-Age=0';
+      } catch {}
     }
   }
 
