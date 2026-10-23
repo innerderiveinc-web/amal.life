@@ -19,6 +19,11 @@ export default function AboutPage() {
       a: 'ہرگز نہیں۔ اسلامی شریعت میں فتویٰ دینا صرف زندہ اور باقاعدہ مستند مفتیانِ کرام کا حق ہے۔ امل ایک تحقیقی و معلوماتی پلیٹ فارم ہے جس میں کسی بھی مشین یا خودکار نظام کو نیا فتویٰ گھڑنے یا حلال و حرام کا خود فیصلہ کرنے کی قطعی اجازت نہیں۔ امل صرف قرآن، سنت اور فقہائے اربعہ کی معتبر کتب سے اصل متون و حوالہ جات پیش کرتا ہے اور ذاتی پیچیدہ مسائل میں مستند مفتیانِ کرام سے رجوع کرواتا ہے۔',
     },
     {
+      q: 'How does AMAL OS safely leverage Artificial Intelligence (AI) without compromising Islamic principles?',
+      qUrdu: 'امل او ایس اسلامی اصولوں کو پامال کیے بغیر AI کا شرعی اور محفوظ استعمال کیسے کرتا ہے؟',
+      a: 'We adhere to a strict "Tool, Not Mufti" protocol. AI in AMAL OS is restricted to four halal, deterministic functions: (1) Semantic emotional retrieval of verbatim Quran & Hadith, (2) Breaking down broad intentions (Niyyah) into manageable daily Sunnah micro-habits, (3) Cross-referencing classical texts (linking Kanz-ul-Iman with Khaza\'in-ul-Irfan and Bahar-e-Shariat), and (4) Structuring complex questions into organized briefs for human Muftis to review. AI is strictly prohibited from generating autonomous fatwas or altering any sacred texts.',
+    },
+    {
       q: 'How does AMAL OS treat the Four Sunni Madhhabs (Fiqh Schools)?',
       qUrdu: 'چاروں فقہی مذاہب (حنفی، شافعی، مالکی، حنبلی) کے بارے میں کیا طریقہ کار ہے؟',
       a: 'AMAL OS strictly upholds the classical consensus of Ahl al-Sunnah wal-Jama\'ah (al-Sawad al-A\'zam). All four historical Sunni legal schools—Hanafi, Shafi\'i, Maliki, and Hanbali—are presented with equal scholarly reverence and canonical fidelity. Users can toggle Asr times (Mislayn vs Misl al-Awwal) and Zakat jewelry positions per their followed school with complete ease.',
@@ -207,6 +212,310 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* 4 POSITIVE & HALAL WAYS AI IS LEVERAGED IN AMAL OS */}
+        <section style={{ marginBottom: 56 }}>
+          <div style={{
+            backgroundColor: '#0F291E',
+            borderRadius: 16,
+            padding: '36px 32px',
+            color: '#FFFFFF',
+            border: '2px solid #D4AF37',
+            boxShadow: '0 8px 24px rgba(15, 41, 30, 0.15)',
+          }}>
+            <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 36px' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                backgroundColor: 'rgba(212, 175, 55, 0.15)',
+                border: '1px solid rgba(212, 175, 55, 0.4)',
+                padding: '5px 14px',
+                borderRadius: 20,
+                fontSize: 11,
+                fontWeight: 800,
+                color: '#FDE68A',
+                marginBottom: 14,
+                letterSpacing: 0.8,
+              }}>
+                <span>🛡️</span> ZERO FATWA HALLUCINATIONS · STRICT SCHOLARLY BOUNDARIES
+              </div>
+              <h2 style={{ fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 800, margin: '0 0 10px', color: '#FFFFFF' }}>
+                4 Positive &amp; Halal Ways AI is Leveraged in AMAL OS
+              </h2>
+              <p style={{ fontSize: 15, color: '#A7F3D0', margin: 0, fontWeight: 700 }}>
+                شریعت کے دائرے میں مصنوعی ذہانت (AI) کے ۴ محفوظ، مثبت اور مصدقہ استعمال
+              </p>
+              <p style={{ fontSize: 13, color: '#D1D5DB', marginTop: 12, lineHeight: 1.6 }}>
+                Islam requires rigorous fidelity to truth. In AMAL OS, AI is <strong>never a Mufti, Lawgiver, or Preacher</strong>. It is strictly a specialized digital clerk (Kaatib) and indexer that upholds the canonical Ahl al-Sunnah literature without altering a single letter of sacred text.
+              </p>
+            </div>
+
+            {/* The 4 Cards Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 20,
+              marginBottom: 30,
+            }}>
+              {/* Card 1 */}
+              <div style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: 12,
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                padding: 22,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <div style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      backgroundColor: 'rgba(52, 211, 153, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      border: '1px solid rgba(52, 211, 153, 0.3)',
+                    }}>
+                      💬
+                    </div>
+                    <div>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+                        Pillar 1 · تلاش و رہنمائی
+                      </span>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+                        Semantic Emotional Retrieval
+                      </h3>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
+                    (&quot;Ask AMAL&quot; — احساس و جذبات کی بنیاد پر قرآنی نصوص کی تلاش)
+                  </div>
+                  <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
+                    When a user writes: <em>&ldquo;I feel overwhelmed by workplace pressure and cannot focus during prayer,&rdquo;</em> AI vector search identifies the exact Ayahs on Sakinah (peace) and Sabr (patience) from the verified corpus—<strong>without altering a single word of Islamic text</strong>.
+                  </p>
+                </div>
+                <div style={{
+                  marginTop: 16,
+                  paddingTop: 12,
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: '#9CA3AF',
+                }}>
+                  <span>Shar&apos;i Boundary: 100% Verbatim</span>
+                  <Link href="/ask" style={{ color: '#6EE7B7', textDecoration: 'none', fontWeight: 700 }}>
+                    Try Ask AMAL ➔
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: 12,
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                padding: 22,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <div style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      backgroundColor: 'rgba(52, 211, 153, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      border: '1px solid rgba(52, 211, 153, 0.3)',
+                    }}>
+                      🎯
+                    </div>
+                    <div>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+                        Pillar 2 · نیت سے عمل تک
+                      </span>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+                        Adaptive Daily Amal Habits
+                      </h3>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
+                    (Niyyah to Action — نیت کو مسنون معمولات میں ڈھالنا)
+                  </div>
+                  <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
+                    AI helps break down high-level intentions into micro-actions tailored to the user&apos;s schedule (e.g. reminding a busy commuter to recite Ayat-ul-Kursi or do 3 minutes of Istighfar during transit). Rooted in the Prophetic guidance: <em>&ldquo;The deeds most loved by Allah are those done regularly, even if small&rdquo;</em> (Bukhari).
+                  </p>
+                </div>
+                <div style={{
+                  marginTop: 16,
+                  paddingTop: 12,
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: '#9CA3AF',
+                }}>
+                  <span>Shar&apos;i Boundary: Zero Ritual Inventions</span>
+                  <Link href="/" style={{ color: '#6EE7B7', textDecoration: 'none', fontWeight: 700 }}>
+                    View Today&apos;s Amal ➔
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: 12,
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                padding: 22,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <div style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      backgroundColor: 'rgba(52, 211, 153, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      border: '1px solid rgba(52, 211, 153, 0.3)',
+                    }}>
+                      📚
+                    </div>
+                    <div>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+                        Pillar 3 · مراجع کا باہمی ربط
+                      </span>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+                        Classical Corpus Cross-Referencing
+                      </h3>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
+                    (کنز الایمان، خزائن العرفان و بہارِ شریعت کا الحاق)
+                  </div>
+                  <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
+                    AI instantly links an Ayah in <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) to its commentary in <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) and related practical rulings in <strong>Bahar-e-Shariat</strong> (صدر الشریعہ), saving students of knowledge hours of manual searching across multi-volume physical tomes.
+                  </p>
+                </div>
+                <div style={{
+                  marginTop: 16,
+                  paddingTop: 12,
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: '#9CA3AF',
+                }}>
+                  <span>Shar&apos;i Boundary: 106 Canonical Works</span>
+                  <Link href="/quran" style={{ color: '#6EE7B7', textDecoration: 'none', fontWeight: 700 }}>
+                    Read Quran Wisdom ➔
+                  </Link>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: 12,
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                padding: 22,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <div style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      backgroundColor: 'rgba(52, 211, 153, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      border: '1px solid rgba(52, 211, 153, 0.3)',
+                    }}>
+                      ⚖️
+                    </div>
+                    <div>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: '#34D399', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+                        Pillar 4 · فتویٰ سیکریٹریٹ
+                      </span>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+                        Mufti Query Dossier Preparation
+                      </h3>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
+                    (مفتیانِ کرام کے لیے سوال و حالات کی باقاعدہ فائل بندی)
+                  </div>
+                  <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
+                    When a user submits a complex question, AI structures the background details (context, timeline, parties involved) into a neat case brief for a human Mufti to review, speeding up authentic scholarly response times without ever attempting to issue the verdict itself.
+                  </p>
+                </div>
+                <div style={{
+                  marginTop: 16,
+                  paddingTop: 12,
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: '#9CA3AF',
+                }}>
+                  <span>Shar&apos;i Boundary: Strict Human Mufti Ifta</span>
+                  <Link href="/decision-room" style={{ color: '#6EE7B7', textDecoration: 'none', fontWeight: 700 }}>
+                    Deen Decision Room ➔
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Comparative Table Banner */}
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+              borderRadius: 12,
+              padding: '16px 20px',
+              border: '1px solid rgba(212, 175, 55, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 12,
+              fontSize: 12,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 20 }}>📜</span>
+                <span style={{ color: '#F9FAFB' }}>
+                  <strong>The Sovereign AMAL OS Guarantee:</strong> Machine learning is our clerk; classical consensus (Ijma) is our anchor; human scholars are our arbiters.
+                </span>
+              </div>
+              <span style={{ color: '#D4AF37', fontWeight: 800 }}>
+                Ad-Free · Hallucination-Free · Ahl al-Sunnah
+              </span>
+            </div>
           </div>
         </section>
 
