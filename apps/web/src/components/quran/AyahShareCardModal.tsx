@@ -81,16 +81,18 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
   const [theme, setTheme] = useState<CardTheme>('EMERALD_GOLD');
   const [includeEnglish, setIncludeEnglish] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [previewImgUrl, setPreviewImgUrl] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Helper function to wrap text for canvas
+  // Helper function to wrap text for canvas safely
   const wrapText = useCallback(
     (
       ctx: CanvasRenderingContext2D,
       text: string,
       maxWidth: number
     ): string[] => {
-      const words = text.split(/\s+/);
+      if (!text) return [];
+      const words = String(text).split(/\s+/);
       const lines: string[] = [];
       let currentLine = '';
 
@@ -304,23 +306,96 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
     ctx.font = '13px system-ui, -apple-system, sans-serif';
     ctx.fillStyle = t.isLight ? '#94A3B8' : 'rgba(255, 255, 255, 0.45)';
     ctx.fillText('صدقۂ جاریہ · Authentic Islamic Living OS', width / 2, footerY + 22);
+
+    // Update image preview URL for instant mobile & desktop display
+    try {
+      const url = canvas.toDataURL('image/png', 0.95);
+      setPreviewImgUrl(url);
+    } catch {}
   }, [aspect, theme, includeEnglish, surahNumber, surahNameArabic, surahNameEnglish, ayahNumber, arabicText, urduTranslation, englishTranslation, wrapText]);
 
-  // Re-render canvas whenever settings change
+  // Re-render canvas whenever settings change & when fonts are loaded
   useEffect(() => {
     if (isOpen) {
+      if (typeof document !== 'undefined' && 'fonts' in document) {
+        document.fonts.ready.then(() => {
+          renderCardToCanvas();
+        });
+      }
       renderCardToCanvas();
+      const t = setTimeout(() => renderCardToCanvas(), 180);
+      return () => clearTimeout(t);
     }
   }, [isOpen, renderCardToCanvas]);
 
   if (!isOpen) return null;
 
-  // Handle Download PNG
+  // Bulletproof Universal Download PNG (Works on iOS, Android, Desktop)
   const handleDownload = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     setIsGenerating(true);
 
+    const filename = `AMAL-Ayah-${surahNumber}-${ayahNumber}-${aspect.toLowerCase()}.png`;
+
+    try {
+      // 1. Mobile Web Share API support (iOS Safari & Android native share & save sheet)
+      if (typeof navigator !== 'undefined' && navigator.canShare && canvas.toBlob) {
+        canvas.toBlob(async (blob) => {
+          if (blob) {
+            const file = new File([blob], filename, { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({
+                  files: [file],
+                  title: `Surah ${surahNameEnglish} · Ayah ${ayahNumber}`,
+                  text: `Al-Quran Al-Kareem · Ayah ${ayahNumber}`,
+                });
+                showAmalToast('Sacred Card shared successfully!', 'success');
+                setIsGenerating(false);
+                return;
+              } catch (e: any) {
+                if (e?.name === 'AbortError') {
+                  setIsGenerating(false);
+                  return;
+                }
+              }
+            }
+          }
+
+          // 2. Blob URL download (works reliably on Chrome, Edge, Firefox, Android)
+          if (blob) {
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = blobUrl;
+            document.body.appendChild(link);
+            link.click();
+            setTimeout(() => {
+              document.body.removeChild(link);
+              URL.revokeObjectURL(blobUrl);
+            }, 150);
+            showAmalToast('Sacred Ayah Card downloaded successfully! (تصویر محفوظ ہو گئی)', 'success');
+            setIsGenerating(false);
+          } else {
+            fallbackDataUrlDownload();
+          }
+        }, 'image/png', 1.0);
+      } else {
+        fallbackDataUrlDownload();
+      }
+    } catch (err) {
+      console.error(err);
+      fallbackDataUrlDownload();
+    }
+  };
+
+  const fallbackDataUrlDownload = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      setIsGenerating(false);
+      return;
+    }
     try {
       const dataUrl = canvas.toDataURL('image/png', 1.0);
       const link = document.createElement('a');
@@ -328,11 +403,12 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
       link.href = dataUrl;
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-      showAmalToast('Sacred Ayah Card downloaded successfully! (تصویر محفوظ ہو گئی)', 'success');
-    } catch (err) {
-      console.error(err);
-      showAmalToast('Failed to export image.', 'warning');
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 150);
+      showAmalToast('Sacred Ayah Card downloaded! (تصویر محفوظ ہو گئی)', 'success');
+    } catch {
+      showAmalToast('براہ کرم کارڈ پر لانگ پریس کر کے محفوظ فرمائیں۔ (Long-press image to save)', 'info');
     } finally {
       setIsGenerating(false);
     }
@@ -722,21 +798,34 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                backgroundColor: '#0F172A',
               }}
             >
+              {previewImgUrl ? (
+                <img
+                  src={previewImgUrl}
+                  alt={`Sacred Ayah Card Surah ${surahNumber}:${ayahNumber}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
+                />
+              ) : null}
               <canvas
                 ref={canvasRef}
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'contain',
-                  display: 'block',
+                  display: previewImgUrl ? 'none' : 'block',
                 }}
               />
             </div>
 
-            <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, textAlign: 'center' }}>
-              ✓ 100% Offline Client-Side Render • Verbatim Kanz-ul-Iman
+            <div style={{ fontSize: 11, color: '#64748B', marginTop: 12, textAlign: 'center' }}>
+              ✓ 100% Offline HD Card • موبائل پر کارڈ محفوظ کرنے کے لیے لانگ پریس کریں
             </div>
           </div>
         </div>

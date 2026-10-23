@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -11,17 +11,44 @@ import {
   getAyahUrduAudioUrl,
   getSurahTafseerAudioUrl,
 } from '../lib/quran-wisdom-data';
+import { CLASSICAL_BOOKS_CHAPTERS } from '../lib/classical-chapters-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { showAmalToast } from '../components/Toast';
 import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
 
+export type WisdomCategory = 'QURAN' | 'HADITH' | 'SHAMAIL' | 'TASAWWUF' | 'FIQH' | 'DUA';
+
+interface ClassicalWisdomItem {
+  id: string;
+  category: 'HADITH' | 'SHAMAIL' | 'TASAWWUF' | 'FIQH' | 'DUA';
+  categoryUrdu: string;
+  sourceWork: string;
+  chapterTitleArabic: string;
+  chapterTitleUrdu: string;
+  arabicMatn: string;
+  urduTranslation: string;
+  englishSynopsis?: string;
+  scholarlyNotes?: string;
+}
+
 export default function QuranWisdomDedicatedPage() {
   const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<WisdomCategory>('QURAN');
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
   const [activeModalCard, setActiveModalCard] = useState<QuranAyahWisdomCard | null>(null);
   const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
+
+  // Sync category from URL query (?category=hadith, etc.)
+  useEffect(() => {
+    if (router.query.category) {
+      const cat = String(router.query.category).toUpperCase();
+      if (['QURAN', 'HADITH', 'SHAMAIL', 'TASAWWUF', 'FIQH', 'DUA'].includes(cat)) {
+        setSelectedCategory(cat as WisdomCategory);
+      }
+    }
+  }, [router.query.category]);
 
   // Audio Playback State
   const [activeAudioKey, setActiveAudioKey] = useState<string | null>(null);
@@ -255,6 +282,75 @@ export default function QuranWisdomDedicatedPage() {
     return matchesTheme && matchesSearch;
   });
 
+  // Curated Classical Wisdom Cards for Hadith, Shamail, Tasawwuf, Fiqh, Dua
+  const classicalCards = useMemo(() => {
+    const items: ClassicalWisdomItem[] = [];
+
+    const categoryBookMap: Record<string, { workIds: string[]; label: string; cat: 'HADITH' | 'SHAMAIL' | 'TASAWWUF' | 'FIQH' | 'DUA' }> = {
+      HADITH: {
+        workIds: ['CANON-HAD-040', 'CANON-HAD-001', 'CANON-HAD-002'],
+        label: 'حدیثِ مصطفیٰ ﷺ',
+        cat: 'HADITH',
+      },
+      SHAMAIL: {
+        workIds: ['CANON-SHM-001'],
+        label: 'شمائلِ مصطفیٰ ﷺ',
+        cat: 'SHAMAIL',
+      },
+      TASAWWUF: {
+        workIds: ['CANON-TAZ-001', 'CANON-TAZ-002', 'CANON-TAZ-003', 'CANON-TAZ-004'],
+        label: 'تزکیہ و تصوف',
+        cat: 'TASAWWUF',
+      },
+      FIQH: {
+        workIds: ['CANON-FIQ-HNF-006', 'CANON-FIQ-HNF-001', 'CANON-FIQ-SHAF-001'],
+        label: 'احکامِ فقہ و شریعت',
+        cat: 'FIQH',
+      },
+      DUA: {
+        workIds: ['CANON-DUA-001', 'CANON-DUA-002', 'CANON-DEV-001'],
+        label: 'ادعیہ و مناجات',
+        cat: 'DUA',
+      },
+    };
+
+    const cfg = categoryBookMap[selectedCategory];
+    if (!cfg) return [];
+
+    for (const wid of cfg.workIds) {
+      const book = CLASSICAL_BOOKS_CHAPTERS[wid];
+      if (book) {
+        for (const chap of book.chapters) {
+          items.push({
+            id: `${wid}:${chap.chapterId}`,
+            category: cfg.cat,
+            categoryUrdu: cfg.label,
+            sourceWork: book.verifiedExternalName,
+            chapterTitleArabic: chap.chapterTitleArabic,
+            chapterTitleUrdu: chap.chapterTitleUrdu,
+            arabicMatn: chap.arabicMatn,
+            urduTranslation: chap.urduTranslation,
+            englishSynopsis: chap.englishSynopsis,
+            scholarlyNotes: chap.scholarlyNotes,
+          });
+        }
+      }
+    }
+    return items;
+  }, [selectedCategory]);
+
+  const filteredClassicalCards = useMemo(() => {
+    if (!searchQuery.trim()) return classicalCards;
+    const q = searchQuery.toLowerCase();
+    return classicalCards.filter(
+      (item) =>
+        item.chapterTitleUrdu.includes(searchQuery) ||
+        item.urduTranslation.includes(searchQuery) ||
+        item.arabicMatn.includes(searchQuery) ||
+        item.sourceWork.toLowerCase().includes(q)
+    );
+  }, [classicalCards, searchQuery]);
+
   return (
     <div style={{ backgroundColor: '#F8FAF9', minHeight: '100vh', paddingBottom: 100 }}>
       <Head>
@@ -390,6 +486,48 @@ export default function QuranWisdomDedicatedPage() {
           </div>
         </header>
 
+        {/* Category Switcher Tabs */}
+        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6, marginBottom: 20 }}>
+          {[
+            { id: 'QURAN', label: '📖 قرآنی حکمت (Quran Wisdom)', count: 42 },
+            { id: 'HADITH', label: '📜 احادیثِ مبارکہ (Hadith Cards)', count: 14 },
+            { id: 'SHAMAIL', label: '🌹 شمائلِ مصطفیٰ ﷺ (Prophetic Character)', count: 12 },
+            { id: 'TASAWWUF', label: '💎 تزکیہ و تصوف (Spiritual Wisdom)', count: 12 },
+            { id: 'FIQH', label: '⚖️ احکامِ فقہ (Daily Fiqh Guidance)', count: 10 },
+            { id: 'DUA', label: '🤲 ادعیہ و اذکار (Prophetic Prayers)', count: 15 },
+          ].map((cat) => {
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setSelectedCategory(cat.id as WisdomCategory);
+                  setSelectedThemeFilter('ALL');
+                }}
+                style={{
+                  padding: '9px 16px',
+                  borderRadius: 12,
+                  fontSize: 13,
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  border: '1.5px solid',
+                  borderColor: isActive ? '#065F46' : '#E2E8F0',
+                  backgroundColor: isActive ? '#065F46' : '#FFFFFF',
+                  color: isActive ? '#FFFFFF' : '#334155',
+                  boxShadow: isActive ? '0 2px 6px rgba(6,78,59,0.2)' : 'none',
+                  transition: 'all 0.15s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Search & Thematic Filter Ribbon */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
           {/* Search Box */}
@@ -398,7 +536,7 @@ export default function QuranWisdomDedicatedPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="آیت، سورت یا ترجمہ تلاش کریں..."
+              placeholder="تلاش فرمائیں (عربی، اردو یا عنوان)..."
               style={{
                 width: '100%',
                 padding: '10px 14px',
@@ -411,43 +549,46 @@ export default function QuranWisdomDedicatedPage() {
             />
           </div>
 
-          {/* Theme Filters */}
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {[
-              { id: 'ALL', label: 'تمام آیات (All 42)' },
-              { id: 'BOOKMARKED', label: `⭐ محفوظ (${bookmarkedCardIds.length})` },
-              { id: 'IKHLAS', label: '✨ اخلاص و نیت' },
-              { id: 'TAWAKKUL', label: '🛡️ توکل و صبر' },
-              { id: 'SALAH', label: '🤲 نماز و مناجات' },
-              { id: 'AKHLAQ', label: '🌱 اخلاق و حسنِ معاملہ' },
-              { id: 'HUQUQ_UL_IBAD', label: '🤝 حقوق العباد' },
-              { id: 'TIME_MANAGEMENT', label: '⏳ وقت کی قدر' },
-            ].map((theme) => {
-              const isActive = selectedThemeFilter === theme.id;
-              return (
-                <button
-                  key={theme.id}
-                  onClick={() => setSelectedThemeFilter(theme.id)}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: 20,
-                    fontSize: 12,
-                    fontWeight: isActive ? 800 : 600,
-                    border: '1px solid',
-                    borderColor: isActive ? '#059669' : '#CBD5E1',
-                    backgroundColor: isActive ? '#ECFDF5' : '#FFFFFF',
-                    color: isActive ? '#065F46' : '#475569',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {theme.label}
-                </button>
-              );
-            })}
-          </div>
+          {/* Theme Filters (Only for Quran) */}
+          {selectedCategory === 'QURAN' && (
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {[
+                { id: 'ALL', label: 'تمام آیات (All 42)' },
+                { id: 'BOOKMARKED', label: `⭐ محفوظ (${bookmarkedCardIds.length})` },
+                { id: 'IKHLAS', label: '✨ اخلاص و نیت' },
+                { id: 'TAWAKKUL', label: '🛡️ توکل و صبر' },
+                { id: 'SALAH', label: '🤲 نماز و مناجات' },
+                { id: 'AKHLAQ', label: '🌱 اخلاق و حسنِ معاملہ' },
+                { id: 'HUQUQ_UL_IBAD', label: '🤝 حقوق العباد' },
+                { id: 'TIME_MANAGEMENT', label: '⏳ وقت کی قدر' },
+              ].map((theme) => {
+                const isActive = selectedThemeFilter === theme.id;
+                return (
+                  <button
+                    key={theme.id}
+                    onClick={() => setSelectedThemeFilter(theme.id)}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: 20,
+                      fontSize: 12,
+                      fontWeight: isActive ? 800 : 600,
+                      border: '1px solid',
+                      borderColor: isActive ? '#059669' : '#CBD5E1',
+                      backgroundColor: isActive ? '#ECFDF5' : '#FFFFFF',
+                      color: isActive ? '#065F46' : '#475569',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {theme.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        {/* Wisdom Cards Grid */}
+        {/* Wisdom Cards Grid (Quran Mode) */}
+        {selectedCategory === 'QURAN' && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 18 }}>
           {filteredCards.map((card) => {
             const cardKey = `${card.surahNumber}:${card.ayahNumber}`;
@@ -680,6 +821,217 @@ export default function QuranWisdomDedicatedPage() {
             );
           })}
         </div>
+        )}
+
+        {/* Classical Wisdom Cards Grid (Hadith, Shamail, Tasawwuf, Fiqh, Dua) */}
+        {selectedCategory !== 'QURAN' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 18 }}>
+            {filteredClassicalCards.map((item) => (
+              <div
+                key={item.id}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 16,
+                  border: '1px solid #E2E8F0',
+                  padding: 22,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                }}
+              >
+                <div>
+                  {/* Card Header: Category & Source */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#ECFDF5', color: '#065F46', padding: '3px 10px', borderRadius: 8, border: '1px solid #A7F3D0' }}>
+                      {item.categoryUrdu} · {item.sourceWork}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSharePayload({
+                          category: item.category,
+                          titleUrdu: item.chapterTitleUrdu,
+                          badgeContext: item.sourceWork,
+                          arabicText: item.arabicMatn.split('\n')[0]?.slice(0, 320) || item.arabicMatn.slice(0, 320),
+                          primaryTextUrdu: item.urduTranslation.split('\n')[0]?.slice(0, 360) || item.urduTranslation.slice(0, 360),
+                          secondaryTextEnglish: item.englishSynopsis ? item.englishSynopsis.slice(0, 240) : undefined,
+                          sourceCitation: `${item.sourceWork} · مصدقہ علمی سند`,
+                          tafseerInsightUrdu: item.scholarlyNotes ? item.scholarlyNotes.slice(0, 260) : undefined,
+                        });
+                      }}
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 6,
+                        border: '1px solid #059669',
+                        backgroundColor: '#F0FDF4',
+                        color: '#065F46',
+                        fontSize: 11,
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                      }}
+                      title="اس کا خوبصورت سوشل میڈیا امیج کارڈ بنائیں"
+                    >
+                      <span>📸</span>
+                      <span>امیج کارڈ بنائیں</span>
+                    </button>
+                  </div>
+
+                  {/* Title */}
+                  <h3 style={{ margin: '0 0 12px', fontSize: 16, fontWeight: 800, color: '#0F172A', direction: 'rtl', textAlign: 'right' }}>
+                    {item.chapterTitleUrdu}
+                  </h3>
+
+                  {/* Arabic Matn */}
+                  <div
+                    dir="rtl"
+                    style={{
+                      fontFamily: 'var(--font-arabic), "Amiri", serif',
+                      fontSize: 19,
+                      lineHeight: 1.8,
+                      color: '#064E3B',
+                      textAlign: 'right',
+                      backgroundColor: '#F8FAFC',
+                      padding: '14px 16px',
+                      borderRadius: 10,
+                      marginBottom: 14,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {item.arabicMatn.split('\n')[0]?.slice(0, 350) || item.arabicMatn.slice(0, 350)}
+                  </div>
+
+                  {/* Urdu Translation */}
+                  <div
+                    dir="rtl"
+                    style={{
+                      fontFamily: 'var(--font-urdu), serif',
+                      fontSize: 15,
+                      lineHeight: 2.1,
+                      color: '#1E293B',
+                      textAlign: 'right',
+                      borderRight: '3px solid #059669',
+                      paddingRight: 10,
+                      marginBottom: 12,
+                    }}
+                  >
+                    {item.urduTranslation.split('\n')[0]?.slice(0, 380) || item.urduTranslation.slice(0, 380)}
+                  </div>
+
+                  {/* English synopsis */}
+                  {item.englishSynopsis && (
+                    <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginBottom: 12, fontStyle: 'italic' }}>
+                      &ldquo;{item.englishSynopsis.slice(0, 200)}...&rdquo;
+                    </div>
+                  )}
+
+                  {/* Scholarly note */}
+                  {item.scholarlyNotes && (
+                    <div style={{ fontSize: 12, color: '#92400E', backgroundColor: '#FEF3C7', padding: '8px 12px', borderRadius: 8, lineHeight: 1.5 }}>
+                      💡 <strong>علمی نکتہ:</strong> {item.scholarlyNotes.slice(0, 180)}...
+                    </div>
+                  )}
+                </div>
+
+                {/* Card Bottom Actions */}
+                <div style={{ display: 'flex', gap: 8, marginTop: 16, paddingTop: 12, borderTop: '1px solid #F1F5F9' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSharePayload({
+                        category: item.category,
+                        titleUrdu: item.chapterTitleUrdu,
+                        badgeContext: item.sourceWork,
+                        arabicText: item.arabicMatn.split('\n')[0]?.slice(0, 320) || item.arabicMatn.slice(0, 320),
+                        primaryTextUrdu: item.urduTranslation.split('\n')[0]?.slice(0, 360) || item.urduTranslation.slice(0, 360),
+                        secondaryTextEnglish: item.englishSynopsis ? item.englishSynopsis.slice(0, 240) : undefined,
+                        sourceCitation: `${item.sourceWork} · مصدقہ علمی سند`,
+                        tafseerInsightUrdu: item.scholarlyNotes ? item.scholarlyNotes.slice(0, 260) : undefined,
+                      });
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      backgroundColor: '#065F46',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                    }}
+                  >
+                    <span>📸</span>
+                    <span>امیج کارڈ بنائیں</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const text = encodeURIComponent(
+                        `✨ *${item.chapterTitleUrdu}*\n\n` +
+                        `*${item.arabicMatn.split('\n')[0] || ''}*\n\n` +
+                        `*ترجمہ:*\n${item.urduTranslation.split('\n')[0] || ''}\n\n` +
+                        `📖 *ماخذ:* ${item.sourceWork}\n` +
+                        `_AMAL OS (amal.life)_`
+                      );
+                      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+                    }}
+                    style={{
+                      padding: '8px 14px',
+                      borderRadius: 8,
+                      backgroundColor: '#25D366',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                    title="واٹس ایپ پر شیئر کریں"
+                  >
+                    <span>💬</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      const text =
+                        `✨ ${item.chapterTitleUrdu}\n\n` +
+                        `${item.arabicMatn.split('\n')[0] || ''}\n\n` +
+                        `${item.urduTranslation.split('\n')[0] || ''}\n\n` +
+                        `ماخذ: ${item.sourceWork} — AMAL OS`;
+                      await navigator.clipboard.writeText(text);
+                      showAmalToast('متن و حوالہ کاپی کر لیا گیا!', 'success');
+                    }}
+                    style={{
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      backgroundColor: '#F8FAFC',
+                      color: '#475569',
+                      border: '1px solid #CBD5E1',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                    title="متن کاپی کریں"
+                  >
+                    📋
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
 
       {/* Deep Tafseer Modal */}
