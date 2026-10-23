@@ -31,7 +31,7 @@ export default function TermsPage() {
             Terms of Service & Shar'i Adab Charter
           </h1>
           <p style={{ color: '#4B5563', fontSize: 15, margin: 0, lineHeight: 1.6 }}>
-            Bismillahir Rahmanir Raheem. AMAL OS is a sovereign spiritual operating system dedicated to the worship of Allah ﷻ and the service of the Ummah. By utilizing AMAL OS, you agree to these legal and ethical terms.
+            Bismillahir Rahmanir Raheem. AMAL OS is developed and stewarded by <strong>Qsura India Pvt Ltd</strong> as a sovereign spiritual operating system dedicated to the worship of Allah ﷻ and the service of the Ummah. By utilizing AMAL OS, you agree to these legal and ethical terms.
           </p>
         </div>
 
@@ -148,7 +148,7 @@ export default function TermsPage() {
                 <strong>Audio Recitations:</strong> Master recitations by Shaykh Al-Husary, Shaykh Al-Minshawi, Shaykh Abdul Basit, and Shaykh Mishary Rashid Alafasy are hosted under non-commercial spiritual listening licenses courtesy of open Quranic repositories.
               </li>
               <li>
-                <strong>Software & Design:</strong> The AMAL OS proprietary software architecture, design system, algorithms, and compilation engines are protected by copyright. Code modules released under open-source licenses carry MIT/Apache 2.0 governance.
+                <strong>Software & Design:</strong> The AMAL OS proprietary software architecture, design system, algorithms, and compilation engines are developed and owned by Qsura India Pvt Ltd and protected by applicable copyright and intellectual property laws. Code modules released under open-source licenses carry MIT/Apache 2.0 governance.
               </li>
             </ul>
           </section>

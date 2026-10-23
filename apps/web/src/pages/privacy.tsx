@@ -82,7 +82,7 @@ export default function PrivacyPage() {
             Privacy Policy & Sovereign Trust Center
           </h1>
           <p style={{ color: '#4B5563', fontSize: 15, margin: 0, lineHeight: 1.6 }}>
-            In Islam, privacy is a sacred trust: <em>"Indeed, Allah commands you to render trusts to whom they are due"</em> (Surah An-Nisa 4:58). AMAL OS guarantees zero advertising, zero location tracking brokers, and complete cryptographic client-side isolation.
+            In Islam, privacy is a sacred trust: <em>&quot;Indeed, Allah commands you to render trusts to whom they are due&quot;</em> (Surah An-Nisa 4:58). AMAL OS is stewarded by <strong>Qsura India Pvt Ltd</strong> with a binding guarantee of zero advertising, zero location tracking brokers, and complete cryptographic client-side isolation.
           </p>
         </header>
 

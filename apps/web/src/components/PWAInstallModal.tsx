@@ -161,7 +161,10 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({ isOpen, onClos
           </div>
 
           <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>AMAL OS — انسٹال کریں</h3>
-          <p style={{ margin: '6px 0 0', fontSize: 13, color: '#A7F3D0' }}>
+          <p style={{ margin: '4px 0 0', fontSize: 12, color: '#6EE7B7', fontWeight: 700 }}>
+            by Qsura India Pvt Ltd
+          </p>
+          <p style={{ margin: '4px 0 0', fontSize: 13, color: '#A7F3D0' }}>
             Install AMAL OS on your Phone / Home Screen
           </p>
         </div>

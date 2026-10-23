@@ -330,12 +330,12 @@ export const Footer: React.FC = () => {
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-              <span style={{ fontWeight: 800, color: '#FFFFFF' }}>© 2026 AMAL OS Project.</span>
+              <span style={{ fontWeight: 800, color: '#FFFFFF' }}>© 2026 AMAL OS by Qsura India Pvt Ltd.</span>
               <span style={{ color: '#6B7280' }}>تمام حقوق شرعی اغراض کے لیے محفوظ ہیں۔</span>
               <span style={{ color: '#10B981', fontWeight: 700 }}>· وقف برائے خدمتِ امتِ محمدیہ ﷺ</span>
             </div>
-            <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
-              Sadaqah Jariyah Lil-Ummah · Zero Commercial Exploitation · 100% Ad-Free Sovereign Deen OS
+            <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>
+              Crafted &amp; Stewarded by Qsura India Pvt Ltd · Sadaqah Jariyah Lil-Ummah · Zero Commercial Exploitation · 100% Ad-Free Sovereign Deen OS
             </div>
           </div>
 

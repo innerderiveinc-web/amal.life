@@ -47,10 +47,10 @@ export default function CopyrightPage() {
         }}>
           <div>
             <div style={{ fontSize: 18, fontWeight: 800, color: '#A7F3D0' }}>
-              © 2026 AMAL OS Project. All Rights Reserved.
+              © 2026 AMAL OS by Qsura India Pvt Ltd. All Rights Reserved.
             </div>
             <p style={{ fontSize: 13, color: '#9CA3AF', margin: '4px 0 0' }}>
-              Software runtime, design architecture, and compilation engines are protected by global intellectual property law and released in part as open-source public benefit software.
+              Software runtime, design architecture, and compilation engines are developed and stewarded by Qsura India Pvt Ltd, protected by global intellectual property law, and dedicated as a perpetual Waqf for the service of the Ummah.
             </p>
           </div>
           <div style={{

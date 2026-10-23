@@ -1290,7 +1290,7 @@ export default function SettingsPage() {
                       AMAL OS Engine Version
                     </div>
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#111827', marginTop: 4 }}>
-                      V1.0.0 (Production Release 2026.10.18)
+                      V1.0.0 (Release 2026.10) · by Qsura India Pvt Ltd
                     </div>
                   </div>
                 </div>
@@ -1392,7 +1392,7 @@ export default function SettingsPage() {
                   color: '#4B5563',
                   lineHeight: 1.6,
                 }}>
-                  <strong>Epistemic Compliance Guarantee:</strong> AMAL OS operates strictly under the Two-Scholar Dual Jurist Protocol (INV_07) and Section 03 Epistemic Domain Invariants. All calculations are executed deterministically on-device without remote tracking or commercial telemetry.
+                  <strong>Epistemic Compliance Guarantee:</strong> AMAL OS is engineered and stewarded by Qsura India Pvt Ltd, operating strictly under the Two-Scholar Dual Jurist Protocol (INV_07) and Section 03 Epistemic Domain Invariants. All calculations are executed deterministically on-device without remote tracking or commercial telemetry.
                 </div>
               </div>
             )}

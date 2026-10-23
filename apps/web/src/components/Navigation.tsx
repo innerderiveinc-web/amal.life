@@ -439,9 +439,10 @@ export const Navigation: React.FC = () => {
               }}>
                 AMAL OS
               </div>
-              <span style={{ fontSize: 9, color: '#64748B', fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase' }}>
-                Deen &amp; Life Intelligence
-              </span>
+              <div style={{ fontSize: 9, color: '#64748B', fontWeight: 700, letterSpacing: 0.4, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ textTransform: 'uppercase' }}>Deen &amp; Life OS</span>
+                <span style={{ color: '#059669', fontWeight: 800 }}>· by Qsura</span>
+              </div>
             </div>
           </Link>
 

@@ -48,10 +48,11 @@ export default function AboutPage() {
   return (
     <div style={{ backgroundColor: '#FAF9F6', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Head>
-        <title>About AMAL OS — Authentic Islamic Methodology & Scholarly Architecture</title>
+        <title>About AMAL OS by Qsura India Pvt Ltd — Authentic Methodology & Architecture</title>
+        <meta name="author" content="Qsura India Pvt Ltd" />
         <meta
           name="description"
-          content="Learn about AMAL OS: The sovereign, ad-free Islamic operating system grounded in Sawad al-A'zam orthodoxy across the 4 Sunni Madhhabs."
+          content="Learn about AMAL OS by Qsura India Pvt Ltd: The sovereign, ad-free Islamic operating system grounded in Sawad al-A'zam orthodoxy across the 4 Sunni Madhhabs."
         />
       </Head>
 
@@ -580,6 +581,34 @@ export default function AboutPage() {
               );
             })}
           </div>
+        </section>
+
+        {/* Engineering & Stewardship by Qsura India Pvt Ltd */}
+        <section style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 16,
+          padding: '36px 32px',
+          border: '1px solid #E5E7EB',
+          marginBottom: 48,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+            <span style={{ fontSize: 28 }}>🏛️</span>
+            <div>
+              <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1B4332', margin: 0 }}>
+                Engineering &amp; Stewardship by Qsura India Pvt Ltd
+              </h2>
+              <span style={{ fontSize: 12, color: '#059669', fontWeight: 700 }}>
+                پبلک بینیفٹ و شرعی امانت · Public Benefit Islamic Technology
+              </span>
+            </div>
+          </div>
+          <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.7, margin: '0 0 14px' }}>
+            <strong>AMAL OS</strong> is conceptualized, engineered, and stewarded by <strong>Qsura India Pvt Ltd</strong> as a dedicated sovereign life platform for the global Muslim Ummah. Our engineering ethos unites deep technological rigor with authentic traditional orthodoxy (Ahl al-Sunnah wal-Jama&apos;ah).
+          </p>
+          <p style={{ fontSize: 14, color: '#4B5563', lineHeight: 1.7, margin: 0 }}>
+            Qsura India Pvt Ltd commits that AMAL OS shall remain 100% ad-free, devoid of commercial tracking, strictly non-sectarian, and protected against algorithmic distortion. All digital calculation engines and foundational canons are offered as a perpetual Waqf in service of divine worship.
+          </p>
         </section>
 
         {/* Contact & Scholarly Review Banner */}
