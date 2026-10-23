@@ -67,7 +67,7 @@ export const ReflectionScreen: React.FC = () => {
               ✓ Saved to Zero-Knowledge Vault
             </Text>
             <Text style={{ color: '#047857', fontSize: 12, textAlign: 'center', marginBottom: 12 }}>
-              Your reflection has been safely encrypted and saved. No AI training, no public exposure.
+              Your reflection has been safely encrypted and saved. 100% private on-device storage, zero cloud profiling.
             </Text>
             <TouchableOpacity
               style={[styles.saveButton, { backgroundColor: '#065F46', paddingHorizontal: 20 }]}

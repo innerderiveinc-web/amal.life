@@ -22,12 +22,12 @@ export const PrivacyCenterScreen: React.FC = () => {
         </Text>
       </View>
 
-      {/* AI Memory Controls */}
+      {/* Inquiry History Controls */}
       <View style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>AI MEMORY CONTROLS</Text>
+        <Text style={styles.sectionTitle}>INQUIRY HISTORY &amp; CONTEXT CONTROLS</Text>
         <View style={styles.switchRow}>
           <View style={styles.switchLabelContainer}>
-            <Text style={styles.switchLabel}>Allow AI Personal Context</Text>
+            <Text style={styles.switchLabel}>Allow Routine Context Personalization</Text>
             <Text style={styles.switchSubLabel}>
               Allows AMAL to recall your preferred routine constraints (e.g. evening work hours) to adapt journeys.
             </Text>
@@ -57,22 +57,22 @@ export const PrivacyCenterScreen: React.FC = () => {
           style={styles.purgeButton}
           onPress={() => {
             Alert.alert(
-              'Purge AI Memory',
-              'All personal routine contexts and behavioral observations will be permanently erased.',
+              'Purge Inquiry History',
+              'All personal routine contexts and search observations will be permanently erased.',
               [
                 { text: 'Cancel', style: 'cancel' },
                 {
-                  text: 'Purge Memory',
+                  text: 'Purge History',
                   style: 'destructive',
                   onPress: () => {
-                    Alert.alert('Success', 'AI memory history has been securely wiped.');
+                    Alert.alert('Success', 'Search and inquiry history has been securely wiped.');
                   },
                 },
               ]
             );
           }}
         >
-          <Text style={styles.purgeButtonText}>Clear All AI Memory History</Text>
+          <Text style={styles.purgeButtonText}>Clear All Search &amp; Inquiry History</Text>
         </TouchableOpacity>
       </View>
 

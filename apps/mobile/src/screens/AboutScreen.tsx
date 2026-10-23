@@ -18,7 +18,7 @@ export const AboutScreen: React.FC = () => {
     {
       icon: '⚖️',
       title: 'Fatwa Firewall & Scholars Desk',
-      desc: 'AI cannot issue fatwas or novel verdicts. Sensitive legal cases escalate to certified human Muftis.',
+      desc: 'The platform cannot issue fatwas or novel verdicts. Sensitive legal cases escalate to certified human Muftis.',
     },
     {
       icon: '🕌',
@@ -34,8 +34,8 @@ export const AboutScreen: React.FC = () => {
 
   const faqs = [
     {
-      q: 'Does AMAL OS AI issue independent fatwas?',
-      a: 'No. AI is strictly prohibited from declaring matters Halal or Haram. It quotes classical texts across the 4 Madhhabs and connects seekers to certified human scholars.',
+      q: 'Does AMAL OS issue independent fatwas?',
+      a: 'No. Automated systems are strictly prohibited from declaring matters Halal or Haram. The platform quotes verified classical texts across the 4 Madhhabs and connects seekers to certified human scholars.',
     },
     {
       q: 'Can this be used outside India?',
