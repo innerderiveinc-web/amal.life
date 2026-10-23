@@ -108,13 +108,13 @@ export default function TermsPage() {
             </div>
             <ul style={{ fontSize: 14, color: '#374151', lineHeight: 1.8, paddingLeft: 20, margin: 0 }}>
               <li>
-                <strong>No Fatwa Issuance:</strong> Algorithmic responses do NOT constitute a binding personal fatwa. Every individual's personal circumstance (<em>Hal</em>) may alter legal dispensations (<em>Rukhsah</em>).
+                <strong>No Fatwa Issuance (عدمِ صدورِ فتویٰ):</strong> Search results, references, and synthesized summaries do NOT constitute a binding personal fatwa. AMAL OS is an educational research and clerical index, not a Mufti. Every individual's personal circumstance (<em>Hal</em>) may alter legal dispensations (<em>Rukhsah</em>).
               </li>
               <li>
                 <strong>Life-or-Death, Talaq & High-Stakes Litigation:</strong> Complex disputes regarding divorce (<em>Talaq / Khula</em>), criminal litigation, medical bioethics, or contentious probate inheritance MUST be submitted to qualified, living human scholars and recognized Dar al-Ifta institutions.
               </li>
               <li>
-                <strong>Dual Jurist Protocol:</strong> Where fiqh synthesis is requested, AMAL OS maps opinions across the 4 Sunni Madhhabs (Hanafi, Shafi'i, Maliki, Hanbali) and outputs an auditable Scholar Dossier rather than unilaterally deciding contentious matters.
+                <strong>Dual Jurist Protocol:</strong> Where fiqh research is requested, AMAL OS maps opinions across the 4 Sunni Madhhabs (Hanafi, Shafi'i, Maliki, Hanbali) and outputs an auditable Scholar Case Brief rather than unilaterally deciding contentious matters.
               </li>
             </ul>
           </section>
@@ -129,7 +129,7 @@ export default function TermsPage() {
             </p>
             <ul style={{ fontSize: 14, color: '#374151', lineHeight: 1.8, paddingLeft: 20, margin: '10px 0 0' }}>
               <li>Submit blasphemous, insulting, or derogatory queries regarding Allah ﷻ, His Prophets, the Sahabah, the Ahl al-Bayt, or classical Islamic scholarship.</li>
-              <li>Attempt to scrape, jailbreak, or prompt-inject the AI runtime to manufacture un-Islamic permissibility (<em>Tahleel al-Haram</em>) or baseless takfir.</li>
+              <li>Attempt to scrape, exploit, or inject malicious inputs into the knowledge runtime to manufacture un-Islamic permissibility (<em>Tahleel al-Haram</em>) or baseless takfir.</li>
               <li>Weaponize family circles or decision rooms for domestic coercion, domestic abuse, or violation of family members' rights.</li>
               <li>Use calculated inheritance allocations to unlawfully disinherit women, orphans, or rightful Quranic heirs.</li>
             </ul>

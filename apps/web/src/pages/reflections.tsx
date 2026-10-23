@@ -282,7 +282,7 @@ export default function ReflectionsPage() {
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 12, color: '#888' }}>
-                  Stored with SHA-256 integrity · Zero external AI training
+                  Stored with SHA-256 integrity · 100% Private Local Storage · Zero Cloud Profiling
                 </span>
                 <button
                   type="submit"

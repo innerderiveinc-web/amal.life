@@ -20,7 +20,7 @@ import {
 import { biometricVaultGuardEngine, VaultSecurityMode } from '@amal/amal-engine';
 import { AmalApiClient } from '../lib/api';
 
-type SettingsTab = 'GENERAL' | 'FIQH' | 'AI' | 'PRIVACY' | 'READER' | 'SYSTEM';
+type SettingsTab = 'GENERAL' | 'FIQH' | 'SCHOLARSHIP' | 'PRIVACY' | 'READER' | 'SYSTEM';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('GENERAL');
@@ -46,7 +46,7 @@ export default function SettingsPage() {
     isha: 0,
   });
 
-  // --- AI ENGINE TAB STATE ---
+  // --- SCHOLARLY STRICTNESS TAB STATE ---
   const [strictSawadAlAzam, setStrictSawadAlAzam] = useState(true);
   const [dualJuristVerification, setDualJuristVerification] = useState(true);
   const [aiProvider, setAiProvider] = useState<'gemini' | 'openai' | 'local'>('gemini');
@@ -87,7 +87,7 @@ export default function SettingsPage() {
     setOffsets({ fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0, ...getSavedOffsets() });
     setAthanSound(localStorage.getItem('amal_azaan_settings') || 'makkah');
 
-    // 3. Load AI Preferences
+    // 3. Load Scholarly Strictness Preferences
     setStrictSawadAlAzam(localStorage.getItem('amal_strict_sawad') !== 'false');
     setDualJuristVerification(localStorage.getItem('amal_dual_jurist') !== 'false');
     setAiProvider((localStorage.getItem('amal_ai_provider') as any) || 'gemini');
@@ -153,21 +153,21 @@ export default function SettingsPage() {
     showAmalToast('Fiqh & Prayer settings updated! Recalculating auqat...', 'success');
   };
 
-  // Save AI Settings
-  const handleSaveAI = () => {
+  // Save Scholarly Strictness Settings
+  const handleSaveStrictness = () => {
     localStorage.setItem('amal_strict_sawad', String(strictSawadAlAzam));
     localStorage.setItem('amal_dual_jurist', String(dualJuristVerification));
     localStorage.setItem('amal_ai_provider', aiProvider);
     localStorage.setItem('amal_ephemeral_memory', String(ephemeralMemory));
 
-    showAmalToast('AI Epistemic parameters updated!', 'success');
+    showAmalToast('علمی استناد و احتیاط کے اصول محفوظ ہو گئے! · Scholarly strictness parameters updated!', 'success');
   };
 
-  // Purge AI Memory
-  const handlePurgeAIMemory = () => {
+  // Clear Search & Inquiry History
+  const handlePurgeSearchCache = () => {
     localStorage.removeItem('amal_notes');
     localStorage.removeItem('amal_pending_situation');
-    showAmalToast('AI Conversation Memory completely purged!', 'info');
+    showAmalToast('تحقیقی تلاش اور نوٹس کی کیش مکمل صاف کر دی گئی! · Inquiry history completely cleared!', 'info');
   };
 
   // Save Privacy
@@ -243,7 +243,7 @@ export default function SettingsPage() {
     <>
       <Head>
         <title>System Settings | AMAL OS V1 Control Center</title>
-        <meta name="description" content="Configure system-wide settings for AMAL OS: Fiqh methodology, Prayer Calculation, AI Epistemic Strictness, Sovereign Vault Security, and Reader Preferences." />
+        <meta name="description" content="Configure system-wide settings for AMAL OS: Fiqh methodology, Prayer Calculation, Scholarly Epistemic Strictness, Sovereign Vault Security, and Reader Preferences." />
       </Head>
 
       <Navigation />
@@ -279,7 +279,7 @@ export default function SettingsPage() {
               </h1>
             </div>
             <p style={{ margin: '6px 0 0', fontSize: 14, color: '#4B5563' }}>
-              مرکزی ترتیبات · Configure system-wide Fiqh methodology, AI strictness, privacy vault, and interface options.
+              مرکزی ترتیبات · Configure system-wide Fiqh methodology, scholarly strictness, privacy vault, and interface options.
             </p>
           </div>
 
@@ -365,7 +365,7 @@ export default function SettingsPage() {
             </button>
 
             <button
-              onClick={() => setActiveTab('AI')}
+              onClick={() => setActiveTab('SCHOLARSHIP')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -377,13 +377,13 @@ export default function SettingsPage() {
                 fontSize: 14,
                 fontWeight: 700,
                 cursor: 'pointer',
-                backgroundColor: activeTab === 'AI' ? '#F0FDF4' : 'transparent',
-                color: activeTab === 'AI' ? AmalTheme.colors.primary : '#374151',
-                borderLeft: activeTab === 'AI' ? `4px solid ${AmalTheme.colors.primary}` : '4px solid transparent',
+                backgroundColor: activeTab === 'SCHOLARSHIP' ? '#F0FDF4' : 'transparent',
+                color: activeTab === 'SCHOLARSHIP' ? AmalTheme.colors.primary : '#374151',
+                borderLeft: activeTab === 'SCHOLARSHIP' ? `4px solid ${AmalTheme.colors.primary}` : '4px solid transparent',
               }}
             >
-              <span>🤖</span>
-              <span>AI Scholarly Strictness</span>
+              <span>📜</span>
+              <span>Scholarly Strictness & Verification</span>
             </button>
 
             <button
@@ -747,15 +747,15 @@ export default function SettingsPage() {
             )}
 
             {/* ============================================================== */}
-            {/* 3. AI SCHOLARLY STRICTNESS TAB                                 */}
+            {/* 3. SCHOLARLY STRICTNESS & VERIFICATION TAB                     */}
             {/* ============================================================== */}
-            {activeTab === 'AI' && (
+            {activeTab === 'SCHOLARSHIP' && (
               <div>
                 <h2 style={{ margin: '0 0 16px', fontSize: 20, fontWeight: 800, color: '#111827' }}>
-                  AI Epistemic Grounding & Scholarly Strictness
+                  Epistemic Grounding & Scholarly Strictness (علمی استناد و احتیاط)
                 </h2>
-                <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280' }}>
-                  AMAL OS employs the Dual-Jurist Verification Protocol (INV_07) to strictly ground all AI responses in canonical Islamic scholarship.
+                <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280', lineHeight: 1.6 }}>
+                  AMAL OS employs the Dual-Jurist Verification Protocol (INV_07) to strictly ground all retrieved evidence in canonical Islamic scholarship. AMAL OS is an educational research index and clerical tool, never an autonomous Mufti.
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -774,7 +774,7 @@ export default function SettingsPage() {
                           🛡️ Strict Sawad al-A'zam Epistemic Gate (Section 03.11)
                         </div>
                         <div style={{ fontSize: 12, color: '#047857' }}>
-                          Guarantees that AI answers only cite peer-reviewed classical texts from the 76 canonical corpus works.
+                          Guarantees that retrieved references strictly cite peer-reviewed classical texts from the 76 canonical corpus works.
                         </div>
                       </div>
                       <input
@@ -791,7 +791,7 @@ export default function SettingsPage() {
                           ⚖️ Dual-Jurist Consensus Gatekeeper (INV_07)
                         </div>
                         <div style={{ fontSize: 12, color: '#047857' }}>
-                          Prevents rogue AI hallucinations by cross-checking rulings across classical Hanafi and Jumhur codices.
+                          Prevents unverified statements or misattributions by cross-checking rulings strictly across classical Hanafi and Jumhur codices.
                         </div>
                       </div>
                       <input
@@ -805,7 +805,7 @@ export default function SettingsPage() {
 
                   <div>
                     <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-                      AI Inference Engine Provider
+                      Knowledge Retrieval Engine Provider
                     </label>
                     <select
                       value={aiProvider}
@@ -820,9 +820,9 @@ export default function SettingsPage() {
                         backgroundColor: '#F9FAFB',
                       }}
                     >
-                      <option value="gemini">Google Gemini 1.5 Pro (Deterministic Grounded Model)</option>
-                      <option value="openai">OpenAI GPT-4o (Strict Temperature 0.2)</option>
-                      <option value="local">Offline Classical Corpus (Zero Cloud API, 100% Offline)</option>
+                      <option value="gemini">Google Gemini Grounded Model (Deterministic Corpus Verification)</option>
+                      <option value="openai">OpenAI Strict Retrieval (Deterministic Low-Temperature)</option>
+                      <option value="local">Offline Classical Corpus (Zero Cloud API, 100% Local Device Storage)</option>
                     </select>
                   </div>
 
@@ -837,10 +837,10 @@ export default function SettingsPage() {
                   }}>
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>
-                        🧠 Ephemeral Conversation Memory
+                        🛡️ Ephemeral Inquiry History
                       </div>
                       <div style={{ fontSize: 12, color: '#6B7280' }}>
-                        Automatically wipe conversation history after every session (Zero retention)
+                        Automatically wipe search inquiries and scratch reflections after every session (Zero retention)
                       </div>
                     </div>
                     <input
@@ -853,7 +853,7 @@ export default function SettingsPage() {
 
                   <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                     <button
-                      onClick={handleSaveAI}
+                      onClick={handleSaveStrictness}
                       style={{
                         padding: '10px 22px',
                         backgroundColor: AmalTheme.colors.primary,
@@ -865,11 +865,11 @@ export default function SettingsPage() {
                         cursor: 'pointer',
                       }}
                     >
-                      Save AI Parameters
+                      Save Scholarly Parameters
                     </button>
 
                     <button
-                      onClick={handlePurgeAIMemory}
+                      onClick={handlePurgeSearchCache}
                       style={{
                         padding: '10px 18px',
                         backgroundColor: '#FEE2E2',
@@ -881,7 +881,7 @@ export default function SettingsPage() {
                         cursor: 'pointer',
                       }}
                     >
-                      🧹 Purge AI Memory Now
+                      🧹 Clear Inquiry Cache Now
                     </button>
                   </div>
                 </div>

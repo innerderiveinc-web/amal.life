@@ -49,7 +49,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
   en: {
     // Navigation & Common
     'nav.home': 'Dashboard',
-    'nav.ask': 'Ask Scholar AI',
+    'nav.ask': 'Ask AMAL (Scholarly Guidance)',
     'nav.library': 'Canonical Library',
     'nav.sirah': 'Prophetic Life Graph',
     'nav.prayer': 'Prayer & Qibla',
@@ -62,7 +62,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
 
     // App Header & Taglines
     'app.title': 'AMAL OS',
-    'app.subtitle': 'From Niyyah to Amal — Muslim Life Intelligence Platform',
+    'app.subtitle': 'From Niyyah to Amal — Sovereign Muslim Life Operating System',
     'app.sawad_azam_badge': '100% Sawad al-A’zam Heritage',
     'app.dual_jurist_badge': 'Two-Scholar Governance (INV_07)',
 
@@ -105,7 +105,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
   ur: {
     // Navigation & Common
     'nav.home': 'ڈیش بورڈ',
-    'nav.ask': 'اسکالر اے آئی سے پوچھیں',
+    'nav.ask': 'مستند علمی رہنمائی (پوچھیں)',
     'nav.library': 'کتب خانہ (مستند لائبریری)',
     'nav.sirah': 'سیرت النبی و شمائل گراف',
     'nav.prayer': 'نماز کے اوقات و قبلہ',
@@ -118,7 +118,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
 
     // App Header & Taglines
     'app.title': 'عمل او ایس',
-    'app.subtitle': 'نیت سے عمل تک — مستند اسلامی لائف انٹیلی جنس',
+    'app.subtitle': 'نیت سے عمل تک — مستند اسلامی نظامِ حیات',
     'app.sawad_azam_badge': '۱۰۰٪ سوادِ اعظم اہلسنت والجماعت',
     'app.dual_jurist_badge': 'دو مفتیانِ کرام کی نگرانی (INV_07)',
 
@@ -161,7 +161,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
   ar: {
     // Navigation & Common
     'nav.home': 'لوحة التحكم',
-    'nav.ask': 'اسأل الذكاء الشرعي',
+    'nav.ask': 'سؤال وبحث علمي (اسأل عمل)',
     'nav.library': 'المكتبة التراثية المعتمدة',
     'nav.sirah': 'الرسم البياني للسيرة والشمائل',
     'nav.prayer': 'مواقيت الصلاة والقبلة',
@@ -174,7 +174,7 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
 
     // App Header & Taglines
     'app.title': 'نظام عمل (AMAL OS)',
-    'app.subtitle': 'من النية إلى العمل — منظومة الذكاء الحياتي الإسلامي',
+    'app.subtitle': 'من النية إلى العمل — منظومة الحياة الإسلامية الأصيلة',
     'app.sawad_azam_badge': 'منهج السواد الأعظم وأهل السنة',
     'app.dual_jurist_badge': 'حوكمة الفقيهين المعتمدة (INV_07)',
 
