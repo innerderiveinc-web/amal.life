@@ -150,35 +150,38 @@ export const Navigation: React.FC = () => {
     }}>
       {/* 1. TOP UTILITY & LIVE CONTEXT RIBBON */}
       <div style={{
-        backgroundColor: '#0F291E',
+        backgroundColor: '#061710',
         color: '#D1D5DB',
-        padding: '6px 24px',
+        padding: '5px 24px',
         fontSize: 11,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: 8,
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}>
         {/* Left: Live Hijri Date & Prayer Countdown */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ color: '#86EFAC' }}>🌙</span>
-            <span suppressHydrationWarning style={{ fontWeight: 700, color: '#F3F4F6' }}>
+            <span suppressHydrationWarning style={{ fontWeight: 700, color: '#F9FAFB' }}>
               {isMounted ? `${hijri.day} ${currentLang === 'ur' ? hijri.monthNameUrdu : hijri.monthNameEnglish} ${hijri.year} AH` : '...'}
             </span>
           </div>
+
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
 
           <Link href="/prayer" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, color: '#A7F3D0' }}>
             <span>🕌</span>
             <span suppressHydrationWarning>
               {isMounted && nextPrayer ? (
                 <>
-                  {currentLang === 'ur'
-                    ? `اگلی نماز: ${nextPrayer.nameUrdu}`
-                    : `Next Salah: ${nextPrayer.nameEnglish}`}{' '}
-                  <strong suppressHydrationWarning>{nextPrayer.time}</strong>{' '}
-                  <span suppressHydrationWarning style={{ fontSize: 10, opacity: 0.9, fontWeight: 600, color: '#6EE7B7' }}>
+                  <span style={{ color: '#9CA3AF' }}>
+                    {currentLang === 'ur' ? `اگلی نماز: ${nextPrayer.nameUrdu}` : `Next Salah: ${nextPrayer.nameEnglish}`}
+                  </span>{' '}
+                  <strong suppressHydrationWarning style={{ color: '#FFFFFF' }}>{nextPrayer.time}</strong>{' '}
+                  <span suppressHydrationWarning style={{ fontSize: 10, fontWeight: 700, color: '#34D399' }}>
                     ({currentLang === 'ur' ? nextPrayer.formattedCountdownUrdu : nextPrayer.formattedCountdownEnglish})
                   </span>
                 </>
@@ -188,99 +191,81 @@ export const Navigation: React.FC = () => {
             </span>
           </Link>
 
-          <span style={{ color: '#6EE7B7', fontSize: 10, backgroundColor: 'rgba(52, 211, 153, 0.15)', padding: '1px 6px', borderRadius: 4, fontWeight: 700 }}>
-            Hanafi Mislayn 2x
+          <span style={{ color: '#6EE7B7', fontSize: 10, backgroundColor: 'rgba(52, 211, 153, 0.15)', padding: '1px 6px', borderRadius: 4, fontWeight: 700, border: '1px solid rgba(52, 211, 153, 0.25)' }}>
+            Hanafi
           </span>
         </div>
 
-        {/* Right: Offline Status Pill, Tahajjud Mode, Bookmarks & Language Selector */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {/* 1. Offline Mode Indicator Pill */}
-          <span
-            title="Core calculation engines (Prayer times, Hijri calendar, Zakat, Miras) run locally on your device"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 5,
-              backgroundColor: 'rgba(16, 185, 129, 0.15)',
-              color: '#34D399',
-              fontSize: 10,
-              fontWeight: 700,
-              padding: '2px 8px',
-              borderRadius: 12,
-              border: '1px solid rgba(52, 211, 153, 0.3)',
-              cursor: 'default',
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
-            <span>Local Device Mode</span>
-          </span>
-
-          {/* 2. Tahajjud Night Serenity Mode Toggle */}
+        {/* Right: Clean, Unified Utility Toolbar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {/* Tahajjud Mode */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-toggle-tahajjud'));
             }}
             style={{
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: 12,
-              padding: '2px 8px',
-              fontSize: 10,
-              fontWeight: 700,
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 14,
+              padding: '3px 10px',
+              fontSize: 11,
+              fontWeight: 600,
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
               color: '#A7F3D0',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
+              transition: 'all 0.15s ease',
             }}
             title="Toggle Tahajjud & Night Serenity OLED Dark Mode"
           >
             <span>🌙</span>
-            <span>تہجد موڈ</span>
+            <span>{currentLang === 'ur' ? 'تہجد موڈ' : 'Tahajjud'}</span>
           </button>
 
-          {/* 3. Masnoon Duas & Bookmarks Drawer Button */}
+          {/* Masnoon Duas */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-bookmarks'));
             }}
             style={{
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: 12,
-              padding: '2px 8px',
-              fontSize: 10,
-              fontWeight: 700,
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 14,
+              padding: '3px 10px',
+              fontSize: 11,
+              fontWeight: 600,
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
               color: '#FDE68A',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
+              transition: 'all 0.15s ease',
             }}
             title="Open Saved Bookmarks & Duas (Cmd+B)"
           >
             <span>⭐</span>
-            <span>محفوظ دعائیں</span>
+            <span>{currentLang === 'ur' ? 'محفوظ دعائیں' : 'Saved Duas'}</span>
           </button>
 
-          {/* 4. Sovereign Account & Sign In / Cloud Sync Button */}
+          {/* Account / Sign In */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-auth'));
             }}
             style={{
-              border: user && !user.isGuest ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: 12,
-              padding: '2px 9px',
-              fontSize: 10,
-              fontWeight: 700,
-              backgroundColor: user && !user.isGuest ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)',
-              color: user && !user.isGuest ? '#A7F3D0' : '#FFFFFF',
+              border: user && !user.isGuest ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 14,
+              padding: '3px 10px',
+              fontSize: 11,
+              fontWeight: 600,
+              backgroundColor: user && !user.isGuest ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.06)',
+              color: user && !user.isGuest ? '#A7F3D0' : '#E5E7EB',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: 5,
+              gap: 4,
+              transition: 'all 0.15s ease',
             }}
             title={user && !user.isGuest ? `Signed in as ${user.name} (${user.madhhab})` : 'Sign In or Create Sovereign Account'}
           >
@@ -292,21 +277,22 @@ export const Navigation: React.FC = () => {
             </span>
           </button>
 
-          {/* 5. System Settings Control Center Link */}
+          {/* Settings */}
           <Link
             href="/settings"
             style={{
               textDecoration: 'none',
-              border: router.pathname === '/settings' ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: 12,
-              padding: '2px 8px',
-              fontSize: 10,
-              fontWeight: 700,
-              backgroundColor: router.pathname === '/settings' ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)',
-              color: router.pathname === '/settings' ? '#A7F3D0' : '#FFFFFF',
+              border: router.pathname === '/settings' ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 14,
+              padding: '3px 10px',
+              fontSize: 11,
+              fontWeight: 600,
+              backgroundColor: router.pathname === '/settings' ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.06)',
+              color: router.pathname === '/settings' ? '#A7F3D0' : '#E5E7EB',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
+              transition: 'all 0.15s ease',
             }}
             title="AMAL OS System Settings & Control Center"
           >
@@ -314,21 +300,22 @@ export const Navigation: React.FC = () => {
             <span>{currentLang === 'ur' ? 'ترتیبات' : 'Settings'}</span>
           </Link>
 
-          {/* 6. Language Selector */}
-          <div style={{ display: 'flex', gap: 2, backgroundColor: 'rgba(255,255,255,0.1)', padding: '2px', borderRadius: 4 }}>
+          {/* Language Switcher */}
+          <div style={{ display: 'flex', gap: 2, backgroundColor: 'rgba(255,255,255,0.08)', padding: '2px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.1)' }}>
             {(['en', 'ur', 'ar'] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => switchLanguage(l)}
                 style={{
                   border: 'none',
-                  borderRadius: 3,
-                  padding: '2px 6px',
+                  borderRadius: 4,
+                  padding: '2px 8px',
                   fontSize: 10,
-                  fontWeight: currentLang === l ? 700 : 500,
+                  fontWeight: currentLang === l ? 800 : 500,
                   backgroundColor: currentLang === l ? '#10B981' : 'transparent',
                   color: currentLang === l ? '#064E3B' : '#D1D5DB',
                   cursor: 'pointer',
+                  transition: 'background-color 0.15s ease',
                 }}
               >
                 {l === 'en' ? 'EN' : l === 'ur' ? 'اردو' : 'العربية'}
@@ -349,57 +336,71 @@ export const Navigation: React.FC = () => {
         gap: 16,
       }}>
         {/* Brand & Identity */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 24 }}>🧭</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              backgroundColor: '#064E3B',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 20,
+              boxShadow: '0 2px 6px rgba(6, 78, 59, 0.25)',
+              flexShrink: 0,
+            }}>
+              🧭
+            </div>
             <div>
               <div style={{
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: 900,
-                color: AmalTheme.colors.primary,
+                color: '#064E3B',
                 letterSpacing: 0.5,
-                lineHeight: 1,
+                lineHeight: 1.1,
               }}>
                 AMAL OS
               </div>
-              <span style={{ fontSize: 10, color: '#6B7280', fontWeight: 600, letterSpacing: 0.5 }}>
-                DEEN & LIFE INTELLIGENCE
+              <span style={{ fontSize: 9, color: '#64748B', fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+                Deen &amp; Life Intelligence
               </span>
             </div>
           </Link>
 
           <span className="desktop-only" style={{
             fontSize: 10,
-            padding: '3px 10px',
-            borderRadius: 14,
+            padding: '2px 8px',
+            borderRadius: 12,
             backgroundColor: '#F0FDF4',
             color: '#065F46',
             fontWeight: 700,
-            border: '1px solid #86EFAC',
+            border: '1px solid #BBF7D0',
             display: 'flex',
             alignItems: 'center',
-            gap: 5,
+            gap: 4,
           }}>
-            <span style={{ color: '#059669', fontSize: 11 }}>✓</span>
-            <span>Ahl al-Sunnah Verified</span>
+            <span style={{ color: '#059669', fontSize: 10 }}>✓</span>
+            <span>Ahl al-Sunnah</span>
           </span>
         </div>
 
         {/* Primary Hubs (Desktop) */}
-        <div className="desktop-only" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <div className="desktop-only" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           <Link
             href="/"
             style={{
               textDecoration: 'none',
               fontSize: 13,
               fontWeight: router.pathname === '/' ? 700 : 600,
-              color: router.pathname === '/' ? AmalTheme.colors.primary : '#374151',
+              color: router.pathname === '/' ? '#065F46' : '#334155',
               padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: router.pathname === '/' ? '#F0FDF4' : 'transparent',
+              transition: 'all 0.15s ease',
             }}
           >
-            {currentLang === 'ur' ? '🌅 آج (Today)' : '🌅 Today'}
+            {currentLang === 'ur' ? '🌅 آج' : '🌅 Today'}
           </Link>
 
           {/* Direct Premier Hub: Al-Quran (114 Surahs) */}
@@ -409,20 +410,20 @@ export const Navigation: React.FC = () => {
               textDecoration: 'none',
               fontSize: 13,
               fontWeight: router.pathname === '/quran' ? 700 : 600,
-              color: router.pathname === '/quran' ? '#065F46' : '#15803D',
-              padding: '6px 12px',
+              color: router.pathname === '/quran' ? '#065F46' : '#1E293B',
+              padding: '6px 10px',
               borderRadius: 6,
-              backgroundColor: router.pathname === '/quran' ? '#DCFCE7' : '#F0FDF4',
-              border: `1px solid ${router.pathname === '/quran' ? '#86EFAC' : '#BBF7D0'}`,
+              backgroundColor: router.pathname === '/quran' ? '#DCFCE7' : 'transparent',
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
+              gap: 5,
+              transition: 'all 0.15s ease',
             }}
           >
             <span>📖</span>
             <span>{currentLang === 'ur' ? 'قرآنِ کریم' : 'Al-Quran'}</span>
-            <span style={{ fontSize: 9, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>
-              Kanz-ul-Iman
+            <span style={{ fontSize: 9, backgroundColor: '#10B981', color: '#FFFFFF', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>
+              {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz'}
             </span>
           </Link>
 
@@ -433,18 +434,21 @@ export const Navigation: React.FC = () => {
               textDecoration: 'none',
               fontSize: 13,
               fontWeight: router.pathname === '/wisdom' ? 700 : 600,
-              color: router.pathname === '/wisdom' ? '#92400E' : '#B45309',
-              padding: '6px 12px',
+              color: router.pathname === '/wisdom' ? '#92400E' : '#1E293B',
+              padding: '6px 10px',
               borderRadius: 6,
-              backgroundColor: router.pathname === '/wisdom' ? '#FEF3C7' : '#FFFBEB',
-              border: `1px solid ${router.pathname === '/wisdom' ? '#FCD34D' : '#FDE68A'}`,
+              backgroundColor: router.pathname === '/wisdom' ? '#FEF3C7' : 'transparent',
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
+              gap: 5,
+              transition: 'all 0.15s ease',
             }}
           >
             <span>✨</span>
-            <span>{currentLang === 'ur' ? 'قرآنی حکمت (۴۲)' : 'Wisdom (42)'}</span>
+            <span>{currentLang === 'ur' ? 'قرآنی حکمت' : 'Wisdom'}</span>
+            <span style={{ fontSize: 9, backgroundColor: '#F59E0B', color: '#FFFFFF', padding: '1px 5px', borderRadius: 10, fontWeight: 700 }}>
+              42
+            </span>
           </Link>
 
           {/* Hub 1: Ibadat Dropdown */}
@@ -585,9 +589,10 @@ export const Navigation: React.FC = () => {
                 cursor: 'pointer',
                 padding: '6px 10px',
                 borderRadius: 6,
+                whiteSpace: 'nowrap',
               }}
             >
-              <span>⚖️ {currentLang === 'ur' ? 'احکام و مالیات' : 'Ahkam & Finance'}</span>
+              <span>⚖️ {currentLang === 'ur' ? 'احکام و فقہ' : 'Fiqh & Rules'}</span>
               <span style={{ fontSize: 9 }}>▼</span>
             </button>
 
@@ -641,6 +646,7 @@ export const Navigation: React.FC = () => {
               padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: router.pathname === '/ask' ? '#F0FDF4' : 'transparent',
+              whiteSpace: 'nowrap',
             }}
           >
             {currentLang === 'ur' ? '💬 سوال پوچھیں' : '💬 Ask AMAL'}
@@ -657,14 +663,42 @@ export const Navigation: React.FC = () => {
               padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: router.pathname === '/about' ? '#F0FDF4' : 'transparent',
+              whiteSpace: 'nowrap',
             }}
           >
             {currentLang === 'ur' ? '🕌 تعارف' : '🕌 About'}
           </Link>
         </div>
 
-        {/* Right Tools & 9-Dots App Launcher */}
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        {/* Right Tools: Sleek Search & Apps Launcher */}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {/* Quick Action: Search (Cmd+K) - Desktop */}
+          <button
+            onClick={() => {
+              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
+            }}
+            className="desktop-only"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              border: '1px solid #E2E8F0',
+              borderRadius: 8,
+              padding: '6px 12px',
+              backgroundColor: '#F8FAFC',
+              color: '#64748B',
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease',
+            }}
+            title="Universal Instant Search (Cmd+K)"
+          >
+            <span>🔍</span>
+            <span style={{ fontSize: 12 }}>{currentLang === 'ur' ? 'تلاش...' : 'Search...'}</span>
+            <kbd style={{ fontSize: 10, backgroundColor: '#E2E8F0', color: '#475569', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>⌘K</kbd>
+          </button>
+
           {/* 9-Dots All 15 Apps Launcher */}
           <div style={{ position: 'relative' }}>
             <button
@@ -672,20 +706,22 @@ export const Navigation: React.FC = () => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 5,
-                border: '1px solid #D1D5DB',
+                gap: 6,
+                border: '1px solid #E2E8F0',
                 borderRadius: 8,
-                padding: '5px 10px',
-                backgroundColor: isAppsMenuOpen ? '#1B4332' : '#F9FAFB',
-                color: isAppsMenuOpen ? '#FFFFFF' : '#374151',
+                padding: '6px 12px',
+                backgroundColor: isAppsMenuOpen ? '#064E3B' : '#FFFFFF',
+                color: isAppsMenuOpen ? '#FFFFFF' : '#1E293B',
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: 'pointer',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                transition: 'all 0.15s ease',
               }}
               title="All 15 AMAL OS Applications"
             >
-              <span>⠿</span>
-              <span>{currentLang === 'ur' ? 'تمام ماڈیولز' : 'All 15 Apps'}</span>
+              <span style={{ fontSize: 13 }}>⠿</span>
+              <span>{currentLang === 'ur' ? 'تمام ایپس' : 'All Apps'}</span>
             </button>
 
             {/* 9-Dots Popover Grid */}
@@ -741,73 +777,6 @@ export const Navigation: React.FC = () => {
               </div>
             )}
           </div>
-
-          {/* Quick Action: Search (Cmd+K) - Desktop */}
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
-            }}
-            className="desktop-only"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-              border: '1px solid #D1D5DB',
-              borderRadius: 6,
-              padding: '5px 9px',
-              backgroundColor: '#F8FAFC',
-              color: '#334155',
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-            title="Universal Instant Search (Cmd+K)"
-          >
-            <span>🔍</span>
-            <kbd style={{ fontSize: 10, backgroundColor: '#E2E8F0', padding: '1px 4px', borderRadius: 3 }}>⌘K</kbd>
-          </button>
-
-          {/* Quick Action: Reader Settings - Desktop */}
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-reader'));
-            }}
-            className="desktop-only"
-            style={{
-              border: '1px solid #D1D5DB',
-              borderRadius: 6,
-              padding: '5px 8px',
-              backgroundColor: '#F8FAFC',
-              color: '#334155',
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-            title="Senior & Quran Reading Comfort Mode"
-          >
-            👓
-          </button>
-
-          {/* Quick Action: Onboarding Wizard - Desktop */}
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-onboarding'));
-            }}
-            className="desktop-only"
-            style={{
-              border: '1px solid #D1D5DB',
-              borderRadius: 6,
-              padding: '5px 8px',
-              backgroundColor: '#F8FAFC',
-              color: '#334155',
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-            title="Deeni Safar Setup Wizard"
-          >
-            🧭
-          </button>
 
           {/* Mobile Hamburger Menu Toggle */}
           <button
