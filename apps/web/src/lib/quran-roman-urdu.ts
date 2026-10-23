@@ -566,6 +566,7 @@ const URDU_WORD_MAP: Record<string, string> = {
 
 /**
  * Converts Urdu Kanz-ul-Iman translation into clean Roman Urdu
+ * Strict epistemic guard: Never returns partial/mixed-script corruptions.
  */
 export function convertUrduToRomanUrdu(urduText: string): string {
   if (!urduText) return '';
@@ -578,7 +579,13 @@ export function convertUrduToRomanUrdu(urduText: string): string {
     }
     return cleanWord;
   });
-  return converted.join(' ') + '.';
+  const res = converted.join(' ') + '.';
+  // If the result still contains Urdu script, the conversion is incomplete/broken.
+  // Return empty string to prevent displaying garbled mixed script.
+  if (/[\u0600-\u06FF]/.test(res)) {
+    return '';
+  }
+  return res;
 }
 
 /**
@@ -594,7 +601,10 @@ export function getAyahRomanTransliteration(
     return VERIFIED_ROMAN_QURAN[key].transliteration;
   }
   if (fallbackArabic) {
-    return transliterateArabicToRoman(fallbackArabic);
+    const roman = transliterateArabicToRoman(fallbackArabic);
+    // If it still has Arabic characters, reject
+    if (/[\u0600-\u06FF]/.test(roman)) return '';
+    return roman;
   }
   return '';
 }

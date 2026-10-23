@@ -28,7 +28,7 @@ export default function QuranWisdomPage() {
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('ALL');
   const [revelationFilter, setRevelationFilter] = useState<'ALL' | 'MECCAN' | 'MEDINAN'>('ALL');
   const [fontSize, setFontSize] = useState<number>(24);
-  const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(true);
+  const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(false);
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
 
   // Reader & Wisdom Modal State

@@ -675,17 +675,26 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                   </span>
                 </div>
 
-                {/* Roman Transliteration (if enabled) */}
-                {showRomanUrdu && (
-                  <div style={{ marginBottom: 20, textAlign: 'center', padding: '10px 16px', backgroundColor: '#F8FAFC', borderRadius: 10 }}>
-                    <div style={{ fontSize: 13, color: '#475569', fontStyle: 'italic', marginBottom: 4 }}>
-                      {getAyahRomanTransliteration(selectedSurahNumber, currentAyah.ayahNumber)}
+                {/* Roman Transliteration & Tarjuma (if enabled and authentic) */}
+                {showRomanUrdu && (() => {
+                  const translit = getAyahRomanTransliteration(selectedSurahNumber, currentAyah.ayahNumber);
+                  const romanTarjuma = getAyahRomanUrduTarjuma(selectedSurahNumber, currentAyah.ayahNumber);
+                  if (!translit && !romanTarjuma) return null;
+                  return (
+                    <div style={{ marginBottom: 20, textAlign: 'center', padding: '10px 16px', backgroundColor: '#F8FAFC', borderRadius: 10 }}>
+                      {translit && (
+                        <div style={{ fontSize: 13, color: '#475569', fontStyle: 'italic', marginBottom: 4 }}>
+                          {translit}
+                        </div>
+                      )}
+                      {romanTarjuma && (
+                        <div style={{ fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
+                          {romanTarjuma}
+                        </div>
+                      )}
                     </div>
-                    <div style={{ fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
-                      {getAyahRomanUrduTarjuma(selectedSurahNumber, currentAyah.ayahNumber, currentAyah.textUrdu)}
-                    </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 {/* Urdu Translation: Kanz-ul-Iman */}
                 <div style={{ marginBottom: 24, textAlign: 'center', backgroundColor: '#FDFBF7', padding: '20px 24px', borderRadius: 12, border: '1px solid #FEF3C7' }}>
@@ -1065,32 +1074,41 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                   </div>
                 </div>
 
-                {/* Roman Urdu Transliteration & Tarjuma (when enabled) */}
-                {showRomanUrdu && (
-                  <div style={{ margin: '10px 0 10px', padding: '10px 14px', borderRadius: 10, backgroundColor: '#F0F9FF', border: '1px solid #BAE6FD' }}>
-                    {/* Transliteration */}
-                    <div style={{ marginBottom: 6 }}>
-                      <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <span>🔤</span>
-                        <span>Roman Transliteration (تلفظ و تجوید):</span>
-                      </div>
-                      <div style={{ fontSize: Math.max(14, fontSize - 8), fontWeight: 600, color: '#0C4A6E', lineHeight: 1.6 }}>
-                        {getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber, verse.textArabic)}
-                      </div>
-                    </div>
+                {/* Roman Urdu Transliteration & Tarjuma (when enabled and authentic) */}
+                {showRomanUrdu && (() => {
+                  const translit = getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber);
+                  const romanTarjuma = getAyahRomanUrduTarjuma(selectedSurahNumber, verse.ayahNumber);
+                  if (!translit && !romanTarjuma) return null;
+                  return (
+                    <div style={{ margin: '10px 0 10px', padding: '10px 14px', borderRadius: 10, backgroundColor: '#F0F9FF', border: '1px solid #BAE6FD' }}>
+                      {/* Transliteration */}
+                      {translit && (
+                        <div style={{ marginBottom: 6 }}>
+                          <div style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                            <span>🔤</span>
+                            <span>Roman Transliteration (تلفظ و تجوید):</span>
+                          </div>
+                          <div style={{ fontSize: Math.max(14, fontSize - 8), fontWeight: 600, color: '#0C4A6E', lineHeight: 1.6 }}>
+                            {translit}
+                          </div>
+                        </div>
+                      )}
 
-                    {/* Roman Urdu Tarjuma */}
-                    <div>
-                      <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <span>📖</span>
-                        <span>Kanz-ul-Iman (Roman Urdu Tarjuma):</span>
-                      </div>
-                      <div style={{ fontSize: Math.max(13, fontSize - 9), color: '#064E3B', fontWeight: 600, lineHeight: 1.6 }}>
-                        {getAyahRomanUrduTarjuma(selectedSurahNumber, verse.ayahNumber, verse.textUrdu)}
-                      </div>
+                      {/* Roman Urdu Tarjuma */}
+                      {romanTarjuma && (
+                        <div>
+                          <div style={{ fontSize: 10, fontWeight: 800, color: '#047857', textTransform: 'uppercase', marginBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                            <span>📖</span>
+                            <span>Kanz-ul-Iman (Roman Urdu Tarjuma):</span>
+                          </div>
+                          <div style={{ fontSize: Math.max(13, fontSize - 9), color: '#064E3B', fontWeight: 600, lineHeight: 1.6 }}>
+                            {romanTarjuma}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 {/* English Translation */}
                 {verse.textEnglish && (
