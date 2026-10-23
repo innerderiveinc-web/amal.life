@@ -212,11 +212,22 @@ export class AmalApiClient {
     // 4. Privacy Export (Local Device Only)
     if (path === '/privacy/export' && method === 'GET') {
       const exportBlob = {
+        version: '1.0.0',
         exportedAt: new Date().toISOString(),
         mode: 'LOCAL_BROWSER_SOVEREIGN_STORAGE',
         goals: JSON.parse(localStorage.getItem('amal_goals') || '[]'),
         journeys: JSON.parse(localStorage.getItem('amal_journeys') || '[]'),
         reflections: JSON.parse(localStorage.getItem('amal_reflections') || '[]'),
+        bookmarks: JSON.parse(localStorage.getItem('amal_saved_bookmarks') || '[]'),
+        quranWisdomBookmarks: JSON.parse(localStorage.getItem('amal_quran_wisdom_bookmarks') || '[]'),
+        location: JSON.parse(localStorage.getItem('amal_user_location') || '{}'),
+        madhhab: localStorage.getItem('amal_user_madhhab') || 'HANAFI',
+        method: localStorage.getItem('amal_user_method') || 'KARACHI',
+        prayerOffsets: JSON.parse(localStorage.getItem('amal_user_prayer_offsets') || '{}'),
+        hijriOffset: Number(localStorage.getItem('amal_user_hijri_offset') || '0'),
+        azaanSettings: JSON.parse(localStorage.getItem('amal_azaan_settings') || '{}'),
+        focusMode: localStorage.getItem('amal_focus_mode') !== 'false',
+        appLanguage: localStorage.getItem('amal_app_language') || 'en',
       };
       return { success: true, isLocalOnly: true, data: exportBlob as T };
     }
@@ -331,6 +342,70 @@ export class AmalApiClient {
 
   public static async exportData() {
     return this.request('/privacy/export', 'GET');
+  }
+
+  public static async restoreData(backupData: any): Promise<ApiResponse<{ restoredCount: number }>> {
+    if (typeof window === 'undefined') {
+      return { success: false, error: { code: 'OFFLINE', message: 'Window not available' } };
+    }
+    try {
+      if (!backupData || typeof backupData !== 'object') {
+        return { success: false, error: { code: 'INVALID_BACKUP', message: 'Invalid backup file structure' } };
+      }
+      let count = 0;
+      if (Array.isArray(backupData.goals)) {
+        localStorage.setItem('amal_goals', JSON.stringify(backupData.goals));
+        count += backupData.goals.length;
+      }
+      if (Array.isArray(backupData.journeys)) {
+        localStorage.setItem('amal_journeys', JSON.stringify(backupData.journeys));
+        count += backupData.journeys.length;
+      }
+      if (Array.isArray(backupData.reflections)) {
+        localStorage.setItem('amal_reflections', JSON.stringify(backupData.reflections));
+        count += backupData.reflections.length;
+      }
+      if (Array.isArray(backupData.bookmarks)) {
+        localStorage.setItem('amal_saved_bookmarks', JSON.stringify(backupData.bookmarks));
+        count += backupData.bookmarks.length;
+      }
+      if (Array.isArray(backupData.quranWisdomBookmarks)) {
+        localStorage.setItem('amal_quran_wisdom_bookmarks', JSON.stringify(backupData.quranWisdomBookmarks));
+        count += backupData.quranWisdomBookmarks.length;
+      }
+      if (backupData.location && typeof backupData.location === 'object') {
+        localStorage.setItem('amal_user_location', JSON.stringify(backupData.location));
+      }
+      if (backupData.madhhab) {
+        localStorage.setItem('amal_user_madhhab', backupData.madhhab);
+      }
+      if (backupData.method) {
+        localStorage.setItem('amal_user_method', backupData.method);
+      }
+      if (backupData.prayerOffsets) {
+        localStorage.setItem('amal_user_prayer_offsets', JSON.stringify(backupData.prayerOffsets));
+      }
+      if (backupData.hijriOffset !== undefined) {
+        localStorage.setItem('amal_user_hijri_offset', String(backupData.hijriOffset));
+      }
+      if (backupData.azaanSettings) {
+        localStorage.setItem('amal_azaan_settings', JSON.stringify(backupData.azaanSettings));
+      }
+      if (backupData.focusMode !== undefined) {
+        localStorage.setItem('amal_focus_mode', backupData.focusMode ? 'true' : 'false');
+      }
+      if (backupData.appLanguage) {
+        localStorage.setItem('amal_app_language', backupData.appLanguage);
+      }
+
+      window.dispatchEvent(new CustomEvent('amal_prayer_settings_changed'));
+      window.dispatchEvent(new CustomEvent('amal_bookmarks_updated'));
+      window.dispatchEvent(new CustomEvent('amal_data_restored'));
+
+      return { success: true, data: { restoredCount: count } };
+    } catch (e: any) {
+      return { success: false, error: { code: 'RESTORE_FAILED', message: e.message || 'Restoration failed' } };
+    }
   }
 
   public static async deleteAccount() {

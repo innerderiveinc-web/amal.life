@@ -750,6 +750,49 @@ export default function QuranWisdomPage() {
           </div>
         </header>
 
+        {/* SCHOLARLY CORPUS TRANSPARENCY NOTICE */}
+        <div
+          style={{
+            backgroundColor: '#064E3B',
+            borderRadius: 14,
+            padding: '14px 20px',
+            marginBottom: 20,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 12,
+            border: '1px solid #10B981',
+            color: '#F0FDF4',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 22 }}>📜</span>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 13, fontWeight: 800, color: '#A7F3D0' }}>
+                  Juz &apos;Amma &amp; Essential Surahs (37 Chapters) Complete Exegesis Edition
+                </span>
+                <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: '#059669', color: '#FFF', padding: '2px 8px', borderRadius: 10 }}>
+                  37 FULL EXEGESIS SURAHS
+                </span>
+                <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: 'rgba(255,255,255,0.15)', color: '#D1FAE5', padding: '2px 8px', borderRadius: 10 }}>
+                  114 SURAHS COMPLETE HUMAN AUDIO
+                </span>
+              </div>
+              <p style={{ margin: '4px 0 0', fontSize: 12, color: '#D1D5DB', lineHeight: 1.5 }}>
+                All 114 Surahs feature certified human recitation &amp; Kanz-ul-Iman translation audio. Surahs 1, 2, 36, 55, 56, 67, and 78–114 currently include comprehensive verse-by-verse Khaza&apos;in-ul-Irfan &amp; Bahar-e-Shariat cross-references; the remaining chapters are in active scholarly digitization.
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 700 }}>
+              جزء عم و سورتیں: مکمل تفسیر
+            </span>
+          </div>
+        </div>
+
         {/* BANNER TO DEDICATED QURAN WISDOM CARDS PAGE */}
         <div
           style={{

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
@@ -190,6 +190,29 @@ export default function SettingsPage() {
     a.click();
     URL.revokeObjectURL(url);
     showAmalToast('Archive downloaded to device!', 'success');
+  };
+
+  // Restore Data Archive
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleRestoreFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      showAmalToast('Reading sovereign backup file...', 'info');
+      const text = await file.text();
+      const backupData = JSON.parse(text);
+      const res = await AmalApiClient.restoreData(backupData);
+      if (res.success) {
+        showAmalToast(`Successfully restored ${res.data?.restoredCount ?? 0} items! Reloading...`, 'success');
+        setTimeout(() => window.location.reload(), 1200);
+      } else {
+        showAmalToast(res.error?.message || 'Restore failed', 'warning');
+      }
+    } catch (err: any) {
+      showAmalToast('Invalid JSON backup file: ' + err.message, 'warning');
+    }
   };
 
   // Reset All Local Data
@@ -982,6 +1005,30 @@ export default function SettingsPage() {
                       }}
                     >
                       📦 Export Sovereign Data (JSON)
+                    </button>
+
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".json"
+                      onChange={handleRestoreFile}
+                      style={{ display: 'none' }}
+                    />
+
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      style={{
+                        padding: '10px 18px',
+                        backgroundColor: '#ECFDF5',
+                        color: '#065F46',
+                        border: '1px solid #A7F3D0',
+                        borderRadius: 8,
+                        fontSize: 14,
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      📥 Restore Sovereign Data (JSON)
                     </button>
 
                     <button

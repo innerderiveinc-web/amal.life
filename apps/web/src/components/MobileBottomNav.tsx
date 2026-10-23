@@ -38,6 +38,7 @@ export const MobileBottomNav: React.FC = () => {
           <Link
             key={item.href}
             href={item.href}
+            aria-label={`Navigate to ${item.label} (${item.labelUrdu})`}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -62,6 +63,7 @@ export const MobileBottomNav: React.FC = () => {
         onClick={() => {
           if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
         }}
+        aria-label="Open Universal Evidence Search (Cmd+K)"
         style={{
           display: 'flex',
           flexDirection: 'column',

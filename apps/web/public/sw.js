@@ -1,11 +1,15 @@
-// AMAL OS — Service Worker (Offline Resilience & PWA)
-const CACHE_NAME = 'amal-os-cache-v1';
+// AMAL OS — Service Worker (Offline Resilience, Audio Caching & PWA)
+const CACHE_NAME = 'amal-os-cache-v2';
+const AUDIO_CACHE_NAME = 'amal-os-audio-v1';
 const PRECACHE_ASSETS = [
   '/',
   '/prayer',
+  '/quran',
   '/calendar',
   '/library',
   '/tasbih',
+  '/settings',
+  '/about',
   '/manifest.json',
   '/favicon.ico',
   '/icon-192.png',
@@ -25,7 +29,9 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys
+          .filter((key) => key !== CACHE_NAME && key !== AUDIO_CACHE_NAME)
+          .map((key) => caches.delete(key))
       );
     })
   );
@@ -37,7 +43,34 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Network-first for dynamic navigation, falling back to cache
+  // 1. Audio Cache Strategy (Cache-First with Background Fetch for Offline Repeat Playback)
+  if (
+    url.pathname.endsWith('.mp3') ||
+    url.hostname.includes('everyayah.com') ||
+    url.hostname.includes('dawateislami.net') ||
+    url.hostname.includes('islamic.network')
+  ) {
+    event.respondWith(
+      caches.open(AUDIO_CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          return fetch(event.request)
+            .then((networkResponse) => {
+              if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
+                cache.put(event.request, networkResponse.clone());
+              }
+              return networkResponse;
+            })
+            .catch(() => cachedResponse);
+        });
+      })
+    );
+    return;
+  }
+
+  // 2. Navigation Requests (Network-first falling back to cache)
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -53,7 +86,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Stale-while-revalidate for static assets
+  // 3. Static Assets (Stale-while-revalidate)
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)

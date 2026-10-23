@@ -68,11 +68,28 @@ export const Navigation: React.FC = () => {
     }
   }, [now, prayerConfigKey]);
 
+  const [isOnline, setIsOnline] = useState(true);
+
   useEffect(() => {
     setNow(new Date());
     const interval = setInterval(() => setNow(new Date()), 60000);
     const handleConfigChange = () => setPrayerConfigKey((k) => k + 1);
     window.addEventListener('amal_prayer_settings_changed', handleConfigChange);
+
+    if (typeof window !== 'undefined') {
+      setIsOnline(navigator.onLine);
+      const handleOnline = () => setIsOnline(true);
+      const handleOffline = () => setIsOnline(false);
+      window.addEventListener('online', handleOnline);
+      window.addEventListener('offline', handleOffline);
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('amal_prayer_settings_changed', handleConfigChange);
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
+      };
+    }
+
     return () => {
       clearInterval(interval);
       window.removeEventListener('amal_prayer_settings_changed', handleConfigChange);
@@ -148,6 +165,32 @@ export const Navigation: React.FC = () => {
       zIndex: 1000,
       fontFamily: 'system-ui, -apple-system, sans-serif',
     }}>
+      {/* 0. OFFLINE RESILIENCE BANNER */}
+      {!isOnline && (
+        <div style={{
+          backgroundColor: '#78350F',
+          color: '#FEF3C7',
+          padding: '6px 20px',
+          fontSize: 11,
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 10,
+          borderBottom: '1px solid rgba(251, 191, 36, 0.4)',
+          letterSpacing: 0.2,
+          flexWrap: 'wrap',
+        }}>
+          <span>🌿</span>
+          <span>
+            <strong>Offline Mode Active (آف لائن موڈ متحرک ہے):</strong> On-device prayer math, Qibla azimuth &amp; local vault functioning 100% offline.
+          </span>
+          <span style={{ fontSize: 10, opacity: 0.85, backgroundColor: 'rgba(0,0,0,0.2)', padding: '2px 8px', borderRadius: 10 }}>
+            Streaming audio requires internet or local cache
+          </span>
+        </div>
+      )}
+
       {/* 1. TOP UTILITY & LIVE CONTEXT RIBBON */}
       <div style={{
         backgroundColor: '#061710',
@@ -172,7 +215,7 @@ export const Navigation: React.FC = () => {
 
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
 
-          <Link href="/prayer" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, color: '#A7F3D0' }}>
+          <Link href="/prayer" aria-label="View Detailed Prayer Times and Qibla Compass" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6, color: '#A7F3D0' }}>
             <span>🕌</span>
             <span suppressHydrationWarning>
               {isMounted && nextPrayer ? (
@@ -203,6 +246,7 @@ export const Navigation: React.FC = () => {
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-toggle-tahajjud'));
             }}
+            aria-label="Toggle Tahajjud & Night Serenity OLED Dark Mode"
             style={{
               border: '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: 14,
@@ -228,6 +272,7 @@ export const Navigation: React.FC = () => {
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-bookmarks'));
             }}
+            aria-label="Open Saved Bookmarks & Masnoon Duas Drawer (Cmd+B)"
             style={{
               border: '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: 14,
@@ -253,6 +298,7 @@ export const Navigation: React.FC = () => {
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-auth'));
             }}
+            aria-label={user && !user.isGuest ? `Signed in as ${user.name}` : "Sign In or Create Sovereign Account"}
             style={{
               border: user && !user.isGuest ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: 14,
@@ -280,6 +326,7 @@ export const Navigation: React.FC = () => {
           {/* Settings */}
           <Link
             href="/settings"
+            aria-label="AMAL OS System Settings & Control Center"
             style={{
               textDecoration: 'none',
               border: router.pathname === '/settings' ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
@@ -306,6 +353,7 @@ export const Navigation: React.FC = () => {
               <button
                 key={l}
                 onClick={() => switchLanguage(l)}
+                aria-label={`Switch interface language to ${l === 'en' ? 'English' : l === 'ur' ? 'Urdu' : 'Arabic'}`}
                 style={{
                   border: 'none',
                   borderRadius: 4,
@@ -677,6 +725,7 @@ export const Navigation: React.FC = () => {
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
             }}
+            aria-label="Open Universal Instant Search (Cmd+K)"
             className="desktop-only"
             style={{
               display: 'flex',
@@ -703,6 +752,7 @@ export const Navigation: React.FC = () => {
           <div style={{ position: 'relative' }}>
             <button
               onClick={() => setIsAppsMenuOpen(!isAppsMenuOpen)}
+              aria-label="Open AMAL All Apps and Hubs Menu"
               style={{
                 display: 'flex',
                 alignItems: 'center',
