@@ -9,6 +9,7 @@ import { AmalTheme } from '@amal/ui';
 import { PropheticTimeline } from '../components/PropheticTimeline';
 import { ShamailCard } from '../components/ShamailCard';
 import { ReportComparisonView } from '../components/ReportComparisonView';
+import { UniversalContentShareModal, UniversalCardPayload } from '../../../components/cards/UniversalContentShareModal';
 
 interface SirahExplorerRouteProps {
   events: SirahEventRecord[];
@@ -23,6 +24,7 @@ export const SirahExplorerRoute: React.FC<SirahExplorerRouteProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'TIMELINE' | 'SHAMAIL' | 'VARIANTS'>('TIMELINE');
   const [selectedPeriod, setSelectedPeriod] = useState<PropheticLifePeriod | undefined>(undefined);
+  const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
 
   const periods: PropheticLifePeriod[] = [
     'PRE_PROPHETIC_EARLY_LIFE',
@@ -162,13 +164,37 @@ export const SirahExplorerRoute: React.FC<SirahExplorerRouteProps> = ({
       {activeTab === 'SHAMAIL' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16 }}>
           {shamailReports.map((report) => (
-            <ShamailCard key={report.report_id} report={report} />
+            <ShamailCard
+              key={report.report_id}
+              report={report}
+              onShareCard={(rep) => {
+                setSharePayload({
+                  category: 'SHAMAIL',
+                  titleUrdu: 'شمائلِ مصطفیٰ ﷺ',
+                  badgeContext: `باب: ${rep.category.replace(/_/g, ' ')}`,
+                  arabicText: rep.arabic_matn,
+                  primaryTextUrdu: rep.urdu_translation || rep.english_translation,
+                  secondaryTextEnglish: rep.urdu_translation ? rep.english_translation : undefined,
+                  sourceCitation: `${rep.source_hadith_ref || rep.primary_source_work} (راوی: ${rep.primary_narrator})`,
+                  tafseerInsightUrdu: `✨ سیرت و اداب: ${rep.practical_adab_lesson}`,
+                });
+              }}
+            />
           ))}
         </div>
       )}
 
       {activeTab === 'VARIANTS' && (
         <ReportComparisonView variants={variants} />
+      )}
+
+      {/* Sacred Universal Share Modal */}
+      {sharePayload && (
+        <UniversalContentShareModal
+          isOpen={!!sharePayload}
+          onClose={() => setSharePayload(null)}
+          payload={sharePayload}
+        />
       )}
     </div>
   );

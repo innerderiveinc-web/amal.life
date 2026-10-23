@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { SUNNAH_ADHKAR_LIST, DhikrItem } from '../lib/adhkar-data';
 import { showAmalToast } from '../components/Toast';
+import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
 
 export default function AdhkarPage() {
   // Determine default mode based on current local time
@@ -21,6 +22,7 @@ export default function AdhkarPage() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [showTransliteration, setShowTransliteration] = useState(false);
   const [showEnglish, setShowEnglish] = useState(true);
+  const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
 
   // Date key for local daily persistence: YYYY-MM-DD
   const todayKey = useMemo(() => {
@@ -459,6 +461,43 @@ export default function AdhkarPage() {
                         صفر ↺
                       </button>
                     )}
+
+                    {/* Share Card Generator Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSharePayload({
+                          category: 'DUA',
+                          categoryLabelUrdu: activeTab === 'MORNING' ? 'اذکارِ صباح' : 'اذکارِ مساء',
+                          categoryLabelEnglish: activeTab === 'MORNING' ? 'Morning Sunnah Dhikr' : 'Evening Sunnah Dhikr',
+                          titleUrdu: item.titleUrdu,
+                          titleEnglish: item.titleEnglish,
+                          arabicText: item.arabicText,
+                          primaryTextUrdu: item.translationUrdu,
+                          secondaryTextEnglish: item.translationEnglish,
+                          sourceCitation: item.sourceHadith,
+                          badgeContext: `${item.targetCount} مرتبہ · فضیلت و برکت`,
+                        });
+                      }}
+                      title="اس دعا کا خوبصورت کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا"
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 6,
+                        border: '1px solid #A7F3D0',
+                        backgroundColor: '#ECFDF5',
+                        color: '#064E3B',
+                        fontSize: 11,
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                      }}
+                    >
+                      <span>📸</span>
+                      <span>کارڈ</span>
+                    </button>
                   </div>
                 </div>
 
@@ -545,6 +584,15 @@ export default function AdhkarPage() {
           })}
         </div>
       </main>
+
+      {/* Sacred Universal Share Modal */}
+      {sharePayload && (
+        <UniversalContentShareModal
+          isOpen={!!sharePayload}
+          onClose={() => setSharePayload(null)}
+          payload={sharePayload}
+        />
+      )}
     </div>
   );
 }

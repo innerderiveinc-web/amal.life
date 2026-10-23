@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { showAmalToast } from './Toast';
+import { UniversalContentShareModal } from './cards/UniversalContentShareModal';
 
 export interface AyahWisdomModalProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isCachedOffline, setIsCachedOffline] = useState<boolean>(false);
   const [isCaching, setIsCaching] = useState<boolean>(false);
+  const [isShareCardOpen, setIsShareCardOpen] = useState<boolean>(false);
   const modalAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const wisdomCard = getAyahWisdomCard(surahNumber, ayahNumber);
@@ -199,20 +201,44 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             </h3>
           </div>
 
-          <button
-            onClick={onClose}
-            style={{
-              border: 'none',
-              backgroundColor: 'transparent',
-              fontSize: 20,
-              cursor: 'pointer',
-              color: '#64748B',
-              padding: 4,
-              lineHeight: 1,
-            }}
-          >
-            ✕
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <button
+              type="button"
+              onClick={() => setIsShareCardOpen(true)}
+              style={{
+                padding: '5px 12px',
+                borderRadius: 8,
+                border: '1px solid #10B981',
+                backgroundColor: '#ECFDF5',
+                color: '#065F46',
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+              }}
+              title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+            >
+              <span>📸</span>
+              <span>کارڈ بنائیں</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              style={{
+                border: 'none',
+                backgroundColor: 'transparent',
+                fontSize: 20,
+                cursor: 'pointer',
+                color: '#64748B',
+                padding: 4,
+                lineHeight: 1,
+              }}
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         {/* Modal Body */}
@@ -872,6 +898,26 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
           )}
         </div>
       </div>
+
+      {/* Sacred Universal Share Modal */}
+      {isShareCardOpen && (
+        <UniversalContentShareModal
+          isOpen={isShareCardOpen}
+          onClose={() => setIsShareCardOpen(false)}
+          payload={{
+            category: 'QURAN',
+            titleUrdu: surahNameUrdu ? `سورۃ ${surahNameUrdu}` : `سورۃ ${surahNumber}`,
+            badgeContext: `آیت مبارکہ ${ayahNumber}`,
+            arabicText: wisdomCard?.textArabic || fallbackArabic || '',
+            primaryTextUrdu: wisdomCard?.tarjumaKanzulIman || fallbackUrdu || '',
+            secondaryTextEnglish: wisdomCard?.tarjumaEnglish || fallbackEnglish,
+            sourceCitation: `سورۃ ${surahNameUrdu || surahNumber} (${surahNumber}:${ayahNumber}) · کنز الایمان فی ترجمۃ القرآن`,
+            tafseerInsightUrdu: wisdomCard?.tafseerKhazainUlIrfan?.excerptUrdu
+              ? `تفسیر خزائن العرفان: ${wisdomCard.tafseerKhazainUlIrfan.excerptUrdu}`
+              : undefined,
+          }}
+        />
+      )}
     </div>
   );
 };

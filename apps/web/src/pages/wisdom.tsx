@@ -13,6 +13,7 @@ import {
 } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { showAmalToast } from '../components/Toast';
+import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
 
 export default function QuranWisdomDedicatedPage() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function QuranWisdomDedicatedPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
   const [activeModalCard, setActiveModalCard] = useState<QuranAyahWisdomCard | null>(null);
+  const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
 
   // Audio Playback State
   const [activeAudioKey, setActiveAudioKey] = useState<string | null>(null);
@@ -443,14 +445,49 @@ export default function QuranWisdomDedicatedPage() {
                       </span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleToggleBookmark(cardKey)}
-                      style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 18 }}
-                      title={isBookmarked ? 'محفوظ فہرست سے ہٹائیں' : 'پسندیدہ کارڈ محفوظ کریں'}
-                    >
-                      {isBookmarked ? '⭐' : '☆'}
-                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSharePayload({
+                            category: 'QURAN',
+                            titleUrdu: `سورۃ ${card.surahNameUrdu}`,
+                            badgeContext: `آیت ${card.ayahNumber} (${card.revelationType === 'MECCAN' ? 'مکی' : 'مدنی'})`,
+                            arabicText: card.textArabic,
+                            primaryTextUrdu: card.tarjumaKanzulIman,
+                            secondaryTextEnglish: card.tarjumaEnglish,
+                            sourceCitation: `سورۃ ${card.surahNameUrdu} (${card.surahNumber}:${card.ayahNumber}) · کنز الایمان`,
+                            tafseerInsightUrdu: card.tafseerKhazainUlIrfan ? `تفسیر خزائن العرفان: ${card.tafseerKhazainUlIrfan.excerptUrdu}` : undefined,
+                          });
+                        }}
+                        style={{
+                          padding: '3px 8px',
+                          borderRadius: 6,
+                          border: '1px solid #CBD5E1',
+                          backgroundColor: '#F8FAFC',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: '#065F46',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                        title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+                      >
+                        <span>📸</span>
+                        <span>کارڈ</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleToggleBookmark(cardKey)}
+                        style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 18 }}
+                        title={isBookmarked ? 'محفوظ فہرست سے ہٹائیں' : 'پسندیدہ کارڈ محفوظ کریں'}
+                      >
+                        {isBookmarked ? '⭐' : '☆'}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Arabic Matn */}
@@ -620,6 +657,15 @@ export default function QuranWisdomDedicatedPage() {
           fallbackArabic={activeModalCard.textArabic}
           fallbackUrdu={activeModalCard.tarjumaKanzulIman}
           fallbackEnglish={activeModalCard.tarjumaEnglish}
+        />
+      )}
+
+      {/* Sacred Universal Share Modal */}
+      {sharePayload && (
+        <UniversalContentShareModal
+          isOpen={!!sharePayload}
+          onClose={() => setSharePayload(null)}
+          payload={sharePayload}
         />
       )}
     </div>

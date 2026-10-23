@@ -11,12 +11,14 @@ import { getBookChapters, getVerifiedSourceUrl, ClassicalBookWithChapters, Class
 import { getAyahWisdomCard, QuranAyahWisdomCard, getAyahAudioUrl } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { showAmalToast } from '../components/Toast';
+import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
 
 export default function LibraryPage() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [selectedDiscipline, setSelectedDiscipline] = useState('ALL');
   const [selectedWork, setSelectedWork] = useState<CanonicalEditionRecord | null>(MASTER_CANONICAL_CORPUS[0] || null);
+  const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
 
   // In-App Reader State
   const [isReaderModalOpen, setIsReaderModalOpen] = useState(false);
@@ -1037,28 +1039,62 @@ export default function LibraryPage() {
                           <span style={{ fontSize: 11, color: '#64748B', fontWeight: 600 }}>
                             {currentSurah.nameTransliterated} · {v.ayahNumber}
                           </span>
-                          <button
-                            onClick={() => {
-                              setActiveWisdomAyah({ surahNumber: currentSurah.surahNumber, ayahNumber: v.ayahNumber });
-                              setWisdomTab('KHAZAIN');
-                            }}
-                            style={{
-                              padding: '6px 14px',
-                              borderRadius: 8,
-                              backgroundColor: '#ECFDF5',
-                              color: '#047857',
-                              border: '1px solid #A7F3D0',
-                              fontSize: 12,
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 6,
-                            }}
-                          >
-                            <span>📖</span>
-                            <span>تدبر، حکمت و تفسیری سند (Wisdom Card)</span>
-                          </button>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSharePayload({
+                                  category: 'QURAN',
+                                  titleUrdu: currentSurah.nameUrdu,
+                                  badgeContext: `آیت مبارکہ ${v.ayahNumber}`,
+                                  arabicText: v.textArabic,
+                                  primaryTextUrdu: v.textUrdu,
+                                  secondaryTextEnglish: v.textEnglish,
+                                  sourceCitation: `${currentSurah.nameUrdu} (${currentSurah.surahNumber}:${v.ayahNumber}) · کنز الایمان`,
+                                });
+                              }}
+                              style={{
+                                padding: '6px 12px',
+                                borderRadius: 8,
+                                backgroundColor: '#F0FDF4',
+                                color: '#166534',
+                                border: '1px solid #86EFAC',
+                                fontSize: 12,
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 4,
+                              }}
+                              title="سوشل میڈیا کارڈ بنائیں"
+                            >
+                              <span>📸</span>
+                              <span>کارڈ</span>
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                setActiveWisdomAyah({ surahNumber: currentSurah.surahNumber, ayahNumber: v.ayahNumber });
+                                setWisdomTab('KHAZAIN');
+                              }}
+                              style={{
+                                padding: '6px 14px',
+                                borderRadius: 8,
+                                backgroundColor: '#ECFDF5',
+                                color: '#047857',
+                                border: '1px solid #A7F3D0',
+                                fontSize: 12,
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 6,
+                              }}
+                            >
+                              <span>📖</span>
+                              <span>تدبر، حکمت و تفسیری سند (Wisdom Card)</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -1137,6 +1173,48 @@ export default function LibraryPage() {
                               {currentChapter.chapterTitleEnglish}
                             </div>
                           </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              let cat: 'HADITH' | 'TASAWWUF' | 'FIQH' | 'DUA' = 'HADITH';
+                              if (selectedWork?.work_id.includes('DUA') || selectedWork?.work_id.includes('DEV')) cat = 'DUA';
+                              else if (selectedWork?.discipline === 'TAZKIYAH' || selectedWork?.discipline === 'SPIRITUAL_HERITAGE') cat = 'TASAWWUF';
+                              else if (selectedWork?.discipline?.includes('FIQH')) cat = 'FIQH';
+                              else if (selectedWork?.discipline === 'HADITH') cat = 'HADITH';
+
+                              const firstArabicLine = currentChapter.arabicMatn.split('\n')[0] || currentChapter.arabicMatn;
+                              const firstUrduLine = currentChapter.urduTranslation.split('\n')[0] || currentChapter.urduTranslation;
+
+                              setSharePayload({
+                                category: cat,
+                                titleUrdu: currentChapter.chapterTitleUrdu,
+                                badgeContext: selectedWork ? `${selectedWork.title_transliterated}` : undefined,
+                                arabicText: firstArabicLine.slice(0, 320),
+                                primaryTextUrdu: firstUrduLine.slice(0, 360),
+                                secondaryTextEnglish: currentChapter.englishSynopsis ? currentChapter.englishSynopsis.slice(0, 240) : undefined,
+                                sourceCitation: `${selectedWork?.title_arabic || ''} · ${currentChapter.chapterTitleUrdu} · مصدقہ علمی ماخذ`,
+                                tafseerInsightUrdu: currentChapter.scholarlyNotes ? currentChapter.scholarlyNotes.slice(0, 260) : undefined,
+                              });
+                            }}
+                            style={{
+                              padding: '6px 14px',
+                              borderRadius: 8,
+                              border: '1px solid #10B981',
+                              backgroundColor: '#065F46',
+                              color: '#FFFFFF',
+                              fontSize: 12,
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 6,
+                            }}
+                            title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+                          >
+                            <span>📸</span>
+                            <span>کارڈ بنائیں</span>
+                          </button>
                         </div>
 
                         {/* Arabic Matn Box */}
@@ -1347,6 +1425,15 @@ export default function LibraryPage() {
           fallbackArabic={loadedSurahsCache[activeWisdomAyah.surahNumber]?.verses?.find((v) => v.ayahNumber === activeWisdomAyah.ayahNumber)?.textArabic}
           fallbackUrdu={loadedSurahsCache[activeWisdomAyah.surahNumber]?.verses?.find((v) => v.ayahNumber === activeWisdomAyah.ayahNumber)?.textUrdu}
           fallbackEnglish={loadedSurahsCache[activeWisdomAyah.surahNumber]?.verses?.find((v) => v.ayahNumber === activeWisdomAyah.ayahNumber)?.textEnglish}
+        />
+      )}
+
+      {/* Sacred Universal Share Modal */}
+      {sharePayload && (
+        <UniversalContentShareModal
+          isOpen={!!sharePayload}
+          onClose={() => setSharePayload(null)}
+          payload={sharePayload}
         />
       )}
     </div>
