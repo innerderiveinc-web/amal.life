@@ -1,8 +1,8 @@
 export interface ApiErrorPayload {
   code: string;
   message: string;
-  request_id: string;
-  retryable: boolean;
+  request_id?: string;
+  retryable?: boolean;
   details?: unknown;
 }
 
