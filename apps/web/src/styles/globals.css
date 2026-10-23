@@ -1,9 +1,9 @@
 /* AMAL OS — Global "Sakinah" Stylesheet */
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-arabic: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
-  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-arabic: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Geeza Pro', 'Noto Sans Arabic', 'Segoe UI', serif;
+  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', 'Geeza Pro', 'Noto Sans Arabic', 'Arabic Typesetting', serif;
 
   --color-primary: #1B4332;
   --color-primary-light: #2D6A4F;
@@ -78,17 +78,23 @@ body {
   outline-offset: 2px;
 }
 
-/* 4. Typography Helpers */
+/* 4. Typography Helpers & Anti-FOUT Stabilization */
 .font-arabic {
   font-family: var(--font-arabic) !important;
   direction: rtl;
   line-height: 1.9 !important;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
 }
 
 .font-urdu {
   font-family: var(--font-urdu) !important;
   direction: rtl;
   line-height: 2.2 !important;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+  /* Prevent violent layout collapse if Nastaliq is fetching over slow mobile data */
+  min-height: 1.4em;
 }
 
 .font-sans {

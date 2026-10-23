@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { showAmalToast } from '../components/Toast';
+import { api } from '../lib/api';
 
 export interface AuthUser {
   id: string;
@@ -166,22 +167,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const exportSovereignData = () => {
     if (typeof window === 'undefined') return;
-    const exportBundle = {
-      profile: user,
-      bookmarks: localStorage.getItem('amal_saved_bookmarks') || '[]',
-      location: localStorage.getItem('amal_user_location') || '{}',
-      exportedAt: new Date().toISOString(),
-      standard: 'AMAL_OS_CANONICAL_SOVEREIGNTY_V1',
-    };
-
-    const blob = new Blob([JSON.stringify(exportBundle, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `amal-os-data-export-${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showAmalToast('Sovereign data export downloaded (.json)', 'success');
+    api.exportData();
+    showAmalToast('Comprehensive sovereign data backup downloaded (.json)', 'success');
   };
 
   return (

@@ -22,11 +22,17 @@ export interface ApiResponse<T = any> {
 export class AmalApiClient {
   private static token: string = '';
 
+  /**
+   * Set authentication token with strict character sanitization to defend against XSS poisoning.
+   * Note: In production cloud mode, the backend sets an HttpOnly SameSite=Strict session cookie,
+   * which takes priority over localStorage tokens.
+   */
   public static setAuthToken(token: string) {
-    this.token = token;
+    const sanitized = token ? token.trim().replace(/[^a-zA-Z0-9_\-\.]/g, '') : '';
+    this.token = sanitized;
     if (typeof window !== 'undefined') {
-      if (token) {
-        localStorage.setItem('amal_token', token);
+      if (sanitized) {
+        localStorage.setItem('amal_token', sanitized);
       } else {
         localStorage.removeItem('amal_token');
       }
@@ -36,7 +42,7 @@ export class AmalApiClient {
   public static getAuthToken(): string {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('amal_token');
-      if (stored) return stored;
+      if (stored) return stored.replace(/[^a-zA-Z0-9_\-\.]/g, '');
     }
     return this.token;
   }
@@ -77,6 +83,7 @@ export class AmalApiClient {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,
+        credentials: 'include', // Enables secure HttpOnly, SameSite=Strict cookie session exchange
         signal: controller.signal,
       });
 
@@ -412,3 +419,5 @@ export class AmalApiClient {
     return this.request('/privacy/delete-account', 'POST');
   }
 }
+
+export const api = AmalApiClient;
