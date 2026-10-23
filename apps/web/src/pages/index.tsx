@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Navigation } from '../components/Navigation';
-import { DailyMamoolBar } from '../components/DailyMamoolBar';
-import { DailyKnowledgeBroadcastCard } from '../components/DailyKnowledgeBroadcastCard';
+
+// Dynamically import real-time client clock & location dependent widgets to eliminate React hydration mismatch errors
+const DailyMamoolBar = dynamic(
+  () => import('../components/DailyMamoolBar').then((m) => m.DailyMamoolBar),
+  { ssr: false }
+);
+
+const DailyKnowledgeBroadcastCard = dynamic(
+  () => import('../components/DailyKnowledgeBroadcastCard').then((m) => m.DailyKnowledgeBroadcastCard),
+  { ssr: false }
+);
 import {
   signatureCapabilitiesEngine,
   CompiledAmalPlan,

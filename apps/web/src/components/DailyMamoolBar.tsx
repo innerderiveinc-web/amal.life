@@ -17,9 +17,11 @@ const PRAYER_NAMES_URDU: Record<string, string> = {
 export const DailyMamoolBar: React.FC = () => {
   const [mamool, setMamool] = useState<DailyMamool | null>(() => DailyMamoolEngine.getMamool());
   const [microAmalDone, setMicroAmalDone] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const { playTrack } = useAudioPlayer();
 
   useEffect(() => {
+    setIsMounted(true);
     const data = DailyMamoolEngine.getMamool();
     setMamool(data);
 
@@ -86,6 +88,7 @@ export const DailyMamoolBar: React.FC = () => {
 
   return (
     <section
+      suppressHydrationWarning
       style={{
         backgroundColor: '#FFFFFF',
         borderRadius: 18,
@@ -97,6 +100,7 @@ export const DailyMamoolBar: React.FC = () => {
     >
       {/* Top Banner: Time Slot & Countdown */}
       <div
+        suppressHydrationWarning
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -141,7 +145,7 @@ export const DailyMamoolBar: React.FC = () => {
                 Daily Routine
               </span>
             </div>
-            <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
+            <div suppressHydrationWarning style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
               {mamool.currentSlotNameUrdu} · {mamool.currentSlotNameEnglish}
             </div>
           </div>
@@ -149,6 +153,7 @@ export const DailyMamoolBar: React.FC = () => {
 
         {/* Countdown Badge */}
         <div
+          suppressHydrationWarning
           style={{
             backgroundColor: '#F0FDF4',
             border: '1px solid #BBF7D0',
@@ -164,7 +169,7 @@ export const DailyMamoolBar: React.FC = () => {
         >
           <span style={{ fontSize: 14 }}>⏳</span>
           <span dir="rtl" suppressHydrationWarning style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
-            <bdi style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
+            <bdi suppressHydrationWarning style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
           </span>
           <span
             suppressHydrationWarning
@@ -185,6 +190,7 @@ export const DailyMamoolBar: React.FC = () => {
       {/* 5-Prayer Full Auqat Strip */}
       {fullPrayerTimes && (
         <div
+          suppressHydrationWarning
           style={{
             marginTop: 14,
             padding: '10px 14px',
@@ -203,7 +209,7 @@ export const DailyMamoolBar: React.FC = () => {
             <span>پانچوں نمازوں کے اوقات (Daily Auqat-e-Namaz):</span>
           </div>
 
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+          <div suppressHydrationWarning style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
             {[
               { key: 'fajr', label: 'فجر (Fajr)', time: fullPrayerTimes.fajr },
               { key: 'sunrise', label: 'طلوع (Sunrise)', time: fullPrayerTimes.sunrise },
@@ -216,6 +222,7 @@ export const DailyMamoolBar: React.FC = () => {
               return (
                 <div
                   key={p.key}
+                  suppressHydrationWarning
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -230,10 +237,10 @@ export const DailyMamoolBar: React.FC = () => {
                     boxShadow: isNext ? '0 2px 6px rgba(16, 185, 129, 0.15)' : 'none',
                   }}
                 >
-                  <span>{p.label}</span>
-                  <span style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
+                  <span suppressHydrationWarning>{p.label}</span>
+                  <span suppressHydrationWarning style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
                   {isNext && (
-                    <span style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
+                    <span suppressHydrationWarning style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
                       اگلی
                     </span>
                   )}

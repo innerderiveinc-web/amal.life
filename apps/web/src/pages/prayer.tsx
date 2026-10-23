@@ -769,12 +769,13 @@ export default function PrayerTimesPage() {
               </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div suppressHydrationWarning style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {prayerList.map((p) => {
                 const isNext = nextPrayer?.key === p.key;
                 return (
                   <div
                     key={p.key}
+                    suppressHydrationWarning
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -792,7 +793,7 @@ export default function PrayerTimesPage() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                           <span style={{ fontWeight: 700, color: '#111827', fontSize: 15 }}>{p.name}</span>
                           {isNext && (
-                            <span style={{
+                            <span suppressHydrationWarning style={{
                               fontSize: 10,
                               fontWeight: 800,
                               backgroundColor: '#059669',
@@ -810,7 +811,7 @@ export default function PrayerTimesPage() {
                         </div>
                       </div>
                     </div>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: isNext ? '#065F46' : '#1B4332' }}>
+                    <div suppressHydrationWarning style={{ fontSize: 18, fontWeight: 800, color: isNext ? '#065F46' : '#1B4332' }}>
                       {p.time}
                     </div>
                   </div>
@@ -819,14 +820,14 @@ export default function PrayerTimesPage() {
             </div>
 
             {/* Night Prayers */}
-            <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #E5E7EB', display: 'flex', justifyContent: 'space-between' }}>
+            <div suppressHydrationWarning style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #E5E7EB', display: 'flex', justifyContent: 'space-between' }}>
               <div>
                 <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>Islamic Midnight</span>
-                <span style={{ fontSize: 14, fontWeight: 700, color: '#374151' }}>{prayerTimes.midnight}</span>
+                <span suppressHydrationWarning style={{ fontSize: 14, fontWeight: 700, color: '#374151' }}>{prayerTimes.midnight}</span>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>Tahajjud (Last 1/3)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, color: '#15803D' }}>{prayerTimes.qiyamThird}</span>
+                <span suppressHydrationWarning style={{ fontSize: 14, fontWeight: 700, color: '#15803D' }}>{prayerTimes.qiyamThird}</span>
               </div>
             </div>
 
