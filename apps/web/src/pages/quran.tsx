@@ -261,8 +261,31 @@ export default function QuranWisdomPage() {
   const currentSurahMeta = ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || ALL_114_SURAHS[0]!;
 
   // Reader View Mode: Continuous Scroll vs Single Ayah Focus Mode
-  const [viewMode, setViewMode] = useState<'SCROLL' | 'FOCUS'>('SCROLL');
+  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
   const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
+
+  // Restore saved view mode preference or URL query param (?mode=scroll or ?mode=focus)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (router.query.mode === 'scroll') {
+        setViewModeState('SCROLL');
+      } else if (router.query.mode === 'focus') {
+        setViewModeState('FOCUS');
+      } else {
+        const savedMode = localStorage.getItem('amal_quran_view_mode') as 'SCROLL' | 'FOCUS';
+        if (savedMode === 'FOCUS' || savedMode === 'SCROLL') {
+          setViewModeState(savedMode);
+        }
+      }
+    }
+  }, [router.query.mode]);
+
+  const setViewMode = (mode: 'SCROLL' | 'FOCUS') => {
+    setViewModeState(mode);
+    try {
+      localStorage.setItem('amal_quran_view_mode', mode);
+    } catch {}
+  };
 
   // Sync focused Ayah with audio playback so Focus Mode auto-advances seamlessly
   useEffect(() => {
@@ -830,6 +853,53 @@ export default function QuranWisdomPage() {
                   <span>📖</span>
                   <span>Deep Tafseer &amp; Evidence (15 min)</span>
                   <span style={{ fontSize: 10, opacity: 0.85, fontWeight: 600 }}>— تفصیلی خزائن العرفان</span>
+                </button>
+              </div>
+
+              {/* Prominent Visual View Mode Switcher */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, backgroundColor: 'rgba(0, 0, 0, 0.35)', padding: '6px 12px', borderRadius: 12, border: '1px solid rgba(52, 211, 153, 0.4)', width: 'fit-content', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 12, color: '#A7F3D0', fontWeight: 800 }}>مطالعہ کا انداز (Display Mode):</span>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('FOCUS')}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 8,
+                    border: 'none',
+                    fontSize: 12,
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    backgroundColor: viewMode === 'FOCUS' ? '#34D399' : 'transparent',
+                    color: viewMode === 'FOCUS' ? '#064E3B' : '#FFFFFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    boxShadow: viewMode === 'FOCUS' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none',
+                  }}
+                >
+                  <span>🎯</span>
+                  <span>ایک ایک آیت فوکس (Single Ayah Focus)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('SCROLL')}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 8,
+                    border: 'none',
+                    fontSize: 12,
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    backgroundColor: viewMode === 'SCROLL' ? '#34D399' : 'transparent',
+                    color: viewMode === 'SCROLL' ? '#064E3B' : '#FFFFFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    boxShadow: viewMode === 'SCROLL' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none',
+                  }}
+                >
+                  <span>📜</span>
+                  <span>روایتی سکرول موڈ (Scroll View)</span>
                 </button>
               </div>
             </div>
