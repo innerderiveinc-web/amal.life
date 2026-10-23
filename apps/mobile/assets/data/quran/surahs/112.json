@@ -1,0 +1,34 @@
+{
+  "surahNumber": 112,
+  "nameArabic": "سُورَةُ الإِخۡلَاصِ",
+  "nameTransliterated": "Al-Ikhlaas",
+  "nameEnglish": "Sincerity",
+  "revelationType": "MECCAN",
+  "ayahsCount": 4,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ هُوَ ٱللَّهُ أَحَدٌ",
+      "textUrdu": "تم فرماؤ وہ اللہ ہے وہ ایک ہے",
+      "textEnglish": "Say, \"He is Allah, [who is] One,"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "ٱللَّهُ ٱلصَّمَدُ",
+      "textUrdu": "اللہ بے نیاز ہے",
+      "textEnglish": "Allah, the Eternal Refuge."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+      "textUrdu": "نہ اس کی کوئی اولاد اور نہ وہ کسی سے پیدا ہوا",
+      "textEnglish": "He neither begets nor is born,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+      "textUrdu": "اور نہ اس کے جوڑ کا کوئی",
+      "textEnglish": "Nor is there to Him any equivalent.\""
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "surahNumber": 104,
+  "nameArabic": "سُورَةُ الهُمَزَةِ",
+  "nameTransliterated": "Al-Humaza",
+  "nameEnglish": "The Traducer",
+  "revelationType": "MECCAN",
+  "ayahsCount": 9,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَيْلٌۭ لِّكُلِّ هُمَزَةٍۢ لُّمَزَةٍ",
+      "textUrdu": "خرابی ہے اس کے لیے جو لوگوں کے منہ پر عیب کرے پیٹھ پیچھے بدی کرے",
+      "textEnglish": "Woe to every scorner and mocker"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "ٱلَّذِى جَمَعَ مَالًۭا وَعَدَّدَهُۥ",
+      "textUrdu": "جس نے مال جوڑا اور گن گن کر رکھا،",
+      "textEnglish": "Who collects wealth and [continuously] counts it."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "يَحْسَبُ أَنَّ مَالَهُۥٓ أَخْلَدَهُۥ",
+      "textUrdu": "کیا یہ سمجھتا ہے کہ اس کا مال اسے دنیا میں ہمیشہ رکھے گا",
+      "textEnglish": "He thinks that his wealth will make him immortal."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "كَلَّا ۖ لَيُنۢبَذَنَّ فِى ٱلْحُطَمَةِ",
+      "textUrdu": "ہر گز نہیں ضرور وہ روندنے والی میں پھینکا جائے گا",
+      "textEnglish": "No! He will surely be thrown into the Crusher."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا ٱلْحُطَمَةُ",
+      "textUrdu": "اور تو نے کیا جانا کیا روندنے والی،",
+      "textEnglish": "And what can make you know what is the Crusher?"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "نَارُ ٱللَّهِ ٱلْمُوقَدَةُ",
+      "textUrdu": "اللہ کی آگ کہ بھڑک رہی ہے",
+      "textEnglish": "It is the fire of Allah, [eternally] fueled,"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "ٱلَّتِى تَطَّلِعُ عَلَى ٱلْأَفْـِٔدَةِ",
+      "textUrdu": "وہ جو دلوں پر چڑھ جائے گی",
+      "textEnglish": "Which mounts directed at the hearts."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌۭ",
+      "textUrdu": "بیشک وہ ان پر بند کردی جائے گی",
+      "textEnglish": "Indeed, Hellfire will be closed down upon them"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "فِى عَمَدٍۢ مُّمَدَّدَةٍۭ",
+      "textUrdu": "لمبے لمبے ستونوں میں",
+      "textEnglish": "In extended columns."
+    }
+  ]
+}

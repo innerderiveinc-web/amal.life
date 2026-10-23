@@ -1,0 +1,250 @@
+{
+  "surahNumber": 75,
+  "nameArabic": "سُورَةُ القِيَامَةِ",
+  "nameTransliterated": "Al-Qiyaama",
+  "nameEnglish": "The Resurrection",
+  "revelationType": "MECCAN",
+  "ayahsCount": 40,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ لَآ أُقْسِمُ بِيَوْمِ ٱلْقِيَٰمَةِ",
+      "textUrdu": "روزِ قیامت کی قسم! یاد فرماتا ہوں،",
+      "textEnglish": "I swear by the Day of Resurrection"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَلَآ أُقْسِمُ بِٱلنَّفْسِ ٱللَّوَّامَةِ",
+      "textUrdu": "اور اس جان کی قسم! جو اپنے اوپر ملامت کرے",
+      "textEnglish": "And I swear by the reproaching soul [to the certainty of resurrection]."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "أَيَحْسَبُ ٱلْإِنسَٰنُ أَلَّن نَّجْمَعَ عِظَامَهُۥ",
+      "textUrdu": "کیا آدمی یہ سمجھتا ہے کہ ہم ہرگز اس کی ہڈیاں جمع نہ فرمائیں گے،",
+      "textEnglish": "Does man think that We will not assemble his bones?"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "بَلَىٰ قَٰدِرِينَ عَلَىٰٓ أَن نُّسَوِّىَ بَنَانَهُۥ",
+      "textUrdu": "کیوں نہیں ہم قادر ہیں کہ اس کے پور ٹھیک بنادیں",
+      "textEnglish": "Yes. [We are] Able [even] to proportion his fingertips."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "بَلْ يُرِيدُ ٱلْإِنسَٰنُ لِيَفْجُرَ أَمَامَهُۥ",
+      "textUrdu": "بلکہ آدمی چاہتا ہے کہ اس کی نگاہ کے سامنے بدی کرے",
+      "textEnglish": "But man desires to continue in sin."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "يَسْـَٔلُ أَيَّانَ يَوْمُ ٱلْقِيَٰمَةِ",
+      "textUrdu": "پوچھتا ہے قیامت کا دن کب ہوگا،",
+      "textEnglish": "He asks, \"When is the Day of Resurrection?\""
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "فَإِذَا بَرِقَ ٱلْبَصَرُ",
+      "textUrdu": "پھر جس دن آنکھ چوندھیائے گی",
+      "textEnglish": "So when vision is dazzled"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَخَسَفَ ٱلْقَمَرُ",
+      "textUrdu": "اور چاند کہے گا",
+      "textEnglish": "And the moon darkens"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَجُمِعَ ٱلشَّمْسُ وَٱلْقَمَرُ",
+      "textUrdu": "اور سورج اور چاند ملادیے جائیں گے",
+      "textEnglish": "And the sun and the moon are joined,"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "يَقُولُ ٱلْإِنسَٰنُ يَوْمَئِذٍ أَيْنَ ٱلْمَفَرُّ",
+      "textUrdu": "اس دن آدمی کہے گا کدھر بھاگ کر جاؤں",
+      "textEnglish": "Man will say on that Day, \"Where is the [place of] escape?\""
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "كَلَّا لَا وَزَرَ",
+      "textUrdu": "ہرگز نہیں کوئی پناہ نہیں،",
+      "textEnglish": "No! There is no refuge."
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "إِلَىٰ رَبِّكَ يَوْمَئِذٍ ٱلْمُسْتَقَرُّ",
+      "textUrdu": "اس دن تیرے رب ہی کی طرف جاکر ٹھہرنا ہے",
+      "textEnglish": "To your Lord, that Day, is the [place of] permanence."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "يُنَبَّؤُا۟ ٱلْإِنسَٰنُ يَوْمَئِذٍۭ بِمَا قَدَّمَ وَأَخَّرَ",
+      "textUrdu": "اس دن آدمی کو اس کا سب اگلا پچھلا جتادیا جائے گا",
+      "textEnglish": "Man will be informed that Day of what he sent ahead and kept back."
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "بَلِ ٱلْإِنسَٰنُ عَلَىٰ نَفْسِهِۦ بَصِيرَةٌۭ",
+      "textUrdu": "بلکہ آدمی خود ہی اپنے حال پر پوری نگاہ رکھتا ہے،",
+      "textEnglish": "Rather, man, against himself, will be a witness,"
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "وَلَوْ أَلْقَىٰ مَعَاذِيرَهُۥ",
+      "textUrdu": "اور اگر اس کے پاس جتنے بہانے ہوں سب لا ڈالے،",
+      "textEnglish": "Even if he presents his excuses."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "لَا تُحَرِّكْ بِهِۦ لِسَانَكَ لِتَعْجَلَ بِهِۦٓ",
+      "textUrdu": "جب بھی نہ سنا جائے گا تم یاد کرنے کی جلدی میں قرآن کے ساتھ اپنی زبان کو حرکت نہ دو",
+      "textEnglish": "Move not your tongue with it, [O Muhammad], to hasten with recitation of the Qur'an."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "إِنَّ عَلَيْنَا جَمْعَهُۥ وَقُرْءَانَهُۥ",
+      "textUrdu": "بیشک اس کا محفوظ کرنا اور پڑھنا ہمارے ذمہ ہے،",
+      "textEnglish": "Indeed, upon Us is its collection [in your heart] and [to make possible] its recitation."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "فَإِذَا قَرَأْنَٰهُ فَٱتَّبِعْ قُرْءَانَهُۥ",
+      "textUrdu": "تو جب ہم اسے پڑھ چکیں اس وقت اس پڑھے ہوئے کی اتباع کرو",
+      "textEnglish": "So when We have recited it [through Gabriel], then follow its recitation."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "ثُمَّ إِنَّ عَلَيْنَا بَيَانَهُۥ",
+      "textUrdu": "پھر بیشک اس کی باریکیوں کا تم پر ظاہر فرمانا ہمارے ذمہ ہے،",
+      "textEnglish": "Then upon Us is its clarification [to you]."
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "كَلَّا بَلْ تُحِبُّونَ ٱلْعَاجِلَةَ",
+      "textUrdu": "کوئی نہیں بلکہ اے کافرو! تم پاؤں تلے کی (دنیاوی فائدے کو) عزیز دوست رکھتے ہو",
+      "textEnglish": "No! But you love the immediate"
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "وَتَذَرُونَ ٱلْءَاخِرَةَ",
+      "textUrdu": "اور آخرت کو چھوڑ بیٹھے ہو،",
+      "textEnglish": "And leave the Hereafter."
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "وُجُوهٌۭ يَوْمَئِذٍۢ نَّاضِرَةٌ",
+      "textUrdu": "کچھ منہ اس دن تر و تازہ ہوں گے",
+      "textEnglish": "[Some] faces, that Day, will be radiant,"
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "إِلَىٰ رَبِّهَا نَاظِرَةٌۭ",
+      "textUrdu": "اپنے رب کا دیکھتے",
+      "textEnglish": "Looking at their Lord."
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "وَوُجُوهٌۭ يَوْمَئِذٍۭ بَاسِرَةٌۭ",
+      "textUrdu": "اور کچھ منہ اس دن بگڑے ہوئے ہوں گے",
+      "textEnglish": "And [some] faces, that Day, will be contorted,"
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "تَظُنُّ أَن يُفْعَلَ بِهَا فَاقِرَةٌۭ",
+      "textUrdu": "سمجھتے ہوں گے کہ ان کے ساتھ وہ کی جائے گی جو کمر کو توڑ دے",
+      "textEnglish": "Expecting that there will be done to them [something] backbreaking."
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "كَلَّآ إِذَا بَلَغَتِ ٱلتَّرَاقِىَ",
+      "textUrdu": "ہاں ہاں جب جان گلے کو پہنچ جائے گی",
+      "textEnglish": "No! When the soul has reached the collar bones"
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "وَقِيلَ مَنْ ۜ رَاقٍۢ",
+      "textUrdu": "اور کہیں گے کہ ہے کوئی جھاڑ پھونک کرے",
+      "textEnglish": "And it is said, \"Who will cure [him]?\""
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "وَظَنَّ أَنَّهُ ٱلْفِرَاقُ",
+      "textUrdu": "سمجھ لے گا کہ یہ جدائی کی گھڑی ہے",
+      "textEnglish": "And the dying one is certain that it is the [time of] separation"
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "وَٱلْتَفَّتِ ٱلسَّاقُ بِٱلسَّاقِ",
+      "textUrdu": "اور پنڈلی سے پنڈلی لپٹ جائے گی",
+      "textEnglish": "And the leg is wound about the leg,"
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "إِلَىٰ رَبِّكَ يَوْمَئِذٍ ٱلْمَسَاقُ",
+      "textUrdu": "اس دن تیرے رب ہی کی طرف ہانکنا ہے",
+      "textEnglish": "To your Lord, that Day, will be the procession."
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "فَلَا صَدَّقَ وَلَا صَلَّىٰ",
+      "textUrdu": "اس نے نہ تو سچ مانا اور نہ نماز پڑھی،",
+      "textEnglish": "And the disbeliever had not believed, nor had he prayed."
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "وَلَٰكِن كَذَّبَ وَتَوَلَّىٰ",
+      "textUrdu": "ہاں جھٹلایا اور منہ پھیرا",
+      "textEnglish": "But [instead], he denied and turned away."
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "ثُمَّ ذَهَبَ إِلَىٰٓ أَهْلِهِۦ يَتَمَطَّىٰٓ",
+      "textUrdu": "پھر اپنے گھر کو اکڑتا چلا",
+      "textEnglish": "And then he went to his people, swaggering [in pride]."
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "أَوْلَىٰ لَكَ فَأَوْلَىٰ",
+      "textUrdu": "تیری خرابی ا ٓ لگی اب آ لگی،",
+      "textEnglish": "Woe to you, and woe!"
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "ثُمَّ أَوْلَىٰ لَكَ فَأَوْلَىٰٓ",
+      "textUrdu": "پھر تیری خرابی آ لگی اب آ لگی،",
+      "textEnglish": "Then woe to you, and woe!"
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "أَيَحْسَبُ ٱلْإِنسَٰنُ أَن يُتْرَكَ سُدًى",
+      "textUrdu": "کیا آدمی اس گھمنڈ میں ہے کہ آزاد چھوڑ دیا جائے گا",
+      "textEnglish": "Does man think that he will be left neglected?"
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "أَلَمْ يَكُ نُطْفَةًۭ مِّن مَّنِىٍّۢ يُمْنَىٰ",
+      "textUrdu": "کیا وہ ایک بوند نہ تھا اس منی کا کہ گرائی جائے",
+      "textEnglish": "Had he not been a sperm from semen emitted?"
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "ثُمَّ كَانَ عَلَقَةًۭ فَخَلَقَ فَسَوَّىٰ",
+      "textUrdu": "پھر خون کی پھٹک ہوا تو اس نے پیدا فرمایا پھر ٹھیک بنایا",
+      "textEnglish": "Then he was a clinging clot, and [Allah] created [his form] and proportioned [him]"
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "فَجَعَلَ مِنْهُ ٱلزَّوْجَيْنِ ٱلذَّكَرَ وَٱلْأُنثَىٰٓ",
+      "textUrdu": "تو اس سے دو جوڑ بنائے مرد اور عورت،",
+      "textEnglish": "And made of him two mates, the male and the female."
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "أَلَيْسَ ذَٰلِكَ بِقَٰدِرٍ عَلَىٰٓ أَن يُحْۦِىَ ٱلْمَوْتَىٰ",
+      "textUrdu": "کیا جس نے یہ کچھ کیا وہ مردے نہ جِلا سکے گا،",
+      "textEnglish": "Is not that [Creator] Able to give life to the dead?"
+    }
+  ]
+}

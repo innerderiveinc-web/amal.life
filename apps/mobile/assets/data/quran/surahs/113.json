@@ -1,0 +1,40 @@
+{
+  "surahNumber": 113,
+  "nameArabic": "سُورَةُ الفَلَقِ",
+  "nameTransliterated": "Al-Falaq",
+  "nameEnglish": "The Dawn",
+  "revelationType": "MECCAN",
+  "ayahsCount": 5,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ",
+      "textUrdu": "تم فرماؤ میں اس کی پناہ لیتا ہوں جو صبح کا پیدا کرنے والا ہے",
+      "textEnglish": "Say, \"I seek refuge in the Lord of daybreak"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "مِن شَرِّ مَا خَلَقَ",
+      "textUrdu": "اس کی سب مخلوق کی شر سے",
+      "textEnglish": "From the evil of that which He created"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+      "textUrdu": "اور اندھیری ڈالنے والے کے شر سے جب وہ ڈوبے",
+      "textEnglish": "And from the evil of darkness when it settles"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ",
+      "textUrdu": "اور ان عورتوں کے شر سے جو گرہوں میں پھونکتی ہیں",
+      "textEnglish": "And from the evil of the blowers in knots"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+      "textUrdu": "اور حسد والے کے شر سے جب وہ مجھ سے جلے",
+      "textEnglish": "And from the evil of an envier when he envies.\""
+    }
+  ]
+}

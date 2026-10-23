@@ -1,0 +1,478 @@
+{
+  "surahNumber": 55,
+  "nameArabic": "سُورَةُ الرَّحۡمَٰن",
+  "nameTransliterated": "Ar-Rahmaan",
+  "nameEnglish": "The Beneficent",
+  "revelationType": "MEDINAN",
+  "ayahsCount": 78,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱلرَّحْمَٰنُ",
+      "textUrdu": "رحمٰن",
+      "textEnglish": "The Most Merciful"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "عَلَّمَ ٱلْقُرْءَانَ",
+      "textUrdu": "نے اپنے محبوب کو قرآن سکھایا",
+      "textEnglish": "Taught the Qur'an,"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "خَلَقَ ٱلْإِنسَٰنَ",
+      "textUrdu": "انسانیت کی جان محمد کو پیدا کیا،",
+      "textEnglish": "Created man,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "عَلَّمَهُ ٱلْبَيَانَ",
+      "textUrdu": "ما کان وما یکون کا بیان انہیں سکھایا",
+      "textEnglish": "[And] taught him eloquence."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "ٱلشَّمْسُ وَٱلْقَمَرُ بِحُسْبَانٍۢ",
+      "textUrdu": "سورج اور چاند حساب سے ہیں",
+      "textEnglish": "The sun and the moon [move] by precise calculation,"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "وَٱلنَّجْمُ وَٱلشَّجَرُ يَسْجُدَانِ",
+      "textUrdu": "اور سبزے اور پیڑ سجدہ کرتے ہیں",
+      "textEnglish": "And the stars and trees prostrate."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَٱلسَّمَآءَ رَفَعَهَا وَوَضَعَ ٱلْمِيزَانَ",
+      "textUrdu": "اور آسمان کو اللہ نے بلند کیا اور ترازو رکھی",
+      "textEnglish": "And the heaven He raised and imposed the balance"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "أَلَّا تَطْغَوْا۟ فِى ٱلْمِيزَانِ",
+      "textUrdu": "کہ ترازو میں بے اعتدالی نہ کرو",
+      "textEnglish": "That you not transgress within the balance."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَأَقِيمُوا۟ ٱلْوَزْنَ بِٱلْقِسْطِ وَلَا تُخْسِرُوا۟ ٱلْمِيزَانَ",
+      "textUrdu": "اور انصاف کے ساتھ تول قائم کرو اور وزن نہ گھٹاؤ،",
+      "textEnglish": "And establish weight in justice and do not make deficient the balance."
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَٱلْأَرْضَ وَضَعَهَا لِلْأَنَامِ",
+      "textUrdu": "اور زمین رکھی مخلوق کے لیے",
+      "textEnglish": "And the earth He laid [out] for the creatures."
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "فِيهَا فَٰكِهَةٌۭ وَٱلنَّخْلُ ذَاتُ ٱلْأَكْمَامِ",
+      "textUrdu": "اس میں میوے اور غلاف والی کھجوریں",
+      "textEnglish": "Therein is fruit and palm trees having sheaths [of dates]"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "وَٱلْحَبُّ ذُو ٱلْعَصْفِ وَٱلرَّيْحَانُ",
+      "textUrdu": "اور بھُس کے ساتھ اناج اور خوشبو کے پھول،",
+      "textEnglish": "And grain having husks and scented plants."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اے جن و انس! تم دونوں اپنے رب کی کون سی نعمت کو جھٹلاؤ گے",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "خَلَقَ ٱلْإِنسَٰنَ مِن صَلْصَٰلٍۢ كَٱلْفَخَّارِ",
+      "textUrdu": "اس نے آدمی کو بنا یا بجتی مٹی سے جیسے ٹھیکری",
+      "textEnglish": "He created man from clay like [that of] pottery."
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "وَخَلَقَ ٱلْجَآنَّ مِن مَّارِجٍۢ مِّن نَّارٍۢ",
+      "textUrdu": "اور جن کو پیدا فرمایا آگ کے لُوکے (لپیٹ) سے",
+      "textEnglish": "And He created the jinn from a smokeless flame of fire."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو تم دونوں اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "رَبُّ ٱلْمَشْرِقَيْنِ وَرَبُّ ٱلْمَغْرِبَيْنِ",
+      "textUrdu": "دونوں پورب کا رب اور دونوں پچھم کا رب",
+      "textEnglish": "[He is] Lord of the two sunrises and Lord of the two sunsets."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو تم دونوں اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "مَرَجَ ٱلْبَحْرَيْنِ يَلْتَقِيَانِ",
+      "textUrdu": "اس نے دو سمندر بہائے کہ دیکھنے میں معلوم ہوں ملے ہوئے",
+      "textEnglish": "He released the two seas, meeting [side by side];"
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "بَيْنَهُمَا بَرْزَخٌۭ لَّا يَبْغِيَانِ",
+      "textUrdu": "اور ہے ان میں روک کہ ایک دوسرے پر بڑھ نہیں سکتا",
+      "textEnglish": "Between them is a barrier [so] neither of them transgresses."
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "يَخْرُجُ مِنْهُمَا ٱللُّؤْلُؤُ وَٱلْمَرْجَانُ",
+      "textUrdu": "ان میں سے موتی اور مونگا نکلتا ہے،",
+      "textEnglish": "From both of them emerge pearl and coral."
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "وَلَهُ ٱلْجَوَارِ ٱلْمُنشَـَٔاتُ فِى ٱلْبَحْرِ كَٱلْأَعْلَٰمِ",
+      "textUrdu": "اور اسی کی ہیں وہ چلنے والیاں کہ دریا میں اٹھی ہوئی ہیں جیسے پہاڑ",
+      "textEnglish": "And to Him belong the ships [with sails] elevated in the sea like mountains."
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "كُلُّ مَنْ عَلَيْهَا فَانٍۢ",
+      "textUrdu": "زمین پر جتنے ہیں سب کو فنا ہے",
+      "textEnglish": "Everyone upon the earth will perish,"
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو ٱلْجَلَٰلِ وَٱلْإِكْرَامِ",
+      "textUrdu": "اور باقی ہے تمہارے رب کی ذات عظمت اور بزرگی والا",
+      "textEnglish": "And there will remain the Face of your Lord, Owner of Majesty and Honor."
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "يَسْـَٔلُهُۥ مَن فِى ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۚ كُلَّ يَوْمٍ هُوَ فِى شَأْنٍۢ",
+      "textUrdu": "اسی کے منگتا ہیں جتنے آسمانوں اور زمین میں ہیں اسے ہر دن ایک کام ہے",
+      "textEnglish": "Whoever is within the heavens and earth asks Him; every day He is bringing about a matter."
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "سَنَفْرُغُ لَكُمْ أَيُّهَ ٱلثَّقَلَانِ",
+      "textUrdu": "جلد سب کام نبٹا کر ہم تمہارے حساب کا قصد فرماتے ہیں اے دونوں بھاری گروہ",
+      "textEnglish": "We will attend to you, O prominent beings."
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "يَٰمَعْشَرَ ٱلْجِنِّ وَٱلْإِنسِ إِنِ ٱسْتَطَعْتُمْ أَن تَنفُذُوا۟ مِنْ أَقْطَارِ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ فَٱنفُذُوا۟ ۚ لَا تَنفُذُونَ إِلَّا بِسُلْطَٰنٍۢ",
+      "textUrdu": "اے جن و انسان کے گروہ اگر تم سے ہوسکے کہ آسمانوں اور زمین کے کناروں سے نکل جاؤ تو نکل جاؤ، جہاں نکل کر جاؤ گے اسی کی سلطنت ہے",
+      "textEnglish": "O company of jinn and mankind, if you are able to pass beyond the regions of the heavens and the earth, then pass. You will not pass except by authority [from Allah]."
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "يُرْسَلُ عَلَيْكُمَا شُوَاظٌۭ مِّن نَّارٍۢ وَنُحَاسٌۭ فَلَا تَنتَصِرَانِ",
+      "textUrdu": "تم پر چھوڑی جائے گی بے دھویں کی آگ کی لپٹ اور بے لپٹ کا کالا دھواں تو پھر بدلا نہ لے سکو گے",
+      "textEnglish": "There will be sent upon you a flame of fire and smoke, and you will not defend yourselves."
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "فَإِذَا ٱنشَقَّتِ ٱلسَّمَآءُ فَكَانَتْ وَرْدَةًۭ كَٱلدِّهَانِ",
+      "textUrdu": "پھر جب آسمان پھٹ ائے گا تو گلاب کے پھول کا سا ہوجائے گا جیسے سرخ نری (بکرے کی رنگی ہوئی کھال)",
+      "textEnglish": "And when the heaven is split open and becomes rose-colored like oil -"
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "فَيَوْمَئِذٍۢ لَّا يُسْـَٔلُ عَن ذَنۢبِهِۦٓ إِنسٌۭ وَلَا جَآنٌّۭ",
+      "textUrdu": "تو اس دن گنہگار کے گناہ کی پوچھ نہ ہوگی کسی آدمی اور جِن سے",
+      "textEnglish": "Then on that Day none will be asked about his sin among men or jinn."
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 41,
+      "textArabic": "يُعْرَفُ ٱلْمُجْرِمُونَ بِسِيمَٰهُمْ فَيُؤْخَذُ بِٱلنَّوَٰصِى وَٱلْأَقْدَامِ",
+      "textUrdu": "مجرم اپنے چہرے سے پہچانے جائیں گے تو ماتھا اور پاؤں پکڑ کر جہنم میں ڈالے جائیں گے",
+      "textEnglish": "The criminals will be known by their marks, and they will be seized by the forelocks and the feet."
+    },
+    {
+      "ayahNumber": 42,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 43,
+      "textArabic": "هَٰذِهِۦ جَهَنَّمُ ٱلَّتِى يُكَذِّبُ بِهَا ٱلْمُجْرِمُونَ",
+      "textUrdu": "یہ ہے وہ جہنم جسے مجرم جھٹلاتے ہیں،",
+      "textEnglish": "This is Hell, which the criminals deny."
+    },
+    {
+      "ayahNumber": 44,
+      "textArabic": "يَطُوفُونَ بَيْنَهَا وَبَيْنَ حَمِيمٍ ءَانٍۢ",
+      "textUrdu": "پھیرے کریں گے اس میں اور انتہا کے جلتے کھولتے پانی میں",
+      "textEnglish": "They will go around between it and scalding water, heated [to the utmost degree]."
+    },
+    {
+      "ayahNumber": 45,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 46,
+      "textArabic": "وَلِمَنْ خَافَ مَقَامَ رَبِّهِۦ جَنَّتَانِ",
+      "textUrdu": "اور جو اپنے رب کے حضور کھڑے ہونے سے ڈرے اس کے لیے دو جنتیں ہیں",
+      "textEnglish": "But for he who has feared the position of his Lord are two gardens -"
+    },
+    {
+      "ayahNumber": 47,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 48,
+      "textArabic": "ذَوَاتَآ أَفْنَانٍۢ",
+      "textUrdu": "بہت سی ڈالوں والیاں",
+      "textEnglish": "Having [spreading] branches."
+    },
+    {
+      "ayahNumber": 49,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 50,
+      "textArabic": "فِيهِمَا عَيْنَانِ تَجْرِيَانِ",
+      "textUrdu": "ان میں دو چشمے بہتے ہیں",
+      "textEnglish": "In both of them are two springs, flowing."
+    },
+    {
+      "ayahNumber": 51,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 52,
+      "textArabic": "فِيهِمَا مِن كُلِّ فَٰكِهَةٍۢ زَوْجَانِ",
+      "textUrdu": "ان میں ہر میوہ دو دو قسم کا،",
+      "textEnglish": "In both of them are of every fruit, two kinds."
+    },
+    {
+      "ayahNumber": 53,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 54,
+      "textArabic": "مُتَّكِـِٔينَ عَلَىٰ فُرُشٍۭ بَطَآئِنُهَا مِنْ إِسْتَبْرَقٍۢ ۚ وَجَنَى ٱلْجَنَّتَيْنِ دَانٍۢ",
+      "textUrdu": "اور ایسے بچھونوں پر تکیہ لگائے جن کا اَستر قناویز کا اور دونوں کے میوے اتنے جھکے ہوئے کہ نیچے سے چن لو",
+      "textEnglish": "[They are] reclining on beds whose linings are of silk brocade, and the fruit of the two gardens is hanging low."
+    },
+    {
+      "ayahNumber": 55,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 56,
+      "textArabic": "فِيهِنَّ قَٰصِرَٰتُ ٱلطَّرْفِ لَمْ يَطْمِثْهُنَّ إِنسٌۭ قَبْلَهُمْ وَلَا جَآنٌّۭ",
+      "textUrdu": "ان بچھونوں پر وہ عورتیں ہیں کہ شوہر کے سوا کسی کو آنکھ اٹھا کر نہیں دیکھتیں ان سے پہلے انہیں نہ چھوا کسی آدمی اور نہ جِن نے،",
+      "textEnglish": "In them are women limiting [their] glances, untouched before them by man or jinni -"
+    },
+    {
+      "ayahNumber": 57,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 58,
+      "textArabic": "كَأَنَّهُنَّ ٱلْيَاقُوتُ وَٱلْمَرْجَانُ",
+      "textUrdu": "گویا وہ لعل اور یاقوت اور مونگا ہیں",
+      "textEnglish": "As if they were rubies and coral."
+    },
+    {
+      "ayahNumber": 59,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 60,
+      "textArabic": "هَلْ جَزَآءُ ٱلْإِحْسَٰنِ إِلَّا ٱلْإِحْسَٰنُ",
+      "textUrdu": "نیکی کا بدلہ کیا ہے مگر نیکی",
+      "textEnglish": "Is the reward for good [anything] but good?"
+    },
+    {
+      "ayahNumber": 61,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 62,
+      "textArabic": "وَمِن دُونِهِمَا جَنَّتَانِ",
+      "textUrdu": "اور ان کے سوا دو جنتیں اور ہیں",
+      "textEnglish": "And below them both [in excellence] are two [other] gardens -"
+    },
+    {
+      "ayahNumber": 63,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 64,
+      "textArabic": "مُدْهَآمَّتَانِ",
+      "textUrdu": "نہایت سبزی سے سیاہی کی جھلک دے رہی ہیں،",
+      "textEnglish": "Dark green [in color]."
+    },
+    {
+      "ayahNumber": 65,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 66,
+      "textArabic": "فِيهِمَا عَيْنَانِ نَضَّاخَتَانِ",
+      "textUrdu": "ان میں دو چشمے ہیں چھلکتے ہوئے،",
+      "textEnglish": "In both of them are two springs, spouting."
+    },
+    {
+      "ayahNumber": 67,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 68,
+      "textArabic": "فِيهِمَا فَٰكِهَةٌۭ وَنَخْلٌۭ وَرُمَّانٌۭ",
+      "textUrdu": "ان میں میوے اور کھجوریں اور انار ہیں،",
+      "textEnglish": "In both of them are fruit and palm trees and pomegranates."
+    },
+    {
+      "ayahNumber": 69,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 70,
+      "textArabic": "فِيهِنَّ خَيْرَٰتٌ حِسَانٌۭ",
+      "textUrdu": "ان میں عورتیں ہیں عادت کی نیک صورت کی اچھی",
+      "textEnglish": "In them are good and beautiful women -"
+    },
+    {
+      "ayahNumber": 71,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 72,
+      "textArabic": "حُورٌۭ مَّقْصُورَٰتٌۭ فِى ٱلْخِيَامِ",
+      "textUrdu": "حوریں ہیں خیموں میں پردہ نشین",
+      "textEnglish": "Fair ones reserved in pavilions -"
+    },
+    {
+      "ayahNumber": 73,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 74,
+      "textArabic": "لَمْ يَطْمِثْهُنَّ إِنسٌۭ قَبْلَهُمْ وَلَا جَآنٌّۭ",
+      "textUrdu": "ان سے پہلے انہیں ہاتھ نہ لگایا کسی آدمی اور نہ کسی جِن نے،",
+      "textEnglish": "Untouched before them by man or jinni -"
+    },
+    {
+      "ayahNumber": 75,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے",
+      "textEnglish": "So which of the favors of your Lord would you deny? -"
+    },
+    {
+      "ayahNumber": 76,
+      "textArabic": "مُتَّكِـِٔينَ عَلَىٰ رَفْرَفٍ خُضْرٍۢ وَعَبْقَرِىٍّ حِسَانٍۢ",
+      "textUrdu": "تکیہ لگائے ہوئے سبز بچھونوں اور منقش خوبصورت چاندنیوں پر،",
+      "textEnglish": "Reclining on green cushions and beautiful fine carpets."
+    },
+    {
+      "ayahNumber": 77,
+      "textArabic": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "textUrdu": "تو اپنے رب کی کونسی نعمت جھٹلاؤ گے،",
+      "textEnglish": "So which of the favors of your Lord would you deny?"
+    },
+    {
+      "ayahNumber": 78,
+      "textArabic": "تَبَٰرَكَ ٱسْمُ رَبِّكَ ذِى ٱلْجَلَٰلِ وَٱلْإِكْرَامِ",
+      "textUrdu": "بڑی برکت والا ہے تمہارے رب کا نام جو عظمت اور بزرگی والا،",
+      "textEnglish": "Blessed is the name of your Lord, Owner of Majesty and Honor."
+    }
+  ]
+}

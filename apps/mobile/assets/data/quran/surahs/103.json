@@ -1,0 +1,28 @@
+{
+  "surahNumber": 103,
+  "nameArabic": "سُورَةُ العَصۡرِ",
+  "nameTransliterated": "Al-Asr",
+  "nameEnglish": "The Declining Day, Epoch",
+  "revelationType": "MECCAN",
+  "ayahsCount": 3,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْعَصْرِ",
+      "textUrdu": "اس زمانہ محبوب کی قسم",
+      "textEnglish": "By time,"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ",
+      "textUrdu": "بیشک آدمی ضرور نقصان میں ہے",
+      "textEnglish": "Indeed, mankind is in loss,"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ",
+      "textUrdu": "مگر جو ایمان لائے اور اچھے کام کیے اور ایک دورے کو حق کی تاکید کی اور ایک دوسرے کو صبر کی وصیت کی",
+      "textEnglish": "Except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience."
+    }
+  ]
+}

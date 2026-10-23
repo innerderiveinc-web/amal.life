@@ -1,0 +1,190 @@
+{
+  "surahNumber": 89,
+  "nameArabic": "سُورَةُ الفَجۡرِ",
+  "nameTransliterated": "Al-Fajr",
+  "nameEnglish": "The Dawn",
+  "revelationType": "MECCAN",
+  "ayahsCount": 30,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْفَجْرِ",
+      "textUrdu": "اس صبح کی قسم",
+      "textEnglish": "By the dawn"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَلَيَالٍ عَشْرٍۢ",
+      "textUrdu": "اور دس راتوں کی",
+      "textEnglish": "And [by] ten nights"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَٱلشَّفْعِ وَٱلْوَتْرِ",
+      "textUrdu": "اور جفت اور طاق کی",
+      "textEnglish": "And [by] the even [number] and the odd"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَٱلَّيْلِ إِذَا يَسْرِ",
+      "textUrdu": "اور رات کی جب چل دے",
+      "textEnglish": "And [by] the night when it passes,"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "هَلْ فِى ذَٰلِكَ قَسَمٌۭ لِّذِى حِجْرٍ",
+      "textUrdu": "کیوں اس میں عقلمند کے لیے قسم ہوئی",
+      "textEnglish": "Is there [not] in [all] that an oath [sufficient] for one of perception?"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِعَادٍ",
+      "textUrdu": "کیا تم نے نہ دیکھا تمہارے رب نے عاد کے ساتھ کیسا کیا،",
+      "textEnglish": "Have you not considered how your Lord dealt with 'Aad -"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "إِرَمَ ذَاتِ ٱلْعِمَادِ",
+      "textUrdu": "وہ اِرم حد سے زیادہ طول والے",
+      "textEnglish": "[With] Iram - who had lofty pillars,"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "ٱلَّتِى لَمْ يُخْلَقْ مِثْلُهَا فِى ٱلْبِلَٰدِ",
+      "textUrdu": "کہ اس جیسا شہروں میں پیدا نہ ہوا",
+      "textEnglish": "The likes of whom had never been created in the land?"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَثَمُودَ ٱلَّذِينَ جَابُوا۟ ٱلصَّخْرَ بِٱلْوَادِ",
+      "textUrdu": "اور ثمود جنہوں نے وادی میں پتھر کی چٹانیں کاٹیں",
+      "textEnglish": "And [with] Thamud, who carved out the rocks in the valley?"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَفِرْعَوْنَ ذِى ٱلْأَوْتَادِ",
+      "textUrdu": "اور فرعون کہ چومیخا کرتا (سخت سزائیں دیتا)",
+      "textEnglish": "And [with] Pharaoh, owner of the stakes? -"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "ٱلَّذِينَ طَغَوْا۟ فِى ٱلْبِلَٰدِ",
+      "textUrdu": "جنہوں نے شہروں میں سرکشی کی",
+      "textEnglish": "[All of] whom oppressed within the lands"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "فَأَكْثَرُوا۟ فِيهَا ٱلْفَسَادَ",
+      "textUrdu": "پھر ان میں بہت فساد پھیلایا",
+      "textEnglish": "And increased therein the corruption."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "فَصَبَّ عَلَيْهِمْ رَبُّكَ سَوْطَ عَذَابٍ",
+      "textUrdu": "تو ان پر تمہارے رب نے عذاب کا کوڑا بقوت مارا،",
+      "textEnglish": "So your Lord poured upon them a scourge of punishment."
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "إِنَّ رَبَّكَ لَبِٱلْمِرْصَادِ",
+      "textUrdu": "بیشک تمہارے رب کی نظر سے کچھ غائب نہیں،",
+      "textEnglish": "Indeed, your Lord is in observation."
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "فَأَمَّا ٱلْإِنسَٰنُ إِذَا مَا ٱبْتَلَىٰهُ رَبُّهُۥ فَأَكْرَمَهُۥ وَنَعَّمَهُۥ فَيَقُولُ رَبِّىٓ أَكْرَمَنِ",
+      "textUrdu": "لیکن آدمی تو جب اسے اس کا رب آزمائے کہ اس کو جاہ اور نعمت دے، جب تو کہتا ہے میرے رب نے مجھے عزت دی،",
+      "textEnglish": "And as for man, when his Lord tries him and [thus] is generous to him and favors him, he says, \"My Lord has honored me.\""
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "وَأَمَّآ إِذَا مَا ٱبْتَلَىٰهُ فَقَدَرَ عَلَيْهِ رِزْقَهُۥ فَيَقُولُ رَبِّىٓ أَهَٰنَنِ",
+      "textUrdu": "اور اگر آزمائے اور اس کا رزق اس پر تنگ کرے، تو کہتا ہے میرے رب نے مجھے خوار کیا،",
+      "textEnglish": "But when He tries him and restricts his provision, he says, \"My Lord has humiliated me.\""
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "كَلَّا ۖ بَل لَّا تُكْرِمُونَ ٱلْيَتِيمَ",
+      "textUrdu": "یوں نہیں بلکہ تم یتیم کی عزت نہیں کرتے",
+      "textEnglish": "No! But you do not honor the orphan"
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "وَلَا تَحَٰٓضُّونَ عَلَىٰ طَعَامِ ٱلْمِسْكِينِ",
+      "textUrdu": "اور آپس میں ایک دوسرے کو مسکین کے کھلانے کی رغبت نہیں دیتے،",
+      "textEnglish": "And you do not encourage one another to feed the poor."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "وَتَأْكُلُونَ ٱلتُّرَاثَ أَكْلًۭا لَّمًّۭا",
+      "textUrdu": "اور میراث کا مال ہپ ہپ کھاتے ہو",
+      "textEnglish": "And you consume inheritance, devouring [it] altogether,"
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "وَتُحِبُّونَ ٱلْمَالَ حُبًّۭا جَمًّۭا",
+      "textUrdu": "اور مال کی نہایت محبت رکھتے ہو",
+      "textEnglish": "And you love wealth with immense love."
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "كَلَّآ إِذَا دُكَّتِ ٱلْأَرْضُ دَكًّۭا دَكًّۭا",
+      "textUrdu": "ہاں ہاں جب زمین ٹکرا کر پاش پاش کردی جائے",
+      "textEnglish": "No! When the earth has been leveled - pounded and crushed -"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "وَجَآءَ رَبُّكَ وَٱلْمَلَكُ صَفًّۭا صَفًّۭا",
+      "textUrdu": "اور تمہارے رب کا حکم آئے اور فرشتے قطار قطار،",
+      "textEnglish": "And your Lord has come and the angels, rank upon rank,"
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "وَجِا۟ىٓءَ يَوْمَئِذٍۭ بِجَهَنَّمَ ۚ يَوْمَئِذٍۢ يَتَذَكَّرُ ٱلْإِنسَٰنُ وَأَنَّىٰ لَهُ ٱلذِّكْرَىٰ",
+      "textUrdu": "اور اس دن جہنم لائے جائے اس دن آدمی سوچے گا اور اب اسے سوچنے کا وقت کہاں",
+      "textEnglish": "And brought [within view], that Day, is Hell - that Day, man will remember, but what good to him will be the remembrance?"
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "يَقُولُ يَٰلَيْتَنِى قَدَّمْتُ لِحَيَاتِى",
+      "textUrdu": "کہے گا ہائے کسی طرح میں نے جیتے جی نیکی آگے بھیجی ہوتی،",
+      "textEnglish": "He will say, \"Oh, I wish I had sent ahead [some good] for my life.\""
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "فَيَوْمَئِذٍۢ لَّا يُعَذِّبُ عَذَابَهُۥٓ أَحَدٌۭ",
+      "textUrdu": "تو اس دن اس کا سا عذاب کوئی نہیں کرتا،",
+      "textEnglish": "So on that Day, none will punish [as severely] as His punishment,"
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "وَلَا يُوثِقُ وَثَاقَهُۥٓ أَحَدٌۭ",
+      "textUrdu": "اور اس کا سا باندھنا کوئی نہیں باندھتا،",
+      "textEnglish": "And none will bind [as severely] as His binding [of the evildoers]."
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "يَٰٓأَيَّتُهَا ٱلنَّفْسُ ٱلْمُطْمَئِنَّةُ",
+      "textUrdu": "اے اطمینان والی جان",
+      "textEnglish": "[To the righteous it will be said], \"O reassured soul,"
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "ٱرْجِعِىٓ إِلَىٰ رَبِّكِ رَاضِيَةًۭ مَّرْضِيَّةًۭ",
+      "textUrdu": "اپنے رب کی طرف واپس ہو یوں کہ تو اس سے راضی وہ تجھ سے راضی،",
+      "textEnglish": "Return to your Lord, well-pleased and pleasing [to Him],"
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "فَٱدْخُلِى فِى عِبَٰدِى",
+      "textUrdu": "پھر میرے خاص بندوں میں داخل ہو،",
+      "textEnglish": "And enter among My [righteous] servants"
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "وَٱدْخُلِى جَنَّتِى",
+      "textUrdu": "اور میری جنت میں آ،",
+      "textEnglish": "And enter My Paradise.\""
+    }
+  ]
+}

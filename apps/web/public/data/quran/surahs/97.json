@@ -1,0 +1,40 @@
+{
+  "surahNumber": 97,
+  "nameArabic": "سُورَةُ القَدۡرِ",
+  "nameTransliterated": "Al-Qadr",
+  "nameEnglish": "The Power, Fate",
+  "revelationType": "MECCAN",
+  "ayahsCount": 5,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِنَّآ أَنزَلْنَٰهُ فِى لَيْلَةِ ٱلْقَدْرِ",
+      "textUrdu": "بیشک ہم نے اسے شبِ قدر میں اتارا",
+      "textEnglish": "Indeed, We sent the Qur'an down during the Night of Decree."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا لَيْلَةُ ٱلْقَدْرِ",
+      "textUrdu": "اور تم نے کیا جانا کیا شبِ قدر،",
+      "textEnglish": "And what can make you know what is the Night of Decree?"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "لَيْلَةُ ٱلْقَدْرِ خَيْرٌۭ مِّنْ أَلْفِ شَهْرٍۢ",
+      "textUrdu": "شبِ قدر ہزار مہینوں سے بہتر",
+      "textEnglish": "The Night of Decree is better than a thousand months."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "تَنَزَّلُ ٱلْمَلَٰٓئِكَةُ وَٱلرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍۢ",
+      "textUrdu": "اس میں فرشتے اور جبریل اترتے ہیں اپنے رب کے حکم سے ہر کام کے لیے",
+      "textEnglish": "The angels and the Spirit descend therein by permission of their Lord for every matter."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "سَلَٰمٌ هِىَ حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ",
+      "textUrdu": "وہ سلامتی ہے، صبح چمکتے تک",
+      "textEnglish": "Peace it is until the emergence of dawn."
+    }
+  ]
+}

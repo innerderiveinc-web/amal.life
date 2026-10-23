@@ -1,0 +1,58 @@
+{
+  "surahNumber": 95,
+  "nameArabic": "سُورَةُ التِّينِ",
+  "nameTransliterated": "At-Tin",
+  "nameEnglish": "The Fig",
+  "revelationType": "MECCAN",
+  "ayahsCount": 8,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلتِّينِ وَٱلزَّيْتُونِ",
+      "textUrdu": "انجیر کی قسم اور زیتون",
+      "textEnglish": "By the fig and the olive"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَطُورِ سِينِينَ",
+      "textUrdu": "اور طور سینا",
+      "textEnglish": "And [by] Mount Sinai"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَهَٰذَا ٱلْبَلَدِ ٱلْأَمِينِ",
+      "textUrdu": "اور اس امان والے شہر کی",
+      "textEnglish": "And [by] this secure city [Makkah],"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "لَقَدْ خَلَقْنَا ٱلْإِنسَٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍۢ",
+      "textUrdu": "بیشک ہم نے آدمی کو اچھی صورت پر بنایا،",
+      "textEnglish": "We have certainly created man in the best of stature;"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "ثُمَّ رَدَدْنَٰهُ أَسْفَلَ سَٰفِلِينَ",
+      "textUrdu": "پھر اسے ہر نیچی سے نیچی حالت کی طرف پھیردیا",
+      "textEnglish": "Then We return him to the lowest of the low,"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍۢ",
+      "textUrdu": "مگر جو ایمان لائے اور اچھے کام کیے کہ انہیں بے حد ثواب ہے",
+      "textEnglish": "Except for those who believe and do righteous deeds, for they will have a reward uninterrupted."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "فَمَا يُكَذِّبُكَ بَعْدُ بِٱلدِّينِ",
+      "textUrdu": "تو اب کیا چیز تجھے انصاف کے جھٹلانے پر باعث ہے",
+      "textEnglish": "So what yet causes you to deny the Recompense?"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "أَلَيْسَ ٱللَّهُ بِأَحْكَمِ ٱلْحَٰكِمِينَ",
+      "textUrdu": "کیا اللہ سب حاکموں سے بڑھ کر حاکم نہیں،",
+      "textEnglish": "Is not Allah the most just of judges?"
+    }
+  ]
+}

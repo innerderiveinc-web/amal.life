@@ -1,0 +1,28 @@
+{
+  "surahNumber": 110,
+  "nameArabic": "سُورَةُ النَّصۡرِ",
+  "nameTransliterated": "An-Nasr",
+  "nameEnglish": "Divine Support",
+  "revelationType": "MEDINAN",
+  "ayahsCount": 3,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ",
+      "textUrdu": "جب اللہ کی مدد اور فتح آئے",
+      "textEnglish": "When the victory of Allah has come and the conquest,"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُونَ فِى دِينِ ٱللَّهِ أَفْوَاجًۭا",
+      "textUrdu": "اور لوگوں کو تم دیکھو کہ اللہ کے دین میں فوج فوج داخل ہوتے ہیں",
+      "textEnglish": "And you see the people entering into the religion of Allah in multitudes,"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ ۚ إِنَّهُۥ كَانَ تَوَّابًۢا",
+      "textUrdu": "تو اپنے رب کی ثناء کرتے ہوئے اس کی پاکی بولو اور اس سے بخشش چاہو بیشک وہ بہت توبہ قبول کرنے والا ہے",
+      "textEnglish": "Then exalt [Him] with praise of your Lord and ask forgiveness of Him. Indeed, He is ever Accepting of repentance."
+    }
+  ]
+}

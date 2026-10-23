@@ -1,0 +1,76 @@
+{
+  "surahNumber": 93,
+  "nameArabic": "سُورَةُ الضُّحَىٰ",
+  "nameTransliterated": "Ad-Dhuhaa",
+  "nameEnglish": "The Morning Hours",
+  "revelationType": "MECCAN",
+  "ayahsCount": 11,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلضُّحَىٰ",
+      "textUrdu": "چاشت کی قسم",
+      "textEnglish": "By the morning brightness"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَٱلَّيْلِ إِذَا سَجَىٰ",
+      "textUrdu": "اور رات کی جب پردہ ڈالے",
+      "textEnglish": "And [by] the night when it covers with darkness,"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",
+      "textUrdu": "کہ تمہیں تمہارے رب نے نہ چھوڑا، اور نہ مکروہ جانا،",
+      "textEnglish": "Your Lord has not taken leave of you, [O Muhammad], nor has He detested [you]."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَلَلْءَاخِرَةُ خَيْرٌۭ لَّكَ مِنَ ٱلْأُولَىٰ",
+      "textUrdu": "اور بیشک پچھلی تمہارے لیے پہلی سے بہتر ہے",
+      "textEnglish": "And the Hereafter is better for you than the first [life]."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ",
+      "textUrdu": "اور بیشک قریب ہے کہ تمہارا رب تمہیں اتنا دے گا کہ تم راضی ہوجاؤ گے",
+      "textEnglish": "And your Lord is going to give you, and you will be satisfied."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "أَلَمْ يَجِدْكَ يَتِيمًۭا فَـَٔاوَىٰ",
+      "textUrdu": "کیا اس نے تمہیں یتیم نہ پایا پھر جگہ دی",
+      "textEnglish": "Did He not find you an orphan and give [you] refuge?"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَوَجَدَكَ ضَآلًّۭا فَهَدَىٰ",
+      "textUrdu": "اور تمہیں اپنی محبت میں خود رفتہ پایا تو اپنی طرف راہ دی",
+      "textEnglish": "And He found you lost and guided [you],"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَوَجَدَكَ عَآئِلًۭا فَأَغْنَىٰ",
+      "textUrdu": "اور تمہیں حاجت مند پایا پھر غنی کردیا",
+      "textEnglish": "And He found you poor and made [you] self-sufficient."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "فَأَمَّا ٱلْيَتِيمَ فَلَا تَقْهَرْ",
+      "textUrdu": "تو یتیم پر دباؤ نہ ڈالو",
+      "textEnglish": "So as for the orphan, do not oppress [him]."
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَأَمَّا ٱلسَّآئِلَ فَلَا تَنْهَرْ",
+      "textUrdu": "اور منگتا کو نہ جھڑکو",
+      "textEnglish": "And as for the petitioner, do not repel [him]."
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ",
+      "textUrdu": "اور اپنے رب کی نعمت کا خوب چرچا کرو",
+      "textEnglish": "But as for the favor of your Lord, report [it]."
+    }
+  ]
+}

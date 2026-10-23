@@ -1,0 +1,154 @@
+{
+  "surahNumber": 59,
+  "nameArabic": "سُورَةُ الحَشۡرِ",
+  "nameTransliterated": "Al-Hashr",
+  "nameEnglish": "The Exile",
+  "revelationType": "MEDINAN",
+  "ayahsCount": 24,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ سَبَّحَ لِلَّهِ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+      "textUrdu": "اللہ کی پاکی بولتا ہے جو کچھ آسمانوں میں ہے اور جو کچھ زمین میں، اور وہ وہی عزت و حکمت والا ہے",
+      "textEnglish": "Whatever is in the heavens and whatever is on the earth exalts Allah, and He is the Exalted in Might, the Wise."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "هُوَ ٱلَّذِىٓ أَخْرَجَ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَٰبِ مِن دِيَٰرِهِمْ لِأَوَّلِ ٱلْحَشْرِ ۚ مَا ظَنَنتُمْ أَن يَخْرُجُوا۟ ۖ وَظَنُّوٓا۟ أَنَّهُم مَّانِعَتُهُمْ حُصُونُهُم مِّنَ ٱللَّهِ فَأَتَىٰهُمُ ٱللَّهُ مِنْ حَيْثُ لَمْ يَحْتَسِبُوا۟ ۖ وَقَذَفَ فِى قُلُوبِهِمُ ٱلرُّعْبَ ۚ يُخْرِبُونَ بُيُوتَهُم بِأَيْدِيهِمْ وَأَيْدِى ٱلْمُؤْمِنِينَ فَٱعْتَبِرُوا۟ يَٰٓأُو۟لِى ٱلْأَبْصَٰرِ",
+      "textUrdu": "وہی ہے جس نے ان کافر کتابیوں کو ان کے گھروں سے نکالا ان کے پہلے حشر کے لیے تمہیں گمان نہ تھا کہ وہ نکلیں گے اور وہ سمجھتے تھے کہ ان کے قلعے انہیں اللہ سے بچالیں گے تو اللہ کا حکم ان کے پاس آیا جہاں سے ان کا گمان بھی نہ تھا اور اس نے ان کے دلوں میں رُعب ڈالا کہ اپنے گھر ویران کرتے ہیں اپنے ہاتھوں اور مسلمانوں کے ہاتھوں تو عبرت لو اے نگاہ والو،",
+      "textEnglish": "It is He who expelled the ones who disbelieved among the People of the Scripture from their homes at the first gathering. You did not think they would leave, and they thought that their fortresses would protect them from Allah; but [the decree of] Allah came upon them from where they had not expected, and He cast terror into their hearts [so] they destroyed their houses by their [own] hands and the hands of the believers. So take warning, O people of vision."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَلَوْلَآ أَن كَتَبَ ٱللَّهُ عَلَيْهِمُ ٱلْجَلَآءَ لَعَذَّبَهُمْ فِى ٱلدُّنْيَا ۖ وَلَهُمْ فِى ٱلْءَاخِرَةِ عَذَابُ ٱلنَّارِ",
+      "textUrdu": "اور اگر نہ ہوتا کہ اللہ نے ان پر گھر سے اجڑنا لکھ دیا تھا تو دنیا ہی میں ان پر عذاب فرماتا اور ان کے لیے آخرت میں آگ کا عذاب ہے،",
+      "textEnglish": "And if not that Allah had decreed for them evacuation, He would have punished them in [this] world, and for them in the Hereafter is the punishment of the Fire."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "ذَٰلِكَ بِأَنَّهُمْ شَآقُّوا۟ ٱللَّهَ وَرَسُولَهُۥ ۖ وَمَن يُشَآقِّ ٱللَّهَ فَإِنَّ ٱللَّهَ شَدِيدُ ٱلْعِقَابِ",
+      "textUrdu": "یہ اس لیے کہ وہ اللہ سے اور اس کے رسول سے پھٹے (جدا) رہے اور جو اللہ اور اس کے رسول سے پھٹا رہے تو بیشک اللہ کا عذاب سخت ہے،",
+      "textEnglish": "That is because they opposed Allah and His Messenger. And whoever opposes Allah - then indeed, Allah is severe in penalty."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "مَا قَطَعْتُم مِّن لِّينَةٍ أَوْ تَرَكْتُمُوهَا قَآئِمَةً عَلَىٰٓ أُصُولِهَا فَبِإِذْنِ ٱللَّهِ وَلِيُخْزِىَ ٱلْفَٰسِقِينَ",
+      "textUrdu": "جو درخت تم نے کاٹے یا ان کی جڑوں پر قائم چھوڑ دیے یہ سب اللہ کی اجازت سے تھا اور اس لیے کہ فاسقوں کو رسوا کرے",
+      "textEnglish": "Whatever you have cut down of [their] palm trees or left standing on their trunks - it was by permission of Allah and so He would disgrace the defiantly disobedient."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "وَمَآ أَفَآءَ ٱللَّهُ عَلَىٰ رَسُولِهِۦ مِنْهُمْ فَمَآ أَوْجَفْتُمْ عَلَيْهِ مِنْ خَيْلٍۢ وَلَا رِكَابٍۢ وَلَٰكِنَّ ٱللَّهَ يُسَلِّطُ رُسُلَهُۥ عَلَىٰ مَن يَشَآءُ ۚ وَٱللَّهُ عَلَىٰ كُلِّ شَىْءٍۢ قَدِيرٌۭ",
+      "textUrdu": "اور جو غنیمت دلائی اللہ نے اپنے رسول کو ان سے تو تم نے ان پر نہ اپنے گھوڑے دوڑائے تھے اور نہ اونٹ ہاں اللہ اپنے رسولوں کے قابو میں دے دیتا ہے جسے چاہے اور اللہ سب کچھ کرسکتا ہے،",
+      "textEnglish": "And what Allah restored [of property] to His Messenger from them - you did not spur for it [in an expedition] any horses or camels, but Allah gives His messengers power over whom He wills, and Allah is over all things competent."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "مَّآ أَفَآءَ ٱللَّهُ عَلَىٰ رَسُولِهِۦ مِنْ أَهْلِ ٱلْقُرَىٰ فَلِلَّهِ وَلِلرَّسُولِ وَلِذِى ٱلْقُرْبَىٰ وَٱلْيَتَٰمَىٰ وَٱلْمَسَٰكِينِ وَٱبْنِ ٱلسَّبِيلِ كَىْ لَا يَكُونَ دُولَةًۢ بَيْنَ ٱلْأَغْنِيَآءِ مِنكُمْ ۚ وَمَآ ءَاتَىٰكُمُ ٱلرَّسُولُ فَخُذُوهُ وَمَا نَهَىٰكُمْ عَنْهُ فَٱنتَهُوا۟ ۚ وَٱتَّقُوا۟ ٱللَّهَ ۖ إِنَّ ٱللَّهَ شَدِيدُ ٱلْعِقَابِ",
+      "textUrdu": "جو غنیمت دلائی اللہ نے اپنے رسول کو شہر والوں سے وہ اللہ اور رسول کی ہے اور رشتہ داروں اور یتیموں اور مسکینوں اور مسافروں کے لیے کہ تمہارے اغنیا کا مال نہ جائے (ف۹۲۱ اور جو کچھ تمہیں رسول عطا فرمائیں وہ لو اور جس سے منع فرمائیں باز رہو، اور اللہ سے ڈرو بیشک اللہ کا عذاب سخت ہے",
+      "textEnglish": "And what Allah restored to His Messenger from the people of the towns - it is for Allah and for the Messenger and for [his] near relatives and orphans and the [stranded] traveler - so that it will not be a perpetual distribution among the rich from among you. And whatever the Messenger has given you - take; and what he has forbidden you - refrain from. And fear Allah; indeed, Allah is severe in penalty."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "لِلْفُقَرَآءِ ٱلْمُهَٰجِرِينَ ٱلَّذِينَ أُخْرِجُوا۟ مِن دِيَٰرِهِمْ وَأَمْوَٰلِهِمْ يَبْتَغُونَ فَضْلًۭا مِّنَ ٱللَّهِ وَرِضْوَٰنًۭا وَيَنصُرُونَ ٱللَّهَ وَرَسُولَهُۥٓ ۚ أُو۟لَٰٓئِكَ هُمُ ٱلصَّٰدِقُونَ",
+      "textUrdu": "ان فقیر ہجرت کرنے والوں کے لیے جو اپنے گھروں اور مالوں سے نکالے گئے اللہ کا فضل اور اس کی رضا چاہتے اور اللہ و رسول کی مدد کرتے وہی سچے ہیں",
+      "textEnglish": "For the poor emigrants who were expelled from their homes and their properties, seeking bounty from Allah and [His] approval and supporting Allah and His Messenger, [there is also a share]. Those are the truthful."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَٱلَّذِينَ تَبَوَّءُو ٱلدَّارَ وَٱلْإِيمَٰنَ مِن قَبْلِهِمْ يُحِبُّونَ مَنْ هَاجَرَ إِلَيْهِمْ وَلَا يَجِدُونَ فِى صُدُورِهِمْ حَاجَةًۭ مِّمَّآ أُوتُوا۟ وَيُؤْثِرُونَ عَلَىٰٓ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌۭ ۚ وَمَن يُوقَ شُحَّ نَفْسِهِۦ فَأُو۟لَٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ",
+      "textUrdu": "اور جنہوں نے پہلے سے اس شہر اور ایمان میں گھر بنالیا دوست رکھتے ہیں انہیں جو ان کی طرف ہجرت کرکے گئے اور اپنے دلوں میں کوئی حاجت نہیں پاتے اس چیز کو جو دیے گئے اور اپنی جانوں پر ان کو ترجیح دیتے ہیں اگرچہ انہیں شدید محتاجی ہو اور جو اپنے نفس کے لالچ سے بچایا گیا تو وہی کامیاب ہیں،",
+      "textEnglish": "And [also for] those who were settled in al-Madinah and [adopted] the faith before them. They love those who emigrated to them and find not any want in their breasts of what the emigrants were given but give [them] preference over themselves, even though they are in privation. And whoever is protected from the stinginess of his soul - it is those who will be the successful."
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَٱلَّذِينَ جَآءُو مِنۢ بَعْدِهِمْ يَقُولُونَ رَبَّنَا ٱغْفِرْ لَنَا وَلِإِخْوَٰنِنَا ٱلَّذِينَ سَبَقُونَا بِٱلْإِيمَٰنِ وَلَا تَجْعَلْ فِى قُلُوبِنَا غِلًّۭا لِّلَّذِينَ ءَامَنُوا۟ رَبَّنَآ إِنَّكَ رَءُوفٌۭ رَّحِيمٌ",
+      "textUrdu": "اور وہ جو ان کے بعد آئے عرض کرتے ہیں اے ہمارے رب ہمیں بخش دے اور ہمارے بھائیوں کو جو ہم سے پہلے ایمان لائے اور ہمارے دل میں ایمان والوں کی طرف سے کینہ نہ رکھ اے ہمارے رب بیشک تو ہی نہایت مہربان رحم والا ہے،",
+      "textEnglish": "And [there is a share for] those who came after them, saying, \"Our Lord, forgive us and our brothers who preceded us in faith and put not in our hearts [any] resentment toward those who have believed. Our Lord, indeed You are Kind and Merciful.\""
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "۞ أَلَمْ تَرَ إِلَى ٱلَّذِينَ نَافَقُوا۟ يَقُولُونَ لِإِخْوَٰنِهِمُ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَٰبِ لَئِنْ أُخْرِجْتُمْ لَنَخْرُجَنَّ مَعَكُمْ وَلَا نُطِيعُ فِيكُمْ أَحَدًا أَبَدًۭا وَإِن قُوتِلْتُمْ لَنَنصُرَنَّكُمْ وَٱللَّهُ يَشْهَدُ إِنَّهُمْ لَكَٰذِبُونَ",
+      "textUrdu": "کیا تم نے منافقوں کو نہ دیکھا کہ اپنے بھائیوں کافر کتابیوں سے کہتے ہیں کہ اگر تم نکالے گئے تو ضرور ہم تمہارے ساتھ جائیں گے اور ہرگز تمہارے بارے میں کسی کی نہ مانیں گے اور اگر تم سے لڑائی ہوئی تو ہم ضرور تمہاری مدد کریں گے، اور اللہ گواہ ہے کہ وہ جھوٹے ہیں",
+      "textEnglish": "Have you not considered those who practice hypocrisy, saying to their brothers who have disbelieved among the People of the Scripture, \"If you are expelled, we will surely leave with you, and we will not obey, in regard to you, anyone - ever; and if you are fought, we will surely aid you.\" But Allah testifies that they are liars."
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "لَئِنْ أُخْرِجُوا۟ لَا يَخْرُجُونَ مَعَهُمْ وَلَئِن قُوتِلُوا۟ لَا يَنصُرُونَهُمْ وَلَئِن نَّصَرُوهُمْ لَيُوَلُّنَّ ٱلْأَدْبَٰرَ ثُمَّ لَا يُنصَرُونَ",
+      "textUrdu": "اگر وہ نکالے گئے تو یہ ان کے ساتھ نہ نکلیں گے، اور ان سے لڑائی ہوئی تو یہ ان کی مدد نہ کریں گے اگر ان کی مدد کی بھی تو ضرور پیٹھ پھیر کر بھاگیں گے، پھر مدد نہ پائیں گے،",
+      "textEnglish": "If they are expelled, they will not leave with them, and if they are fought, they will not aid them. And [even] if they should aid them, they will surely turn their backs; then [thereafter] they will not be aided."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "لَأَنتُمْ أَشَدُّ رَهْبَةًۭ فِى صُدُورِهِم مِّنَ ٱللَّهِ ۚ ذَٰلِكَ بِأَنَّهُمْ قَوْمٌۭ لَّا يَفْقَهُونَ",
+      "textUrdu": "بیشک ان کے دلوں میں اللہ سے زیادہ تمہارا ڈر ہے یہ اس لیے کہ وہ ناسمجھ لوگ ہیں",
+      "textEnglish": "You [believers] are more fearful within their breasts than Allah. That is because they are a people who do not understand."
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "لَا يُقَٰتِلُونَكُمْ جَمِيعًا إِلَّا فِى قُرًۭى مُّحَصَّنَةٍ أَوْ مِن وَرَآءِ جُدُرٍۭ ۚ بَأْسُهُم بَيْنَهُمْ شَدِيدٌۭ ۚ تَحْسَبُهُمْ جَمِيعًۭا وَقُلُوبُهُمْ شَتَّىٰ ۚ ذَٰلِكَ بِأَنَّهُمْ قَوْمٌۭ لَّا يَعْقِلُونَ",
+      "textUrdu": "یہ سب مل کر بھی تم سے نہ لڑیں گے مگر قلعہ بند شہروں میں یا دُھسّوں (شہر پناہ) کے پیچھے، آپس میں ان کی آنچ (جنگ) سخت ہے تم انہیں ایک جتھا سمجھو گے اور ان کے دل الگ الگ ہیں، یہ اس لیے کہ وہ بے عقل لوگ ہیں",
+      "textEnglish": "They will not fight you all except within fortified cities or from behind walls. Their violence among themselves is severe. You think they are together, but their hearts are diverse. That is because they are a people who do not reason."
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "كَمَثَلِ ٱلَّذِينَ مِن قَبْلِهِمْ قَرِيبًۭا ۖ ذَاقُوا۟ وَبَالَ أَمْرِهِمْ وَلَهُمْ عَذَابٌ أَلِيمٌۭ",
+      "textUrdu": "ان کی سی کہاوت جو ابھی قریب زمانہ میں ان سے پہلے تھے انہوں نے اپنے کام کا وبال چکھا اور ان کے لیے دردناک عذاب ہے",
+      "textEnglish": "[Theirs is] like the example of those shortly before them: they tasted the bad consequence of their affair, and they will have a painful punishment."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "كَمَثَلِ ٱلشَّيْطَٰنِ إِذْ قَالَ لِلْإِنسَٰنِ ٱكْفُرْ فَلَمَّا كَفَرَ قَالَ إِنِّى بَرِىٓءٌۭ مِّنكَ إِنِّىٓ أَخَافُ ٱللَّهَ رَبَّ ٱلْعَٰلَمِينَ",
+      "textUrdu": "شیطان کی کہاوت جب اس نے آدمی سے کہا کفر کر پھر جب اس نے کفر کرلیا بولا میں تجھ سے الگ ہوں میں اللہ سے ڈرتا ہوں جو سارے جہان کا رب",
+      "textEnglish": "[The hypocrites are] like the example of Satan when he says to man, \"Disbelieve.\" But when he disbelieves, he says, \"Indeed, I am disassociated from you. Indeed, I fear Allah, Lord of the worlds.\""
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "فَكَانَ عَٰقِبَتَهُمَآ أَنَّهُمَا فِى ٱلنَّارِ خَٰلِدَيْنِ فِيهَا ۚ وَذَٰلِكَ جَزَٰٓؤُا۟ ٱلظَّٰلِمِينَ",
+      "textUrdu": "تو ان دونوں کا انجام یہ ہوا کہ وہ دونوں آگ میں ہیں ہمیشہ اس میں رہے، اور ظالموں کو یہی سزا ہے،",
+      "textEnglish": "So the outcome for both of them is that they will be in the Fire, abiding eternally therein. And that is the recompense of the wrong-doers."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَلْتَنظُرْ نَفْسٌۭ مَّا قَدَّمَتْ لِغَدٍۢ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ خَبِيرٌۢ بِمَا تَعْمَلُونَ",
+      "textUrdu": "اے ایمان والو اللہ سے ڈرو اور ہر جان دیکھے کہ کل کے لیے آگے کیا بھیجا اور اللہ سے ڈرو بیشک اللہ کو تمہارے کاموں کی خبر ہے،",
+      "textEnglish": "O you who have believed, fear Allah. And let every soul look to what it has put forth for tomorrow - and fear Allah. Indeed, Allah is Acquainted with what you do."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "وَلَا تَكُونُوا۟ كَٱلَّذِينَ نَسُوا۟ ٱللَّهَ فَأَنسَىٰهُمْ أَنفُسَهُمْ ۚ أُو۟لَٰٓئِكَ هُمُ ٱلْفَٰسِقُونَ",
+      "textUrdu": "اور ان جیسے نہ ہو جو اللہ کو بھول بیٹھے تو اللہ نے انہیں بلا میں ڈالا کہ اپنی جانیں یاد نہ رہیں وہی فاسق ہیں،",
+      "textEnglish": "And be not like those who forgot Allah, so He made them forget themselves. Those are the defiantly disobedient."
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "لَا يَسْتَوِىٓ أَصْحَٰبُ ٱلنَّارِ وَأَصْحَٰبُ ٱلْجَنَّةِ ۚ أَصْحَٰبُ ٱلْجَنَّةِ هُمُ ٱلْفَآئِزُونَ",
+      "textUrdu": "دوزخ والے اور جنت والے برابر نہیں جنت والے ہی مراد کو پہنچے،",
+      "textEnglish": "Not equal are the companions of the Fire and the companions of Paradise. The companions of Paradise - they are the attainers [of success]."
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "لَوْ أَنزَلْنَا هَٰذَا ٱلْقُرْءَانَ عَلَىٰ جَبَلٍۢ لَّرَأَيْتَهُۥ خَٰشِعًۭا مُّتَصَدِّعًۭا مِّنْ خَشْيَةِ ٱللَّهِ ۚ وَتِلْكَ ٱلْأَمْثَٰلُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ",
+      "textUrdu": "اگر ہم یہ قرآن کسی پہاڑ پر اتارتے تو ضرور تو اسے دیکھتا جھکا ہوا پاش پاش ہوتا اللہ کے خوف سے اور یہ مثالیں لوگوں کے لیے ہم بیان فرماتے ہیں کہ وہ سوچیں،",
+      "textEnglish": "If We had sent down this Qur'an upon a mountain, you would have seen it humbled and coming apart from fear of Allah. And these examples We present to the people that perhaps they will give thought."
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَٰهَ إِلَّا هُوَ ۖ عَٰلِمُ ٱلْغَيْبِ وَٱلشَّهَٰدَةِ ۖ هُوَ ٱلرَّحْمَٰنُ ٱلرَّحِيمُ",
+      "textUrdu": "وہی اللہ ہے جس کے سوا کوئی معبود نہیں، ہر نہاں و عیاں کا جاننے والا وہی ہے بڑا مہربان رحمت والا،",
+      "textEnglish": "He is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Entirely Merciful, the Especially Merciful."
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَٰهَ إِلَّا هُوَ ٱلْمَلِكُ ٱلْقُدُّوسُ ٱلسَّلَٰمُ ٱلْمُؤْمِنُ ٱلْمُهَيْمِنُ ٱلْعَزِيزُ ٱلْجَبَّارُ ٱلْمُتَكَبِّرُ ۚ سُبْحَٰنَ ٱللَّهِ عَمَّا يُشْرِكُونَ",
+      "textUrdu": "وہی ہے اللہ جس کے سوا کوئی معبود نہیں بادشاہ نہایت پاک سلامتی دینے والا امان بخشنے والا حفاظت فرمانے والا عزت والا عظمت والا تکبر والا اللہ کو پاکی ہے ان کے شرک سے،",
+      "textEnglish": "He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him."
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "هُوَ ٱللَّهُ ٱلْخَٰلِقُ ٱلْبَارِئُ ٱلْمُصَوِّرُ ۖ لَهُ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ ۚ يُسَبِّحُ لَهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+      "textUrdu": "وہی ہے اللہ بنانے والا پیدا کرنے والا ہر ایک کو صورت دینے والا اسی کے ہیں سب اچھے نام اس کی پاکی بولتا ہے جو کچھ آسمانوں اور زمین میں ہے اور وہی عزت و حکمت والا ہے،",
+      "textEnglish": "He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names. Whatever is in the heavens and earth is exalting Him. And He is the Exalted in Might, the Wise."
+    }
+  ]
+}

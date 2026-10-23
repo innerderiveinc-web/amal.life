@@ -1,0 +1,34 @@
+{
+  "surahNumber": 106,
+  "nameArabic": "سُورَةُ قُرَيۡشٍ",
+  "nameTransliterated": "Quraish",
+  "nameEnglish": "Quraysh",
+  "revelationType": "MECCAN",
+  "ayahsCount": 4,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ لِإِيلَٰفِ قُرَيْشٍ",
+      "textUrdu": "اس لیے کہ قریش کو میل دلایا",
+      "textEnglish": "For the accustomed security of the Quraysh -"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "إِۦلَٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ",
+      "textUrdu": "ان کے جاڑے اور گرمی دونوں کے کوچ میں میل دلایا (رغبت دلائی)",
+      "textEnglish": "Their accustomed security [in] the caravan of winter and summer -"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْبَيْتِ",
+      "textUrdu": "تو انہیں چاہیے اس گھر کے رب کی بندگی کریں،",
+      "textEnglish": "Let them worship the Lord of this House,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍۢ وَءَامَنَهُم مِّنْ خَوْفٍۭ",
+      "textUrdu": "جس نے انہیں بھوک میں کھانا دیا، اور انہیں ایک بڑے خوف سے امان بخشا",
+      "textEnglish": "Who has fed them, [saving them] from hunger and made them safe, [saving them] from fear."
+    }
+  ]
+}

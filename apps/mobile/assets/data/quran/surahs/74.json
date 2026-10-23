@@ -1,0 +1,346 @@
+{
+  "surahNumber": 74,
+  "nameArabic": "سُورَةُ المُدَّثِّرِ",
+  "nameTransliterated": "Al-Muddaththir",
+  "nameEnglish": "The Cloaked One",
+  "revelationType": "MECCAN",
+  "ayahsCount": 56,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ يَٰٓأَيُّهَا ٱلْمُدَّثِّرُ",
+      "textUrdu": "اے بالا پوش اوڑھنے والے!",
+      "textEnglish": "O you who covers himself [with a garment],"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "قُمْ فَأَنذِرْ",
+      "textUrdu": "کھڑے ہوجاؤ پھر ڈر سناؤ",
+      "textEnglish": "Arise and warn"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَرَبَّكَ فَكَبِّرْ",
+      "textUrdu": "اور اپنے رب ہی کی بڑائی بولو",
+      "textEnglish": "And your Lord glorify"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَثِيَابَكَ فَطَهِّرْ",
+      "textUrdu": "اور اپنے کپڑے پاک رکھو",
+      "textEnglish": "And your clothing purify"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "وَٱلرُّجْزَ فَٱهْجُرْ",
+      "textUrdu": "اور بتوں سے دور رہو،",
+      "textEnglish": "And uncleanliness avoid"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "وَلَا تَمْنُن تَسْتَكْثِرُ",
+      "textUrdu": "اور زیادہ لینے کی نیت سے کسی پر احسان نہ کرو",
+      "textEnglish": "And do not confer favor to acquire more"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَلِرَبِّكَ فَٱصْبِرْ",
+      "textUrdu": "اور اپنے رب کے لیے صبر کیے رہو",
+      "textEnglish": "But for your Lord be patient."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "فَإِذَا نُقِرَ فِى ٱلنَّاقُورِ",
+      "textUrdu": "پھر جب صور پھونکا جائے گا",
+      "textEnglish": "And when the trumpet is blown,"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "فَذَٰلِكَ يَوْمَئِذٍۢ يَوْمٌ عَسِيرٌ",
+      "textUrdu": "تو وہ دن کڑا (سخت) دن ہے،",
+      "textEnglish": "That Day will be a difficult day"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "عَلَى ٱلْكَٰفِرِينَ غَيْرُ يَسِيرٍۢ",
+      "textUrdu": "کافروں پر آسان نہیں",
+      "textEnglish": "For the disbelievers - not easy."
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "ذَرْنِى وَمَنْ خَلَقْتُ وَحِيدًۭا",
+      "textUrdu": "اسے مجھ پر چھوڑ جسے میں نے اکیلا پیدا کیا",
+      "textEnglish": "Leave Me with the one I created alone"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "وَجَعَلْتُ لَهُۥ مَالًۭا مَّمْدُودًۭا",
+      "textUrdu": "اور اسے وسیع مال دیا",
+      "textEnglish": "And to whom I granted extensive wealth"
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "وَبَنِينَ شُهُودًۭا",
+      "textUrdu": "اور بیٹے دیے سامنے حاضر رہتے",
+      "textEnglish": "And children present [with him]"
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "وَمَهَّدتُّ لَهُۥ تَمْهِيدًۭا",
+      "textUrdu": "اور میں نے اس کے لیے طرح طرح کی تیاریاں کیں",
+      "textEnglish": "And spread [everything] before him, easing [his life]."
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "ثُمَّ يَطْمَعُ أَنْ أَزِيدَ",
+      "textUrdu": "پھر یہ طمع کرتا ہے کہ میں اور زیادہ دوں",
+      "textEnglish": "Then he desires that I should add more."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "كَلَّآ ۖ إِنَّهُۥ كَانَ لِءَايَٰتِنَا عَنِيدًۭا",
+      "textUrdu": "ہرگز نہیں وہ تو میری آیتوں سے عناد رکھتا ہے،",
+      "textEnglish": "No! Indeed, he has been toward Our verses obstinate."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "سَأُرْهِقُهُۥ صَعُودًا",
+      "textUrdu": "قریب ہے کہ میں اسے آگ کے پہاڑ صعود پر چڑھاؤں،",
+      "textEnglish": "I will cover him with arduous torment."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "إِنَّهُۥ فَكَّرَ وَقَدَّرَ",
+      "textUrdu": "بیشک وہ سوچا اور دل میں کچھ بات ٹھہرائی",
+      "textEnglish": "Indeed, he thought and deliberated."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "فَقُتِلَ كَيْفَ قَدَّرَ",
+      "textUrdu": "تو اس پر لعنت ہو کیسی ٹھہرائی،",
+      "textEnglish": "So may he be destroyed [for] how he deliberated."
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "ثُمَّ قُتِلَ كَيْفَ قَدَّرَ",
+      "textUrdu": "پھر اس پر لعنت ہو کیسی ٹھہرائی،",
+      "textEnglish": "Then may he be destroyed [for] how he deliberated."
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "ثُمَّ نَظَرَ",
+      "textUrdu": "پھر نظر اٹھا کر دیکھا،",
+      "textEnglish": "Then he considered [again];"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "ثُمَّ عَبَسَ وَبَسَرَ",
+      "textUrdu": "پھر تیوری چڑھائی اور منہ بگاڑا،",
+      "textEnglish": "Then he frowned and scowled;"
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "ثُمَّ أَدْبَرَ وَٱسْتَكْبَرَ",
+      "textUrdu": "پھر پیٹھ پھیری اور تکبر کیا،",
+      "textEnglish": "Then he turned back and was arrogant"
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "فَقَالَ إِنْ هَٰذَآ إِلَّا سِحْرٌۭ يُؤْثَرُ",
+      "textUrdu": "پھر بولا یہ تو وہی جادو ہے اگلوں سے سیکھا،",
+      "textEnglish": "And said, \"This is not but magic imitated [from others]."
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "إِنْ هَٰذَآ إِلَّا قَوْلُ ٱلْبَشَرِ",
+      "textUrdu": "یہ نہیں مگر آدمی کا کلام",
+      "textEnglish": "This is not but the word of a human being.\""
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "سَأُصْلِيهِ سَقَرَ",
+      "textUrdu": "کوئی دم جاتا ہے کہ میں اسے دوزخ میں دھنساتا ہوں،",
+      "textEnglish": "I will drive him into Saqar."
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا سَقَرُ",
+      "textUrdu": "اور تم نے کیا جانا دوزخ کیا ہے،",
+      "textEnglish": "And what can make you know what is Saqar?"
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "لَا تُبْقِى وَلَا تَذَرُ",
+      "textUrdu": "نہ چھوڑے نہ لگی رکھے",
+      "textEnglish": "It lets nothing remain and leaves nothing [unburned],"
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "لَوَّاحَةٌۭ لِّلْبَشَرِ",
+      "textUrdu": "آدمی کی کھال اتار لیتی ہے",
+      "textEnglish": "Blackening the skins."
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "عَلَيْهَا تِسْعَةَ عَشَرَ",
+      "textUrdu": "اس پر اُنیس داروغہ ہیں",
+      "textEnglish": "Over it are nineteen [angels]."
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "وَمَا جَعَلْنَآ أَصْحَٰبَ ٱلنَّارِ إِلَّا مَلَٰٓئِكَةًۭ ۙ وَمَا جَعَلْنَا عِدَّتَهُمْ إِلَّا فِتْنَةًۭ لِّلَّذِينَ كَفَرُوا۟ لِيَسْتَيْقِنَ ٱلَّذِينَ أُوتُوا۟ ٱلْكِتَٰبَ وَيَزْدَادَ ٱلَّذِينَ ءَامَنُوٓا۟ إِيمَٰنًۭا ۙ وَلَا يَرْتَابَ ٱلَّذِينَ أُوتُوا۟ ٱلْكِتَٰبَ وَٱلْمُؤْمِنُونَ ۙ وَلِيَقُولَ ٱلَّذِينَ فِى قُلُوبِهِم مَّرَضٌۭ وَٱلْكَٰفِرُونَ مَاذَآ أَرَادَ ٱللَّهُ بِهَٰذَا مَثَلًۭا ۚ كَذَٰلِكَ يُضِلُّ ٱللَّهُ مَن يَشَآءُ وَيَهْدِى مَن يَشَآءُ ۚ وَمَا يَعْلَمُ جُنُودَ رَبِّكَ إِلَّا هُوَ ۚ وَمَا هِىَ إِلَّا ذِكْرَىٰ لِلْبَشَرِ",
+      "textUrdu": "اور ہم نے دوزخ کے داروغہ نہ کیے مگر فرشتے، اور ہم نے ان کی یہ گنتی نہ رکھی مگر کافروں کی جانچ کو اس لیے کہ کتاب والوں کو یقین آئے اور ایمان والوں کا ایمان بڑھے اور کتاب والوں اور مسلمانوں کو کوئی شک نہ رہے اور دل کے روگی (مریض) اور کافر کہیں اس اچنبھے کی بات میں اللہ کا کیا مطلب ہے، یونہی اللہ گمراہ کرتا ہے جسے چاہے اور ہدایت فرماتا ہے جسے چاہے، اور تمہارے رب کے لشکروں کو اس کے سوا کوئی نہیں جانتا، اور وہ تو نہیں مگر آدمی کے لیے نصیحت،",
+      "textEnglish": "And We have not made the keepers of the Fire except angels. And We have not made their number except as a trial for those who disbelieve - that those who were given the Scripture will be convinced and those who have believed will increase in faith and those who were given the Scripture and the believers will not doubt and that those in whose hearts is hypocrisy and the disbelievers will say, \"What does Allah intend by this as an example?\" Thus does Allah leave astray whom He wills and guides whom He wills. And none knows the soldiers of your Lord except Him. And mention of the Fire is not but a reminder to humanity."
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "كَلَّا وَٱلْقَمَرِ",
+      "textUrdu": "ہاں ہاں چاند کی قسم،",
+      "textEnglish": "No! By the moon"
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "وَٱلَّيْلِ إِذْ أَدْبَرَ",
+      "textUrdu": "اور رات کی جب پیٹھ پھیرے،",
+      "textEnglish": "And [by] the night when it departs"
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "وَٱلصُّبْحِ إِذَآ أَسْفَرَ",
+      "textUrdu": "اور صبح کی جب اجا لا ڈالے",
+      "textEnglish": "And [by] the morning when it brightens,"
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "إِنَّهَا لَإِحْدَى ٱلْكُبَرِ",
+      "textUrdu": "بیشک دوزخ بہت بڑی چیزوں میں کی ایک ہے،",
+      "textEnglish": "Indeed, the Fire is of the greatest [afflictions]"
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "نَذِيرًۭا لِّلْبَشَرِ",
+      "textUrdu": "آدمیوں کو ڈراؤ،",
+      "textEnglish": "As a warning to humanity -"
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "لِمَن شَآءَ مِنكُمْ أَن يَتَقَدَّمَ أَوْ يَتَأَخَّرَ",
+      "textUrdu": "اسے جو تم میں چاہے، کہ آگے آئے یا پیچھے رہے",
+      "textEnglish": "To whoever wills among you to proceed or stay behind."
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "كُلُّ نَفْسٍۭ بِمَا كَسَبَتْ رَهِينَةٌ",
+      "textUrdu": "ہر جان اپنی کرنی (اعمال) میں گروی ہے،",
+      "textEnglish": "Every soul, for what it has earned, will be retained"
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "إِلَّآ أَصْحَٰبَ ٱلْيَمِينِ",
+      "textUrdu": "مگر دہنی طرف والے",
+      "textEnglish": "Except the companions of the right,"
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "فِى جَنَّٰتٍۢ يَتَسَآءَلُونَ",
+      "textUrdu": "باغوں میں پوچھتے ہیں،",
+      "textEnglish": "[Who will be] in gardens, questioning each other"
+    },
+    {
+      "ayahNumber": 41,
+      "textArabic": "عَنِ ٱلْمُجْرِمِينَ",
+      "textUrdu": "مجرموں سے،",
+      "textEnglish": "About the criminals,"
+    },
+    {
+      "ayahNumber": 42,
+      "textArabic": "مَا سَلَكَكُمْ فِى سَقَرَ",
+      "textUrdu": "تمہیں کیا بات دوزخ میں لے گئی،",
+      "textEnglish": "[And asking them], \"What put you into Saqar?\""
+    },
+    {
+      "ayahNumber": 43,
+      "textArabic": "قَالُوا۟ لَمْ نَكُ مِنَ ٱلْمُصَلِّينَ",
+      "textUrdu": "وہ بولے ہم نماز نہ پڑھتے تھے،",
+      "textEnglish": "They will say, \"We were not of those who prayed,"
+    },
+    {
+      "ayahNumber": 44,
+      "textArabic": "وَلَمْ نَكُ نُطْعِمُ ٱلْمِسْكِينَ",
+      "textUrdu": "اور مسکین کو کھانا نہ دیتے تھے",
+      "textEnglish": "Nor did we used to feed the poor."
+    },
+    {
+      "ayahNumber": 45,
+      "textArabic": "وَكُنَّا نَخُوضُ مَعَ ٱلْخَآئِضِينَ",
+      "textUrdu": "اور بیہودہ فکر والوں کے ساتھ بیہودہ فکریں کرتے تھے،",
+      "textEnglish": "And we used to enter into vain discourse with those who engaged [in it],"
+    },
+    {
+      "ayahNumber": 46,
+      "textArabic": "وَكُنَّا نُكَذِّبُ بِيَوْمِ ٱلدِّينِ",
+      "textUrdu": "اور ہم انصاف کے دن کو جھٹلاتے رہے،",
+      "textEnglish": "And we used to deny the Day of Recompense"
+    },
+    {
+      "ayahNumber": 47,
+      "textArabic": "حَتَّىٰٓ أَتَىٰنَا ٱلْيَقِينُ",
+      "textUrdu": "یہاں تک کہ ہمیں موت آئی،",
+      "textEnglish": "Until there came to us the certainty.\""
+    },
+    {
+      "ayahNumber": 48,
+      "textArabic": "فَمَا تَنفَعُهُمْ شَفَٰعَةُ ٱلشَّٰفِعِينَ",
+      "textUrdu": "تو انہیں سفارشیوں کی سفارش کام نہ دے گی",
+      "textEnglish": "So there will not benefit them the intercession of [any] intercessors."
+    },
+    {
+      "ayahNumber": 49,
+      "textArabic": "فَمَا لَهُمْ عَنِ ٱلتَّذْكِرَةِ مُعْرِضِينَ",
+      "textUrdu": "تو انہیں کیا ہوا نصیحت سے منہ پھیرتے ہیں",
+      "textEnglish": "Then what is [the matter] with them that they are, from the reminder, turning away"
+    },
+    {
+      "ayahNumber": 50,
+      "textArabic": "كَأَنَّهُمْ حُمُرٌۭ مُّسْتَنفِرَةٌۭ",
+      "textUrdu": "گویا وہ بھڑکے ہوئے گدھے ہوں،",
+      "textEnglish": "As if they were alarmed donkeys"
+    },
+    {
+      "ayahNumber": 51,
+      "textArabic": "فَرَّتْ مِن قَسْوَرَةٍۭ",
+      "textUrdu": "کہ شیر سے بھاگے ہوں",
+      "textEnglish": "Fleeing from a lion?"
+    },
+    {
+      "ayahNumber": 52,
+      "textArabic": "بَلْ يُرِيدُ كُلُّ ٱمْرِئٍۢ مِّنْهُمْ أَن يُؤْتَىٰ صُحُفًۭا مُّنَشَّرَةًۭ",
+      "textUrdu": "بلکہ ان میں کا ہر شخص چاہتا ہے کہ کھلے صحیفے اس کے ہاتھ میں دے دیے جائیں",
+      "textEnglish": "Rather, every person among them desires that he would be given scriptures spread about."
+    },
+    {
+      "ayahNumber": 53,
+      "textArabic": "كَلَّا ۖ بَل لَّا يَخَافُونَ ٱلْءَاخِرَةَ",
+      "textUrdu": "ہرگز نہیں بلکہ ان کو آخرت کا ڈر نہیں",
+      "textEnglish": "No! But they do not fear the Hereafter."
+    },
+    {
+      "ayahNumber": 54,
+      "textArabic": "كَلَّآ إِنَّهُۥ تَذْكِرَةٌۭ",
+      "textUrdu": "ہاں ہاں بیشک وہ نصیحت ہے،",
+      "textEnglish": "No! Indeed, the Qur'an is a reminder"
+    },
+    {
+      "ayahNumber": 55,
+      "textArabic": "فَمَن شَآءَ ذَكَرَهُۥ",
+      "textUrdu": "تو جو چاہے اس سے نصیحت لے،",
+      "textEnglish": "Then whoever wills will remember it."
+    },
+    {
+      "ayahNumber": 56,
+      "textArabic": "وَمَا يَذْكُرُونَ إِلَّآ أَن يَشَآءَ ٱللَّهُ ۚ هُوَ أَهْلُ ٱلتَّقْوَىٰ وَأَهْلُ ٱلْمَغْفِرَةِ",
+      "textUrdu": "اور وہ کیا نصیحت مانیں مگر جب اللہ چاہے، وہی ہے ڈرنے کے لائق اور اسی کی شان ہے مغفرت فرمانا،",
+      "textEnglish": "And they will not remember except that Allah wills. He is worthy of fear and adequate for [granting] forgiveness."
+    }
+  ]
+}

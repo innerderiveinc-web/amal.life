@@ -24,6 +24,35 @@ export const QuranScreen: React.FC = () => {
   const [playingKey, setPlayingKey] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'WISDOM' | 'SURAHS'>('WISDOM');
 
+  // Surah In-App Reader State
+  const [selectedSurah, setSelectedSurah] = useState<QuranSurahMeta | null>(null);
+  const [surahVerses, setSurahVerses] = useState<Array<{ ayahNumber: number; textArabic: string; textUrdu: string }>>([]);
+  const [isLoadingVerses, setIsLoadingVerses] = useState<boolean>(false);
+
+  const openSurahReader = async (meta: QuranSurahMeta) => {
+    setSelectedSurah(meta);
+    setSurahVerses([]);
+    setIsLoadingVerses(true);
+    try {
+      const res = await fetch(`https://api.alquran.cloud/v1/surah/${meta.number}/editions/quran-uthmani,ur.kanzuliman`);
+      const data = await res.json();
+      if (data.code === 200 && Array.isArray(data.data) && data.data.length >= 2) {
+        const uthmani = data.data[0];
+        const urdu = data.data[1];
+        const verses = uthmani.ayahs.map((ayah: any, idx: number) => ({
+          ayahNumber: ayah.numberInSurah,
+          textArabic: ayah.text,
+          textUrdu: urdu.ayahs[idx]?.text || '',
+        }));
+        setSurahVerses(verses);
+      }
+    } catch (e) {
+      console.warn('Failed to load surah verses:', e);
+    } finally {
+      setIsLoadingVerses(false);
+    }
+  };
+
   const themes = [
     { id: 'ALL', label: 'تمام آیات' },
     { id: 'IKHLAS', label: 'اخلاص و نیت' },
@@ -208,7 +237,12 @@ export const QuranScreen: React.FC = () => {
         {activeTab === 'SURAHS' && (
           <View style={styles.surahsContainer}>
             {filteredSurahs.map((meta) => (
-              <View key={meta.number} style={styles.surahRow}>
+              <TouchableOpacity
+                key={meta.number}
+                style={styles.surahRow}
+                onPress={() => openSurahReader(meta)}
+                activeOpacity={0.7}
+              >
                 <View style={styles.surahNumberCircle}>
                   <Text style={styles.surahNumberText}>{meta.number}</Text>
                 </View>
@@ -219,11 +253,52 @@ export const QuranScreen: React.FC = () => {
                   </Text>
                 </View>
                 <Text style={styles.surahArabicTitle}>{meta.nameArabic}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         )}
       </ScrollView>
+
+      {/* Surah In-App Reader Modal */}
+      {selectedSurah && (
+        <Modal visible={!!selectedSurah} transparent animationType="slide">
+          <View style={styles.modalOverlay}>
+            <View style={[styles.modalContent, { maxHeight: '90%' }]}>
+              <View style={styles.modalHeader}>
+                <View>
+                  <Text style={styles.modalTitle}>
+                    {selectedSurah.nameArabic} ({selectedSurah.nameTransliterated})
+                  </Text>
+                  <Text style={{ fontSize: 12, color: '#64748B' }}>
+                    {selectedSurah.nameUrdu} • {selectedSurah.ayahsCount} آیات • ترجمہ کنز الایمان
+                  </Text>
+                </View>
+                <TouchableOpacity onPress={() => setSelectedSurah(null)}>
+                  <Text style={styles.modalClose}>✕</Text>
+                </TouchableOpacity>
+              </View>
+
+              <ScrollView style={styles.modalBody}>
+                {isLoadingVerses ? (
+                  <View style={{ padding: 30, alignItems: 'center' }}>
+                    <Text style={{ color: '#065F46', fontWeight: 'bold' }}>سورت مبارکہ لوڈ ہو رہی ہے...</Text>
+                  </View>
+                ) : (
+                  surahVerses.map((v) => (
+                    <View key={v.ayahNumber} style={[styles.modalSection, { paddingBottom: 16, borderBottomWidth: 1, borderBottomColor: '#E2E8F0' }]}>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
+                        <Text style={{ fontSize: 11, fontWeight: '700', color: '#065F46' }}>آیت {v.ayahNumber}</Text>
+                      </View>
+                      <Text style={[styles.modalArabic, { textAlign: 'right', marginBottom: 8 }]}>{v.textArabic}</Text>
+                      <Text style={[styles.modalUrdu, { textAlign: 'right', color: '#1E293B' }]}>{v.textUrdu}</Text>
+                    </View>
+                  ))
+                )}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+      )}
 
       {/* Deep Tafseer Study Modal */}
       {activeCard && (

@@ -1,0 +1,274 @@
+{
+  "surahNumber": 70,
+  "nameArabic": "سُورَةُ المَعَارِجِ",
+  "nameTransliterated": "Al-Ma'aarij",
+  "nameEnglish": "The Ascending Stairways",
+  "revelationType": "MECCAN",
+  "ayahsCount": 44,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ سَأَلَ سَآئِلٌۢ بِعَذَابٍۢ وَاقِعٍۢ",
+      "textUrdu": "ایک مانگنے والا وہ عذاب مانگتا ہے،",
+      "textEnglish": "A supplicant asked for a punishment bound to happen"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "لِّلْكَٰفِرِينَ لَيْسَ لَهُۥ دَافِعٌۭ",
+      "textUrdu": "جو کافروں پر ہونے والا ہے، اس کا کوئی ٹالنے والا نہیں،",
+      "textEnglish": "To the disbelievers; of it there is no preventer."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "مِّنَ ٱللَّهِ ذِى ٱلْمَعَارِجِ",
+      "textUrdu": "وہ ہوگا اللہ کی طرف سے جو بلندیوں کا مالک ہے",
+      "textEnglish": "[It is] from Allah, owner of the ways of ascent."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "تَعْرُجُ ٱلْمَلَٰٓئِكَةُ وَٱلرُّوحُ إِلَيْهِ فِى يَوْمٍۢ كَانَ مِقْدَارُهُۥ خَمْسِينَ أَلْفَ سَنَةٍۢ",
+      "textUrdu": "ملائکہ اور جبریل اس کی بارگاہ کی طرف عروج کرتے ہیں وہ عذاب اس دن ہوگا جس کی مقدار پچاس ہزار برس ہے",
+      "textEnglish": "The angels and the Spirit will ascend to Him during a Day the extent of which is fifty thousand years."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَٱصْبِرْ صَبْرًۭا جَمِيلًا",
+      "textUrdu": "تو تم اچھی طرح صبر کرو،",
+      "textEnglish": "So be patient with gracious patience."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "إِنَّهُمْ يَرَوْنَهُۥ بَعِيدًۭا",
+      "textUrdu": "وہ اسے دور سمجھ رہے ہیں",
+      "textEnglish": "Indeed, they see it [as] distant,"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَنَرَىٰهُ قَرِيبًۭا",
+      "textUrdu": "اور ہم اسے نزدیک دیکھ رہے ہیں",
+      "textEnglish": "But We see it [as] near."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "يَوْمَ تَكُونُ ٱلسَّمَآءُ كَٱلْمُهْلِ",
+      "textUrdu": "جس دن آسمان ہوگا جیسی گلی چاندی،",
+      "textEnglish": "On the Day the sky will be like murky oil,"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَتَكُونُ ٱلْجِبَالُ كَٱلْعِهْنِ",
+      "textUrdu": "اور پہاڑ ایسے ہلکے ہوجائیں گے جیسے اون",
+      "textEnglish": "And the mountains will be like wool,"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَلَا يَسْـَٔلُ حَمِيمٌ حَمِيمًۭا",
+      "textUrdu": "اور کوئی دوست کسی دوست کی بات نہ پوچھے گا",
+      "textEnglish": "And no friend will ask [anything of] a friend,"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "يُبَصَّرُونَهُمْ ۚ يَوَدُّ ٱلْمُجْرِمُ لَوْ يَفْتَدِى مِنْ عَذَابِ يَوْمِئِذٍۭ بِبَنِيهِ",
+      "textUrdu": "ہوں گے انہیں دیکھتے ہوئے مجرم آرزو کرے گا، کاش! اس دن کے عذاب سے چھٹنے کے بدلے میں دے دے اپنے بیٹے،",
+      "textEnglish": "They will be shown each other. The criminal will wish that he could be ransomed from the punishment of that Day by his children"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "وَصَٰحِبَتِهِۦ وَأَخِيهِ",
+      "textUrdu": "اور اپنی جورو اور اپنا بھائی،",
+      "textEnglish": "And his wife and his brother"
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "وَفَصِيلَتِهِ ٱلَّتِى تُـْٔوِيهِ",
+      "textUrdu": "اور اپنا کنبہ جس میں اس کی جگہ ہے،",
+      "textEnglish": "And his nearest kindred who shelter him"
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "وَمَن فِى ٱلْأَرْضِ جَمِيعًۭا ثُمَّ يُنجِيهِ",
+      "textUrdu": "اور جتنے زمین میں ہیں سب پھر یہ بدلہ دنیا اسے بچالے،",
+      "textEnglish": "And whoever is on earth entirely [so] then it could save him."
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "كَلَّآ ۖ إِنَّهَا لَظَىٰ",
+      "textUrdu": "ہرگز نہیں وہ تو بھڑکتی آگ ہے،",
+      "textEnglish": "No! Indeed, it is the Flame [of Hell],"
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "نَزَّاعَةًۭ لِّلشَّوَىٰ",
+      "textUrdu": "کھال اتار لینے والی بلارہی ہے",
+      "textEnglish": "A remover of exteriors."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "تَدْعُوا۟ مَنْ أَدْبَرَ وَتَوَلَّىٰ",
+      "textUrdu": "اس کو جس نے پیٹھ دی اور منہ پھیرا",
+      "textEnglish": "It invites he who turned his back [on truth] and went away [from obedience]"
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "وَجَمَعَ فَأَوْعَىٰٓ",
+      "textUrdu": "اور جوڑ کر سینت رکھا (محفوظ کرلیا)",
+      "textEnglish": "And collected [wealth] and hoarded."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "۞ إِنَّ ٱلْإِنسَٰنَ خُلِقَ هَلُوعًا",
+      "textUrdu": "بیشک آدمی بنایا گیا ہے بڑا بے صبرا حریص،",
+      "textEnglish": "Indeed, mankind was created anxious:"
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "إِذَا مَسَّهُ ٱلشَّرُّ جَزُوعًۭا",
+      "textUrdu": "جب اسے برائی پہنچے تو سخت گھبرانے والا،",
+      "textEnglish": "When evil touches him, impatient,"
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "وَإِذَا مَسَّهُ ٱلْخَيْرُ مَنُوعًا",
+      "textUrdu": "اور جب بھلائی پہنچے تو روک رکھنے والا",
+      "textEnglish": "And when good touches him, withholding [of it],"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "إِلَّا ٱلْمُصَلِّينَ",
+      "textUrdu": "مگر نمازی،",
+      "textEnglish": "Except the observers of prayer -"
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "ٱلَّذِينَ هُمْ عَلَىٰ صَلَاتِهِمْ دَآئِمُونَ",
+      "textUrdu": "جو اپنی نماز کے پابند ہیں",
+      "textEnglish": "Those who are constant in their prayer"
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "وَٱلَّذِينَ فِىٓ أَمْوَٰلِهِمْ حَقٌّۭ مَّعْلُومٌۭ",
+      "textUrdu": "اور وہ جن کے مال میں ایک معلوم حق ہے",
+      "textEnglish": "And those within whose wealth is a known right"
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "لِّلسَّآئِلِ وَٱلْمَحْرُومِ",
+      "textUrdu": "اس کے لیے جو مانگے اور جو مانگ بھی نہ سکے تو محروم رہے",
+      "textEnglish": "For the petitioner and the deprived -"
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "وَٱلَّذِينَ يُصَدِّقُونَ بِيَوْمِ ٱلدِّينِ",
+      "textUrdu": "اور ہو جو انصاف کا دن سچ جانتے ہیں",
+      "textEnglish": "And those who believe in the Day of Recompense"
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "وَٱلَّذِينَ هُم مِّنْ عَذَابِ رَبِّهِم مُّشْفِقُونَ",
+      "textUrdu": "اور وہ جو اپنے رب کے عذاب سے ڈر رہے ہیں،",
+      "textEnglish": "And those who are fearful of the punishment of their Lord -"
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "إِنَّ عَذَابَ رَبِّهِمْ غَيْرُ مَأْمُونٍۢ",
+      "textUrdu": "بیشک ان کے رب کا عذاب نڈر ہونے کی چیز نہیں",
+      "textEnglish": "Indeed, the punishment of their Lord is not that from which one is safe -"
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "وَٱلَّذِينَ هُمْ لِفُرُوجِهِمْ حَٰفِظُونَ",
+      "textUrdu": "اور ہو جو اپنی شرمگاہوں کی حفاظت کرتے ہیں،",
+      "textEnglish": "And those who guard their private parts"
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "إِلَّا عَلَىٰٓ أَزْوَٰجِهِمْ أَوْ مَا مَلَكَتْ أَيْمَٰنُهُمْ فَإِنَّهُمْ غَيْرُ مَلُومِينَ",
+      "textUrdu": "مگر اپنی بیبیوں یا اپنے ہاتھ کے مال کنیزوں سے کہ ان پر کچھ ملامت نہیں،",
+      "textEnglish": "Except from their wives or those their right hands possess, for indeed, they are not to be blamed -"
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "فَمَنِ ٱبْتَغَىٰ وَرَآءَ ذَٰلِكَ فَأُو۟لَٰٓئِكَ هُمُ ٱلْعَادُونَ",
+      "textUrdu": "تو جو ان دو کے سوا اور چاہے وہی حد سے بڑھنے والے ہیں",
+      "textEnglish": "But whoever seeks beyond that, then they are the transgressors -"
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "وَٱلَّذِينَ هُمْ لِأَمَٰنَٰتِهِمْ وَعَهْدِهِمْ رَٰعُونَ",
+      "textUrdu": "اور وہ جو اپنی امانتوں اور اپنے عہد کی حفاظت کرتے ہیں",
+      "textEnglish": "And those who are to their trusts and promises attentive"
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "وَٱلَّذِينَ هُم بِشَهَٰدَٰتِهِمْ قَآئِمُونَ",
+      "textUrdu": "اور وہ جو اپنی گواہیوں پر قائم ہیں",
+      "textEnglish": "And those who are in their testimonies upright"
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "وَٱلَّذِينَ هُمْ عَلَىٰ صَلَاتِهِمْ يُحَافِظُونَ",
+      "textUrdu": "اور وہ جو اپنی نماز کی حفاظت کرتے ہیں",
+      "textEnglish": "And those who [carefully] maintain their prayer:"
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "أُو۟لَٰٓئِكَ فِى جَنَّٰتٍۢ مُّكْرَمُونَ",
+      "textUrdu": "یہ ہیں جن کا باغوں میں اعزاز ہوگا",
+      "textEnglish": "They will be in gardens, honored."
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "فَمَالِ ٱلَّذِينَ كَفَرُوا۟ قِبَلَكَ مُهْطِعِينَ",
+      "textUrdu": "تو ان کافروں کو کیا ہوا تمہاری طرف تیز نگاہ سے دیکھتے ہیں",
+      "textEnglish": "So what is [the matter] with those who disbelieve, hastening [from] before you, [O Muhammad],"
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "عَنِ ٱلْيَمِينِ وَعَنِ ٱلشِّمَالِ عِزِينَ",
+      "textUrdu": "داہنے اور بائیں گروہ کے گروہ،",
+      "textEnglish": "[To sit] on [your] right and [your] left in separate groups?"
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "أَيَطْمَعُ كُلُّ ٱمْرِئٍۢ مِّنْهُمْ أَن يُدْخَلَ جَنَّةَ نَعِيمٍۢ",
+      "textUrdu": "کیا ان میں ہر شخص یہ طمع کرتا ہے کہ چین کے باغ میں داخل کیا جائے،",
+      "textEnglish": "Does every person among them aspire to enter a garden of pleasure?"
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "كَلَّآ ۖ إِنَّا خَلَقْنَٰهُم مِّمَّا يَعْلَمُونَ",
+      "textUrdu": "ہرگز نہیں، بیشک ہم نے انہیں اس چیز سے بنایا جسے جانتے ہیں",
+      "textEnglish": "No! Indeed, We have created them from that which they know."
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "فَلَآ أُقْسِمُ بِرَبِّ ٱلْمَشَٰرِقِ وَٱلْمَغَٰرِبِ إِنَّا لَقَٰدِرُونَ",
+      "textUrdu": "تو مجھے قسم ہے اس کی جو سب پُوربوں سب پچھموں کا مالک ہے کہ ضرور ہم قادر ہیں،",
+      "textEnglish": "So I swear by the Lord of [all] risings and settings that indeed We are able"
+    },
+    {
+      "ayahNumber": 41,
+      "textArabic": "عَلَىٰٓ أَن نُّبَدِّلَ خَيْرًۭا مِّنْهُمْ وَمَا نَحْنُ بِمَسْبُوقِينَ",
+      "textUrdu": "کہ ان سے اچھے بدل دیں اور ہم سے کوئی نکل کر نہیں جاسکتا",
+      "textEnglish": "To replace them with better than them; and We are not to be outdone."
+    },
+    {
+      "ayahNumber": 42,
+      "textArabic": "فَذَرْهُمْ يَخُوضُوا۟ وَيَلْعَبُوا۟ حَتَّىٰ يُلَٰقُوا۟ يَوْمَهُمُ ٱلَّذِى يُوعَدُونَ",
+      "textUrdu": "تو انہیں چھوڑ دو ان کی بیہودگیوں میں پڑے اور کھیلتے ہوئے یہاں تک کہ اپنے اس دن سے ملیں جس کا انہیں وعدہ دیا جاتا ہے،",
+      "textEnglish": "So leave them to converse vainly and amuse themselves until they meet their Day which they are promised -"
+    },
+    {
+      "ayahNumber": 43,
+      "textArabic": "يَوْمَ يَخْرُجُونَ مِنَ ٱلْأَجْدَاثِ سِرَاعًۭا كَأَنَّهُمْ إِلَىٰ نُصُبٍۢ يُوفِضُونَ",
+      "textUrdu": "جس دن قبروں سے نکلیں گے جھپٹتے ہوئے گویا وہ نشانیوں کی طرف لپک رہے ہیں",
+      "textEnglish": "The Day they will emerge from the graves rapidly as if they were, toward an erected idol, hastening."
+    },
+    {
+      "ayahNumber": 44,
+      "textArabic": "خَٰشِعَةً أَبْصَٰرُهُمْ تَرْهَقُهُمْ ذِلَّةٌۭ ۚ ذَٰلِكَ ٱلْيَوْمُ ٱلَّذِى كَانُوا۟ يُوعَدُونَ",
+      "textUrdu": "آنکھیں نیچی کیے ہوئے ان پر ذلت سوار، یہ ہے ان کا وہ دن جس کا ان سے وعدہ تھا",
+      "textEnglish": "Their eyes humbled, humiliation will cover them. That is the Day which they had been promised."
+    }
+  ]
+}

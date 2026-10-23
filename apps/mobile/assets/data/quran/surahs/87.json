@@ -1,0 +1,124 @@
+{
+  "surahNumber": 87,
+  "nameArabic": "سُورَةُ الأَعۡلَىٰ",
+  "nameTransliterated": "Al-A'laa",
+  "nameEnglish": "The Most High",
+  "revelationType": "MECCAN",
+  "ayahsCount": 19,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ سَبِّحِ ٱسْمَ رَبِّكَ ٱلْأَعْلَى",
+      "textUrdu": "اپنے رب کے نام کی پاکی بولو جب سے بلند ہے",
+      "textEnglish": "Exalt the name of your Lord, the Most High,"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "ٱلَّذِى خَلَقَ فَسَوَّىٰ",
+      "textUrdu": "جس نے بناکر ٹھیک کیا",
+      "textEnglish": "Who created and proportioned"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَٱلَّذِى قَدَّرَ فَهَدَىٰ",
+      "textUrdu": "اور جس نے اندازہ پر رکھ کر راہ دی",
+      "textEnglish": "And who destined and [then] guided"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَٱلَّذِىٓ أَخْرَجَ ٱلْمَرْعَىٰ",
+      "textUrdu": "اور جس نے چارہ نکالا،",
+      "textEnglish": "And who brings out the pasture"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَجَعَلَهُۥ غُثَآءً أَحْوَىٰ",
+      "textUrdu": "پھر اسے خشک سیاہ کردیا،",
+      "textEnglish": "And [then] makes it black stubble."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "سَنُقْرِئُكَ فَلَا تَنسَىٰٓ",
+      "textUrdu": "اب ہم تمہیں پڑھائیں گے کہ تم نہ بھولو گے",
+      "textEnglish": "We will make you recite, [O Muhammad], and you will not forget,"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "إِلَّا مَا شَآءَ ٱللَّهُ ۚ إِنَّهُۥ يَعْلَمُ ٱلْجَهْرَ وَمَا يَخْفَىٰ",
+      "textUrdu": "مگر جو اللہ چاہے بیشک وہ جانتا ہے ہر کھلے اور چھپے کو،",
+      "textEnglish": "Except what Allah should will. Indeed, He knows what is declared and what is hidden."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَنُيَسِّرُكَ لِلْيُسْرَىٰ",
+      "textUrdu": "اور ہم تمہارے لیے آسانی کا سامان کردیں گے",
+      "textEnglish": "And We will ease you toward ease."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "فَذَكِّرْ إِن نَّفَعَتِ ٱلذِّكْرَىٰ",
+      "textUrdu": "تو تم نصیحت فرماؤ اگر نصیحت کام دے",
+      "textEnglish": "So remind, if the reminder should benefit;"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "سَيَذَّكَّرُ مَن يَخْشَىٰ",
+      "textUrdu": "عنقریب نصیحت مانے گا جو ڈرتا ہے",
+      "textEnglish": "He who fears [Allah] will be reminded."
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "وَيَتَجَنَّبُهَا ٱلْأَشْقَى",
+      "textUrdu": "اور اس سے وہ بڑا بدبخت دور رہے گا،",
+      "textEnglish": "But the wretched one will avoid it -"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "ٱلَّذِى يَصْلَى ٱلنَّارَ ٱلْكُبْرَىٰ",
+      "textUrdu": "جو سب سے بڑی آگ میں جائے گا",
+      "textEnglish": "[He] who will [enter and] burn in the greatest Fire,"
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "ثُمَّ لَا يَمُوتُ فِيهَا وَلَا يَحْيَىٰ",
+      "textUrdu": "پھر نہ اس میں مرے اور نہ جیے",
+      "textEnglish": "Neither dying therein nor living."
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "قَدْ أَفْلَحَ مَن تَزَكَّىٰ",
+      "textUrdu": "بیشک مراد کو پہنچا جو ستھرا ہوا",
+      "textEnglish": "He has certainly succeeded who purifies himself"
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "وَذَكَرَ ٱسْمَ رَبِّهِۦ فَصَلَّىٰ",
+      "textUrdu": "اور اپنے رب کا نام لے کر نماز پڑھی",
+      "textEnglish": "And mentions the name of his Lord and prays."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "بَلْ تُؤْثِرُونَ ٱلْحَيَوٰةَ ٱلدُّنْيَا",
+      "textUrdu": "بلکہ تم جیتی دنیا کو ترجیح دیتے ہو",
+      "textEnglish": "But you prefer the worldly life,"
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "وَٱلْءَاخِرَةُ خَيْرٌۭ وَأَبْقَىٰٓ",
+      "textUrdu": "اور آخرت بہتر اور باقی رہنے والی،",
+      "textEnglish": "While the Hereafter is better and more enduring."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "إِنَّ هَٰذَا لَفِى ٱلصُّحُفِ ٱلْأُولَىٰ",
+      "textUrdu": "بیشک یہ اگلے صحیفوں میں ہے",
+      "textEnglish": "Indeed, this is in the former scriptures,"
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "صُحُفِ إِبْرَٰهِيمَ وَمُوسَىٰ",
+      "textUrdu": "ابراہیم اور موسیٰ کے صحیفوں میں،",
+      "textEnglish": "The scriptures of Abraham and Moses."
+    }
+  ]
+}

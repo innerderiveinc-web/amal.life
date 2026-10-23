@@ -1,0 +1,58 @@
+{
+  "surahNumber": 102,
+  "nameArabic": "سُورَةُ التَّكَاثُرِ",
+  "nameTransliterated": "At-Takaathur",
+  "nameEnglish": "Competition",
+  "revelationType": "MECCAN",
+  "ayahsCount": 8,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ أَلْهَىٰكُمُ ٱلتَّكَاثُرُ",
+      "textUrdu": "تمہیں غافل رکھا مال کی زیادہ طلبی نے",
+      "textEnglish": "Competition in [worldly] increase diverts you"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "حَتَّىٰ زُرْتُمُ ٱلْمَقَابِرَ",
+      "textUrdu": "یہاں تک کہ تم نے قبروں کا منہ دیکھا",
+      "textEnglish": "Until you visit the graveyards."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "كَلَّا سَوْفَ تَعْلَمُونَ",
+      "textUrdu": "ہاں ہاں جلد جان جاؤ گے",
+      "textEnglish": "No! You are going to know."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ",
+      "textUrdu": "پھر ہاں ہاں جلد جان جاؤ گے",
+      "textEnglish": "Then no! You are going to know."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "كَلَّا لَوْ تَعْلَمُونَ عِلْمَ ٱلْيَقِينِ",
+      "textUrdu": "ہاں ہاں اگر یقین کا جاننا جانتے تو مال کی محبت نہ رکھتے",
+      "textEnglish": "No! If you only knew with knowledge of certainty..."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "لَتَرَوُنَّ ٱلْجَحِيمَ",
+      "textUrdu": "بیشک ضرور جنہم کو دیکھو گے",
+      "textEnglish": "You will surely see the Hellfire."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "ثُمَّ لَتَرَوُنَّهَا عَيْنَ ٱلْيَقِينِ",
+      "textUrdu": "پھر بیشک ضرور اسے یقینی دیکھنا دیکھو گے،",
+      "textEnglish": "Then you will surely see it with the eye of certainty."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "ثُمَّ لَتُسْـَٔلُنَّ يَوْمَئِذٍ عَنِ ٱلنَّعِيمِ",
+      "textUrdu": "پھر بیشک ضرور اس دن تم سے نعمتوں کی پرسش ہوگی",
+      "textEnglish": "Then you will surely be asked that Day about pleasure."
+    }
+  ]
+}

@@ -189,6 +189,35 @@ export default function QuranWisdomPage() {
 
     setIsLoadingSurah(true);
     try {
+      // 1. Primary: Load instantaneously from local offline bundled dataset (100% offline, zero network)
+      try {
+        const localRes = await fetch(`/data/quran/surahs/${surahNum}.json`);
+        if (localRes.ok) {
+          const localData = await localRes.json();
+          if (localData && Array.isArray(localData.verses) && localData.verses.length > 0) {
+            const bundledSurah: QuranSurahData = {
+              surahNumber: surahNum,
+              nameArabic: meta?.nameArabic || localData.nameArabic,
+              nameTransliterated: meta?.nameTransliterated || localData.nameTransliterated,
+              nameUrdu: meta?.nameUrdu || localData.nameUrdu || '',
+              nameEnglish: meta?.nameEnglish || localData.nameEnglish,
+              revelationType: (meta?.revelationType || localData.revelationType) as any,
+              ayahsCount: meta?.ayahsCount || localData.ayahsCount || localData.verses.length,
+              verses: localData.verses,
+            };
+            setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: bundledSurah }));
+            try {
+              localStorage.setItem(`amal_cached_surah_${surahNum}`, JSON.stringify(bundledSurah));
+            } catch {}
+            setIsLoadingSurah(false);
+            return;
+          }
+        }
+      } catch (localErr) {
+        console.info('Local static surah fetch bypassed, attempting network fallback:', localErr);
+      }
+
+      // 2. Secondary Network Fallback: Remote CDN if local static asset is unreachable
       const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/editions/quran-uthmani,ur.kanzuliman,en.sahih`);
       if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
       const data = await res.json();
@@ -222,7 +251,7 @@ export default function QuranWisdomPage() {
       }
     } catch (err: any) {
       console.warn('Surah online load failed, fallback:', err);
-      setSurahFetchError('انٹرنیٹ کے بغیر نئی سورت لوڈ نہیں ہو سکی۔ بنیادی سورتیں (فاتحہ، یاسین، ملک، اخلاص، فلق، ناس) بغیر انٹرنیٹ کے دستیاب ہیں۔');
+      setSurahFetchError('سورت لوڈ کرنے میں خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔');
     } finally {
       setIsLoadingSurah(false);
     }

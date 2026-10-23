@@ -1,0 +1,124 @@
+{
+  "surahNumber": 96,
+  "nameArabic": "سُورَةُ العَلَقِ",
+  "nameTransliterated": "Al-Alaq",
+  "nameEnglish": "The Clot",
+  "revelationType": "MECCAN",
+  "ayahsCount": 19,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ",
+      "textUrdu": "پڑھو اپنے رب کے نام سے جس نے پیدا کیا",
+      "textEnglish": "Recite in the name of your Lord who created -"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ",
+      "textUrdu": "آدمی کو خون کی پھٹک سے بنایا، پڑھو",
+      "textEnglish": "Created man from a clinging substance."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ",
+      "textUrdu": "اور تمہارا رب ہی سب سے بڑا کریم،",
+      "textEnglish": "Recite, and your Lord is the most Generous -"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "ٱلَّذِى عَلَّمَ بِٱلْقَلَمِ",
+      "textUrdu": "جس نے قلم سے لکھنا سکھایا",
+      "textEnglish": "Who taught by the pen -"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "عَلَّمَ ٱلْإِنسَٰنَ مَا لَمْ يَعْلَمْ",
+      "textUrdu": "آدمی کو سکھایا جو نہ جانتا تھا",
+      "textEnglish": "Taught man that which he knew not."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "كَلَّآ إِنَّ ٱلْإِنسَٰنَ لَيَطْغَىٰٓ",
+      "textUrdu": "ہاں ہاں بیشک آدمی سرکشی کرتا ہے،",
+      "textEnglish": "No! [But] indeed, man transgresses"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "أَن رَّءَاهُ ٱسْتَغْنَىٰٓ",
+      "textUrdu": "اس پر کہ اپنے آپ کو غنی سمجھ لیا",
+      "textEnglish": "Because he sees himself self-sufficient."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "إِنَّ إِلَىٰ رَبِّكَ ٱلرُّجْعَىٰٓ",
+      "textUrdu": "بیشک تمہارے رب ہی کی طرف پھرنا ہے",
+      "textEnglish": "Indeed, to your Lord is the return."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "أَرَءَيْتَ ٱلَّذِى يَنْهَىٰ",
+      "textUrdu": "بھلا دیکھو تو جو منع کرتا ہے،",
+      "textEnglish": "Have you seen the one who forbids"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "عَبْدًا إِذَا صَلَّىٰٓ",
+      "textUrdu": "بندے کو جب وہ نماز پڑھے",
+      "textEnglish": "A servant when he prays?"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "أَرَءَيْتَ إِن كَانَ عَلَى ٱلْهُدَىٰٓ",
+      "textUrdu": "بھلا دیکھو تو اگر وہ ہدایت پر ہوتا،",
+      "textEnglish": "Have you seen if he is upon guidance"
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "أَوْ أَمَرَ بِٱلتَّقْوَىٰٓ",
+      "textUrdu": "یا پرہیزگاری بتاتا تو کیا خوب تھا،",
+      "textEnglish": "Or enjoins righteousness?"
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ",
+      "textUrdu": "بھلا دیکھو تو اگر جھٹلایا اور منہ پھیرا",
+      "textEnglish": "Have you seen if he denies and turns away -"
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "أَلَمْ يَعْلَم بِأَنَّ ٱللَّهَ يَرَىٰ",
+      "textUrdu": "تو کیا حال ہوگا کیا نہ جانا کہ اللہ دیکھ رہا ہے",
+      "textEnglish": "Does he not know that Allah sees?"
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "كَلَّا لَئِن لَّمْ يَنتَهِ لَنَسْفَعًۢا بِٱلنَّاصِيَةِ",
+      "textUrdu": "ہاں ہاں اگر باز نہ آیا تو ضرور ہم پیشانی کے بال پکڑ کر کھینچیں گے",
+      "textEnglish": "No! If he does not desist, We will surely drag him by the forelock -"
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "نَاصِيَةٍۢ كَٰذِبَةٍ خَاطِئَةٍۢ",
+      "textUrdu": "کیسی پیشانی جھوٹی خطاکار،",
+      "textEnglish": "A lying, sinning forelock."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "فَلْيَدْعُ نَادِيَهُۥ",
+      "textUrdu": "اب پکارے اپنی مجلس کو",
+      "textEnglish": "Then let him call his associates;"
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "سَنَدْعُ ٱلزَّبَانِيَةَ",
+      "textUrdu": "ابھی ہم سپاہیوں کو بلاتے ہیں",
+      "textEnglish": "We will call the angels of Hell."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "كَلَّا لَا تُطِعْهُ وَٱسْجُدْ وَٱقْتَرِب ۩",
+      "textUrdu": "ہاں ہاں، اس کی نہ سنو اور سجدہ کرو اور ہم سے قریب ہوجاؤ، (السجدة ۔۱۴)",
+      "textEnglish": "No! Do not obey him. But prostrate and draw near [to Allah]."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "surahNumber": 94,
+  "nameArabic": "سُورَةُ الشَّرۡحِ",
+  "nameTransliterated": "Ash-Sharh",
+  "nameEnglish": "The Consolation",
+  "revelationType": "MECCAN",
+  "ayahsCount": 8,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ",
+      "textUrdu": "کیا ہم نے تمہارا سینہ کشادہ نہ کیا",
+      "textEnglish": "Did We not expand for you, [O Muhammad], your breast?"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَوَضَعْنَا عَنكَ وِزْرَكَ",
+      "textUrdu": "اور تم پر سے تمہارا بوجھ اتار لیا،",
+      "textEnglish": "And We removed from you your burden"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "ٱلَّذِىٓ أَنقَضَ ظَهْرَكَ",
+      "textUrdu": "جس نے تمہاری پیٹھ توڑی تھی",
+      "textEnglish": "Which had weighed upon your back"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَرَفَعْنَا لَكَ ذِكْرَكَ",
+      "textUrdu": "اور ہم نے تمہارے لیے تمہارا ذکر بلند کردیا",
+      "textEnglish": "And raised high for you your repute."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
+      "textUrdu": "تو بیشک دشواری کے ساتھ آسانی ہے،",
+      "textEnglish": "For indeed, with hardship [will be] ease."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "إِنَّ مَعَ ٱلْعُسْرِ يُسْرًۭا",
+      "textUrdu": "بیشک دشواری کے ساتھ آسانی ہے",
+      "textEnglish": "Indeed, with hardship [will be] ease."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "فَإِذَا فَرَغْتَ فَٱنصَبْ",
+      "textUrdu": "تو جب تم نماز سے فارغ ہو تو دعا میں محنت کرو",
+      "textEnglish": "So when you have finished [your duties], then stand up [for worship]."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَإِلَىٰ رَبِّكَ فَٱرْغَب",
+      "textUrdu": "اور اپنے رب ہی کی طرف رغبت کرو",
+      "textEnglish": "And to your Lord direct [your] longing."
+    }
+  ]
+}

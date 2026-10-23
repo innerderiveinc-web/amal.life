@@ -13,7 +13,8 @@ import { AuthModal } from '../components/AuthModal';
 import { Footer } from '../components/Footer';
 import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
-import { enablePersistentStorage } from '../lib/storage-guard';
+import { enablePersistentStorage, checkStorageHealth } from '../lib/storage-guard';
+import { showAmalToast } from '../components/Toast';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -34,6 +35,20 @@ export default function App({ Component, pageProps }: AppProps) {
     // Register Service Worker for offline PWA & Request Persistent Storage Protection
     if (typeof window !== 'undefined') {
       enablePersistentStorage();
+
+      // Proactive Spiritual Backup Sentinel (Guards against iOS Safari 7-day ITP cache eviction)
+      setTimeout(async () => {
+        try {
+          const health = await checkStorageHealth();
+          if (health.shouldPromptBackup) {
+            showAmalToast(
+              'روحانی ڈیٹا کی حفاظت: آپ کے اعمال و نوٹس محفوظ ہیں۔ ترتیبات (Settings) میں جا کر بیک اپ ایکسپورٹ کر لیں تاکہ براؤزر کیش صاف ہونے سے ڈیٹا ضائع نہ ہو۔',
+              'info'
+            );
+          }
+        } catch {}
+      }, 5000);
+
       if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').catch(() => {});

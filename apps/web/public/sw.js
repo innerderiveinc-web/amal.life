@@ -14,6 +14,15 @@ const PRECACHE_ASSETS = [
   '/favicon.ico',
   '/icon-192.png',
   '/icon-512.png',
+  '/data/quran/surahs/1.json',
+  '/data/quran/surahs/18.json',
+  '/data/quran/surahs/36.json',
+  '/data/quran/surahs/55.json',
+  '/data/quran/surahs/56.json',
+  '/data/quran/surahs/67.json',
+  '/data/quran/surahs/112.json',
+  '/data/quran/surahs/113.json',
+  '/data/quran/surahs/114.json',
 ];
 
 self.addEventListener('install', (event) => {

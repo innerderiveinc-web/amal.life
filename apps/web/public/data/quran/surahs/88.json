@@ -1,0 +1,166 @@
+{
+  "surahNumber": 88,
+  "nameArabic": "سُورَةُ الغَاشِيَةِ",
+  "nameTransliterated": "Al-Ghaashiya",
+  "nameEnglish": "The Overwhelming",
+  "revelationType": "MECCAN",
+  "ayahsCount": 26,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ هَلْ أَتَىٰكَ حَدِيثُ ٱلْغَٰشِيَةِ",
+      "textUrdu": "بیشک تمہارے پاس اس مصیبت کی خبر آئی جو چھا جائے گی",
+      "textEnglish": "Has there reached you the report of the Overwhelming [event]?"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وُجُوهٌۭ يَوْمَئِذٍ خَٰشِعَةٌ",
+      "textUrdu": "کتنے ہی منہ اس دن ذلیل ہوں گے،",
+      "textEnglish": "[Some] faces, that Day, will be humbled,"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "عَامِلَةٌۭ نَّاصِبَةٌۭ",
+      "textUrdu": "کام کریں مشقت جھیلیں،",
+      "textEnglish": "Working [hard] and exhausted."
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "تَصْلَىٰ نَارًا حَامِيَةًۭ",
+      "textUrdu": "جائیں بھڑکتی آگ میں",
+      "textEnglish": "They will [enter to] burn in an intensely hot Fire."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "تُسْقَىٰ مِنْ عَيْنٍ ءَانِيَةٍۢ",
+      "textUrdu": "نہایت جلتے چشمہ کا پانی پلائے جائیں،",
+      "textEnglish": "They will be given drink from a boiling spring."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "لَّيْسَ لَهُمْ طَعَامٌ إِلَّا مِن ضَرِيعٍۢ",
+      "textUrdu": "ان کے لیے کچھ کھانا نہیں مگر آگ کے کانٹے",
+      "textEnglish": "For them there will be no food except from a poisonous, thorny plant"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "لَّا يُسْمِنُ وَلَا يُغْنِى مِن جُوعٍۢ",
+      "textUrdu": "کہ نہ فربہی لائیں اور نہ بھوک میں کام دیں",
+      "textEnglish": "Which neither nourishes nor avails against hunger."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وُجُوهٌۭ يَوْمَئِذٍۢ نَّاعِمَةٌۭ",
+      "textUrdu": "کتنے ہی منہ اس دن چین میں ہیں",
+      "textEnglish": "[Other] faces, that Day, will show pleasure."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "لِّسَعْيِهَا رَاضِيَةٌۭ",
+      "textUrdu": "اپنی کوشش پر راضی",
+      "textEnglish": "With their effort [they are] satisfied"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "فِى جَنَّةٍ عَالِيَةٍۢ",
+      "textUrdu": "بلند باغ میں،",
+      "textEnglish": "In an elevated garden,"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "لَّا تَسْمَعُ فِيهَا لَٰغِيَةًۭ",
+      "textUrdu": "کہ اس میں کوئی بیہودہ بات نہ سنیں گے،",
+      "textEnglish": "Wherein they will hear no unsuitable speech."
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "فِيهَا عَيْنٌۭ جَارِيَةٌۭ",
+      "textUrdu": "اس میں رواں چشمہ ہے،",
+      "textEnglish": "Within it is a flowing spring."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "فِيهَا سُرُرٌۭ مَّرْفُوعَةٌۭ",
+      "textUrdu": "اس میں بلند تخت ہیں،",
+      "textEnglish": "Within it are couches raised high"
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "وَأَكْوَابٌۭ مَّوْضُوعَةٌۭ",
+      "textUrdu": "اور چنے ہوئے کوزے",
+      "textEnglish": "And cups put in place"
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "وَنَمَارِقُ مَصْفُوفَةٌۭ",
+      "textUrdu": "اور برابر برابر بچھے ہوئے قالین",
+      "textEnglish": "And cushions lined up"
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "وَزَرَابِىُّ مَبْثُوثَةٌ",
+      "textUrdu": "اور پھیلی ہوئی چاندنیاں",
+      "textEnglish": "And carpets spread around."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "أَفَلَا يَنظُرُونَ إِلَى ٱلْإِبِلِ كَيْفَ خُلِقَتْ",
+      "textUrdu": "تو کیا اونٹ کو نہیں دیکھتے کیسا بنایا گیا،",
+      "textEnglish": "Then do they not look at the camels - how they are created?"
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "وَإِلَى ٱلسَّمَآءِ كَيْفَ رُفِعَتْ",
+      "textUrdu": "اور آسمان کو کیسا اونچا کیا گیا",
+      "textEnglish": "And at the sky - how it is raised?"
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "وَإِلَى ٱلْجِبَالِ كَيْفَ نُصِبَتْ",
+      "textUrdu": "اور پہاڑوں کو، کیسے قائم کیے گئے،",
+      "textEnglish": "And at the mountains - how they are erected?"
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "وَإِلَى ٱلْأَرْضِ كَيْفَ سُطِحَتْ",
+      "textUrdu": "اور زمین کو، کیسے بچھائی گئی،",
+      "textEnglish": "And at the earth - how it is spread out?"
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "فَذَكِّرْ إِنَّمَآ أَنتَ مُذَكِّرٌۭ",
+      "textUrdu": "تو تم نصیحت سناؤ تم تو یہی نصیحت سنانے والے ہو،",
+      "textEnglish": "So remind, [O Muhammad]; you are only a reminder."
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "لَّسْتَ عَلَيْهِم بِمُصَيْطِرٍ",
+      "textUrdu": "تم کچھ ان پر کڑ وڑا (ضامن) نہیں",
+      "textEnglish": "You are not over them a controller."
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "إِلَّا مَن تَوَلَّىٰ وَكَفَرَ",
+      "textUrdu": "ہاں جو منہ پھیرے اور کفر کرے",
+      "textEnglish": "However, he who turns away and disbelieves -"
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "فَيُعَذِّبُهُ ٱللَّهُ ٱلْعَذَابَ ٱلْأَكْبَرَ",
+      "textUrdu": "تو اسے اللہ بڑا عذاب دے گا",
+      "textEnglish": "Then Allah will punish him with the greatest punishment."
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "إِنَّ إِلَيْنَآ إِيَابَهُمْ",
+      "textUrdu": "بیشک ہماری ہی طرف ان کا پھرنا",
+      "textEnglish": "Indeed, to Us is their return."
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "ثُمَّ إِنَّ عَلَيْنَا حِسَابَهُم",
+      "textUrdu": "پھر بیشک ہماری ہی طرف ان کا حساب ہے،",
+      "textEnglish": "Then indeed, upon Us is their account."
+    }
+  ]
+}

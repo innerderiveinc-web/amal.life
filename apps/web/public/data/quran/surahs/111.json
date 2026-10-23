@@ -1,0 +1,40 @@
+{
+  "surahNumber": 111,
+  "nameArabic": "سُورَةُ المَسَدِ",
+  "nameTransliterated": "Al-Masad",
+  "nameEnglish": "The Palm Fibre",
+  "revelationType": "MECCAN",
+  "ayahsCount": 5,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ تَبَّتْ يَدَآ أَبِى لَهَبٍۢ وَتَبَّ",
+      "textUrdu": "تباہ ہوجائیں ابولہب کے دونوں ہاتھ اور وہ تباہ ہوہی گیا",
+      "textEnglish": "May the hands of Abu Lahab be ruined, and ruined is he."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "مَآ أَغْنَىٰ عَنْهُ مَالُهُۥ وَمَا كَسَبَ",
+      "textUrdu": "اسے کچھ کام نہ آیا اس کا مال اور نہ جو کمایا",
+      "textEnglish": "His wealth will not avail him or that which he gained."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "سَيَصْلَىٰ نَارًۭا ذَاتَ لَهَبٍۢ",
+      "textUrdu": "اب دھنستا ہے لپٹ مارتی آگ میں وہ،",
+      "textEnglish": "He will [enter to] burn in a Fire of [blazing] flame"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "وَٱمْرَأَتُهُۥ حَمَّالَةَ ٱلْحَطَبِ",
+      "textUrdu": "اور اس کی جُورو لکڑیوں کا گٹھا سر پر اٹھاتی،",
+      "textEnglish": "And his wife [as well] - the carrier of firewood."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فِى جِيدِهَا حَبْلٌۭ مِّن مَّسَدٍۭ",
+      "textUrdu": "اس کے گلے میں کھجور کی چھال کا رسّا،",
+      "textEnglish": "Around her neck is a rope of [twisted] fiber."
+    }
+  ]
+}

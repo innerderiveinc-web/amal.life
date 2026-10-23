@@ -1,0 +1,58 @@
+{
+  "surahNumber": 99,
+  "nameArabic": "سُورَةُ الزَّلۡزَلَةِ",
+  "nameTransliterated": "Az-Zalzala",
+  "nameEnglish": "The Earthquake",
+  "revelationType": "MEDINAN",
+  "ayahsCount": 8,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِذَا زُلْزِلَتِ ٱلْأَرْضُ زِلْزَالَهَا",
+      "textUrdu": "جب زمین تھرتھرا دی جائے جیسا اس کا تھرتھرانا ٹھہرا ہے",
+      "textEnglish": "When the earth is shaken with its [final] earthquake"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "وَأَخْرَجَتِ ٱلْأَرْضُ أَثْقَالَهَا",
+      "textUrdu": "اور زمین اپنے بوجھ باہر پھینک دے",
+      "textEnglish": "And the earth discharges its burdens"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَقَالَ ٱلْإِنسَٰنُ مَا لَهَا",
+      "textUrdu": "اور آدمی کہے اسے کیا ہوا",
+      "textEnglish": "And man says, \"What is [wrong] with it?\" -"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "يَوْمَئِذٍۢ تُحَدِّثُ أَخْبَارَهَا",
+      "textUrdu": "اس دن وہ اپنی خبریں بتائے گی",
+      "textEnglish": "That Day, it will report its news"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا",
+      "textUrdu": "اس لیے کہ تمہارے رب نے اسے حکم بھیجا",
+      "textEnglish": "Because your Lord has commanded it."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "يَوْمَئِذٍۢ يَصْدُرُ ٱلنَّاسُ أَشْتَاتًۭا لِّيُرَوْا۟ أَعْمَٰلَهُمْ",
+      "textUrdu": "اس دن لوگ اپنے رب کی طرف پھریں گے کئی راہ ہوکر تاکہ اپنا کیا دکھائیں جائیں تو،",
+      "textEnglish": "That Day, the people will depart separated [into categories] to be shown [the result of] their deeds."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًۭا يَرَهُۥ",
+      "textUrdu": "جو ایک ذرہ بھر بھلائی کرے اسے دیکھے گا،",
+      "textEnglish": "So whoever does an atom's weight of good will see it,"
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍۢ شَرًّۭا يَرَهُۥ",
+      "textUrdu": "اور جو ایک ذرہ بھر برائی کرے اسے دیکھے گا",
+      "textEnglish": "And whoever does an atom's weight of evil will see it."
+    }
+  ]
+}

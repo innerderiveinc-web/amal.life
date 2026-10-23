@@ -1,0 +1,76 @@
+{
+  "surahNumber": 101,
+  "nameArabic": "سُورَةُ القَارِعَةِ",
+  "nameTransliterated": "Al-Qaari'a",
+  "nameEnglish": "The Calamity",
+  "revelationType": "MECCAN",
+  "ayahsCount": 11,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱلْقَارِعَةُ",
+      "textUrdu": "دل دہلانے والی،",
+      "textEnglish": "The Striking Calamity -"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "مَا ٱلْقَارِعَةُ",
+      "textUrdu": "کیا وہ دہلانے والی،",
+      "textEnglish": "What is the Striking Calamity?"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا ٱلْقَارِعَةُ",
+      "textUrdu": "اور تو نے کیا جانا کیا ہے دہلانے والی",
+      "textEnglish": "And what can make you know what is the Striking Calamity?"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "يَوْمَ يَكُونُ ٱلنَّاسُ كَٱلْفَرَاشِ ٱلْمَبْثُوثِ",
+      "textUrdu": "جس دن آدمی ہوں گے جیسے پھیلے پتنگے",
+      "textEnglish": "It is the Day when people will be like moths, dispersed,"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "وَتَكُونُ ٱلْجِبَالُ كَٱلْعِهْنِ ٱلْمَنفُوشِ",
+      "textUrdu": "اور پہاڑ ہوں گے جیسے دھنکی اون",
+      "textEnglish": "And the mountains will be like wool, fluffed up."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "فَأَمَّا مَن ثَقُلَتْ مَوَٰزِينُهُۥ",
+      "textUrdu": "تو جس کی تولیں بھاری ہوئیں",
+      "textEnglish": "Then as for one whose scales are heavy [with good deeds],"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "فَهُوَ فِى عِيشَةٍۢ رَّاضِيَةٍۢ",
+      "textUrdu": "وہ تو من مانتے عیش میں ہیں",
+      "textEnglish": "He will be in a pleasant life."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَأَمَّا مَنْ خَفَّتْ مَوَٰزِينُهُۥ",
+      "textUrdu": "اور جس کی تولیں ہلکی پڑیں",
+      "textEnglish": "But as for one whose scales are light,"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "فَأُمُّهُۥ هَاوِيَةٌۭ",
+      "textUrdu": "وہ نیچا دکھانے والی گود میں ہے",
+      "textEnglish": "His refuge will be an abyss."
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا هِيَهْ",
+      "textUrdu": "اور تو نے کیا جانا، کیا نیچا دکھانے والی،",
+      "textEnglish": "And what can make you know what that is?"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "نَارٌ حَامِيَةٌۢ",
+      "textUrdu": "ایک آگ شعلے مارتی",
+      "textEnglish": "It is a Fire, intensely hot."
+    }
+  ]
+}

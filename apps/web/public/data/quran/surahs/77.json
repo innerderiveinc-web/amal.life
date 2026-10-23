@@ -1,0 +1,310 @@
+{
+  "surahNumber": 77,
+  "nameArabic": "سُورَةُ المُرۡسَلَاتِ",
+  "nameTransliterated": "Al-Mursalaat",
+  "nameEnglish": "The Emissaries",
+  "revelationType": "MECCAN",
+  "ayahsCount": 50,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْمُرْسَلَٰتِ عُرْفًۭا",
+      "textUrdu": "قسم ان کی جو بھیجی جاتی ہیں لگاتار",
+      "textEnglish": "By those [winds] sent forth in gusts"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "فَٱلْعَٰصِفَٰتِ عَصْفًۭا",
+      "textUrdu": "پھر زور سے جھونکا دینے والیاں،",
+      "textEnglish": "And the winds that blow violently"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَٱلنَّٰشِرَٰتِ نَشْرًۭا",
+      "textUrdu": "پھر ابھار کر اٹھانے والیاں",
+      "textEnglish": "And [by] the winds that spread [clouds]"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "فَٱلْفَٰرِقَٰتِ فَرْقًۭا",
+      "textUrdu": "پھر حق ناحق کو خوب جدا کرنے والیاں،",
+      "textEnglish": "And those [angels] who bring criterion"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَٱلْمُلْقِيَٰتِ ذِكْرًا",
+      "textUrdu": "پھر ان کی قسم جو ذکر کا لقا کرتی ہیں",
+      "textEnglish": "And those [angels] who deliver a message"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "عُذْرًا أَوْ نُذْرًا",
+      "textUrdu": "حجت تمام کرنے یا ڈرانے کو،",
+      "textEnglish": "As justification or warning,"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "إِنَّمَا تُوعَدُونَ لَوَٰقِعٌۭ",
+      "textUrdu": "بیشک جس بات کا تم وعدہ دیے جاتے ہو ضرور ہونی ہے",
+      "textEnglish": "Indeed, what you are promised is to occur."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "فَإِذَا ٱلنُّجُومُ طُمِسَتْ",
+      "textUrdu": "پھر جب تارے محو کردیے جائیں،",
+      "textEnglish": "So when the stars are obliterated"
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "وَإِذَا ٱلسَّمَآءُ فُرِجَتْ",
+      "textUrdu": "اور جب آسمان میں رخنے پڑیں،",
+      "textEnglish": "And when the heaven is opened"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَإِذَا ٱلْجِبَالُ نُسِفَتْ",
+      "textUrdu": "اور جب پہاڑ غبار کرکے اڑا دیے جا ئیں،",
+      "textEnglish": "And when the mountains are blown away"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "وَإِذَا ٱلرُّسُلُ أُقِّتَتْ",
+      "textUrdu": "اور جب رسولوں کا وقت آئے",
+      "textEnglish": "And when the messengers' time has come..."
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "لِأَىِّ يَوْمٍ أُجِّلَتْ",
+      "textUrdu": "کس دن کے لیے ٹھہرائے گئے تھے،",
+      "textEnglish": "For what Day was it postponed?"
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "لِيَوْمِ ٱلْفَصْلِ",
+      "textUrdu": "روز فیصلہ کے لیے،",
+      "textEnglish": "For the Day of Judgement."
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "وَمَآ أَدْرَىٰكَ مَا يَوْمُ ٱلْفَصْلِ",
+      "textUrdu": "اور تو کیا جانے وہ روز فیصلہ کیا ہے",
+      "textEnglish": "And what can make you know what is the Day of Judgement?"
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "جھٹلانے والوں کی اس دن خرابی",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "أَلَمْ نُهْلِكِ ٱلْأَوَّلِينَ",
+      "textUrdu": "کیا ہم نے اگلوں کو ہلاک نہ فرمایا",
+      "textEnglish": "Did We not destroy the former peoples?"
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "ثُمَّ نُتْبِعُهُمُ ٱلْءَاخِرِينَ",
+      "textUrdu": "پھر پچھلوں کو ان کے پیچھے پہنچائیں گے",
+      "textEnglish": "Then We will follow them with the later ones."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "كَذَٰلِكَ نَفْعَلُ بِٱلْمُجْرِمِينَ",
+      "textUrdu": "مجرموں کے ساتھ ہم ایسا ہی کرتے ہیں،",
+      "textEnglish": "Thus do We deal with the criminals."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "أَلَمْ نَخْلُقكُّم مِّن مَّآءٍۢ مَّهِينٍۢ",
+      "textUrdu": "کیا ہم نے تمہیں ایک بے قدر پانی سے پیدا نہ فرمایا",
+      "textEnglish": "Did We not create you from a liquid disdained?"
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "فَجَعَلْنَٰهُ فِى قَرَارٍۢ مَّكِينٍ",
+      "textUrdu": "پھر اسے ایک محفوظ جگہ میں رکھا",
+      "textEnglish": "And We placed it in a firm lodging"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "إِلَىٰ قَدَرٍۢ مَّعْلُومٍۢ",
+      "textUrdu": "ایک معلوم اندازہ تک",
+      "textEnglish": "For a known extent."
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "فَقَدَرْنَا فَنِعْمَ ٱلْقَٰدِرُونَ",
+      "textUrdu": "پھر ہم نے اندازہ فرمایا، تو ہم کیا ہی اچھے قادر",
+      "textEnglish": "And We determined [it], and excellent [are We] to determine."
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "أَلَمْ نَجْعَلِ ٱلْأَرْضَ كِفَاتًا",
+      "textUrdu": "کیا ہم نے زمین کو جمع کرنے والی نہ کیا،",
+      "textEnglish": "Have We not made the earth a container"
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "أَحْيَآءًۭ وَأَمْوَٰتًۭا",
+      "textUrdu": "تمہارے زندوں اور مردوں کی",
+      "textEnglish": "Of the living and the dead?"
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "وَجَعَلْنَا فِيهَا رَوَٰسِىَ شَٰمِخَٰتٍۢ وَأَسْقَيْنَٰكُم مَّآءًۭ فُرَاتًۭا",
+      "textUrdu": "اور ہم نے اس میں اونچے اونچے لنگر ڈالے اور ہم نے تمہیں خوب میٹھا پانی پلایا",
+      "textEnglish": "And We placed therein lofty, firmly set mountains and have given you to drink sweet water."
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "ٱنطَلِقُوٓا۟ إِلَىٰ مَا كُنتُم بِهِۦ تُكَذِّبُونَ",
+      "textUrdu": "چلو اس کی طرف جسے جھٹلاتے تھے،",
+      "textEnglish": "[They will be told], \"Proceed to that which you used to deny."
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "ٱنطَلِقُوٓا۟ إِلَىٰ ظِلٍّۢ ذِى ثَلَٰثِ شُعَبٍۢ",
+      "textUrdu": "چلو اس دھوئیں کے سائے کی طرف جس کی تین شاخیں",
+      "textEnglish": "Proceed to a shadow [of smoke] having three columns"
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "لَّا ظَلِيلٍۢ وَلَا يُغْنِى مِنَ ٱللَّهَبِ",
+      "textUrdu": "نہ سایہ دے نہ لپٹ سے بچائے",
+      "textEnglish": "[But having] no cool shade and availing not against the flame.\""
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "إِنَّهَا تَرْمِى بِشَرَرٍۢ كَٱلْقَصْرِ",
+      "textUrdu": "بیشک دوزخ چنگاریاں اڑاتی ہے",
+      "textEnglish": "Indeed, it throws sparks [as huge] as a fortress,"
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "كَأَنَّهُۥ جِمَٰلَتٌۭ صُفْرٌۭ",
+      "textUrdu": "جیسے اونچے محل گویا وہ زرد رنگ کے اونٹ ہیں،",
+      "textEnglish": "As if they were yellowish [black] camels."
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "هَٰذَا يَوْمُ لَا يَنطِقُونَ",
+      "textUrdu": "یہ دن ہے کہ وہ بول نہ سکیں گے",
+      "textEnglish": "This is a Day they will not speak,"
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "وَلَا يُؤْذَنُ لَهُمْ فَيَعْتَذِرُونَ",
+      "textUrdu": "اور نہ انہیں اجازت ملے کہ عذر کریں",
+      "textEnglish": "Nor will it be permitted for them to make an excuse."
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "هَٰذَا يَوْمُ ٱلْفَصْلِ ۖ جَمَعْنَٰكُمْ وَٱلْأَوَّلِينَ",
+      "textUrdu": "یہ ہے فیصلہ کا دن، ہم نے تمہیں جمع کیا اور سب اگلوں کو",
+      "textEnglish": "This is the Day of Judgement; We will have assembled you and the former peoples."
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "فَإِن كَانَ لَكُمْ كَيْدٌۭ فَكِيدُونِ",
+      "textUrdu": "اب اگر تمہارا کوئی داؤ ہو تو مجھ پر چل لو",
+      "textEnglish": "So if you have a plan, then plan against Me."
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 41,
+      "textArabic": "إِنَّ ٱلْمُتَّقِينَ فِى ظِلَٰلٍۢ وَعُيُونٍۢ",
+      "textUrdu": "بیشک ڈر والے سایوں اور چشموں میں ہیں،",
+      "textEnglish": "Indeed, the righteous will be among shades and springs"
+    },
+    {
+      "ayahNumber": 42,
+      "textArabic": "وَفَوَٰكِهَ مِمَّا يَشْتَهُونَ",
+      "textUrdu": "اور میووں میں جو ان کا جی چاہے",
+      "textEnglish": "And fruits from whatever they desire,"
+    },
+    {
+      "ayahNumber": 43,
+      "textArabic": "كُلُوا۟ وَٱشْرَبُوا۟ هَنِيٓـًٔۢا بِمَا كُنتُمْ تَعْمَلُونَ",
+      "textUrdu": "کھاؤ اور پیو رچتا ہوا اپنے اعمال کا صلہ",
+      "textEnglish": "[Being told], \"Eat and drink in satisfaction for what you used to do.\""
+    },
+    {
+      "ayahNumber": 44,
+      "textArabic": "إِنَّا كَذَٰلِكَ نَجْزِى ٱلْمُحْسِنِينَ",
+      "textUrdu": "بیشک نیکوں کو ہم ایسا ہی بدلہ دیتے ہیں،",
+      "textEnglish": "Indeed, We thus reward the doers of good."
+    },
+    {
+      "ayahNumber": 45,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 46,
+      "textArabic": "كُلُوا۟ وَتَمَتَّعُوا۟ قَلِيلًا إِنَّكُم مُّجْرِمُونَ",
+      "textUrdu": "کچھ دن کھالو اور برت لو ضرور تم مجرم ہو",
+      "textEnglish": "[O disbelievers], eat and enjoy yourselves a little; indeed, you are criminals."
+    },
+    {
+      "ayahNumber": 47,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 48,
+      "textArabic": "وَإِذَا قِيلَ لَهُمُ ٱرْكَعُوا۟ لَا يَرْكَعُونَ",
+      "textUrdu": "اور جب ان سے کہا جائے کہ نماز پڑھو تو نہیں پڑھتے،",
+      "textEnglish": "And when it is said to them, \"Bow [in prayer],\" they do not bow."
+    },
+    {
+      "ayahNumber": 49,
+      "textArabic": "وَيْلٌۭ يَوْمَئِذٍۢ لِّلْمُكَذِّبِينَ",
+      "textUrdu": "اس دن جھٹلانے والوں کی خرابی،",
+      "textEnglish": "Woe, that Day, to the deniers."
+    },
+    {
+      "ayahNumber": 50,
+      "textArabic": "فَبِأَىِّ حَدِيثٍۭ بَعْدَهُۥ يُؤْمِنُونَ",
+      "textUrdu": "پھر اس کے بعد کون سی بات پر ایمان لائیں گے",
+      "textEnglish": "Then in what statement after the Qur'an will they believe?"
+    }
+  ]
+}

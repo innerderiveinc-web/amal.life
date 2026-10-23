@@ -1,0 +1,40 @@
+{
+  "surahNumber": 105,
+  "nameArabic": "سُورَةُ الفِيلِ",
+  "nameTransliterated": "Al-Fil",
+  "nameEnglish": "The Elephant",
+  "revelationType": "MECCAN",
+  "ayahsCount": 5,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَٰبِ ٱلْفِيلِ",
+      "textUrdu": "اے محبوب! کیا تم نے نہ دیکھا تمہارے رب نے ان ہاتھی والوں کیا حال کیا",
+      "textEnglish": "Have you not considered, [O Muhammad], how your Lord dealt with the companions of the elephant?"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍۢ",
+      "textUrdu": "کیا ان کا داؤ تباہی میں نہ ڈالا،",
+      "textEnglish": "Did He not make their plan into misguidance?"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ",
+      "textUrdu": "اور ان پر پرندوں کی ٹکڑیاں (فوجیں) بھیجیں",
+      "textEnglish": "And He sent against them birds in flocks,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "تَرْمِيهِم بِحِجَارَةٍۢ مِّن سِجِّيلٍۢ",
+      "textUrdu": "کہ انہیں کنکر کے پتھروں سے مارتے",
+      "textEnglish": "Striking them with stones of hard clay,"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَجَعَلَهُمْ كَعَصْفٍۢ مَّأْكُولٍۭ",
+      "textUrdu": "تو انہیں کر ڈالا جیسے کھائی کھیتی کی پتی (بھوسہ)",
+      "textEnglish": "And He made them like eaten straw."
+    }
+  ]
+}

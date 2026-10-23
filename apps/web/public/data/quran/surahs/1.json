@@ -1,0 +1,52 @@
+{
+  "surahNumber": 1,
+  "nameArabic": "سُورَةُ ٱلْفَاتِحَةِ",
+  "nameTransliterated": "Al-Faatiha",
+  "nameEnglish": "The Opening",
+  "revelationType": "MECCAN",
+  "ayahsCount": 7,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "﻿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+      "textUrdu": "اللہ کے نام سے شروع جو بہت مہربان رحمت والا",
+      "textEnglish": "In the name of Allah, the Entirely Merciful, the Especially Merciful."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+      "textUrdu": "سب خوبیاں اللہ کو جو مالک سارے جہان والوں کا،",
+      "textEnglish": "[All] praise is [due] to Allah, Lord of the worlds -"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+      "textUrdu": "بہت مہربان رحمت والا،",
+      "textEnglish": "The Entirely Merciful, the Especially Merciful,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "مَٰلِكِ يَوْمِ ٱلدِّينِ",
+      "textUrdu": "روز جزا کا مالک،",
+      "textEnglish": "Sovereign of the Day of Recompense."
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+      "textUrdu": "ہم تجھی کو پوجیں اور تجھی سے مدد چاہیں،",
+      "textEnglish": "It is You we worship and You we ask for help."
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+      "textUrdu": "ہم کو سیدھا راستہ چلا،",
+      "textEnglish": "Guide us to the straight path -"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+      "textUrdu": "راستہ ان کا جن پر تو نے احسان کیا، نہ ان کا جن پر غضب ہوا اور نہ بہکے ہوؤں کا",
+      "textEnglish": "The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray."
+    }
+  ]
+}

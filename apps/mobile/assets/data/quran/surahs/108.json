@@ -1,0 +1,28 @@
+{
+  "surahNumber": 108,
+  "nameArabic": "سُورَةُ الكَوۡثَرِ",
+  "nameTransliterated": "Al-Kawthar",
+  "nameEnglish": "Abundance",
+  "revelationType": "MECCAN",
+  "ayahsCount": 3,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ",
+      "textUrdu": "اے محبوب! بیشک ہم نے تمہیں بے شمار خوبیاں عطا فرمائیں",
+      "textEnglish": "Indeed, We have granted you, [O Muhammad], al-Kawthar."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "فَصَلِّ لِرَبِّكَ وَٱنْحَرْ",
+      "textUrdu": "تو تم اپنے رب کے لیے نماز پڑھو اور قربانی کرو",
+      "textEnglish": "So pray to your Lord and sacrifice [to Him alone]."
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ",
+      "textUrdu": "بیشک جو تمہارا دشمن ہے وہی ہر خیر سے محروم ہے",
+      "textEnglish": "Indeed, your enemy is the one cut off."
+    }
+  ]
+}

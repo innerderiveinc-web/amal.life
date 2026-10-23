@@ -1,0 +1,76 @@
+{
+  "surahNumber": 100,
+  "nameArabic": "سُورَةُ العَادِيَاتِ",
+  "nameTransliterated": "Al-Aadiyaat",
+  "nameEnglish": "The Chargers",
+  "revelationType": "MECCAN",
+  "ayahsCount": 11,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْعَٰدِيَٰتِ ضَبْحًۭا",
+      "textUrdu": "قسم ان کی جو دوڑتے ہیں سینے سے آواز نکلتی ہوئی",
+      "textEnglish": "By the racers, panting,"
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "فَٱلْمُورِيَٰتِ قَدْحًۭا",
+      "textUrdu": "پھر پتھروں سے آگ نکالتے ہیں سم مارکر",
+      "textEnglish": "And the producers of sparks [when] striking"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "فَٱلْمُغِيرَٰتِ صُبْحًۭا",
+      "textUrdu": "پھر صبح ہوتے تاراج کرتے ہیں",
+      "textEnglish": "And the chargers at dawn,"
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "فَأَثَرْنَ بِهِۦ نَقْعًۭا",
+      "textUrdu": "پھر اس وقت غبار اڑاتے ہیں،",
+      "textEnglish": "Stirring up thereby [clouds of] dust,"
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "فَوَسَطْنَ بِهِۦ جَمْعًا",
+      "textUrdu": "پھر دشمن کے بیچ لشکر میں جاتے ہیں،",
+      "textEnglish": "Arriving thereby in the center collectively,"
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "إِنَّ ٱلْإِنسَٰنَ لِرَبِّهِۦ لَكَنُودٌۭ",
+      "textUrdu": "بیشک آدمی اپنے رب کا بڑا ناشکرا ہے",
+      "textEnglish": "Indeed mankind, to his Lord, is ungrateful."
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٌۭ",
+      "textUrdu": "اور بیشک وہ اس پر خود گواہ ہے،",
+      "textEnglish": "And indeed, he is to that a witness."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَإِنَّهُۥ لِحُبِّ ٱلْخَيْرِ لَشَدِيدٌ",
+      "textUrdu": "اور بیشک وہ مال کی چاہت میں ضرور کرّا (تیز) ہے",
+      "textEnglish": "And indeed he is, in love of wealth, intense."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "۞ أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِى ٱلْقُبُورِ",
+      "textUrdu": "تو کیا نہیں جانتا جب اٹھائے جائیں گے جو قبروں میں ہیں،",
+      "textEnglish": "But does he not know that when the contents of the graves are scattered"
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "وَحُصِّلَ مَا فِى ٱلصُّدُورِ",
+      "textUrdu": "اور کھول دی جائے گی جو سینوں میں ہے،",
+      "textEnglish": "And that within the breasts is obtained,"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "إِنَّ رَبَّهُم بِهِمْ يَوْمَئِذٍۢ لَّخَبِيرٌۢ",
+      "textUrdu": "بیشک ان کے رب کو اس دن ان کی سب خبر ہے",
+      "textEnglish": "Indeed, their Lord with them, that Day, is [fully] Acquainted."
+    }
+  ]
+}

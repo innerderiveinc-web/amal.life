@@ -1,0 +1,682 @@
+{
+  "surahNumber": 21,
+  "nameArabic": "سُورَةُ الأَنبِيَاءِ",
+  "nameTransliterated": "Al-Anbiyaa",
+  "nameEnglish": "The Prophets",
+  "revelationType": "MECCAN",
+  "ayahsCount": 112,
+  "verses": [
+    {
+      "ayahNumber": 1,
+      "textArabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱقْتَرَبَ لِلنَّاسِ حِسَابُهُمْ وَهُمْ فِى غَفْلَةٍۢ مُّعْرِضُونَ",
+      "textUrdu": "لوگوں کا حساب نزدیک اور وہ غفلت میں منہ پھیرے ہیں",
+      "textEnglish": "[The time of] their account has approached for the people, while they are in heedlessness turning away."
+    },
+    {
+      "ayahNumber": 2,
+      "textArabic": "مَا يَأْتِيهِم مِّن ذِكْرٍۢ مِّن رَّبِّهِم مُّحْدَثٍ إِلَّا ٱسْتَمَعُوهُ وَهُمْ يَلْعَبُونَ",
+      "textUrdu": "جب ان کے رب کے پاس سے انہیں کوئی نئی نصیحت آتی ہے تو اسے نہیں سنتے مگر کھیلتے ہوئے،",
+      "textEnglish": "No mention comes to them anew from their Lord except that they listen to it while they are at play"
+    },
+    {
+      "ayahNumber": 3,
+      "textArabic": "لَاهِيَةًۭ قُلُوبُهُمْ ۗ وَأَسَرُّوا۟ ٱلنَّجْوَى ٱلَّذِينَ ظَلَمُوا۟ هَلْ هَٰذَآ إِلَّا بَشَرٌۭ مِّثْلُكُمْ ۖ أَفَتَأْتُونَ ٱلسِّحْرَ وَأَنتُمْ تُبْصِرُونَ",
+      "textUrdu": "ان کے دل کھیل میں پڑے ہیں اور ظالموں نے آپس میں خفیہ مشورت کی کہ یہ کون ہیں ایک تم ہی جیسے آدمی تو ہیں کیا جادو کے پاس جاتے ہو دیکھ بھال کر،",
+      "textEnglish": "With their hearts distracted. And those who do wrong conceal their private conversation, [saying], \"Is this [Prophet] except a human being like you? So would you approach magic while you are aware [of it]?\""
+    },
+    {
+      "ayahNumber": 4,
+      "textArabic": "قَالَ رَبِّى يَعْلَمُ ٱلْقَوْلَ فِى ٱلسَّمَآءِ وَٱلْأَرْضِ ۖ وَهُوَ ٱلسَّمِيعُ ٱلْعَلِيمُ",
+      "textUrdu": "نبی نے فرمایا میرا رب جانتا ہے آسمانوں اور زمین میں ہر بات کو، اور وہی ہے سنتا جانتا",
+      "textEnglish": "The Prophet said, \"My Lord knows whatever is said throughout the heaven and earth, and He is the Hearing, the Knowing.\""
+    },
+    {
+      "ayahNumber": 5,
+      "textArabic": "بَلْ قَالُوٓا۟ أَضْغَٰثُ أَحْلَٰمٍۭ بَلِ ٱفْتَرَىٰهُ بَلْ هُوَ شَاعِرٌۭ فَلْيَأْتِنَا بِـَٔايَةٍۢ كَمَآ أُرْسِلَ ٱلْأَوَّلُونَ",
+      "textUrdu": "بلکہ بولے پریشان خوابیں ہیں بلکہ ان کی گڑھت (گھڑی ہوئی چیز) ہے بلکہ یہ شاعر ہیں تو ہمارے پاس کوئی نشانی لائیں جیسے اگلے بھیجے گئے تھے",
+      "textEnglish": "But they say, \"[The revelation is but] a mixture of false dreams; rather, he has invented it; rather, he is a poet. So let him bring us a sign just as the previous [messengers] were sent [with miracles].\""
+    },
+    {
+      "ayahNumber": 6,
+      "textArabic": "مَآ ءَامَنَتْ قَبْلَهُم مِّن قَرْيَةٍ أَهْلَكْنَٰهَآ ۖ أَفَهُمْ يُؤْمِنُونَ",
+      "textUrdu": "ان سے پہلے کوئی بستی ایمان نہ لائی جسے ہم نے ہلاک کیا، تو کیا یہ ایمان لائیں گے",
+      "textEnglish": "Not a [single] city which We destroyed believed before them, so will they believe?"
+    },
+    {
+      "ayahNumber": 7,
+      "textArabic": "وَمَآ أَرْسَلْنَا قَبْلَكَ إِلَّا رِجَالًۭا نُّوحِىٓ إِلَيْهِمْ ۖ فَسْـَٔلُوٓا۟ أَهْلَ ٱلذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ",
+      "textUrdu": "اور ہم نے تم سے پہلے نہ بھیجے مگر مرد جنہیں ہم وحی کرتے تو اے لوگو! علم والوں سے پوچھو اگر تمہیں علم نہ ہو",
+      "textEnglish": "And We sent not before you, [O Muhammad], except men to whom We revealed [the message], so ask the people of the message if you do not know."
+    },
+    {
+      "ayahNumber": 8,
+      "textArabic": "وَمَا جَعَلْنَٰهُمْ جَسَدًۭا لَّا يَأْكُلُونَ ٱلطَّعَامَ وَمَا كَانُوا۟ خَٰلِدِينَ",
+      "textUrdu": "اور ہم نے انہیں خالی بدن نہ بنایا کہ کھانا نہ کھائیں اور نہ وہ دنیا میں ہمیشہ رہیں،",
+      "textEnglish": "And We did not make the prophets forms not eating food, nor were they immortal [on earth]."
+    },
+    {
+      "ayahNumber": 9,
+      "textArabic": "ثُمَّ صَدَقْنَٰهُمُ ٱلْوَعْدَ فَأَنجَيْنَٰهُمْ وَمَن نَّشَآءُ وَأَهْلَكْنَا ٱلْمُسْرِفِينَ",
+      "textUrdu": "پھر ہم نے اپنا وعدہ انہیں سچا کر دکھایا تو انہیں نجات دی اور جن کو چاہی اور حد سے بڑھنے والوں کو ہلاک کردیا",
+      "textEnglish": "Then We fulfilled for them the promise, and We saved them and whom We willed and destroyed the transgressors."
+    },
+    {
+      "ayahNumber": 10,
+      "textArabic": "لَقَدْ أَنزَلْنَآ إِلَيْكُمْ كِتَٰبًۭا فِيهِ ذِكْرُكُمْ ۖ أَفَلَا تَعْقِلُونَ",
+      "textUrdu": "بیشک ہم سے تمہاری طرف ایک کتاب اتاری جس میں تمہاری ناموری ہے تو کیا تمہیں عقل نہیں",
+      "textEnglish": "We have certainly sent down to you a Book in which is your mention. Then will you not reason?"
+    },
+    {
+      "ayahNumber": 11,
+      "textArabic": "وَكَمْ قَصَمْنَا مِن قَرْيَةٍۢ كَانَتْ ظَالِمَةًۭ وَأَنشَأْنَا بَعْدَهَا قَوْمًا ءَاخَرِينَ",
+      "textUrdu": "اور کتنی ہی بستیاں ہم نے تباہ کردیں کہ وہ ستمگار تھیں اور ان کے بعد اور قوم پیدا کی،",
+      "textEnglish": "And how many a city which was unjust have We shattered and produced after it another people."
+    },
+    {
+      "ayahNumber": 12,
+      "textArabic": "فَلَمَّآ أَحَسُّوا۟ بَأْسَنَآ إِذَا هُم مِّنْهَا يَرْكُضُونَ",
+      "textUrdu": "تو جب انہوں نے ہمارا عذاب پایا جبھی وہ اس سے بھاگنے لگے",
+      "textEnglish": "And when its inhabitants perceived Our punishment, at once they fled from it."
+    },
+    {
+      "ayahNumber": 13,
+      "textArabic": "لَا تَرْكُضُوا۟ وَٱرْجِعُوٓا۟ إِلَىٰ مَآ أُتْرِفْتُمْ فِيهِ وَمَسَٰكِنِكُمْ لَعَلَّكُمْ تُسْـَٔلُونَ",
+      "textUrdu": "نہ بھاگو اور لوٹ کے جاؤ ان آسائشوں کی طرف جو تم کو دی گئیں تھیں اور اپنے مکانوں کی طرف شاید تم سے پوچھنا ہو",
+      "textEnglish": "[Some angels said], \"Do not flee but return to where you were given luxury and to your homes - perhaps you will be questioned.\""
+    },
+    {
+      "ayahNumber": 14,
+      "textArabic": "قَالُوا۟ يَٰوَيْلَنَآ إِنَّا كُنَّا ظَٰلِمِينَ",
+      "textUrdu": "بولے ہائے خرابی ہماری بیشک ہم ظالم تھے",
+      "textEnglish": "They said, \"O woe to us! Indeed, we were wrongdoers.\""
+    },
+    {
+      "ayahNumber": 15,
+      "textArabic": "فَمَا زَالَت تِّلْكَ دَعْوَىٰهُمْ حَتَّىٰ جَعَلْنَٰهُمْ حَصِيدًا خَٰمِدِينَ",
+      "textUrdu": "تو وہ یہی پکارتے رہے یہاں تک کہ ہم نے انہیں کردیا کاٹے ہوئے بجھے ہوئے،",
+      "textEnglish": "And that declaration of theirs did not cease until We made them [as] a harvest [mowed down], extinguished [like a fire]."
+    },
+    {
+      "ayahNumber": 16,
+      "textArabic": "وَمَا خَلَقْنَا ٱلسَّمَآءَ وَٱلْأَرْضَ وَمَا بَيْنَهُمَا لَٰعِبِينَ",
+      "textUrdu": "اور ہم نے آسمان اور زمین اور جو کچھ ان کے درمیان ہے عبث نہ بنائے",
+      "textEnglish": "And We did not create the heaven and earth and that between them in play."
+    },
+    {
+      "ayahNumber": 17,
+      "textArabic": "لَوْ أَرَدْنَآ أَن نَّتَّخِذَ لَهْوًۭا لَّٱتَّخَذْنَٰهُ مِن لَّدُنَّآ إِن كُنَّا فَٰعِلِينَ",
+      "textUrdu": "اگر ہم کوئی بہلاوا اختیار کرنا چاہتے تو اپنے پاس سے اختیار کرتے اگر ہمیں کرنا ہوتا",
+      "textEnglish": "Had We intended to take a diversion, We could have taken it from [what is] with Us - if [indeed] We were to do so."
+    },
+    {
+      "ayahNumber": 18,
+      "textArabic": "بَلْ نَقْذِفُ بِٱلْحَقِّ عَلَى ٱلْبَٰطِلِ فَيَدْمَغُهُۥ فَإِذَا هُوَ زَاهِقٌۭ ۚ وَلَكُمُ ٱلْوَيْلُ مِمَّا تَصِفُونَ",
+      "textUrdu": "بلکہ ہم حق کو باطل پر پھینک مارتے ہیں تو وہ اس کا بھیجہ نکال دیتا ہے تو جبھی وہ مٹ کر رہ جاتا ہے اور تمہاری خرابی ہے ان باتوں سے جو بناتے ہو",
+      "textEnglish": "Rather, We dash the truth upon falsehood, and it destroys it, and thereupon it departs. And for you is destruction from that which you describe."
+    },
+    {
+      "ayahNumber": 19,
+      "textArabic": "وَلَهُۥ مَن فِى ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۚ وَمَنْ عِندَهُۥ لَا يَسْتَكْبِرُونَ عَنْ عِبَادَتِهِۦ وَلَا يَسْتَحْسِرُونَ",
+      "textUrdu": "اور اسی کے ہیں جتنے آسمانوں اور زمین میں ہیں اور اس کے پاس والے اس کی عبادت سے تکبر نہیں کرتے اور نہ تھکیں،",
+      "textEnglish": "To Him belongs whoever is in the heavens and the earth. And those near Him are not prevented by arrogance from His worship, nor do they tire."
+    },
+    {
+      "ayahNumber": 20,
+      "textArabic": "يُسَبِّحُونَ ٱلَّيْلَ وَٱلنَّهَارَ لَا يَفْتُرُونَ",
+      "textUrdu": "رات دن اس کی پاکی بولتے ہیں اور سستی نہیں کرتے،",
+      "textEnglish": "They exalt [Him] night and day [and] do not slacken."
+    },
+    {
+      "ayahNumber": 21,
+      "textArabic": "أَمِ ٱتَّخَذُوٓا۟ ءَالِهَةًۭ مِّنَ ٱلْأَرْضِ هُمْ يُنشِرُونَ",
+      "textUrdu": "کیا انہوں نے زمین میں سے کچھ ایسے خدا بنالیے ہیں کہ وہ کچھ پیدا کرتے ہیں",
+      "textEnglish": "Or have men taken for themselves gods from the earth who resurrect [the dead]?"
+    },
+    {
+      "ayahNumber": 22,
+      "textArabic": "لَوْ كَانَ فِيهِمَآ ءَالِهَةٌ إِلَّا ٱللَّهُ لَفَسَدَتَا ۚ فَسُبْحَٰنَ ٱللَّهِ رَبِّ ٱلْعَرْشِ عَمَّا يَصِفُونَ",
+      "textUrdu": "اگر آسمان و زمین میں اللہ کے سوا اور خدا ہوتے تو ضرور وہ تباہ ہوجاتے تو پاکی ہے اللہ عرش کے مالک کو ان باتوں سے جو یہ بناتے ہیں",
+      "textEnglish": "Had there been within the heavens and earth gods besides Allah, they both would have been ruined. So exalted is Allah, Lord of the Throne, above what they describe."
+    },
+    {
+      "ayahNumber": 23,
+      "textArabic": "لَا يُسْـَٔلُ عَمَّا يَفْعَلُ وَهُمْ يُسْـَٔلُونَ",
+      "textUrdu": "اس سے نہیں پوچھا جاتا جو وہ کرے اور ان سب سے سوال ہوگا",
+      "textEnglish": "He is not questioned about what He does, but they will be questioned."
+    },
+    {
+      "ayahNumber": 24,
+      "textArabic": "أَمِ ٱتَّخَذُوا۟ مِن دُونِهِۦٓ ءَالِهَةًۭ ۖ قُلْ هَاتُوا۟ بُرْهَٰنَكُمْ ۖ هَٰذَا ذِكْرُ مَن مَّعِىَ وَذِكْرُ مَن قَبْلِى ۗ بَلْ أَكْثَرُهُمْ لَا يَعْلَمُونَ ٱلْحَقَّ ۖ فَهُم مُّعْرِضُونَ",
+      "textUrdu": "کیا اللہ کے سوا اور خدا بنا رکھے ہیں، تم فرماؤ اپنی دلیل لاؤ یہ قرآن میرے ساتھ والوں کا ذکر ہے اور مجھ سے اگلوں کا تذکرہ بلکہ ان میں اکثر حق کو نہیں جانتے تو وہ رو گرداں، ہیں",
+      "textEnglish": "Or have they taken gods besides Him? Say, [O Muhammad], \"Produce your proof. This [Qur'an] is the message for those with me and the message of those before me.\" But most of them do not know the truth, so they are turning away."
+    },
+    {
+      "ayahNumber": 25,
+      "textArabic": "وَمَآ أَرْسَلْنَا مِن قَبْلِكَ مِن رَّسُولٍ إِلَّا نُوحِىٓ إِلَيْهِ أَنَّهُۥ لَآ إِلَٰهَ إِلَّآ أَنَا۠ فَٱعْبُدُونِ",
+      "textUrdu": "اور ہم نے تم سے پہلے کوئی رسول نہ بھیجا مگر یہ کہ ہم اس کی طرف وحی فرماتے کہ میرے سوا کوئی معبود نہیں تو مجھی کو پوجو،",
+      "textEnglish": "And We sent not before you any messenger except that We revealed to him that, \"There is no deity except Me, so worship Me.\""
+    },
+    {
+      "ayahNumber": 26,
+      "textArabic": "وَقَالُوا۟ ٱتَّخَذَ ٱلرَّحْمَٰنُ وَلَدًۭا ۗ سُبْحَٰنَهُۥ ۚ بَلْ عِبَادٌۭ مُّكْرَمُونَ",
+      "textUrdu": "اور بولے رحمن نے بیٹا اختیار کیا پاک ہے وہ بلکہ بندے ہیں عزت والے",
+      "textEnglish": "And they say, \"The Most Merciful has taken a son.\" Exalted is He! Rather, they are [but] honored servants."
+    },
+    {
+      "ayahNumber": 27,
+      "textArabic": "لَا يَسْبِقُونَهُۥ بِٱلْقَوْلِ وَهُم بِأَمْرِهِۦ يَعْمَلُونَ",
+      "textUrdu": "بات میں اس سے سبقت نہیں کرتے اور وہ اسی کے حکم پر کاربند ہوتے ہیں،",
+      "textEnglish": "They cannot precede Him in word, and they act by His command."
+    },
+    {
+      "ayahNumber": 28,
+      "textArabic": "يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يَشْفَعُونَ إِلَّا لِمَنِ ٱرْتَضَىٰ وَهُم مِّنْ خَشْيَتِهِۦ مُشْفِقُونَ",
+      "textUrdu": "وہ جانتا ہے جو ان کے آگے ہے اور جو ان کے پیچھے ہے اور شفاعت نہیں کرتے مگر اس کے لیے جسے وہ پسند فرمائے اور وہ اس کے خوف سے ڈر رہے ہیں،",
+      "textEnglish": "He knows what is [presently] before them and what will be after them, and they cannot intercede except on behalf of one whom He approves. And they, from fear of Him, are apprehensive."
+    },
+    {
+      "ayahNumber": 29,
+      "textArabic": "۞ وَمَن يَقُلْ مِنْهُمْ إِنِّىٓ إِلَٰهٌۭ مِّن دُونِهِۦ فَذَٰلِكَ نَجْزِيهِ جَهَنَّمَ ۚ كَذَٰلِكَ نَجْزِى ٱلظَّٰلِمِينَ",
+      "textUrdu": "اور ان میں جو کوئی کہے کہ میں اللہ کے سوا معبود ہوں تو اسے ہم جہنم کی جزا دیں گے، ہم ایسی ہی سزا دیتے ہیں ستمگاروں کو،",
+      "textEnglish": "And whoever of them should say, \"Indeed, I am a god besides Him\"- that one We would recompense with Hell. Thus do We recompense the wrongdoers."
+    },
+    {
+      "ayahNumber": 30,
+      "textArabic": "أَوَلَمْ يَرَ ٱلَّذِينَ كَفَرُوٓا۟ أَنَّ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ كَانَتَا رَتْقًۭا فَفَتَقْنَٰهُمَا ۖ وَجَعَلْنَا مِنَ ٱلْمَآءِ كُلَّ شَىْءٍ حَىٍّ ۖ أَفَلَا يُؤْمِنُونَ",
+      "textUrdu": "کیا کافروں نے یہ خیال نہ کیا کہ آسمان اور زمین بند تھے تو ہم نے انہیں کھولا اور ہم نے ہر جاندار چیز پانی سے بنائی تو کیا وہ ایمان لائیں گے،",
+      "textEnglish": "Have those who disbelieved not considered that the heavens and the earth were a joined entity, and We separated them and made from water every living thing? Then will they not believe?"
+    },
+    {
+      "ayahNumber": 31,
+      "textArabic": "وَجَعَلْنَا فِى ٱلْأَرْضِ رَوَٰسِىَ أَن تَمِيدَ بِهِمْ وَجَعَلْنَا فِيهَا فِجَاجًۭا سُبُلًۭا لَّعَلَّهُمْ يَهْتَدُونَ",
+      "textUrdu": "اور زمین میں ہم نے لنگر ڈالے کہ انھیں لے کر نہ کانپے اور ہم نے اس میں کشادہ راہیں رکھیں کہ کہیں وہ راہ پائیں",
+      "textEnglish": "And We placed within the earth firmly set mountains, lest it should shift with them, and We made therein [mountain] passes [as] roads that they might be guided."
+    },
+    {
+      "ayahNumber": 32,
+      "textArabic": "وَجَعَلْنَا ٱلسَّمَآءَ سَقْفًۭا مَّحْفُوظًۭا ۖ وَهُمْ عَنْ ءَايَٰتِهَا مُعْرِضُونَ",
+      "textUrdu": "اور ہم نے آسمان کو چھت بنایا نگاہ رکھی گئی اور وہ اس کی نشانیوں سے روگرداں ہیں",
+      "textEnglish": "And We made the sky a protected ceiling, but they, from its signs, are turning away."
+    },
+    {
+      "ayahNumber": 33,
+      "textArabic": "وَهُوَ ٱلَّذِى خَلَقَ ٱلَّيْلَ وَٱلنَّهَارَ وَٱلشَّمْسَ وَٱلْقَمَرَ ۖ كُلٌّۭ فِى فَلَكٍۢ يَسْبَحُونَ",
+      "textUrdu": "اور وہی ہے جس نے بنائے رات اور دن اور سورج اور چاند ہر ایک ایک گھیرے میں پیر رہا ہے",
+      "textEnglish": "And it is He who created the night and the day and the sun and the moon; all [heavenly bodies] in an orbit are swimming."
+    },
+    {
+      "ayahNumber": 34,
+      "textArabic": "وَمَا جَعَلْنَا لِبَشَرٍۢ مِّن قَبْلِكَ ٱلْخُلْدَ ۖ أَفَإِي۟ن مِّتَّ فَهُمُ ٱلْخَٰلِدُونَ",
+      "textUrdu": "اور ہم نے تم سے پہلے کسی آدمی کے لیے دنیا میں ہمیشگی نہ بنائی تو کیا اگر تم انتقال فرماؤ تو یہ ہمیشہ رہیں گے",
+      "textEnglish": "And We did not grant to any man before you eternity [on earth]; so if you die - would they be eternal?"
+    },
+    {
+      "ayahNumber": 35,
+      "textArabic": "كُلُّ نَفْسٍۢ ذَآئِقَةُ ٱلْمَوْتِ ۗ وَنَبْلُوكُم بِٱلشَّرِّ وَٱلْخَيْرِ فِتْنَةًۭ ۖ وَإِلَيْنَا تُرْجَعُونَ",
+      "textUrdu": "ہر جان کو موت کا مزہ چکھنا ہے، اور ہم تمہاری آزمائش کرتے ہیں برائی اور بھلائی سے جانچنے کو اور ہماری ہی طرف تمہیں لوٹ کر آنا ہے",
+      "textEnglish": "Every soul will taste death. And We test you with evil and with good as trial; and to Us you will be returned."
+    },
+    {
+      "ayahNumber": 36,
+      "textArabic": "وَإِذَا رَءَاكَ ٱلَّذِينَ كَفَرُوٓا۟ إِن يَتَّخِذُونَكَ إِلَّا هُزُوًا أَهَٰذَا ٱلَّذِى يَذْكُرُ ءَالِهَتَكُمْ وَهُم بِذِكْرِ ٱلرَّحْمَٰنِ هُمْ كَٰفِرُونَ",
+      "textUrdu": "اور جب کافر تمہیں دیکھتے ہیں تو تمہیں نہیں ٹھہراتے مگر ٹھٹھا کیا یہ ہیں وہ جو تمہارے خداؤں کو برا کہتے ہیں اور وہ رحمن ہی کی یاد سے منکر ہیں",
+      "textEnglish": "And when those who disbelieve see you, [O Muhammad], they take you not except in ridicule, [saying], \"Is this the one who insults your gods?\" And they are, at the mention of the Most Merciful, disbelievers."
+    },
+    {
+      "ayahNumber": 37,
+      "textArabic": "خُلِقَ ٱلْإِنسَٰنُ مِنْ عَجَلٍۢ ۚ سَأُو۟رِيكُمْ ءَايَٰتِى فَلَا تَسْتَعْجِلُونِ",
+      "textUrdu": "آدمی جلد باز بنایا گیا، اب میں تمہیں اپنی نشانیاں دکھاؤں گا مجھ سے جلدی نہ کرو",
+      "textEnglish": "Man was created of haste. I will show you My signs, so do not impatiently urge Me."
+    },
+    {
+      "ayahNumber": 38,
+      "textArabic": "وَيَقُولُونَ مَتَىٰ هَٰذَا ٱلْوَعْدُ إِن كُنتُمْ صَٰدِقِينَ",
+      "textUrdu": "اور کہتے ہیں کب ہوگا یہ وعدہ اگر تم سچے ہو،",
+      "textEnglish": "And they say, \"When is this promise, if you should be truthful?\""
+    },
+    {
+      "ayahNumber": 39,
+      "textArabic": "لَوْ يَعْلَمُ ٱلَّذِينَ كَفَرُوا۟ حِينَ لَا يَكُفُّونَ عَن وُجُوهِهِمُ ٱلنَّارَ وَلَا عَن ظُهُورِهِمْ وَلَا هُمْ يُنصَرُونَ",
+      "textUrdu": "کسی طرح جانتے کافر اس وقت کو جب نہ روک سکیں گے اپنے مونہوں سے آگے اور نہ اپنی پیٹھوں سے اور نہ ان کی مدد ہو",
+      "textEnglish": "If those who disbelieved but knew the time when they will not avert the Fire from their faces or from their backs and they will not be aided..."
+    },
+    {
+      "ayahNumber": 40,
+      "textArabic": "بَلْ تَأْتِيهِم بَغْتَةًۭ فَتَبْهَتُهُمْ فَلَا يَسْتَطِيعُونَ رَدَّهَا وَلَا هُمْ يُنظَرُونَ",
+      "textUrdu": "بلکہ وہ ان پر اچانک آپڑے گی تو انہیں بے حواس کردے گی پھر نہ وہ اسے پھیرسکیں گے اور نہ انہیں مہلت دی جائے گی",
+      "textEnglish": "Rather, it will come to them unexpectedly and bewilder them, and they will not be able to repel it, nor will they be reprieved."
+    },
+    {
+      "ayahNumber": 41,
+      "textArabic": "وَلَقَدِ ٱسْتُهْزِئَ بِرُسُلٍۢ مِّن قَبْلِكَ فَحَاقَ بِٱلَّذِينَ سَخِرُوا۟ مِنْهُم مَّا كَانُوا۟ بِهِۦ يَسْتَهْزِءُونَ",
+      "textUrdu": "اور بیشک تم سے اگلے رسولوں کے ساتھ ٹھٹھا کیا گیا تو مسخرگی کرنے والوں کا ٹھٹھا انہیں کو لے بیٹھا",
+      "textEnglish": "And already were messengers ridiculed before you, but those who mocked them were enveloped by what they used to ridicule."
+    },
+    {
+      "ayahNumber": 42,
+      "textArabic": "قُلْ مَن يَكْلَؤُكُم بِٱلَّيْلِ وَٱلنَّهَارِ مِنَ ٱلرَّحْمَٰنِ ۗ بَلْ هُمْ عَن ذِكْرِ رَبِّهِم مُّعْرِضُونَ",
+      "textUrdu": "تم فرماؤ شبانہ روز تمہاری کون نگہبانی کرتا ہے رحمان سے بلکہ وہ اپنے رب کی یاد سے منہ پھیرے ہیں",
+      "textEnglish": "Say, \"Who can protect you at night or by day from the Most Merciful?\" But they are, from the remembrance of their Lord, turning away."
+    },
+    {
+      "ayahNumber": 43,
+      "textArabic": "أَمْ لَهُمْ ءَالِهَةٌۭ تَمْنَعُهُم مِّن دُونِنَا ۚ لَا يَسْتَطِيعُونَ نَصْرَ أَنفُسِهِمْ وَلَا هُم مِّنَّا يُصْحَبُونَ",
+      "textUrdu": "کیا ان کے کچھ خدا ہیں جو ان کو ہم سے بچاتے ہیں وہ اپنی ہی جانوں کو نہیں بچاسکتے اور نہ ہماری طرف سے ان کی یاری ہو،",
+      "textEnglish": "Or do they have gods to defend them other than Us? They are unable [even] to help themselves, nor can they be protected from Us."
+    },
+    {
+      "ayahNumber": 44,
+      "textArabic": "بَلْ مَتَّعْنَا هَٰٓؤُلَآءِ وَءَابَآءَهُمْ حَتَّىٰ طَالَ عَلَيْهِمُ ٱلْعُمُرُ ۗ أَفَلَا يَرَوْنَ أَنَّا نَأْتِى ٱلْأَرْضَ نَنقُصُهَا مِنْ أَطْرَافِهَآ ۚ أَفَهُمُ ٱلْغَٰلِبُونَ",
+      "textUrdu": "بلکہ ہم نے ان کو اور ان کے باپ دادا کو برتاوا دیا یہاں تک کہ زندگی ان پر دراز ہوئی تو کیا نہیں دیکھتے کہ ہم زمین کو اس کے کناروں سے گھٹاتے آرہے ہیں تو کیا یہ غالب ہوں گے",
+      "textEnglish": "But, [on the contrary], We have provided good things for these [disbelievers] and their fathers until life was prolonged for them. Then do they not see that We set upon the land, reducing it from its borders? So it is they who will overcome?"
+    },
+    {
+      "ayahNumber": 45,
+      "textArabic": "قُلْ إِنَّمَآ أُنذِرُكُم بِٱلْوَحْىِ ۚ وَلَا يَسْمَعُ ٱلصُّمُّ ٱلدُّعَآءَ إِذَا مَا يُنذَرُونَ",
+      "textUrdu": "تم فرماؤ کہ میں تم کو صرف وحی سے ڈراتا ہوں اور بہرے پکارنا نہیں سنتے جب ڈرائے جائیں،",
+      "textEnglish": "Say, \"I only warn you by revelation.\" But the deaf do not hear the call when they are warned."
+    },
+    {
+      "ayahNumber": 46,
+      "textArabic": "وَلَئِن مَّسَّتْهُمْ نَفْحَةٌۭ مِّنْ عَذَابِ رَبِّكَ لَيَقُولُنَّ يَٰوَيْلَنَآ إِنَّا كُنَّا ظَٰلِمِينَ",
+      "textUrdu": "اور اگر انہیں تمہارے رب کے عذاب کی ہوا چھو جائے تو ضرور کہیں گے ہائے خرابی ہماری بیشک ہم ظالم تھے",
+      "textEnglish": "And if [as much as] a whiff of the punishment of your Lord should touch them, they would surely say, \"O woe to us! Indeed, we have been wrongdoers.\""
+    },
+    {
+      "ayahNumber": 47,
+      "textArabic": "وَنَضَعُ ٱلْمَوَٰزِينَ ٱلْقِسْطَ لِيَوْمِ ٱلْقِيَٰمَةِ فَلَا تُظْلَمُ نَفْسٌۭ شَيْـًۭٔا ۖ وَإِن كَانَ مِثْقَالَ حَبَّةٍۢ مِّنْ خَرْدَلٍ أَتَيْنَا بِهَا ۗ وَكَفَىٰ بِنَا حَٰسِبِينَ",
+      "textUrdu": "اور ہم عدل کی ترازوئیں رکھیں گے قیامت کے دن تو کسی جان پر کچھ ظلم نہ ہوگا، اور اگر کوئی چیز رائی کے دانہ کے برابر ہو تو ہم اسے لے آئیں گے، اور ہم کافی ہیں حساب کو،",
+      "textEnglish": "And We place the scales of justice for the Day of Resurrection, so no soul will be treated unjustly at all. And if there is [even] the weight of a mustard seed, We will bring it forth. And sufficient are We as accountant."
+    },
+    {
+      "ayahNumber": 48,
+      "textArabic": "وَلَقَدْ ءَاتَيْنَا مُوسَىٰ وَهَٰرُونَ ٱلْفُرْقَانَ وَضِيَآءًۭ وَذِكْرًۭا لِّلْمُتَّقِينَ",
+      "textUrdu": "اور بیشک ہم نے موسیٰ اور ہارون کو فیصلہ دیا اور اجالا اور پرہیزگاروں کو نصیحت",
+      "textEnglish": "And We had already given Moses and Aaron the criterion and a light and a reminder for the righteous"
+    },
+    {
+      "ayahNumber": 49,
+      "textArabic": "ٱلَّذِينَ يَخْشَوْنَ رَبَّهُم بِٱلْغَيْبِ وَهُم مِّنَ ٱلسَّاعَةِ مُشْفِقُونَ",
+      "textUrdu": "وہ جو بے دیکھے اپنے رب سے ڈرتے ہیں اور انہیں قیامت کا اندیشہ لگا ہوا ہے،",
+      "textEnglish": "Who fear their Lord unseen, while they are of the Hour apprehensive."
+    },
+    {
+      "ayahNumber": 50,
+      "textArabic": "وَهَٰذَا ذِكْرٌۭ مُّبَارَكٌ أَنزَلْنَٰهُ ۚ أَفَأَنتُمْ لَهُۥ مُنكِرُونَ",
+      "textUrdu": "اور یہ ہے برکت والا ذکر کہ ہم نے اتارا تو کیا تم اس کے منکر ہو،",
+      "textEnglish": "And this [Qur'an] is a blessed message which We have sent down. Then are you with it unacquainted?"
+    },
+    {
+      "ayahNumber": 51,
+      "textArabic": "۞ وَلَقَدْ ءَاتَيْنَآ إِبْرَٰهِيمَ رُشْدَهُۥ مِن قَبْلُ وَكُنَّا بِهِۦ عَٰلِمِينَ",
+      "textUrdu": "اور بیشک ہم نے ابراہیم کو پہلے ہی سے اس کی نیک راہ عطا کردی اور ہم اس سے خبردار تھے،",
+      "textEnglish": "And We had certainly given Abraham his sound judgement before, and We were of him well-Knowing"
+    },
+    {
+      "ayahNumber": 52,
+      "textArabic": "إِذْ قَالَ لِأَبِيهِ وَقَوْمِهِۦ مَا هَٰذِهِ ٱلتَّمَاثِيلُ ٱلَّتِىٓ أَنتُمْ لَهَا عَٰكِفُونَ",
+      "textUrdu": "جب اس نے اپنے باپ اور قوم سے کہا یہ مورتیں کیا ہیں جن کے آگے تم آسن مارے (پوجا کے لیے بیٹھے) ہو",
+      "textEnglish": "When he said to his father and his people, \"What are these statues to which you are devoted?\""
+    },
+    {
+      "ayahNumber": 53,
+      "textArabic": "قَالُوا۟ وَجَدْنَآ ءَابَآءَنَا لَهَا عَٰبِدِينَ",
+      "textUrdu": "بولے ہم نے اپنے دادا کو ان کی پوجا کرتے پایا",
+      "textEnglish": "They said, \"We found our fathers worshippers of them.\""
+    },
+    {
+      "ayahNumber": 54,
+      "textArabic": "قَالَ لَقَدْ كُنتُمْ أَنتُمْ وَءَابَآؤُكُمْ فِى ضَلَٰلٍۢ مُّبِينٍۢ",
+      "textUrdu": "کہا بے شک تم اور تمہارے باپ دادا سب کھلی گمراہی میں ہو،",
+      "textEnglish": "He said, \"You were certainly, you and your fathers, in manifest error.\""
+    },
+    {
+      "ayahNumber": 55,
+      "textArabic": "قَالُوٓا۟ أَجِئْتَنَا بِٱلْحَقِّ أَمْ أَنتَ مِنَ ٱللَّٰعِبِينَ",
+      "textUrdu": "بولے کیا تم ہمارے پاس حق لائے ہو یا یونہی کھیلتے ہو",
+      "textEnglish": "They said, \"Have you come to us with truth, or are you of those who jest?\""
+    },
+    {
+      "ayahNumber": 56,
+      "textArabic": "قَالَ بَل رَّبُّكُمْ رَبُّ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ٱلَّذِى فَطَرَهُنَّ وَأَنَا۠ عَلَىٰ ذَٰلِكُم مِّنَ ٱلشَّٰهِدِينَ",
+      "textUrdu": "کہا بلکہ تمہارا رب وہ ہے جو رب ہے آسمان اور زمین کا جس نے انہیں پیدا کیا، اور میں اس پر گواہوں میں سے ہوں،",
+      "textEnglish": "He said, \"[No], rather, your Lord is the Lord of the heavens and the earth who created them, and I, to that, am of those who testify."
+    },
+    {
+      "ayahNumber": 57,
+      "textArabic": "وَتَٱللَّهِ لَأَكِيدَنَّ أَصْنَٰمَكُم بَعْدَ أَن تُوَلُّوا۟ مُدْبِرِينَ",
+      "textUrdu": "اور مجھے اللہ کی قسم ہے میں تمہارے بتوں کا برا چاہوں گا بعد اس کے کہ تم پھر جاؤ پیٹھ دے کر",
+      "textEnglish": "And [I swear] by Allah, I will surely plan against your idols after you have turned and gone away.\""
+    },
+    {
+      "ayahNumber": 58,
+      "textArabic": "فَجَعَلَهُمْ جُذَٰذًا إِلَّا كَبِيرًۭا لَّهُمْ لَعَلَّهُمْ إِلَيْهِ يَرْجِعُونَ",
+      "textUrdu": "تو ان سب کو چورا کردیا مگر ایک کو جو ان کا سب سے بڑا تھا کہ شاید وہ اس سے کچھ پوچھیں",
+      "textEnglish": "So he made them into fragments, except a large one among them, that they might return to it [and question]."
+    },
+    {
+      "ayahNumber": 59,
+      "textArabic": "قَالُوا۟ مَن فَعَلَ هَٰذَا بِـَٔالِهَتِنَآ إِنَّهُۥ لَمِنَ ٱلظَّٰلِمِينَ",
+      "textUrdu": "بولے کس نے ہمارے خداؤں کے ساتھ یہ کام کیا بیشک وہ ظالم ہے،",
+      "textEnglish": "They said, \"Who has done this to our gods? Indeed, he is of the wrongdoers.\""
+    },
+    {
+      "ayahNumber": 60,
+      "textArabic": "قَالُوا۟ سَمِعْنَا فَتًۭى يَذْكُرُهُمْ يُقَالُ لَهُۥٓ إِبْرَٰهِيمُ",
+      "textUrdu": "ان میں کے کچھ بولے ہم نے ایک جوان کو انہیں برا کہتے سنا جسے ابراہیم کہتے ہیں",
+      "textEnglish": "They said, \"We heard a young man mention them who is called Abraham.\""
+    },
+    {
+      "ayahNumber": 61,
+      "textArabic": "قَالُوا۟ فَأْتُوا۟ بِهِۦ عَلَىٰٓ أَعْيُنِ ٱلنَّاسِ لَعَلَّهُمْ يَشْهَدُونَ",
+      "textUrdu": "بولے تو اسے لوگوں کے سامنے لاؤ شاید وہ گواہی دیں",
+      "textEnglish": "They said, \"Then bring him before the eyes of the people that they may testify.\""
+    },
+    {
+      "ayahNumber": 62,
+      "textArabic": "قَالُوٓا۟ ءَأَنتَ فَعَلْتَ هَٰذَا بِـَٔالِهَتِنَا يَٰٓإِبْرَٰهِيمُ",
+      "textUrdu": "بولے کیا تم نے ہمارے خداؤں کے ساتھ یہ کام کیا اے ابراہیم",
+      "textEnglish": "They said, \"Have you done this to our gods, O Abraham?\""
+    },
+    {
+      "ayahNumber": 63,
+      "textArabic": "قَالَ بَلْ فَعَلَهُۥ كَبِيرُهُمْ هَٰذَا فَسْـَٔلُوهُمْ إِن كَانُوا۟ يَنطِقُونَ",
+      "textUrdu": "فرمایا بلکہ ان کے اس بڑے نے کیا ہوگا تو ان سے پوچھو اگر بولتے ہوں",
+      "textEnglish": "He said, \"Rather, this - the largest of them - did it, so ask them, if they should [be able to] speak.\""
+    },
+    {
+      "ayahNumber": 64,
+      "textArabic": "فَرَجَعُوٓا۟ إِلَىٰٓ أَنفُسِهِمْ فَقَالُوٓا۟ إِنَّكُمْ أَنتُمُ ٱلظَّٰلِمُونَ",
+      "textUrdu": "تو اپنے جی کی طرف پلٹے اور بولے بیشک تمہیں ستمگار ہو",
+      "textEnglish": "So they returned to [blaming] themselves and said [to each other], \"Indeed, you are the wrongdoers.\""
+    },
+    {
+      "ayahNumber": 65,
+      "textArabic": "ثُمَّ نُكِسُوا۟ عَلَىٰ رُءُوسِهِمْ لَقَدْ عَلِمْتَ مَا هَٰٓؤُلَآءِ يَنطِقُونَ",
+      "textUrdu": "پھر اپنے سروں کے بل اوندھائے گئے کہ تمہیں خوب معلوم ہے یہ بولتے نہیں",
+      "textEnglish": "Then they reversed themselves, [saying], \"You have already known that these do not speak!\""
+    },
+    {
+      "ayahNumber": 66,
+      "textArabic": "قَالَ أَفَتَعْبُدُونَ مِن دُونِ ٱللَّهِ مَا لَا يَنفَعُكُمْ شَيْـًۭٔا وَلَا يَضُرُّكُمْ",
+      "textUrdu": "کہا تو کیا اللہ کے سوا ایسے کو پوجتے ہو جو نہ تمہیں نفع دے اور نہ نقصان پہنچائے",
+      "textEnglish": "He said, \"Then do you worship instead of Allah that which does not benefit you at all or harm you?"
+    },
+    {
+      "ayahNumber": 67,
+      "textArabic": "أُفٍّۢ لَّكُمْ وَلِمَا تَعْبُدُونَ مِن دُونِ ٱللَّهِ ۖ أَفَلَا تَعْقِلُونَ",
+      "textUrdu": "تف ہے تم پر اور ان بتوں پر جن کو اللہ کے سوا پوجتے ہو، تو کیا تمہیں عقل نہیں",
+      "textEnglish": "Uff to you and to what you worship instead of Allah. Then will you not use reason?\""
+    },
+    {
+      "ayahNumber": 68,
+      "textArabic": "قَالُوا۟ حَرِّقُوهُ وَٱنصُرُوٓا۟ ءَالِهَتَكُمْ إِن كُنتُمْ فَٰعِلِينَ",
+      "textUrdu": "بولے ان کو جلادو اور اپنے خداؤں کی مدد کروں اگر تمہیں کرنا ہے",
+      "textEnglish": "They said, \"Burn him and support your gods - if you are to act.\""
+    },
+    {
+      "ayahNumber": 69,
+      "textArabic": "قُلْنَا يَٰنَارُ كُونِى بَرْدًۭا وَسَلَٰمًا عَلَىٰٓ إِبْرَٰهِيمَ",
+      "textUrdu": "ہم نے فرمایا اے آگ ہو جا ٹھنڈی اور سلامتی ابراہیم پر",
+      "textEnglish": "Allah said, \"O fire, be coolness and safety upon Abraham.\""
+    },
+    {
+      "ayahNumber": 70,
+      "textArabic": "وَأَرَادُوا۟ بِهِۦ كَيْدًۭا فَجَعَلْنَٰهُمُ ٱلْأَخْسَرِينَ",
+      "textUrdu": "اور انہوں نے اس کا برا چاہا تو ہم نے انہیں سب سے بڑھ کر زیاں کار کردیا",
+      "textEnglish": "And they intended for him harm, but We made them the greatest losers."
+    },
+    {
+      "ayahNumber": 71,
+      "textArabic": "وَنَجَّيْنَٰهُ وَلُوطًا إِلَى ٱلْأَرْضِ ٱلَّتِى بَٰرَكْنَا فِيهَا لِلْعَٰلَمِينَ",
+      "textUrdu": "اور ہم اسے اور لوط کو نجات بخشی اس زمین کی طرف جس میں ہم نے جہاں والوں کے لیے برکت رکھی",
+      "textEnglish": "And We delivered him and Lot to the land which We had blessed for the worlds."
+    },
+    {
+      "ayahNumber": 72,
+      "textArabic": "وَوَهَبْنَا لَهُۥٓ إِسْحَٰقَ وَيَعْقُوبَ نَافِلَةًۭ ۖ وَكُلًّۭا جَعَلْنَا صَٰلِحِينَ",
+      "textUrdu": "اور ہم نے اسے اسحاق عطا فرمایا اور یعقوب پوتا، اور ہم نے ان سب کو اپنے قرب خاص کا سزاوار کیا،",
+      "textEnglish": "And We gave him Isaac and Jacob in addition, and all [of them] We made righteous."
+    },
+    {
+      "ayahNumber": 73,
+      "textArabic": "وَجَعَلْنَٰهُمْ أَئِمَّةًۭ يَهْدُونَ بِأَمْرِنَا وَأَوْحَيْنَآ إِلَيْهِمْ فِعْلَ ٱلْخَيْرَٰتِ وَإِقَامَ ٱلصَّلَوٰةِ وَإِيتَآءَ ٱلزَّكَوٰةِ ۖ وَكَانُوا۟ لَنَا عَٰبِدِينَ",
+      "textUrdu": "اور ہم نے انہیں امام کیا کہ ہمارے حکم سے بلاتے ہیں اور ہم نے انہیں وحی بھیجی اچھے کام کرنے اور نماز برپا رکھنے اور زکوٰة دینے کی اور وہ ہماری بندگی کرتے تھے،",
+      "textEnglish": "And We made them leaders guiding by Our command. And We inspired to them the doing of good deeds, establishment of prayer, and giving of zakah; and they were worshippers of Us."
+    },
+    {
+      "ayahNumber": 74,
+      "textArabic": "وَلُوطًا ءَاتَيْنَٰهُ حُكْمًۭا وَعِلْمًۭا وَنَجَّيْنَٰهُ مِنَ ٱلْقَرْيَةِ ٱلَّتِى كَانَت تَّعْمَلُ ٱلْخَبَٰٓئِثَ ۗ إِنَّهُمْ كَانُوا۟ قَوْمَ سَوْءٍۢ فَٰسِقِينَ",
+      "textUrdu": "اور لوط کو ہم نے حکومت اور علم دیا اور اسے اس بستی سے نجات بخشی جو گندے کام کرتی تھی بیشک وہ برُے لوگ بے حکم تھے،",
+      "textEnglish": "And to Lot We gave judgement and knowledge, and We saved him from the city that was committing wicked deeds. Indeed, they were a people of evil, defiantly disobedient."
+    },
+    {
+      "ayahNumber": 75,
+      "textArabic": "وَأَدْخَلْنَٰهُ فِى رَحْمَتِنَآ ۖ إِنَّهُۥ مِنَ ٱلصَّٰلِحِينَ",
+      "textUrdu": "اور ہم نے اسے اپنی رحمت میں داخل کیا، بیشک وہ ہمارے قرب خاص سزاواروں میں ہے،",
+      "textEnglish": "And We admitted him into Our mercy. Indeed, he was of the righteous."
+    },
+    {
+      "ayahNumber": 76,
+      "textArabic": "وَنُوحًا إِذْ نَادَىٰ مِن قَبْلُ فَٱسْتَجَبْنَا لَهُۥ فَنَجَّيْنَٰهُ وَأَهْلَهُۥ مِنَ ٱلْكَرْبِ ٱلْعَظِيمِ",
+      "textUrdu": "اور نوح کو جب اس سے پہلے اس نے ہمیں پکارا تو ہم نے اس کی دعا قبول کی اور اسے اور اس کے گھر والوں کو بڑی سختی سے نجات دی",
+      "textEnglish": "And [mention] Noah, when he called [to Allah] before [that time], so We responded to him and saved him and his family from the great flood."
+    },
+    {
+      "ayahNumber": 77,
+      "textArabic": "وَنَصَرْنَٰهُ مِنَ ٱلْقَوْمِ ٱلَّذِينَ كَذَّبُوا۟ بِـَٔايَٰتِنَآ ۚ إِنَّهُمْ كَانُوا۟ قَوْمَ سَوْءٍۢ فَأَغْرَقْنَٰهُمْ أَجْمَعِينَ",
+      "textUrdu": "اور ہم نے ان لوگوں پر اس کو مدد دی جنہوں نے ہماری آیتیں جھٹلائیں، بیشک وہ برے لوگ تھے تو ہم نے ان سب کو ڈبو دیا،",
+      "textEnglish": "And We saved him from the people who denied Our signs. Indeed, they were a people of evil, so We drowned them, all together."
+    },
+    {
+      "ayahNumber": 78,
+      "textArabic": "وَدَاوُۥدَ وَسُلَيْمَٰنَ إِذْ يَحْكُمَانِ فِى ٱلْحَرْثِ إِذْ نَفَشَتْ فِيهِ غَنَمُ ٱلْقَوْمِ وَكُنَّا لِحُكْمِهِمْ شَٰهِدِينَ",
+      "textUrdu": "اور داؤد اور سلیمان کو یاد کرو جب کھیتی کا ایک جھگڑا چکاتے تھے، جب رات کو اس میں کچھ لوگوں کی بکریاں چھوٹیں اور ہم ان کے حکم کے وقت حاضر تھے،",
+      "textEnglish": "And [mention] David and Solomon, when they judged concerning the field - when the sheep of a people overran it [at night], and We were witness to their judgement."
+    },
+    {
+      "ayahNumber": 79,
+      "textArabic": "فَفَهَّمْنَٰهَا سُلَيْمَٰنَ ۚ وَكُلًّا ءَاتَيْنَا حُكْمًۭا وَعِلْمًۭا ۚ وَسَخَّرْنَا مَعَ دَاوُۥدَ ٱلْجِبَالَ يُسَبِّحْنَ وَٱلطَّيْرَ ۚ وَكُنَّا فَٰعِلِينَ",
+      "textUrdu": "ہم نے وہ معاملہ سلیمان کو سمجھادیا اور دونوں کو حکومت اور علم عطا کیا اور داؤد کے ساتھ پہاڑ مسخر فرمادیے کہ تسبیح کرتے اور پرندے اور یہ ہمارے کام تھے،",
+      "textEnglish": "And We gave understanding of the case to Solomon, and to each [of them] We gave judgement and knowledge. And We subjected the mountains to exalt [Us], along with David and [also] the birds. And We were doing [that]."
+    },
+    {
+      "ayahNumber": 80,
+      "textArabic": "وَعَلَّمْنَٰهُ صَنْعَةَ لَبُوسٍۢ لَّكُمْ لِتُحْصِنَكُم مِّنۢ بَأْسِكُمْ ۖ فَهَلْ أَنتُمْ شَٰكِرُونَ",
+      "textUrdu": "اور ہم نے اسے تمہارا ایک پہناوا بنانا سکھایا کہ تمہیں تمہاری آنچ سے (زخمی ہونے سے) بچائے تو کیا تم شکر کروگے،",
+      "textEnglish": "And We taught him the fashioning of coats of armor to protect you from your [enemy in] battle. So will you then be grateful?"
+    },
+    {
+      "ayahNumber": 81,
+      "textArabic": "وَلِسُلَيْمَٰنَ ٱلرِّيحَ عَاصِفَةًۭ تَجْرِى بِأَمْرِهِۦٓ إِلَى ٱلْأَرْضِ ٱلَّتِى بَٰرَكْنَا فِيهَا ۚ وَكُنَّا بِكُلِّ شَىْءٍ عَٰلِمِينَ",
+      "textUrdu": "اور سلیمان کے لیے تیز ہوا مسخر کردی کہ اس کے حکم سے چلتی اس زمین کی طرف جس میں ہم نے برکت رکھی اور ہم کو ہر چیز معلوم ہے،",
+      "textEnglish": "And to Solomon [We subjected] the wind, blowing forcefully, proceeding by his command toward the land which We had blessed. And We are ever, of all things, Knowing."
+    },
+    {
+      "ayahNumber": 82,
+      "textArabic": "وَمِنَ ٱلشَّيَٰطِينِ مَن يَغُوصُونَ لَهُۥ وَيَعْمَلُونَ عَمَلًۭا دُونَ ذَٰلِكَ ۖ وَكُنَّا لَهُمْ حَٰفِظِينَ",
+      "textUrdu": "اور شیطانوں میں سے جو اس کے لیے غوطہ لگاتے اور اس کے سوا اور کام کرتے اور ہم انہیں روکے ہوئے تھے",
+      "textEnglish": "And of the devils were those who dived for him and did work other than that. And We were of them a guardian."
+    },
+    {
+      "ayahNumber": 83,
+      "textArabic": "۞ وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ ٱلضُّرُّ وَأَنتَ أَرْحَمُ ٱلرَّٰحِمِينَ",
+      "textUrdu": "اور ایوب کو (یاد کرو) جب اس نے اپنے رب کو پکارا کہ مجھے تکلیف پہنچی اور تو سب مہر والوں سے بڑھ کر مہر والا ہے،",
+      "textEnglish": "And [mention] Job, when he called to his Lord, \"Indeed, adversity has touched me, and you are the Most Merciful of the merciful.\""
+    },
+    {
+      "ayahNumber": 84,
+      "textArabic": "فَٱسْتَجَبْنَا لَهُۥ فَكَشَفْنَا مَا بِهِۦ مِن ضُرٍّۢ ۖ وَءَاتَيْنَٰهُ أَهْلَهُۥ وَمِثْلَهُم مَّعَهُمْ رَحْمَةًۭ مِّنْ عِندِنَا وَذِكْرَىٰ لِلْعَٰبِدِينَ",
+      "textUrdu": "تو ہم نے اس کی دعا سن لی تو ہم نے دور کردی جو تکلیف اسے تھی اور ہم نے اسے اس کے گھر والے اور ان کے ساتھ اتنے ہی اور عطا کیے اپنے پاس سے رحمت فرما کر اور بندی والوں کے لیے نصیحت",
+      "textEnglish": "So We responded to him and removed what afflicted him of adversity. And We gave him [back] his family and the like thereof with them as mercy from Us and a reminder for the worshippers [of Allah]."
+    },
+    {
+      "ayahNumber": 85,
+      "textArabic": "وَإِسْمَٰعِيلَ وَإِدْرِيسَ وَذَا ٱلْكِفْلِ ۖ كُلٌّۭ مِّنَ ٱلصَّٰبِرِينَ",
+      "textUrdu": "اور اسماعیل اور ادریس اور ذوالکفل کو (یاد کرو)، وہ سب صبر والے تھے",
+      "textEnglish": "And [mention] Ishmael and Idrees and Dhul-Kifl; all were of the patient."
+    },
+    {
+      "ayahNumber": 86,
+      "textArabic": "وَأَدْخَلْنَٰهُمْ فِى رَحْمَتِنَآ ۖ إِنَّهُم مِّنَ ٱلصَّٰلِحِينَ",
+      "textUrdu": "اور انہیں ہم نے اپنی رحمت میں داخل کیا، بیشک وہ ہمارے قربِ خاص کے سزاواروں میں ہیں،",
+      "textEnglish": "And We admitted them into Our mercy. Indeed, they were of the righteous."
+    },
+    {
+      "ayahNumber": 87,
+      "textArabic": "وَذَا ٱلنُّونِ إِذ ذَّهَبَ مُغَٰضِبًۭا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِى ٱلظُّلُمَٰتِ أَن لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ",
+      "textUrdu": "اور ذوالنون، کو (یاد کرو) جب چلا غصہ میں بھرا تو گمان کیا کہ ہم اس پر تنگی نہ کریں گے تو اندھیریوں میں پکارا کوئی معبود نہیں سوا تیرے پاکی ہے تجھ کو، بیشک مجھ سے بے جا ہوا",
+      "textEnglish": "And [mention] the man of the fish, when he went off in anger and thought that We would not decree [anything] upon him. And he called out within the darknesses, \"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.\""
+    },
+    {
+      "ayahNumber": 88,
+      "textArabic": "فَٱسْتَجَبْنَا لَهُۥ وَنَجَّيْنَٰهُ مِنَ ٱلْغَمِّ ۚ وَكَذَٰلِكَ نُۨجِى ٱلْمُؤْمِنِينَ",
+      "textUrdu": "تو ہم نے اس کی پکار سن لی اور سے غم سے نجات بخشی اور ایسی ہی نجات دیں گے مسلمانوں کو",
+      "textEnglish": "So We responded to him and saved him from the distress. And thus do We save the believers."
+    },
+    {
+      "ayahNumber": 89,
+      "textArabic": "وَزَكَرِيَّآ إِذْ نَادَىٰ رَبَّهُۥ رَبِّ لَا تَذَرْنِى فَرْدًۭا وَأَنتَ خَيْرُ ٱلْوَٰرِثِينَ",
+      "textUrdu": "اور زکریا کو جب اس نے اپنے رب کو پکارا، اے میرے رب مجھے اکیلا نہ چھوڑ اور تو سب سے بہتر اور وارث",
+      "textEnglish": "And [mention] Zechariah, when he called to his Lord, \"My Lord, do not leave me alone [with no heir], while you are the best of inheritors.\""
+    },
+    {
+      "ayahNumber": 90,
+      "textArabic": "فَٱسْتَجَبْنَا لَهُۥ وَوَهَبْنَا لَهُۥ يَحْيَىٰ وَأَصْلَحْنَا لَهُۥ زَوْجَهُۥٓ ۚ إِنَّهُمْ كَانُوا۟ يُسَٰرِعُونَ فِى ٱلْخَيْرَٰتِ وَيَدْعُونَنَا رَغَبًۭا وَرَهَبًۭا ۖ وَكَانُوا۟ لَنَا خَٰشِعِينَ",
+      "textUrdu": "تو ہم نے اس کی دعا قبول کی اور اسے یحییٰ عطا فرمایا اور اس کے لیے اس کی بی بی سنواری بیشک وہ بھلے کاموں میں جلدی کرتے تھے اور ہمیں پکارتے تھے امید اور خوف سے، اور ہمارے حضور گڑگڑاتے ہیں،",
+      "textEnglish": "So We responded to him, and We gave to him John, and amended for him his wife. Indeed, they used to hasten to good deeds and supplicate Us in hope and fear, and they were to Us humbly submissive."
+    },
+    {
+      "ayahNumber": 91,
+      "textArabic": "وَٱلَّتِىٓ أَحْصَنَتْ فَرْجَهَا فَنَفَخْنَا فِيهَا مِن رُّوحِنَا وَجَعَلْنَٰهَا وَٱبْنَهَآ ءَايَةًۭ لِّلْعَٰلَمِينَ",
+      "textUrdu": "اور اس عورت کو اس نے اپنی پارسائی نگاہ رکھی تو ہم نے اس میں اپنی روح پھونکی اور اسے اور اس کے بیٹے کو سارے جہاں کے لیے نشانی بنایا",
+      "textEnglish": "And [mention] the one who guarded her chastity, so We blew into her [garment] through Our angel [Gabriel], and We made her and her son a sign for the worlds."
+    },
+    {
+      "ayahNumber": 92,
+      "textArabic": "إِنَّ هَٰذِهِۦٓ أُمَّتُكُمْ أُمَّةًۭ وَٰحِدَةًۭ وَأَنَا۠ رَبُّكُمْ فَٱعْبُدُونِ",
+      "textUrdu": "بیشک تمہارا یہ دین ایک ہی دین ہے اور میں تمہارا رب ہوں تو میری عبادت کرو،",
+      "textEnglish": "Indeed this, your religion, is one religion, and I am your Lord, so worship Me."
+    },
+    {
+      "ayahNumber": 93,
+      "textArabic": "وَتَقَطَّعُوٓا۟ أَمْرَهُم بَيْنَهُمْ ۖ كُلٌّ إِلَيْنَا رَٰجِعُونَ",
+      "textUrdu": "اور اَوروں نے اپنے کام آپس میں ٹکڑے ٹکڑے کرلیے سب کو ہماری طرف پھرنا ہے،",
+      "textEnglish": "And [yet] they divided their affair among themselves, [but] all to Us will return."
+    },
+    {
+      "ayahNumber": 94,
+      "textArabic": "فَمَن يَعْمَلْ مِنَ ٱلصَّٰلِحَٰتِ وَهُوَ مُؤْمِنٌۭ فَلَا كُفْرَانَ لِسَعْيِهِۦ وَإِنَّا لَهُۥ كَٰتِبُونَ",
+      "textUrdu": "تو جو کچھ بھلے کام کرے اور ہو ایمان والا تو اس کی کوشش کی بے قدری نہیں، اور ہم اسے لکھ رہے ہیں،",
+      "textEnglish": "So whoever does righteous deeds while he is a believer - no denial will there be for his effort, and indeed We, of it, are recorders."
+    },
+    {
+      "ayahNumber": 95,
+      "textArabic": "وَحَرَٰمٌ عَلَىٰ قَرْيَةٍ أَهْلَكْنَٰهَآ أَنَّهُمْ لَا يَرْجِعُونَ",
+      "textUrdu": "اور حرام ہے اس بستی پر جسے ہم نے ہلاک کردیا کہ پھر لوٹ کر آئیں",
+      "textEnglish": "And there is prohibition upon [the people of] a city which We have destroyed that they will [ever] return"
+    },
+    {
+      "ayahNumber": 96,
+      "textArabic": "حَتَّىٰٓ إِذَا فُتِحَتْ يَأْجُوجُ وَمَأْجُوجُ وَهُم مِّن كُلِّ حَدَبٍۢ يَنسِلُونَ",
+      "textUrdu": "یہاں تک کہ جب کھولے جائیں گے یاجوج و ماجوج اور وہ ہر بلندی سے ڈھلکتے ہوں گے،",
+      "textEnglish": "Until when [the dam of] Gog and Magog has been opened and they, from every elevation, descend"
+    },
+    {
+      "ayahNumber": 97,
+      "textArabic": "وَٱقْتَرَبَ ٱلْوَعْدُ ٱلْحَقُّ فَإِذَا هِىَ شَٰخِصَةٌ أَبْصَٰرُ ٱلَّذِينَ كَفَرُوا۟ يَٰوَيْلَنَا قَدْ كُنَّا فِى غَفْلَةٍۢ مِّنْ هَٰذَا بَلْ كُنَّا ظَٰلِمِينَ",
+      "textUrdu": "اور قریب آیا سچا وعدہ تو جبھی آنکھیں پھٹ کر رہ جائیں گی کافروں کی کہ ہائے ہماری خرابی بیشک ہم اس سے غفلت میں تھے بلکہ ہم ظالم تھے",
+      "textEnglish": "And [when] the true promise has approached; then suddenly the eyes of those who disbelieved will be staring [in horror, while they say], \"O woe to us; we had been unmindful of this; rather, we were wrongdoers.\""
+    },
+    {
+      "ayahNumber": 98,
+      "textArabic": "إِنَّكُمْ وَمَا تَعْبُدُونَ مِن دُونِ ٱللَّهِ حَصَبُ جَهَنَّمَ أَنتُمْ لَهَا وَٰرِدُونَ",
+      "textUrdu": "بیشک تم اور جو کچھ اللہ کے سوا تم پوجتے ہو سب جہنم کے ایندھن ہو، تمہیں اس میں جانا،",
+      "textEnglish": "Indeed, you [disbelievers] and what you worship other than Allah are the firewood of Hell. You will be coming to [enter] it."
+    },
+    {
+      "ayahNumber": 99,
+      "textArabic": "لَوْ كَانَ هَٰٓؤُلَآءِ ءَالِهَةًۭ مَّا وَرَدُوهَا ۖ وَكُلٌّۭ فِيهَا خَٰلِدُونَ",
+      "textUrdu": "اگر یہ خدا ہوتے جہنم میں نہ جاتے، اور ان سب کو ہمیشہ اس میں رہنا",
+      "textEnglish": "Had these [false deities] been [actual] gods, they would not have come to it, but all are eternal therein."
+    },
+    {
+      "ayahNumber": 100,
+      "textArabic": "لَهُمْ فِيهَا زَفِيرٌۭ وَهُمْ فِيهَا لَا يَسْمَعُونَ",
+      "textUrdu": "وہ اس میں رینکیں گے اور وہ اس میں کچھ نہ سنیں گے",
+      "textEnglish": "For them therein is heavy sighing, and they therein will not hear."
+    },
+    {
+      "ayahNumber": 101,
+      "textArabic": "إِنَّ ٱلَّذِينَ سَبَقَتْ لَهُم مِّنَّا ٱلْحُسْنَىٰٓ أُو۟لَٰٓئِكَ عَنْهَا مُبْعَدُونَ",
+      "textUrdu": "بیشک وہ جن کے لیے ہمارا وعدہ بھلائی کا ہوچکا وہ جنہم سے دور رکھے گئے ہیں",
+      "textEnglish": "Indeed, those for whom the best [reward] has preceded from Us - they are from it far removed."
+    },
+    {
+      "ayahNumber": 102,
+      "textArabic": "لَا يَسْمَعُونَ حَسِيسَهَا ۖ وَهُمْ فِى مَا ٱشْتَهَتْ أَنفُسُهُمْ خَٰلِدُونَ",
+      "textUrdu": "وہ اس کی بھنک (ہلکی سی آواز بھی) نہ سنیں گے اور وہ اپنی من مانتی خواہشوں میں ہمیشہ رہیں گے،",
+      "textEnglish": "They will not hear its sound, while they are, in that which their souls desire, abiding eternally."
+    },
+    {
+      "ayahNumber": 103,
+      "textArabic": "لَا يَحْزُنُهُمُ ٱلْفَزَعُ ٱلْأَكْبَرُ وَتَتَلَقَّىٰهُمُ ٱلْمَلَٰٓئِكَةُ هَٰذَا يَوْمُكُمُ ٱلَّذِى كُنتُمْ تُوعَدُونَ",
+      "textUrdu": "انہیں غم میں نہ ڈالے گی وہ سب سے بڑی گھبراہٹ اور فرشتے ان کی پیشوائی کو آئیں گے کہ یہ ہے تمہارا وہ دن جس کا تم سے وعدہ تھا،",
+      "textEnglish": "They will not be grieved by the greatest terror, and the angels will meet them, [saying], \"This is your Day which you have been promised\" -"
+    },
+    {
+      "ayahNumber": 104,
+      "textArabic": "يَوْمَ نَطْوِى ٱلسَّمَآءَ كَطَىِّ ٱلسِّجِلِّ لِلْكُتُبِ ۚ كَمَا بَدَأْنَآ أَوَّلَ خَلْقٍۢ نُّعِيدُهُۥ ۚ وَعْدًا عَلَيْنَآ ۚ إِنَّا كُنَّا فَٰعِلِينَ",
+      "textUrdu": "جس دن ہم آسمان کو لپیٹیں گے جیسے سجل فرشتہ نامہٴ اعمال کو لپیٹتا ہے، جیسے پہلے اسے بنایا تھا ویسے ہی پھر کردیں گے یہ وعدہ ہے ہمارے ذمہ، ہم کو اس کا ضرور کرنا،",
+      "textEnglish": "The Day when We will fold the heaven like the folding of a [written] sheet for the records. As We began the first creation, We will repeat it. [That is] a promise binding upon Us. Indeed, We will do it."
+    },
+    {
+      "ayahNumber": 105,
+      "textArabic": "وَلَقَدْ كَتَبْنَا فِى ٱلزَّبُورِ مِنۢ بَعْدِ ٱلذِّكْرِ أَنَّ ٱلْأَرْضَ يَرِثُهَا عِبَادِىَ ٱلصَّٰلِحُونَ",
+      "textUrdu": "اور بیشک ہم نے زبور میں نصیحت کے بعد لکھ دیا کہ اس زمین کے وارث میرے نیک بندے ہوں گے",
+      "textEnglish": "And We have already written in the book [of Psalms] after the [previous] mention that the land [of Paradise] is inherited by My righteous servants."
+    },
+    {
+      "ayahNumber": 106,
+      "textArabic": "إِنَّ فِى هَٰذَا لَبَلَٰغًۭا لِّقَوْمٍ عَٰبِدِينَ",
+      "textUrdu": "بیشک یہ قرآن کافی ہے عبادت والوں کو",
+      "textEnglish": "Indeed, in this [Qur'an] is notification for a worshipping people."
+    },
+    {
+      "ayahNumber": 107,
+      "textArabic": "وَمَآ أَرْسَلْنَٰكَ إِلَّا رَحْمَةًۭ لِّلْعَٰلَمِينَ",
+      "textUrdu": "اور ہم نے تمہیں نہ بھیجا مگر رحمت سارے جہان کے لیے",
+      "textEnglish": "And We have not sent you, [O Muhammad], except as a mercy to the worlds."
+    },
+    {
+      "ayahNumber": 108,
+      "textArabic": "قُلْ إِنَّمَا يُوحَىٰٓ إِلَىَّ أَنَّمَآ إِلَٰهُكُمْ إِلَٰهٌۭ وَٰحِدٌۭ ۖ فَهَلْ أَنتُم مُّسْلِمُونَ",
+      "textUrdu": "تم فرماؤ مجھے تو یہی وحی ہوتی ہے کہ تمہارا خدا نہیں مگر ایک اللہ تو کیا تم مسلمان ہوتے ہو،",
+      "textEnglish": "Say, \"It is only revealed to me that your god is but one God; so will you be Muslims [in submission to Him]?\""
+    },
+    {
+      "ayahNumber": 109,
+      "textArabic": "فَإِن تَوَلَّوْا۟ فَقُلْ ءَاذَنتُكُمْ عَلَىٰ سَوَآءٍۢ ۖ وَإِنْ أَدْرِىٓ أَقَرِيبٌ أَم بَعِيدٌۭ مَّا تُوعَدُونَ",
+      "textUrdu": "پھر اگر وہ منہ پھیریں تو فرمادو میں نے تمہیں لڑائی کا اعلان کردیا، برابری پر اور میں کیا جانوں کہ پاس ہے یا دور ہے وہ جو تمہیں وعدہ دیا جاتا ہے",
+      "textEnglish": "But if they turn away, then say, \"I have announced to [all of] you equally. And I know not whether near or far is that which you are promised."
+    },
+    {
+      "ayahNumber": 110,
+      "textArabic": "إِنَّهُۥ يَعْلَمُ ٱلْجَهْرَ مِنَ ٱلْقَوْلِ وَيَعْلَمُ مَا تَكْتُمُونَ",
+      "textUrdu": "بیشک اللہ جانتا ہے آواز کی بات اور جانتا ہے جو تم چھپاتے ہو",
+      "textEnglish": "Indeed, He knows what is declared of speech, and He knows what you conceal."
+    },
+    {
+      "ayahNumber": 111,
+      "textArabic": "وَإِنْ أَدْرِى لَعَلَّهُۥ فِتْنَةٌۭ لَّكُمْ وَمَتَٰعٌ إِلَىٰ حِينٍۢ",
+      "textUrdu": "اور میں کیا جانوں شاید وہ تمہاری جانچ ہو اور ایک وقت تک برتوانا",
+      "textEnglish": "And I know not; perhaps it is a trial for you and enjoyment for a time.\""
+    },
+    {
+      "ayahNumber": 112,
+      "textArabic": "قَٰلَ رَبِّ ٱحْكُم بِٱلْحَقِّ ۗ وَرَبُّنَا ٱلرَّحْمَٰنُ ٱلْمُسْتَعَانُ عَلَىٰ مَا تَصِفُونَ",
+      "textUrdu": "نبی نے عرض کی کہ اے میرے رب حق فیصلہ فرمادے اور ہمارے رب رحمنٰ ہی کی مدد درکار ہے ان باتوں پر جو تم بتاتے ہو،",
+      "textEnglish": "[The Prophet] has said, \"My Lord, judge [between us] in truth. And our Lord is the Most Merciful, the one whose help is sought against that which you describe.\""
+    }
+  ]
+}
