@@ -616,7 +616,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               {wisdomTab === 'KANZ' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div style={{ padding: '8px 12px', borderRadius: 8, backgroundColor: '#ECFDF5', color: '#065F46', fontSize: 12, fontWeight: 700 }}>
-                    ماخذ: کنز الایمان فی ترجمۃ القرآن · امام احمد رضا خان رحمتہ اللہ علیہ (۱۳۴۰ھ)
+                    ماخذ: کنز الایمان فی ترجمۃ القرآن
                   </div>
                   <div
                     dir="rtl"
@@ -856,7 +856,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ padding: 12, borderRadius: 8, backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#059669', marginBottom: 6 }}>
-                  کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان)
+                  اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن)
                 </div>
                 <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 18, lineHeight: 2.2, textAlign: 'right', color: '#1E293B' }}>
                   {fallbackUrdu || 'ترجمہ دستیاب نہیں ہے۔'}

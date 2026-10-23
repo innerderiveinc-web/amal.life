@@ -688,20 +688,37 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                   </span>
                 </div>
 
-                {/* Roman Transliteration & Tarjuma (if enabled and authentic) */}
-                {showRomanUrdu && (() => {
-                  const translit = getAyahRomanTransliteration(selectedSurahNumber, currentAyah.ayahNumber);
-                  const romanTarjuma = getAyahRomanUrduTarjuma(selectedSurahNumber, currentAyah.ayahNumber);
+                {/* Roman Transliteration (Pronunciation Guide) */}
+                {(() => {
+                  const translit = getAyahRomanTransliteration(selectedSurahNumber, currentAyah.ayahNumber, currentAyah.textArabic);
+                  const romanTarjuma = showRomanUrdu ? getAyahRomanUrduTarjuma(selectedSurahNumber, currentAyah.ayahNumber, currentAyah.textUrdu) : null;
                   if (!translit && !romanTarjuma) return null;
                   return (
-                    <div style={{ marginBottom: 20, textAlign: 'center', padding: '10px 16px', backgroundColor: '#F8FAFC', borderRadius: 10 }}>
+                    <div
+                      style={{
+                        marginBottom: 20,
+                        textAlign: 'center',
+                        padding: '12px 18px',
+                        backgroundColor: '#F8FAFC',
+                        borderRadius: 12,
+                        border: '1px solid #E2E8F0',
+                        maxWidth: 760,
+                        margin: '0 auto 20px',
+                      }}
+                    >
                       {translit && (
-                        <div style={{ fontSize: 13, color: '#475569', fontStyle: 'italic', marginBottom: 4 }}>
-                          {translit}
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: '#64748B', marginBottom: 4, letterSpacing: 0.5 }}>
+                            Transliteration (تلفظ و تجوید):
+                          </div>
+                          <div style={{ fontSize: 14, color: '#334155', fontStyle: 'italic', lineHeight: 1.6 }}>
+                            {translit}
+                          </div>
                         </div>
                       )}
                       {romanTarjuma && (
-                        <div style={{ fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
+                        <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #E2E8F0', fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
+                          <span style={{ fontSize: 10, color: '#047857', textTransform: 'uppercase', marginRight: 6 }}>Roman Urdu:</span>
                           {romanTarjuma}
                         </div>
                       )}
@@ -712,7 +729,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                 {/* Urdu Translation: Kanz-ul-Iman */}
                 <div style={{ marginBottom: 24, textAlign: 'center', backgroundColor: '#FDFBF7', padding: '20px 24px', borderRadius: 12, border: '1px solid #FEF3C7' }}>
                   <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', marginBottom: 8, letterSpacing: 0.5 }}>
-                    کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان):
+                    اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
                   </div>
                   <div
                     dir="rtl"
@@ -1106,10 +1123,24 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                   </span>
                 </div>
 
+                {/* Roman Transliteration (Pronunciation Guide) */}
+                {(() => {
+                  const translit = getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber, verse.textArabic);
+                  if (!translit) return null;
+                  return (
+                    <div style={{ marginBottom: 10, fontSize: 13, color: '#334155', fontStyle: 'italic', lineHeight: 1.6 }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: '#64748B', fontStyle: 'normal', marginRight: 6 }}>
+                        Transliteration (تلفظ):
+                      </span>
+                      {translit}
+                    </div>
+                  );
+                })()}
+
                 {/* Urdu Tarjuma (Kanz-ul-Iman) */}
                 <div style={{ marginBottom: 8 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                    کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان):
+                    اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
                   </div>
                   <div
                     dir="rtl"

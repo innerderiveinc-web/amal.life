@@ -260,7 +260,7 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
     // Sub-heading
     ctx.font = 'bold 16px -apple-system, system-ui, sans-serif';
     ctx.fillStyle = t.accentGold;
-    ctx.fillText('ترجمہ کنز الایمان (امام احمد رضا خان علیہ الرحمہ):', width / 2, cursorY);
+    ctx.fillText('ترجمہ کنز الایمان فی ترجمۃ القرآن:', width / 2, cursorY);
     cursorY += 38;
 
     let urduFontSize = 26;
@@ -371,7 +371,7 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
     const text = encodeURIComponent(
       `📖 *${surahNameArabic} (${surahNameEnglish}) · آیت ${ayahNumber}*\n\n` +
       `*${arabicText}*\n\n` +
-      `*ترجمہ کنز الایمان (امام احمد رضا خان):*\n` +
+      `*ترجمہ کنز الایمان:*\n` +
       `${urduTranslation}\n\n` +
       (includeEnglish && englishTranslation ? `"${englishTranslation}"\n\n` : '') +
       `_مطالعہ فرمائیں: https://amal.life/quran?surah=${surahNumber}&ayah=${ayahNumber}_`
@@ -384,7 +384,7 @@ export const AyahShareCardModal: React.FC<AyahShareCardModalProps> = ({
     const text =
       `📖 ${surahNameArabic} (${surahNameEnglish}) · آیت ${ayahNumber}\n\n` +
       `${arabicText}\n\n` +
-      `ترجمہ کنز الایمان (امام احمد رضا خان):\n${urduTranslation}\n\n` +
+      `ترجمہ کنز الایمان:\n${urduTranslation}\n\n` +
       (includeEnglish && englishTranslation ? `English: "${englishTranslation}"\n\n` : '') +
       `AMAL OS (amal.life)`;
     await navigator.clipboard.writeText(text);

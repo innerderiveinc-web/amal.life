@@ -167,7 +167,7 @@ export default function ReflectionsPage() {
 
             <div style={{ marginBottom: 14 }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان):
+                اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن):
               </div>
               <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 15, color: '#334155', lineHeight: 2.0, textAlign: 'right' }}>
                 {activePromptCard.tarjumaKanzulIman}

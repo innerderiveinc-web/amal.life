@@ -667,7 +667,7 @@ export default function QuranWisdomPage() {
         minshawi: 'Shaykh Muhammad Siddiq Al-Minshawi',
       };
       const artistName = isUrdu
-        ? 'کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان) · 100% Human Voice'
+        ? 'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice'
         : qariDisplayMap[selectedQari];
 
       navigator.mediaSession.metadata = new MediaMetadata({
