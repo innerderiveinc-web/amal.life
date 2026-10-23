@@ -6,7 +6,7 @@ import { Navigation } from '../components/Navigation';
 import { AmalTheme } from '@amal/ui';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
 import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
-import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getSurahWisdomCards, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahKanzulImanAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
+import { QURAN_WISDOM_COLLECTION, QuranAyahWisdomCard, getAyahWisdomCard, getSurahWisdomCards, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahKanzulImanAudioUrl, getSurahTafseerAudioUrl, getSurahAudioEndpoints } from '../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../lib/quran-roman-urdu';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { SurahDirectorySidebar } from '../components/quran/SurahDirectorySidebar';
@@ -175,6 +175,18 @@ export default function QuranWisdomPage() {
       return;
     }
 
+    // Check offline local device cache first
+    try {
+      const offlineCached = localStorage.getItem(`amal_cached_surah_${surahNum}`);
+      if (offlineCached) {
+        const parsed = JSON.parse(offlineCached);
+        if (parsed && Array.isArray(parsed.verses) && parsed.verses.length > 0) {
+          setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: parsed }));
+          return;
+        }
+      }
+    } catch {}
+
     setIsLoadingSurah(true);
     try {
       const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/editions/quran-uthmani,ur.kanzuliman,en.sahih`);
@@ -204,6 +216,9 @@ export default function QuranWisdomPage() {
         };
 
         setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: newSurah }));
+        try {
+          localStorage.setItem(`amal_cached_surah_${surahNum}`, JSON.stringify(newSurah));
+        } catch {}
       }
     } catch (err: any) {
       console.warn('Surah online load failed, fallback:', err);
@@ -587,6 +602,19 @@ export default function QuranWisdomPage() {
           }
 
           console.warn('Master audio error on source:', currentSrc, e);
+
+          // Intelligent multi-CDN failover: Switch to resilient secondary node before failing
+          const endpoints = getSurahAudioEndpoints(selectedSurahNumber);
+          const currentIdx = endpoints.findIndex((u) => currentSrc.includes(encodeURIComponent(u.split('/').pop() || '')));
+          if (currentIdx !== -1 && currentIdx < endpoints.length - 1 && masterAudioRef.current) {
+            const nextMirror = endpoints[currentIdx + 1];
+            if (nextMirror) {
+              console.info('Primary mirror throttled; cascading to resilient backup CDN:', nextMirror);
+              masterAudioRef.current.src = nextMirror;
+              masterAudioRef.current.play().catch(() => {});
+              return;
+            }
+          }
 
           // Safely pause and unload without triggering recursive onError
           if (masterAudioRef.current) {

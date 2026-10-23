@@ -19,6 +19,7 @@ import {
 } from '../lib/prayer-utils';
 import { biometricVaultGuardEngine, VaultSecurityMode } from '@amal/amal-engine';
 import { AmalApiClient } from '../lib/api';
+import { recordSuccessfulBackup } from '../lib/storage-guard';
 
 type SettingsTab = 'GENERAL' | 'FIQH' | 'SCHOLARSHIP' | 'PRIVACY' | 'READER' | 'SYSTEM';
 
@@ -189,7 +190,8 @@ export default function SettingsPage() {
     a.download = `amal_os_sovereign_archive_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    showAmalToast('Archive downloaded to device!', 'success');
+    recordSuccessfulBackup();
+    showAmalToast('Archive downloaded to device! (Backup recorded)', 'success');
   };
 
   // Restore Data Archive

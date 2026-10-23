@@ -13,6 +13,7 @@ import { AuthModal } from '../components/AuthModal';
 import { Footer } from '../components/Footer';
 import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
+import { enablePersistentStorage } from '../lib/storage-guard';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -30,11 +31,14 @@ export default function App({ Component, pageProps }: AppProps) {
       document.body.classList.add('theme-tahajjud');
     }
 
-    // Register Service Worker for offline PWA
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    // Register Service Worker for offline PWA & Request Persistent Storage Protection
+    if (typeof window !== 'undefined') {
+      enablePersistentStorage();
+      if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
     }
 
     // 2. Global Keyboard shortcuts:

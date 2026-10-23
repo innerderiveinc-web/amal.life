@@ -231,14 +231,14 @@ export default function Home() {
                   NEW · نیا ماڈیول
                 </span>
                 <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
-                  Ahl al-Sunnah Verified Standards
+                  Ahl al-Sunnah wal-Jama&apos;ah (Sawad al-A&apos;zam) · 4 Sunni Madhhabs Grounded
                 </span>
               </div>
               <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
                 Al-Quran Al-Kareem &amp; Wisdom (قرآنِ کریم، حکمت و تدبر)
               </h3>
               <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4B5563', maxWidth: 580, lineHeight: 1.5 }}>
-                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) · <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) · 2-Min Quick Wisdom Cards
+                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) · <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) · Hanafi, Shafi&apos;i, Maliki &amp; Hanbali Fiqh Concordance
               </p>
             </div>
           </div>

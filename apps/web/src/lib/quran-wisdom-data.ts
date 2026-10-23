@@ -206,12 +206,26 @@ const SURAH_KANZUL_IMAN_FILES: Record<number, string> = {
 };
 
 /**
+ * Returns prioritized streaming URLs for full Surah recitation + Kanz-ul-Iman Tarjuma
+ * with multi-node CDN fallback to survive regional ISP blocking or Archive.org downtime.
+ */
+export function getSurahAudioEndpoints(surahNumber: number): string[] {
+  const f = SURAH_KANZUL_IMAN_FILES[surahNumber];
+  if (!f) return [];
+  const enc = encodeURIComponent(f);
+  return [
+    `https://archive.org/download/TilawaatEQuranByMuhammadAsadAttariAndTarjumaEKanzUlImanByAbdulHabibAttari/${enc}`,
+    `https://ia801503.us.archive.org/34/items/TilawaatEQuranByMuhammadAsadAttariAndTarjumaEKanzUlImanByAbdulHabibAttari/${enc}`,
+    `https://ia601503.us.archive.org/34/items/TilawaatEQuranByMuhammadAsadAttariAndTarjumaEKanzUlImanByAbdulHabibAttari/${enc}`,
+  ];
+}
+
+/**
  * Returns certified streaming URL for full Surah recitation + Kanz-ul-Iman Tarjuma
  */
 export function getSurahKanzulImanAudioUrl(surahNumber: number): string | null {
-  const f = SURAH_KANZUL_IMAN_FILES[surahNumber];
-  if (!f) return null;
-  return `https://archive.org/download/TilawaatEQuranByMuhammadAsadAttariAndTarjumaEKanzUlImanByAbdulHabibAttari/${encodeURIComponent(f)}`;
+  const endpoints = getSurahAudioEndpoints(surahNumber);
+  return endpoints.length > 0 && endpoints[0] ? endpoints[0] : null;
 }
 
 /**
