@@ -34,7 +34,8 @@ export class WebFatwaFirewall {
     /\b(being beaten|domestic abuse|physical violence|hit me|assaulted me|trafficking)\b/i,
     /\b(emergency medical|poisoned|unconscious|cannot breathe|hopeless and depressed)\b/i,
     /\b(khudkushi|mar jana chahta|jaan dena chahta|apne aap ko khatam|gharelu tashaddud|maar peet)\b/i,
-    /(خودکشی|جان لے لوں|اپنے آپ کو مار|گھریلو تشدد|مار پیٹ|انتحار|أقتل نفسي|عنف أسري|زندگی ختم)/i,
+    /\b(zindagi se tang|zehar kha|fansii|fasi laga|marne ka mann|jeene ka dil nahi|dunya chhor|chhat se kood|nadi me kood|haath kaat|nas kaat|depression se pagal)\b/i,
+    /(خودکشی|جان لے لوں|اپنے آپ کو مار|گھریلو تشدد|مار پیٹ|انتحار|أقتل نفسي|عنف أسري|زندگی ختم|زندگی سے تنگ|زہر کھا|پھانسی لگا|چھت سے کود|دنیا چھوڑ دوں|نس کاٹ لی)/i,
   ];
 
   // Triggers for Class D: Personalized Fiqh, divorce, talaq, marital dissolution, legal oaths
@@ -48,7 +49,10 @@ export class WebFatwaFirewall {
     /\b(ruling on my case|verdict on my situation|declare me|binding fatwa|issue a fatwa|fatwa on my|give me a fatwa)\b/i,
     /\b(inheritance dispute|ruling on my inheritance|divide my estate)\b/i,
     /\b(talaq de di|talaq dedi|teen talaq|3 talaq|talaq bol diya|khula lena|qasam tod di|kaffara kitna|nikah toot gaya|fatwa chahiye|biwi haram ho gayi)\b/i,
-    /(طلاق|تین طلاق|طلاق واقع|خلع|نکاح ٹوٹ گیا|قسم کا کفارہ|فتویٰ چاہیے|کیا یہ حلال ہے یا حرام|هل وقع الطلاق|الخلع|كفارة اليمين|طلاق ثلاث|أفتوني)/i,
+    /\b(chhor diya|chhod diya|alag ho gaye|rishta khatam|rishta tod diya|nikah se nikal|nikaah baatil|shauhar ne bola nikal jao|ghar se nikal diya|muh se nikal gaya|tum azaad ho|tum aazad ho|tumhe azad kiya|biwi ko chhora|shohar se alag|bina talaq ke alag|talaaq|talak|3 baar bol|teen martaba keh)\b/i,
+    /\b(court case|muqaddama|adalat|virasat ki ladai|bhai ne hissa nahi diya|chori ka maal|haram kamai|qanooni faisla|police complaint|fraud lawsuit|legal settlement|property dispute)\b/i,
+    /\b(islam se kharij|kafir ho gaya|dairah[- ]e[- ]islam|iman chala gaya|kufr bak diya|tauheen[- ]e[- ]risalat|murtad|declare kafir|is he a kafir|am i a kafir)\b/i,
+    /(طلاق|تین طلاق|طلاق واقع|خلع|نکاح ٹوٹ گیا|قسم کا کفارہ|فتویٰ چاہیے|کیا یہ حلال ہے یا حرام|هل وقع الطلاق|الخلع|كفارة اليمين|طلاق ثلاث|أفتوني|علیحدگی|رشتہ ختم|نکاح باطل|تم آزاد ہو|گھر سے نکال دیا|شوہر نے چھوڑ دیا|بیوی کو چھوڑ دیا|تین بار بول دیا|عدالتی مقدمہ|وراثت کا تنازع|جائیداد کا جھگڑا|حق مار لیا|حصہ نہیں دیا|دائرہ اسلام سے خارج|کافر ہو گیا|ایمان ضائع|مرتد|تکفیر)/i,
   ];
 
   // Triggers for Class C: Known scholarly disagreement topics
