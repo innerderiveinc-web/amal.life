@@ -545,7 +545,7 @@ export default function QuranWisdomPage() {
       masterAudioRef.current.src = tafseerUrl;
       masterAudioRef.current.playbackRate = playbackSpeed;
       masterAudioRef.current.play().then(() => {
-        showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`, 'info');
+        showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`, 'info');
       }).catch((e) => {
         if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) return;
         console.warn('Tafseer studio error, falling back to sync mode:', e);
@@ -572,7 +572,7 @@ export default function QuranWisdomPage() {
         minshawi: 'Shaykh Muhammad Siddiq Al-Minshawi',
       };
       const artistName = isUrdu
-        ? 'کنز الایمان (اعلیٰ حضرت امام احمد رضا خان) · 100% Human Voice'
+        ? 'کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان) · 100% Human Voice'
         : qariDisplayMap[selectedQari];
 
       navigator.mediaSession.metadata = new MediaMetadata({
@@ -724,8 +724,8 @@ export default function QuranWisdomPage() {
                 قرآنِ کریم، حکمت و تدبر
               </h1>
               <p style={{ fontSize: 15, color: '#E2E8F0', lineHeight: 1.6, margin: '0 0 18px', maxWidth: 660 }}>
-                صحیح مدینہ عثمانی اعراب کے ساتھ تلاوت، <strong>کنز الایمان</strong> (اعلیٰ حضرت امام احمد رضا خان)،
-                اور <strong>خزائن العرفان</strong> (صدر الافاضل نعیم الدین مراد آبادی) کی تفسیری حکمت کے ساتھ روزمرہ دینی زندگی کا روحانی سفر۔
+                صحیح مدینہ عثمانی اعراب کے ساتھ تلاوت، <strong>کنز الایمان</strong> (امام احمد رضا خان)،
+                اور <strong>خزائن العرفان</strong> (علامہ نعیم الدین مراد آبادی) کی تفسیری حکمت کے ساتھ روزمرہ دینی زندگی کا روحانی سفر۔
               </p>
 
               {/* Time-Mode Selectors */}

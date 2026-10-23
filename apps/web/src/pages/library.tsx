@@ -914,7 +914,7 @@ export default function LibraryPage() {
                       {currentSurahMeta.nameEnglish} • {currentSurahMeta.revelationType} • {currentSurahMeta.ayahsCount} Ayahs
                     </div>
                     <div style={{ fontSize: 11, color: '#059669', fontWeight: 700, marginTop: 4 }}>
-                      اردو ترجمہ: کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان بریلوی قدس سرہ) · English: Saheeh International
+                      اردو ترجمہ: کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان) · English: Saheeh International
                     </div>
                   </div>
                   <span style={{ fontSize: 22 }}>✨</span>

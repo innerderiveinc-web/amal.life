@@ -414,7 +414,7 @@ export default function AboutPage() {
                     (کنز الایمان، خزائن العرفان و بہارِ شریعت کا الحاق)
                   </div>
                   <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
-                    The platform instantly links an Ayah in <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) to its commentary in <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) and related practical rulings in <strong>Bahar-e-Shariat</strong> (صدر الشریعہ), saving students of knowledge hours of manual searching across multi-volume physical tomes.
+                    The platform instantly links an Ayah in <strong>Kanz-ul-Iman</strong> (Imam Ahmad Raza) to its commentary in <strong>Khaza&apos;in-ul-Irfan</strong> (Allama Muradabadi) and related classical rulings in <strong>Bahar-e-Shariat</strong> (Allama Amjadi), saving students of knowledge hours of manual searching across multi-volume physical tomes.
                   </p>
                 </div>
                 <div style={{

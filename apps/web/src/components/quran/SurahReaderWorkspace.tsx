@@ -588,7 +588,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
                 {/* Urdu Tarjuma (Kanz-ul-Iman) */}
                 <div style={{ marginBottom: 8 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                    کنز الایمان (اعلیٰ حضرت امام احمد رضا خان):
+                    کنز الایمان فی ترجمۃ القرآن (امام احمد رضا خان):
                   </div>
                   <div
                     dir="rtl"

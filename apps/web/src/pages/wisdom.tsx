@@ -136,7 +136,7 @@ export default function QuranWisdomDedicatedPage() {
         setIsPlayingAudio(true);
         showAmalToast(
           tafseerUrl
-            ? `سورۃ ${card.surahNameUrdu}: دعوتِ اسلامی کی مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`
+            ? `سورۃ ${card.surahNameUrdu}: مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔`
             : `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
           'info'
         );

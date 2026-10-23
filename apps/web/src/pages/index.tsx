@@ -238,7 +238,7 @@ export default function Home() {
                 Al-Quran Al-Kareem &amp; Wisdom (قرآنِ کریم، حکمت و تدبر)
               </h3>
               <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4B5563', maxWidth: 580, lineHeight: 1.5 }}>
-                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (اعلیٰ حضرت) · <strong>Khaza&apos;in-ul-Irfan</strong> (صدر الافاضل) · Hanafi, Shafi&apos;i, Maliki &amp; Hanbali Fiqh Concordance
+                100% Real Human Voice Recitation · <strong>Kanz-ul-Iman</strong> (امام احمد رضا) · <strong>Khaza&apos;in-ul-Irfan</strong> (علامہ نعیم الدین مراد آبادی) · Hanafi, Shafi&apos;i, Maliki &amp; Hanbali Fiqh Concordance
               </p>
             </div>
           </div>
