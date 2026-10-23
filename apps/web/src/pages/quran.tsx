@@ -30,6 +30,8 @@ export default function QuranWisdomPage() {
   const [fontSize, setFontSize] = useState<number>(24);
   const [showRomanUrdu, setShowRomanUrdu] = useState<boolean>(false);
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
+  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
+  const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
 
   // Reader & Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
@@ -161,12 +163,19 @@ export default function QuranWisdomPage() {
       const s = parseInt(router.query.surah as string, 10);
       if (!isNaN(s) && s >= 1 && s <= 114) {
         handleSelectSurah(s);
+        if (router.query.ayah) {
+          const a = parseInt(router.query.ayah as string, 10);
+          if (!isNaN(a) && a >= 1) {
+            setFocusedAyahNumber(a);
+          }
+        }
       }
     }
-  }, [router.query.surah]);
+  }, [router.query.surah, router.query.ayah]);
 
   const handleSelectSurah = async (surahNum: number) => {
     setSelectedSurahNumber(surahNum);
+    setFocusedAyahNumber(1);
     setSurahFetchError(null);
     setPlayingAyahNumber(null);
 
@@ -259,10 +268,6 @@ export default function QuranWisdomPage() {
 
   const currentSurah = loadedSurahsCache[selectedSurahNumber] || loadedSurahsCache[1]!;
   const currentSurahMeta = ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || ALL_114_SURAHS[0]!;
-
-  // Reader View Mode: Continuous Scroll vs Single Ayah Focus Mode
-  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
-  const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
 
   // Restore saved view mode preference or URL query param (?mode=scroll or ?mode=focus)
   useEffect(() => {

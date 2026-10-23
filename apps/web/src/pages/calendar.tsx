@@ -113,7 +113,9 @@ export default function CalendarPage() {
         </div>
 
         {/* Today's Big Hijri Banner */}
-        <div style={{
+        <div
+          suppressHydrationWarning
+          style={{
           backgroundColor: '#1B4332',
           color: '#FFFFFF',
           borderRadius: 16,

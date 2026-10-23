@@ -249,19 +249,45 @@ export const DailyMamoolBar: React.FC = () => {
             })}
 
             <Link
+              href="/adhkar"
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: '#92400E',
+                backgroundColor: '#FEF3C7',
+                border: '1px solid #FDE68A',
+                padding: '3px 8px',
+                borderRadius: 6,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+              title="صبح و شام کے مسنون اذکار"
+            >
+              <span>🌅</span>
+              <span>مسنون اذکار</span>
+            </Link>
+
+            <Link
               href="/prayer"
               style={{
                 fontSize: 11,
                 fontWeight: 700,
                 color: '#059669',
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                padding: '3px 8px',
+                borderRadius: 6,
                 textDecoration: 'none',
-                marginLeft: 4,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 2,
+                gap: 4,
               }}
+              title="تفصیلات، تہجد کیلکولیٹر و قبلہ کمپاس"
             >
-              تفصیل و قبلہ ➔
+              <span>🕋</span>
+              <span>تفصیل و قبلہ ➔</span>
             </Link>
           </div>
         </div>
