@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { audioStreamingEngine, Reciter, QuranSurahAudio, ShamailAudioChapter, SirahAudioEpisode } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
@@ -36,7 +37,43 @@ export default function AudioPage() {
 
       <main style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px' }}>
         {/* Header */}
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              backgroundColor: '#ECFDF5',
+              border: '1px solid #A7F3D0',
+              borderRadius: 12,
+              padding: '12px 18px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 12,
+              marginBottom: 16,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 20 }}>✨</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
+                This audio suite is part of the <strong>Unified Quran Hub</strong>.
+              </span>
+            </div>
+            <Link
+              href="/quran?tab=audio"
+              style={{
+                textDecoration: 'none',
+                padding: '6px 14px',
+                borderRadius: 8,
+                backgroundColor: '#065F46',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                fontSize: 12,
+              }}
+            >
+              Open Inside Quran Hub ➔
+            </Link>
+          </div>
+
           <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1B4332', marginBottom: 6 }}>
             🎧 Audio Recitations & Sirah Audiobooks
           </h1>

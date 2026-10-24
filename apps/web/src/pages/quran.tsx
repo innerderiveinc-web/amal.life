@@ -15,13 +15,28 @@ import { FloatingQuranAudioPlayer, AudioSyncMode, AudioSegment } from '../compon
 import { showAmalToast } from '../components/Toast';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { useLanguage } from '../context/LanguageContext';
+import { QuranAudioHubTab } from '../components/quran/QuranAudioHubTab';
+import { QuranTajweedHubTab } from '../components/quran/QuranTajweedHubTab';
 
 export type { AudioSyncMode, AudioSegment };
+export type QuranHubTab = 'READER' | 'AUDIO' | 'TAJWEED' | 'WISDOM';
 
 export default function QuranWisdomPage() {
   const router = useRouter();
   const { pause: pauseGlobalPlayer } = useAudioPlayer();
   const { t, isUrdu } = useLanguage();
+  const [activeHubTab, setActiveHubTab] = useState<QuranHubTab>('READER');
+
+  useEffect(() => {
+    if (router.isReady && router.query.tab) {
+      const tab = String(router.query.tab).toUpperCase();
+      if (tab === 'AUDIO') setActiveHubTab('AUDIO');
+      else if (tab === 'TAJWEED') setActiveHubTab('TAJWEED');
+      else if (tab === 'WISDOM') setActiveHubTab('WISDOM');
+      else setActiveHubTab('READER');
+    }
+  }, [router.isReady, router.query.tab]);
+
   const [selectedSurahNumber, setSelectedSurahNumber] = useState<number>(1);
   const [surahSearchFilter, setSurahSearchFilter] = useState<string>('');
   const [selectedQari, setSelectedQari] = useState<'alafasy' | 'husary' | 'minshawi'>('alafasy');
@@ -967,141 +982,207 @@ export default function QuranWisdomPage() {
           </div>
         </div>
 
-        {/* MOBILE VIEW TOGGLE: READ SURAH vs 114 SURAHS LIST */}
-        <div className="mobile-only" style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-          <button
-            onClick={() => setMobileTab('READER')}
-            style={{
-              flex: 1,
-              padding: '11px 14px',
-              borderRadius: 10,
-              border: mobileTab === 'READER' ? '2px solid #065F46' : '1px solid #D1D5DB',
-              backgroundColor: mobileTab === 'READER' ? '#ECFDF5' : '#FFFFFF',
-              color: mobileTab === 'READER' ? '#065F46' : '#4B5563',
-              fontWeight: 800,
-              fontSize: 13,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 6,
-              boxShadow: mobileTab === 'READER' ? '0 2px 6px rgba(6, 95, 70, 0.15)' : 'none',
-            }}
-          >
-            <span>📖</span>
-            <span>{isUrdu ? 'تلاوت و سورت' : 'Read Surah'}</span>
-            <span style={{ fontSize: 10, backgroundColor: '#10B981', color: '#FFF', padding: '1px 5px', borderRadius: 4 }}>
-              {currentSurahMeta?.number}
-            </span>
-          </button>
-          <button
-            onClick={() => setMobileTab('DIRECTORY')}
-            style={{
-              flex: 1,
-              padding: '11px 14px',
-              borderRadius: 10,
-              border: mobileTab === 'DIRECTORY' ? '2px solid #065F46' : '1px solid #D1D5DB',
-              backgroundColor: mobileTab === 'DIRECTORY' ? '#ECFDF5' : '#FFFFFF',
-              color: mobileTab === 'DIRECTORY' ? '#065F46' : '#4B5563',
-              fontWeight: 800,
-              fontSize: 13,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 6,
-            }}
-          >
-            <span>📋</span>
-            <span>{isUrdu ? 'سورت منتخب کریں' : 'All 114 Surahs'}</span>
-          </button>
-        </div>
-
-        {/* SECTION 2 & 3: SURAHS DIRECTORY & IN-APP READER */}
-        <section className="quran-workspace-grid" style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24, alignItems: 'start' }}>
-          {/* LEFT: 114 Surahs Directory Sidebar */}
-          <div className={mobileTab === 'DIRECTORY' ? '' : 'desktop-only'} style={{ minWidth: 0, width: '100%' }}>
-            <SurahDirectorySidebar
-              surahSearchFilter={surahSearchFilter}
-              setSurahSearchFilter={setSurahSearchFilter}
-              revelationFilter={revelationFilter}
-              setRevelationFilter={setRevelationFilter}
-              belovedShortcuts={belovedShortcuts}
-              filteredSurahs={filteredSurahs}
-              selectedSurahNumber={selectedSurahNumber}
-              onSelectSurah={handleSelectSurah}
-            />
-          </div>
-
-          {/* RIGHT: Active Surah Reader & Continuous Player */}
-          <div className={mobileTab === 'READER' ? '' : 'desktop-only'} style={{ minWidth: 0, width: '100%' }}>
-            {/* Mobile Quick Surah Selector */}
-            <div className="mobile-only" style={{ marginBottom: 12 }}>
-              <label style={{ fontSize: 11, fontWeight: 700, color: '#065F46', display: 'block', marginBottom: 4 }}>
-                {isUrdu ? 'فوری سورت تبدیل کریں:' : 'Quick Surah Jumper:'}
-              </label>
-              <select
-                value={selectedSurahNumber}
-                onChange={(e) => handleSelectSurah(Number(e.target.value))}
+        {/* UNIFIED QURAN HUB SUITE TABS */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            overflowX: 'auto',
+            marginBottom: 20,
+            padding: 4,
+            backgroundColor: '#FFFFFF',
+            borderRadius: 12,
+            border: '1px solid #E2E8F0',
+          }}
+        >
+          {[
+            { id: 'READER', icon: '📖', labelUrdu: 'تلاوت و تفاسیر (۱۱۴ سورتیں)', labelEn: 'Recitation & Tafsir (114 Surahs)' },
+            { id: 'AUDIO', icon: '🎧', labelUrdu: 'قراء کرام و آڈیو اسٹریمنگ', labelEn: 'Master Reciters Stream' },
+            { id: 'TAJWEED', icon: '🎙️', labelUrdu: 'تجوید و مخارج مشق', labelEn: 'Tajweed & Makharij Trainer' },
+            { id: 'WISDOM', icon: '✨', labelUrdu: 'قرآنی حکمت کارڈز', labelEn: 'Ayah Wisdom Cards' },
+          ].map((tab) => {
+            const isActive = activeHubTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  if (tab.id === 'WISDOM') {
+                    router.push('/wisdom');
+                  } else {
+                    setActiveHubTab(tab.id as QuranHubTab);
+                    router.push(`/quran?tab=${tab.id.toLowerCase()}`, undefined, { shallow: true });
+                  }
+                }}
                 style={{
-                  width: '100%',
-                  padding: '10px 12px',
-                  borderRadius: 10,
-                  border: '1.5px solid #10B981',
-                  backgroundColor: '#FFFFFF',
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: '#064E3B',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '9px 16px',
+                  borderRadius: 8,
+                  border: 'none',
+                  backgroundColor: isActive ? '#065F46' : 'transparent',
+                  color: isActive ? '#FFFFFF' : '#475569',
+                  fontWeight: isActive ? 800 : 600,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                {ALL_114_SURAHS.map((s) => (
-                  <option key={s.number} value={s.number}>
-                    {s.number}. {s.nameArabic} ({s.nameTransliterated} · {s.ayahsCount} Verses)
-                  </option>
-                ))}
-              </select>
+                <span>{tab.icon}</span>
+                <span>{isUrdu ? tab.labelUrdu : tab.labelEn}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {activeHubTab === 'AUDIO' ? (
+          <div style={{ marginBottom: 30 }}>
+            <QuranAudioHubTab />
+          </div>
+        ) : activeHubTab === 'TAJWEED' ? (
+          <div style={{ marginBottom: 30 }}>
+            <QuranTajweedHubTab />
+          </div>
+        ) : (
+          <>
+            {/* MOBILE VIEW TOGGLE: READ SURAH vs 114 SURAHS LIST */}
+            <div className="mobile-only" style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+              <button
+                onClick={() => setMobileTab('READER')}
+                style={{
+                  flex: 1,
+                  padding: '11px 14px',
+                  borderRadius: 10,
+                  border: mobileTab === 'READER' ? '2px solid #065F46' : '1px solid #D1D5DB',
+                  backgroundColor: mobileTab === 'READER' ? '#ECFDF5' : '#FFFFFF',
+                  color: mobileTab === 'READER' ? '#065F46' : '#4B5563',
+                  fontWeight: 800,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 6,
+                  boxShadow: mobileTab === 'READER' ? '0 2px 6px rgba(6, 95, 70, 0.15)' : 'none',
+                }}
+              >
+                <span>📖</span>
+                <span>{isUrdu ? 'تلاوت و سورت' : 'Read Surah'}</span>
+                <span style={{ fontSize: 10, backgroundColor: '#10B981', color: '#FFF', padding: '1px 5px', borderRadius: 4 }}>
+                  {currentSurahMeta?.number}
+                </span>
+              </button>
+              <button
+                onClick={() => setMobileTab('DIRECTORY')}
+                style={{
+                  flex: 1,
+                  padding: '11px 14px',
+                  borderRadius: 10,
+                  border: mobileTab === 'DIRECTORY' ? '2px solid #065F46' : '1px solid #D1D5DB',
+                  backgroundColor: mobileTab === 'DIRECTORY' ? '#ECFDF5' : '#FFFFFF',
+                  color: mobileTab === 'DIRECTORY' ? '#065F46' : '#4B5563',
+                  fontWeight: 800,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>📋</span>
+                <span>{isUrdu ? 'سورت منتخب کریں' : 'All 114 Surahs'}</span>
+              </button>
             </div>
 
-            <SurahReaderWorkspace
-              currentSurahMeta={currentSurahMeta}
-              currentSurah={currentSurah}
-              selectedSurahNumber={selectedSurahNumber}
-              playingAyahNumber={playingAyahNumber}
-              audioSyncMode={audioSyncMode}
-              surahWideAudioType={surahWideAudioType}
-              isPlayingPaused={isPlayingPaused}
-              currentAudioSegment={currentAudioSegment}
-              isSurahSettingsOpen={isSurahSettingsOpen}
-              setIsSurahSettingsOpen={setIsSurahSettingsOpen}
-              selectedQari={selectedQari}
-              setSelectedQari={setSelectedQari}
-              playbackSpeed={playbackSpeed}
-              setPlaybackSpeed={setPlaybackSpeed}
-              isSurahCachedOffline={isSurahCachedOffline}
-              isCachingSurah={isCachingSurah}
-              handleCacheSurahOffline={handleCacheSurahOffline}
-              handleDownloadSurahAudio={handleDownloadSurahAudio}
-              showRomanUrdu={showRomanUrdu}
-              setShowRomanUrdu={setShowRomanUrdu}
-              fontSize={fontSize}
-              setFontSize={setFontSize}
-              isLoadingSurah={isLoadingSurah}
-              surahFetchError={surahFetchError}
-              handlePlaySurahKanzulIman={handlePlaySurahKanzulIman}
-              handlePlaySurahUrduOnly={handlePlaySurahUrduOnly}
-              handlePlaySurahTafseer={handlePlaySurahTafseer}
-              handlePlaySurahTilawatOnly={handlePlaySurahTilawatOnly}
-              handlePlayAyahAudio={handlePlayAyahAudio}
-              onOpenWisdomModal={(sNum, aNum) => setActiveWisdomAyah({ surahNumber: sNum, ayahNumber: aNum })}
-              viewMode={viewMode}
-              setViewMode={setViewMode}
-              focusedAyahNumber={focusedAyahNumber}
-              setFocusedAyahNumber={setFocusedAyahNumber}
-              continuousSurahPlayback={continuousSurahPlayback}
-              setContinuousSurahPlayback={setContinuousSurahPlayback}
-            />
-          </div>
-        </section>
+            {/* SECTION 2 & 3: SURAHS DIRECTORY & IN-APP READER */}
+            <section className="quran-workspace-grid" style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24, alignItems: 'start' }}>
+              {/* LEFT: 114 Surahs Directory Sidebar */}
+              <div className={mobileTab === 'DIRECTORY' ? '' : 'desktop-only'} style={{ minWidth: 0, width: '100%' }}>
+                <SurahDirectorySidebar
+                  surahSearchFilter={surahSearchFilter}
+                  setSurahSearchFilter={setSurahSearchFilter}
+                  revelationFilter={revelationFilter}
+                  setRevelationFilter={setRevelationFilter}
+                  belovedShortcuts={belovedShortcuts}
+                  filteredSurahs={filteredSurahs}
+                  selectedSurahNumber={selectedSurahNumber}
+                  onSelectSurah={handleSelectSurah}
+                />
+              </div>
+
+              {/* RIGHT: Active Surah Reader & Continuous Player */}
+              <div className={mobileTab === 'READER' ? '' : 'desktop-only'} style={{ minWidth: 0, width: '100%' }}>
+                {/* Mobile Quick Surah Selector */}
+                <div className="mobile-only" style={{ marginBottom: 12 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: '#065F46', display: 'block', marginBottom: 4 }}>
+                    {isUrdu ? 'فوری سورت تبدیل کریں:' : 'Quick Surah Jumper:'}
+                  </label>
+                  <select
+                    value={selectedSurahNumber}
+                    onChange={(e) => handleSelectSurah(Number(e.target.value))}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: 10,
+                      border: '1.5px solid #10B981',
+                      backgroundColor: '#FFFFFF',
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: '#064E3B',
+                    }}
+                  >
+                    {ALL_114_SURAHS.map((s) => (
+                      <option key={s.number} value={s.number}>
+                        {s.number}. {s.nameArabic} ({s.nameTransliterated} · {s.ayahsCount} Verses)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <SurahReaderWorkspace
+                  currentSurahMeta={currentSurahMeta}
+                  currentSurah={currentSurah}
+                  selectedSurahNumber={selectedSurahNumber}
+                  playingAyahNumber={playingAyahNumber}
+                  audioSyncMode={audioSyncMode}
+                  surahWideAudioType={surahWideAudioType}
+                  isPlayingPaused={isPlayingPaused}
+                  currentAudioSegment={currentAudioSegment}
+                  isSurahSettingsOpen={isSurahSettingsOpen}
+                  setIsSurahSettingsOpen={setIsSurahSettingsOpen}
+                  selectedQari={selectedQari}
+                  setSelectedQari={setSelectedQari}
+                  playbackSpeed={playbackSpeed}
+                  setPlaybackSpeed={setPlaybackSpeed}
+                  isSurahCachedOffline={isSurahCachedOffline}
+                  isCachingSurah={isCachingSurah}
+                  handleCacheSurahOffline={handleCacheSurahOffline}
+                  handleDownloadSurahAudio={handleDownloadSurahAudio}
+                  showRomanUrdu={showRomanUrdu}
+                  setShowRomanUrdu={setShowRomanUrdu}
+                  fontSize={fontSize}
+                  setFontSize={setFontSize}
+                  isLoadingSurah={isLoadingSurah}
+                  surahFetchError={surahFetchError}
+                  handlePlaySurahKanzulIman={handlePlaySurahKanzulIman}
+                  handlePlaySurahUrduOnly={handlePlaySurahUrduOnly}
+                  handlePlaySurahTafseer={handlePlaySurahTafseer}
+                  handlePlaySurahTilawatOnly={handlePlaySurahTilawatOnly}
+                  handlePlayAyahAudio={handlePlayAyahAudio}
+                  onOpenWisdomModal={(sNum, aNum) => setActiveWisdomAyah({ surahNumber: sNum, ayahNumber: aNum })}
+                  viewMode={viewMode}
+                  setViewMode={setViewMode}
+                  focusedAyahNumber={focusedAyahNumber}
+                  setFocusedAyahNumber={setFocusedAyahNumber}
+                  continuousSurahPlayback={continuousSurahPlayback}
+                  setContinuousSurahPlayback={setContinuousSurahPlayback}
+                />
+              </div>
+            </section>
+          </>
+        )}
       </main>
 
       {/* PERSISTENT FLOATING AUDIO PLAYER (LOCK-SCREEN & PLAYBACK CONTROLS) */}

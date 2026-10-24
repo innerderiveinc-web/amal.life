@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { wordByWordTajweedEngine, TajweedAudioPassage } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
@@ -33,6 +34,43 @@ export default function TajweedPage() {
       <Navigation />
 
       <main style={{ maxWidth: 880, margin: '0 auto', padding: '0 20px' }}>
+        {/* Quran Hub integration notice */}
+        <div
+          style={{
+            backgroundColor: '#ECFDF5',
+            border: '1px solid #A7F3D0',
+            borderRadius: 12,
+            padding: '12px 18px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 12,
+            marginBottom: 20,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 20 }}>✨</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
+              Word-by-word Tajweed is integrated into the <strong>Unified Quran Hub</strong>.
+            </span>
+          </div>
+          <Link
+            href="/quran?tab=tajweed"
+            style={{
+              textDecoration: 'none',
+              padding: '6px 14px',
+              borderRadius: 8,
+              backgroundColor: '#065F46',
+              color: '#FFFFFF',
+              fontWeight: 700,
+              fontSize: 12,
+            }}
+          >
+            Open Inside Quran Hub ➔
+          </Link>
+        </div>
+
         {/* Header Banner */}
         <div style={{
           backgroundColor: '#064E3B',
