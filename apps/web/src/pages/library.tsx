@@ -532,6 +532,11 @@ export default function LibraryPage() {
                   onClick={() => {
                     setSelectedWork(work);
                     setSelectedChapterIndex(0);
+                    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+                      setTimeout(() => {
+                        document.getElementById('library-detail-panel')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }
                   }}
                   style={{
                     padding: 14,
@@ -601,7 +606,7 @@ export default function LibraryPage() {
 
           {/* Book Inspection & Provenance Card */}
           {selectedWork ? (
-            <div style={{
+            <div id="library-detail-panel" style={{
               backgroundColor: '#FFFFFF',
               borderRadius: 16,
               padding: 26,

@@ -212,6 +212,22 @@ img, video, iframe, svg {
     gap: 16px !important;
   }
 
+  /* Horizontal swipeable tab strip for settings on mobile */
+  .settings-tabs-container {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 6px !important;
+    gap: 8px !important;
+  }
+
+  .settings-tabs-container button {
+    flex-shrink: 0 !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+
   /* Mobile typography adjustments so text doesn't overflow */
   h1 {
     font-size: 22px !important;
