@@ -16,6 +16,8 @@ import { CLASSICAL_BOOKS_CHAPTERS } from '../lib/classical-chapters-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { showAmalToast } from '../components/Toast';
 import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
+import { verifyContentCitation, SanadVerificationReport } from '../lib/authenticity-pipeline';
+import { SanadVerificationModal } from '../components/authenticity/SanadVerificationModal';
 
 export type WisdomCategory = 'QURAN' | 'HADITH' | 'SHAMAIL' | 'TASAWWUF' | 'FIQH' | 'DUA';
 
@@ -40,6 +42,7 @@ export default function QuranWisdomDedicatedPage() {
   const [bookmarkedCardIds, setBookmarkedCardIds] = useState<string[]>([]);
   const [activeModalCard, setActiveModalCard] = useState<QuranAyahWisdomCard | null>(null);
   const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
+  const [activeSanadReport, setActiveSanadReport] = useState<SanadVerificationReport | null>(null);
   const { isUrdu } = useLanguage();
 
   // Sync category from URL query (?category=hadith, etc.)
@@ -664,6 +667,31 @@ export default function QuranWisdomDedicatedPage() {
 
                       <button
                         type="button"
+                        onClick={() => {
+                          const rep = verifyContentCitation(`سورۃ ${card.surahNameUrdu} (${card.surahNumber}:${card.ayahNumber}) · کنز الایمان فی ترجمۃ القرآن`);
+                          setActiveSanadReport(rep);
+                        }}
+                        style={{
+                          padding: '3px 8px',
+                          borderRadius: 6,
+                          border: '1px solid #10B981',
+                          backgroundColor: '#ECFDF5',
+                          fontSize: 10,
+                          fontWeight: 800,
+                          color: '#065F46',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 3,
+                        }}
+                        title="تحقیق و سندِ روایت دیکھیں"
+                      >
+                        <span>✓</span>
+                        <span>مستند سند</span>
+                      </button>
+
+                      <button
+                        type="button"
                         onClick={() => handleToggleBookmark(cardKey)}
                         style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 18 }}
                         title={isBookmarked ? 'محفوظ فہرست سے ہٹائیں' : 'پسندیدہ کارڈ محفوظ کریں'}
@@ -1060,6 +1088,15 @@ export default function QuranWisdomDedicatedPage() {
           isOpen={!!sharePayload}
           onClose={() => setSharePayload(null)}
           payload={sharePayload}
+        />
+      )}
+
+      {/* Tafteesh & Sanad Authenticity Verification Modal */}
+      {activeSanadReport && (
+        <SanadVerificationModal
+          report={activeSanadReport}
+          isOpen={!!activeSanadReport}
+          onClose={() => setActiveSanadReport(null)}
         />
       )}
     </div>

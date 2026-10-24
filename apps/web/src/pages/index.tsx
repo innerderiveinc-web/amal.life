@@ -15,6 +15,11 @@ const DailyKnowledgeBroadcastCard = dynamic(
   () => import('../components/DailyKnowledgeBroadcastCard').then((m) => m.DailyKnowledgeBroadcastCard),
   { ssr: false }
 );
+
+const SpiritualCoachHub = dynamic(
+  () => import('../components/coach/SpiritualCoachHub').then((m) => m.SpiritualCoachHub),
+  { ssr: false }
+);
 import {
   signatureCapabilitiesEngine,
   CompiledAmalPlan,
@@ -200,6 +205,9 @@ export default function Home() {
 
         {/* Automated Daily Knowledge Broadcast Stream */}
         <DailyKnowledgeBroadcastCard />
+
+        {/* Smart Spiritual Coach Hub & Muhasabah Agent */}
+        <SpiritualCoachHub />
 
         {/* PREMIER FEATURED QURAN WISDOM SHOWCASE */}
         <div

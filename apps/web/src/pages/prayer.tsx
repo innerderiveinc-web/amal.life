@@ -27,6 +27,8 @@ import { PrayerOffsetsModal } from '../components/prayer/PrayerOffsetsModal';
 import { MosqueIqamahModal } from '../components/prayer/MosqueIqamahModal';
 import { CitySearchModal } from '../components/prayer/CitySearchModal';
 import { TahajjudSmartHub } from '../components/prayer/TahajjudSmartHub';
+import { computeMultiFiqhReport } from '../lib/prayer-precision-engine';
+import { MultiFiqhPrecisionModal } from '../components/prayer/MultiFiqhPrecisionModal';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function PrayerTimesPage() {
@@ -41,6 +43,12 @@ export default function PrayerTimesPage() {
   // Minute offsets for local masjid calibration (+/- min)
   const [offsets, setOffsets] = useState<Record<string, number>>({ fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 });
   const [isOffsetsModalOpen, setIsOffsetsModalOpen] = useState(false);
+  const [isPrecisionModalOpen, setIsPrecisionModalOpen] = useState(false);
+
+  // Multi-Fiqh Precision Astronomical Report
+  const precisionReport = useMemo(() => {
+    return computeMultiFiqhReport(selectedCity.name, selectedCity.lat, selectedCity.lon);
+  }, [selectedCity]);
 
   // Azaan Audio & Push Notification State
   const [azaanSettings, setAzaanSettings] = useState<AzaanSettings>(() => getSavedAzaanSettings());
@@ -498,6 +506,27 @@ export default function PrayerTimesPage() {
             >
               <span>⚙️</span>
               <span>{Object.values(offsets).some((v) => v !== 0) ? 'Calibrated (± Min)' : 'Calibrate / ± Minutes'}</span>
+            </button>
+
+            <button
+              onClick={() => setIsPrecisionModalOpen(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '8px 14px',
+                borderRadius: 8,
+                backgroundColor: '#047857',
+                color: '#FFFFFF',
+                border: '1px solid #10B981',
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+              title={isUrdu ? 'فقہی و فلکیاتی موازنہ دیکھیں' : 'Compare 5 Global Fiqh Authorities & Asr Shadow Rules'}
+            >
+              <span>🔭</span>
+              <span>{isUrdu ? 'فقہی و فلکیاتی تحقیق' : 'Multi-Fiqh Verifier'}</span>
             </button>
 
             <button
@@ -1245,6 +1274,13 @@ export default function PrayerTimesPage() {
         selectedCity={selectedCity}
         handleSelectCity={handleSelectCity}
         method={method}
+      />
+
+      {/* 4. MULTI-FIQH & ASTRONOMICAL PRECISION MODAL */}
+      <MultiFiqhPrecisionModal
+        report={precisionReport}
+        isOpen={isPrecisionModalOpen}
+        onClose={() => setIsPrecisionModalOpen(false)}
       />
     </div>
   );
