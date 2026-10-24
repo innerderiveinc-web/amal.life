@@ -44,6 +44,38 @@ export const AmalTheme = {
       warningLight: '#FFFBEB',
       neutralGray: '#64748B',
     },
+
+    // The 4 Sacred Pillars Architectural Palette
+    pillars: {
+      ibadah: {
+        primary: '#064E3B',
+        hover: '#065F46',
+        light: '#ECFDF5',
+        border: '#A7F3D0',
+        text: '#065F46',
+      },
+      ilm: {
+        primary: '#1E40AF',
+        hover: '#1D4ED8',
+        light: '#EFF6FF',
+        border: '#BFDBFE',
+        text: '#1E40AF',
+      },
+      sisters: {
+        primary: '#831843',
+        hover: '#9D174D',
+        light: '#FDF2F8',
+        border: '#FECDD3',
+        text: '#831843',
+      },
+      fiqh: {
+        primary: '#92400E',
+        hover: '#B45309',
+        light: '#FEF3C7',
+        border: '#FDE68A',
+        text: '#92400E',
+      },
+    },
   },
 
   typography: {

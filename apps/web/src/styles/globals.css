@@ -14,6 +14,23 @@
   --color-surface-card: #FFFFFF;
   --color-border: #E5E7EB;
 
+  /* The 4 Sacred Pillars Tokens */
+  --amal-pillar-ibadah: #064E3B;
+  --amal-pillar-ibadah-bg: #ECFDF5;
+  --amal-pillar-ibadah-border: #A7F3D0;
+
+  --amal-pillar-ilm: #1E40AF;
+  --amal-pillar-ilm-bg: #EFF6FF;
+  --amal-pillar-ilm-border: #BFDBFE;
+
+  --amal-pillar-sisters: #831843;
+  --amal-pillar-sisters-bg: #FDF2F8;
+  --amal-pillar-sisters-border: #FECDD3;
+
+  --amal-pillar-fiqh: #92400E;
+  --amal-pillar-fiqh-bg: #FEF3C7;
+  --amal-pillar-fiqh-border: #FDE68A;
+
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
