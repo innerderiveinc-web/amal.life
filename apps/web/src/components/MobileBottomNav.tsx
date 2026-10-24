@@ -1,9 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useLanguage } from '../context/LanguageContext';
 
 export const MobileBottomNav: React.FC = () => {
   const router = useRouter();
+  const { isUrdu } = useLanguage();
 
   const navItems = [
     { label: 'Today', labelUrdu: 'آج', href: '/', icon: '🌅' },
@@ -54,7 +56,7 @@ export const MobileBottomNav: React.FC = () => {
             }}
           >
             <span style={{ fontSize: 20 }}>{item.icon}</span>
-            <span>{item.label}</span>
+            <span>{isUrdu ? item.labelUrdu : item.label}</span>
           </Link>
         );
       })}
@@ -81,7 +83,7 @@ export const MobileBottomNav: React.FC = () => {
         }}
       >
         <span style={{ fontSize: 20 }}>🔍</span>
-        <span>Search</span>
+        <span>{isUrdu ? 'تلاش' : 'Search'}</span>
       </button>
     </nav>
   );
