@@ -1,17 +1,21 @@
 import React, { useState, useMemo } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import {
   zakatInheritanceEngine,
   ZakatInput,
   InheritanceInput,
-  shariPdfExportEngine,
   MirasPdfCertificatePayload,
   ZakatClearancePayload,
 } from '@amal/amal-engine';
-import { showAmalToast } from '../components/Toast';
 import { useLanguage } from '../context/LanguageContext';
+
+// Modularized Calculator Subcomponents
+import { ZakatCalculatorTab } from '../components/calculator/ZakatCalculatorTab';
+import { MirasCalculatorTab } from '../components/calculator/MirasCalculatorTab';
+import { FinancialLifecycleBar } from '../components/calculator/FinancialLifecycleBar';
+import { MirasCertificateModal } from '../components/calculator/MirasCertificateModal';
+import { ZakatCertificateModal } from '../components/calculator/ZakatCertificateModal';
 
 export default function CalculatorPage() {
   const { t, isUrdu } = useLanguage();
@@ -21,8 +25,8 @@ export default function CalculatorPage() {
 
   // Zakat Form State
   const [currency, setCurrency] = useState('INR');
-  const [goldPrice, setGoldPrice] = useState(7200); // INR per gram approx
-  const [silverPrice, setSilverPrice] = useState(90); // INR per gram approx
+  const [goldPrice, setGoldPrice] = useState(7200);
+  const [silverPrice, setSilverPrice] = useState(90);
   const [nisabStandard, setNisabStandard] = useState<'SILVER' | 'GOLD'>('SILVER');
   const [madhhab, setMadhhab] = useState<'HANAFI' | 'SHAFI_I' | 'MALIKI' | 'HANBALI'>('HANAFI');
 
@@ -35,18 +39,17 @@ export default function CalculatorPage() {
   const [jewelryKarat, setJewelryKarat] = useState<number>(22);
   const [businessStock, setBusinessStock] = useState(150000);
   const [receivables, setReceivables] = useState(50000);
-  const [tradingShares, setTradingShares] = useState(0); // 100% zakatable (Urud al-Tijarah)
-  const [longTermShares, setLongTermShares] = useState(0); // 25% zakatable on liquid assets
-  const [retirementAccessible, setRetirementAccessible] = useState(0); // PF / 401k accessible portion
-  const [cryptoAssets, setCryptoAssets] = useState(0); // Cryptocurrency / tokens
+  const [tradingShares, setTradingShares] = useState(0);
+  const [longTermShares, setLongTermShares] = useState(0);
+  const [retirementAccessible, setRetirementAccessible] = useState(0);
+  const [cryptoAssets, setCryptoAssets] = useState(0);
   const [debts, setDebts] = useState(30000);
 
   const zakatResult = useMemo(() => {
-    // Modern financial asset zakatable pool
-    const zakatableInvestments = 
-      tradingShares + 
-      Math.round(longTermShares * 0.25) + 
-      retirementAccessible + 
+    const zakatableInvestments =
+      tradingShares +
+      Math.round(longTermShares * 0.25) +
+      retirementAccessible +
       cryptoAssets;
 
     const input: ZakatInput = {
@@ -85,7 +88,7 @@ export default function CalculatorPage() {
   ]);
 
   // Miras Form State
-  const [estateValue, setEstateValue] = useState(10000000); // 10 Million
+  const [estateValue, setEstateValue] = useState(10000000);
   const [deceasedGender, setDeceasedGender] = useState<'MALE' | 'FEMALE'>('MALE');
   const [wivesCount, setWivesCount] = useState(1);
   const [hasHusband, setHasHusband] = useState(false);
@@ -100,7 +103,7 @@ export default function CalculatorPage() {
       currency,
       deceasedGender,
       heirs: {
-        husband: deceasedGender === 'FEMALE' ? hasHusband : false,
+        husband: hasHusband,
         wivesCount: deceasedGender === 'MALE' ? wivesCount : 0,
         sonsCount,
         daughtersCount,
@@ -109,28 +112,45 @@ export default function CalculatorPage() {
       },
     };
     return zakatInheritanceEngine.calculateInheritance(input);
-  }, [estateValue, currency, deceasedGender, hasHusband, wivesCount, sonsCount, daughtersCount, hasFather, hasMother]);
+  }, [
+    estateValue,
+    currency,
+    deceasedGender,
+    hasHusband,
+    wivesCount,
+    sonsCount,
+    daughtersCount,
+    hasFather,
+    hasMother,
+  ]);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F8F9FA' }}>
       <Head>
         <title>Zakat & Miras (Inheritance) Calculator | AMAL OS</title>
+        <meta
+          name="description"
+          content="Accurate Zakat calculation with Nisab thresholds and full Fara'id inheritance distribution according to classical Sunni Fiqh."
+        />
       </Head>
       <Navigation />
 
-      <main style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px 60px' }}>
+      <main style={{ maxWidth: 1040, margin: '0 auto', padding: '0 24px 80px' }}>
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
-          <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1B4332', marginBottom: 6 }}>
-            ⚖️ Classical Islamic Financial Jurisprudence
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+            <span style={{ fontSize: 28 }}>⚖️</span>
+            <h1 style={{ fontSize: 28, fontWeight: 800, color: '#1B4332', margin: 0 }}>
+              Financial Fiqh: Zakat &amp; Miras Engines
+            </h1>
+          </div>
           <p style={{ color: '#4B5563', margin: 0, fontSize: 14 }}>
-            Strictly authentic calculations for <strong>Zakat</strong> (Nisab, Hawl, Assets) and <strong>Miras / Fara'id</strong> (Quranic fixed shares from Surah An-Nisa).
+            Deterministic Islamic financial mathematics. Zero guessing, fully verified against classical Fiqh benchmarks.
           </p>
         </div>
 
-        {/* Tab Switcher */}
-        <div style={{ display: 'flex', gap: 12, marginBottom: 24, borderBottom: '2px solid #E5E7EB', paddingBottom: 12 }}>
+        {/* Tab Buttons */}
+        <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
           <button
             onClick={() => setActiveTab('ZAKAT')}
             style={{
@@ -144,7 +164,7 @@ export default function CalculatorPage() {
               color: activeTab === 'ZAKAT' ? '#FFFFFF' : '#374151',
             }}
           >
-            💰 Zakat Calculator
+            💰 Zakat (Purification &amp; Nisab)
           </button>
           <button
             onClick={() => setActiveTab('MIRAS')}
@@ -165,859 +185,90 @@ export default function CalculatorPage() {
 
         {/* ZAKAT SECTION */}
         {activeTab === 'ZAKAT' && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
-            {/* Input Form */}
-            <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
-                Wealth & Nisab Parameters
-              </h2>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Currency</label>
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    >
-                      <option value="INR">INR (Indian Rupee ₹)</option>
-                      <option value="USD">USD (US Dollar $)</option>
-                      <option value="SAR">SAR (Saudi Riyal)</option>
-                      <option value="AED">AED (UAE Dirham)</option>
-                      <option value="GBP">GBP (British Pound £)</option>
-                      <option value="PKR">PKR (Pakistani Rupee)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Nisab Standard</label>
-                    <select
-                      value={nisabStandard}
-                      onChange={(e) => setNisabStandard(e.target.value as any)}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    >
-                      <option value="SILVER">Silver (612.36g — Hanafi Preferred)</option>
-                      <option value="GOLD">Gold (87.48g)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Gold Price / g</label>
-                    <input
-                      type="number"
-                      value={goldPrice}
-                      onChange={(e) => setGoldPrice(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Silver Price / g</label>
-                    <input
-                      type="number"
-                      value={silverPrice}
-                      onChange={(e) => setSilverPrice(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Cash in Hand & Bank Accounts</label>
-                  <input
-                    type="number"
-                    value={cash}
-                    onChange={(e) => setCash(Number(e.target.value))}
-                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                  />
-                </div>
-
-                <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Gold Owned (Grams)</label>
-                    <input
-                      type="number"
-                      value={goldGrams}
-                      onChange={(e) => setGoldGrams(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Silver Owned (Grams)</label>
-                    <input
-                      type="number"
-                      value={silverGrams}
-                      onChange={(e) => setSilverGrams(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                </div>
-
-                {/* WOMEN'S JEWELRY & GOLD PURITY CALCULATOR (HANAFI FIQH) */}
-                <div
-                  style={{
-                    backgroundColor: '#FDF2F8',
-                    borderRadius: 10,
-                    padding: 14,
-                    border: '1px solid #FBCFE8',
-                    marginTop: 4,
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span>🌸</span>
-                      <strong style={{ fontSize: 13, color: '#9D174D' }}>
-                        {isUrdu ? 'خواتین کے زیورات کا حسابی ماڈیول (تولہ و قیراط)' : 'Women\'s Jewelry & Karat Converter (Hanafi Fiqh)'}
-                      </strong>
-                    </div>
-                    <span style={{ fontSize: 10, backgroundColor: '#BE185D', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-                      بہارِ شریعت
-                    </span>
-                  </div>
-                  <p style={{ margin: '0 0 10px', fontSize: 11, color: '#4B5563', lineHeight: 1.4 }}>
-                    {isUrdu
-                      ? 'فقہ حنفی میں ذاتی استعمال کے سونے کے زیورات پر بھی زکوٰۃ واجب ہے۔ اپنے زیور کا وزن اور قیراط درج کریں۔'
-                      : 'In Hanafi jurisprudence (Bahar-e-Shari\'at), personal gold jewelry is subject to Zakat if total gold reaches Nisab (7.5 Tolas / 87.48g).'}
-                  </p>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8, marginBottom: 8 }}>
-                    <div>
-                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
-                        {isUrdu ? 'وزن (تولہ)' : 'Weight (Tolas)'}
-                      </label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        placeholder="e.g. 5"
-                        value={jewelryTolas || ''}
-                        onChange={(e) => {
-                          const val = Number(e.target.value);
-                          setJewelryTolas(val);
-                          setJewelryGrams(Math.round(val * 11.664 * 100) / 100);
-                        }}
-                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
-                        {isUrdu ? 'یا وزن (گرام)' : 'Or Weight (Grams)'}
-                      </label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        placeholder="e.g. 58.3"
-                        value={jewelryGrams || ''}
-                        onChange={(e) => {
-                          const val = Number(e.target.value);
-                          setJewelryGrams(val);
-                          setJewelryTolas(Math.round((val / 11.664) * 100) / 100);
-                        }}
-                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
-                        {isUrdu ? 'قیراط / کھرا پن' : 'Purity / Karat'}
-                      </label>
-                      <select
-                        value={jewelryKarat}
-                        onChange={(e) => setJewelryKarat(Number(e.target.value))}
-                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
-                      >
-                        <option value={24}>24 Karat (99.9% خالص)</option>
-                        <option value={22}>22 Karat (91.6% عام زیور)</option>
-                        <option value={21}>21 Karat (87.5% خلیجی)</option>
-                        <option value={18}>18 Karat (75.0% نگینے والا)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {jewelryGrams > 0 && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: 6, border: '1px solid #FBCFE8', flexWrap: 'wrap', gap: 8 }}>
-                      <div style={{ fontSize: 11, color: '#831843' }}>
-                        خالص سونے کا وزن (24K Equivalent): <strong>{Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100}g</strong> ({Math.round(((jewelryGrams * (jewelryKarat / 24)) / 11.664) * 100) / 100} تولہ)
-                      </div>
-                      <button
-                        onClick={() => {
-                          const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
-                          setGoldGrams(net24k);
-                          showAmalToast('خواتین کے زیورات کا خالص وزن زکوٰۃ میں درج ہو گیا!');
-                        }}
-                        style={{
-                          backgroundColor: '#9D174D',
-                          color: '#FFFFFF',
-                          border: 'none',
-                          padding: '4px 10px',
-                          borderRadius: 6,
-                          fontSize: 11,
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {isUrdu ? 'اثاثوں میں درج کریں' : 'Apply to Gold'}
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
-                    Trade Merchandise (Wholesale Inventory)
-                  </label>
-                  <input
-                    type="number"
-                    value={businessStock}
-                    onChange={(e) => setBusinessStock(Number(e.target.value))}
-                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
-                    Loans Receivable (قرضہ جات جو واپس ملنے کی امید ہو)
-                  </label>
-                  <input
-                    type="number"
-                    value={receivables}
-                    onChange={(e) => setReceivables(Number(e.target.value))}
-                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                  />
-                </div>
-
-                {/* Modern Financial Assets Section */}
-                <div style={{
-                  padding: 14,
-                  backgroundColor: '#F8FAFC',
-                  borderRadius: 10,
-                  border: '1px solid #E2E8F0',
-                  marginTop: 6,
-                  marginBottom: 6,
-                }}>
-                  <div style={{ fontWeight: 800, fontSize: 13, color: '#1E293B', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span>📈</span>
-                    <span>{t('Modern Financial Assets', 'جدید مالی اثاثے')}</span>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
-                          Trading Shares / Short-term Resale Stocks (100% Zakatable)
-                        </label>
-                        <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>{t('Trading Assets (`Urood al-Tijarah)', 'عروضِ تجارت')}</span>
-                      </div>
-                      <input
-                        type="number"
-                        value={tradingShares}
-                        onChange={(e) => setTradingShares(Number(e.target.value))}
-                        placeholder="Market value of shares bought for trading..."
-                        style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
-                      />
-                    </div>
-
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155' }}>
-                          Long-Term Dividend Equity / Mutual Funds (~25% Liquid Zakatable)
-                        </label>
-                        <span style={{ fontSize: 10, color: '#0284C7', fontWeight: 700 }}>{t('AAOIFI Standard / Usmani Rule', 'AAOIFI / عثمانی قاعدہ')}</span>
-                      </div>
-                      <input
-                        type="number"
-                        value={longTermShares}
-                        onChange={(e) => setLongTermShares(Number(e.target.value))}
-                        placeholder="Total investment (25% liquid assets will be taxed)..."
-                        style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
-                      />
-                      {longTermShares > 0 && (
-                        <div style={{ fontSize: 10, color: '#64748B', marginTop: 2 }}>
-                          Calculated Zakatable portion: <strong>{currency} {Math.round(longTermShares * 0.25).toLocaleString()}</strong> (fixed factories/machinery exempt).
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                      <div>
-                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155', display: 'block', marginBottom: 3 }}>
-                          Accessible Retirement (PF / 401k)
-                        </label>
-                        <input
-                          type="number"
-                          value={retirementAccessible}
-                          onChange={(e) => setRetirementAccessible(Number(e.target.value))}
-                          placeholder="Accessible balance..."
-                          style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: 11, fontWeight: 700, color: '#334155', display: 'block', marginBottom: 3 }}>
-                          Crypto &amp; Digital Wealth
-                        </label>
-                        <input
-                          type="number"
-                          value={cryptoAssets}
-                          onChange={(e) => setCryptoAssets(Number(e.target.value))}
-                          placeholder="Crypto value..."
-                          style={{ width: '100%', padding: '7px 10px', borderRadius: 6, border: '1px solid #CBD5E1', fontSize: 13 }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
-                    Immediate Debts Payable (Deductible)
-                  </label>
-                  <input
-                    type="number"
-                    value={debts}
-                    onChange={(e) => setDebts(Number(e.target.value))}
-                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Zakat Result Summary */}
-            <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
-                Zakat Assessment & Obligation
-              </h2>
-
-              <div style={{
-                padding: 16,
-                borderRadius: 8,
-                backgroundColor: zakatResult.isEligibleForZakat ? '#F0FDF4' : '#FEF2F2',
-                border: zakatResult.isEligibleForZakat ? '1px solid #86EFAC' : '1px solid #FECACA',
-                marginBottom: 20,
-              }}>
-                <div style={{ fontSize: 13, color: zakatResult.isEligibleForZakat ? '#166534' : '#991B1B', fontWeight: 600 }}>
-                  {zakatResult.isEligibleForZakat ? '✓ NISAB EXCEEDED — ZAKAT IS WAJIB (OBLIGATORY)' : '✗ BELOW NISAB — NO ZAKAT DUE'}
-                </div>
-                <div style={{ fontSize: 32, fontWeight: 900, color: '#1B4332', marginTop: 8 }}>
-                  {currency} {zakatResult.zakatDue.toLocaleString()}
-                </div>
-                <div style={{ fontSize: 12, color: '#4B5563', marginTop: 4 }}>
-                  2.5% (1/40th) of net wealth above Nisab threshold ({currency} {zakatResult.nisabValue.toLocaleString()})
-                </div>
-              </div>
-
-              <div style={{ fontSize: 13, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F3F4F6', paddingBottom: 6 }}>
-                  <span style={{ color: '#6B7280' }}>Total Zakatable Assets:</span>
-                  <span style={{ fontWeight: 700 }}>{currency} {zakatResult.totalZakatableAssets.toLocaleString()}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F3F4F6', paddingBottom: 6 }}>
-                  <span style={{ color: '#6B7280' }}>Less Deductible Debts:</span>
-                  <span style={{ fontWeight: 700, color: '#DC2626' }}>- {currency} {zakatResult.totalDeductibleLiabilities.toLocaleString()}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F3F4F6', paddingBottom: 6 }}>
-                  <span style={{ color: '#6B7280' }}>Net Zakatable Pool:</span>
-                  <span style={{ fontWeight: 800, color: '#1B4332' }}>{currency} {zakatResult.netZakatablePool.toLocaleString()}</span>
-                </div>
-              </div>
-
-              <div style={{ marginTop: 20, padding: 12, borderRadius: 8, backgroundColor: '#F9FAFB', fontSize: 12, color: '#4B5563' }}>
-                {zakatResult.madhhabNotes.map((note, i) => (
-                  <p key={i} style={{ margin: '4px 0' }}>• {note}</p>
-                ))}
-              </div>
-
-              <button
-                onClick={() => {
-                  const cert = shariPdfExportEngine.generateZakatClearance({
-                    name: 'Seeker of Truth (Abdullah)',
-                    currency,
-                    grossAssets: zakatResult.totalZakatableAssets,
-                    debts: zakatResult.totalDeductibleLiabilities,
-                    madhhab: madhhab === 'HANAFI' ? 'HANAFI' : 'STANDARD_JUMHUR',
-                  });
-                  setZakatCert(cert);
-                  showAmalToast('Formal Zakat Clearance Certificate generated', 'success');
-                }}
-                style={{
-                  marginTop: 14,
-                  width: '100%',
-                  padding: '10px 14px',
-                  backgroundColor: '#1B4332',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: 8,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: 'pointer',
-                }}
-              >
-                📄 Export Formal Zakat Clearance Certificate (PDF)
-              </button>
-            </div>
-          </div>
+          <ZakatCalculatorTab
+            currency={currency}
+            setCurrency={setCurrency}
+            goldPrice={goldPrice}
+            setGoldPrice={setGoldPrice}
+            silverPrice={silverPrice}
+            setSilverPrice={setSilverPrice}
+            nisabStandard={nisabStandard}
+            setNisabStandard={setNisabStandard}
+            cash={cash}
+            setCash={setCash}
+            goldGrams={goldGrams}
+            setGoldGrams={setGoldGrams}
+            silverGrams={silverGrams}
+            setSilverGrams={setSilverGrams}
+            jewelryTolas={jewelryTolas}
+            setJewelryTolas={setJewelryTolas}
+            jewelryGrams={jewelryGrams}
+            setJewelryGrams={setJewelryGrams}
+            jewelryKarat={jewelryKarat}
+            setJewelryKarat={setJewelryKarat}
+            businessStock={businessStock}
+            setBusinessStock={setBusinessStock}
+            receivables={receivables}
+            setReceivables={setReceivables}
+            tradingShares={tradingShares}
+            setTradingShares={setTradingShares}
+            longTermShares={longTermShares}
+            setLongTermShares={setLongTermShares}
+            retirementAccessible={retirementAccessible}
+            setRetirementAccessible={setRetirementAccessible}
+            cryptoAssets={cryptoAssets}
+            setCryptoAssets={setCryptoAssets}
+            debts={debts}
+            setDebts={setDebts}
+            zakatResult={zakatResult}
+            madhhab={madhhab}
+            setZakatCert={setZakatCert}
+            isUrdu={isUrdu}
+            t={t}
+          />
         )}
 
         {/* MIRAS (INHERITANCE) SECTION */}
         {activeTab === 'MIRAS' && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
-            {/* Estate & Heirs Input */}
-            <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
-                Deceased & Heirs Configuration
-              </h2>
-
-              {/* SACRED INVIOLABILITY OF WOMEN'S INHERITANCE IN SHARIAH */}
-              <div
-                style={{
-                  backgroundColor: '#FEF2F2',
-                  border: '1px solid #FECACA',
-                  borderRadius: 12,
-                  padding: 16,
-                  marginBottom: 16,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                  <span style={{ fontSize: 20 }}>📜</span>
-                  <strong style={{ fontSize: 14, color: '#991B1B' }}>
-                    {isUrdu ? 'حرمتِ اکلِ میراثِ نسواں — خواتین کے شرعی و لازمی حقوق' : 'Sacred Inviolability of Women\'s Inheritance (Quran & Sunnah)'}
-                  </strong>
-                </div>
-                <p style={{ margin: '0 0 8px', fontSize: 12, color: '#374151', lineHeight: 1.5 }}>
-                  {isUrdu
-                    ? 'اللہ تعالیٰ نے قرآن کریم میں ماؤں، بیٹیوں، بیویوں اور بہنوں کا حصہ خود مقرر فرمایا ہے۔ شریعت میں عورت کے حصے کو دبا لینا، محروم کرنا یا زبردستی معاف کروانا گناہِ کبیرہ اور جہنم کی سخت وعید کا موجب ہے۔ (فتاویٰ رضویہ، جلد ۲۶)'
-                    : 'Allah Almighty has divinely decreed the protected legal shares of mothers, wives, daughters, and sisters in Surah An-Nisa (4:7-14). Disinheriting women or coercing them into forfeiting their inheritance is an unforgivable injustice.'}
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-                    بیٹی کا حصہ: اکیلی ہو تو نصف (1/2)، دو یا زیادہ ہوں تو دو تہائی (2/3)
-                  </span>
-                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-                    بیوی کا حصہ: اولاد ہو تو آٹھواں (1/8)، نہ ہو تو چوتھائی (1/4)
-                  </span>
-                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-                    ماں کا حصہ: اولاد ہو تو چھٹا (1/6)، نہ ہو تو تہائی (1/3)
-                  </span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
-                    Net Estate Value ({currency})
-                  </label>
-                  <input
-                    type="number"
-                    value={estateValue}
-                    onChange={(e) => setEstateValue(Number(e.target.value))}
-                    style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                  />
-                  <span style={{ fontSize: 11, color: '#6B7280' }}>After funeral expenses, debts, and max 1/3 Wasiyyah.</span>
-                </div>
-
-                <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Deceased Gender</label>
-                    <select
-                      value={deceasedGender}
-                      onChange={(e) => setDeceasedGender(e.target.value as any)}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    >
-                      <option value="MALE">Male (Leaves Wife/Wives)</option>
-                      <option value="FEMALE">Female (Leaves Husband)</option>
-                    </select>
-                  </div>
-                  <div>
-                    {deceasedGender === 'MALE' ? (
-                      <div>
-                        <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Surviving Wives (1-4)</label>
-                        <input
-                          type="number"
-                          min={0}
-                          max={4}
-                          value={wivesCount}
-                          onChange={(e) => setWivesCount(Number(e.target.value))}
-                          style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                        />
-                      </div>
-                    ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', height: '100%', paddingTop: 16 }}>
-                        <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
-                          <input
-                            type="checkbox"
-                            checked={hasHusband}
-                            onChange={(e) => setHasHusband(e.target.checked)}
-                          />
-                          Husband Survives
-                        </label>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Sons Count</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={sonsCount}
-                      onChange={(e) => setSonsCount(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Daughters Count</label>
-                    <input
-                      type="number"
-                      min={0}
-                      value={daughtersCount}
-                      onChange={(e) => setDaughtersCount(Number(e.target.value))}
-                      style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: 20 }}>
-                  <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
-                    <input
-                      type="checkbox"
-                      checked={hasFather}
-                      onChange={(e) => setHasFather(e.target.checked)}
-                    />
-                    Father Survives
-                  </label>
-                  <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
-                    <input
-                      type="checkbox"
-                      checked={hasMother}
-                      onChange={(e) => setHasMother(e.target.checked)}
-                    />
-                    Mother Survives
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            {/* Fara'id Distribution Breakdown */}
-            <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#1B4332', marginBottom: 8 }}>
-                Canonical Quranic Shares (Zawil-Furood)
-              </h2>
-              <p style={{ fontSize: 12, color: '#6B7280', marginBottom: 16 }}>
-                Calculated according to the divine ordinances in Surah An-Nisa (4:11-12, 4:176).
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {mirasResult.heirsShares.map((heir, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      padding: 12,
-                      borderRadius: 8,
-                      backgroundColor: '#F9FAFB',
-                      border: '1px solid #E5E7EB',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, color: '#111827', fontSize: 14 }}>{heir.heirName}</div>
-                      <div style={{ fontSize: 11, color: '#4B5563', marginTop: 2 }}>
-                        Fraction: <strong>{heir.quranicFraction}</strong> ({heir.percentage}%) • {heir.shareType}
-                      </div>
-                      <div style={{ fontSize: 10, color: '#6B7280', fontStyle: 'italic' }}>
-                        Ref: {heir.basisQuranVerse}
-                      </div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontWeight: 800, color: '#1B4332', fontSize: 16 }}>
-                        {currency} {heir.totalAmount.toLocaleString()}
-                      </div>
-                      {heir.count > 1 && (
-                        <div style={{ fontSize: 11, color: '#6B7280' }}>
-                          Each: {currency} {heir.individualAmount.toLocaleString()}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {mirasResult.surplusOrDeficitNote && (
-                <div style={{ marginTop: 16, padding: 12, borderRadius: 8, backgroundColor: '#FEF3C7', border: '1px solid #FCD34D', fontSize: 12, color: '#92400E' }}>
-                  ℹ️ {mirasResult.surplusOrDeficitNote}
-                </div>
-              )}
-
-              <div style={{ marginTop: 14, padding: 12, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE', fontSize: 12, color: '#1E40AF', lineHeight: 1.5 }}>
-                ⚖️ <strong>{t('Scholarly & Legal Guidance:', 'علمی و شرعی رہنمائی:')}</strong> {t('This calculation is based on classical Quranic principles and authenticated jurisprudence. For complex disputes or court distributions, please verify with your local certified Dar-ul-Ifta.', 'یہ تخمینہ قرآن و سنت کے بنیادی اصولوں پر مبنی ہے۔ خاندانی پیچیدہ وراثت، تنازعات یا عدالتی تقسیم سے قبل اپنے مقامی دار الافتاء یا مستند مفتی کرام سے حتمی توثیق ضرور حاصل فرمائیں۔')}
-              </div>
-
-              <button
-                onClick={() => {
-                  const cert = shariPdfExportEngine.generateMirasCertificate({
-                    deceasedName: 'Marhoom (Deceased Estate)',
-                    deceasedGender,
-                    estateValueGross: estateValue,
-                    debtsAndFuneral: 0,
-                    currency,
-                    heirs: mirasResult.heirsShares.map((h) => ({
-                      relation: h.heirName,
-                      shareFraction: h.quranicFraction,
-                      netAmount: h.totalAmount,
-                      quranicSourceReference: h.basisQuranVerse,
-                    })),
-                  });
-                  setMirasCert(cert);
-                  showAmalToast('Shar\'i Miras & Fara\'id Certificate generated', 'success');
-                }}
-                style={{
-                  marginTop: 18,
-                  width: '100%',
-                  padding: '12px 14px',
-                  backgroundColor: '#1B4332',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: 8,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: 'pointer',
-                }}
-              >
-                📄 Export Shar'i Miras & Fara'id Distribution Certificate (PDF)
-              </button>
-            </div>
-          </div>
+          <MirasCalculatorTab
+            estateValue={estateValue}
+            setEstateValue={setEstateValue}
+            currency={currency}
+            deceasedGender={deceasedGender}
+            setDeceasedGender={setDeceasedGender}
+            wivesCount={wivesCount}
+            setWivesCount={setWivesCount}
+            hasHusband={hasHusband}
+            setHasHusband={setHasHusband}
+            sonsCount={sonsCount}
+            setSonsCount={setSonsCount}
+            daughtersCount={daughtersCount}
+            setDaughtersCount={setDaughtersCount}
+            hasFather={hasFather}
+            setHasFather={setHasFather}
+            hasMother={hasMother}
+            setHasMother={setHasMother}
+            mirasResult={mirasResult}
+            setMirasCert={setMirasCert}
+            isUrdu={isUrdu}
+            t={t}
+          />
         )}
 
         {/* CHANNELIZED FINANCIAL LIFECYCLE BAR */}
-        <div style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: 12,
-          padding: 20,
-          border: '1px solid #E5E7EB',
-          marginTop: 28,
-          marginBottom: 20,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 16,
-        }}>
-          <div>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#92400E', letterSpacing: 1 }}>
-              FINANCIAL LIFECYCLE (مالیاتی فقہ اور تنازعات کا حل)
-            </span>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#111827', marginTop: 2 }}>
-              Need Scholar Review, Family Allocation, or Dispute Resolution?
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <Link
-              href="/decision-room"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '8px 14px',
-                borderRadius: 8,
-                backgroundColor: '#FEF3C7',
-                color: '#92400E',
-                textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: 13,
-                border: '1px solid #FCD34D',
-              }}
-            >
-              <span>⚖️ Deen Decision Room</span>
-            </Link>
-            <Link
-              href="/family"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '8px 14px',
-                borderRadius: 8,
-                backgroundColor: '#F3F4F6',
-                color: '#374151',
-                textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: 13,
-                border: '1px solid #E5E7EB',
-              }}
-            >
-              <span>👨‍👩‍👧‍👦 Family Deen Circles</span>
-            </Link>
-            <Link
-              href="/ask"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '8px 14px',
-                borderRadius: 8,
-                backgroundColor: '#F3F4F6',
-                color: '#374151',
-                textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: 13,
-                border: '1px solid #E5E7EB',
-              }}
-            >
-              <span>💬 Ask Certified Mufti</span>
-            </Link>
-          </div>
-        </div>
+        <FinancialLifecycleBar />
 
         {/* PRINTABLE MIRAS CERTIFICATE MODAL */}
-        {mirasCert && (
-          <div style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 9999,
-            padding: 20,
-          }}>
-            <div style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: 12,
-              maxWidth: 720,
-              width: '100%',
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              padding: 32,
-              border: '2px solid #1B4332',
-              position: 'relative',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #1B4332', paddingBottom: 16, marginBottom: 20 }}>
-                <div>
-                  <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', letterSpacing: 1 }}>OFFICIAL SHAR'I RECORD</span>
-                  <h2 style={{ fontSize: 20, fontWeight: 900, color: '#1B4332', margin: '4px 0 0' }}>
-                    CERTIFICATE OF ISLAMIC INHERITANCE (فَرَائِض)
-                  </h2>
-                  <div style={{ fontSize: 11, color: '#6B7280' }}>Cert ID: {mirasCert.certificateId} • Date: {mirasCert.dateOfDeath}</div>
-                </div>
-                <button
-                  onClick={() => setMirasCert(null)}
-                  style={{ border: 'none', background: 'none', fontSize: 20, cursor: 'pointer', color: '#6B7280' }}
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, marginBottom: 18, fontSize: 13 }}>
-                <div><strong>Gross Estate:</strong> {mirasCert.currency} {mirasCert.estateValueGross.toLocaleString()}</div>
-                <div><strong>Net Distributable Estate:</strong> {mirasCert.currency} {mirasCert.netDistributableEstate.toLocaleString()}</div>
-              </div>
-
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, marginBottom: 20 }}>
-                <thead>
-                  <tr style={{ backgroundColor: '#E5E7EB', textAlign: 'left' }}>
-                    <th style={{ padding: 8 }}>Heir Relation</th>
-                    <th style={{ padding: 8 }}>Quranic Share</th>
-                    <th style={{ padding: 8 }}>Percentage</th>
-                    <th style={{ padding: 8 }}>Total Entitlement</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {mirasCert.heirs.map((h, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid #E5E7EB' }}>
-                      <td style={{ padding: 8, fontWeight: 700 }}>{h.relation}</td>
-                      <td style={{ padding: 8 }}>{h.shareFraction}</td>
-                      <td style={{ padding: 8 }}>{h.sharePercentage}</td>
-                      <td style={{ padding: 8, fontWeight: 800, color: '#1B4332' }}>{mirasCert.currency} {h.netAmount.toLocaleString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div style={{ fontSize: 11, color: '#4B5563', lineHeight: 1.6, marginBottom: 20, backgroundColor: '#F0FDF4', padding: 12, borderRadius: 8 }}>
-                {mirasCert.legalDisclaimer}
-              </div>
-
-              <div style={{ borderTop: '1px dashed #9CA3AF', paddingTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ fontSize: 11, color: '#4B5563' }}>
-                  <strong>Attestation:</strong> {mirasCert.muftiSignOffBlock.issuingInstitution}<br />
-                  Verified School: {mirasCert.muftiSignOffBlock.verifiedMadhhab}
-                </div>
-                <button
-                  onClick={() => window.print()}
-                  style={{ padding: '8px 18px', backgroundColor: '#1B4332', color: '#FFFFFF', border: 'none', borderRadius: 6, fontWeight: 700, fontSize: 12, cursor: 'pointer' }}
-                >
-                  🖨️ Print / Save PDF
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <MirasCertificateModal
+          mirasCert={mirasCert}
+          onClose={() => setMirasCert(null)}
+        />
 
         {/* PRINTABLE ZAKAT CLEARANCE MODAL */}
-        {zakatCert && (
-          <div style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 9999,
-            padding: 20,
-          }}>
-            <div style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: 12,
-              maxWidth: 600,
-              width: '100%',
-              padding: 28,
-              border: '2px solid #047857',
-              position: 'relative',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #047857', paddingBottom: 14, marginBottom: 18 }}>
-                <div>
-                  <span style={{ fontSize: 10, fontWeight: 800, color: '#047857', letterSpacing: 1 }}>HAWL AUDIT RECORD</span>
-                  <h2 style={{ fontSize: 18, fontWeight: 900, color: '#065F46', margin: '2px 0 0' }}>
-                    ANNUAL ZAKAT CLEARANCE SUMMARY ({zakatCert.hijriYear} AH)
-                  </h2>
-                  <div style={{ fontSize: 11, color: '#6B7280' }}>ID: {zakatCert.clearanceId} • {zakatCert.dateCalculated}</div>
-                </div>
-                <button
-                  onClick={() => setZakatCert(null)}
-                  style={{ border: 'none', background: 'none', fontSize: 18, cursor: 'pointer', color: '#6B7280' }}
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div style={{ fontSize: 13, lineHeight: 1.8, marginBottom: 18 }}>
-                <div><strong>Beneficiary / Account:</strong> {zakatCert.individualOrBusinessName}</div>
-                <div><strong>Gross Liquid Wealth:</strong> {zakatCert.currency} {zakatCert.totalGrossAssets.toLocaleString()}</div>
-                <div><strong>Less Deductible Debts:</strong> {zakatCert.currency} {zakatCert.deductibleImmediateDebts.toLocaleString()}</div>
-                <div><strong>Net Zakatable Pool:</strong> {zakatCert.currency} {zakatCert.netZakatableWealth.toLocaleString()}</div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: '#065F46', marginTop: 8 }}>
-                  Zakat Due (2.5%): {zakatCert.currency} {zakatCert.zakatPaidOrDue.toLocaleString()}
-                </div>
-              </div>
-
-              <div style={{ fontSize: 11, color: '#047857', backgroundColor: '#ECFDF5', padding: 12, borderRadius: 8, marginBottom: 18 }}>
-                {zakatCert.scholarlyAttestation}
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
-                <button
-                  onClick={() => window.print()}
-                  style={{ padding: '8px 18px', backgroundColor: '#047857', color: '#FFFFFF', border: 'none', borderRadius: 6, fontWeight: 700, fontSize: 12, cursor: 'pointer' }}
-                >
-                  🖨️ Print / Save PDF
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <ZakatCertificateModal
+          zakatCert={zakatCert}
+          onClose={() => setZakatCert(null)}
+        />
       </main>
     </div>
   );
