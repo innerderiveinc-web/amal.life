@@ -189,6 +189,10 @@ export class AmalApiClient {
         'tmpl-salah-consistency': 21,
         'tmpl-quran-restart': 30,
         'tmpl-anger-patience': 10,
+        'tmpl-tahajjud-7d': 7,
+        'tmpl-istighfar-21d': 21,
+        'tmpl-tongue-discipline-14d': 14,
+        'tmpl-gratitude-14d': 14,
       };
       const templateId = body?.template_id || 'tmpl-custom';
       const totalDays = body?.target_duration_days || templateDaysMap[templateId] || 14;

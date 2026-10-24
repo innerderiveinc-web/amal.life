@@ -51,6 +51,42 @@ export default function JourneysPage() {
       urTitle: 'غصے پر قابو اور سنت صبر',
       urDescription: 'اشتعال اور غصے کے لمحات میں نبوی سنت اور تدابیر پر عمل کرنے کا 10 روزہ عملی سفر۔',
     },
+    {
+      id: 'tmpl-tahajjud-7d',
+      title: '7-Day Tahajjud & Night Vigil',
+      duration: '7 Days',
+      phases: '2 Phases (Ignition, Intimacy with Allah)',
+      description: 'Experience the profound peace, secret du’as, and divine closeness of Qiyam al-Layl.',
+      urTitle: '7 روزہ تہجد اور قیام اللیل',
+      urDescription: 'رات کی خاموشی میں اللہ کے حضور کھڑے ہونے، مناجات اور دل کی تسکین کا 7 روزہ سفر۔',
+    },
+    {
+      id: 'tmpl-istighfar-21d',
+      title: '21-Day Heart Cleansing & Tawbah',
+      duration: '21 Days',
+      phases: '3 Phases (Unburdening, Sayyid al-Istighfar, Renewal)',
+      description: 'Cleanse the spiritual rust from the heart with 100 daily istighfar and Sayyid al-Istighfar.',
+      urTitle: '21 روزہ توبہ و استغفار',
+      urDescription: 'روزانہ 100 مرتبہ استغفار اور سید الاستغفار کے ذریعے دل کو گناہوں کے زنگ سے پاک کرنے کا 21 روزہ سفر۔',
+    },
+    {
+      id: 'tmpl-tongue-discipline-14d',
+      title: '14-Day Guarding the Tongue',
+      duration: '14 Days',
+      phases: '2 Phases (Awareness & Silence, Noble Speech)',
+      description: 'Eliminate backbiting (gheebah), sarcasm, and careless gossip through prophetic speech discipline.',
+      urTitle: '14 روزہ حفاظتِ زبان و انسدادِ غیبت',
+      urDescription: 'غیبت، طنز اور لایعنی باتوں سے زبان کو محفوظ رکھ کر ذکر اور نرم کلامی اختیار کرنے کا 14 روزہ سفر۔',
+    },
+    {
+      id: 'tmpl-gratitude-14d',
+      title: '14-Day Prophetic Shukr & Contentment',
+      duration: '14 Days',
+      phases: '2 Phases (Hidden Favors, Contentment in Action)',
+      description: 'Break free from consumerist anxiety and cultivate deep, joyful contentment (Qana\'ah) with Allah’s decree.',
+      urTitle: '14 روزہ شکر گزاری اور قناعت',
+      urDescription: 'حسد اور بے چینی سے نجات پا کر رب کی نعمتوں پر دلی شکر اور قناعت اختیار کرنے کا 14 روزہ سفر۔',
+    },
   ];
 
   const loadJourneys = async () => {
