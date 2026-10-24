@@ -184,13 +184,25 @@ export class AmalApiClient {
     if (path === '/journeys' && method === 'POST') {
       const stored = localStorage.getItem('amal_journeys');
       const existing = stored ? JSON.parse(stored) : [];
+      const templateDaysMap: Record<string, number> = {
+        'tmpl-fajr-14d': 14,
+        'tmpl-salah-consistency': 21,
+        'tmpl-quran-restart': 30,
+        'tmpl-anger-patience': 10,
+      };
+      const templateId = body?.template_id || 'tmpl-custom';
+      const totalDays = body?.target_duration_days || templateDaysMap[templateId] || 14;
       const newJourney = {
         id: `journey_local_${Date.now()}`,
-        templateId: body?.template_id || 'tmpl-custom',
+        templateId,
         templateVersionId: 'v1.0.0',
         title: body?.title || 'New Journey',
         state: 'ACTIVE',
         currentPhase: 1,
+        currentDay: 1,
+        totalDays,
+        completedDays: [],
+        dailyCheckins: {},
         startedAt: new Date().toISOString(),
       };
       const updated = [newJourney, ...existing];
@@ -205,6 +217,15 @@ export class AmalApiClient {
       const updated = existing.map((j: any) => (j.id || j.journeyId) === id ? { ...j, ...body } : j);
       localStorage.setItem('amal_journeys', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { updated: true } as T };
+    }
+
+    if (path.startsWith('/journeys/') && method === 'DELETE') {
+      const id = path.split('/')[2];
+      const stored = localStorage.getItem('amal_journeys');
+      const existing = stored ? JSON.parse(stored) : [];
+      const updated = existing.filter((j: any) => (j.id || j.journeyId) !== id);
+      localStorage.setItem('amal_journeys', JSON.stringify(updated));
+      return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
 
     // 3. Reflections (Local Device Only — No Fake Pre-existing History)
@@ -331,6 +352,21 @@ export class AmalApiClient {
 
   public static async updateJourney(id: string, updates: Record<string, any>) {
     return this.request(`/journeys/${id}`, 'PATCH', updates);
+  }
+
+  public static async deleteJourney(id: string) {
+    return this.request(`/journeys/${id}`, 'DELETE');
+  }
+
+  public static async resetJourney(id: string) {
+    return this.request(`/journeys/${id}`, 'PATCH', {
+      currentDay: 1,
+      currentPhase: 1,
+      completedDays: [],
+      dailyCheckins: {},
+      state: 'ACTIVE',
+      resetAt: new Date().toISOString(),
+    });
   }
 
   // Amal Actions
