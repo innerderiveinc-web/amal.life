@@ -7,7 +7,8 @@ export type ContentCategory =
   | 'SHAMAIL'
   | 'TASAWWUF'
   | 'FIQH'
-  | 'DUA';
+  | 'DUA'
+  | 'SAHABIYYAT';
 
 export const DEFAULT_CATEGORY_LABELS: Record<ContentCategory, { urdu: string; english: string }> = {
   QURAN: { urdu: 'قرآنِ کریم و حکمت', english: 'The Holy Quran' },
@@ -16,6 +17,7 @@ export const DEFAULT_CATEGORY_LABELS: Record<ContentCategory, { urdu: string; en
   TASAWWUF: { urdu: 'تزکیہ و تصوف', english: 'Tazkiyah & Spiritual Wisdom' },
   FIQH: { urdu: 'احکامِ فقہ و شریعت', english: 'Sacred Islamic Fiqh' },
   DUA: { urdu: 'ادعیہ و ماثورہ اذکار', english: 'Prophetic Prayers & Adhkar' },
+  SAHABIYYAT: { urdu: 'اسوۂ صحابیات و صالحات', english: 'Noble Sahabiyyat & Sacred Sisters' },
 };
 
 export interface UniversalCardPayload {
@@ -139,6 +141,20 @@ const CATEGORY_STYLES: Record<ContentCategory, { defaultTheme: ThemePreset; seal
       isLight: false,
     },
     sealText: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+  },
+  SAHABIYYAT: {
+    defaultTheme: {
+      bgGradient: ['#831843', '#064E3B'],
+      borderColor: '#F472B6',
+      accentColor: '#F59E0B',
+      textColor: '#FFFFFF',
+      secondaryTextColor: '#FCE7F3',
+      citationColor: '#FDE68A',
+      badgeBg: 'rgba(244, 114, 182, 0.25)',
+      badgeText: '#FBCFE8',
+      isLight: false,
+    },
+    sealText: 'رَضِيَ اللَّهُ عَنْهُنَّ',
   },
 };
 

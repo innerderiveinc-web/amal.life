@@ -17,6 +17,7 @@ import {
 } from '../lib/women-sanctuary-data';
 import { SanadVerificationModal } from '../components/authenticity/SanadVerificationModal';
 import { SanadVerificationReport } from '../lib/authenticity-pipeline';
+import { UniversalContentShareModal, UniversalCardPayload } from '../components/cards/UniversalContentShareModal';
 
 type SanctuaryTab = 'library' | 'sahabiyyat' | 'fiqh' | 'duas' | 'vault';
 
@@ -28,6 +29,9 @@ export default function SistersSanctuaryPage() {
   const [selectedFiqhCategory, setSelectedFiqhCategory] = useState<string>('all');
   const [readingBook, setReadingBook] = useState<SanctuaryBook | null>(null);
   const [activeChapter, setActiveChapter] = useState<SanctuaryBookChapter | null>(null);
+
+  // Share Card Generator Modal State
+  const [shareCardPayload, setShareCardPayload] = useState<UniversalCardPayload | null>(null);
 
   // Sanad Modal State
   const [selectedSanadReport, setSelectedSanadReport] = useState<SanadVerificationReport | null>(null);
@@ -80,6 +84,71 @@ export default function SistersSanctuaryPage() {
       : `${dua.titleEnglish} (${dua.reference})\n\n${dua.arabicText}\n\nTranslation: ${dua.translationEnglish}\n\n— Amal Nisa (The Sisters Sanctuary)`;
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`;
     window.open(url, '_blank');
+  };
+
+  const handleGenerateSahabiyyahCard = (sah: SahabiyyatProfile) => {
+    const payload: UniversalCardPayload = {
+      category: 'SAHABIYYAT',
+      categoryLabelUrdu: 'اسوۂ صحابیات و امہات المؤمنین',
+      categoryLabelEnglish: 'Noble Sahabiyyat & Mothers of Believers',
+      titleUrdu: sah.nameUrdu,
+      titleEnglish: sah.nameEnglish,
+      titleArabic: sah.nameArabic,
+      arabicText: 'رَضِيَ اللَّهُ عَنْهَا',
+      primaryTextUrdu: `${sah.titleUrdu} — ${sah.biographyUrdu}\n\nاسوہ و اسباق:\n${sah.dailySunnahLessons.map((l, i) => `${i + 1}. ${l.ur}`).join('\n')}`,
+      secondaryTextEnglish: `${sah.titleEnglish} — ${sah.biographyEnglish}\n\nDaily Sunnah Lessons:\n${sah.dailySunnahLessons.map((l, i) => `${i + 1}. ${l.en}`).join('\n')}`,
+      sourceCitation: sah.classicalCitation,
+      badgeContext: sah.era,
+    };
+    setShareCardPayload(payload);
+  };
+
+  const handleGenerateDuaCard = (dua: MasnoonFamilyDua) => {
+    const payload: UniversalCardPayload = {
+      category: 'DUA',
+      categoryLabelUrdu: 'مائیں و مسنون دعائیں',
+      categoryLabelEnglish: 'Motherhood & Family Supplications',
+      titleUrdu: dua.titleUrdu,
+      titleEnglish: dua.titleEnglish,
+      arabicText: dua.arabicText,
+      primaryTextUrdu: `ترجمہ: ${dua.translationUrdu}\n\nفضیلت: ${dua.spiritualVirtueUrdu}`,
+      secondaryTextEnglish: `Translation: ${dua.translationEnglish}\n\nVirtue: ${dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu}`,
+      sourceCitation: dua.reference,
+      badgeContext: isUrdu ? 'مسنون دعا' : 'Masnoon Supplication',
+    };
+    setShareCardPayload(payload);
+  };
+
+  const handleGenerateFiqhCard = (item: FiqhRulingItem) => {
+    const payload: UniversalCardPayload = {
+      category: 'FIQH',
+      categoryLabelUrdu: 'احکامِ نسواں و طہارت',
+      categoryLabelEnglish: 'Fiqh & Purity for Women',
+      titleUrdu: item.titleUrdu,
+      titleEnglish: item.titleEnglish,
+      arabicText: 'أَحْكَامُ الشَّرِيعَةِ وَالطَّهَارَةِ',
+      primaryTextUrdu: `${item.summaryUrdu}\n\n${item.detailedRulingUrdu}\n\nعملی ہدایات:\n${item.practicalGuidelines.map((g) => `• ${g}`).join('\n')}`,
+      secondaryTextEnglish: `${item.summaryEnglish}\n\n${item.detailedRulingEnglish || item.detailedRulingUrdu}\n\nGuidelines:\n${(item.practicalGuidelinesEnglish || item.practicalGuidelines).map((g) => `• ${g}`).join('\n')}`,
+      sourceCitation: item.hanafiReference,
+      badgeContext: isUrdu ? 'فقہ حنفی' : 'Hanafi Jurisprudence',
+    };
+    setShareCardPayload(payload);
+  };
+
+  const handleGenerateChapterCard = (book: SanctuaryBook, ch: SanctuaryBookChapter) => {
+    const payload: UniversalCardPayload = {
+      category: 'HADITH',
+      categoryLabelUrdu: book.titleUrdu,
+      categoryLabelEnglish: book.titleEnglish,
+      titleUrdu: ch.titleUrdu,
+      titleEnglish: ch.titleEnglish,
+      arabicText: ch.arabicEvidence || 'مِنْ كُتُبِ أَهْلِ السُّنَّةِ وَالْجَمَاعَةِ',
+      primaryTextUrdu: `${ch.summaryUrdu}\n\nاہم نکات:\n${ch.keyTakeaways.map((p) => `• ${p}`).join('\n')}`,
+      secondaryTextEnglish: ch.summaryEnglish,
+      sourceCitation: `${book.titleUrdu} (${book.authorUrdu}) • ${ch.hadithOrFiqhReference}`,
+      badgeContext: book.authorEra,
+    };
+    setShareCardPayload(payload);
   };
 
   // Initialize PIN & Local Storage
@@ -626,35 +695,57 @@ export default function SistersSanctuaryPage() {
                     <span style={{ fontSize: 12, color: '#6B7280' }}>
                       {isUrdu ? 'ماخذ:' : 'Source:'} {activeChapter.hadithOrFiqhReference}
                     </span>
-                    <button
-                      onClick={() =>
-                        handleOpenSanad(
-                          readingBook.titleUrdu,
-                          readingBook.authorUrdu,
-                          readingBook.verificationHash,
-                          activeChapter.hadithOrFiqhReference,
-                          activeChapter.summaryUrdu,
-                          activeChapter.summaryEnglish,
-                          readingBook.scholarlyConsensusUrdu
-                        )
-                      }
-                      style={{
-                        backgroundColor: '#ECFDF5',
-                        color: '#065F46',
-                        border: '1px solid #A7F3D0',
-                        padding: '6px 12px',
-                        borderRadius: 8,
-                        fontSize: 12,
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 4,
-                      }}
-                    >
-                      <span>✓</span>
-                      <span>{isUrdu ? 'مستند سند دیکھیں' : 'Verify Sanad'}</span>
-                    </button>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button
+                        onClick={() => handleGenerateChapterCard(readingBook, activeChapter)}
+                        style={{
+                          backgroundColor: '#FDF2F8',
+                          color: '#9D174D',
+                          border: '1px solid #FBCFE8',
+                          padding: '6px 12px',
+                          borderRadius: 8,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                      >
+                        <span>🎨</span>
+                        <span>{isUrdu ? 'حکمت کارڈ بنائیں' : 'Create Wisdom Card'}</span>
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          handleOpenSanad(
+                            readingBook.titleUrdu,
+                            readingBook.authorUrdu,
+                            readingBook.verificationHash,
+                            activeChapter.hadithOrFiqhReference,
+                            activeChapter.summaryUrdu,
+                            activeChapter.summaryEnglish,
+                            readingBook.scholarlyConsensusUrdu
+                          )
+                        }
+                        style={{
+                          backgroundColor: '#ECFDF5',
+                          color: '#065F46',
+                          border: '1px solid #A7F3D0',
+                          padding: '6px 12px',
+                          borderRadius: 8,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                      >
+                        <span>✓</span>
+                        <span>{isUrdu ? 'مستند سند دیکھیں' : 'Verify Sanad'}</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : readingBook ? (
@@ -1194,31 +1285,53 @@ export default function SistersSanctuaryPage() {
                       <span style={{ fontSize: 11, color: '#6B7280' }}>
                         {sah.classicalCitation}
                       </span>
-                      <button
-                        onClick={() =>
-                          handleOpenSanad(
-                            sah.nameUrdu,
-                            sah.titleUrdu,
-                            sah.sanadVerificationHash,
-                            sah.classicalCitation,
-                            sah.biographyUrdu,
-                            sah.biographyEnglish,
-                            'صحیح بخاری، مسلم اور ابن سعد کی مستند اسناد سے تصدیق شدہ'
-                          )
-                        }
-                        style={{
-                          backgroundColor: '#ECFDF5',
-                          color: '#065F46',
-                          border: '1px solid #A7F3D0',
-                          padding: '4px 10px',
-                          borderRadius: 6,
-                          fontSize: 11,
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        ✓ {isUrdu ? 'مستند سند' : 'Sanad'}
-                      </button>
+                      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                        <button
+                          onClick={() => handleGenerateSahabiyyahCard(sah)}
+                          style={{
+                            backgroundColor: '#FDF2F8',
+                            color: '#9D174D',
+                            border: '1px solid #FBCFE8',
+                            padding: '4px 10px',
+                            borderRadius: 6,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 4,
+                          }}
+                        >
+                          <span>🎨</span>
+                          <span>{isUrdu ? 'حکمت کارڈ' : 'Wisdom Card'}</span>
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleOpenSanad(
+                              sah.nameUrdu,
+                              sah.titleUrdu,
+                              sah.sanadVerificationHash,
+                              sah.classicalCitation,
+                              sah.biographyUrdu,
+                              sah.biographyEnglish,
+                              'صحیح بخاری، مسلم اور ابن سعد کی مستند اسناد سے تصدیق شدہ'
+                            )
+                          }
+                          style={{
+                            backgroundColor: '#ECFDF5',
+                            color: '#065F46',
+                            border: '1px solid #A7F3D0',
+                            padding: '4px 10px',
+                            borderRadius: 6,
+                            fontSize: 11,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          ✓ {isUrdu ? 'مستند سند' : 'Sanad'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1591,6 +1704,36 @@ export default function SistersSanctuaryPage() {
                         ))}
                       </ul>
                     </div>
+
+                    <div
+                      style={{
+                        marginTop: 12,
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        borderTop: '1px solid #F3F4F6',
+                        paddingTop: 10,
+                      }}
+                    >
+                      <button
+                        onClick={() => handleGenerateFiqhCard(item)}
+                        style={{
+                          backgroundColor: '#ECFDF5',
+                          color: '#065F46',
+                          border: '1px solid #A7F3D0',
+                          padding: '5px 12px',
+                          borderRadius: 6,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6,
+                        }}
+                      >
+                        <span>🎨</span>
+                        <span>{isUrdu ? 'فقہی کارڈ بنائیں' : 'Generate Fiqh Card'}</span>
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1762,6 +1905,26 @@ export default function SistersSanctuaryPage() {
                         paddingTop: 10,
                       }}
                     >
+                      <button
+                        onClick={() => handleGenerateDuaCard(dua)}
+                        style={{
+                          backgroundColor: '#064E3B',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          padding: '6px 12px',
+                          borderRadius: 6,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6,
+                        }}
+                      >
+                        <span>🎨</span>
+                        <span>{isUrdu ? 'دعائیہ کارڈ بنائیں' : 'Generate Dua Card'}</span>
+                      </button>
+
                       <button
                         onClick={() => handleCopyDua(dua)}
                         style={{
@@ -2289,6 +2452,13 @@ export default function SistersSanctuaryPage() {
           isOpen={isSanadModalOpen}
           report={selectedSanadReport}
           onClose={() => setIsSanadModalOpen(false)}
+        />
+
+        {/* Global High-Res Universal Share Card Generator Modal */}
+        <UniversalContentShareModal
+          isOpen={!!shareCardPayload}
+          payload={shareCardPayload}
+          onClose={() => setShareCardPayload(null)}
         />
       </div>
     </>
