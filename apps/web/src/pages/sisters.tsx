@@ -66,14 +66,18 @@ export default function SistersSanctuaryPage() {
   }, [calcTotalDays, calcHabitDays]);
 
   const handleCopyDua = (dua: MasnoonFamilyDua) => {
-    const textToCopy = `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\nترجمہ: ${dua.translationUrdu}\n\nفضیلت: ${dua.spiritualVirtueUrdu}\n\n— امل او ایس (گوشۂ خواتین)`;
+    const textToCopy = isUrdu
+      ? `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\nترجمہ: ${dua.translationUrdu}\n\nفضیلت: ${dua.spiritualVirtueUrdu}\n\n— امل او ایس (گوشۂ خواتین)`
+      : `${dua.titleEnglish} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\nTranslation: ${dua.translationEnglish}\n\nVirtue: ${dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu}\n\n— Amal OS (The Sisters Sanctuary)`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedDuaId(dua.id);
     setTimeout(() => setCopiedDuaId(null), 3000);
   };
 
   const handleShareDuaWhatsApp = (dua: MasnoonFamilyDua) => {
-    const textToShare = `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\nترجمہ: ${dua.translationUrdu}\n\n— امل نساء (Amal Nisa Sanctuary)`;
+    const textToShare = isUrdu
+      ? `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\nترجمہ: ${dua.translationUrdu}\n\n— امل نساء (Amal Nisa Sanctuary)`
+      : `${dua.titleEnglish} (${dua.reference})\n\n${dua.arabicText}\n\nTranslation: ${dua.translationEnglish}\n\n— Amal Nisa (The Sisters Sanctuary)`;
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`;
     window.open(url, '_blank');
   };
@@ -233,12 +237,15 @@ export default function SistersSanctuaryPage() {
     return WOMEN_CLASSICAL_CANON.filter((book) => {
       const matchesCategory =
         selectedBookCategory === 'all' || book.category === selectedBookCategory;
+      const q = searchQuery.toLowerCase();
       const matchesQuery =
         !searchQuery ||
         book.titleUrdu.includes(searchQuery) ||
-        book.titleEnglish.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.titleEnglish.toLowerCase().includes(q) ||
         book.authorUrdu.includes(searchQuery) ||
-        book.descriptionUrdu.includes(searchQuery);
+        book.authorEnglish.toLowerCase().includes(q) ||
+        book.descriptionUrdu.includes(searchQuery) ||
+        book.descriptionEnglish.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
   }, [selectedBookCategory, searchQuery]);
@@ -549,7 +556,7 @@ export default function SistersSanctuaryPage() {
                         fontWeight: 700,
                       }}
                     >
-                      {readingBook.titleUrdu}
+                      {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
                     </span>
                   </div>
 
@@ -561,7 +568,7 @@ export default function SistersSanctuaryPage() {
                       marginBottom: 8,
                     }}
                   >
-                    {activeChapter.titleUrdu}
+                    {isUrdu ? activeChapter.titleUrdu : activeChapter.titleEnglish}
                   </h2>
                   <p
                     style={{
@@ -570,7 +577,7 @@ export default function SistersSanctuaryPage() {
                       marginBottom: 16,
                     }}
                   >
-                    {activeChapter.titleEnglish} • {activeChapter.hadithOrFiqhReference}
+                    {isUrdu ? activeChapter.titleEnglish : activeChapter.titleUrdu} • {activeChapter.hadithOrFiqhReference}
                   </p>
 
                   <div
@@ -711,13 +718,16 @@ export default function SistersSanctuaryPage() {
                   </div>
 
                   <h2 style={{ fontSize: 24, fontWeight: 800, color: '#064E3B', margin: '4px 0' }}>
-                    {readingBook.titleUrdu}
+                    {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
                   </h2>
+                  <div style={{ fontSize: 14, color: '#047857', fontWeight: 600, marginBottom: 6 }}>
+                    {isUrdu ? readingBook.titleEnglish : readingBook.titleUrdu}
+                  </div>
                   <div style={{ fontSize: 14, color: '#4B5563', marginBottom: 16 }}>
-                    <strong>{readingBook.authorUrdu}</strong> • {readingBook.authorEra}
+                    <strong>{isUrdu ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {readingBook.authorEra}
                   </div>
                   <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.7, marginBottom: 24 }}>
-                    {readingBook.descriptionUrdu}
+                    {isUrdu ? readingBook.descriptionUrdu : readingBook.descriptionEnglish}
                   </p>
 
                   <h3
@@ -753,10 +763,13 @@ export default function SistersSanctuaryPage() {
                       >
                         <div>
                           <div style={{ fontWeight: 800, fontSize: 16, color: '#064E3B', marginBottom: 4 }}>
-                            {ch.chapterNumber}. {ch.titleUrdu}
+                            {ch.chapterNumber}. {isUrdu ? ch.titleUrdu : ch.titleEnglish}
+                          </div>
+                          <div style={{ fontSize: 12, color: '#059669', marginBottom: 4 }}>
+                            {isUrdu ? ch.titleEnglish : ch.titleUrdu}
                           </div>
                           <div style={{ fontSize: 13, color: '#6B7280' }}>
-                            {ch.summaryUrdu}
+                            {isUrdu ? ch.summaryUrdu : ch.summaryEnglish}
                           </div>
                         </div>
                         <button
@@ -910,8 +923,18 @@ export default function SistersSanctuaryPage() {
                               color: '#064E3B',
                             }}
                           >
-                            {book.titleUrdu}
+                            {isUrdu ? book.titleUrdu : book.titleEnglish}
                           </h3>
+                          <div
+                            style={{
+                              fontSize: 12,
+                              color: '#059669',
+                              fontWeight: 600,
+                              marginBottom: 4,
+                            }}
+                          >
+                            {isUrdu ? book.titleEnglish : book.titleUrdu}
+                          </div>
                           <div
                             style={{
                               fontSize: 13,
@@ -920,7 +943,7 @@ export default function SistersSanctuaryPage() {
                               marginBottom: 8,
                             }}
                           >
-                            {book.authorUrdu} ({book.authorEra})
+                            {isUrdu ? book.authorUrdu : book.authorEnglish} ({book.authorEra})
                           </div>
                           <p
                             style={{
@@ -934,7 +957,7 @@ export default function SistersSanctuaryPage() {
                               overflow: 'hidden',
                             }}
                           >
-                            {book.descriptionUrdu}
+                            {isUrdu ? book.descriptionUrdu : book.descriptionEnglish}
                           </p>
                         </div>
 
@@ -1074,7 +1097,7 @@ export default function SistersSanctuaryPage() {
                             fontWeight: 700,
                           }}
                         >
-                          {sah.titleUrdu}
+                          {isUrdu ? sah.titleUrdu : sah.titleEnglish}
                         </span>
                         <span style={{ fontSize: 12, color: '#9CA3AF' }}>{sah.era}</span>
                       </div>
@@ -1087,8 +1110,18 @@ export default function SistersSanctuaryPage() {
                           margin: '4px 0',
                         }}
                       >
-                        {sah.nameUrdu}
+                        {isUrdu ? sah.nameUrdu : sah.nameEnglish}
                       </h3>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: '#059669',
+                          fontWeight: 600,
+                          marginBottom: 4,
+                        }}
+                      >
+                        {isUrdu ? sah.nameEnglish : sah.nameArabic}
+                      </div>
                       <div
                         style={{
                           fontSize: 12,
@@ -1108,7 +1141,7 @@ export default function SistersSanctuaryPage() {
                           marginBottom: 14,
                         }}
                       >
-                        {sah.biographyUrdu}
+                        {isUrdu ? sah.biographyUrdu : sah.biographyEnglish}
                       </p>
 
                       {/* 3 Practical Daily Sunnah Lessons */}
@@ -1434,7 +1467,10 @@ export default function SistersSanctuaryPage() {
                   <div style={{ marginTop: 10, fontSize: 13, color: '#374151', lineHeight: 1.6 }}>
                     <strong>{isUrdu ? 'فقہی احتیاطیں و ہدایات:' : 'Practical Directives:'}</strong>
                     <ul style={{ margin: '4px 0 0', paddingInlineStart: 18 }}>
-                      {calcResult.spiritualPrescriptionUrdu.map((presc, idx) => (
+                      {((isUrdu || !calcResult.spiritualPrescriptionEnglish)
+                        ? calcResult.spiritualPrescriptionUrdu
+                        : calcResult.spiritualPrescriptionEnglish
+                      ).map((presc, idx) => (
                         <li key={idx}>{presc}</li>
                       ))}
                     </ul>
@@ -1471,7 +1507,7 @@ export default function SistersSanctuaryPage() {
                           color: '#064E3B',
                         }}
                       >
-                        {item.titleUrdu}
+                        {isUrdu ? item.titleUrdu : item.titleEnglish}
                       </h3>
                       <span
                         style={{
@@ -1486,6 +1522,16 @@ export default function SistersSanctuaryPage() {
                         {item.hanafiReference}
                       </span>
                     </div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: '#059669',
+                        fontWeight: 600,
+                        marginBottom: 6,
+                      }}
+                    >
+                      {isUrdu ? item.titleEnglish : item.titleUrdu}
+                    </div>
 
                     <p
                       style={{
@@ -1496,7 +1542,7 @@ export default function SistersSanctuaryPage() {
                         marginBottom: 10,
                       }}
                     >
-                      {item.summaryUrdu}
+                      {isUrdu ? item.summaryUrdu : item.summaryEnglish}
                     </p>
 
                     <p
@@ -1507,7 +1553,7 @@ export default function SistersSanctuaryPage() {
                         marginBottom: 14,
                       }}
                     >
-                      {item.detailedRulingUrdu}
+                      {isUrdu ? item.detailedRulingUrdu : (item.detailedRulingEnglish || item.detailedRulingUrdu)}
                     </p>
 
                     <div
@@ -1537,7 +1583,10 @@ export default function SistersSanctuaryPage() {
                           lineHeight: 1.6,
                         }}
                       >
-                        {item.practicalGuidelines.map((g, idx) => (
+                        {((isUrdu || !item.practicalGuidelinesEnglish)
+                          ? item.practicalGuidelines
+                          : item.practicalGuidelinesEnglish
+                        ).map((g, idx) => (
                           <li key={idx}>{g}</li>
                         ))}
                       </ul>
@@ -1606,7 +1655,7 @@ export default function SistersSanctuaryPage() {
                           color: '#064E3B',
                         }}
                       >
-                        {dua.titleUrdu}
+                        {isUrdu ? dua.titleUrdu : dua.titleEnglish}
                       </h3>
                       <span
                         style={{
@@ -1620,6 +1669,17 @@ export default function SistersSanctuaryPage() {
                       >
                         {dua.reference}
                       </span>
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: '#059669',
+                        fontWeight: 600,
+                        marginBottom: 10,
+                      }}
+                    >
+                      {isUrdu ? dua.titleEnglish : dua.titleUrdu}
                     </div>
 
                     {/* Arabic Text */}
@@ -1653,17 +1713,27 @@ export default function SistersSanctuaryPage() {
                       {dua.transliteration}
                     </div>
 
-                    {/* Urdu Translation */}
+                    {/* Translation */}
                     <div
                       style={{
                         fontSize: 15,
                         color: '#1F2937',
                         fontWeight: 600,
                         lineHeight: 1.6,
+                        marginBottom: 4,
+                      }}
+                    >
+                      {isUrdu ? dua.translationUrdu : dua.translationEnglish}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 13,
+                        color: '#4B5563',
+                        lineHeight: 1.6,
                         marginBottom: 10,
                       }}
                     >
-                      {dua.translationUrdu}
+                      {isUrdu ? dua.translationEnglish : dua.translationUrdu}
                     </div>
 
                     {/* Spiritual Benefit / Context */}
@@ -1678,7 +1748,7 @@ export default function SistersSanctuaryPage() {
                       }}
                     >
                       <strong>{isUrdu ? 'فضیلت و روحانی برکت:' : 'Spiritual Virtue:'}</strong>{' '}
-                      {dua.spiritualVirtueUrdu}
+                      {isUrdu ? dua.spiritualVirtueUrdu : (dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu)}
                     </div>
 
                     {/* Action Bar: Copy & WhatsApp Share */}

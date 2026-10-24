@@ -76,8 +76,10 @@ export interface FiqhRulingItem {
   summaryUrdu: string;
   summaryEnglish: string;
   detailedRulingUrdu: string;
+  detailedRulingEnglish?: string;
   hanafiReference: string;
   practicalGuidelines: string[];
+  practicalGuidelinesEnglish?: string[];
 }
 
 export interface MasnoonFamilyDua {
@@ -91,6 +93,7 @@ export interface MasnoonFamilyDua {
   translationEnglish: string;
   reference: string;
   spiritualVirtueUrdu: string;
+  spiritualVirtueEnglish?: string;
 }
 
 // ==========================================
@@ -1108,16 +1111,22 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
   {
     id: 'f-01',
     titleUrdu: 'حیض کی کم سے کم اور زیادہ سے زیادہ مدت',
-    titleEnglish: 'Minimum and Maximum Durations of Haidh',
+    titleEnglish: 'Minimum and Maximum Durations of Haidh (Menstruation)',
     category: 'haidh',
     summaryUrdu: 'فقہ حنفی میں حیض کی کم سے کم مدت ۳ دن اور ۳ راتیں (۷۲ گھنٹے) اور زیادہ سے زیادہ ۱۰ دن اور ۱۰ راتیں (۲۴۰ گھنٹے) ہیں۔',
     summaryEnglish: 'In Hanafi Fiqh, the minimum duration of menses is 3 days and 3 nights (72 hours), while the maximum is 10 days and 10 nights (240 hours).',
     detailedRulingUrdu: 'اگر خون ۳ دن اور ۳ راتوں سے کم آ کر بند ہو جائے، یا ۱۰ دن ۱۰ راتوں سے تجاوز کر جائے، تو وہ حیض نہیں بلکہ "استحاضہ" (بیماری کا خون) کہلائے گا۔ دو حیض کے درمیانی وقفے (طہر) کی کم سے کم مدت ۱۵ دن ہے، زیادہ کی کوئی حد نہیں۔',
+    detailedRulingEnglish: 'If bleeding stops in less than 72 hours, or exceeds 240 hours (10 days/nights), it is not Haidh but Istihadha (irregular bleeding due to illness). The minimum period of purity (Tuhr) between two menstrual cycles is 15 days; there is no maximum limit.',
     hanafiReference: 'بہارِ شریعت، حصہ ۲ / درِ مختار و رد المحتار، کتاب الطہارۃ',
     practicalGuidelines: [
       'اپنے مخصوص ایام کے شروع اور ختم ہونے کے اوقات کا کیلنڈر یا ڈائری میں باقاعدہ اندراج رکھیں۔',
       'عادت کے دنوں کا خاص خیال رکھیں، کیونکہ اکثر عورتوں کے دن مقرر ہوتے ہیں۔',
       '۱۰ دن پورے ہونے پر فورا غسل کر کے نماز شروع کر دیں چاہے ہلکا داغ ہی کیوں نہ ہو۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Maintain an exact record of the start and end dates/times of your bleeding in your journal.',
+      'Pay close attention to your established habit (Aadat), as most women have a fixed number of days.',
+      'Once 10 full days are completed, take Ghusl immediately and resume Salah, even if light spotting continues.'
     ]
   },
   {
@@ -1128,11 +1137,17 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     summaryUrdu: 'حیض کے ایام میں نماز بالکل معاف ہے (قضا بھی نہیں)، روزہ چھوڑنا واجب ہے (بعد میں قضا رکھنا فرض ہے)، اور مصحف کو چھونا و زبانی تلاوت کرنا منع ہے۔',
     summaryEnglish: 'During menses, prayer is completely waived (no Qadha required), fasting is suspended (deferred Qadha is obligatory), and touching/reciting the Quran directly is prohibited.',
     detailedRulingUrdu: 'رسول اللہ ﷺ نے فرمایا کہ عورت کے لیے نماز اور روزہ چھوڑنا شریعت کی آسانی ہے۔ پاک ہونے کے بعد چھوٹے ہوئے روزوں کی قضا سردیوں یا آسانی کے دنوں میں ایک ایک کر کے رکھنا فرض ہے۔ قرآن پاک کی تلاوت کی نیت کے بغیر اگر کوئی دعا یا وظیفہ قرآن کی آیات میں سے پڑھا جائے (جیسے بسم اللہ، الحمد للہ، انا للہ) تو جائز ہے۔',
+    detailedRulingEnglish: 'The Prophet ﷺ confirmed that the waiver of prayer and postponement of fasting is a divine concession. Deferred Ramadan fasts must be made up individually when purified. While reciting the Quran with the intention of Tilawah is prohibited, reciting Quranic verses with the intention of Du\'a, Dhikr, or remembrance (such as Bismillah, Alhamdulillah, or Inna Lillahi) is permissible.',
     hanafiReference: 'صحیح البخاری، حدیث ۳۰۴ / فتاویٰ عالمگیری، ج ۱',
     practicalGuidelines: [
       'رمضان کے روزوں کی قضا اگلے رمضان سے پہلے کسی بھی وقت رکھی جا سکتی ہے۔',
       'قرآن پاک کو کسی کپڑے یا غلاف سے پکڑا جا سکتا ہے لیکن چھونا جائز نہیں۔',
       'دینی کتابیں جیسے جنتی زیور یا تفسیر کے وہ حصے جن میں ترجمہ و تشریح زیادہ ہو، پڑھنا جائز ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Deferred Ramadan fasts can be completed anytime before the arrival of the next Ramadan.',
+      'The Quran may be held using an unattached cloth, pouch, or case, but direct skin contact with the script is unlawful.',
+      'Reading Islamic books like Jannati Zewar or books of Tafsir where translation and commentary exceed Arabic script is permissible.'
     ]
   },
   {
@@ -1143,10 +1158,15 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     summaryUrdu: 'ولادت کے بعد آنے والے خون کو نفاس کہتے ہیں۔ اس کی زیادہ سے زیادہ مدت ۴۰ دن اور ۴۰ راتیں ہیں۔ کم سے کم کی کوئی قید نہیں، اگر ایک گھنٹے میں بھی بند ہو جائے تو غسل کر کے نماز فرض ہے۔',
     summaryEnglish: 'Nifas is postnatal bleeding. The maximum limit is 40 days and nights. There is no minimum; if bleeding ceases after a few days or hours, Ghusl is obligatory immediately and prayers resume.',
     detailedRulingUrdu: 'اگر خون چالیس دن سے پہلے ہی بند ہو گیا، مثلاً ۲۰ یا ۲۵ دن پر، تو چالیس دن کا انتظار کرنا سخت گناہ ہے! جیسے ہی خون بند ہو، فورا غسل کریں اور اپنی نمازیں شروع کریں۔ چالیس دن کے بعد آنے والا خون استحاضہ (بیماری) شمار ہوگا، اس میں نماز نہیں چھوڑی جائے گی۔',
+    detailedRulingEnglish: 'If bleeding stops before 40 days (e.g. on day 20 or 25), waiting for 40 days is prohibited. As soon as bleeding ceases and purity appears, Ghusl is immediately obligatory and Salah must resume. Any bleeding extending beyond 40 days is treated as Istihadha (illness), during which prayers cannot be abandoned.',
     hanafiReference: 'سنن ابی داؤد، حدیث ۳۱۱ / بہارِ شریعت، حصہ ۲',
     practicalGuidelines: [
       'چالیس دن پورا ہونے کا بلاوجہ انتظار نہ کریں، سفیدی ظاہر ہوتے ہی غسل کریں۔',
       'نفاس میں بھی حیض کی طرح نماز بالکل معاف ہے اور روزوں کی قضا بعد میں لازم ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Do not wait unnecessarily for 40 days to elapse; take Ghusl as soon as clear discharge appears.',
+      'Just like Haidh, prayers during Nifas are completely waived without Qadha, while fasts must be made up later.'
     ]
   },
   {
@@ -1157,11 +1177,17 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     summaryUrdu: 'استحاضہ بیماری ہے، اس میں نماز اور روزہ کسی صورت معاف نہیں۔ ایسی بہن "معذورِ شرعی" کا حکم رکھتی ہے اور ہر فرض نماز کے وقت نیا وضو کر کے نماز پڑھے گی۔',
     summaryEnglish: 'Istihadha is due to illness; prayer and fasting are NEVER exempt. A sister experiencing Istihadha performs a fresh Wudu for each obligatory prayer time and prays normally.',
     detailedRulingUrdu: 'جب تک وہ نماز کا وقت باقی رہے گا، اس کا وضو قائم رہے گا، خون کے بہنے سے وضو نہیں ٹوٹے گا۔ اس دوران وہ جتنے چاہے نفل، قضا نمازیں اور تلاوتِ قرآن کر سکتی ہے۔ جب اگلی نماز کا وقت داخل ہوگا تو نیا وضو کرنا ہوگا۔',
+    detailedRulingEnglish: 'The Prophet ﷺ instructed that Istihadha is bleeding from a vessel, not the womb. A sister with Istihadha is considered excused (Ma\'dhur): she performs Wudu once after the prayer time enters, and her Wudu remains valid for all obligatory and voluntary prayers throughout that entire prayer window regardless of continuous bleeding. When the next prayer time enters, a new Wudu is performed.',
     hanafiReference: 'صحیح البخاری، حدیث ۲۲۸ / درِ مختار، باب الحیض',
     practicalGuidelines: [
       'ہر نماز کی اذان کے بعد نیا تازہ وضو کریں۔',
       'نماز سے پہلے صاف پیڈ یا کپڑا تبدیل کر لیں تاکہ نجاست کم سے کم رہے۔',
       'استحاضہ میں روزہ رکھنا بالکل درست اور فرض ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Perform a fresh, valid Wudu after the Adhan / entry of each prayer time.',
+      'Use fresh hygiene pads before prayer to minimize external impurity as much as practically possible.',
+      'Fasting during Istihadha is completely valid and obligatory in Ramadan.'
     ]
   },
   {
@@ -1172,11 +1198,17 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     summaryUrdu: 'شریعت نے عورت کو نماز میں زیادہ سے زیادہ سمٹ کر رہنے کا حکم دیا ہے تاکہ مکمل پردہ اور حیا برقرار رہے۔',
     summaryEnglish: 'In authentic Hanafi jurisprudence, women\'s prayer postures emphasize modesty, containment, and compactness to preserve complete covering.',
     detailedRulingUrdu: 'تکبیر تحریمہ میں ہاتھ صرف سینے یا کندھوں تک چادر کے اندر سے اٹھائے جائیں۔ قیام میں ہاتھ سینے پر باندھے جائیں (سینہ کے اوپر بایاں ہاتھ اور اس پر دایاں ہاتھ)۔ رکوع میں صرف اتنا جھکیں کہ ہاتھ گھٹنوں تک پہنچ جائیں، انگلیاں گھٹنوں پر بغیر کشادہ کیے رکھیں۔ سجدے میں سمٹ کر سجدہ کریں، یعنی بازو زمین پر بچھا دیں اور پیٹ رانوں سے ملا رہے اور پاؤں کھڑے کرنے کے بجائے دائیں طرف نکال کر بچھا دیں۔',
+    detailedRulingEnglish: 'In Hanafi jurisprudence (Al-Hidayah and Bahar-e-Shari\'at), women\'s prayer posture is rooted in modesty (Satr and Haya). In Takbeer Tahrimah, hands are raised only up to shoulders/chest beneath the veil. In Qiyam, hands are folded on the chest. In Ruku, bend only enough for hands to reach knees with fingers joined. In Sujud, keep the posture compact: rest arms flat on the floor, keep the abdomen close to thighs, and extend both feet outward to the right (Tawarruk).',
     hanafiReference: 'مراسیل ابی داؤد، حدیث ۸۷ / الہدایہ للمرغینانی / فتاویٰ رضویہ',
     practicalGuidelines: [
       'سر کے بالوں کی ایک لٹ بھی نماز کے دوران دوپٹے یا چادر سے باہر نہ نکلنے پائے۔',
       'پاؤں کے ٹخنے اور کلائیاں بھی عورت کے ستر میں شامل ہیں، ان کا چھپانا فرض ہے۔',
       'اگر بال یا کلائی کا چوتھائی حصہ ایک رکن کی ادائیگی (تین بار سبحان ربی الاعلیٰ کہنے کی مدت) کھلا رہا تو نماز فاسد ہو جائے گی۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Ensure every strand of hair is completely concealed beneath the headscarf during prayer.',
+      'Ankles and wrists are part of the Aurah (nakedness) that must be covered during Salah.',
+      'If one-fourth of a limb (like hair or forearm) remains uncovered for the duration of a pillar (three Subhana Rabbiyal A\'la), the prayer is invalidated.'
     ]
   },
   {
@@ -1187,11 +1219,17 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     summaryUrdu: 'یہ ایک غلط فہمی ہے کہ مخصوص ایام میں عورت عبادت نہیں کر سکتی۔ نماز کے اوقات میں مصلے پر بیٹھ کر درود شریف، استغفار اور تسبیحات پڑھنا مستحب اور ثواب کا باعث ہے۔',
     summaryEnglish: 'It is a profound misconception that women cannot worship during menstruation. Sitting on the prayer mat at prayer times for Dhikr, Salawat, and Istighfar is highly rewarded.',
     detailedRulingUrdu: 'فقہائے کرام فرماتے ہیں کہ مستحب یہ ہے کہ جس طرح عام دنوں میں نماز کے وقت وضو کر کے مصلے پر بیٹھتی تھیں، اسی طرح مخصوص ایام میں بھی نماز کے اوقات میں باوضو ہو کر جائے نماز پر قبلہ رخ بیٹھیں اور اتنی دیر تک درود پاک، تسبیح، استغفار اور دعائیں پڑھتی رہیں جتنی دیر نماز میں لگتی تھی، تاکہ عبادت کی عادت اور نور برقرار رہے۔',
+    detailedRulingEnglish: 'Classical Hanafi jurists (Radd al-Muhtar) explain that it is commendable (Mustahabb) for a sister during her cycle to perform Wudu at each prayer time, sit facing the Qiblah on her prayer mat, and engage in remembrance of Allah, Salawat upon the Prophet ﷺ, and Istighfar for the duration of a standard prayer. This maintains continuous spiritual light and avoids spiritual apathy.',
     hanafiReference: 'رد المحتار علی الدر المختار، ج ۱ / جنتی زیور',
     practicalGuidelines: [
       'صبح اور شام کے مسنون اذکار (آیت الکرسی کے علاوہ یا دعا کی نیت سے) باقاعدگی سے پڑھیں۔',
       'دل میں درود شریف (صلی اللہ علی النبی الامی) کی کثرت رکھیں، اس پر کوئی پابندی نہیں۔',
       'قرآن پاک کی تلاوت سننے میں کوئی حرج نہیں، موبائل سے تلاوت سن کر تدبر کرنا جائز ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Recite morning and evening Adhkar regularly (reading Ayat-ul-Kursi with the intention of Du\'a is permissible).',
+      'Abound in Salawat upon the Prophet ﷺ; there are zero restrictions on sending blessings.',
+      'Listening to Quranic recitation via audio and contemplating its meanings is permissible and deeply spiritually comforting.'
     ]
   }
 ];
@@ -1210,7 +1248,8 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationUrdu: 'اے میرے پروردگار! مجھے اپنی جناب سے پاکیزہ اولاد عطا فرما، بیشک تو ہی دعا سننے والا ہے۔',
     translationEnglish: 'My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication.',
     reference: 'سورۃ آل عمران، آیت ۳۸',
-    spiritualVirtueUrdu: 'حضرت زکریا علیہ السلام نے بڑھاپے میں یہ دعا مانگی تو اللہ تعالیٰ نے حضرت یحییٰ علیہ السلام کی بشارت عطا فرمائی۔ حمل کے دوران روزانہ کثرت سے پڑھیں۔'
+    spiritualVirtueUrdu: 'حضرت زکریا علیہ السلام نے بڑھاپے میں یہ دعا مانگی تو اللہ تعالیٰ نے حضرت یحییٰ علیہ السلام کی بشارت عطا فرمائی۔ حمل کے دوران روزانہ کثرت سے پڑھیں۔',
+    spiritualVirtueEnglish: 'Supplicated by Prophet Zakariyya in old age, through which Allah blessed him with Prophet Yahya. Recommended to recite abundantly during pregnancy.'
   },
   {
     id: 'dua-02',
@@ -1222,7 +1261,8 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationUrdu: 'اے ہمارے رب! ہمیں ہماری بیویوں اور ہماری اولاد کی طرف سے آنکھوں کی ٹھنڈک عطا فرما اور ہمیں پرہیزگاروں کا پیشوا بنا۔',
     translationEnglish: 'Our Lord, grant us from among our spouses and offspring comfort to our eyes and make us an example for the righteous.',
     reference: 'سورۃ الفرقان، آیت ۷۴',
-    spiritualVirtueUrdu: 'ہر نماز کے بعد اس دعا کو پڑھنے سے شوہر اور بیوی کے درمیان محبت اور بچوں میں اطاعت پیدا ہوتی ہے۔'
+    spiritualVirtueUrdu: 'ہر نماز کے بعد اس دعا کو پڑھنے سے شوہر اور بیوی کے درمیان محبت اور بچوں میں اطاعت پیدا ہوتی ہے۔',
+    spiritualVirtueEnglish: 'Reciting after each prayer nurtures mutual marital compassion and instills righteousness and respect in children.'
   },
   {
     id: 'dua-03',
@@ -1234,7 +1274,8 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationUrdu: 'میں تم دونوں کو اللہ کے تمام و کمال کلمات کی پناہ میں دیتا ہوں، ہر شیطان اور زہریلے جانور سے، اور ہر نظر لگ جانے والی بری آنکھ سے۔',
     translationEnglish: 'I seek protection for you both in the perfect words of Allah, from every devil and poisonous reptile, and from every evil, envious eye.',
     reference: 'صحیح البخاری، حدیث رقم ۳۳۷۱',
-    spiritualVirtueUrdu: 'رسول اللہ ﷺ حضرت حسن اور حضرت حسین رضی اللہ عنہما کو یہ دعا پڑھ کر دم فرمایا کرتے تھے۔ ماؤں کو چاہیے کہ روزانہ اپنے بچوں پر پڑھ کر دم کریں۔'
+    spiritualVirtueUrdu: 'رسول اللہ ﷺ حضرت حسن اور حضرت حسین رضی اللہ عنہما کو یہ دعا پڑھ کر دم فرمایا کرتے تھے۔ ماؤں کو چاہیے کہ روزانہ اپنے بچوں پر پڑھ کر دم کریں۔',
+    spiritualVirtueEnglish: 'The Prophet ﷺ recited this to shield Hasan and Husayn. Mothers are encouraged to recite this daily upon their children.'
   },
   {
     id: 'dua-04',
@@ -1246,7 +1287,8 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationUrdu: 'اے زندہ و جاوید اور سب کو قائم رکھنے والے پروردگار! میں تیری ہی رحمت سے فریاد کرتی ہوں، اے میرے رب! آسانی فرما اور تنگی نہ کر اور بھلائی کے ساتھ مکمل فرما۔',
     translationEnglish: 'O Ever-Living, O Self-Sustaining, by Your mercy I seek assistance. My Lord, make this easy and do not make it difficult, and complete it in goodness.',
     reference: 'جامع الترمذی، حدیث ۳۵۲۴ / حصنِ حصین',
-    spiritualVirtueUrdu: 'دردِ زہ کے وقت اور حمل کے آخری مہینوں میں پڑھنے سے ولادت میں حیرت انگیز آسانی نصیب ہوتی ہے۔'
+    spiritualVirtueUrdu: 'دردِ زہ کے وقت اور حمل کے آخری مہینوں میں پڑھنے سے ولادت میں حیرت انگیز آسانی نصیب ہوتی ہے۔',
+    spiritualVirtueEnglish: 'Reciting during labor contractions and the final trimester brings peace and divine ease during delivery.'
   },
   {
     id: 'dua-05',
@@ -1258,7 +1300,8 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationUrdu: 'اللہ تعالیٰ تمہیں اس دی ہوئی نعمت میں برکت دے، اور تم دینے والے کا شکر ادا کرو، اور بچہ اپنی جوانی کو پہنچے اور تمہیں اس کی نیکی اور خدمت نصیب ہو۔',
     translationEnglish: 'May Allah bless you in what was granted to you, and may you be grateful to the Giver, and may the child reach maturity and you be blessed with their righteousness.',
     reference: 'الاذکار للامام النووی / تحفۃ المودود لابن القیم',
-    spiritualVirtueUrdu: 'ولادت کے مبارک سنت آداب: دائیں کان میں اذان اور بائیں میں اقامت، میٹھی کھجور چبا کر تالو سے لگانا (تحنیک)، ساتویں دن اچھا نام رکھنا، سر کے بال منڈوا کر بالوں کے وزن کے برابر چاندی صدقہ کرنا، اور عقیقہ کرنا۔'
+    spiritualVirtueUrdu: 'ولادت کے مبارک سنت آداب: دائیں کان میں اذان اور بائیں میں اقامت، میٹھی کھجور چبا کر تالو سے لگانا (تحنیک)، ساتویں دن اچھا نام رکھنا، سر کے بال منڈوا کر بالوں کے وزن کے برابر چاندی صدقہ کرنا، اور عقیقہ کرنا۔',
+    spiritualVirtueEnglish: 'Blessed newborn Sunnah rites: Adhan in right ear, Iqamah in left ear, Tahneek with softened date, naming on 7th day, shaving head and giving equivalent silver in charity, and performing Aqeeqah.'
   }
 ];
 
@@ -1280,6 +1323,7 @@ export interface HanafiCycleCalculationResult {
   fastingRulingsUrdu: string;
   fastingRulingsEnglish: string;
   spiritualPrescriptionUrdu: string[];
+  spiritualPrescriptionEnglish?: string[];
   referenceText: string;
 }
 
@@ -1308,6 +1352,11 @@ export function calculateHanafiCycleStatus(
         'ہر نماز کے وقت نیا وضو کر کے نماز ادا کریں۔',
         'خون کے داغ کو صاف پانی سے دھو کر پاک کپڑے پہنیں۔'
       ],
+      spiritualPrescriptionEnglish: [
+        'Perform Qadha for all prayers missed during these days as soon as possible.',
+        'Perform a fresh Wudu at the start of each obligatory prayer time.',
+        'Wash away impurity with clean water and wear fresh garments for Salah.'
+      ],
       referenceText: 'بہارِ شریعت، حصہ ۲، حیض کا بیان / درِ مختار'
     };
   }
@@ -1332,6 +1381,11 @@ export function calculateHanafiCycleStatus(
         'غسل میں کلی کرنا اور ناک میں نرم ہڈی تک پانی پہنچانا یاد رکھیں۔',
         'پاک ہوتے ہی مصلے پر شکرانے کے ساتھ حاضر ہوں۔',
         'مخصوص ایام کے دوران روزانہ مصلے پر بیٹھ کر درود شریف پڑھتے رہنے سے روحانی نور قائم رہتا ہے۔'
+      ],
+      spiritualPrescriptionEnglish: [
+        'Ensure the mandatory Faraidh of Ghusl: thorough gargling and rinsing the nose up to soft bone.',
+        'Return to your prayer rug with gratitude as soon as pure.',
+        'Sitting on your prayer mat during prayer times for Salawat preserves spiritual light and intimacy.'
       ],
       referenceText: 'بہارِ شریعت، حصہ ۲ / جنتی زیور، ص ۷۸'
     };
@@ -1361,6 +1415,11 @@ export function calculateHanafiCycleStatus(
       'آئندہ کے لیے اپنی عادت کے دنوں (مثلاً ۶ یا ۷ دن) کو سختی سے یاد رکھیں۔',
       '۱۰ دن سے زیادہ خون آنے پر عادت کے دن پورے ہوتے ہی غسل کر کے نمازیں جاری رکھیں۔',
       'استحاضہ کے دوران ہر فرض نماز کے وقت نیا وضو کرنا معذور کے لیے ضروری ہے۔'
+    ],
+    spiritualPrescriptionEnglish: [
+      'Note and remember your established habit duration (e.g. 6 or 7 days) strictly in your journal.',
+      'When bleeding exceeds 10 days, take Ghusl right after your habit days conclude and resume Salah.',
+      'During Istihadha, perform fresh Wudu for each obligatory prayer time under the ruling of an excused person.'
     ],
     referenceText: 'رد المحتار علی الدر المختار، باب الحیض / بہارِ شریعت، حصہ ۲'
   };
