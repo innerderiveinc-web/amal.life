@@ -7,9 +7,10 @@ export const MobileBottomNav: React.FC = () => {
 
   const navItems = [
     { label: 'Today', labelUrdu: 'آج', href: '/', icon: '🌅' },
+    { label: 'Journeys', labelUrdu: 'اسفار', href: '/journeys', icon: '🌱' },
     { label: 'Quran', labelUrdu: 'قرآن', href: '/quran', icon: '📖' },
-    { label: 'Ask', labelUrdu: 'رہنمائی', href: '/ask', icon: '💬' },
     { label: 'Prayer', labelUrdu: 'نماز', href: '/prayer', icon: '🕋' },
+    { label: 'Wisdom', labelUrdu: 'حکمت', href: '/wisdom', icon: '✨' },
     { label: 'Tasbih', labelUrdu: 'تسبیح', href: '/tasbih', icon: '📿' },
   ];
 

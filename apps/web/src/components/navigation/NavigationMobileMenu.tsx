@@ -93,6 +93,34 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           </span>
         </Link>
 
+        {/* Premier Journeys Link (Mobile) */}
+        <Link
+          href="/journeys"
+          onClick={onClose}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 14px',
+            borderRadius: 10,
+            textDecoration: 'none',
+            fontSize: 14,
+            fontWeight: 800,
+            backgroundColor: currentPath === '/journeys' ? '#DCFCE7' : '#F0FDF4',
+            color: '#065F46',
+            border: '1px solid #86EFAC',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 18 }}>🌱</span>
+            <span>{currentLang === 'ur' ? 'روحانی اسفار و روزانہ ٹریکر' : 'Spiritual Journeys (8 Roadmaps)'}</span>
+          </div>
+          <span style={{ fontSize: 10, backgroundColor: '#059669', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+            {currentLang === 'ur' ? '14 روزہ' : '14-Day'}
+          </span>
+        </Link>
+
         {/* Primary Navigation Links */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           <Link

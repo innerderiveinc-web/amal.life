@@ -301,6 +301,37 @@ export default function Home() {
             {/* Tranquil 3-Card Sacred Essentials */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
               <Link
+                href="/journeys"
+                className="amal-card-hover"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 14,
+                  padding: 20,
+                  border: '1px solid #A7F3D0',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 14,
+                  boxShadow: '0 2px 8px rgba(6, 95, 70, 0.08)',
+                }}
+              >
+                <span style={{ fontSize: 32 }}>🌱</span>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '1px 6px', borderRadius: 4 }}>
+                      8 JOURNEYS
+                    </span>
+                  </div>
+                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#065F46' }}>
+                    {isUrdu ? 'روحانی اسفار و روزانہ ٹریکر' : 'Spiritual Journeys & Daily Tracker'}
+                  </h3>
+                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
+                    {isUrdu ? '14 روزہ فجر، 21 روزہ نماز، قرآن اور تہجد' : '14-Day Fajr, 21-Day Salah, Quran habit & daily check-ins'}
+                  </p>
+                </div>
+              </Link>
+
+              <Link
                 href="/prayer"
                 className="amal-card-hover"
                 style={{
