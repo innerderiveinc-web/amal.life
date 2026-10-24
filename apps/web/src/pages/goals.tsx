@@ -99,7 +99,7 @@ export default function GoalsPage() {
             </div>
           )}
           <form onSubmit={handleCreateGoal} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div>
                 <label style={{ display: 'block', fontSize: 12, fontWeight: 700, marginBottom: 6, color: '#555' }}>Category</label>
                 <select

@@ -37,6 +37,21 @@ export function saveAzaanSettings(settings: AzaanSettings): void {
   }
 }
 
+let sharedAudioCtx: AudioContext | null = null;
+
+function getSharedAudioContext(): AudioContext | null {
+  if (typeof window === 'undefined') return null;
+  const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+  if (!AudioContextClass) return null;
+  if (!sharedAudioCtx || sharedAudioCtx.state === 'closed') {
+    sharedAudioCtx = new AudioContextClass();
+  }
+  if (sharedAudioCtx.state === 'suspended') {
+    sharedAudioCtx.resume().catch(() => {});
+  }
+  return sharedAudioCtx;
+}
+
 /**
  * Play authentic synthesized sacred Azaan audio using the Web Audio API
  */
@@ -44,10 +59,12 @@ export function playAzaanAudio(soundType: AzaanSoundType = 'BAYATI_CALL', volume
   if (typeof window === 'undefined') return;
 
   try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContextClass) return;
+    const ctx = getSharedAudioContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
 
-    const ctx = new AudioContextClass();
     const masterGain = ctx.createGain();
     masterGain.gain.setValueAtTime(Math.max(0.05, Math.min(volume, 1.0)), ctx.currentTime);
     masterGain.connect(ctx.destination);

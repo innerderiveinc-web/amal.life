@@ -202,6 +202,7 @@ img, video, iframe, svg {
   }
 
   /* Grid layout collapsing to single column on mobile */
+  .quran-workspace-grid,
   .settings-grid,
   .library-split-grid,
   .responsive-grid-2,
