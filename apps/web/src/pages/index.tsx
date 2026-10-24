@@ -209,6 +209,99 @@ export default function Home() {
         {/* Smart Spiritual Coach Hub & Muhasabah Agent */}
         <SpiritualCoachHub />
 
+        {/* PREMIER SISTERS & SAHABIYYAT SANCTUARY SHOWCASE */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #FFF1F2 0%, #FDF2F8 60%, #F5F3FF 100%)',
+            borderRadius: 16,
+            border: '1px solid #FECDD3',
+            padding: '18px 22px',
+            marginBottom: 20,
+            boxShadow: '0 4px 14px rgba(157, 23, 77, 0.06)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 16,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+            <div
+              style={{
+                width: 46,
+                height: 46,
+                borderRadius: 12,
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #FDA4AF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 24,
+                boxShadow: '0 2px 6px rgba(157, 23, 77, 0.1)',
+              }}
+            >
+              🌸
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                <span
+                  style={{
+                    backgroundColor: '#9D174D',
+                    color: '#FFFFFF',
+                    fontSize: 10,
+                    fontWeight: 800,
+                    padding: '2px 8px',
+                    borderRadius: 10,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {isUrdu ? 'مستند کتبِ اہل سنت' : 'AHL AL-SUNNAH SANCTUARY'}
+                </span>
+                <span style={{ fontSize: 12, color: '#9D174D', fontWeight: 700 }}>
+                  {isUrdu ? '۲۰ کلاسیکل کتب • اسوۂ صحابیات • احکامِ طہارت' : '20 Books • Sahabiyyat • Fiqh & Purity'}
+                </span>
+              </div>
+              <h2
+                style={{
+                  margin: '3px 0 2px',
+                  fontSize: 18,
+                  fontWeight: 800,
+                  color: '#831843',
+                }}
+              >
+                {isUrdu ? 'گوشۂ خواتین و صحابیات (عمل نساء)' : 'The Sacred Sisters Sanctuary (Amal Nisa)'}
+              </h2>
+              <p style={{ margin: 0, fontSize: 13, color: '#4B5563', maxWidth: 620, lineHeight: 1.5 }}>
+                {isUrdu
+                  ? 'جنتی زیور، بہارِ شریعت اور مدارج النبوۃ سے ماخوذ خواتین کے احکام، ۱۰ جلیل القدر صحابیات کی حیات اور نجی محفوظ ڈائری۔'
+                  : 'Sovereign sanctuary for Muslim sisters featuring Jannati Zewar, Bahar-e-Shari\'at, Sahabiyyat biographies, and private PIN cycle tracking.'}
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <Link
+              href="/sisters"
+              style={{
+                padding: '9px 18px',
+                borderRadius: 10,
+                backgroundColor: '#9D174D',
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                fontWeight: 800,
+                fontSize: 13,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                boxShadow: '0 2px 6px rgba(157, 23, 77, 0.3)',
+              }}
+            >
+              <span>{isUrdu ? '🌸 گوشۂ خواتین میں جائیں' : '🌸 Enter Sanctuary'}</span>
+              <span>➔</span>
+            </Link>
+          </div>
+        </div>
+
         {/* PREMIER FEATURED QURAN WISDOM SHOWCASE */}
         <div
           style={{

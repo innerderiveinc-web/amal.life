@@ -20,5 +20,26 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Amal Nisa (Women's Sanctuary)",
+      "short_name": "Amal Nisa",
+      "description": "The Sacred Sisters Sanctuary: 20 Books, Sahabiyyat & Fiqh",
+      "url": "/sisters",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Auqat-e-Namaz (Prayer Times)",
+      "short_name": "Prayer",
+      "url": "/prayer",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Al-Quran Al-Kareem",
+      "short_name": "Quran",
+      "url": "/quran",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
   ]
 }

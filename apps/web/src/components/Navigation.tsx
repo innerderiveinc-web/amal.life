@@ -135,6 +135,7 @@ export const Navigation: React.FC = () => {
   ];
 
   const ahkamItems = [
+    { title: 'The Sisters Sanctuary (Amal Nisa)', titleUrdu: 'گوشۂ خواتین و صحابیات', href: '/sisters', icon: '🌸' },
     { title: 'Zakat & Nisab Calculator', titleUrdu: 'زکوٰۃ و نصاب کیلکولیٹر', href: '/calculator', icon: '💰' },
     { title: 'Miras (Fara\'id) Shares & PDF', titleUrdu: 'میراث و فرائض تقسیم', href: '/calculator', icon: '📜' },
     { title: 'Deen Decision Room', titleUrdu: 'ڈیسیژن روم (مفتی پیکٹ)', href: '/decision-room', icon: '⚖️' },
@@ -705,6 +706,24 @@ export const Navigation: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* Direct Link: The Sisters Sanctuary */}
+          <Link
+            href="/sisters"
+            style={{
+              textDecoration: 'none',
+              fontSize: 13,
+              fontWeight: router.pathname === '/sisters' ? 700 : 600,
+              color: router.pathname === '/sisters' ? '#831843' : '#9D174D',
+              padding: '6px 10px',
+              borderRadius: 6,
+              backgroundColor: router.pathname === '/sisters' ? '#FDF2F8' : 'rgba(253, 242, 248, 0.7)',
+              border: '1px solid rgba(244, 114, 182, 0.35)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {currentLang === 'ur' ? '🌸 گوشۂ خواتین' : '🌸 Sisters'}
+          </Link>
 
           {/* Direct Link: Ask AMAL */}
           <Link

@@ -121,6 +121,34 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           </span>
         </Link>
 
+        {/* Premier Sisters Sanctuary Link (Mobile) */}
+        <Link
+          href="/sisters"
+          onClick={onClose}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 14px',
+            borderRadius: 10,
+            textDecoration: 'none',
+            fontSize: 14,
+            fontWeight: 800,
+            backgroundColor: currentPath === '/sisters' ? '#FDF2F8' : '#FFF1F2',
+            color: '#9D174D',
+            border: '1px solid #FECDD3',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 18 }}>🌸</span>
+            <span>{currentLang === 'ur' ? 'گوشۂ خواتین و صحابیات (عمل نساء)' : 'The Sisters Sanctuary (Amal Nisa)'}</span>
+          </div>
+          <span style={{ fontSize: 10, backgroundColor: '#9D174D', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+            {currentLang === 'ur' ? '۲۰ کتب' : '20 Books'}
+          </span>
+        </Link>
+
         {/* Primary Navigation Links */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           <Link

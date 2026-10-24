@@ -361,7 +361,7 @@ export default function LibraryPage() {
             borderRadius: 14,
             padding: '16px 20px',
             border: '1px solid #86EFAC',
-            marginBottom: 20,
+            marginBottom: 16,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -397,6 +397,53 @@ export default function LibraryPage() {
             }}
           >
             <span>Open Al-Quran &amp; Wisdom</span>
+            <span>➔</span>
+          </Link>
+        </div>
+
+        {/* Dedicated Sisters Sanctuary & 20-Book Women's Canon Banner */}
+        <div
+          style={{
+            backgroundColor: '#FDF2F8',
+            borderRadius: 14,
+            padding: '16px 20px',
+            border: '1px solid #FECDD3',
+            marginBottom: 20,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 12,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 24 }}>🌸</span>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#9D174D' }}>
+                The Sisters Sanctuary: 20 Classical Books on Women &amp; Sahabiyyat (گوشۂ خواتین)
+              </div>
+              <div style={{ fontSize: 12, color: '#4B5563' }}>
+                Jannati Zewar, Bahar-e-Shari&apos;at, Al-Ijabah by Imam al-Zarkashi, Seerat Aisha, and Taharah Fiqh.
+              </div>
+            </div>
+          </div>
+
+          <Link
+            href="/sisters"
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              backgroundColor: '#9D174D',
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              fontSize: 12,
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <span>🌸 Open Sisters Sanctuary</span>
             <span>➔</span>
           </Link>
         </div>
