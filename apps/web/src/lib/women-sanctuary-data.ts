@@ -1261,3 +1261,107 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     spiritualVirtueUrdu: 'ولادت کے مبارک سنت آداب: دائیں کان میں اذان اور بائیں میں اقامت، میٹھی کھجور چبا کر تالو سے لگانا (تحنیک)، ساتویں دن اچھا نام رکھنا، سر کے بال منڈوا کر بالوں کے وزن کے برابر چاندی صدقہ کرنا، اور عقیقہ کرنا۔'
   }
 ];
+
+// ==========================================
+// 5. HANAFI FIQH CYCLE ENGINE (BAHAR-E-SHARI'AT)
+// ==========================================
+export interface HanafiCycleCalculationResult {
+  status: 'VALID_HAIDH' | 'EXCESS_ISTIHADHA' | 'DEFICIENT_ISTIHADHA';
+  statusUrdu: string;
+  statusEnglish: string;
+  haidhDays: number;
+  istihadhaDays: number;
+  qadhaSalahRequired: boolean;
+  qadhaDaysCount: number;
+  ghuslObligationUrdu: string;
+  ghuslObligationEnglish: string;
+  prayerRulingsUrdu: string;
+  prayerRulingsEnglish: string;
+  fastingRulingsUrdu: string;
+  fastingRulingsEnglish: string;
+  spiritualPrescriptionUrdu: string[];
+  referenceText: string;
+}
+
+export function calculateHanafiCycleStatus(
+  totalDays: number,
+  habitDays: number = 6
+): HanafiCycleCalculationResult {
+  // Case 1: Deficient bleeding (< 3 days / 72 hours)
+  if (totalDays < 3) {
+    return {
+      status: 'DEFICIENT_ISTIHADHA',
+      statusUrdu: 'خون ۳ دن سے کم رہا — یہ حیض نہیں بلکہ استحاضہ (بیماری) ہے',
+      statusEnglish: 'Bleeding less than 3 days — Classified as Istihadha, not Haidh',
+      haidhDays: 0,
+      istihadhaDays: totalDays,
+      qadhaSalahRequired: true,
+      qadhaDaysCount: totalDays,
+      ghuslObligationUrdu: 'غسلِ حیض فرض نہیں ہے، صرف وضو اور نجاست دھونا کافی ہے۔',
+      ghuslObligationEnglish: 'Menstrual Ghusl is not obligatory; standard Wudu and cleansing suffice.',
+      prayerRulingsUrdu: `چونکہ خون ۳ دن سے کم رہا اس لیے یہ حیض نہیں تھا، لہٰذا ان ${totalDays} دنوں میں جو نمازیں چھوٹی ہیں، ان کی فورا قضا پڑھنا فرض ہے۔`,
+      prayerRulingsEnglish: `Because bleeding lasted under 72 hours, it is not Haidh. Prayers missed during these ${totalDays} days must be performed as Qadha immediately.`,
+      fastingRulingsUrdu: 'اگر ان دنوں میں روزہ چھوڑا تھا تو اس کی قضا رکھنا لازم ہے۔',
+      fastingRulingsEnglish: 'If any fasts were deferred during this time, they must be made up.',
+      spiritualPrescriptionUrdu: [
+        'چھوٹی ہوئی نمازوں کی قضا جلد از جلد ادا کریں۔',
+        'ہر نماز کے وقت نیا وضو کر کے نماز ادا کریں۔',
+        'خون کے داغ کو صاف پانی سے دھو کر پاک کپڑے پہنیں۔'
+      ],
+      referenceText: 'بہارِ شریعت، حصہ ۲، حیض کا بیان / درِ مختار'
+    };
+  }
+
+  // Case 2: Valid Haidh (between 3 and 10 days)
+  if (totalDays >= 3 && totalDays <= 10) {
+    return {
+      status: 'VALID_HAIDH',
+      statusUrdu: `مکمل ${totalDays} دن حیض قرار پائے (شرعی مدت کے اندر)`,
+      statusEnglish: `Full ${totalDays} days confirmed as valid Haidh (Within canonical 3–10 day window)`,
+      haidhDays: totalDays,
+      istihadhaDays: 0,
+      qadhaSalahRequired: false,
+      qadhaDaysCount: 0,
+      ghuslObligationUrdu: 'خون رکتے ہی طہارت کا غسل فرض ہو چکا ہے، غسل کے بعد فورا نماز شروع کریں۔',
+      ghuslObligationEnglish: 'Purification Ghusl is strictly obligatory upon cessation of bleeding. Pray immediately after.',
+      prayerRulingsUrdu: `ان تمام ${totalDays} دنوں کی نمازیں شریعت کی طرف سے بالکل معاف ہیں، ان کی قضا پڑھنا لازم نہیں ہے۔`,
+      prayerRulingsEnglish: `Prayers during these ${totalDays} days are entirely exempt; no Qadha is ever required.`,
+      fastingRulingsUrdu: 'رمضان کے روزے اگر چھوٹے ہیں تو ان کی بعد میں ایک ایک کر کے قضا رکھنا فرض ہے۔',
+      fastingRulingsEnglish: 'Deferred Ramadan fasts must be made up individually prior to next Ramadan.',
+      spiritualPrescriptionUrdu: [
+        'غسل میں کلی کرنا اور ناک میں نرم ہڈی تک پانی پہنچانا یاد رکھیں۔',
+        'پاک ہوتے ہی مصلے پر شکرانے کے ساتھ حاضر ہوں۔',
+        'مخصوص ایام کے دوران روزانہ مصلے پر بیٹھ کر درود شریف پڑھتے رہنے سے روحانی نور قائم رہتا ہے۔'
+      ],
+      referenceText: 'بہارِ شریعت، حصہ ۲ / جنتی زیور، ص ۷۸'
+    };
+  }
+
+  // Case 3: Excess beyond 10 days (> 10 days)
+  // In Hanafi Fiqh: If she has a known habit, her habit days are Haidh, and excess days are Istihadha.
+  const validHabit = habitDays >= 3 && habitDays <= 10 ? habitDays : 6;
+  const excessIstihadhaDays = totalDays - validHabit;
+  const qadhaOwedDays = totalDays > 10 ? totalDays - validHabit : 0;
+
+  return {
+    status: 'EXCESS_ISTIHADHA',
+    statusUrdu: `خون ۱۰ دن سے متجاوز ہو گیا — ابتدائی ${validHabit} دن حیض اور بقیہ ${excessIstihadhaDays} دن استحاضہ ہیں`,
+    statusEnglish: `Bleeding exceeded 10 days — Initial ${validHabit} days (habit) are Haidh; remaining ${excessIstihadhaDays} days are Istihadha`,
+    haidhDays: validHabit,
+    istihadhaDays: excessIstihadhaDays,
+    qadhaSalahRequired: true,
+    qadhaDaysCount: qadhaOwedDays,
+    ghuslObligationUrdu: `ابتدائی ${validHabit} دن (عادت) کے مکمل ہوتے ہی غسل فرض ہو چکا تھا، اگر غسل نہیں کیا تھا تو ابھی فورا غسل کریں۔`,
+    ghuslObligationEnglish: `Ghusl was due at the end of Day ${validHabit} (your normal habit). If not performed, take Ghusl immediately.`,
+    prayerRulingsUrdu: `چونکہ عادت سے زائد دن (${validHabit + 1} سے ${totalDays} تک) استحاضہ تھے، اس لیے ان ${qadhaOwedDays} دنوں میں جو نمازیں نہیں پڑھی گئیں ان کی قضا پڑھنا فرض ہے۔`,
+    prayerRulingsEnglish: `Because days beyond your habit (Days ${validHabit + 1} to ${totalDays}) were Istihadha, any prayers missed during these ${qadhaOwedDays} days must be performed as Qadha.`,
+    fastingRulingsUrdu: `عادت کے ${validHabit} دن کے بعد والے دنوں میں روزہ رکھنا درست تھا، اگر چھوڑا تھا تو قضا رکھیں۔`,
+    fastingRulingsEnglish: `Fasting was valid after Day ${validHabit}. If fasts were deferred during Istihadha days, perform them as Qadha.`,
+    spiritualPrescriptionUrdu: [
+      'آئندہ کے لیے اپنی عادت کے دنوں (مثلاً ۶ یا ۷ دن) کو سختی سے یاد رکھیں۔',
+      '۱۰ دن سے زیادہ خون آنے پر عادت کے دن پورے ہوتے ہی غسل کر کے نمازیں جاری رکھیں۔',
+      'استحاضہ کے دوران ہر فرض نماز کے وقت نیا وضو کرنا معذور کے لیے ضروری ہے۔'
+    ],
+    referenceText: 'رد المحتار علی الدر المختار، باب الحیض / بہارِ شریعت، حصہ ۲'
+  };
+}
