@@ -41,6 +41,8 @@ export interface SurahReaderWorkspaceProps {
   setViewMode?: (mode: 'SCROLL' | 'FOCUS') => void;
   focusedAyahNumber?: number;
   setFocusedAyahNumber?: React.Dispatch<React.SetStateAction<number>>;
+  continuousSurahPlayback?: boolean;
+  setContinuousSurahPlayback?: (val: boolean) => void;
 }
 
 export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
@@ -78,6 +80,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
   setViewMode,
   focusedAyahNumber = 1,
   setFocusedAyahNumber,
+  continuousSurahPlayback = true,
+  setContinuousSurahPlayback,
 }) => {
   const [shareModalAyah, setShareModalAyah] = React.useState<{
     surahNumber: number;
@@ -411,6 +415,36 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Continuous Surah Autoplay Toggle */}
+          {setContinuousSurahPlayback && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>تسلسل:</span>
+              <button
+                type="button"
+                onClick={() => setContinuousSurahPlayback(!continuousSurahPlayback)}
+                aria-label="Toggle Continuous Surah Autoplay"
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  backgroundColor: continuousSurahPlayback ? '#DCFCE7' : '#FFFFFF',
+                  color: continuousSurahPlayback ? '#166534' : '#475569',
+                  border: '1px solid',
+                  borderColor: continuousSurahPlayback ? '#86EFAC' : '#CBD5E1',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+                title="سورت ختم ہونے پر اگلی سورت کا خودکار آغاز"
+              >
+                <span>{continuousSurahPlayback ? '✓' : '○'}</span>
+                <span>{continuousSurahPlayback ? 'اگلی سورت جاری (آن)' : 'ایک سورت (بند)'}</span>
+              </button>
+            </div>
+          )}
 
           {/* Offline Caching & Download Buttons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

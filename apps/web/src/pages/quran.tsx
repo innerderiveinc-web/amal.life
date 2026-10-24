@@ -46,6 +46,20 @@ export default function QuranWisdomPage() {
   const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
   const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
   const [mobileTab, setMobileTab] = useState<'READER' | 'DIRECTORY'>('READER');
+  const [continuousSurahPlayback, setContinuousSurahPlaybackState] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('amal_continuous_surah');
+      if (saved !== null) return saved === 'true';
+    }
+    return true; // Default ON: continuous recitation across surahs
+  });
+
+  const setContinuousSurahPlayback = (val: boolean) => {
+    setContinuousSurahPlaybackState(val);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('amal_continuous_surah', String(val));
+    }
+  };
 
   // Reader & Wisdom Modal State
   const [activeWisdomAyah, setActiveWisdomAyah] = useState<{ surahNumber: number; ayahNumber: number } | null>(null);
@@ -459,11 +473,7 @@ export default function QuranWisdomPage() {
       return;
     }
 
-    // Stop previous audio to eliminate any possibility of overlap
-    if (masterAudioRef.current) {
-      masterAudioRef.current.pause();
-    }
-
+    // Seamlessly switch audio track without explicit OS background pause
     setPlayingAyahNumber(ayahNum);
     setCurrentAudioSegment(segment);
     setIsPlayingPaused(false);
@@ -482,7 +492,11 @@ export default function QuranWisdomPage() {
     if (masterAudioRef.current && url) {
       masterAudioRef.current.src = url;
       masterAudioRef.current.playbackRate = playbackSpeed;
-      masterAudioRef.current.play().catch((e) => {
+      masterAudioRef.current.play().then(() => {
+        if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'playing';
+        }
+      }).catch((e) => {
         if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) {
           return; // Intentionally paused/interrupted by user
         }
@@ -496,7 +510,60 @@ export default function QuranWisdomPage() {
     }
   };
 
-  // Master Audio Ended Handler: controls sequential sync
+  // Seamless Next Surah Auto-Advancement
+  const handleAdvanceToNextSurah = async (segment: AudioSegment = 'ARABIC') => {
+    if (selectedSurahNumber >= 114) {
+      handleStopAudio();
+      showAmalToast(
+        isUrdu
+          ? 'الحمدللہ! قرآنِ مجید کی تمام ۱۱۴ سورتیں مکمل ہو گئیں۔ اللہ تعالیٰ قبول فرمائے!'
+          : 'Alhamdulillah! Complete recitation of all 114 Surahs finished.',
+        'success'
+      );
+      return;
+    }
+
+    const nextSurahNum = selectedSurahNumber + 1;
+    setSelectedSurahNumber(nextSurahNum);
+    setFocusedAyahNumber(1);
+    setPlayingAyahNumber(1);
+    setCurrentAudioSegment(segment);
+    setIsPlayingPaused(false);
+
+    // Fetch next surah
+    handleSelectSurah(nextSurahNum, 1);
+
+    // Immediately play Ayah 1 of next surah
+    let url = '';
+    if (segment === 'ARABIC') {
+      url = getAyahAudioUrl(nextSurahNum, 1, selectedQari);
+    } else {
+      url = getAyahUrduAudioUrl(nextSurahNum, 1);
+    }
+
+    if (masterAudioRef.current && url) {
+      masterAudioRef.current.src = url;
+      masterAudioRef.current.playbackRate = playbackSpeed;
+      masterAudioRef.current.play().then(() => {
+        if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+          navigator.mediaSession.playbackState = 'playing';
+        }
+      }).catch((e) => {
+        if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) return;
+        console.warn('Next surah play error:', e);
+      });
+    }
+
+    const nextMeta = ALL_114_SURAHS.find((s) => s.number === nextSurahNum);
+    showAmalToast(
+      isUrdu
+        ? `اگلی سورت جاری ہے: سورۃ ${nextMeta?.nameUrdu || nextMeta?.nameArabic || nextSurahNum}`
+        : `Auto-advancing: Surah ${nextMeta?.nameTransliterated || nextSurahNum}`,
+      'info'
+    );
+  };
+
+  // Master Audio Ended Handler: controls sequential sync and continuous Surah playback
   const handleMasterAudioEnded = () => {
     if (playingAyahNumber === null) {
       if (surahWideAudioType !== null) {
@@ -515,6 +582,8 @@ export default function QuranWisdomPage() {
         // Urdu Tarjuma finished -> Advance to next Ayah Arabic recitation
         if (playingAyahNumber < totalVerses) {
           handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+        } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
+          handleAdvanceToNextSurah('ARABIC');
         } else {
           handleStopAudio();
           showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت و مستند ترجمہ مکمل ہو گیا۔`, 'success');
@@ -524,6 +593,8 @@ export default function QuranWisdomPage() {
       // Continuous Urdu Tarjuma
       if (playingAyahNumber < totalVerses) {
         handlePlayAyahAudio(playingAyahNumber + 1, 'URDU');
+      } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
+        handleAdvanceToNextSurah('URDU');
       } else {
         handleStopAudio();
         showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''} کا مکمل اردو ترجمہ مکمل ہو گیا۔`, 'success');
@@ -532,6 +603,8 @@ export default function QuranWisdomPage() {
       // Continuous Arabic Tilawat
       if (playingAyahNumber < totalVerses) {
         handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+      } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
+        handleAdvanceToNextSurah('ARABIC');
       } else {
         handleStopAudio();
         showAmalToast(`سورۃ ${currentSurahMeta?.nameUrdu || ''} کی مکمل تلاوت مکمل ہو گیا۔`, 'success');
@@ -667,17 +740,17 @@ export default function QuranWisdomPage() {
     }
   };
 
-  // Lock-screen MediaSession API controls & notification display
+  // Lock-screen MediaSession API controls & background notification display
   useEffect(() => {
     if (typeof window !== 'undefined' && 'mediaSession' in navigator && playingAyahNumber !== null) {
       const isUrduAudio = currentAudioSegment === 'URDU';
-      const verse = currentSurah?.verses?.find((v) => v.ayahNumber === playingAyahNumber);
+      const meta = ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || currentSurahMeta;
       
       const trackTitle = isUrduAudio
-        ? t(`Kanz-ul-Iman Translation · Verse ${playingAyahNumber}`, `ترجمہ کنز الایمان - آیت ${playingAyahNumber}`)
+        ? t(`Kanz-ul-Iman Translation · Surah ${meta?.nameTransliterated || ''} · Verse ${playingAyahNumber}`, `ترجمہ کنز الایمان - سورۃ ${meta?.nameUrdu || ''} · آیت ${playingAyahNumber}`)
         : (isUrdu
-            ? `سورۃ ${currentSurahMeta?.nameArabic || ''} (${currentSurahMeta?.nameTransliterated || ''}) · آیت ${playingAyahNumber}`
-            : `Surah ${currentSurahMeta?.nameTransliterated || ''} (${currentSurahMeta?.nameArabic || ''}) · Ayah ${playingAyahNumber}`);
+            ? `سورۃ ${meta?.nameArabic || ''} (${meta?.nameUrdu || ''}) · آیت ${playingAyahNumber}`
+            : `Surah ${meta?.nameTransliterated || ''} (${meta?.nameArabic || ''}) · Verse ${playingAyahNumber}`);
         
       const qariDisplayMap = {
         alafasy: 'Qari Mishary Rashid Alafasy',
@@ -688,34 +761,66 @@ export default function QuranWisdomPage() {
         ? t('Kanz-ul-Iman Translation · 100% Human Voice', 'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice')
         : qariDisplayMap[selectedQari];
 
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: trackTitle,
-        artist: artistName,
-        album: 'Al-Quran Al-Kareem & Wisdom · AMAL OS',
-      });
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: trackTitle,
+          artist: artistName,
+          album: 'Al-Quran Al-Kareem & Wisdom · AMAL OS',
+          artwork: [
+            { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+            { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+          ],
+        });
+      } catch (e) {
+        console.warn('MediaSession metadata error:', e);
+      }
 
       navigator.mediaSession.setActionHandler('play', () => {
         if (masterAudioRef.current) {
-          masterAudioRef.current.play();
+          masterAudioRef.current.play().catch(() => {});
           setIsPlayingPaused(false);
+          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
         }
       });
       navigator.mediaSession.setActionHandler('pause', () => {
         if (masterAudioRef.current) {
           masterAudioRef.current.pause();
           setIsPlayingPaused(true);
+          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
         }
       });
       navigator.mediaSession.setActionHandler('previoustrack', () => {
         if (playingAyahNumber > 1) {
-          handlePlayAyahAudio(playingAyahNumber - 1, 'ARABIC');
+          handlePlayAyahAudio(playingAyahNumber - 1, currentAudioSegment);
+        } else if (selectedSurahNumber > 1) {
+          const prevSurah = selectedSurahNumber - 1;
+          setSelectedSurahNumber(prevSurah);
+          handleSelectSurah(prevSurah, 1);
+          handlePlayAyahAudio(1, currentAudioSegment);
         }
       });
       navigator.mediaSession.setActionHandler('nexttrack', () => {
         if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
-          handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
+          handlePlayAyahAudio(playingAyahNumber + 1, currentAudioSegment);
+        } else if (selectedSurahNumber < 114) {
+          handleAdvanceToNextSurah(currentAudioSegment);
         }
       });
+      try {
+        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+          if (masterAudioRef.current) {
+            masterAudioRef.current.currentTime = Math.max(0, masterAudioRef.current.currentTime - (details.seekOffset || 10));
+          }
+        });
+        navigator.mediaSession.setActionHandler('seekforward', (details) => {
+          if (masterAudioRef.current) {
+            masterAudioRef.current.currentTime = Math.min(masterAudioRef.current.duration || 0, masterAudioRef.current.currentTime + (details.seekOffset || 10));
+          }
+        });
+        navigator.mediaSession.setActionHandler('stop', () => {
+          handleStopAudio();
+        });
+      } catch {}
     }
   }, [playingAyahNumber, currentAudioSegment, selectedSurahNumber, selectedQari, currentSurah, currentSurahMeta]);
 
@@ -737,6 +842,20 @@ export default function QuranWisdomPage() {
         playsInline
         preload="auto"
         onEnded={handleMasterAudioEnded}
+        onPlay={() => {
+          setIsPlayingPaused(false);
+          if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = 'playing';
+          }
+        }}
+        onPause={() => {
+          if (!masterAudioRef.current?.ended) {
+            setIsPlayingPaused(true);
+            if (typeof window !== 'undefined' && 'mediaSession' in navigator) {
+              navigator.mediaSession.playbackState = 'paused';
+            }
+          }
+        }}
         onError={(e) => {
           // If no src attribute or src is empty/reset, ignore completely!
           const currentSrc = masterAudioRef.current?.getAttribute('src');
@@ -978,6 +1097,8 @@ export default function QuranWisdomPage() {
               setViewMode={setViewMode}
               focusedAyahNumber={focusedAyahNumber}
               setFocusedAyahNumber={setFocusedAyahNumber}
+              continuousSurahPlayback={continuousSurahPlayback}
+              setContinuousSurahPlayback={setContinuousSurahPlayback}
             />
           </div>
         </section>
@@ -1005,6 +1126,10 @@ export default function QuranWisdomPage() {
         handleStopAudio={handleStopAudio}
         onOpenWisdomModal={(sNum, aNum) => setActiveWisdomAyah({ surahNumber: sNum, ayahNumber: aNum })}
         selectedSurahNumber={selectedSurahNumber}
+        continuousSurahPlayback={continuousSurahPlayback}
+        setContinuousSurahPlayback={setContinuousSurahPlayback}
+        handleAdvanceToNextSurah={handleAdvanceToNextSurah}
+        handleSelectSurah={handleSelectSurah}
       />
 
       {/* DEDICATED AYAH WISDOM & LISTENING CARD MODAL */}

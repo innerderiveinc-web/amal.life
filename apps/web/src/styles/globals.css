@@ -254,6 +254,13 @@ img, video, iframe, svg {
     min-height: 40px;
   }
 
+  /* Floating Quran Audio Player above Mobile Bottom Navigation */
+  .floating-quran-player {
+    bottom: 58px !important;
+    z-index: 9500 !important;
+    padding: 10px 14px !important;
+  }
+
   /* Top Ribbon compact layout */
   .nav-ribbon {
     padding: 6px 12px !important;

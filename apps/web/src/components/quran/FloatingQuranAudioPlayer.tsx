@@ -27,6 +27,10 @@ export interface FloatingQuranAudioPlayerProps {
   handleStopAudio: () => void;
   onOpenWisdomModal: (surahNumber: number, ayahNumber: number) => void;
   selectedSurahNumber: number;
+  continuousSurahPlayback?: boolean;
+  setContinuousSurahPlayback?: (val: boolean) => void;
+  handleAdvanceToNextSurah?: (segment?: AudioSegment) => void;
+  handleSelectSurah?: (surahNum: number, targetAyahNumber?: number) => void;
 }
 
 export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> = ({
@@ -50,17 +54,28 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
   handleStopAudio,
   onOpenWisdomModal,
   selectedSurahNumber,
+  continuousSurahPlayback = true,
+  setContinuousSurahPlayback,
+  handleAdvanceToNextSurah,
+  handleSelectSurah,
 }) => {
   const { t, isUrdu } = useLanguage();
   if (playingAyahNumber === null && surahWideAudioType === null && activeTafseerCardKey === null) {
     return null;
   }
 
-  const isNextDisabled = playingAyahNumber === null || !currentSurah || playingAyahNumber >= currentSurah.verses.length;
-  const isPrevDisabled = playingAyahNumber === null || playingAyahNumber <= 1;
+  const isNextDisabled =
+    playingAyahNumber === null ||
+    (!currentSurah && selectedSurahNumber >= 114) ||
+    (currentSurah && playingAyahNumber >= currentSurah.verses.length && selectedSurahNumber >= 114);
+
+  const isPrevDisabled =
+    playingAyahNumber === null ||
+    (playingAyahNumber <= 1 && selectedSurahNumber <= 1);
 
   return (
     <div
+      className="floating-quran-player"
       style={{
         position: 'fixed',
         bottom: 0,
@@ -190,8 +205,14 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
           <button
             onClick={() => {
-              if (playingAyahNumber !== null && playingAyahNumber > 1) {
-                handlePlayAyahAudio(playingAyahNumber - 1, currentAudioSegment);
+              if (playingAyahNumber !== null) {
+                if (playingAyahNumber > 1) {
+                  handlePlayAyahAudio(playingAyahNumber - 1, currentAudioSegment);
+                } else if (selectedSurahNumber > 1 && handleSelectSurah) {
+                  const prevSurah = selectedSurahNumber - 1;
+                  handleSelectSurah(prevSurah, 1);
+                  handlePlayAyahAudio(1, currentAudioSegment);
+                }
               }
             }}
             disabled={isPrevDisabled}
@@ -238,8 +259,12 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
 
           <button
             onClick={() => {
-              if (playingAyahNumber !== null && currentSurah && playingAyahNumber < currentSurah.verses.length) {
-                handlePlayAyahAudio(playingAyahNumber + 1, currentAudioSegment);
+              if (playingAyahNumber !== null && currentSurah) {
+                if (playingAyahNumber < currentSurah.verses.length) {
+                  handlePlayAyahAudio(playingAyahNumber + 1, currentAudioSegment);
+                } else if (selectedSurahNumber < 114 && handleAdvanceToNextSurah) {
+                  handleAdvanceToNextSurah(currentAudioSegment);
+                }
               }
             }}
             disabled={isNextDisabled}
@@ -263,8 +288,33 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
           </button>
         </div>
 
-        {/* Right: Audio Speed, Sync Mode Switch, Cache, Wisdom & Close */}
+        {/* Right: Audio Speed, Continuous Surah Toggle, Sync Mode Switch, Cache, Wisdom & Close */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          {/* Continuous Surah Toggle Button */}
+          {setContinuousSurahPlayback && (
+            <button
+              type="button"
+              onClick={() => setContinuousSurahPlayback(!continuousSurahPlayback)}
+              aria-label="Toggle Continuous Surah Autoplay"
+              style={{
+                padding: '5px 10px',
+                borderRadius: 16,
+                fontSize: 11,
+                fontWeight: 700,
+                backgroundColor: continuousSurahPlayback ? '#047857' : 'rgba(255,255,255,0.12)',
+                color: '#FFFFFF',
+                border: continuousSurahPlayback ? '1px solid #34D399' : '1px solid rgba(255,255,255,0.2)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+              title={continuousSurahPlayback ? 'سورت مکمل ہونے پر اگلی سورت خودکار جاری رہے گی' : 'سورت مکمل ہونے پر آڈیو رک جائے گی'}
+            >
+              <span>🔄</span>
+              <span>{continuousSurahPlayback ? (isUrdu ? 'اگلی سورت: آن' : 'Auto-Next: ON') : (isUrdu ? 'اگلی سورت: بند' : 'Auto-Next: OFF')}</span>
+            </button>
+          )}
           {/* Playback Speed Pill Group */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 2, backgroundColor: 'rgba(255,255,255,0.12)', padding: '2px 4px', borderRadius: 16 }}>
             {[0.75, 1, 1.25, 1.5].map((speed) => (
