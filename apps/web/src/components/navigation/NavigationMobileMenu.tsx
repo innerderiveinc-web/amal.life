@@ -9,6 +9,7 @@ export interface NavigationMobileMenuProps {
   currentPath: string;
   ibadatItems: NavAppItem[];
   ilmItems: NavAppItem[];
+  familySistersItems?: NavAppItem[];
   ahkamItems: NavAppItem[];
 }
 
@@ -19,6 +20,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
   currentPath,
   ibadatItems,
   ilmItems,
+  familySistersItems = [],
   ahkamItems,
 }) => {
   if (!isOpen) return null;
@@ -262,10 +264,46 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           </div>
         </div>
 
-        {/* Hub 3: Ahkam & Finance */}
+        {/* Hub 3: Family & Sisters Sanctuary */}
+        {familySistersItems.length > 0 && (
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 800, color: '#9D174D', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
+              🌸 {currentLang === 'ur' ? 'خاندان و گوشۂ نسواں' : 'Family & Sisters Sanctuary'}
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+              {familySistersItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onClose}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    padding: '8px 10px',
+                    borderRadius: 6,
+                    textDecoration: 'none',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    backgroundColor: '#FDF2F8',
+                    color: currentPath === item.href ? '#831843' : '#9D174D',
+                    border: '1px solid #FBCFE8',
+                  }}
+                >
+                  <span>{item.icon}</span>
+                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {currentLang === 'ur' ? item.titleUrdu : item.title}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Hub 4: Ahkam & Suluk */}
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#D97706', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
-            ⚖️ {currentLang === 'ur' ? 'احکام و مالیات' : 'Ahkam & Finance'}
+            ⚖️ {currentLang === 'ur' ? 'احکام، میراث و سلوک' : 'Fiqh, Miras & Suluk'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {ahkamItems.map((item) => (

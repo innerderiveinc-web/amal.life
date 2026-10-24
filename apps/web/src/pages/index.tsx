@@ -206,446 +206,93 @@ export default function Home() {
         {/* Automated Daily Knowledge Broadcast Stream */}
         <DailyKnowledgeBroadcastCard />
 
+        {/* 4 SACRED PILLARS MATRIX - EXECUTIVE ARCHITECTURAL GATEWAY */}
+        <div style={{ marginTop: 24, marginBottom: 28 }}>
+          <SacredPillarsMatrix />
+        </div>
+
         {/* Smart Spiritual Coach Hub & Muhasabah Agent */}
-        <SpiritualCoachHub />
-
-        {/* PREMIER SISTERS & SAHABIYYAT SANCTUARY SHOWCASE */}
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #FFF1F2 0%, #FDF2F8 60%, #F5F3FF 100%)',
-            borderRadius: 16,
-            border: '1px solid #FECDD3',
-            padding: '18px 22px',
-            marginBottom: 20,
-            boxShadow: '0 4px 14px rgba(157, 23, 77, 0.06)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 16,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-            <div
-              style={{
-                width: 46,
-                height: 46,
-                borderRadius: 12,
-                backgroundColor: '#FFFFFF',
-                border: '1px solid #FDA4AF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 24,
-                boxShadow: '0 2px 6px rgba(157, 23, 77, 0.1)',
-              }}
-            >
-              🌸
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
-                <span
-                  style={{
-                    backgroundColor: '#9D174D',
-                    color: '#FFFFFF',
-                    fontSize: 10,
-                    fontWeight: 800,
-                    padding: '2px 8px',
-                    borderRadius: 10,
-                    letterSpacing: 0.5,
-                  }}
-                >
-                  {isUrdu ? 'مستند کتبِ اہل سنت' : 'AHL AL-SUNNAH SANCTUARY'}
-                </span>
-                <span style={{ fontSize: 12, color: '#9D174D', fontWeight: 700 }}>
-                  {isUrdu ? '۲۰ کلاسیکل کتب • اسوۂ صحابیات • احکامِ طہارت' : '20 Books • Sahabiyyat • Fiqh & Purity'}
-                </span>
-              </div>
-              <h2
-                style={{
-                  margin: '3px 0 2px',
-                  fontSize: 18,
-                  fontWeight: 800,
-                  color: '#831843',
-                }}
-              >
-                {isUrdu ? 'گوشۂ خواتین و صحابیات (عمل نساء)' : 'The Sacred Sisters Sanctuary (Amal Nisa)'}
-              </h2>
-              <p style={{ margin: 0, fontSize: 13, color: '#4B5563', maxWidth: 620, lineHeight: 1.5 }}>
-                {isUrdu
-                  ? 'جنتی زیور، بہارِ شریعت اور مدارج النبوۃ سے ماخوذ خواتین کے احکام، ۱۰ جلیل القدر صحابیات کی حیات اور نجی محفوظ ڈائری۔'
-                  : 'Sovereign sanctuary for Muslim sisters featuring Jannati Zewar, Bahar-e-Shari\'at, Sahabiyyat biographies, and private PIN cycle tracking.'}
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <Link
-              href="/sisters"
-              style={{
-                padding: '9px 18px',
-                borderRadius: 10,
-                backgroundColor: '#9D174D',
-                color: '#FFFFFF',
-                textDecoration: 'none',
-                fontWeight: 800,
-                fontSize: 13,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                boxShadow: '0 2px 6px rgba(157, 23, 77, 0.3)',
-              }}
-            >
-              <span>{isUrdu ? '🌸 گوشۂ خواتین میں جائیں' : '🌸 Enter Sanctuary'}</span>
-              <span>➔</span>
-            </Link>
-          </div>
+        <div style={{ marginBottom: 28 }}>
+          <SpiritualCoachHub />
         </div>
 
-        {/* PREMIER FEATURED QURAN WISDOM SHOWCASE */}
-        <div
-          style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: 16,
-            border: '1px solid #BBF7D0',
-            padding: '20px 24px',
-            marginBottom: 20,
-            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.08)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 16,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+        {/* SIGNATURE CAPABILITIES: LIFE OS MODES, NIYYAH COMPILER & PROPHETIC CONTEXT */}
+        {!isFocusMode ? (
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 16,
+              border: '1px solid #E2E8F0',
+              padding: '24px 24px',
+              marginBottom: 32,
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
+            }}
+          >
             <div
               style={{
-                width: 48,
-                height: 48,
-                borderRadius: 12,
-                backgroundColor: '#ECFDF5',
-                border: '1px solid #A7F3D0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 26,
-              }}
-            >
-              📖
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 11, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '2px 8px', borderRadius: 6 }}>
-                  {isUrdu ? 'مستند شرعی ورثہ' : 'CANONICAL HERITAGE'}
-                </span>
-                <span style={{ fontSize: 11, color: '#059669', fontWeight: 700 }}>
-                  Ahl al-Sunnah wal-Jama&apos;ah (Sawad al-A&apos;zam) · 4 Sunni Madhhabs
-                </span>
-              </div>
-              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
-                {isUrdu ? 'قرآنِ کریم، حکمت و تدبر' : 'Al-Quran Al-Kareem & Wisdom'}
-              </h3>
-              <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4B5563', maxWidth: 580, lineHeight: 1.5 }}>
-                {isUrdu
-                  ? 'مستند تلاوت، کنز الایمان ترجمہ، خزائن العرفان تفسیر اور رومن اردو ٹرانسلٹریشن'
-                  : '100% Real Human Voice Recitation · Kanz-ul-Iman & Khaza\'in-ul-Irfan Tafsir · Roman Transliteration'}
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Link
-              href="/quran"
-              style={{
-                padding: '10px 18px',
-                borderRadius: 10,
-                backgroundColor: '#166534',
-                color: '#FFFFFF',
-                textDecoration: 'none',
-                fontWeight: 800,
-                fontSize: 13,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                boxShadow: '0 2px 6px rgba(22, 101, 52, 0.25)',
-              }}
-            >
-              <span>{isUrdu ? '📖 قرآنِ کریم (سورتیں)' : '📖 Read Holy Quran'}</span>
-              <span>➔</span>
-            </Link>
-
-            <Link
-              href="/wisdom"
-              style={{
-                padding: '10px 18px',
-                borderRadius: 10,
-                backgroundColor: '#D97706',
-                color: '#FFFFFF',
-                textDecoration: 'none',
-                fontWeight: 800,
-                fontSize: 13,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                boxShadow: '0 2px 6px rgba(217, 119, 6, 0.25)',
-              }}
-            >
-              <span>{isUrdu ? '✨ قرآنی حکمت کارڈز' : '✨ Sacred Wisdom Cards'}</span>
-              <span>➔</span>
-            </Link>
-          </div>
-        </div>
-
-        {isFocusMode ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
-            {/* Tranquil 3-Card Sacred Essentials */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
-              <Link
-                href="/journeys"
-                className="amal-card-hover"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 14,
-                  padding: 20,
-                  border: '1px solid #A7F3D0',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  boxShadow: '0 2px 8px rgba(6, 95, 70, 0.08)',
-                }}
-              >
-                <span style={{ fontSize: 32 }}>🌱</span>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, backgroundColor: '#DCFCE7', color: '#166534', padding: '1px 6px', borderRadius: 4 }}>
-                      8 JOURNEYS
-                    </span>
-                  </div>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#065F46' }}>
-                    {isUrdu ? 'روحانی اسفار و روزانہ ٹریکر' : 'Spiritual Journeys & Daily Tracker'}
-                  </h3>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    {isUrdu ? '14 روزہ فجر، 21 روزہ نماز، قرآن اور تہجد' : '14-Day Fajr, 21-Day Salah, Quran habit & daily check-ins'}
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/prayer"
-                className="amal-card-hover"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 14,
-                  padding: 20,
-                  border: '1px solid #BBF7D0',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                }}
-              >
-                <span style={{ fontSize: 32 }}>🕋</span>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#166534' }}>
-                    {isUrdu ? 'اوقاتِ نماز و قبلہ' : 'Prayer Times & Qibla'}
-                  </h3>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    {isUrdu ? 'اوقاتِ نماز، قبلہ رخ اور سنت اذکار' : 'Precise solar prayer times, Qibla & sunnah routines'}
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/quran"
-                className="amal-card-hover"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 14,
-                  padding: 20,
-                  border: '1px solid #BFDBFE',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                }}
-              >
-                <span style={{ fontSize: 32 }}>📖</span>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#1E40AF' }}>
-                    {isUrdu ? 'قرآنِ کریم' : 'Al-Quran Al-Kareem'}
-                  </h3>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    {isUrdu ? '۱۱۴ سورتیں، اردو و انگریزی ترجمہ اور قراء' : '114 Surahs, English & Roman transliteration'}
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/tasbih"
-                className="amal-card-hover"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 14,
-                  padding: 20,
-                  border: '1px solid #FDE68A',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                }}
-              >
-                <span style={{ fontSize: 32 }}>📿</span>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#92400E' }}>
-                    {isUrdu ? 'مسنون تسبیح' : 'Digital Masnoon Tasbih'}
-                  </h3>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    {isUrdu ? 'مسنون اذکار، استغفار اور تسبیحات' : 'Daily sunnah wird, counter & morning/evening adhkar'}
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/ask"
-                className="amal-card-hover"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 14,
-                  padding: 20,
-                  border: '1px solid #E9D5FF',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                }}
-              >
-                <span style={{ fontSize: 32 }}>💬</span>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#7E22CE' }}>
-                    {isUrdu ? 'دینی سوال و رہنمائی' : 'Ask AMAL (Evidence Inquiries)'}
-                  </h3>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#4B5563' }}>
-                    {isUrdu ? 'مستند کتبِ اہلسنت سے سوال و رہنمائی' : 'Canonical Islamic evidence from 106 masterworks'}
-                  </p>
-                </div>
-              </Link>
-            </div>
-
-            {/* Gentle Expand Pill */}
-            <div
-              style={{
-                backgroundColor: '#F8FAFC',
-                borderRadius: 12,
-                padding: '14px 20px',
-                border: '1px solid #E2E8F0',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 flexWrap: 'wrap',
                 gap: 12,
+                paddingBottom: 18,
+                borderBottom: '1px solid #F1F5F9',
+                marginBottom: 20,
               }}
             >
-              <div style={{ fontSize: 13, color: '#475569' }}>
-                Looking for <strong>Niyyah Compiler, Decision Room, Zakat, Miras</strong> or the <strong>106 Classical Books</strong>?
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                  <span
+                    style={{
+                      backgroundColor: '#ECFDF5',
+                      color: '#065F46',
+                      fontSize: 11,
+                      fontWeight: 800,
+                      padding: '2px 8px',
+                      borderRadius: 6,
+                      letterSpacing: 0.5,
+                    }}
+                  >
+                    {isUrdu ? 'خصوصی انجن' : 'AMAL SIGNATURE ENGINES'}
+                  </span>
+                  <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
+                    {isUrdu ? 'نیت، طرزِ زندگی اور نبوی حکمت' : 'Intention, Life Modes & Prophetic Guidance'}
+                  </span>
+                </div>
+                <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
+                  {isUrdu ? 'نظامِ نیت، اسوۂ نبوی اور حالاتِ زندگی' : 'Niyyah Compiler & Prophetic Context Engine'}
+                </h2>
               </div>
-              <button
-                onClick={() => toggleFocusMode(false)}
+
+              <Link
+                href="/decision-room"
                 style={{
-                  padding: '7px 16px',
+                  textDecoration: 'none',
+                  padding: '8px 16px',
                   borderRadius: 8,
                   backgroundColor: '#065F46',
                   color: '#FFFFFF',
                   fontWeight: 700,
                   fontSize: 12,
-                  border: 'none',
-                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  boxShadow: '0 2px 4px rgba(6, 95, 70, 0.2)',
                 }}
               >
-                Switch to Full Suite ➔
-              </button>
+                <span>⚖️</span>
+                <span>{isUrdu ? 'فیصلہ روم کھولیں ➔' : 'Open Decision Room ➔'}</span>
+              </Link>
             </div>
-          </div>
-        ) : (
-          <>
-            {/* Core Hero Banner */}
-            <div
-              className="amal-card-hover"
-              style={{
-                background: 'linear-gradient(135deg, #064E3B 0%, #065F46 55%, #047857 100%)',
-            borderRadius: 16,
-            padding: '30px 34px',
-            color: '#FFFFFF',
-            marginBottom: 24,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 16,
-            boxShadow: '0 12px 28px -6px rgba(6, 78, 59, 0.28), 0 4px 10px -2px rgba(6, 78, 59, 0.12)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Subtle Islamic arch / glow decoration in background */}
-          <div
-            style={{
-              position: 'absolute',
-              right: -40,
-              top: -40,
-              width: 220,
-              height: 220,
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(110, 231, 183, 0.15) 0%, transparent 70%)',
-              pointerEvents: 'none',
-            }}
-          />
 
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#86EFAC', letterSpacing: 1.5, textTransform: 'uppercase' }}>
-              AMAL OS • نظامِ حیات و عمل (SOVEREIGN MUSLIM LIFE OS)
-            </span>
-            <h1 style={{ fontSize: 30, fontWeight: 900, margin: '6px 0 6px', letterSpacing: -0.5 }}>
-              From Niyyah to Amal.
-            </h1>
-            <p style={{ margin: 0, fontSize: 14, color: '#D1FAE5', maxWidth: 540, lineHeight: 1.6 }}>
-              Turn pure intention into evidence-grounded action. Understand your Deen, navigate real life with Prophetic wisdom, and reach qualified scholarship when it matters.
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, position: 'relative', zIndex: 1 }}>
-            <Link
-              href="/decision-room"
-              style={{
-                textDecoration: 'none',
-                padding: '11px 20px',
-                borderRadius: 8,
-                backgroundColor: '#FFFFFF',
-                color: '#065F46',
-                fontWeight: 800,
-                fontSize: 13,
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              <span>⚖️</span>
-              <span>Deen Decision Room →</span>
-            </Link>
-          </div>
-        </div>
-
-            {/* 5. Life OS Mode Switcher Bar */}
-            <LifeOsModeBar
-              currentMode={currentMode}
-              modeProfile={modeProfile}
-              onSwitchMode={handleSwitchMode}
-            />
-
-            {/* 4 SACRED PILLARS MATRIX */}
-            <SacredPillarsMatrix />
+            {/* Life OS Mode Switcher Bar */}
+            <div style={{ marginBottom: 20 }}>
+              <LifeOsModeBar
+                currentMode={currentMode}
+                modeProfile={modeProfile}
+                onSwitchMode={handleSwitchMode}
+              />
+            </div>
 
             {/* FEATURE 1: NIYYAH → AMAL COMPILER */}
             <NiyyahCompilerCard
@@ -661,18 +308,63 @@ export default function Home() {
             />
 
             {/* FEATURE 4: PROPHETIC CONTEXT ENGINE */}
-            <PropheticContextCard
-              struggleQuery={struggleQuery}
-              setStruggleQuery={setStruggleQuery}
-              propheticContext={propheticContext}
-              onSearchPropheticContext={(override) => {
-                if (override) setStruggleQuery(override);
-                const query = override || struggleQuery;
-                const res = signatureCapabilitiesEngine.getPropheticContext(query);
-                setPropheticContext(res);
+            <div style={{ marginTop: 20 }}>
+              <PropheticContextCard
+                struggleQuery={struggleQuery}
+                setStruggleQuery={setStruggleQuery}
+                propheticContext={propheticContext}
+                onSearchPropheticContext={(override) => {
+                  if (override) setStruggleQuery(override);
+                  const query = override || struggleQuery;
+                  const res = signatureCapabilitiesEngine.getPropheticContext(query);
+                  setPropheticContext(res);
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 14,
+              border: '1px dashed #CBD5E1',
+              padding: '16px 20px',
+              marginBottom: 32,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 12,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 20 }}>⚡</span>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>
+                  {isUrdu ? 'نیت کمپائلر، حالاتِ زندگی اور نبوی حکمت انجن' : 'Advanced Signature Engines Available'}
+                </div>
+                <div style={{ fontSize: 12, color: '#64748B' }}>
+                  {isUrdu ? 'مکمل نظام موڈ فعال کر کے نیت اور حالات کے مطابق رہنمائی حاصل کریں۔' : 'Switch to Full Suite to interact with Niyyah Compiler, Life OS Modes & Prophetic Context.'}
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => toggleFocusMode(false)}
+              style={{
+                padding: '7px 14px',
+                borderRadius: 8,
+                backgroundColor: '#065F46',
+                color: '#FFFFFF',
+                border: 'none',
+                fontWeight: 700,
+                fontSize: 12,
+                cursor: 'pointer',
               }}
-            />
-          </>
+            >
+              {isUrdu ? 'مکمل نظام دکھائیں ➔' : 'Show Full Suite ➔'}
+            </button>
+          </div>
         )}
       </main>
 

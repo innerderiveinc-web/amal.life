@@ -113,39 +113,55 @@ export const Navigation: React.FC = () => {
     }
   }, [prayerTimes, now]);
 
-  // Categorized Hubs for topbar
+  // ========================================================
+  // THE 4 SACRED PILLARS OF AMAL OS (INFORMATION ARCHITECTURE)
+  // ========================================================
+
+  // Pillar 1: Ibadah & Daily Rhythm (عبادت و معمولات)
   const ibadatItems = [
     { title: 'Auqat-e-Namaz & Qibla', titleUrdu: 'نماز کے اوقات و قبلہ', href: '/prayer', icon: '🕋' },
     { title: 'Morning & Evening Adhkar', titleUrdu: 'صبح و شام کے اذکار', href: '/adhkar', icon: '🌅' },
     { title: 'Digital Masnoon Tasbih', titleUrdu: 'مسنون تسبیح کاؤنٹر', href: '/tasbih', icon: '📿' },
     { title: 'Hijri Calendar & Fasting', titleUrdu: 'ہجری کیلنڈر و روزے', href: '/calendar', icon: '🌙' },
-    { title: 'Tajweed & Makharij Audio', titleUrdu: 'تجوید و مخارج آڈیو', href: '/tajweed', icon: '🎙️' },
-    { title: 'Hajj & Umrah Pilgrimage', titleUrdu: 'حج و عمرہ رہنمائی', href: '/hajj', icon: '✨' },
-    { title: 'Private Muhasabah Vault', titleUrdu: 'شام کا محاسبہ', href: '/reflections', icon: '📝' },
+    { title: 'Hajj & Umrah Pilgrimage Guide', titleUrdu: 'حج و عمرہ رہنمائی', href: '/hajj', icon: '✨' },
   ];
 
+  // Pillar 2: Quran & Sacred Knowledge (قرآن و علومِ سلف)
   const ilmItems = [
-    { title: 'Al-Quran & Wisdom (Kanz-ul-Iman)', titleUrdu: 'قرآن کریم، حکمت و تدبر', href: '/quran', icon: '📖' },
+    { title: 'Al-Quran Al-Kareem (114 Surahs)', titleUrdu: 'قرآن کریم (کنز الایمان)', href: '/quran', icon: '📖' },
+    { title: 'Ayah Wisdom & Sunnah Cards Studio', titleUrdu: 'قرآنی حکمت و تدبر کارڈز', href: '/wisdom', icon: '✨' },
     { title: '106-Book Canonical Library', titleUrdu: 'کتب خانہ السواد الاعظم', href: '/library', icon: '📚' },
     { title: 'Living Sirah & Shama\'il', titleUrdu: 'سیرت النبی ﷺ و شمائل', href: '/sirah', icon: '🕊️' },
-    { title: 'Quran Audios (4 Qurra)', titleUrdu: 'تلاوت قرآن (۴ قراء)', href: '/audio', icon: '🎧' },
-    { title: 'Knowledge Vault (Dars Notes)', titleUrdu: 'خطبات و درس کا خزانہ', href: '/vault', icon: '🏛️' },
-    { title: 'Niyyah Goals & Baselines', titleUrdu: 'دینی اہداف و نیت', href: '/goals', icon: '🎯' },
-    { title: 'Structured Journeys (Suluk)', titleUrdu: 'منظم دینی سفر', href: '/journeys', icon: '🛤️' },
+    { title: 'Human Voice Quran Audio (4 Qurra)', titleUrdu: 'تلاوت قرآن (۴ قراء)', href: '/audio', icon: '🎧' },
+    { title: 'Tajweed & Makharij Audio', titleUrdu: 'تجوید و مخارج آڈیو', href: '/tajweed', icon: '🎙️' },
+    { title: 'Classical Dars & Knowledge Vault', titleUrdu: 'خطبات و درس کا خزانہ', href: '/vault', icon: '🏛️' },
   ];
 
-  const ahkamItems = [
+  // Pillar 3: Family & Sisters Sanctuary (خاندان و گوشۂ نسواں)
+  const familySistersItems = [
     { title: 'The Sisters Sanctuary (Amal Nisa)', titleUrdu: 'گوشۂ خواتین و صحابیات', href: '/sisters', icon: '🌸' },
-    { title: 'Zakat & Nisab Calculator', titleUrdu: 'زکوٰۃ و نصاب کیلکولیٹر', href: '/calculator', icon: '💰' },
+    { title: '20 Classical Women\'s Masterworks', titleUrdu: '۲۰ کتبِ نسواں (جنتی زیور وغیرہ)', href: '/sisters?tab=library', icon: '📖' },
+    { title: '10 Noble Sahabiyyat Models', titleUrdu: '۱۰ جلیل القدر صحابیات', href: '/sisters?tab=sahabiyyat', icon: '🌺' },
+    { title: 'Taharah & Hanafi Fiqh Guide', titleUrdu: 'احکامِ طہارت و حیض', href: '/sisters?tab=fiqh', icon: '⚖️' },
+    { title: 'Motherhood & Family Duas', titleUrdu: 'ماؤں کی دعائیں و برکت', href: '/sisters?tab=duas', icon: '🤲' },
+    { title: 'Family Deen OS & Child Tarbiyah', titleUrdu: 'فیملی سرکل و معمولات', href: '/family', icon: '👨‍👩‍👧‍👦' },
+  ];
+
+  // Pillar 4: Fiqh, Miras & Suluk Journeys (احکام، میراث و سلوک)
+  const ahkamItems = [
+    { title: 'Zakat & Gold Jewelry Calculator', titleUrdu: 'زکوٰۃ و نصاب کیلکولیٹر', href: '/calculator', icon: '💰' },
     { title: 'Miras (Fara\'id) Shares & PDF', titleUrdu: 'میراث و فرائض تقسیم', href: '/calculator', icon: '📜' },
-    { title: 'Deen Decision Room', titleUrdu: 'ڈیسیژن روم (مفتی پیکٹ)', href: '/decision-room', icon: '⚖️' },
-    { title: 'Family Deen OS', titleUrdu: 'فیملی سرکل و معمولات', href: '/family', icon: '👨‍👩‍👧‍👦' },
+    { title: 'Deen Decision Room (Mufti Packet)', titleUrdu: 'ڈیسیژن روم (مفتی پیکٹ)', href: '/decision-room', icon: '⚖️' },
+    { title: '14-Day Structured Journeys (Suluk)', titleUrdu: 'منظم دینی سفر (سلوک)', href: '/journeys', icon: '🛤️' },
+    { title: 'Niyyah Goals & Spiritual Baselines', titleUrdu: 'دینی اہداف و نیت', href: '/goals', icon: '🎯' },
+    { title: 'Private Muhasabah Vault', titleUrdu: 'شام کا محاسبہ', href: '/reflections', icon: '📝' },
     { title: 'Deen Replay Annual Review', titleUrdu: 'دین ری پلے (سالانہ جائزہ)', href: '/replay', icon: '🔄' },
   ];
 
   const allApps = [
     ...ibadatItems,
     ...ilmItems,
+    ...familySistersItems,
     ...ahkamItems,
     { title: 'Canonical Evidence Explorer', titleUrdu: 'کتبِ معتبرہ سے تلاش و رہنمائی', href: '/ask', icon: '💬' },
     { title: 'Security & Trust Vault', titleUrdu: 'پرائیویسی و امانت سینٹر', href: '/privacy', icon: '🛡️' },
@@ -457,8 +473,8 @@ export const Navigation: React.FC = () => {
           </span>
         </div>
 
-        {/* Primary Hubs (Desktop) */}
-        <div className="desktop-only" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+        {/* Primary 4 Sacred Pillars (Desktop Navigation) */}
+        <div className="desktop-only" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           <Link
             href="/"
             style={{
@@ -475,73 +491,27 @@ export const Navigation: React.FC = () => {
             {currentLang === 'ur' ? '🌅 آج' : '🌅 Today'}
           </Link>
 
-          {/* Direct Premier Hub: Al-Quran (114 Surahs) */}
-          <Link
-            href="/quran"
-            style={{
-              textDecoration: 'none',
-              fontSize: 13,
-              fontWeight: router.pathname === '/quran' ? 700 : 600,
-              color: router.pathname === '/quran' ? '#065F46' : '#1E293B',
-              padding: '6px 10px',
-              borderRadius: 6,
-              backgroundColor: router.pathname === '/quran' ? '#DCFCE7' : 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-              transition: 'all 0.15s ease',
-            }}
-          >
-            <span>📖</span>
-            <span>{currentLang === 'ur' ? 'قرآنِ کریم' : 'Al-Quran'}</span>
-            <span style={{ fontSize: 9, backgroundColor: '#10B981', color: '#FFFFFF', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>
-              {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz'}
-            </span>
-          </Link>
-
-          {/* Dedicated Premier Hub: Quran Wisdom Cards */}
-          <Link
-            href="/wisdom"
-            style={{
-              textDecoration: 'none',
-              fontSize: 13,
-              fontWeight: router.pathname === '/wisdom' ? 700 : 600,
-              color: router.pathname === '/wisdom' ? '#92400E' : '#1E293B',
-              padding: '6px 10px',
-              borderRadius: 6,
-              backgroundColor: router.pathname === '/wisdom' ? '#FEF3C7' : 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-              transition: 'all 0.15s ease',
-            }}
-          >
-            <span>✨</span>
-            <span>{currentLang === 'ur' ? 'قرآنی حکمت' : 'Wisdom'}</span>
-            <span style={{ fontSize: 9, backgroundColor: '#F59E0B', color: '#FFFFFF', padding: '1px 5px', borderRadius: 10, fontWeight: 700 }}>
-              42
-            </span>
-          </Link>
-
-          {/* Hub 1: Ibadat Dropdown */}
+          {/* Pillar 1: Ibadah & Daily Rhythm */}
           <div style={{ position: 'relative' }}>
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'ibadat' ? null : 'ibadat')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 4,
+                gap: 5,
                 border: 'none',
                 background: 'none',
                 fontSize: 13,
-                fontWeight: 600,
-                color: activeDropdown === 'ibadat' ? AmalTheme.colors.primary : '#374151',
+                fontWeight: activeDropdown === 'ibadat' ? 700 : 600,
+                color: activeDropdown === 'ibadat' ? '#065F46' : '#374151',
                 cursor: 'pointer',
                 padding: '6px 10px',
                 borderRadius: 6,
+                backgroundColor: activeDropdown === 'ibadat' ? '#F0FDF4' : 'transparent',
               }}
             >
-              <span>🕋 {currentLang === 'ur' ? 'عبادات' : 'Worship'}</span>
+              <span>🕋</span>
+              <span>{currentLang === 'ur' ? 'عبادات و معمولات' : 'Ibadah & Rhythm'}</span>
               <span style={{ fontSize: 9 }}>▼</span>
             </button>
 
@@ -572,7 +542,7 @@ export const Navigation: React.FC = () => {
                       borderRadius: 6,
                       fontSize: 12,
                       fontWeight: 600,
-                      color: router.pathname === item.href ? AmalTheme.colors.primary : '#374151',
+                      color: router.pathname === item.href ? '#065F46' : '#374151',
                       backgroundColor: router.pathname === item.href ? '#F0FDF4' : 'transparent',
                     }}
                   >
@@ -584,25 +554,27 @@ export const Navigation: React.FC = () => {
             )}
           </div>
 
-          {/* Hub 2: Ilm & Sirah Dropdown */}
+          {/* Pillar 2: Quran & Sacred Knowledge */}
           <div style={{ position: 'relative' }}>
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'ilm' ? null : 'ilm')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 4,
+                gap: 5,
                 border: 'none',
                 background: 'none',
                 fontSize: 13,
-                fontWeight: 600,
-                color: activeDropdown === 'ilm' ? AmalTheme.colors.primary : '#374151',
+                fontWeight: activeDropdown === 'ilm' ? 700 : 600,
+                color: activeDropdown === 'ilm' ? '#065F46' : '#374151',
                 cursor: 'pointer',
                 padding: '6px 10px',
                 borderRadius: 6,
+                backgroundColor: activeDropdown === 'ilm' ? '#F0FDF4' : 'transparent',
               }}
             >
-              <span>📚 {currentLang === 'ur' ? 'علم و سیرت' : 'Heritage'}</span>
+              <span>📖</span>
+              <span>{currentLang === 'ur' ? 'قرآن و علوم' : 'Quran & Ilm'}</span>
               <span style={{ fontSize: 9 }}>▼</span>
             </button>
 
@@ -615,7 +587,7 @@ export const Navigation: React.FC = () => {
                 borderRadius: 10,
                 boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
                 border: '1px solid #E5E7EB',
-                width: 250,
+                width: 260,
                 padding: 6,
                 zIndex: 1100,
               }}>
@@ -633,7 +605,7 @@ export const Navigation: React.FC = () => {
                       borderRadius: 6,
                       fontSize: 12,
                       fontWeight: 600,
-                      color: router.pathname === item.href ? AmalTheme.colors.primary : '#374151',
+                      color: router.pathname === item.href ? '#065F46' : '#374151',
                       backgroundColor: router.pathname === item.href ? '#F0FDF4' : 'transparent',
                     }}
                   >
@@ -645,26 +617,91 @@ export const Navigation: React.FC = () => {
             )}
           </div>
 
-          {/* Hub 3: Ahkam & Family Dropdown */}
+          {/* Pillar 3: Family & Sisters Sanctuary */}
+          <div style={{ position: 'relative' }}>
+            <button
+              onClick={() => setActiveDropdown(activeDropdown === 'family' ? null : 'family')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+                background: 'none',
+                fontSize: 13,
+                fontWeight: activeDropdown === 'family' ? 700 : 600,
+                color: activeDropdown === 'family' ? '#831843' : '#9D174D',
+                cursor: 'pointer',
+                padding: '6px 10px',
+                borderRadius: 6,
+                backgroundColor: activeDropdown === 'family' ? '#FDF2F8' : 'rgba(253, 242, 248, 0.5)',
+                border: '1px solid rgba(244, 114, 182, 0.3)',
+              }}
+            >
+              <span>🌸</span>
+              <span>{currentLang === 'ur' ? 'خاندان و نسواں' : 'Family & Sisters'}</span>
+              <span style={{ fontSize: 9 }}>▼</span>
+            </button>
+
+            {activeDropdown === 'family' && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                backgroundColor: '#FFFFFF',
+                borderRadius: 10,
+                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                border: '1px solid #FECDD3',
+                width: 270,
+                padding: 6,
+                zIndex: 1100,
+              }}>
+                {familySistersItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setActiveDropdown(null)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      padding: '8px 10px',
+                      textDecoration: 'none',
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: router.asPath === item.href ? '#831843' : '#374151',
+                      backgroundColor: router.asPath === item.href ? '#FDF2F8' : 'transparent',
+                    }}
+                  >
+                    <span>{item.icon}</span>
+                    <span>{currentLang === 'ur' ? item.titleUrdu : item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Pillar 4: Fiqh, Miras & Suluk */}
           <div style={{ position: 'relative' }}>
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'ahkam' ? null : 'ahkam')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 4,
+                gap: 5,
                 border: 'none',
                 background: 'none',
                 fontSize: 13,
-                fontWeight: 600,
-                color: activeDropdown === 'ahkam' ? AmalTheme.colors.primary : '#374151',
+                fontWeight: activeDropdown === 'ahkam' ? 700 : 600,
+                color: activeDropdown === 'ahkam' ? '#065F46' : '#374151',
                 cursor: 'pointer',
                 padding: '6px 10px',
                 borderRadius: 6,
                 whiteSpace: 'nowrap',
+                backgroundColor: activeDropdown === 'ahkam' ? '#F0FDF4' : 'transparent',
               }}
             >
-              <span>⚖️ {currentLang === 'ur' ? 'احکام و فقہ' : 'Fiqh & Rules'}</span>
+              <span>⚖️</span>
+              <span>{currentLang === 'ur' ? 'احکام و سلوک' : 'Fiqh & Suluk'}</span>
               <span style={{ fontSize: 9 }}>▼</span>
             </button>
 
@@ -677,7 +714,7 @@ export const Navigation: React.FC = () => {
                 borderRadius: 10,
                 boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
                 border: '1px solid #E5E7EB',
-                width: 260,
+                width: 270,
                 padding: 6,
                 zIndex: 1100,
               }}>
@@ -695,7 +732,7 @@ export const Navigation: React.FC = () => {
                       borderRadius: 6,
                       fontSize: 12,
                       fontWeight: 600,
-                      color: router.pathname === item.href ? AmalTheme.colors.primary : '#374151',
+                      color: router.pathname === item.href ? '#065F46' : '#374151',
                       backgroundColor: router.pathname === item.href ? '#F0FDF4' : 'transparent',
                     }}
                   >
@@ -707,24 +744,6 @@ export const Navigation: React.FC = () => {
             )}
           </div>
 
-          {/* Direct Link: The Sisters Sanctuary */}
-          <Link
-            href="/sisters"
-            style={{
-              textDecoration: 'none',
-              fontSize: 13,
-              fontWeight: router.pathname === '/sisters' ? 700 : 600,
-              color: router.pathname === '/sisters' ? '#831843' : '#9D174D',
-              padding: '6px 10px',
-              borderRadius: 6,
-              backgroundColor: router.pathname === '/sisters' ? '#FDF2F8' : 'rgba(253, 242, 248, 0.7)',
-              border: '1px solid rgba(244, 114, 182, 0.35)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {currentLang === 'ur' ? '🌸 گوشۂ خواتین' : '🌸 Sisters'}
-          </Link>
-
           {/* Direct Link: Ask AMAL */}
           <Link
             href="/ask"
@@ -732,14 +751,14 @@ export const Navigation: React.FC = () => {
               textDecoration: 'none',
               fontSize: 13,
               fontWeight: router.pathname === '/ask' ? 700 : 600,
-              color: router.pathname === '/ask' ? AmalTheme.colors.primary : '#374151',
+              color: router.pathname === '/ask' ? '#065F46' : '#374151',
               padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: router.pathname === '/ask' ? '#F0FDF4' : 'transparent',
               whiteSpace: 'nowrap',
             }}
           >
-            {currentLang === 'ur' ? '💬 سوال پوچھیں' : '💬 Ask AMAL'}
+            {currentLang === 'ur' ? '💬 سوال' : '💬 Ask'}
           </Link>
 
           {/* Direct Link: About & Methodology */}
@@ -749,14 +768,14 @@ export const Navigation: React.FC = () => {
               textDecoration: 'none',
               fontSize: 13,
               fontWeight: router.pathname === '/about' ? 700 : 600,
-              color: router.pathname === '/about' ? AmalTheme.colors.primary : '#374151',
+              color: router.pathname === '/about' ? '#065F46' : '#374151',
               padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: router.pathname === '/about' ? '#F0FDF4' : 'transparent',
               whiteSpace: 'nowrap',
             }}
           >
-            {currentLang === 'ur' ? '🕌 تعارف' : '🕌 About'}
+            {currentLang === 'ur' ? '🕌 منہج' : '🕌 About'}
           </Link>
         </div>
 
@@ -834,6 +853,7 @@ export const Navigation: React.FC = () => {
         currentPath={router.pathname}
         ibadatItems={ibadatItems}
         ilmItems={ilmItems}
+        familySistersItems={familySistersItems}
         ahkamItems={ahkamItems}
       />
     </header>

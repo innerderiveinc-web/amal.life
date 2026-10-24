@@ -1,16 +1,109 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const SacredPillarsMatrix: React.FC = () => {
+  const { isUrdu } = useLanguage();
+
+  const pillars = [
+    {
+      id: 'ibadah',
+      number: '1',
+      icon: '🕋',
+      titleUrdu: 'عبادات و معمولات',
+      titleEnglish: 'Worship & Daily Rhythm',
+      subtitleUrdu: 'اوقاتِ نماز، قبلہ، مسنون اذکار، تسبیح، ہجری تاریخ اور روزے',
+      subtitleEnglish: 'Precise solar prayer times, Qibla azimuth, morning/evening adhkar & fasting.',
+      color: '#065F46',
+      bgLight: '#F0FDF4',
+      borderLight: '#BBF7D0',
+      badgeBg: '#DCFCE7',
+      primaryLink: '/prayer',
+      links: [
+        { labelUrdu: 'اوقات و قبلہ', labelEn: 'Prayer & Qibla', href: '/prayer' },
+        { labelUrdu: 'اذکارِ مسنون', labelEn: 'Daily Adhkar', href: '/adhkar' },
+        { labelUrdu: 'تسبیح کاؤنٹر', labelEn: 'Tasbih', href: '/tasbih' },
+        { labelUrdu: 'ہجری روزے', labelEn: 'Hijri Fasting', href: '/calendar' },
+        { labelUrdu: 'حج و عمرہ', labelEn: 'Hajj Pilgrimage', href: '/hajj' },
+      ],
+    },
+    {
+      id: 'quran',
+      number: '2',
+      icon: '📖',
+      titleUrdu: 'قرآن و علومِ سلف',
+      titleEnglish: 'Al-Quran & Sacred Knowledge',
+      subtitleUrdu: '۱۱۴ سورتیں، کنز الایمان، آڈیو تلاوت، ۱۰۶ مستند کتب اور حکمت کارڈز',
+      subtitleEnglish: '114 Surahs with Kanz-ul-Iman, 4 human reciters, 106-book canon & wisdom cards.',
+      color: '#1E40AF',
+      bgLight: '#EFF6FF',
+      borderLight: '#BFDBFE',
+      badgeBg: '#DBEAFE',
+      primaryLink: '/quran',
+      links: [
+        { labelUrdu: 'قرآنِ کریم', labelEn: 'Read Quran', href: '/quran' },
+        { labelUrdu: 'حکمت کارڈز', labelEn: 'Wisdom Cards', href: '/wisdom' },
+        { labelUrdu: '۱۰۶ کتب خانہ', labelEn: '106 Books', href: '/library' },
+        { labelUrdu: 'سیرت النبی ﷺ', labelEn: 'Living Sirah', href: '/sirah' },
+        { labelUrdu: 'آڈیو تلاوت', labelEn: 'Recitations', href: '/audio' },
+        { labelUrdu: 'درس نوٹس', labelEn: 'Dars Vault', href: '/vault' },
+      ],
+    },
+    {
+      id: 'family',
+      number: '3',
+      icon: '🌸',
+      titleUrdu: 'خاندان و گوشۂ نسواں',
+      titleEnglish: 'Family & Sisters Sanctuary',
+      subtitleUrdu: '۲۰ کتبِ نسواں، ۱۰ صحابیات، احکامِ طہارت، خاندانی دعائیں اور فیملی سرکل',
+      subtitleEnglish: '20 classical women masterworks, Sahabiyyat models, purity fiqh & family OS.',
+      color: '#831843',
+      bgLight: '#FFF1F2',
+      borderLight: '#FECDD3',
+      badgeBg: '#FCE7F3',
+      primaryLink: '/sisters',
+      links: [
+        { labelUrdu: 'گوشۂ خواتین', labelEn: 'Sisters Sanctuary', href: '/sisters' },
+        { labelUrdu: '۲۰ کتبِ نسواں', labelEn: '20 Books', href: '/sisters?tab=library' },
+        { labelUrdu: '۱۰ صحابیات', labelEn: 'Sahabiyyat', href: '/sisters?tab=sahabiyyat' },
+        { labelUrdu: 'احکامِ طہارت', labelEn: 'Purity Fiqh', href: '/sisters?tab=fiqh' },
+        { labelUrdu: 'ماؤں کی دعائیں', labelEn: 'Family Duas', href: '/sisters?tab=duas' },
+        { labelUrdu: 'فیملی سرکل', labelEn: 'Family Circle', href: '/family' },
+      ],
+    },
+    {
+      id: 'ahkam',
+      number: '4',
+      icon: '⚖️',
+      titleUrdu: 'احکام، میراث و سلوک',
+      titleEnglish: 'Fiqh, Miras & Suluk Journeys',
+      subtitleUrdu: 'زکوٰۃ و سونا کیلکولیٹر، میراث کی شرعی تقسیم، ۱۴ روزہ اسفار اور ڈیسیژن روم',
+      subtitleEnglish: 'Gold jewelry zakat, Islamic inheritance shares, 14-day spiritual habits & mufti room.',
+      color: '#92400E',
+      bgLight: '#FEF3C7',
+      borderLight: '#FDE68A',
+      badgeBg: '#FEF9C3',
+      primaryLink: '/calculator',
+      links: [
+        { labelUrdu: 'زکوٰۃ و سونا', labelEn: 'Zakat & Gold', href: '/calculator' },
+        { labelUrdu: 'میراث تقسیم (PDF)', labelEn: 'Miras Shares', href: '/calculator' },
+        { labelUrdu: 'ڈیسیژن روم', labelEn: 'Decision Room', href: '/decision-room' },
+        { labelUrdu: '۱۴ روزہ اسفار', labelEn: '14-Day Journeys', href: '/journeys' },
+        { labelUrdu: 'دینی اہداف', labelEn: 'Niyyah Goals', href: '/goals' },
+        { labelUrdu: 'شام کا محاسبہ', labelEn: 'Muhasabah', href: '/reflections' },
+      ],
+    },
+  ];
+
   return (
     <div
       style={{
         backgroundColor: '#FFFFFF',
         borderRadius: 16,
-        padding: 24,
+        padding: '24px 22px',
         border: '1px solid #E2E8F0',
         marginBottom: 24,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
       }}
     >
       <div
@@ -28,258 +121,112 @@ export const SacredPillarsMatrix: React.FC = () => {
             style={{
               fontSize: 11,
               fontWeight: 800,
-              color: '#047857',
+              color: '#065F46',
               letterSpacing: 1.2,
               textTransform: 'uppercase',
             }}
           >
-            FOUR SACRED PILLARS
+            {isUrdu ? 'چار بنیادی دینی ستون' : 'THE 4 SACRED PILLARS'}
           </span>
-          <h2 style={{ fontSize: 19, fontWeight: 800, color: '#0F172A', margin: '2px 0 0' }}>
-            دینی و عملی شعبہ جات · Core Life Dimensions
+          <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: '2px 0 0' }}>
+            {isUrdu ? 'دینی و عملی شعبہ جات — مربوط نظامِ حیات' : 'Core Life Dimensions — Amal OS Gateways'}
           </h2>
         </div>
         <span style={{ fontSize: 13, color: '#64748B' }}>
-          عبادت، علم و سیرت، مالی احکام اور تزکیۂ نفس کا مربوط نظام
+          {isUrdu
+            ? 'عبادت، علم و قرآن، خاندان و نسواں، اور مالی و باطنی احکام'
+            : 'Worship, Quran & Heritage, Family & Sanctuary, Fiqh & Suluk'}
         </span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 14 }}>
-        {/* Channel 1 */}
-        <div
-          className="amal-card-hover"
-          style={{ padding: 14, borderRadius: 10, backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0' }}
-        >
-          <div style={{ fontSize: 20, marginBottom: 4 }}>🕋</div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: '#166534' }}>1. Daily Worship Rhythm</div>
-          <div style={{ fontSize: 11, color: '#15803D', margin: '4px 0 10px', lineHeight: 1.4 }}>
-            Namaz ➔ Tasbih ➔ Tajweed ➔ Fasting ➔ Muhasabah
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            <Link
-              href="/prayer"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#166534',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #86EFAC',
-              }}
-            >
-              Prayer &amp; Qibla
-            </Link>
-            <Link
-              href="/tasbih"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#166534',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #86EFAC',
-              }}
-            >
-              Tasbih
-            </Link>
-            <Link
-              href="/calendar"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#166534',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #86EFAC',
-              }}
-            >
-              Fasting
-            </Link>
-          </div>
-        </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
+        {pillars.map((p) => (
+          <div
+            key={p.id}
+            className="amal-card-hover"
+            style={{
+              padding: 18,
+              borderRadius: 12,
+              backgroundColor: p.bgLight,
+              border: `1px solid ${p.borderLight}`,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <span style={{ fontSize: 26 }}>{p.icon}</span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 800,
+                    backgroundColor: p.badgeBg,
+                    color: p.color,
+                    padding: '2px 8px',
+                    borderRadius: 10,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  PILLAR {p.number}
+                </span>
+              </div>
 
-        {/* Channel 2 */}
-        <div
-          className="amal-card-hover"
-          style={{ padding: 14, borderRadius: 10, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE' }}
-        >
-          <div style={{ fontSize: 20, marginBottom: 4 }}>📚</div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: '#1E40AF' }}>2. Ilm &amp; Sacred Heritage</div>
-          <div style={{ fontSize: 11, color: '#1D4ED8', margin: '4px 0 10px', lineHeight: 1.4 }}>
-            106-Book Canonical Library ➔ Living Sirah ➔ Quran Audio ➔ Study Vault
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            <Link
-              href="/library"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#1E40AF',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #93C5FD',
-              }}
-            >
-              Library
-            </Link>
-            <Link
-              href="/sirah"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#1E40AF',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #93C5FD',
-              }}
-            >
-              Sirah
-            </Link>
-            <Link
-              href="/audio"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#1E40AF',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #93C5FD',
-              }}
-            >
-              Audio
-            </Link>
-          </div>
-        </div>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: p.color }}>
+                {isUrdu ? p.titleUrdu : p.titleEnglish}
+              </h3>
+              <p style={{ margin: '4px 0 12px', fontSize: 12, color: '#4B5563', lineHeight: 1.5 }}>
+                {isUrdu ? p.subtitleUrdu : p.subtitleEnglish}
+              </p>
+            </div>
 
-        {/* Channel 3 */}
-        <div
-          className="amal-card-hover"
-          style={{ padding: 14, borderRadius: 10, backgroundColor: '#FEF3C7', border: '1px solid #FDE68A' }}
-        >
-          <div style={{ fontSize: 20, marginBottom: 4 }}>⚖️</div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: '#92400E' }}>3. Financial &amp; Household</div>
-          <div style={{ fontSize: 11, color: '#B45309', margin: '4px 0 10px', lineHeight: 1.4 }}>
-            Zakat Nisab ➔ Miras Fara&apos;id ➔ Decision Room ➔ Family Circles
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            <Link
-              href="/calculator"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#92400E',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #FCD34D',
-              }}
-            >
-              Zakat &amp; Miras
-            </Link>
-            <Link
-              href="/decision-room"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#92400E',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #FCD34D',
-              }}
-            >
-              Decision Room
-            </Link>
-            <Link
-              href="/family"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#92400E',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #FCD34D',
-              }}
-            >
-              Family OS
-            </Link>
-          </div>
-        </div>
+            <div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+                {p.links.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    style={{
+                      fontSize: 11,
+                      padding: '3px 8px',
+                      borderRadius: 6,
+                      backgroundColor: '#FFFFFF',
+                      color: p.color,
+                      textDecoration: 'none',
+                      fontWeight: 700,
+                      border: `1px solid ${p.borderLight}`,
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+                      transition: 'all 0.12s ease',
+                    }}
+                  >
+                    {isUrdu ? link.labelUrdu : link.labelEn}
+                  </Link>
+                ))}
+              </div>
 
-        {/* Channel 4 */}
-        <div
-          className="amal-card-hover"
-          style={{ padding: 14, borderRadius: 10, backgroundColor: '#FAF5FF', border: '1px solid #E9D5FF' }}
-        >
-          <div style={{ fontSize: 20, marginBottom: 4 }}>🛤️</div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: '#6B21A8' }}>4. Personal Suluk Lifecycle</div>
-          <div style={{ fontSize: 11, color: '#7E22CE', margin: '4px 0 10px', lineHeight: 1.4 }}>
-            Niyyah Goals ➔ Compiler ➔ Journeys ➔ Muhasabah ➔ Replay
+              <Link
+                href={p.primaryLink}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '7px 12px',
+                  borderRadius: 8,
+                  backgroundColor: p.color,
+                  color: '#FFFFFF',
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  transition: 'opacity 0.15s ease',
+                }}
+              >
+                <span>{isUrdu ? `${p.titleUrdu} میں جائیں` : `Open ${p.titleEnglish}`}</span>
+                <span>➔</span>
+              </Link>
+            </div>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            <Link
-              href="/goals"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#6B21A8',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #D8B4FE',
-              }}
-            >
-              Goals
-            </Link>
-            <Link
-              href="/journeys"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#6B21A8',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #D8B4FE',
-              }}
-            >
-              Journeys
-            </Link>
-            <Link
-              href="/reflections"
-              style={{
-                fontSize: 11,
-                padding: '3px 8px',
-                borderRadius: 4,
-                backgroundColor: '#FFFFFF',
-                color: '#6B21A8',
-                textDecoration: 'none',
-                fontWeight: 700,
-                border: '1px solid #D8B4FE',
-              }}
-            >
-              Muhasabah
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
