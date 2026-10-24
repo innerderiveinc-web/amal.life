@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
@@ -9,6 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 export default function AdhkarPage() {
   const { t, isUrdu } = useLanguage();
+  const audioCtxRef = useRef<AudioContext | null>(null);
   // Determine default mode based on current local time
   const [activeTab, setActiveTab] = useState<'MORNING' | 'EVENING'>(() => {
     if (typeof window !== 'undefined') {
@@ -76,12 +77,18 @@ export default function AdhkarPage() {
       }
     }
 
-    // 2. Audio Click
+    // 2. Audio Click (Reused singleton Web Audio API synth)
     if (soundEnabled && typeof window !== 'undefined') {
       try {
-        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioCtx) {
-          const ctx = new AudioCtx();
+        const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtxClass) {
+          if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
+            audioCtxRef.current = new AudioCtxClass();
+          }
+          const ctx = audioCtxRef.current;
+          if (ctx.state === 'suspended') {
+            ctx.resume().catch(() => {});
+          }
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = 'sine';

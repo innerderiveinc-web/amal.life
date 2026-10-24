@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Head from 'next/head';
 import { Navigation } from '../components/Navigation';
 import { MasnoonTasbihEngine, TasbihPreset, TasbihSessionState } from '@amal/amal-engine';
@@ -15,7 +15,7 @@ export default function TasbihPage() {
   );
   const [hapticEnabled, setHapticEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
-
+  const audioCtxRef = useRef<AudioContext | null>(null);
   const activePreset: TasbihPreset | undefined = presets.find(p => p.id === selectedPresetId);
 
   const triggerFeedback = (type: 'TICK' | 'THRESHOLD_REACHED' | 'CYCLE_COMPLETE') => {
@@ -30,12 +30,15 @@ export default function TasbihPage() {
       }
     }
 
-    // 2. Gentle Audio Click (Web Audio API synth)
+    // 2. Gentle Audio Click (Reused singleton Web Audio API synth)
     if (soundEnabled && typeof window !== 'undefined') {
       try {
-        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContext) {
-          const ctx = new AudioContext();
+        const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtxClass) {
+          if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
+            audioCtxRef.current = new AudioCtxClass();
+          }
+          const ctx = audioCtxRef.current;
           if (ctx.state === 'suspended') {
             ctx.resume().catch(() => {});
           }

@@ -525,7 +525,11 @@ export default function SettingsPage() {
                     </label>
                     <select
                       value={appLanguage}
-                      onChange={(e) => setAppLanguage(e.target.value as any)}
+                      onChange={(e) => {
+                        const val = e.target.value as any;
+                        setAppLanguage(val);
+                        setLanguage(val);
+                      }}
                       style={{
                         width: '100%',
                         maxWidth: 360,
