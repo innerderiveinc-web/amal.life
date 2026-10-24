@@ -5,6 +5,8 @@ import { AmalApiClient } from '../lib/api';
 import { AmalTheme } from '@amal/ui';
 import { useLanguage } from '../context/LanguageContext';
 import { getJourneyTemplateDetails, JOURNEY_TEMPLATES } from '../lib/journey-templates-data';
+import { verifyContentCitation, SanadVerificationReport } from '../lib/authenticity-pipeline';
+import { SanadVerificationModal } from '../components/authenticity/SanadVerificationModal';
 
 export default function JourneysPage() {
   const { t, isUrdu } = useLanguage();
@@ -13,6 +15,7 @@ export default function JourneysPage() {
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [selectedDayByJourney, setSelectedDayByJourney] = useState<Record<string, number>>({});
   const [reflectionNotes, setReflectionNotes] = useState<Record<string, string>>({});
+  const [activeSanadReport, setActiveSanadReport] = useState<SanadVerificationReport | null>(null);
 
   const templates = [
     {
@@ -602,8 +605,34 @@ export default function JourneysPage() {
                         <p style={{ fontSize: 13, color: '#374151', fontStyle: 'italic', margin: '0 0 6px', lineHeight: 1.5 }}>
                           "{selectedDayPlan.evidence.text}"
                         </p>
-                        <div style={{ fontSize: 11, color: '#6B7280', fontWeight: 600 }}>
-                          — {selectedDayPlan.evidence.reference}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4, flexWrap: 'wrap', gap: 6 }}>
+                          <span style={{ fontSize: 11, color: '#6B7280', fontWeight: 600 }}>
+                            — {selectedDayPlan.evidence.reference}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const rep = verifyContentCitation(selectedDayPlan.evidence.reference);
+                              setActiveSanadReport(rep);
+                            }}
+                            style={{
+                              padding: '2px 8px',
+                              borderRadius: 6,
+                              border: '1px solid #10B981',
+                              backgroundColor: '#ECFDF5',
+                              fontSize: 10,
+                              fontWeight: 800,
+                              color: '#065F46',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 3,
+                            }}
+                            title={t('View Authenticity & Sanad Certificate', 'تحقیق و سندِ روایت دیکھیں')}
+                          >
+                            <span>✓</span>
+                            <span>{t('Sanad Verified', 'مستند سند')}</span>
+                          </button>
                         </div>
                       </div>
                     )}
@@ -805,6 +834,15 @@ export default function JourneysPage() {
           </div>
         </section>
       </main>
+
+      {/* Tafteesh & Sanad Verification Certificate Modal */}
+      {activeSanadReport && (
+        <SanadVerificationModal
+          report={activeSanadReport}
+          isOpen={!!activeSanadReport}
+          onClose={() => setActiveSanadReport(null)}
+        />
+      )}
     </div>
   );
 }
