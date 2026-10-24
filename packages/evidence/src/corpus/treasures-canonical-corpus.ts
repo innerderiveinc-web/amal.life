@@ -438,6 +438,21 @@ export const TREASURES_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     provenance_sha256: crypto.createHash('sha256').update('RAHEEQ-AL-MAKHTUM-MUBARAKPURI-1427AH').digest('hex'),
     scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
   },
+  {
+    work_id: 'CANON-SIR-MADARIJ',
+    title_arabic: 'مدارج النبوة ودرجات الفتوة',
+    title_transliterated: 'Madarij al-Nubuwwah (Shaykh Abd al-Haqq Muhaddith Dehlawi)',
+    author_name: 'Shaykh al-Muhaqqiq Shah Abd al-Haqq Muhaddith Dehlawi',
+    author_death_hijri: 1052,
+    discipline: 'SIRAH',
+    edition_publisher: 'Matba Nawal Kishore / Maktaba-e-Islamiyyah',
+    publication_city: 'Delhi / Lucknow',
+    critical_editor_muhaqqiq: 'Two-Jurist Hadith & Sirah Audit',
+    volume_count: 2,
+    rights_status: 'PUBLIC_DOMAIN_CONFIRMED',
+    provenance_sha256: crypto.createHash('sha256').update('MADARIJ-AL-NUBUWWAH-DEHLAWI-1052AH').digest('hex'),
+    scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
+  },
 
   // =========================================================================
   // 9. TAZKIYAH, WISDOM & HIKAYAT

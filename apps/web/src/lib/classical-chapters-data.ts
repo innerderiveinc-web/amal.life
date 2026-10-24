@@ -1664,6 +1664,80 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
       },
     ],
   },
+
+  // =========================================================================
+  // 52. MADARIJ AL-NUBUWWAH (مدارج النبوة - شیخ عبد الحق محدث دہلوی)
+  // =========================================================================
+  'CANON-SIR-MADARIJ': {
+    workId: 'CANON-SIR-MADARIJ',
+    verifiedExternalUrl: 'https://archive.org/details/MadarijUnNabuwatUrduComplete',
+    verifiedExternalName: 'Al-Maktaba (Madarij-un-Nubuwwah - Shaykh Abd al-Haqq Muhaddith Dehlawi)',
+    chapters: [
+      {
+        chapterId: 'madarij_qism_1',
+        chapterTitleArabic: 'القِسْمُ الأَوَّلُ: فِي بَيَانِ حَقِيقَةِ النُّبُوَّةِ وَأَوَّلِيَّةِ نُورِهِ الشَّرِيفِ ﷺ',
+        chapterTitleUrdu: 'قسم اول: حقیقتِ نبوت، مراتبِ رسالت اور اولیتِ نورِ محمدی ﷺ کا بیان',
+        chapterTitleEnglish: 'Part 1: The Primordial Reality of Prophethood & the Blessed Luminous Creation ﷺ',
+        arabicMatn: `قَالَ الشَّيْخُ الْمُحَقِّقُ عَبْدُ الْحَقِّ الْمُحَدِّثُ الدَّهْلَوِيُّ رَحِمَهُ اللَّهُ:
+«أَوَّلُ مَا خَلَقَ اللَّهُ تَعَالَى نُورِي، وَمِنْ نُورِي خَلَقَ كُلَّ شَيْءٍ».
+اعْلَمْ أَنَّ أَوَّلَ شَيْءٍ أَبْرَزَهُ الْحَقُّ سُبْحَانَهُ وَتَعَالَى مِنْ عَالَمِ الْغَيْبِ إِلَى عَالَمِ الشُّهُودِ هُوَ الْحَقِيقَةُ الْمُحَمَّدِيَّةُ، وَهُوَ النُّورُ الأَكْمَلُ الَّذِي اسْتَنَارَتْ بِهِ الأَكْوَانُ، فَهُوَ أَصْلُ الْمَوْجُودَاتِ وَوَاسِطَةُ الْفُيُوضَاتِ الإِلَهِيَّةِ، وَقَدْ كَانَ نَبِيًّا وَآدَمُ بَيْنَ الرُّوحِ وَالْجَسَدِ.`,
+        urduTranslation: `شیخِ محقق حضرت شاہ عبد الحق محدث دہلوی رحمۃ اللہ علیہ فرماتے ہیں:
+"جان لو کہ اللہ تعالیٰ نے سب سے پہلے جس چیز کو عالمِ غیب سے عالمِ شہود میں جلوہ گر فرمایا وہ 'حقیقتِ محمدیہ' (نورِ مصطفیٰ ﷺ) ہے۔ وہی وہ نورِ کامل ہے جس سے تمام کائنات نے روشنی پائی۔ پس حضور نبی کریم ﷺ تمام موجودات کی اصل اور تمام فیوضاتِ الٰہیہ کا واسطہ ہیں۔ اور آپ اس وقت بھی نبی تھے جب حضرت آدم علیہ السلام روح اور جسم کے درمیانی مرحلے میں تھے۔"`,
+        englishSynopsis: 'Shaykh Abd al-Haqq establishes through authentic hadith transmissions that the first creation brought forth from the unseen into existence was the Luminous Reality of the Prophet Muhammad ﷺ.',
+        scholarlyNotes: 'The opening discourse of Madarij-un-Nubuwwah outlining the pre-creational primacy, stations, and cosmic purpose of the Prophet Muhammad ﷺ.',
+      },
+      {
+        chapterId: 'madarij_qism_2',
+        chapterTitleArabic: 'القِسْمُ الثَّانِي: فِي وِلَادَتِهِ الشَّرِيفَةِ وَأَحْوَالِ مَبْعَثِهِ وَمِعْرَاجِهِ ﷺ',
+        chapterTitleUrdu: 'قسم دوم: ولادتِ با سعادت، نسبِ عالی، بعثت اور معراج شریف کے انوار',
+        chapterTitleEnglish: 'Part 2: The Blessed Nativity, Lineage, Prophetic Call & Heavenly Ascension (Mi\'raj)',
+        arabicMatn: `وَأَمَّا وِلَادَتُهُ الْمَيْمُونَةُ فَقَدْ كَانَتْ فِي عَامِ الْفِيلِ، يَوْمَ الاِثْنَيْنِ الثَّانِي عَشَرَ مِنْ رَبِيعِ الأَوَّلِ، وَقَدْ حَفِظَ اللَّهُ نَسَبَهُ الشَّرِيفَ مِنَ السِّفَاحِ مِنْ لَدُنْ آدَمَ إِلَى أَبِيهِ عَبْدِ اللَّهِ.
+وَفِي لَيْلَةِ الإِسْرَاءِ وَالْمِعْرَاجِ أُسْرِيَ بِهِ بِجَسَدِهِ وَرُوحِهِ يَقَظَةً مِنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الأَقْصَى ثُمَّ إِلَى سِدْرَةِ الْمُنْتَهَى وَقَابَ قَوْسَيْنِ، فَرَأَى مِنْ آيَاتِ رَبِّهِ الْكُبْرَى وَكَلَّمَهُ رَبُّهُ كِفَاحًا.`,
+        urduTranslation: `اور حضور اقدس ﷺ کی ولادتِ با سعادت عام الفیل، پیر کے روز ۱۲ ربیع الاول کو ہوئی۔ اللہ تبارک و تعالیٰ نے حضرت آدم علیہ السلام سے لے کر آپ کے والد ماجد حضرت عبد اللہ رضی اللہ عنہ تک آپ کے پاکیزہ نسب کو ہر قسم کی جاہلی آلودگی سے معصوم و محفوظ رکھا۔
+اور شبِ معراج میں حضور ﷺ کو بحالتِ بیداری جسم اور روح کے ساتھ مسجدِ حرام سے مسجدِ اقصیٰ، اور وہاں سے سدرۃ المنتہیٰ اور قاب قوسین کے مقامِ قرب تک سیر کرائی گئی، جہاں آپ نے اپنے رب کی سب سے بڑی نشانیاں ملاحظہ فرمائیں اور شرفِ کلام پایا۔`,
+        englishSynopsis: 'Detailed exposition of the blessed nativity, pristine ancestry, childhood under divine protection, the onset of revelation, and the bodily Ascension through the heavens.',
+        scholarlyNotes: 'Combines historical rigor with deep spiritual insight into the miracles attending the Prophet\'s early life and the Ascension.',
+      },
+      {
+        chapterId: 'madarij_qism_3',
+        chapterTitleArabic: 'القِسْمُ الثَّالِثُ: فِي غَزَوَاتِهِ وَسَرَايَاهُ وَنُصْرَةِ اللَّهِ لَهُ ﷺ',
+        chapterTitleUrdu: 'قسم سوم: غزوات، سرایا اور نصرتِ الٰہی کے ذریعے اسلام کا غلبہ',
+        chapterTitleEnglish: 'Part 3: The Prophetic Expeditions (Ghazawat) and Divine Assistance',
+        arabicMatn: `كَانَتْ مَغَازِي رَسُولِ اللَّهِ ﷺ لِإِعْلَاءِ كَلِمَةِ اللَّهِ، فَمَا حَارَبَ لِطَلَبِ مُلْكٍ وَلا عَصَبِيَّةٍ، بَلْ دِفَاعًا عَنِ الْحَقِّ وَرَدًّا لِلْعُدْوَانِ.
+وَفِي يَوْمِ بَدْرٍ أَنْزَلَ اللَّهُ جُنْدًا لَمْ يَرَوْهُ، وَكَانَ رَسُولُ اللَّهِ ﷺ أَبْهَى النَّاسِ شَجَاعَةً وَثَبَاتًا، كَمَا قَالَ عَلِيٌّ كَرَّمَ اللَّهُ وَجْهَهُ: «كُنَّا إِذَا حَمِيَ الْبَأْسُ وَلَقِيَ الْقَوْمُ الْقَوْمَ، اتَّقَيْنَا بِرَسُولِ اللَّهِ ﷺ فَمَا يَكُونُ أَحَدٌ أَقْرَبَ إِلَى الْعَدُوِّ مِنْهُ».`,
+        urduTranslation: `رسول اللہ ﷺ کے تمام غزوات صرف کلمۃ اللہ کی سربلندی اور باطل کی سرکوبی کے لیے تھے۔ آپ نے کبھی ملک گیری یا ذاتی انتقام کے لیے تلوار نہیں اٹھائی، بلکہ مظلوموں کے دفاع اور حق کی حفاظت فرمائی۔
+یومِ بدر میں اللہ تعالیٰ نے فرشتوں کا لشکر نازل فرمایا، اور حضور ﷺ شجاعت و استقامت میں سب سے بلند ترین مرتبے پر تھے، جیسا کہ حضرت علی مرتضیٰ کرم اللہ وجہہ نے فرمایا: 'جب جنگ کی آگ بھڑک اٹھتی اور گھمسان کا رن پڑتا، تو ہم رسول اللہ ﷺ کی پناہ لیا کرتے تھے اور دشمن کے سب سے زیادہ قریب حضور ﷺ ہی ہوتے تھے۔'`,
+        englishSynopsis: 'Chronicles the military ethics, defensive campaigns, and extraordinary valor of the Prophet ﷺ who fought solely for justice and divine truth.',
+        scholarlyNotes: 'Affirms that the Prophet\'s courage was unparalleled, citing Sayyiduna Ali regarding the Companions seeking shield behind him during the fiercest combat.',
+      },
+      {
+        chapterId: 'madarij_qism_4',
+        chapterTitleArabic: 'القِسْمُ الرَّابِعُ: فِي شَمَائِلِهِ الشَّرِيفَةِ وَأَخْلَاقِهِ الْكَرِيمَةِ وَمُعْجِزَاتِهِ ﷺ',
+        chapterTitleUrdu: 'قسم چہارم: شمائلِ مصطفیٰ ﷺ، حلیہ مبارک، اوصافِ حمیدہ، اخلاق اور معجزات',
+        chapterTitleEnglish: 'Part 4: The Sublime Shama\'il, Physical Beauty, Noble Ethics, and Miracles',
+        arabicMatn: `كَانَ رَسُولُ اللَّهِ ﷺ أَحْسَنَ النَّاسِ خَلْقًا وَخُلُقًا، وَكَانَ وَجْهُهُ الأَنْوَرُ يَتَلأْلأُ تَلأْلُؤَ الْقَمَرِ لَيْلَةَ الْبَدْرِ، أَزْهَرَ اللَّوْنِ، دَعِجَ الْعَيْنَيْنِ، سَهْلَ الْخَدَّيْنِ.
+وَكَانَ خُلُقُهُ الْقُرْآنَ، يَغْضَبُ لِغَضَبِهِ وَيَرْضَى لِرِضَاهُ، لا يَغْضَبُ لِنَفْسِهِ وَلا يَنْتَقِمُ لَهَا، أَجْوَدَ النَّاسِ بِالْخَيْرِ، وَأَشْجَعَ النَّاسِ قَلْبًا، وَأَوْصَلَهُمْ لِلرَّحِمِ، وَأَعْظَمَهُمْ حِلْمًا وَعَفْوًا.`,
+        urduTranslation: `رسول اللہ ﷺ حسنِ صورت اور حسنِ سیرت دونوں میں تمام مخلوق سے افضل و اعلیٰ تھے۔ آپ کا چہرہ انور چودھویں رات کے چاند کی طرح چمکتا تھا۔ رنگت نورانی، آنکھیں مبارک کشادہ اور سیاہ، رخسار مبارک ہموار اور نورانی تھے۔
+اور آپ کے اخلاقِ کریمانہ کا اصل معیار قرآنِ مجید تھا؛ آپ قرآن کے حکم پر راضی ہوتے اور اللہ کی نافرمانی پر جلال فرماتے۔ آپ نے کبھی اپنی ذات کے لیے نہ غصہ فرمایا اور نہ بدلہ لیا۔ آپ تمام انسانوں میں سب سے زیادہ سخی، سب سے بہادر، سب سے زیادہ صلہ رحمی فرمانے والے اور سب سے زیادہ درگزر فرمانے والے تھے۔`,
+        englishSynopsis: 'Comprehensive compilation of the Prophet\'s physical appearance, facial radiant beauty, day-to-day manners, kindness, patience, and character.',
+        scholarlyNotes: 'The crown jewel section of Madarij-un-Nubuwwah describing the living embodiment of the Quranic character in daily prophetic life.',
+      },
+      {
+        chapterId: 'madarij_qism_5',
+        chapterTitleArabic: 'القِسْمُ الْخَامِسُ: فِي وَفَاتِهِ الشَّرِيفَةِ وَحَيَاتِهِ فِي الْبَرْزَخِ وَحُقُوقِهِ عَلَى أُمَّتِهِ ﷺ',
+        chapterTitleUrdu: 'قسم پنجم: وصالِ مبارک، احوالِ برزخ، حیات النبی ﷺ کی عقلی و نقلی دلیلیں، اور امت پر واجب حقوق',
+        chapterTitleEnglish: 'Part 5: The Noble Demise, Reality of Barzakh Life, and Rights of the Prophet ﷺ upon the Ummah',
+        arabicMatn: `اعْلَمْ أَنَّ الأَنْبِيَاءَ عَلَيْهِمُ الصَّلَاةُ وَالسَّلَامُ أَحْيَاءٌ فِي قُبُورِهِمْ يُصَلُّونَ، وَحَيَاتُهُمْ حَيَاةٌ حَقِيقِيَّةٌ حِسِّيَّةٌ بَرْزَخِيَّةٌ أَقْوَى مِنْ حَيَاةِ الشُّهَدَاءِ.
+وَقَدْ ثَبَتَ فِي الصَّحِيحِ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «إِنَّ اللَّهَ حَرَّمَ عَلَى الأَرْضِ أَنْ تَأْكُلَ أَجْسَادَ الأَنْبِيَاءِ»، وَقَالَ: «مَنْ صَلَّى عَلَيَّ عِنْدَ قَبْرِي سَمِعْتُهُ، وَمَنْ صَلَّى عَلَيَّ نَائِيًا بُلِّغْتُهُ».
+فَمِنْ حَقِّهِ ﷺ عَلَى أُمَّتِهِ كَمَالُ الْمَحَبَّةِ وَالتَّعْظِيمِ وَاتِّبَاعُ سُنَّتِهِ وَالإِكْثَارُ مِنَ الصَّلَاةِ وَالسَّلَامِ عَلَيْهِ.`,
+        urduTranslation: `جان لو کہ انبیاء علیہم السلام اپنی مزاراتِ مقدسہ میں زندہ ہیں اور نمازیں پڑھتے ہیں، اور ان کی حیاتِ برزخی ایک حقیقی اور حسی حیات ہے جو شہداء کی حیات سے بھی کہیں زیادہ قوی اور اعلیٰ ہے۔
+اور حدیثِ صحیح میں ثابت ہے کہ رسول اللہ ﷺ نے فرمایا: 'بے شک اللہ تعالیٰ نے زمین پر انبیاء کے جسموں کو کھانا حرام فرما دیا ہے'۔ اور فرمایا: 'جو مجھ پر میری قبر کے پاس درود پڑھتا ہے میں خود اسے سنتا ہوں، اور جو مجھ پر دور سے درود بھیجتا ہے وہ مجھے پہنچایا جاتا ہے'۔
+پس حضور ﷺ کا امت پر یہ واجب حق ہے کہ آپ سے جان و مال سے بڑھ کر محبت کی جائے، تعظیم و ادب بجا لایا جائے، سنت کی پیروی کی جائے اور کثرت سے درود و سلام کا نذرانہ پیش کیا جائے۔`,
+        englishSynopsis: 'Presents definitive scriptural evidence confirming the real, continuous bodily life of the Prophets in the realm of Barzakh, and outlines the obligatory rights of veneration, love, and Salawat due to the Prophet ﷺ.',
+        scholarlyNotes: 'Authored with masterful Hadith scholarship citing Sunan Abi Dawud, Bayhaqi, and classical consensus regarding Hayat al-Anbiya and the hearing of Salawat at the Rawdah Sharif.',
+      },
+    ],
+  },
 };
 
 // Direct catalog ID aliases for uncollided Wave / Treasures mapping
@@ -1726,6 +1800,7 @@ export function getBookChapters(
     if (t.includes('ibanah') || t.includes('al-ibanah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-AQD-003'] || null;
     if (t.includes('hisn al-hasin') || t.includes('hisn-al-hasin')) return CLASSICAL_BOOKS_CHAPTERS['CANON-DUA-003'] || null;
     if (t.includes('ibn al-salah') || t.includes('ibn salah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-MST-001'] || null;
+    if (t.includes('madarij') || t.includes('madarij-un-nubuwwah') || t.includes('madarij un nubuwwah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-MADARIJ'] || null;
   }
 
   return null;
@@ -1794,6 +1869,7 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-SIR-004': { url: "https://www.dawateislami.net/bookslibrary/ur/seerat-e-mustafa", name: "Maktaba-tul-Madina (Sirat-e-Mustafa - Allama Abdul Mustafa Azmi)" },
   'CANON-SIR-005': { url: "https://shamela.ws/book/11133", name: "Al-Maktaba al-Shamela (Ar-Raheeq al-Makhtum / Dala'il al-Nubuwwah)" },
   'CANON-SIR-006': { url: "https://shamela.ws/book/10840", name: "Al-Maktaba al-Shamela (Al-Mawahib al-Ladunniyyah - Al-Qastallani)" },
+  'CANON-SIR-MADARIJ': { url: "https://archive.org/details/MadarijUnNabuwatUrduComplete", name: "Al-Maktaba (Madarij-un-Nubuwwah - Shaykh Abd al-Haqq Muhaddith Dehlawi)" },
   'CANON-TAZ-005': { url: "https://archive.org/details/futuh-al-ghayb-jilani", name: "Classical Spiritual Archives (Futuh al-Ghayb - Shaykh Abdul Qadir Jilani)" },
   'CANON-TAZ-006': { url: "https://shamela.ws/book/21651", name: "Al-Maktaba al-Shamela (Qut al-Qulub - Abu Talib al-Makki)" },
   'CANON-TAZ-007': { url: "https://shamela.ws/book/21704", name: "Al-Maktaba al-Shamela (Awarif al-Ma'arif - Al-Suhrawardi)" },
