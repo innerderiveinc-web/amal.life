@@ -90,6 +90,15 @@ export default function JourneysPage() {
       urTitle: '14 روزہ شکر گزاری اور قناعت',
       urDescription: 'حسد اور بے چینی سے نجات پا کر رب کی نعمتوں پر دلی شکر اور قناعت اختیار کرنے کا 14 روزہ سفر۔',
     },
+    {
+      id: 'tmpl-sahabiyyat-14d',
+      title: '14-Day Walking with the Sahabiyyat',
+      duration: '14 Days',
+      phases: '3 Phases (Empathy & Solace, Courage & Intellect, Legacy & Service)',
+      description: 'Daily character-building inspired by the Mothers of the Believers: Khadijah, Aisha, Fatimah, and the heroic Sahabiyyat.',
+      urTitle: '14 روزہ سفرِ اسوۂ صحابیات',
+      urDescription: 'سیدتنا خدیجہ، عائشہ، اور فاطمہ رضی اللہ عنہن کی سیرت و کردار کو اپنی روزمرہ زندگی میں اپنانے کا 14 روزہ باوقار روحانی سفر۔',
+    },
   ];
 
   const loadJourneys = async () => {

@@ -212,6 +212,94 @@ export default function FamilyPage() {
             </div>
           ))}
         </div>
+
+        {/* BEDTIME SUNNAH STORIES & TARBIYAH FOR CHILDREN */}
+        <div style={{ marginTop: 32 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+            <div>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#9D174D', backgroundColor: '#FDF2F8', padding: '3px 8px', borderRadius: 4 }}>
+                ماں کی گود و تربیتِ اولاد
+              </span>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: '#111827', margin: '4px 0 2px' }}>
+                بچوں کے لیے مسنون کہانیاں اور خواب گاہ کے آداب (Bedtime Sunnah Stories)
+              </h3>
+              <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>
+                ماؤں کے لیے مستند اسلامی واقعات تاکہ رات کو بچوں کو سناتے وقت ان کے دلوں میں عشقِ رسول ﷺ اور اچھے اخلاق کی بنیاد رکھی جا سکے۔
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+            {[
+              {
+                id: 'story-1',
+                title: 'چڑیا کے بچوں کا درد اور رحمتِ عالم ﷺ',
+                titleEn: 'The Mother Bird and Prophetic Mercy',
+                lesson: 'جانوروں اور پرندوں پر رحم کرنا اور ماں کے دل کا احساس۔',
+                reference: 'سنن ابی داؤد، حدیث رقم ۲۶۷۵',
+                content: 'ایک سفر میں صحابہ نے ایک چڑیا کے گھونسلے سے دو چھوٹے بچے اٹھا لیے۔ چڑیا اپنے بچوں کی جدائی میں تڑپ کر حضور ﷺ کے اوپر منڈلانے لگی۔ رحمتِ عالم ﷺ نے فوراً فرمایا: کس نے اس چڑیا کو اس کے بچوں کی وجہ سے تکلیف دی ہے؟ جاؤ فوراً اس کے بچے واپس رکھ آؤ!',
+              },
+              {
+                id: 'story-2',
+                title: 'حضرت انس بن مالک اور نبوی شفقت',
+                titleEn: 'Ten Years of Tenderness with Anas',
+                lesson: 'بچوں کے ساتھ غصے اور ڈانٹ ڈپٹ کے بجائے نرمی اور محبت کا برتاؤ۔',
+                reference: 'صحیح البخاری، حدیث رقم ۶۰۳۸',
+                content: 'حضرت انس بن مالک رضی اللہ عنہ فرماتے ہیں کہ میں نے دس سال تک رسول اللہ ﷺ کی خدمت کی۔ اس تمام عرصے میں حضور ﷺ نے مجھے کبھی "اُف" تک نہ فرمایا، اور نہ کبھی کسی کام پر یہ فرمایا کہ تم نے یہ کیوں کیا یا کیوں نہ کیا!',
+              },
+              {
+                id: 'story-3',
+                title: 'کھجور کے تنے کا رونا اور گلے لگانا',
+                titleEn: 'The Weeping Palm Trunk in the Mosque',
+                lesson: 'رسول اللہ ﷺ سے والہانہ محبت اور درود شریف کی برکت۔',
+                reference: 'صحیح البخاری، حدیث رقم ۳۵۸۴',
+                content: 'مسجدِ نبوی میں کھجور کا ایک خشک تنا تھا جس سے ٹیک لگا کر حضور ﷺ خطبہ دیتے۔ جب منبر بنا اور حضور ﷺ وہاں تشریف لے گئے، تو وہ سوکھا تنا چھوٹے بچے کی طرح بلک بلک کر رونے لگا۔ سرکار ﷺ منبر سے اترے اور اسے گلے لگایا تو وہ چپ ہوا۔',
+              },
+              {
+                id: 'story-4',
+                title: 'سوتے وقت فرشتوں کا حفاظتی حصار',
+                titleEn: 'Bedtime Guardian Angels & 3 Quls',
+                lesson: 'سونے سے پہلے تینوں قل پڑھ کر دم کرنا اور آیت الکرسی کا حصار۔',
+                reference: 'صحیح البخاری، حدیث رقم ۵۰۱۷',
+                content: 'رسول اللہ ﷺ ہر رات سوتے وقت دونوں ہاتھ پھیلا کر سورۃ الاخلاص، سورۃ الفلق اور سورۃ الناس پڑھتے اور ہاتھوں پر پھونک کر سر، چہرے اور پورے جسم پر تین مرتبہ پھیرتے۔ اس سے اللہ تعالیٰ ساری رات شیاطین اور برے خوابوں سے حفاظت فرماتا ہے۔',
+              },
+            ].map((story) => (
+              <div
+                key={story.id}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 12,
+                  padding: 18,
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                    <h4 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#065F46' }}>
+                      {story.title}
+                    </h4>
+                    <span style={{ fontSize: 10, color: '#92400E', backgroundColor: '#FEF3C7', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+                      {story.reference}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: 12, color: '#6B7280', fontStyle: 'italic', marginBottom: 10 }}>
+                    {story.titleEn}
+                  </div>
+                  <p style={{ fontSize: 13, color: '#374151', lineHeight: 1.6, marginBottom: 12 }}>
+                    {story.content}
+                  </p>
+                </div>
+                <div style={{ backgroundColor: '#F0FDF4', padding: '8px 10px', borderRadius: 6, fontSize: 11, color: '#166534', border: '1px solid #BBF7D0' }}>
+                  <strong>سبق و نصیحت:</strong> {story.lesson}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );

@@ -59,6 +59,7 @@ export function getSmartCoachGuidance(state?: Partial<SpiritualCoachState>): Spi
   let savedStreak = 0;
   let savedFocus = 'صبر اور نماز میں استقامت (Salah & Patience)';
 
+  let isSpiritualPauseActive = false;
   if (typeof window !== 'undefined') {
     try {
       const storedAudit = localStorage.getItem(`amal_muhasabah_${dateStr}`);
@@ -69,6 +70,8 @@ export function getSmartCoachGuidance(state?: Partial<SpiritualCoachState>): Spi
 
       const storedFocus = localStorage.getItem('amal_spiritual_focus');
       if (storedFocus) savedFocus = storedFocus;
+
+      isSpiritualPauseActive = localStorage.getItem('amal_spiritual_pause_mode') === 'true';
     } catch {}
   }
 
@@ -78,7 +81,34 @@ export function getSmartCoachGuidance(state?: Partial<SpiritualCoachState>): Spi
     source: 'جامع الترمذی · حدیث ۲۸۷۹',
   };
 
-  if (phase === 'MIDDAY_CHECK') {
+  // If sister is in Spiritual Pause Mode (Cycle / Postnatal)
+  if (isSpiritualPauseActive) {
+    if (phase === 'MORNING_INTENT') {
+      microAction = {
+        ur: 'ایامِ معافی: نماز کی چھوٹ شریعت کا رخصت و تحفہ ہے۔ صبح ۱۰۰ بار درودِ پاک اور استغفار کا ورد فرمائیں۔',
+        en: 'Spiritual Pause: Prayer exemption is a divine concession. Engage in 100x Salawat and Istighfar this morning.',
+        source: 'جنتی زیور · ص ۷۸ / بہارِ شریعت',
+      };
+    } else if (phase === 'MIDDAY_CHECK') {
+      microAction = {
+        ur: 'ایامِ معافی: دوپہر کے وقت مصلے پر باوضو بیٹھ کر تسبیح و تحمید (سبحان اللہ، الحمد للہ) پڑھنا نور کو قائم رکھتا ہے۔',
+        en: 'Spiritual Pause: Sitting on your prayer rug at midday reciting Tasbih preserves continuous spiritual light.',
+        source: 'رد المحتار علی الدر المختار',
+      };
+    } else if (phase === 'EVENING_RECONNECT') {
+      microAction = {
+        ur: 'اہلِ خانہ کے لیے کھانا پکانا اور بچوں کی مسکراتے ہوئے دیکھ بھال کرنا بارگاہِ الٰہی میں صدقۂ جاریہ ہے۔',
+        en: 'Cooking for family and nurturing children with a smile is continuous rewarded charity (Sadaqah).',
+        source: 'شعب الایمان للبیہقی',
+      };
+    } else {
+      microAction = {
+        ur: 'ماؤں کے لیے تسلی: رات کو بیدار ہو کر بچے کو سنبھالنا اور دودھ پلانا تہجد اور جہاد کے برابر اجر رکھتا ہے۔',
+        en: 'Solace for Mothers: Tending to a crying child at night with patience carries the reward of Tahajjud and vigil.',
+        source: 'نوادر الحدیث · علامہ عبد المصطفیٰ اعظمی',
+      };
+    }
+  } else if (phase === 'MIDDAY_CHECK') {
     microAction = {
       ur: 'نمازِ ظہر و عصر کے بعد ۶۰ سیکنڈ کی مسنون تسبیح: ۳۳ مرتبہ سبحان اللہ، ۳۳ مرتبہ الحمد للہ، ۳۴ مرتبہ اللہ اکبر۔',
       en: 'Post-Dhuhr/Asr 60-second Dhikr: SubhanAllah (33x), Alhamdulillah (33x), Allahu Akbar (34x).',

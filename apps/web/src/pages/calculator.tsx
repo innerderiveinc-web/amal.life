@@ -29,6 +29,10 @@ export default function CalculatorPage() {
   const [cash, setCash] = useState(250000);
   const [goldGrams, setGoldGrams] = useState(25);
   const [silverGrams, setSilverGrams] = useState(100);
+  // Women's Personal Gold Jewelry & Karat Converter State
+  const [jewelryTolas, setJewelryTolas] = useState<number>(0);
+  const [jewelryGrams, setJewelryGrams] = useState<number>(0);
+  const [jewelryKarat, setJewelryKarat] = useState<number>(22);
   const [businessStock, setBusinessStock] = useState(150000);
   const [receivables, setReceivables] = useState(50000);
   const [tradingShares, setTradingShares] = useState(0); // 100% zakatable (Urud al-Tijarah)
@@ -250,6 +254,113 @@ export default function CalculatorPage() {
                   </div>
                 </div>
 
+                {/* WOMEN'S JEWELRY & GOLD PURITY CALCULATOR (HANAFI FIQH) */}
+                <div
+                  style={{
+                    backgroundColor: '#FDF2F8',
+                    borderRadius: 10,
+                    padding: 14,
+                    border: '1px solid #FBCFE8',
+                    marginTop: 4,
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span>🌸</span>
+                      <strong style={{ fontSize: 13, color: '#9D174D' }}>
+                        {isUrdu ? 'خواتین کے زیورات کا حسابی ماڈیول (تولہ و قیراط)' : 'Women\'s Jewelry & Karat Converter (Hanafi Fiqh)'}
+                      </strong>
+                    </div>
+                    <span style={{ fontSize: 10, backgroundColor: '#BE185D', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+                      بہارِ شریعت
+                    </span>
+                  </div>
+                  <p style={{ margin: '0 0 10px', fontSize: 11, color: '#4B5563', lineHeight: 1.4 }}>
+                    {isUrdu
+                      ? 'فقہ حنفی میں ذاتی استعمال کے سونے کے زیورات پر بھی زکوٰۃ واجب ہے۔ اپنے زیور کا وزن اور قیراط درج کریں۔'
+                      : 'In Hanafi jurisprudence (Bahar-e-Shari\'at), personal gold jewelry is subject to Zakat if total gold reaches Nisab (7.5 Tolas / 87.48g).'}
+                  </p>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8, marginBottom: 8 }}>
+                    <div>
+                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
+                        {isUrdu ? 'وزن (تولہ)' : 'Weight (Tolas)'}
+                      </label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        placeholder="e.g. 5"
+                        value={jewelryTolas || ''}
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          setJewelryTolas(val);
+                          setJewelryGrams(Math.round(val * 11.664 * 100) / 100);
+                        }}
+                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
+                        {isUrdu ? 'یا وزن (گرام)' : 'Or Weight (Grams)'}
+                      </label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        placeholder="e.g. 58.3"
+                        value={jewelryGrams || ''}
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          setJewelryGrams(val);
+                          setJewelryTolas(Math.round((val / 11.664) * 100) / 100);
+                        }}
+                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: 11, fontWeight: 700, color: '#6B7280', display: 'block', marginBottom: 2 }}>
+                        {isUrdu ? 'قیراط / کھرا پن' : 'Purity / Karat'}
+                      </label>
+                      <select
+                        value={jewelryKarat}
+                        onChange={(e) => setJewelryKarat(Number(e.target.value))}
+                        style={{ width: '100%', padding: '6px 8px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 12 }}
+                      >
+                        <option value={24}>24 Karat (99.9% خالص)</option>
+                        <option value={22}>22 Karat (91.6% عام زیور)</option>
+                        <option value={21}>21 Karat (87.5% خلیجی)</option>
+                        <option value={18}>18 Karat (75.0% نگینے والا)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {jewelryGrams > 0 && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: 6, border: '1px solid #FBCFE8', flexWrap: 'wrap', gap: 8 }}>
+                      <div style={{ fontSize: 11, color: '#831843' }}>
+                        خالص سونے کا وزن (24K Equivalent): <strong>{Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100}g</strong> ({Math.round(((jewelryGrams * (jewelryKarat / 24)) / 11.664) * 100) / 100} تولہ)
+                      </div>
+                      <button
+                        onClick={() => {
+                          const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
+                          setGoldGrams(net24k);
+                          showAmalToast('خواتین کے زیورات کا خالص وزن زکوٰۃ میں درج ہو گیا!');
+                        }}
+                        style={{
+                          backgroundColor: '#9D174D',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          padding: '4px 10px',
+                          borderRadius: 6,
+                          fontSize: 11,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {isUrdu ? 'اثاثوں میں درج کریں' : 'Apply to Gold'}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
                 <div>
                   <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
                     Trade Merchandise (Wholesale Inventory)
@@ -453,6 +564,40 @@ export default function CalculatorPage() {
               <h2 style={{ fontSize: 17, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
                 Deceased & Heirs Configuration
               </h2>
+
+              {/* SACRED INVIOLABILITY OF WOMEN'S INHERITANCE IN SHARIAH */}
+              <div
+                style={{
+                  backgroundColor: '#FEF2F2',
+                  border: '1px solid #FECACA',
+                  borderRadius: 12,
+                  padding: 16,
+                  marginBottom: 16,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                  <span style={{ fontSize: 20 }}>📜</span>
+                  <strong style={{ fontSize: 14, color: '#991B1B' }}>
+                    {isUrdu ? 'حرمتِ اکلِ میراثِ نسواں — خواتین کے شرعی و لازمی حقوق' : 'Sacred Inviolability of Women\'s Inheritance (Quran & Sunnah)'}
+                  </strong>
+                </div>
+                <p style={{ margin: '0 0 8px', fontSize: 12, color: '#374151', lineHeight: 1.5 }}>
+                  {isUrdu
+                    ? 'اللہ تعالیٰ نے قرآن کریم میں ماؤں، بیٹیوں، بیویوں اور بہنوں کا حصہ خود مقرر فرمایا ہے۔ شریعت میں عورت کے حصے کو دبا لینا، محروم کرنا یا زبردستی معاف کروانا گناہِ کبیرہ اور جہنم کی سخت وعید کا موجب ہے۔ (فتاویٰ رضویہ، جلد ۲۶)'
+                    : 'Allah Almighty has divinely decreed the protected legal shares of mothers, wives, daughters, and sisters in Surah An-Nisa (4:7-14). Disinheriting women or coercing them into forfeiting their inheritance is an unforgivable injustice.'}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
+                    بیٹی کا حصہ: اکیلی ہو تو نصف (1/2)، دو یا زیادہ ہوں تو دو تہائی (2/3)
+                  </span>
+                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
+                    بیوی کا حصہ: اولاد ہو تو آٹھواں (1/8)، نہ ہو تو چوتھائی (1/4)
+                  </span>
+                  <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
+                    ماں کا حصہ: اولاد ہو تو چھٹا (1/6)، نہ ہو تو تہائی (1/3)
+                  </span>
+                </div>
+              </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div>
