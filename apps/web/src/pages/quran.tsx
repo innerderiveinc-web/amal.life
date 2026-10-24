@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
-import { AmalTheme } from '@amal/ui';
-import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../lib/quran-surahs-data';
-import { ALL_114_SURAHS, QuranSurahMeta } from '../lib/quran-114-directory';
+import { ALL_114_SURAHS } from '../lib/quran-114-directory';
 import { getSurahAudioEndpoints } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { SurahDirectorySidebar } from '../components/quran/SurahDirectorySidebar';
@@ -20,9 +17,10 @@ import { useLanguage } from '../context/LanguageContext';
 import { QuranAudioHubTab } from '../components/quran/QuranAudioHubTab';
 import { QuranTajweedHubTab } from '../components/quran/QuranTajweedHubTab';
 import { useQuranMasterAudio } from '../components/quran/useQuranMasterAudio';
+import { QuranHeaderBar, QuranHubTab } from '../components/quran/QuranHeaderBar';
+import { useQuranSurahLoader } from '../components/quran/useQuranSurahLoader';
 
-export type { AudioSyncMode, AudioSegment };
-export type QuranHubTab = 'READER' | 'AUDIO' | 'TAJWEED' | 'WISDOM';
+export type { AudioSyncMode, AudioSegment, QuranHubTab };
 
 export default function QuranWisdomPage() {
   const router = useRouter();
@@ -85,17 +83,6 @@ export default function QuranWisdomPage() {
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [isSurahSettingsOpen, setIsSurahSettingsOpen] = useState<boolean>(false);
 
-  // Surahs in-memory cache
-  const [loadedSurahsCache, setLoadedSurahsCache] = useState<Record<number, QuranSurahData>>(() => {
-    const initial: Record<number, QuranSurahData> = {};
-    for (const s of QURAN_SURAHS_COLLECTION) {
-      initial[s.surahNumber] = s;
-    }
-    return initial;
-  });
-  const [isLoadingSurah, setIsLoadingSurah] = useState<boolean>(false);
-  const [surahFetchError, setSurahFetchError] = useState<string | null>(null);
-
   // Smart Resume / Bookmark Persistence State
   const [lastReadPosition, setLastReadPosition] = useState<{
     surahNumber: number;
@@ -109,116 +96,28 @@ export default function QuranWisdomPage() {
 
   const isInitialResumeChecked = useRef(false);
 
+  // Modular Surah Dataset & Cache Loader Hook
+  const [playingAyahNumberState, setPlayingAyahNumberState] = useState<number | null>(null);
+  const {
+    loadedSurahsCache,
+    isLoadingSurah,
+    surahFetchError,
+    handleSelectSurah,
+  } = useQuranSurahLoader({
+    setSelectedSurahNumber,
+    setFocusedAyahNumber,
+    setPlayingAyahNumber: setPlayingAyahNumberState,
+    setMobileTab,
+  });
+
   const currentSurah = loadedSurahsCache[selectedSurahNumber] || loadedSurahsCache[1]!;
   const currentSurahMeta =
     ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || ALL_114_SURAHS[0]!;
-
-  const handleSelectSurah = async (surahNum: number, targetAyahNumber?: number) => {
-    setSelectedSurahNumber(surahNum);
-    setFocusedAyahNumber(targetAyahNumber && targetAyahNumber >= 1 ? targetAyahNumber : 1);
-    setSurahFetchError(null);
-    setPlayingAyahNumber(null);
-    setMobileTab('READER');
-
-    const meta = ALL_114_SURAHS.find((s) => s.number === surahNum);
-    if (
-      loadedSurahsCache[surahNum] &&
-      meta &&
-      loadedSurahsCache[surahNum].verses.length >= meta.ayahsCount
-    ) {
-      return;
-    }
-
-    // Check offline local device cache first
-    try {
-      const offlineCached = localStorage.getItem(`amal_cached_surah_${surahNum}`);
-      if (offlineCached) {
-        const parsed = JSON.parse(offlineCached);
-        if (parsed && Array.isArray(parsed.verses) && parsed.verses.length > 0) {
-          setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: parsed }));
-          return;
-        }
-      }
-    } catch {}
-
-    setIsLoadingSurah(true);
-    try {
-      // 1. Primary: Load instantaneously from local offline bundled dataset (100% offline, zero network)
-      try {
-        const localRes = await fetch(`/data/quran/surahs/${surahNum}.json`);
-        if (localRes.ok) {
-          const localData = await localRes.json();
-          if (localData && Array.isArray(localData.verses) && localData.verses.length > 0) {
-            const bundledSurah: QuranSurahData = {
-              surahNumber: surahNum,
-              nameArabic: meta?.nameArabic || localData.nameArabic,
-              nameTransliterated: meta?.nameTransliterated || localData.nameTransliterated,
-              nameUrdu: meta?.nameUrdu || localData.nameUrdu || '',
-              nameEnglish: meta?.nameEnglish || localData.nameEnglish,
-              revelationType: (meta?.revelationType || localData.revelationType) as any,
-              ayahsCount: meta?.ayahsCount || localData.ayahsCount || localData.verses.length,
-              verses: localData.verses,
-            };
-            setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: bundledSurah }));
-            try {
-              localStorage.setItem(`amal_cached_surah_${surahNum}`, JSON.stringify(bundledSurah));
-            } catch {}
-            setIsLoadingSurah(false);
-            return;
-          }
-        }
-      } catch (localErr) {
-        console.info('Local static surah fetch bypassed, attempting network fallback:', localErr);
-      }
-
-      // 2. Secondary Network Fallback: Remote CDN if local static asset is unreachable
-      const res = await fetch(
-        `https://api.alquran.cloud/v1/surah/${surahNum}/editions/quran-uthmani,ur.kanzuliman,en.sahih`
-      );
-      if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-      const data = await res.json();
-      if (data.code === 200 && Array.isArray(data.data) && data.data.length >= 3) {
-        const uthmani = data.data[0];
-        const urdu = data.data[1];
-        const english = data.data[2];
-
-        const verses = uthmani.ayahs.map((ayah: any, idx: number) => ({
-          ayahNumber: ayah.numberInSurah,
-          textArabic: ayah.text,
-          textUrdu: urdu.ayahs[idx]?.text || '',
-          textEnglish: english.ayahs[idx]?.text || '',
-        }));
-
-        const newSurah: QuranSurahData = {
-          surahNumber: surahNum,
-          nameArabic: meta?.nameArabic || uthmani.name,
-          nameTransliterated: meta?.nameTransliterated || uthmani.englishName,
-          nameUrdu: meta?.nameUrdu || '',
-          nameEnglish: meta?.nameEnglish || uthmani.englishNameTranslation,
-          revelationType: (meta?.revelationType ||
-            (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as any,
-          ayahsCount: meta?.ayahsCount || uthmani.numberOfAyahs,
-          verses,
-        };
-
-        setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: newSurah }));
-        try {
-          localStorage.setItem(`amal_cached_surah_${surahNum}`, JSON.stringify(newSurah));
-        } catch {}
-      }
-    } catch (err: any) {
-      console.warn('Surah online load failed, fallback:', err);
-      setSurahFetchError('سورت لوڈ کرنے میں خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔');
-    } finally {
-      setIsLoadingSurah(false);
-    }
-  };
 
   // Modular Master Audio Hook
   const {
     masterAudioRef,
     playingAyahNumber,
-    setPlayingAyahNumber,
     audioSyncMode,
     setAudioSyncMode,
     currentAudioSegment,
@@ -391,7 +290,7 @@ export default function QuranWisdomPage() {
     { num: 36, label: 'يس' },
     { num: 55, label: 'الرحمن' },
     { num: 56, label: 'الواقعة' },
-    { num: 67, label: 'الملك' },
+    { num: 67, label: 'الملک' },
     { num: 103, label: 'العصر' },
     { num: 107, label: 'الماعون' },
     { num: 112, label: 'الإخلاص' },
@@ -466,7 +365,6 @@ export default function QuranWisdomPage() {
           if (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') {
             handleMasterAudioEnded();
           } else {
-            setPlayingAyahNumber(null);
             setIsPlayingPaused(false);
             setSurahWideAudioType(null);
             setActiveTafseerCardKey(null);
@@ -478,211 +376,27 @@ export default function QuranWisdomPage() {
       />
 
       <main style={{ maxWidth: 1140, margin: '0 auto', padding: '0 20px' }}>
-        {/* Noble Header & Scholarly Credentials Bar */}
-        <div
-          style={{
-            padding: '16px 0 20px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 12,
-            borderBottom: '1px solid #E2E8F0',
-            marginBottom: 20,
+        {/* Quran Header Bar with Credentials, Resume Action & Hub Tabs */}
+        <QuranHeaderBar
+          lastReadPosition={lastReadPosition}
+          onResumeLastRead={() => {
+            if (lastReadPosition) {
+              handleSelectSurah(lastReadPosition.surahNumber, lastReadPosition.ayahNumber);
+              if (lastReadPosition.viewMode) setViewMode(lastReadPosition.viewMode);
+              showAmalToast(
+                t(
+                  `✨ Resumed: ${lastReadPosition.surahNameTransliterated} (Verse ${lastReadPosition.ayahNumber})`,
+                  `✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`
+                ),
+                'success'
+              );
+            }
           }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Link
-              href="/"
-              style={{
-                color: AmalTheme.colors.primary,
-                textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: 13,
-              }}
-            >
-              Home
-            </Link>
-            <span style={{ color: '#94A3B8' }}>/</span>
-            <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 16 }}>
-              {t('The Holy Quran', 'القرآن الکریم', 'القرآن الكريم')}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            {lastReadPosition && (
-              <button
-                onClick={() => {
-                  handleSelectSurah(lastReadPosition.surahNumber, lastReadPosition.ayahNumber);
-                  if (lastReadPosition.viewMode) setViewMode(lastReadPosition.viewMode);
-                  showAmalToast(
-                    t(
-                      `✨ Resumed: ${lastReadPosition.surahNameTransliterated} (Verse ${lastReadPosition.ayahNumber})`,
-                      `✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`
-                    ),
-                    'success'
-                  );
-                }}
-                style={{
-                  fontSize: 11,
-                  padding: '4px 10px',
-                  borderRadius: 8,
-                  backgroundColor: '#ECFDF5',
-                  color: '#065F46',
-                  fontWeight: 800,
-                  border: '1px solid #A7F3D0',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
-                  transition: 'all 0.15s ease',
-                }}
-                title={t('Resume last recitation', 'آخری تلاوت یا سنے گئے مقام پر فوری جائیں')}
-              >
-                <span>🔖</span>
-                <span>
-                  {t(
-                    `Last Read: ${lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`,
-                    `آخری مقام: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`
-                  )}
-                </span>
-              </button>
-            )}
-            <span
-              style={{
-                fontSize: 11,
-                padding: '4px 10px',
-                borderRadius: 8,
-                backgroundColor: '#DCFCE7',
-                color: '#166534',
-                fontWeight: 800,
-                border: '1px solid #BBF7D0',
-              }}
-            >
-              {t('✓ Uthmanic Medina Script', '✓ مصحف مدینہ منورہ')}
-            </span>
-            <span
-              style={{
-                fontSize: 11,
-                padding: '4px 10px',
-                borderRadius: 8,
-                backgroundColor: '#FEF3C7',
-                color: '#92400E',
-                fontWeight: 800,
-                border: '1px solid #FDE68A',
-              }}
-            >
-              {t('Translation: Kanz-ul-Iman', 'ترجمہ: کنز الایمان فی ترجمۃ القرآن')}
-            </span>
-            <span
-              style={{
-                fontSize: 11,
-                padding: '4px 10px',
-                borderRadius: 8,
-                backgroundColor: '#EFF6FF',
-                color: '#1E40AF',
-                fontWeight: 800,
-                border: '1px solid #BFDBFE',
-              }}
-            >
-              {t("Tafsir: Khaza'in-ul-Irfan", 'تفسیر: خزائن العرفان')}
-            </span>
-            <Link
-              href="/wisdom"
-              style={{
-                fontSize: 11,
-                padding: '4px 12px',
-                borderRadius: 8,
-                backgroundColor: '#065F46',
-                color: '#FFFFFF',
-                fontWeight: 700,
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 5,
-              }}
-              title={t('Open 42 Curated Quranic Wisdom Cards', '۴۲ منتخب قرآنی حکمت کارڈز کھولیں')}
-            >
-              <span>✨</span>
-              <span>{t('Wisdom Cards', 'حکمت کارڈز')}</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* UNIFIED QURAN HUB SUITE TABS */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 8,
-            overflowX: 'auto',
-            marginBottom: 20,
-            padding: 4,
-            backgroundColor: '#FFFFFF',
-            borderRadius: 12,
-            border: '1px solid #E2E8F0',
-          }}
-        >
-          {[
-            {
-              id: 'READER',
-              icon: '📖',
-              labelUrdu: 'تلاوت و تفاسیر (۱۱۴ سورتیں)',
-              labelEn: 'Recitation & Tafsir (114 Surahs)',
-            },
-            {
-              id: 'AUDIO',
-              icon: '🎧',
-              labelUrdu: 'قراء کرام و آڈیو اسٹریمنگ',
-              labelEn: 'Master Reciters Stream',
-            },
-            {
-              id: 'TAJWEED',
-              icon: '🎙️',
-              labelUrdu: 'تجوید و مخارج مشق',
-              labelEn: 'Tajweed & Makharij Trainer',
-            },
-            {
-              id: 'WISDOM',
-              icon: '✨',
-              labelUrdu: 'قرآنی حکمت کارڈز',
-              labelEn: 'Ayah Wisdom Cards',
-            },
-          ].map((tab) => {
-            const isActive = activeHubTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  if (tab.id === 'WISDOM') {
-                    router.push('/wisdom');
-                  } else {
-                    setActiveHubTab(tab.id as QuranHubTab);
-                    router.push(`/quran?tab=${tab.id.toLowerCase()}`, undefined, { shallow: true });
-                  }
-                }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '9px 16px',
-                  borderRadius: 8,
-                  border: 'none',
-                  backgroundColor: isActive ? '#065F46' : 'transparent',
-                  color: isActive ? '#FFFFFF' : '#475569',
-                  fontWeight: isActive ? 800 : 600,
-                  fontSize: 13,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  transition: 'all 0.15s ease',
-                }}
-              >
-                <span>{tab.icon}</span>
-                <span>{isUrdu ? tab.labelUrdu : tab.labelEn}</span>
-              </button>
-            );
-          })}
-        </div>
+          activeHubTab={activeHubTab}
+          onSelectHubTab={setActiveHubTab}
+          isUrdu={isUrdu}
+          t={t}
+        />
 
         {activeHubTab === 'AUDIO' ? (
           <div style={{ marginBottom: 30 }}>
