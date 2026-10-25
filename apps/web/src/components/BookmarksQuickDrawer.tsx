@@ -2,94 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { showAmalToast } from './Toast';
 import { useLanguage } from '../context/LanguageContext';
+import { DEFAULT_BELOVED_BOOKMARKS, SavedBookmarkItem } from './bookmarks/default-bookmarks-data';
+import { BookmarkItemCard } from './bookmarks/BookmarkItemCard';
 
-export interface SavedBookmarkItem {
-  id: string;
-  category: 'DUA' | 'AYAH' | 'ADHKAR';
-  titleUrdu: string;
-  titleEnglish: string;
-  arabicText: string;
-  translationUrdu: string;
-  translationEnglish: string;
-  citation: string;
-  audioUrl?: string;
-  reciter?: string;
-}
-
-const DEFAULT_BELOVED_BOOKMARKS: SavedBookmarkItem[] = [
-  {
-    id: 'bm-1',
-    category: 'AYAH',
-    titleUrdu: 'آیت الکرسی (عظیم ترین قرآنی آیت)',
-    titleEnglish: 'Ayat al-Kursi (The Throne Verse)',
-    arabicText: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ...',
-    translationUrdu: 'اللہ، جس کے سوا کوئی معبود نہیں، وہ ہمیشہ زندہ اور سب کا نگہبان ہے۔ اسے نہ اونگھ آتی ہے نہ نیند...',
-    translationEnglish: 'Allah! There is no deity except Him, the Ever-Living, the Sustainer of all existence...',
-    citation: 'سورة البقرة ۲:۲۵۵ · Sahih Muslim',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/002255.mp3',
-    reciter: 'Shaykh Mahmoud Khalil Al-Husary',
-  },
-  {
-    id: 'bm-2',
-    category: 'DUA',
-    titleUrdu: 'سید الاستغفار (استغفار کا سردار)',
-    titleEnglish: 'Sayyid al-Istighfar (The Master Supplication for Forgiveness)',
-    arabicText: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ...',
-    translationUrdu: 'اے اللہ! تو ہی میرا رب ہے، تیرے سوا کوئی معبود نہیں۔ تو نے مجھے پیدا کیا اور میں تیرا بندہ ہوں...',
-    translationEnglish: 'O Allah, You are my Lord; there is no god but You. You created me and I am Your servant...',
-    citation: 'صحیح البخاری ۶۳۰۶ (من قالها موقنا بها فمات دخل الجنة)',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/071010.mp3',
-    reciter: 'Masnoon Supplication',
-  },
-  {
-    id: 'bm-3',
-    category: 'DUA',
-    titleUrdu: 'والدین کے لیے قرآنی دعا',
-    titleEnglish: 'Supplication for Parents',
-    arabicText: 'رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
-    translationUrdu: 'اے میرے رب! ان دونوں پر رحم فرما جیسا کہ انہوں نے بچپن میں مجھے پالا۔',
-    translationEnglish: 'My Lord, have mercy upon them as they brought me up when I was small.',
-    citation: 'سورة الإسراء ۱۷:۲۴',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/017024.mp3',
-    reciter: 'Shaykh Mahmoud Khalil Al-Husary',
-  },
-  {
-    id: 'bm-4',
-    category: 'DUA',
-    titleUrdu: 'دنیا و آخرت کی بھلائی کی جامع دعا',
-    titleEnglish: 'Rabbana Du\'a (Comprehensive Well-Being)',
-    arabicText: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
-    translationUrdu: 'اے ہمارے پروردگار! ہمیں دنیا میں بھی بھلائی عطا فرما اور آخرت میں بھی بھلائی اور ہمیں آگ کے عذاب سے بچا۔',
-    translationEnglish: 'Our Lord, give us in this world that which is good and in the Hereafter that which is good and protect us from the punishment of the Fire.',
-    citation: 'سورة البقرة ۲:۲۰۱ · متفق علیہ',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/002201.mp3',
-    reciter: 'Shaykh Mahmoud Khalil Al-Husary',
-  },
-  {
-    id: 'bm-5',
-    category: 'ADHKAR',
-    titleUrdu: 'سوتے وقت کی مسنون حفاظت کی دعا',
-    titleEnglish: 'Supplication Before Sleep',
-    arabicText: 'بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ',
-    translationUrdu: 'اے میرے رب! تیرے نام کے ساتھ میں نے اپنا پہلو رکھا اور تیرے ہی نام سے اٹھاؤں گا۔ پس اگر تو میری جان روک لے تو اس پر رحم فرما...',
-    translationEnglish: 'In Your name, my Lord, I lay down my side and in Your name I raise it...',
-    citation: 'صحیح البخاری ۶۳۲۰ · صحیح مسلم ۲۷۱۴',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/067001.mp3',
-    reciter: 'Masnoon Supplication',
-  },
-  {
-    id: 'bm-6',
-    category: 'ADHKAR',
-    titleUrdu: 'درودِ پاک (صلوٰۃ علی النبی ﷺ)',
-    titleEnglish: 'Friday Salawat upon the Prophet ﷺ',
-    arabicText: 'إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا',
-    translationUrdu: 'بیشک اللہ اور اس کے فرشتے درود بھیجتے ہیں اس غیب بتانے والے (نبی) پر، اے ایمان والو ان پر درود اور خوب سلام بھیجو۔',
-    translationEnglish: 'Indeed, Allah and His angels confer blessings upon the Prophet. O you who have believed, ask [Allah to confer] blessings upon him and ask [Allah to grant him] peace.',
-    citation: 'سورة الأحزاب ۳۳:۵۶ (Kanz al-Iman Translation)',
-    audioUrl: 'https://everyayah.com/data/Husary_128kbps/033056.mp3',
-    reciter: 'Shaykh Mahmoud Khalil Al-Husary',
-  },
-];
+export type { SavedBookmarkItem } from './bookmarks/default-bookmarks-data';
 
 interface BookmarksQuickDrawerProps {
   isOpen: boolean;
@@ -280,121 +196,13 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
             </div>
           ) : (
             filteredBookmarks.map((bm) => (
-              <div
+              <BookmarkItemCard
                 key={bm.id}
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 12,
-                  padding: 16,
-                  border: '1px solid #E2E8F0',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h4 style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.4 }}>
-                      {isUrdu ? bm.titleUrdu : bm.titleEnglish}
-                    </h4>
-                    <span style={{ fontSize: 11, color: '#64748B' }}>
-                      {isUrdu ? bm.titleEnglish : (bm.titleUrdu || '')}
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      backgroundColor: '#ECFDF5',
-                      color: '#065F46',
-                      padding: '2px 8px',
-                      borderRadius: 12,
-                      border: '1px solid #A7F3D0',
-                    }}
-                  >
-                    {bm.category}
-                  </span>
-                </div>
-
-                {/* Arabic Matn */}
-                <div
-                  className="font-arabic"
-                  style={{
-                    fontSize: 15,
-                    color: '#064E3B',
-                    backgroundColor: '#F8FAFC',
-                    padding: '10px 14px',
-                    borderRadius: 8,
-                    border: '1px solid #E2E8F0',
-                    lineHeight: 1.9,
-                  }}
-                >
-                  {bm.arabicText}
-                </div>
-
-                {/* Urdu Translation */}
-                <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.6 }}>
-                  {bm.translationUrdu}
-                </div>
-
-                {/* Citation & Action Controls */}
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginTop: 4,
-                    paddingTop: 8,
-                    borderTop: '1px solid #F1F5F9',
-                  }}
-                >
-                  <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 600 }}>
-                    {bm.citation}
-                  </span>
-
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <button
-                      onClick={() => handleCopyText(`${bm.arabicText}\n\n${bm.translationUrdu}\n[${bm.citation}]`, bm.titleUrdu)}
-                      style={{
-                        background: '#F1F5F9',
-                        border: 'none',
-                        borderRadius: 6,
-                        padding: '4px 8px',
-                        fontSize: 11,
-                        fontWeight: 600,
-                        color: '#475569',
-                        cursor: 'pointer',
-                      }}
-                      title="کاپی کریں"
-                    >
-                      📋 کاپی
-                    </button>
-
-                    {bm.audioUrl && (
-                      <button
-                        onClick={() => handlePlayBookmark(bm)}
-                        style={{
-                          backgroundColor: '#064E3B',
-                          color: '#FFFFFF',
-                          border: 'none',
-                          borderRadius: 6,
-                          padding: '4px 10px',
-                          fontSize: 11,
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 4,
-                        }}
-                      >
-                        <span>▶</span>
-                        <span>سنیں</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+                bookmark={bm}
+                isUrdu={isUrdu}
+                onCopyText={handleCopyText}
+                onPlayBookmark={handlePlayBookmark}
+              />
             ))
           )}
         </div>
