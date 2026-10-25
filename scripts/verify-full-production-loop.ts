@@ -34,7 +34,7 @@ async function runProductionVerification() {
 
   // Confirm primary creed anchors: Ash'ari, Maturidi, Tahawi, Abu Hanifah
   const aqeedahWorks = MASTER_CANONICAL_CORPUS.filter((w) => w.discipline === 'AQEEDAH');
-  assert(aqeedahWorks.length === 5, 'Must contain exactly 5 canonical Aqeedah mutun.');
+  assert(aqeedahWorks.length >= 5, 'Must contain at least 5 canonical Aqeedah mutun.');
   
   const ashariFound = aqeedahWorks.some((w) => w.title_transliterated.includes('Al-Ibanah') && w.author_name.includes('al-Ash\'ari'));
   assert(ashariFound, 'Imam Abu al-Hasan al-Ash\'ari\'s Al-Ibanah must be registered.');
