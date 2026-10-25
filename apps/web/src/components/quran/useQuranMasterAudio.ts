@@ -6,12 +6,13 @@ import {
   QuranAyahWisdomCard,
   getAyahAudioUrl,
   getAyahUrduAudioUrl,
-  getSurahKanzulImanAudioUrl,
   getSurahTafseerAudioUrl,
 } from '../../lib/quran-wisdom-data';
 import { showAmalToast } from '../Toast';
 import { useAudioPlayer } from '../../context/AudioPlayerContext';
 import { AudioSyncMode, AudioSegment } from './FloatingQuranAudioPlayer';
+import { useQuranOfflineAudio } from './useQuranOfflineAudio';
+import { useQuranMediaSession } from './useQuranMediaSession';
 
 export interface UseQuranMasterAudioOptions {
   selectedSurahNumber: number;
@@ -51,85 +52,24 @@ export function useQuranMasterAudio({
   const [surahWideAudioType, setSurahWideAudioType] = useState<'KANZUL_IMAN' | 'TAFSEER' | null>(null);
   const [continuousTafseerIndex, setContinuousTafseerIndex] = useState<number | null>(null);
 
-  const [isSurahCachedOffline, setIsSurahCachedOffline] = useState<boolean>(false);
-  const [isCachingSurah, setIsCachingSurah] = useState<boolean>(false);
-
   // Single Master Audio Ref — strictly prevents any audio overlapping
   const masterAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Offline Caching Sub-Hook
+  const {
+    isSurahCachedOffline,
+    isCachingSurah,
+    handleCacheSurahOffline,
+    handleDownloadSurahAudio,
+  } = useQuranOfflineAudio({
+    selectedSurahNumber,
+    selectedQari,
+  });
 
   // Sync playback rate to master audio element
   useEffect(() => {
     if (masterAudioRef.current) masterAudioRef.current.playbackRate = playbackSpeed;
   }, [playbackSpeed]);
-
-  // Check if current Surah Kanz-ul-Iman / Tilawat audio is cached offline
-  useEffect(() => {
-    if (typeof window !== 'undefined' && 'caches' in window) {
-      const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
-      if (kanzulImanUrl) {
-        caches
-          .open('amal-quran-audio-v1')
-          .then((cache) => {
-            cache.match(kanzulImanUrl).then((res) => {
-              setIsSurahCachedOffline(!!res);
-            });
-          })
-          .catch(() => {});
-      } else {
-        setIsSurahCachedOffline(false);
-      }
-    }
-  }, [selectedSurahNumber]);
-
-  const handleCacheSurahOffline = async () => {
-    if (typeof window === 'undefined' || !('caches' in window)) {
-      showAmalToast('آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔', 'warning');
-      return;
-    }
-    setIsCachingSurah(true);
-    try {
-      const cache = await caches.open('amal-quran-audio-v1');
-      const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
-      if (kanzulImanUrl) {
-        await cache.add(kanzulImanUrl);
-      }
-      // Also cache first 3 verses of the selected Surah
-      const p1 = cache.add(getAyahAudioUrl(selectedSurahNumber, 1, selectedQari)).catch(() => {});
-      const p2 = cache.add(getAyahUrduAudioUrl(selectedSurahNumber, 1)).catch(() => {});
-      await Promise.all([p1, p2]);
-
-      setIsSurahCachedOffline(true);
-      showAmalToast(
-        'سورۃ مبارکہ کی آڈیو کامیابی سے آف لائن محفوظ کر لی گئی ہے! (Surah cached offline)',
-        'success'
-      );
-    } catch (e) {
-      console.warn('Failed to cache surah audio:', e);
-      showAmalToast('آف لائن محفوظ کرنے میں خرابی پیش آئی۔', 'warning');
-    } finally {
-      setIsCachingSurah(false);
-    }
-  };
-
-  const handleDownloadSurahAudio = () => {
-    const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
-    if (!kanzulImanUrl) {
-      showAmalToast('اس سورت کا مکمل آڈیو لنک دستیاب نہیں ہے۔', 'warning');
-      return;
-    }
-    try {
-      const a = document.createElement('a');
-      a.href = kanzulImanUrl;
-      a.download = `Amal_Surah_${selectedSurahNumber}_KanzulIman.mp3`;
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      showAmalToast('مکمل سورت کی آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔', 'success');
-    } catch (e) {
-      showAmalToast('ڈاؤنلوڈ میں خرابی پیش آئی۔', 'warning');
-    }
-  };
 
   // Master Stop Audio Function — completely silences and resets all audio
   const handleStopAudio = () => {
@@ -485,109 +425,24 @@ export function useQuranMasterAudio({
     }
   };
 
-  // Lock-screen MediaSession API controls & background notification display
-  useEffect(() => {
-    if (typeof window !== 'undefined' && 'mediaSession' in navigator && playingAyahNumber !== null) {
-      const isUrduAudio = currentAudioSegment === 'URDU';
-      const meta =
-        ALL_114_SURAHS.find((s) => s.number === selectedSurahNumber) || currentSurahMeta;
-
-      const trackTitle = isUrduAudio
-        ? t(
-            `Kanz-ul-Iman Translation · Surah ${meta?.nameTransliterated || ''} · Verse ${playingAyahNumber}`,
-            `ترجمہ کنز الایمان - سورۃ ${meta?.nameUrdu || ''} · آیت ${playingAyahNumber}`
-          )
-        : isUrdu
-          ? `سورۃ ${meta?.nameArabic || ''} (${meta?.nameUrdu || ''}) · آیت ${playingAyahNumber}`
-          : `Surah ${meta?.nameTransliterated || ''} (${meta?.nameArabic || ''}) · Verse ${playingAyahNumber}`;
-
-      const qariDisplayMap = {
-        alafasy: 'Qari Mishary Rashid Alafasy',
-        husary: 'Shaykh Mahmoud Khalil Al-Husary',
-        minshawi: 'Shaykh Muhammad Siddiq Al-Minshawi',
-      };
-      const artistName = isUrduAudio
-        ? t(
-            'Kanz-ul-Iman Translation · 100% Human Voice',
-            'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice'
-          )
-        : qariDisplayMap[selectedQari];
-
-      try {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: trackTitle,
-          artist: artistName,
-          album: 'Al-Quran Al-Kareem & Wisdom · AMAL OS',
-          artwork: [
-            { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-            { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-          ],
-        });
-      } catch (e) {
-        console.warn('MediaSession metadata error:', e);
-      }
-
-      navigator.mediaSession.setActionHandler('play', () => {
-        if (masterAudioRef.current) {
-          masterAudioRef.current.play().catch(() => {});
-          setIsPlayingPaused(false);
-          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
-        }
-      });
-      navigator.mediaSession.setActionHandler('pause', () => {
-        if (masterAudioRef.current) {
-          masterAudioRef.current.pause();
-          setIsPlayingPaused(true);
-          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
-        }
-      });
-      navigator.mediaSession.setActionHandler('previoustrack', () => {
-        if (playingAyahNumber > 1) {
-          handlePlayAyahAudio(playingAyahNumber - 1, currentAudioSegment);
-        } else if (selectedSurahNumber > 1) {
-          const prevSurah = selectedSurahNumber - 1;
-          setSelectedSurahNumber(prevSurah);
-          onSelectSurah(prevSurah, 1);
-          handlePlayAyahAudio(1, currentAudioSegment);
-        }
-      });
-      navigator.mediaSession.setActionHandler('nexttrack', () => {
-        if (currentSurah && playingAyahNumber < currentSurah.verses.length) {
-          handlePlayAyahAudio(playingAyahNumber + 1, currentAudioSegment);
-        } else if (selectedSurahNumber < 114) {
-          handleAdvanceToNextSurah(currentAudioSegment);
-        }
-      });
-      try {
-        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-          if (masterAudioRef.current) {
-            masterAudioRef.current.currentTime = Math.max(
-              0,
-              masterAudioRef.current.currentTime - (details.seekOffset || 10)
-            );
-          }
-        });
-        navigator.mediaSession.setActionHandler('seekforward', (details) => {
-          if (masterAudioRef.current) {
-            masterAudioRef.current.currentTime = Math.min(
-              masterAudioRef.current.duration || 0,
-              masterAudioRef.current.currentTime + (details.seekOffset || 10)
-            );
-          }
-        });
-        navigator.mediaSession.setActionHandler('stop', () => {
-          handleStopAudio();
-        });
-      } catch {}
-    }
-  }, [
+  // Lock-screen MediaSession Integration Sub-Hook
+  useQuranMediaSession({
+    masterAudioRef,
     playingAyahNumber,
     currentAudioSegment,
     selectedSurahNumber,
     selectedQari,
     currentSurah,
     currentSurahMeta,
-  ]);
+    isUrdu,
+    t,
+    setIsPlayingPaused,
+    setSelectedSurahNumber,
+    onSelectSurah,
+    handlePlayAyahAudio,
+    handleAdvanceToNextSurah,
+    handleStopAudio,
+  });
 
   return {
     masterAudioRef,
