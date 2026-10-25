@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { showAmalToast } from './Toast';
+import { AuthSignInTab } from './auth/AuthSignInTab';
+import { AuthRegisterTab } from './auth/AuthRegisterTab';
+import { AuthProfileTab } from './auth/AuthProfileTab';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -218,389 +221,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         {/* Content Body */}
         <div style={{ padding: '24px 28px', overflowY: 'auto' }}>
-          {/* TAB 1: SIGN IN */}
           {activeTab === 'SIGNIN' && (
-            <form onSubmit={handleSignInSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Username
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    صارف کا نام / شناختی نام
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="ashraf786"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '11px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                    outline: 'none',
-                  }}
-                />
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Password
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    پاسورڈ / خفیہ کوڈ
-                  </span>
-                </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '11px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                    outline: 'none',
-                  }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                style={{
-                  backgroundColor: '#065F46',
-                  color: '#FFFFFF',
-                  padding: '12px 16px',
-                  borderRadius: 10,
-                  fontSize: 14,
-                  fontWeight: 800,
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  marginTop: 6,
-                }}
-              >
-                <span>{isSubmitting ? 'تصدیق ہو رہی ہے...' : 'Sign In · لاگ ان کریں'}</span>
-                <span>➔</span>
-              </button>
-
-              <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: 14, textAlign: 'center' }}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    continueAsGuest();
-                    onClose();
-                  }}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: '#065F46',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    padding: '6px 12px',
-                  }}
-                >
-                  بغیر اکاؤنٹ کے آف لائن استعمال جاری رکھیں · Continue as Sovereign Guest →
-                </button>
-              </div>
-            </form>
+            <AuthSignInTab
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+              isSubmitting={isSubmitting}
+              onSubmit={handleSignInSubmit}
+              onContinueAsGuest={() => {
+                continueAsGuest();
+                onClose();
+              }}
+            />
           )}
 
-          {/* TAB 2: REGISTER */}
           {activeTab === 'REGISTER' && (
-            <form onSubmit={handleRegisterSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Username (Unique ID)
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    صارف کا شناختی نام (لاگ ان کے لیے)
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_.-]/g, ''))}
-                  placeholder="ashraf786 (حروف و ہندسے)"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Full Name / Title
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    پورا نام
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Muhammad Ashraf"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Password
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    پاسورڈ / خفیہ پن
-                  </span>
-                </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="•••••••• (کم از کم ۴ حروف یا ہندسے)"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    Primary Fiqh School (Madhhab)
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    فقہی مسلک
-                  </span>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-                  {(['Hanafi', 'Shafi\'i', 'Maliki', 'Hanbali'] as const).map((m) => (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => setMadhhab(m)}
-                      style={{
-                        padding: '8px 10px',
-                        borderRadius: 8,
-                        border: madhhab === m ? '2px solid #065F46' : '1px solid #D1D5DB',
-                        backgroundColor: madhhab === m ? '#ECFDF5' : '#FFFFFF',
-                        color: madhhab === m ? '#065F46' : '#374151',
-                        fontSize: 12,
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {m === 'Hanafi' ? 'Hanafi · حنفی' : m === 'Shafi\'i' ? 'Shafi\'i · شافعی' : m === 'Maliki' ? 'Maliki · مالکی' : 'Hanbali · حنبلی'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                    City &amp; Country (Prayer Times)
-                  </label>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    شہر و ملک
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="Delhi / Mumbai / Lucknow / Bareilly, India"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: 10,
-                    border: '1.5px solid #D1D5DB',
-                    fontSize: 14,
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                style={{
-                  backgroundColor: '#065F46',
-                  color: '#FFFFFF',
-                  padding: '12px 16px',
-                  borderRadius: 10,
-                  fontSize: 14,
-                  fontWeight: 800,
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  marginTop: 6,
-                }}
-              >
-                <span>{isSubmitting ? 'اکاؤنٹ بن رہا ہے...' : 'نیا اکاؤنٹ بنائیں · Create Account'}</span>
-                <span>✓</span>
-              </button>
-            </form>
+            <AuthRegisterTab
+              username={username}
+              setUsername={setUsername}
+              name={name}
+              setName={setName}
+              password={password}
+              setPassword={setPassword}
+              madhhab={madhhab}
+              setMadhhab={setMadhhab}
+              city={city}
+              setCity={setCity}
+              isSubmitting={isSubmitting}
+              onSubmit={handleRegisterSubmit}
+            />
           )}
 
-          {/* TAB 3: SIGNED IN PROFILE VIEW */}
           {activeTab === 'PROFILE' && user && !user.isGuest && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              {/* Profile Card */}
-              <div
-                style={{
-                  backgroundColor: '#F0FDF4',
-                  border: '1px solid #BBF7D0',
-                  borderRadius: 12,
-                  padding: 16,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                }}
-              >
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: '50%',
-                    backgroundColor: '#065F46',
-                    color: '#FFFFFF',
-                    fontSize: 20,
-                    fontWeight: 800,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: '#064E3B' }}>{user.name}</div>
-                  <div style={{ fontSize: 12, color: '#047857', fontWeight: 600 }}>@{user.username || 'seeker'}</div>
-                  <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '1px 6px', borderRadius: 4 }}>
-                      {user.madhhab} Fiqh
-                    </span>
-                    <span style={{ fontSize: 10, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '1px 6px', borderRadius: 4 }}>
-                      {user.role}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sync Status Badge */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '12px 16px',
-                  backgroundColor: '#F8FAFC',
-                  borderRadius: 10,
-                  border: '1px solid #E2E8F0',
-                  fontSize: 13,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }}></span>
-                  <span style={{ fontWeight: 700, color: '#1E293B' }}>Cloud Sync Active</span>
-                </div>
-                <span style={{ fontSize: 11, color: '#64748B' }}>
-                  Device &amp; Family Circles Connected
-                </span>
-              </div>
-
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <button
-                  type="button"
-                  onClick={exportSovereignData}
-                  style={{
-                    padding: '10px 14px',
-                    borderRadius: 8,
-                    border: '1px solid #D1D5DB',
-                    backgroundColor: '#FFFFFF',
-                    color: '#374151',
-                    fontSize: 13,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                  }}
-                >
-                  <span>📥</span>
-                  <span>Export Sovereign Data (.json)</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    signOut();
-                    setActiveTab('SIGNIN');
-                  }}
-                  style={{
-                    padding: '10px 14px',
-                    borderRadius: 8,
-                    border: '1px solid #FCA5A5',
-                    backgroundColor: '#FEF2F2',
-                    color: '#DC2626',
-                    fontSize: 13,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                  }}
-                >
-                  <span>🚪</span>
-                  <span>سائن آؤٹ کریں · Sign Out</span>
-                </button>
-              </div>
-            </div>
+            <AuthProfileTab
+              user={user}
+              onExportSovereignData={exportSovereignData}
+              onSignOut={() => {
+                signOut();
+                setActiveTab('SIGNIN');
+              }}
+            />
           )}
         </div>
       </div>

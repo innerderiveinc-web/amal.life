@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { DailyKnowledgeEngine, DailyKnowledgeBroadcast } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
-import { AmalTheme } from '@amal/ui';
 import { useLanguage } from '../context/LanguageContext';
+import { BroadcastAyahTab } from './broadcast/BroadcastAyahTab';
+import { BroadcastHadithTab } from './broadcast/BroadcastHadithTab';
+import { BroadcastDuaTab } from './broadcast/BroadcastDuaTab';
+import { BroadcastHikmatTab } from './broadcast/BroadcastHikmatTab';
 
 export const DailyKnowledgeBroadcastCard: React.FC = () => {
-  const { t, isUrdu } = useLanguage();
-  const [broadcast, setBroadcast] = useState<DailyKnowledgeBroadcast | null>(() => DailyKnowledgeEngine.getBroadcast());
+  const { t } = useLanguage();
+  const [broadcast, setBroadcast] = useState<DailyKnowledgeBroadcast | null>(() =>
+    DailyKnowledgeEngine.getBroadcast()
+  );
   const [activeTab, setActiveTab] = useState<'AYAH' | 'HADITH' | 'DUA' | 'HIKMAT'>('AYAH');
   const [copied, setCopied] = useState(false);
-  const { playTrack, isPlaying } = useAudioPlayer();
+  const { playTrack } = useAudioPlayer();
 
   const handlePlayAyah = () => {
     if (!broadcast) return;
@@ -41,14 +45,10 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
   };
 
   useEffect(() => {
-    // Initial fetch
     setBroadcast(DailyKnowledgeEngine.getBroadcast());
-
-    // Auto-update every 60 seconds if slot or day transitions
     const interval = setInterval(() => {
       setBroadcast(DailyKnowledgeEngine.getBroadcast());
     }, 60000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -246,527 +246,40 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
 
       {/* Tab 1: AYAH */}
       {activeTab === 'AYAH' && (
-        <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                color: '#047857',
-                backgroundColor: '#D1FAE5',
-                padding: '4px 10px',
-                borderRadius: 6,
-              }}
-            >
-              {broadcast.ayah.surahNameUrdu} ({broadcast.ayah.surahNumber}:{broadcast.ayah.ayahNumber}) • {broadcast.ayah.spiritualTheme}
-            </span>
-
-            <button
-              onClick={() => handleCopy(`${broadcast.ayah.arabicText}\n\n${broadcast.ayah.kanzAlImanUrdu} [کنز الایمان]`)}
-              style={{
-                background: 'none',
-                border: '1px solid #CBD5E1',
-                padding: '4px 10px',
-                borderRadius: 6,
-                fontSize: 12,
-                cursor: 'pointer',
-                color: '#475569',
-              }}
-            >
-              {copied ? '✅ کاپی ہو گیا' : '📋 متن کاپی کریں'}
-            </button>
-          </div>
-
-          {/* Arabic Matn */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Amiri', 'Traditional Arabic', serif",
-              fontSize: 24,
-              lineHeight: 1.8,
-              color: '#064E3B',
-              backgroundColor: '#F0FDF4',
-              padding: '16px 20px',
-              borderRadius: 12,
-              border: '1px solid #A7F3D0',
-              marginBottom: 14,
-              textAlign: 'center',
-            }}
-          >
-            ﴿{broadcast.ayah.arabicText}﴾
-          </div>
-
-          {/* Kanz al-Iman Urdu */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif",
-              fontSize: 18,
-              lineHeight: 1.9,
-              color: '#1F2937',
-              backgroundColor: '#FAFAF9',
-              padding: '14px 18px',
-              borderRadius: 10,
-              border: '1px solid #E7E5E4',
-              marginBottom: 12,
-            }}
-          >
-            <span style={{ fontWeight: 800, color: '#047857' }}>ترجمہ کنز الایمان: </span>
-            {broadcast.ayah.kanzAlImanUrdu}
-          </div>
-
-          {/* English translation */}
-          <div style={{ fontSize: 13, color: '#4B5563', fontStyle: 'italic', marginBottom: 16 }}>
-            "{broadcast.ayah.englishTranslation}"
-          </div>
-
-          {/* Action Footer */}
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button
-              onClick={handlePlayAyah}
-              style={{
-                backgroundColor: '#059669',
-                color: '#FFFFFF',
-                border: 'none',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                cursor: 'pointer',
-              }}
-            >
-              <span>🎧 تلاوت سنیں (Listen to Recitation)</span>
-            </button>
-
-            <Link
-              href={`/library?surah=${broadcast.ayah.surahNumber}`}
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#F0FDF4',
-                color: '#065F46',
-                border: '1px solid #A7F3D0',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              <span>📖 مکمل سورۃ {broadcast.ayah.surahNameUrdu} قرآن ریڈر میں کھولیں →</span>
-            </Link>
-          </div>
-        </div>
+        <BroadcastAyahTab
+          ayah={broadcast.ayah}
+          copied={copied}
+          onCopy={handleCopy}
+          onPlayAyah={handlePlayAyah}
+        />
       )}
 
       {/* Tab 2: HADITH */}
       {activeTab === 'HADITH' && (
-        <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                color: '#1E40AF',
-                backgroundColor: '#DBEAFE',
-                padding: '4px 10px',
-                borderRadius: 6,
-              }}
-            >
-              {broadcast.hadith.sourceBook} • راوی: {broadcast.hadith.narrator}
-            </span>
-
-            <button
-              onClick={() => handleCopy(`${broadcast.hadith.arabicMatn}\n\n${broadcast.hadith.urduTranslation}`)}
-              style={{
-                background: 'none',
-                border: '1px solid #CBD5E1',
-                padding: '4px 10px',
-                borderRadius: 6,
-                fontSize: 12,
-                cursor: 'pointer',
-                color: '#475569',
-              }}
-            >
-              {copied ? '✅ کاپی ہو گیا' : '📋 متن کاپی کریں'}
-            </button>
-          </div>
-
-          {/* Arabic Matn */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Amiri', 'Traditional Arabic', serif",
-              fontSize: 21,
-              lineHeight: 1.8,
-              color: '#1E3A8A',
-              backgroundColor: '#EFF6FF',
-              padding: '16px 20px',
-              borderRadius: 12,
-              border: '1px solid #BFDBFE',
-              marginBottom: 14,
-            }}
-          >
-            «{broadcast.hadith.arabicMatn}»
-          </div>
-
-          {/* Urdu Translation */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif",
-              fontSize: 18,
-              lineHeight: 1.9,
-              color: '#1F2937',
-              backgroundColor: '#FAFAF9',
-              padding: '14px 18px',
-              borderRadius: 10,
-              border: '1px solid #E7E5E4',
-              marginBottom: 12,
-            }}
-          >
-            <span style={{ fontWeight: 800, color: '#1E40AF' }}>اردو مفہوم: </span>
-            {broadcast.hadith.urduTranslation}
-          </div>
-
-          {/* Practical Sunnah Action */}
-          <div
-            style={{
-              backgroundColor: '#FEF3C7',
-              border: '1px solid #FDE68A',
-              padding: '10px 14px',
-              borderRadius: 8,
-              fontSize: 13,
-              color: '#92400E',
-              marginBottom: 16,
-            }}
-          >
-            <strong>🎯 روزمرہ سنت پر عمل: </strong> {broadcast.hadith.sunnahApplication}
-          </div>
-
-          {/* Action Footer */}
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <Link
-              href="/library?work=CANON-HAD-040"
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#1E40AF',
-                color: '#FFFFFF',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              <span>📜 اربعین نووی کے تمام ۴۲ اسباق لائبریری میں پڑھیں →</span>
-            </Link>
-          </div>
-        </div>
+        <BroadcastHadithTab
+          hadith={broadcast.hadith}
+          copied={copied}
+          onCopy={handleCopy}
+        />
       )}
 
       {/* Tab 3: DUA */}
       {activeTab === 'DUA' && (
-        <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                color: '#7C2D12',
-                backgroundColor: '#FFEDD5',
-                padding: '4px 10px',
-                borderRadius: 6,
-              }}
-            >
-              {broadcast.dua.sourceBook} • {broadcast.dua.titleUrdu}
-            </span>
-
-            <button
-              onClick={() => handleCopy(`${broadcast.dua.arabicText}\n\n${broadcast.dua.urduTranslation}`)}
-              style={{
-                background: 'none',
-                border: '1px solid #CBD5E1',
-                padding: '4px 10px',
-                borderRadius: 6,
-                fontSize: 12,
-                cursor: 'pointer',
-                color: '#475569',
-              }}
-            >
-              {copied ? '✅ کاپی ہو گیا' : '📋 دعا کاپی کریں'}
-            </button>
-          </div>
-
-          {/* Arabic Text */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Amiri', 'Traditional Arabic', serif",
-              fontSize: 22,
-              lineHeight: 1.8,
-              color: '#7C2D12',
-              backgroundColor: '#FFF7ED',
-              padding: '16px 20px',
-              borderRadius: 12,
-              border: '1px solid #FED7AA',
-              marginBottom: 14,
-              textAlign: 'center',
-            }}
-          >
-            «{broadcast.dua.arabicText}»
-          </div>
-
-          {/* Urdu Translation */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif",
-              fontSize: 18,
-              lineHeight: 1.9,
-              color: '#1F2937',
-              backgroundColor: '#FAFAF9',
-              padding: '14px 18px',
-              borderRadius: 10,
-              border: '1px solid #E7E5E4',
-              marginBottom: 12,
-            }}
-          >
-            <span style={{ fontWeight: 800, color: '#C2410C' }}>اردو ترجمہ: </span>
-            {broadcast.dua.urduTranslation}
-          </div>
-
-          {/* Virtue */}
-          <div
-            style={{
-              backgroundColor: '#ECFDF5',
-              border: '1px solid #A7F3D0',
-              padding: '10px 14px',
-              borderRadius: 8,
-              fontSize: 13,
-              color: '#065F46',
-              marginBottom: 16,
-            }}
-          >
-            <strong>✨ فضیلت و برکت: </strong> {broadcast.dua.virtue}
-          </div>
-
-          {/* Action Footer */}
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button
-              onClick={handlePlayDua}
-              style={{
-                backgroundColor: '#C2410C',
-                color: '#FFFFFF',
-                border: 'none',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                cursor: 'pointer',
-              }}
-            >
-              <span>🎧 مسنون دعا سنیں (Listen to Dua)</span>
-            </button>
-
-            <Link
-              href="/tasbih"
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#FFF7ED',
-                color: '#C2410C',
-                border: '1px solid #FED7AA',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              <span>📿 مسنون تسبیح کاؤنٹر شروع کریں (33 / 100) →</span>
-            </Link>
-            <Link
-              href="/library?work=CANON-DUA-001"
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#F8FAFC',
-                color: '#334155',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                border: '1px solid #CBD5E1',
-              }}
-            >
-              تمام ۴۰ ربّنا دعائیں دیکھیں
-            </Link>
-          </div>
-        </div>
+        <BroadcastDuaTab
+          dua={broadcast.dua}
+          copied={copied}
+          onCopy={handleCopy}
+          onPlayDua={handlePlayDua}
+        />
       )}
 
       {/* Tab 4: HIKMAT */}
       {activeTab === 'HIKMAT' && (
-        <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                color: '#5B21B6',
-                backgroundColor: '#EDE9FE',
-                padding: '4px 10px',
-                borderRadius: 6,
-              }}
-            >
-              {broadcast.hikmat.sourceBook} • {broadcast.hikmat.author}
-            </span>
-
-            <button
-              onClick={() => handleCopy(`${broadcast.hikmat.urduWisdom}\n\nعمل: ${broadcast.hikmat.practicalReflection}`)}
-              style={{
-                background: 'none',
-                border: '1px solid #CBD5E1',
-                padding: '4px 10px',
-                borderRadius: 6,
-                fontSize: 12,
-                cursor: 'pointer',
-                color: '#475569',
-              }}
-            >
-              {copied ? '✅ کاپی ہو گیا' : '📋 نصیحت کاپی کریں'}
-            </button>
-          </div>
-
-          {/* Arabic quote if available */}
-          {broadcast.hikmat.quoteArabic && (
-            <div
-              dir="rtl"
-              style={{
-                fontFamily: "'Amiri', 'Traditional Arabic', serif",
-                fontSize: 20,
-                lineHeight: 1.8,
-                color: '#4C1D95',
-                backgroundColor: '#F5F3FF',
-                padding: '14px 18px',
-                borderRadius: 12,
-                border: '1px solid #DDD6FE',
-                marginBottom: 14,
-                textAlign: 'center',
-              }}
-            >
-              «{broadcast.hikmat.quoteArabic}»
-            </div>
-          )}
-
-          {/* Urdu Wisdom */}
-          <div
-            dir="rtl"
-            style={{
-              fontFamily: "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif",
-              fontSize: 18,
-              lineHeight: 1.9,
-              color: '#1F2937',
-              backgroundColor: '#FAFAF9',
-              padding: '14px 18px',
-              borderRadius: 10,
-              border: '1px solid #E7E5E4',
-              marginBottom: 12,
-            }}
-          >
-            <span style={{ fontWeight: 800, color: '#6D28D9' }}>بصیرت و نصیحت: </span>
-            {broadcast.hikmat.urduWisdom}
-          </div>
-
-          {/* Practical Reflection */}
-          <div
-            style={{
-              backgroundColor: '#F3E8FF',
-              border: '1px solid #E9D5FF',
-              padding: '10px 14px',
-              borderRadius: 8,
-              fontSize: 13,
-              color: '#581C87',
-              marginBottom: 16,
-            }}
-          >
-            <strong>🌱 آج کا عملی محاسبہ: </strong> {broadcast.hikmat.practicalReflection}
-          </div>
-
-          {/* Action Footer */}
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <Link
-              href="/vault"
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#5B21B6',
-                color: '#FFFFFF',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              <span>💎 نالج والٹ میں محفوظ کریں →</span>
-            </Link>
-            <Link
-              href="/reflections"
-              style={{
-                textDecoration: 'none',
-                backgroundColor: '#F8FAFC',
-                color: '#334155',
-                fontSize: 13,
-                fontWeight: 700,
-                padding: '8px 16px',
-                borderRadius: 8,
-                border: '1px solid #CBD5E1',
-              }}
-            >
-              شام کا محاسبہ و توبہ
-            </Link>
-          </div>
-        </div>
+        <BroadcastHikmatTab
+          hikmat={broadcast.hikmat}
+          copied={copied}
+          onCopy={handleCopy}
+        />
       )}
     </section>
   );
