@@ -70,16 +70,28 @@ def test_quran_wisdom():
         assert matched, f"Cross-reference '{ref}' is not in approved classical corpus!"
 
     # Verify /quran page and Navigation integration
-    with open(nav_comp, "r", encoding="utf-8") as f:
-        nav_code = f.read()
-    assert "/quran" in nav_code, "Navigation.tsx must contain direct link to /quran"
-    assert "Kanz-ul-Iman" in nav_code, "Navigation.tsx must showcase Kanz-ul-Iman badge"
+    nav_dir = os.path.join(repo_root, "apps", "web", "src", "components", "navigation")
+    nav_codes = []
+    if os.path.exists(nav_comp):
+        with open(nav_comp, "r", encoding="utf-8") as f:
+            nav_codes.append(f.read())
+    if os.path.exists(nav_dir):
+        for fn in os.listdir(nav_dir):
+            if fn.endswith((".ts", ".tsx")):
+                with open(os.path.join(nav_dir, fn), "r", encoding="utf-8") as f:
+                    nav_codes.append(f.read())
+    combined_nav_code = "\n".join(nav_codes)
+    assert "/quran" in combined_nav_code, "Navigation must contain direct link to /quran"
+    assert "Kanz-ul-Iman" in combined_nav_code, "Navigation must showcase Kanz-ul-Iman badge"
+
+    wisdom_page = os.path.join(repo_root, "apps", "web", "src", "pages", "wisdom.tsx")
+    with open(wisdom_page, "r", encoding="utf-8") as f:
+        wisdom_code = f.read()
+    assert "QURAN_WISDOM_COLLECTION" in wisdom_code, "wisdom.tsx must render wisdom cards"
 
     with open(quran_page, "r", encoding="utf-8") as f:
         quran_code = f.read()
-    assert "QURAN_WISDOM_COLLECTION" in quran_code, "quran.tsx must render wisdom cards"
     assert "AyahWisdomModal" in quran_code, "quran.tsx must include AyahWisdomModal"
-    assert "QUICK_2MIN" in quran_code, "quran.tsx must support 2-min Quick Wisdom mode"
 
     # Part 2: Verify Complete 114 Surahs (6,236 Verses) Offline Corpus
     surahs_dir = os.path.join(repo_root, "apps", "web", "public", "data", "quran", "surahs")

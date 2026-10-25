@@ -91,7 +91,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             <span>{currentLang === 'ur' ? 'قرآنِ کریم و حکمت' : 'Holy Quran & Wisdom'}</span>
           </div>
           <span style={{ fontSize: 10, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-            {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz'}
+            {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz-ul-Iman'}
           </span>
         </Link>
 
