@@ -51,6 +51,14 @@ export class AmalJourneyEngine {
     return goal;
   }
 
+  public static getUserGoals(userId: string): UserGoal[] {
+    return this.userGoals.get(userId) || [];
+  }
+
+  public static setUserGoals(userId: string, goals: UserGoal[]): void {
+    this.userGoals.set(userId, goals);
+  }
+
   /**
    * 2. Amal Recommendation Ranking Algorithm:
    * RecommendationScore = EvidenceFit × GoalFit × ContextFit × Feasibility × PreferenceFit × Continuity × Safety

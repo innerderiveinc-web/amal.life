@@ -118,7 +118,7 @@ export class AmalApiServer {
         const verified = JwtService.verifyToken(token);
         if (verified) {
           userId = verified.sub;
-          userRole = (verified.role as any) || 'USER';
+          userRole = (verified.role as 'USER' | 'SCHOLAR' | 'ADMIN') || 'USER';
         }
       }
 
@@ -131,8 +131,9 @@ export class AmalApiServer {
       const response = await ApiRouter.handle(method, path, body, ctx);
 
       // If login/register succeeds, set a secure SameSite cookie
-      if (response.success && (path === '/api/v1/auth/login' || path === '/api/v1/auth/register') && (response.data as any)?.session?.token) {
-        const sessionToken = (response.data as any).session.token;
+      const authData = response.data as { session?: { token?: string } } | undefined;
+      if (response.success && (path === '/api/v1/auth/login' || path === '/api/v1/auth/register') && authData?.session?.token) {
+        const sessionToken = authData.session.token;
         res.setHeader('Set-Cookie', `amal_token=${sessionToken}; Path=/; SameSite=Strict; HttpOnly; Max-Age=2592000`);
       }
       

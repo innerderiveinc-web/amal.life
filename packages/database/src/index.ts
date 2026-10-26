@@ -59,6 +59,7 @@ export class InMemoryAmalDatabase {
   scholars: Map<string, ScholarProfile> = new Map();
   scholarCases: Map<string, ScholarCase> = new Map();
   caseMessages: Map<string, ScholarCaseMessage[]> = new Map();
+  userSyncState: Map<string, any> = new Map();
 
   auditLogs: AuditLog[] = [];
 

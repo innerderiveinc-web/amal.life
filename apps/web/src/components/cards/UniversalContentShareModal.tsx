@@ -181,9 +181,9 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
     try {
       canvas.toBlob(async (blob) => {
         if (!blob) throw new Error('Blob generation failed');
-        if (typeof navigator !== 'undefined' && navigator.clipboard && (window as any).ClipboardItem) {
+        if (typeof navigator !== 'undefined' && navigator.clipboard && window.ClipboardItem) {
           await navigator.clipboard.write([
-            new (window as any).ClipboardItem({ 'image/png': blob }),
+            new window.ClipboardItem({ 'image/png': blob }),
           ]);
           showAmalToast('Card copied to clipboard! Ready to paste into WhatsApp / Telegram.', 'success');
         } else {

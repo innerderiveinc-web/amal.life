@@ -61,7 +61,7 @@ export function SettingsFiqhTab({
           </label>
           <select
             value={madhhab}
-            onChange={(e) => setMadhhab(e.target.value as any)}
+            onChange={(e) => setMadhhab(e.target.value as ('HANAFI' | 'STANDARD_JUMHUR'))}
             style={{
               width: '100%',
               maxWidth: 420,
@@ -84,7 +84,7 @@ export function SettingsFiqhTab({
           </label>
           <select
             value={calcMethod}
-            onChange={(e) => setCalcMethod(e.target.value as any)}
+            onChange={(e) => setCalcMethod(e.target.value as ('KARACHI' | 'MWL' | 'UMM_AL_QURA' | 'EGYPTIAN' | 'ISNA'))}
             style={{
               width: '100%',
               maxWidth: 420,

@@ -3,7 +3,7 @@
  * Manages seeker profile, preferences, and locale settings.
  */
 
-import { Controller, Get, Patch, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../common/auth/auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { AuthenticatedUser } from '../../common/auth/auth.types.js';
@@ -12,6 +12,40 @@ import { db } from '@amal/database';
 @Controller('users')
 @UseGuards(AuthGuard)
 export class UsersController {
+  @Get('sync')
+  async getSyncState(@CurrentUser() user: AuthenticatedUser) {
+    const state = db.userSyncState.get(user.userId) || { version: 0, data: {}, syncedAt: null };
+    return { success: true, data: state };
+  }
+
+  @Post('sync')
+  async pushSyncState(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: any,
+  ) {
+    const timestamp = new Date().toISOString();
+    const previous = db.userSyncState.get(user.userId) || { version: 0, data: {}, syncedAt: timestamp };
+    const updated = {
+      version: (previous.version || 0) + 1,
+      data: {
+        ...previous.data,
+        ...body,
+        updatedAt: timestamp,
+      },
+      syncedAt: timestamp,
+      userId: user.userId,
+    };
+    db.userSyncState.set(user.userId, updated);
+    return {
+      success: true,
+      data: {
+        syncedAt: updated.syncedAt,
+        version: updated.version,
+        recordsSynced: Object.keys(body || {}).length,
+      },
+    };
+  }
+
   @Get('me')
   async getProfile(@CurrentUser() user: AuthenticatedUser) {
     const profile = db.profiles.get(user.userId);
@@ -37,7 +71,7 @@ export class UsersController {
       language: 'en',
       country: 'IN',
       timezone: 'Asia/Kolkata',
-      lifeStage: 'YOUNG_PROFESSIONAL' as any,
+      lifeStage: 'YOUNG_PROFESSIONAL',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

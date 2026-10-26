@@ -68,7 +68,7 @@ export function useQuranSurahLoader({
               nameTransliterated: meta?.nameTransliterated || localData.nameTransliterated,
               nameUrdu: meta?.nameUrdu || localData.nameUrdu || '',
               nameEnglish: meta?.nameEnglish || localData.nameEnglish,
-              revelationType: (meta?.revelationType || localData.revelationType) as any,
+              revelationType: (meta?.revelationType || localData.revelationType) as ('MECCAN' | 'MEDINAN'),
               ayahsCount: meta?.ayahsCount || localData.ayahsCount || localData.verses.length,
               verses: localData.verses,
             };
@@ -109,7 +109,7 @@ export function useQuranSurahLoader({
           nameUrdu: meta?.nameUrdu || '',
           nameEnglish: meta?.nameEnglish || uthmani.englishNameTranslation,
           revelationType: (meta?.revelationType ||
-            (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as any,
+            (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as ('MECCAN' | 'MEDINAN'),
           ayahsCount: meta?.ayahsCount || uthmani.numberOfAyahs,
           verses,
         };

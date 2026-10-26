@@ -110,7 +110,7 @@ export function MirasCalculatorTab({
               <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>Deceased Gender</label>
               <select
                 value={deceasedGender}
-                onChange={(e) => setDeceasedGender(e.target.value as any)}
+                onChange={(e) => setDeceasedGender(e.target.value as ('MALE' | 'FEMALE'))}
                 style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
               >
                 <option value="MALE">Male (Leaves Wife/Wives)</option>

@@ -146,3 +146,6 @@ const styles = StyleSheet.create({
   archiveSummary: { fontSize: 12, color: '#374151', marginTop: 4, lineHeight: 18 },
   archiveDate: { fontSize: 10, color: '#9CA3AF', marginTop: 4 },
 });
+
+export default FamilyScreen;
+

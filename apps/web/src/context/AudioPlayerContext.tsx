@@ -43,8 +43,8 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   // Play a gentle Web Audio chime for instant audible confirmation on user click
   const playTestChime = () => {
     try {
-      if (typeof window !== 'undefined' && (window.AudioContext || (window as any).webkitAudioContext)) {
-        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const ctx = new AudioCtx();
         if (ctx.state === 'suspended') {
           ctx.resume().catch(() => {});

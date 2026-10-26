@@ -2,7 +2,7 @@
  * AMAL OS — LAYER 19: JOURNEY REPOSITORY (Section 106, 114)
  */
 
-import { Journey, JourneyId, UserId, GoalId, toJourneyId } from '@amal/types';
+import { Journey, JourneyId, UserId, GoalId, toJourneyId, JourneyType, JourneyStatus } from '@amal/types';
 import { db, InMemoryAmalDatabase } from '../index.js';
 
 export interface JourneyRepository {
@@ -18,12 +18,12 @@ export class InMemoryJourneyRepository implements JourneyRepository {
     const now = new Date().toISOString();
     const journey: Journey = {
       id,
-      title: 'Journey',
-      goal: 'Personal Worship Consistency',
-      journeyType: 'CUSTOM' as any,
-      description: 'Spiritual Journey',
-      status: 'ACTIVE' as any,
-      durationDays: 30,
+      title: input.title || 'Journey',
+      goal: input.goal || 'Personal Worship Consistency',
+      journeyType: (input.journeyType as JourneyType) || 'CUSTOM',
+      description: input.description || 'Spiritual Journey',
+      status: (input.status as JourneyStatus) || 'ACTIVE',
+      durationDays: input.durationDays || 30,
       totalDays: 30,
       currentDay: 1,
       progress: 0,

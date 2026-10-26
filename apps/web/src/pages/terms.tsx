@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { AmalTheme } from '@amal/ui';
 
+type TermsSection = 'OVERVIEW' | 'DISCLAIMER' | 'ADAB' | 'IP' | 'LIABILITY';
+
 export default function TermsPage() {
-  const [activeSection, setActiveSection] = useState<'OVERVIEW' | 'DISCLAIMER' | 'ADAB' | 'IP' | 'LIABILITY'>('OVERVIEW');
+  const [activeSection, setActiveSection] = useState<TermsSection>('OVERVIEW');
 
   return (
     <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -53,7 +55,7 @@ export default function TermsPage() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveSection(tab.id as any)}
+              onClick={() => setActiveSection(tab.id as TermsSection)}
               style={{
                 padding: '8px 16px',
                 borderRadius: 8,

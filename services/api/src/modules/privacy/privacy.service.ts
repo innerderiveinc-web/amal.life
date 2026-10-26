@@ -12,6 +12,7 @@ import { AuthenticatedUser } from '../../common/auth/auth.types.js';
 import { AmalError } from '../../common/errors/amal-error.js';
 import { ErrorCode } from '../../common/errors/error-codes.js';
 import { db } from '@amal/database';
+import { UserConsent } from '@amal/types';
 
 export interface PrivacyRequestRecord {
   id: string;
@@ -55,8 +56,8 @@ export class PrivacyService {
     );
   }
 
-  public async updateConsents(actor: AuthenticatedUser, consents: any[]) {
-    db.consents.set(actor.userId, consents as any);
+  public async updateConsents(actor: AuthenticatedUser, consents: UserConsent[]) {
+    db.consents.set(actor.userId, consents);
     await this.audit.record({
       actorUserId: actor.userId,
       action: 'CONSENT_UPDATE',

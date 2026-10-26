@@ -153,7 +153,7 @@ export class LegacyContinuityEngine {
    * primary Islamic evidence or scholarly authority.
    */
   public assertTwoGraphFirewall(item: Partial<LegacyItemRecord>): void {
-    if ((item as any).isAuthoritativeClaim === true) {
+    if ((item as { isAuthoritativeClaim?: unknown }).isAuthoritativeClaim === true) {
       throw new Error(
         'TWO_GRAPH_FIREWALL_BREACH: User-created legacy content cannot declare itself authoritative Islamic Shariah evidence. Personal opinion != Islamic authority.'
       );

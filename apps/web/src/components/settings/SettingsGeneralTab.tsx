@@ -47,7 +47,7 @@ export function SettingsGeneralTab({
           <select
             value={appLanguage}
             onChange={(e) => {
-              const val = e.target.value as any;
+              const val = e.target.value as ('en' | 'ur' | 'ar');
               setAppLanguage(val);
               setLanguage(val);
             }}

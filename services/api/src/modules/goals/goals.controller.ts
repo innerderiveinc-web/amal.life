@@ -3,7 +3,7 @@ import { GoalsService } from './goals.service.js';
 import { AuthGuard, AuthUser } from '../../common/guards/auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { IdempotencyInterceptor } from '../../common/interceptors/idempotency.interceptor.js';
-import { GoalCategory, GoalIntent } from '@amal/types';
+import { GoalCategory, GoalIntent, GoalStatus } from '@amal/types';
 
 export interface CreateGoalDto {
   title: string;
@@ -17,7 +17,7 @@ export interface UpdateGoalDto {
   title?: string;
   desiredOutcome?: string;
   priority?: number;
-  status?: string;
+  status?: GoalStatus;
 }
 
 import { AuthenticatedUser } from '../../common/auth/auth.types.js';
@@ -27,7 +27,7 @@ function toActor(user: AuthUser): AuthenticatedUser {
     userId: user.id,
     sessionId: `sess_${user.id}`,
     accountMode: 'ADULT',
-    roles: (user.roles as any) || ['USER'],
+    roles: (user.roles as Array<'USER' | 'FAMILY_OWNER' | 'SCHOLAR' | 'ADMIN'>) || ['USER'],
   };
 }
 

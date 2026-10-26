@@ -103,10 +103,10 @@ export class EvidenceService {
   }
 
   public async getNodeSources(nodeId: string) {
-    const node = db.nodes.get(nodeId);
+    const node = db.nodes.get(nodeId) as { sourceId?: string; metadata?: { sourceId?: string } } | undefined;
     if (!node) return [];
     return Array.from(db.sources.values()).filter(
-      s => s.id === (node as any).sourceId || (node as any).metadata?.sourceId === s.id
+      s => s.id === node.sourceId || node.metadata?.sourceId === s.id
     );
   }
 

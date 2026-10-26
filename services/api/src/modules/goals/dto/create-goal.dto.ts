@@ -9,7 +9,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { GoalCategory, GoalIntent } from '@amal/types';
+import { GoalCategory, GoalIntent, GoalStatus } from '@amal/types';
 
 export class CreateGoalDto {
   @IsString()
@@ -53,5 +53,5 @@ export class UpdateGoalDto {
 
   @IsOptional()
   @IsString()
-  status?: string;
+  status?: GoalStatus;
 }

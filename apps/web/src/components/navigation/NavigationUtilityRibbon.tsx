@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { CloudSyncBadge } from './CloudSyncBadge';
 
 export interface NavigationUtilityRibbonProps {
   isOnline: boolean;
@@ -184,6 +185,9 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
             <span>⭐</span>
             <span>{currentLang === 'ur' ? 'محفوظ دعائیں' : 'Saved Duas'}</span>
           </button>
+
+          {/* Cloud Sync Status Badge */}
+          <CloudSyncBadge currentLang={currentLang} />
 
           {/* Account / Sign In */}
           <button

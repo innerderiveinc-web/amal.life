@@ -38,12 +38,12 @@ export default function App({ Component, pageProps }: AppProps) {
     // PWA Install Prompt Handlers
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      (window as any).deferredPrompt = e;
+      window.deferredPrompt = e as BeforeInstallPromptEvent;
       window.dispatchEvent(new CustomEvent('amal-pwa-installable'));
     };
 
     const handleAppInstalled = () => {
-      (window as any).deferredPrompt = null;
+      window.deferredPrompt = null;
       window.dispatchEvent(new CustomEvent('amal-pwa-installed'));
     };
 

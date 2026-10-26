@@ -11,7 +11,7 @@ export function requestIdMiddleware(req: Request, res: Response, next: NextFunct
   const requestId = incomingId || `req_${randomUUID()}`;
 
   req.headers['x-request-id'] = requestId;
-  (req as any).requestId = requestId;
+  (req as Request & { requestId?: string }).requestId = requestId;
 
   res.setHeader('x-request-id', requestId);
   next();

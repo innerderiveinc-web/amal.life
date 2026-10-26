@@ -21,9 +21,9 @@ export class InMemoryUserRepository implements UserRepository {
       email: input.email || `${id}@amal.local`,
       role: input.role || 'USER',
       status: input.status || 'ACTIVE',
-      accountMode: (input as any).accountMode || 'ADULT',
-      locale: (input as any).locale || 'en',
-      timezone: (input as any).timezone || 'Asia/Kolkata',
+      accountMode: input.accountMode || 'ADULT',
+      locale: input.locale || 'en',
+      timezone: input.timezone || 'Asia/Kolkata',
       createdAt: now,
       updatedAt: now,
     };

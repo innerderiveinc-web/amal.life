@@ -51,8 +51,8 @@ export const ToastContainer: React.FC = () => {
       }, 3200);
     };
 
-    window.addEventListener('amal-toast' as any, handleToastEvent);
-    return () => window.removeEventListener('amal-toast' as any, handleToastEvent);
+    window.addEventListener('amal-toast', handleToastEvent as EventListener);
+    return () => window.removeEventListener('amal-toast', handleToastEvent as EventListener);
   }, []);
 
   if (toasts.length === 0) return null;

@@ -19,7 +19,9 @@ import type {
   MasterRightsCategory,
   MasterScholarReviewLevel,
   CanonicalMasterWorkRecord,
-  CanonicalMasterAuthorRecord
+  CanonicalMasterAuthorRecord,
+  MasterKnowledgeCollectionFamily,
+  MasterSilsilaCode
 } from '@amal/types';
 
 import type {
@@ -177,7 +179,7 @@ export class GlobalHeritageAtlasEngine {
         languages: ['ARABIC', 'PERSIAN', 'URDU'],
         madhhab: fig.school,
         spiritual_tradition: fig.tradition,
-        associated_silsilas: fig.silsilas as any,
+        associated_silsilas: fig.silsilas as MasterSilsilaCode[],
         biographical_sources: ['Siyar A\'lam al-Nubala'],
         identity_status: 'VERIFIED'
       });
@@ -205,7 +207,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Al-Ghunya',
       author_id: this.jilaniPersonId,
       work_type: 'SPIRITUAL_MANUAL',
-      domain: '25_SUFI_MANUALS' as any,
+      domain: '25_SUFI_MANUALS' as MasterKnowledgeCollectionFamily,
       historical_period: '6th Century AH (c. 550 AH)',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -259,7 +261,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Futuh al-Ghayb',
       author_id: this.jilaniPersonId,
       work_type: 'TAZKIYAH',
-      domain: '19_TAZKIYAH' as any,
+      domain: '19_TAZKIYAH' as MasterKnowledgeCollectionFamily,
       historical_period: '6th Century AH',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -301,7 +303,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Al-Fath al-Rabbani',
       author_id: this.jilaniPersonId,
       work_type: 'TAZKIYAH',
-      domain: '19_TAZKIYAH' as any,
+      domain: '19_TAZKIYAH' as MasterKnowledgeCollectionFamily,
       historical_period: '6th Century AH (545 AH)',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -343,7 +345,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Sirr al-Asrar',
       author_id: this.jilaniPersonId,
       work_type: 'SPIRITUAL_MANUAL',
-      domain: '25_SUFI_MANUALS' as any,
+      domain: '25_SUFI_MANUALS' as MasterKnowledgeCollectionFamily,
       historical_period: '6th Century AH',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -381,7 +383,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Jala al-Khatir',
       author_id: this.jilaniPersonId,
       work_type: 'MALFUZAT',
-      domain: '26_MALFUZAT' as any,
+      domain: '26_MALFUZAT' as MasterKnowledgeCollectionFamily,
       historical_period: '6th Century AH',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -419,7 +421,7 @@ export class GlobalHeritageAtlasEngine {
       short_title: 'Al-Kibrit al-Ahmar',
       author_id: this.jilaniPersonId,
       work_type: 'DUA',
-      domain: '27_DUA' as any,
+      domain: '27_DUA' as MasterKnowledgeCollectionFamily,
       historical_period: 'Later Tazkirah Period',
       original_language: 'ARABIC',
       original_script: 'ARABIC_NASKH',
@@ -593,7 +595,7 @@ export class GlobalHeritageAtlasEngine {
         short_title: w.title.split(' ')[0] || w.title,
         author_id: alaHazratId,
         work_type: 'FIQH',
-        domain: w.domains[0] as any,
+        domain: w.domains[0] as MasterKnowledgeCollectionFamily,
         historical_period: '14th Century AH',
         original_language: 'URDU',
         original_script: 'URDU_NASTALIQ',
@@ -915,7 +917,7 @@ export class GlobalHeritageAtlasEngine {
       figure,
       authenticated_works: works
         .filter(w => w.attribution_status === 'AUTHENTICATED' || w.attribution_status === 'STRONGLY_SUPPORTED')
-        .map(w => ({ work_id: w.work_id, title: w.canonical_title, domains: [w.domain as any] })),
+        .map(w => ({ work_id: w.work_id, title: w.canonical_title, domains: [w.domain as AtlasTaxonomyDomain] })),
       attributed_works: works
         .filter(w => w.attribution_status === 'TRADITIONALLY_ATTRIBUTED' || w.attribution_status === 'PROBABLE')
         .map(w => ({ work_id: w.work_id, title: w.canonical_title, attribution_status: w.attribution_status })),
@@ -1124,7 +1126,7 @@ export class GlobalHeritageAtlasEngine {
     edges: SilsilaLineageEdge[];
     figures: AtlasBuzurgRecord[];
   } {
-    const silsila = this.catalogueEngine.getSilsila(silsilaCode as any);
+    const silsila = this.catalogueEngine.getSilsila(silsilaCode as MasterSilsilaCode);
     const edges = this.lineageEdges;
     const figures = Array.from(this.buzurgRegistry.values()).filter(b => b.silsilas.includes(silsilaCode));
 

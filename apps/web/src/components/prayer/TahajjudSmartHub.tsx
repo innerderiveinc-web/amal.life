@@ -107,7 +107,7 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
     if (typeof window === 'undefined') return;
     try {
       setIsPlayingAlarmTest(true);
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (AudioCtx) {
         const ctx = new AudioCtx();
         const freqs = [293.66, 369.99, 440.0, 587.33];

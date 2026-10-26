@@ -221,7 +221,7 @@ export default function LibraryPage() {
           nameTransliterated: meta?.nameTransliterated || uthmani.englishName,
           nameUrdu: meta?.nameUrdu || '',
           nameEnglish: meta?.nameEnglish || uthmani.englishNameTranslation,
-          revelationType: (meta?.revelationType || (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as any,
+          revelationType: (meta?.revelationType || (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as ('MECCAN' | 'MEDINAN'),
           ayahsCount: meta?.ayahsCount || uthmani.numberOfAyahs,
           verses,
         };

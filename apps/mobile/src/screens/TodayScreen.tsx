@@ -503,3 +503,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+export default TodayScreen;
+

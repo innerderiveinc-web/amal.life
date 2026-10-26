@@ -216,7 +216,7 @@ export class ScholarsController {
     if (!c) {
       throw new HttpException('Case not found', HttpStatus.NOT_FOUND);
     }
-    c.status = 'USER_FOLLOWUP' as any;
+    c.status = 'PENDING_TRIAGE';
     c.sanitizedContext = `${c.sanitizedContext || ''}\n[Followup from user]: ${body.followupQuestion}`;
     return {
       success: true,
@@ -235,7 +235,7 @@ export class ScholarsController {
     if (!c) {
       throw new HttpException('Case not found', HttpStatus.NOT_FOUND);
     }
-    c.status = 'CLOSED' as any;
+    c.status = 'DELIVERED';
     return {
       success: true,
       case: c,

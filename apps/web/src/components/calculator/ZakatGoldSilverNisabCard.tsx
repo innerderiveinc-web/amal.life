@@ -74,7 +74,7 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <select
             value={nisabStandard}
-            onChange={(e) => setNisabStandard(e.target.value as any)}
+            onChange={(e) => setNisabStandard(e.target.value as ('SILVER' | 'GOLD'))}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
           >
             <option value="SILVER">Silver (612.36g — Hanafi Preferred)</option>

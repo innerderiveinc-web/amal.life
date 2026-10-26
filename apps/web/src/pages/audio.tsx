@@ -66,7 +66,7 @@ export default function AudioPage() {
     if (router.query.tab) {
       const tab = String(router.query.tab).toUpperCase();
       if (tab === 'SIRAH' || tab === 'SHAMAIL' || tab === 'QURAN') {
-        setActiveTab(tab as any);
+        setActiveTab(tab as ('QURAN' | 'SHAMAIL' | 'SIRAH'));
       }
     }
     if (router.query.work) {

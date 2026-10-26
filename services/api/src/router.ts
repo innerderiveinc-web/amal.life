@@ -9,6 +9,14 @@ import {
   AskAmalResponseDto,
   UserContextResponseDto,
   EvidenceChainNode,
+  SunniSchool,
+  AmalWorkId,
+  AmalPersonId,
+  MasterSilsilaCode,
+  AmalEditionId,
+  AmalPracticeId,
+  ClassicalTazkiyahConceptTerm,
+  TrustPolicySlug,
 } from '@amal/types';
 import { db, SEED_JOURNEY_TEMPLATES } from '@amal/database';
 import { JwtService } from './common/auth/jwt.service.js';
@@ -35,6 +43,7 @@ import {
   audioStreamingEngine,
   hijriFastingEngine,
   signatureCapabilitiesEngine,
+  LifeOsMode,
   deenReplayEngine,
   familyDeenOsEngine,
   knowledgeVaultEngine,
@@ -44,11 +53,17 @@ import {
   mosqueIqamahSyncEngine,
   offlineResilienceEngine,
   masnoonTasbihEngine,
+  MasnoonTasbihEngine,
   dailyMamoolEngine,
+  DailyMamoolEngine,
   universalSearchEngine,
+  UniversalSearchEngine,
   readerModeEngine,
+  ReaderModeEngine,
   onboardingWizardEngine,
+  OnboardingWizardEngine,
   gentleNotificationsEngine,
+  GentleNotificationsEngine,
 } from '@amal/amal-engine';
 import { PrayerService } from './prayer-service.js';
 import { CommunicationsService } from './modules/notifications/communications.service.js';
@@ -278,6 +293,54 @@ export class ApiRouter {
         return {
           success: true,
           data: { user, profile },
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
+      if ((path === '/api/v1/sync' || path === '/api/v1/users/sync') && method === 'POST') {
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return {
+            success: false,
+            error: { code: 'UNAUTHORIZED', message: 'Authentication required to push cloud synchronization state.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const syncBundle = body || {};
+        const previous = db.userSyncState.get(ctx.userId) || { version: 0, data: {}, syncedAt: timestamp };
+        const updated = {
+          version: (previous.version || 0) + 1,
+          data: {
+            ...previous.data,
+            ...syncBundle,
+            updatedAt: timestamp,
+          },
+          syncedAt: timestamp,
+          userId: ctx.userId,
+        };
+        db.userSyncState.set(ctx.userId, updated);
+        return {
+          success: true,
+          data: {
+            syncedAt: updated.syncedAt,
+            version: updated.version,
+            recordsSynced: Object.keys(syncBundle).length,
+          },
+          metadata: { timestamp, request_id: requestId, version },
+        };
+      }
+
+      if ((path === '/api/v1/sync' || path === '/api/v1/users/sync') && method === 'GET') {
+        if (!ctx.userId || ctx.userRole === 'ANONYMOUS') {
+          return {
+            success: false,
+            error: { code: 'UNAUTHORIZED', message: 'Authentication required to pull cloud synchronization state.' },
+            metadata: { timestamp, request_id: requestId, version },
+          };
+        }
+        const state = db.userSyncState.get(ctx.userId) || { version: 0, data: {}, syncedAt: null };
+        return {
+          success: true,
+          data: state,
           metadata: { timestamp, request_id: requestId, version },
         };
       }
@@ -674,7 +737,7 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/life-os/mode/') && method === 'GET') {
         const mode = path.replace('/api/v1/life-os/mode/', '').toUpperCase();
-        const profile = signatureCapabilitiesEngine.getLifeOsProfile(mode as any);
+        const profile = signatureCapabilitiesEngine.getLifeOsProfile(mode as LifeOsMode);
         return { success: true, data: profile, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -801,18 +864,18 @@ export class ApiRouter {
       // 4J. USER-FRIENDLY EXPERIENCES (TASBIH, MAMOOL, SEARCH, READER, ONBOARDING, NOTIFICATIONS)
       // -----------------------------------------------------
       if (path === '/api/v1/tasbih/presets' && method === 'GET') {
-        const presets = masnoonTasbihEngine.constructor ? (masnoonTasbihEngine as any).constructor.getAllPresets() : [];
+        const presets = MasnoonTasbihEngine.getAllPresets();
         return { success: true, data: { presets }, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/tasbih/increment' && method === 'POST') {
-        const result = (masnoonTasbihEngine as any).constructor.increment(body);
+        const result = MasnoonTasbihEngine.increment(body);
         return { success: true, data: result, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/mamool/today' && method === 'GET') {
         const hour = body?.hour ?? new Date().getHours();
-        const mamool = (dailyMamoolEngine as any).constructor.getMamool(hour);
+        const mamool = DailyMamoolEngine.getMamool(hour);
         return { success: true, data: mamool, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -822,24 +885,24 @@ export class ApiRouter {
           const searchParams = new URLSearchParams(path.split('?')[1]);
           query = searchParams.get('q') || searchParams.get('query') || '';
         }
-        const results = (universalSearchEngine as any).constructor.search(query);
-        const suggestions = (universalSearchEngine as any).constructor.getPopularSuggestions();
+        const results = UniversalSearchEngine.search(query);
+        const suggestions = UniversalSearchEngine.getPopularSuggestions();
         return { success: true, data: { results, suggestions }, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/reader/preferences' && method === 'GET') {
-        const defaults = (readerModeEngine as any).constructor.getDefaultPreferences();
-        const resolved = (readerModeEngine as any).constructor.getResolvedStyles(defaults);
+        const defaults = ReaderModeEngine.getDefaultPreferences();
+        const resolved = ReaderModeEngine.getResolvedStyles(defaults);
         return { success: true, data: { preferences: defaults, styles: resolved }, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/onboarding/starter-plan' && method === 'POST') {
-        const plan = (onboardingWizardEngine as any).constructor.generateStarterPlan(body);
+        const plan = OnboardingWizardEngine.generateStarterPlan(body);
         return { success: true, data: plan, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if (path === '/api/v1/notifications/gentle-schedule' && method === 'GET') {
-        const schedule = (gentleNotificationsEngine as any).constructor.getSchedule(body);
+        const schedule = GentleNotificationsEngine.getSchedule(body);
         return { success: true, data: { schedule }, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -1075,7 +1138,7 @@ export class ApiRouter {
       // 6. GOALS & AMAL ENGINE (Multi-factor Ranking & Baselines)
       // -----------------------------------------------------
       if (path === '/api/v1/goals' && method === 'GET') {
-        const stored = (AmalJourneyEngine as any).userGoals?.get(ctx.userId) || [];
+        const stored = AmalJourneyEngine.getUserGoals(ctx.userId);
         const goals = stored.length > 0 ? stored : [
           {
             id: 'goal_fajr_init',
@@ -1127,9 +1190,9 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/goals/') && method === 'PATCH') {
         const goalId = path.split('/')[4];
-        const stored = (AmalJourneyEngine as any).userGoals?.get(ctx.userId) || [];
+        const stored = AmalJourneyEngine.getUserGoals(ctx.userId);
         const updated = stored.map((g: any) => (g.id === goalId ? { ...g, ...body } : g));
-        (AmalJourneyEngine as any).userGoals?.set(ctx.userId, updated);
+        AmalJourneyEngine.setUserGoals(ctx.userId, updated);
         return {
           success: true,
           data: { id: goalId, updated: true },
@@ -1139,9 +1202,9 @@ export class ApiRouter {
 
       if (path.startsWith('/api/v1/goals/') && method === 'DELETE') {
         const goalId = path.split('/')[4];
-        const stored = (AmalJourneyEngine as any).userGoals?.get(ctx.userId) || [];
+        const stored = AmalJourneyEngine.getUserGoals(ctx.userId);
         const filtered = stored.filter((g: any) => g.id !== goalId);
-        (AmalJourneyEngine as any).userGoals?.set(ctx.userId, filtered);
+        AmalJourneyEngine.setUserGoals(ctx.userId, filtered);
         return {
           success: true,
           data: { id: goalId, deleted: true },
@@ -1838,9 +1901,10 @@ export class ApiRouter {
       }
 
       if (path.startsWith('/api/v1/billing/webhooks/') && method === 'POST') {
-        const providerName = path.split('/')[5]?.toUpperCase() as any;
-        const signature = (ctx as any).signature || body?.signature || '';
-        const timestampHeader = (ctx as any).timestampHeader;
+        const providerName = (path.split('/')[5]?.toUpperCase() || 'LOCAL_TEST') as 'STRIPE' | 'RAZORPAY' | 'LOCAL_TEST';
+        const extCtx = ctx as RequestContext & { signature?: string; timestampHeader?: string };
+        const signature = extCtx.signature || body?.signature || '';
+        const timestampHeader = extCtx.timestampHeader;
         const res = await billingWebhookService.handleWebhook(providerName, body, signature, timestampHeader);
         return { success: res.success, data: res, metadata: { timestamp, request_id: requestId, version } };
       }
@@ -2515,7 +2579,7 @@ export class ApiRouter {
       }
 
       if (path.startsWith('/api/v1/knowledge/madhhabs/') && method === 'GET') {
-        const school = path.split('/')[5]?.toUpperCase() as any;
+        const school = path.split('/')[5]?.toUpperCase() as SunniSchool;
         const foundation = ecosystemService.getMadhhabFoundation(school);
         if (!foundation) throw new Error(`Madhhab foundation ${school} not found.`);
         return { success: true, data: foundation, metadata: { timestamp, request_id: requestId, version } };
@@ -3852,7 +3916,7 @@ export class ApiRouter {
 
       if ((path.startsWith('/api/v1/catalogue/works/') || path.startsWith('/catalogue/works/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const work = ecosystemService.getCatalogueWork(id as any);
+        const work = ecosystemService.getCatalogueWork(id as AmalWorkId);
         return { success: !!work, data: work, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3863,7 +3927,7 @@ export class ApiRouter {
 
       if ((path.startsWith('/api/v1/catalogue/authors/') || path.startsWith('/catalogue/authors/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const author = ecosystemService.getCatalogueAuthor(id as any);
+        const author = ecosystemService.getCatalogueAuthor(id as AmalPersonId);
         return { success: !!author, data: author, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3874,13 +3938,13 @@ export class ApiRouter {
 
       if ((path.startsWith('/api/v1/catalogue/silsilas/') || path.startsWith('/catalogue/silsilas/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const silsila = ecosystemService.getCatalogueSilsila(id as any);
+        const silsila = ecosystemService.getCatalogueSilsila(id as MasterSilsilaCode);
         return { success: !!silsila, data: silsila, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if ((path.startsWith('/api/v1/catalogue/editions/') || path.startsWith('/catalogue/editions/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const edition = ecosystemService.getCatalogueEdition(id as any);
+        const edition = ecosystemService.getCatalogueEdition(id as AmalEditionId);
         return { success: !!edition, data: edition, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3916,13 +3980,13 @@ export class ApiRouter {
 
       if ((path.startsWith('/api/v1/catalogue/public-card/') || path.startsWith('/catalogue/public-card/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const card = ecosystemService.getPublicSourceView(id as any);
+        const card = ecosystemService.getPublicSourceView(id as AmalWorkId);
         return { success: true, data: card, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if ((path.startsWith('/api/v1/catalogue/reconstruct/') || path.startsWith('/catalogue/reconstruct/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const packet = ecosystemService.reconstructKnowledgePacket(id as any);
+        const packet = ecosystemService.reconstructKnowledgePacket(id as AmalWorkId);
         return { success: true, data: packet, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3943,13 +4007,13 @@ export class ApiRouter {
       if ((path.startsWith('/api/v1/atlas/buzurg/') || path.startsWith('/atlas/buzurg/')) && path.endsWith('/universe') && method === 'GET') {
         const parts = path.split('/');
         const id = parts[parts.length - 2];
-        const universe = ecosystemService.getFigureKnowledgeUniverse(id as any);
+        const universe = ecosystemService.getFigureKnowledgeUniverse(id as AmalPersonId);
         return { success: true, data: universe, metadata: { timestamp, request_id: requestId, version } };
       }
 
       if ((path.startsWith('/api/v1/atlas/buzurg/') || path.startsWith('/atlas/buzurg/')) && !path.endsWith('/universe') && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const buzurg = ecosystemService.getAtlasBuzurg(id as any);
+        const buzurg = ecosystemService.getAtlasBuzurg(id as AmalPersonId);
         return { success: !!buzurg, data: buzurg, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3967,7 +4031,7 @@ export class ApiRouter {
 
       if ((path.startsWith('/api/v1/atlas/practices/') || path.startsWith('/atlas/practices/')) && method === 'GET') {
         const id = path.includes('/api/v1/') ? path.split('/')[5] : path.split('/')[3];
-        const practice = ecosystemService.getAtlasPractice(id as any);
+        const practice = ecosystemService.getAtlasPractice(id as AmalPracticeId);
         return { success: !!practice, data: practice, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -3979,7 +4043,7 @@ export class ApiRouter {
       if ((path.startsWith('/api/v1/atlas/concepts/') || path.startsWith('/atlas/concepts/')) && path.endsWith('/compare') && method === 'GET') {
         const parts = path.split('/');
         const term = parts[parts.length - 2];
-        const comparison = ecosystemService.compareTazkiyahConcept(term as any);
+        const comparison = ecosystemService.compareTazkiyahConcept(term as ClassicalTazkiyahConceptTerm);
         return { success: true, data: comparison, metadata: { timestamp, request_id: requestId, version } };
       }
 
@@ -4022,7 +4086,7 @@ export class ApiRouter {
       if ((path.startsWith('/api/v1/trust-center/policies/') || path.startsWith('/trust-center/policies/')) && method === 'GET') {
         const parts = path.split('/');
         const slug = parts[parts.length - 1];
-        const policy = ecosystemService.getTrustCenterPolicy(slug as any);
+        const policy = ecosystemService.getTrustCenterPolicy(slug as TrustPolicySlug);
         return { success: !!policy, data: policy, metadata: { timestamp, request_id: requestId, version } };
       }
 

@@ -31,7 +31,7 @@ export class InMemoryReflectionRepository implements ReflectionRepository {
       wentWell: input.freeText || input.feeling || 'Reflection recorded',
       date: input.date,
       content: input.freeText || input.feeling || 'Reflection recorded',
-      sentiment: (input.feeling as any) || 'PEACEFUL',
+      sentiment: input.feeling || 'PEACEFUL',
       tags: [...(input.helpfulFactors || []), ...(input.frictionFactors || [])],
       isPrivate: input.privacyLevel !== 'SHARED', // Default to true (Section 53)
       createdAt: new Date().toISOString(),

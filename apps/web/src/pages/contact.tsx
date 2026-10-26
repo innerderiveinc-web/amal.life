@@ -160,7 +160,7 @@ export default function ContactPage() {
                   </label>
                   <select
                     value={category}
-                    onChange={(e) => setCategory(e.target.value as any)}
+                    onChange={(e) => setCategory(e.target.value as ('SCHOLARLY' | 'GENERAL' | 'BUG' | 'PARTNERSHIP'))}
                     style={{
                       width: '100%',
                       padding: '10px 12px',

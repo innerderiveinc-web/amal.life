@@ -41,7 +41,7 @@ let sharedAudioCtx: AudioContext | null = null;
 
 function getSharedAudioContext(): AudioContext | null {
   if (typeof window === 'undefined') return null;
-  const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return null;
   if (!sharedAudioCtx || sharedAudioCtx.state === 'closed') {
     sharedAudioCtx = new AudioContextClass();

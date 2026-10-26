@@ -229,3 +229,6 @@ const styles = StyleSheet.create({
     color: '#DC2626',
   },
 });
+
+export default PrivacyCenterScreen;
+

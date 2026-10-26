@@ -45,7 +45,7 @@ export function SettingsPrivacyTab({
           </label>
           <select
             value={securityMode}
-            onChange={(e) => setSecurityMode(e.target.value as any)}
+            onChange={(e) => setSecurityMode(e.target.value as VaultSecurityMode)}
             style={{
               width: '100%',
               maxWidth: 420,

@@ -83,7 +83,7 @@ export default function KnowledgeVaultPage() {
                   <label style={{ fontSize: 12, fontWeight: 700, color: '#374151', display: 'block', marginBottom: 4 }}>Source Category</label>
                   <select
                     value={sourceType}
-                    onChange={(e) => setSourceType(e.target.value as any)}
+                    onChange={(e) => setSourceType(e.target.value as VaultSavedNote['sourceType'])}
                     style={{ width: '100%', padding: 10, borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 14 }}
                   >
                     <option value="FRIDAY_KHUTBAH">Friday Khutbah</option>

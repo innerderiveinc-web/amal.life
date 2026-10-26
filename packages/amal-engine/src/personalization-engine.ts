@@ -8,6 +8,7 @@
 
 import {
   LearnedPreference,
+  PreferenceSourceTier,
   PersonalizationSettings,
   RecommendationCandidate,
   UserInsightItem,
@@ -101,7 +102,7 @@ export class PersonalizationEngine {
   /**
    * Sets or updates a preference with conflict resolution and hierarchical weighting.
    */
-  public static setPreference(userId: string, input: Partial<LearnedPreference> & { type: any; value: any; source: any }): {
+  public static setPreference(userId: string, input: Partial<LearnedPreference> & { type: any; value: any; source: PreferenceSourceTier }): {
     preference: LearnedPreference;
     conflictDetected: boolean;
     userPromptRequired: boolean;
@@ -117,7 +118,7 @@ export class PersonalizationEngine {
     const existing = userMap.get(prefId);
 
     if (existing) {
-      const resolution = PreferenceLearner.resolveConflict(existing, input as any);
+      const resolution = PreferenceLearner.resolveConflict(existing, input);
       userMap.set(prefId, resolution.winner);
       return {
         preference: resolution.winner,

@@ -1,4 +1,4 @@
-import { Goal, GoalCategory, GoalIntent } from '@amal/types';
+import { Goal, GoalCategory, GoalIntent, GoalId, UserId, GoalStatus } from '@amal/types';
 import { db } from '@amal/database';
 
 export interface CreateGoalInput {
@@ -16,7 +16,7 @@ export interface UpdateGoalInput {
   title?: string;
   desiredOutcome?: string;
   priority?: number;
-  status?: string;
+  status?: GoalStatus;
 }
 
 export interface GoalRepository {
@@ -29,10 +29,10 @@ export interface GoalRepository {
 
 export class PostgresGoalRepository implements GoalRepository {
   public async create(input: CreateGoalInput): Promise<Goal> {
-    const id = `goal_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id = `goal_${Date.now()}_${Math.random().toString(36).substring(2, 7)}` as GoalId;
     const goal: Goal = {
-      id: id as any,
-      userId: input.userId as any,
+      id,
+      userId: input.userId as UserId,
       title: input.title,
       category: input.category,
       intent: input.intent,
@@ -68,7 +68,7 @@ export class PostgresGoalRepository implements GoalRepository {
     }
 
     if (input.title) goal.title = input.title;
-    if (input.status) goal.status = input.status as any;
+    if (input.status) goal.status = input.status;
     goal.updatedAt = new Date().toISOString();
 
     db.goals.set(goalId, goal);

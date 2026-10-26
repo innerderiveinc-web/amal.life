@@ -46,7 +46,7 @@ export function SettingsReaderTab({
           </label>
           <select
             value={arabicScript}
-            onChange={(e) => setArabicScript(e.target.value as any)}
+            onChange={(e) => setArabicScript(e.target.value as ('indopak' | 'uthmani'))}
             style={{
               width: '100%',
               maxWidth: 420,

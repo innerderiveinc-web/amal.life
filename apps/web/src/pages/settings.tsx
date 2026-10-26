@@ -140,7 +140,7 @@ export default function SettingsPage() {
 
     // 2. Fiqh
     setMadhhab(getSavedMadhhab());
-    setCalcMethod(getSavedMethod() as any);
+    setCalcMethod(getSavedMethod() as ('KARACHI' | 'MWL' | 'UMM_AL_QURA' | 'EGYPTIAN' | 'ISNA'));
     setHijriOffset(getSavedHijriOffset());
     const savedOffsets = getSavedOffsets();
     setOffsets({
@@ -161,7 +161,7 @@ export default function SettingsPage() {
     const savedDualJurist = localStorage.getItem('amal_dual_jurist');
     if (savedDualJurist !== null) setDualJuristVerification(savedDualJurist === 'true');
 
-    const savedAi = localStorage.getItem('amal_ai_provider') as any;
+    const savedAi = localStorage.getItem('amal_ai_provider') as ('gemini' | 'openai' | 'local') | null;
     if (savedAi) setAiProvider(savedAi);
 
     const savedEphemeral = localStorage.getItem('amal_ephemeral_memory');

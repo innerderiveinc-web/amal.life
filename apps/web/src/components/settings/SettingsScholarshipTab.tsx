@@ -88,7 +88,7 @@ export function SettingsScholarshipTab({
           </label>
           <select
             value={aiProvider}
-            onChange={(e) => setAiProvider(e.target.value as any)}
+            onChange={(e) => setAiProvider(e.target.value as ('gemini' | 'openai' | 'local'))}
             style={{
               width: '100%',
               maxWidth: 420,

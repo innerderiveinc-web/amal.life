@@ -453,8 +453,8 @@ export class SpiritualHeritageEngine {
       historical_context: work?.historical_period || 'UNKNOWN',
       which_silsila_or_tradition: claim.tradition || work?.silsila_context || work?.tradition_context || 'UNKNOWN',
       what_translation_used: translation?.translator_name || 'Standard Classical Translation',
-      who_reviewed_it: (claim as any).reviewer_ids?.join(', ') || 'sch_tasawwuf_01, sch_hadith_02',
-      which_knowledge_release: (claim as any).release_id || 'rel_amal_v3_spiritual',
+      who_reviewed_it: claim.reviewer_ids?.join(', ') || 'sch_tasawwuf_01, sch_hadith_02',
+      which_knowledge_release: claim.release_id || 'rel_amal_v3_spiritual',
       is_verified_unbroken: work !== undefined && edition !== undefined && passage !== undefined,
     };
   }

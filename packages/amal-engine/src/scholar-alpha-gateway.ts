@@ -71,7 +71,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_farooq_hanafi',
         primary_madhhab: 'HANAFI',
         secondary_competencies: ['USUL_AL_FIQH', 'HANAFI_FATAWA'],
-        expertise_domains: ['HANAFI_FIQH' as any, 'USUL' as any],
+        expertise_domains: ['HANAFI_FIQH', 'TAFSIR'],
         institutional_affiliations: ['Darul Uloom Deoband', 'University of Karachi'],
         ijazah_lineages: [
           { discipline: 'Hanafi Fiqh & Ifta', granting_scholar_or_institution: 'Darul Ifta Karachi', city: 'Karachi', year_hijri: 1428, verified: true },
@@ -88,7 +88,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_abdurrahman_maliki',
         primary_madhhab: 'MALIKI',
         secondary_competencies: ['MALIKI_MUTUN', 'USUL_MALIK'],
-        expertise_domains: ['MALIKI_FIQH' as any, 'HADITH' as any],
+        expertise_domains: ['MALIKI_FIQH', 'HADITH'],
         institutional_affiliations: ['University of al-Qarawiyyin, Fes', 'Zaytuna University'],
         ijazah_lineages: [
           { discipline: 'Al-Muwatta & Mukhtasar Khalil', granting_scholar_or_institution: 'Al-Qarawiyyin Faculty of Sharia', city: 'Fes', year_hijri: 1430, verified: true },
@@ -104,7 +104,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_ahmad_shafii',
         primary_madhhab: 'SHAFI_I',
         secondary_competencies: ['SHAFII_FIQH', 'TAFSIR'],
-        expertise_domains: ['SHAFII_FIQH' as any, 'TAFSIR' as any],
+        expertise_domains: ['SHAFII_FIQH', 'TAFSIR'],
         institutional_affiliations: ['Al-Azhar University, Cairo', 'Dar al-Mustafa, Tarim'],
         ijazah_lineages: [
           { discipline: 'Minhaj al-Talibin & Shafi\'i Jurisprudence', granting_scholar_or_institution: 'Al-Azhar Faculty of Sharia', city: 'Cairo', year_hijri: 1432, verified: true },
@@ -120,7 +120,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_sulayman_hanbali',
         primary_madhhab: 'HANBALI',
         secondary_competencies: ['HANBALI_FIQH', 'HADITH_CRITIQUE'],
-        expertise_domains: ['HANBALI_FIQH' as any, 'HADITH' as any],
+        expertise_domains: ['HANBALI_FIQH', 'HADITH'],
         institutional_affiliations: ['Imam Muhammad Ibn Saud Islamic University, Riyadh', 'Hanbali Heritage Institute, Damascus'],
         ijazah_lineages: [
           { discipline: 'Al-Mughni & Hanbali Fiqh', granting_scholar_or_institution: 'Damascus Scholarly Circle', city: 'Damascus', year_hijri: 1431, verified: true },
@@ -136,7 +136,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_tariq_hadith',
         primary_madhhab: 'HANAFI',
         secondary_competencies: ['HADITH_JARH_WAT_TADIL', 'ILAL_AL_HADITH'],
-        expertise_domains: ['HADITH' as any, 'SIRAH' as any],
+        expertise_domains: ['HADITH', 'SEERAH'],
         institutional_affiliations: ['Islamic University of Madinah', 'Nadwatul Ulama, Lucknow'],
         ijazah_lineages: [
           { discipline: 'Sahih al-Bukhari & Mustalah al-Hadith', granting_scholar_or_institution: 'Islamic University of Madinah', city: 'Madinah Munawwarah', year_hijri: 1426, verified: true },
@@ -152,7 +152,7 @@ export class ScholarAlphaGateway {
         name_encrypted: 'enc_bilal_tazkiyah',
         primary_madhhab: 'HANAFI',
         secondary_competencies: ['TAZKIYAH', 'IHSAAN', 'SILSILA_LINEAGES'],
-        expertise_domains: ['TAZKIYAH' as any, 'SPIRITUAL_HERITAGE' as any],
+        expertise_domains: ['TASAWWUF', 'AQEEDAH'],
         institutional_affiliations: ['Chishtiyyah & Qadiriyyah Certified Lineage', 'Dar al-Ulum Nizamiyyah, Hyderabad'],
         ijazah_lineages: [
           { discipline: 'Tazkiyah al-Nafs & Classical Spiritual Texts', granting_scholar_or_institution: 'Zawiyah Qadiriyyah', city: 'Baghdad / Hyderabad', year_hijri: 1429, verified: true },

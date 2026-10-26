@@ -27,6 +27,7 @@ export interface AmalDatabaseSnapshot {
     familyMembers: [string, any][];
     scholarCases: [string, any][];
     caseMessages: [string, any][];
+    userSyncState?: [string, any][];
     auditLogs: any[];
   };
 }
@@ -42,8 +43,9 @@ function getNodeModules(): { fs: any; path: any } | null {
   }
   try {
     // eval('require') protects Webpack from bundling Node-only builtins into client bundles
-    const req = typeof (globalThis as any).__non_webpack_require__ === 'function'
-      ? (globalThis as any).__non_webpack_require__
+    const g = globalThis as { __non_webpack_require__?: (mod: string) => any };
+    const req = typeof g.__non_webpack_require__ === 'function'
+      ? g.__non_webpack_require__
       : eval('require');
     return {
       fs: req('fs/promises'),
@@ -97,6 +99,7 @@ export function exportSnapshot(database: InMemoryAmalDatabase): AmalDatabaseSnap
       familyMembers: Array.from(database.familyMembers.entries()),
       scholarCases: Array.from(database.scholarCases.entries()),
       caseMessages: Array.from(database.caseMessages.entries()),
+      userSyncState: Array.from(database.userSyncState ? database.userSyncState.entries() : []),
       auditLogs: [...database.auditLogs],
     },
   };
@@ -125,6 +128,7 @@ export function importSnapshot(database: InMemoryAmalDatabase, snapshot: AmalDat
   if (d.familyMembers) database.familyMembers = new Map(d.familyMembers);
   if (d.scholarCases) database.scholarCases = new Map(d.scholarCases);
   if (d.caseMessages) database.caseMessages = new Map(d.caseMessages);
+  if (d.userSyncState) database.userSyncState = new Map(d.userSyncState);
   if (d.auditLogs && Array.isArray(d.auditLogs)) database.auditLogs = [...d.auditLogs];
 }
 

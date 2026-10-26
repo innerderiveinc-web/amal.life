@@ -33,7 +33,7 @@ export default function TasbihPage() {
     // 2. Gentle Audio Click (Reused singleton Web Audio API synth)
     if (soundEnabled && typeof window !== 'undefined') {
       try {
-        const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
         if (AudioCtxClass) {
           if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
             audioCtxRef.current = new AudioCtxClass();

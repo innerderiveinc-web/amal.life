@@ -182,7 +182,7 @@ export default function DecisionRoomPage() {
                     <label style={{ fontSize: 12, fontWeight: 600, color: '#4B5563' }}>Privacy Level:</label>
                     <select
                       value={privacySetting}
-                      onChange={(e) => setPrivacySetting(e.target.value as any)}
+                      onChange={(e) => setPrivacySetting(e.target.value as ('FULL_CONTEXT' | 'SELECTIVE_CONTEXT' | 'ANONYMOUS'))}
                       style={{ fontSize: 12, padding: '4px 8px', borderRadius: 6, border: '1px solid #D1D5DB' }}
                     >
                       <option value="SELECTIVE_CONTEXT">Selective Context (Recommended)</option>

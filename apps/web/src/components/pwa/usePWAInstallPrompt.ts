@@ -13,7 +13,7 @@ export function usePWAInstallPrompt(isOpen: boolean, onClose: () => void) {
     // Detect standalone PWA mode
     const checkStandalone = () => {
       const isWindowStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isNavStandalone = (window.navigator as any).standalone === true;
+      const isNavStandalone = window.navigator.standalone === true;
       setIsStandalone(isWindowStandalone || isNavStandalone);
     };
 
@@ -26,7 +26,7 @@ export function usePWAInstallPrompt(isOpen: boolean, onClose: () => void) {
 
     // Check if deferredPrompt is present
     const updatePromptStatus = () => {
-      setCanPrompt(Boolean((window as any).deferredPrompt));
+      setCanPrompt(Boolean(window.deferredPrompt));
     };
 
     updatePromptStatus();
@@ -43,7 +43,7 @@ export function usePWAInstallPrompt(isOpen: boolean, onClose: () => void) {
   }, [isOpen]);
 
   const handleInstallClick = async () => {
-    const promptEvent = (window as any).deferredPrompt;
+    const promptEvent = window.deferredPrompt;
     if (promptEvent) {
       setIsInstalling(true);
       try {
@@ -51,7 +51,7 @@ export function usePWAInstallPrompt(isOpen: boolean, onClose: () => void) {
         const choiceResult = await promptEvent.userChoice;
         if (choiceResult.outcome === 'accepted') {
           showAmalToast('AMAL OS کامیابی سے آپ کی ہوم اسکرین پر شامل ہو گیا ہے!', 'success');
-          (window as any).deferredPrompt = null;
+          window.deferredPrompt = null;
           setCanPrompt(false);
           setIsStandalone(true);
           onClose();
