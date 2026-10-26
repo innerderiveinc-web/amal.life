@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Master PostgreSQL 16 Database with Persistent Volume
+  postgres:
+    image: postgres:16-alpine
+    container_name: amal_postgres_prod
+    restart: always
+    environment:
+      POSTGRES_USER: amal_admin
+      POSTGRES_PASSWORD: amal_super_secure_production_password_2026
+      POSTGRES_DB: amal_production
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../packages/database/src/schema-sirah-shamail.sql:/docker-entrypoint-initdb.d/01-init-schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U amal_admin -d amal_production"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - amal_internal_net
+
+  # PgBouncer Connection Pooler (Guards against connection exhaustion across 100+ pods)
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: amal_pgbouncer_prod
+    restart: always
+    environment:
+      DB_USER: amal_admin
+      DB_PASSWORD: amal_super_secure_production_password_2026
+      DB_HOST: postgres
+      DB_NAME: amal_production
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 1000
+      DEFAULT_POOL_SIZE: 50
+    ports:
+      - "6432:5432"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - amal_internal_net
+
+  # AMAL API Service (Horizontally Scalable Node / Next.js backend)
+  amal-api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://amal_admin:amal_super_secure_production_password_2026@pgbouncer:5432/amal_production?sslmode=disable
+      PORT: 4000
+      AUDIO_CDN_BASE_URL: https://audio.amal.life
+    ports:
+      - "4000:4000"
+    depends_on:
+      - pgbouncer
+    networks:
+      - amal_internal_net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  amal_internal_net:
+    driver: bridge

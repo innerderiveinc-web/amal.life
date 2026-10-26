@@ -1,0 +1,539 @@
+{
+  "generatedAt": "2026-10-26T12:22:43.405Z",
+  "totalTracks": 59,
+  "verifiedTracks": 59,
+  "cdnBaseUrl": "https://audio.amal.life",
+  "manifest": [
+    {
+      "id": "quran-1-husary",
+      "category": "QURAN",
+      "title": "Surah Al-Fatihah (husary)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree_iza3a/001.mp3",
+      "r2Key": "quran/husary/001.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/husary/001.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-1-minshawi",
+      "category": "QURAN",
+      "title": "Surah Al-Fatihah (minshawi)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/001.mp3",
+      "r2Key": "quran/minshawi/001.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/minshawi/001.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-1-abdulbasit",
+      "category": "QURAN",
+      "title": "Surah Al-Fatihah (abdulbasit)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/abdulbaset_mujawwad/001.mp3",
+      "r2Key": "quran/abdulbasit/001.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/abdulbasit/001.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-1-alafasy",
+      "category": "QURAN",
+      "title": "Surah Al-Fatihah (alafasy)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3",
+      "r2Key": "quran/alafasy/001.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/alafasy/001.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-36-husary",
+      "category": "QURAN",
+      "title": "Surah Ya-Sin (husary)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree_iza3a/036.mp3",
+      "r2Key": "quran/husary/036.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/husary/036.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-36-minshawi",
+      "category": "QURAN",
+      "title": "Surah Ya-Sin (minshawi)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/036.mp3",
+      "r2Key": "quran/minshawi/036.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/minshawi/036.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-36-abdulbasit",
+      "category": "QURAN",
+      "title": "Surah Ya-Sin (abdulbasit)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/abdulbaset_mujawwad/036.mp3",
+      "r2Key": "quran/abdulbasit/036.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/abdulbasit/036.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-36-alafasy",
+      "category": "QURAN",
+      "title": "Surah Ya-Sin (alafasy)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/036.mp3",
+      "r2Key": "quran/alafasy/036.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/alafasy/036.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-55-husary",
+      "category": "QURAN",
+      "title": "Surah Ar-Rahman (husary)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree_iza3a/055.mp3",
+      "r2Key": "quran/husary/055.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/husary/055.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-55-minshawi",
+      "category": "QURAN",
+      "title": "Surah Ar-Rahman (minshawi)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/055.mp3",
+      "r2Key": "quran/minshawi/055.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/minshawi/055.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-55-abdulbasit",
+      "category": "QURAN",
+      "title": "Surah Ar-Rahman (abdulbasit)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/abdulbaset_mujawwad/055.mp3",
+      "r2Key": "quran/abdulbasit/055.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/abdulbasit/055.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-55-alafasy",
+      "category": "QURAN",
+      "title": "Surah Ar-Rahman (alafasy)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/055.mp3",
+      "r2Key": "quran/alafasy/055.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/alafasy/055.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-67-husary",
+      "category": "QURAN",
+      "title": "Surah Al-Mulk (husary)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree_iza3a/067.mp3",
+      "r2Key": "quran/husary/067.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/husary/067.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-67-minshawi",
+      "category": "QURAN",
+      "title": "Surah Al-Mulk (minshawi)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/067.mp3",
+      "r2Key": "quran/minshawi/067.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/minshawi/067.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-67-abdulbasit",
+      "category": "QURAN",
+      "title": "Surah Al-Mulk (abdulbasit)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/abdulbaset_mujawwad/067.mp3",
+      "r2Key": "quran/abdulbasit/067.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/abdulbasit/067.mp3",
+      "verified": true
+    },
+    {
+      "id": "quran-67-alafasy",
+      "category": "QURAN",
+      "title": "Surah Al-Mulk (alafasy)",
+      "sourceUrl": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/067.mp3",
+      "r2Key": "quran/alafasy/067.mp3",
+      "cdnUrl": "https://audio.amal.life/quran/alafasy/067.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-1-ar",
+      "category": "SHAMAIL",
+      "title": "Chapter 1: The Physical Countenance & Noble Comportment of the Prophet ﷺ (Arabic Matn)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_01.mp3",
+      "r2Key": "shamail/ch-1-ar-075_Shamael_01.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-1-ar-075_Shamael_01.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-1-ur",
+      "category": "SHAMAIL",
+      "title": "Chapter 1: The Physical Countenance & Noble Comportment of the Prophet ﷺ (Urdu Sharh)",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2810%29%20Muhammad%20%28s%29_before_prophethood_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "shamail/ch-1-ur-%2810%29%20Muhammad%20%28s%29_before_prophethood_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-1-ur-%2810%29%20Muhammad%20%28s%29_before_prophethood_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-1-en",
+      "category": "SHAMAIL",
+      "title": "Chapter 1: The Physical Countenance & Noble Comportment of the Prophet ﷺ (English Commentary)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_01.mp3",
+      "r2Key": "shamail/ch-1-en-075_Shamael_01.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-1-en-075_Shamael_01.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-2-ar",
+      "category": "SHAMAIL",
+      "title": "Chapter 2: The Blessed Seal of Prophethood (Khatam an-Nubuwwah) (Arabic Matn)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_02.mp3",
+      "r2Key": "shamail/ch-2-ar-075_Shamael_02.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-2-ar-075_Shamael_02.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-2-ur",
+      "category": "SHAMAIL",
+      "title": "Chapter 2: The Blessed Seal of Prophethood (Khatam an-Nubuwwah) (Urdu Sharh)",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "shamail/ch-2-ur-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-2-ur-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-2-en",
+      "category": "SHAMAIL",
+      "title": "Chapter 2: The Blessed Seal of Prophethood (Khatam an-Nubuwwah) (English Commentary)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_02.mp3",
+      "r2Key": "shamail/ch-2-en-075_Shamael_02.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-2-en-075_Shamael_02.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-3-ar",
+      "category": "SHAMAIL",
+      "title": "Chapter 3: The Sublime Humility & Noble Manner of the Messenger of Allah ﷺ (Arabic Matn)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_03.mp3",
+      "r2Key": "shamail/ch-3-ar-075_Shamael_03.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-3-ar-075_Shamael_03.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-3-ur",
+      "category": "SHAMAIL",
+      "title": "Chapter 3: The Sublime Humility & Noble Manner of the Messenger of Allah ﷺ (Urdu Sharh)",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2805%29%20Character%20of%20people%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "shamail/ch-3-ur-%2805%29%20Character%20of%20people%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-3-ur-%2805%29%20Character%20of%20people%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "shamail-3-en",
+      "category": "SHAMAIL",
+      "title": "Chapter 3: The Sublime Humility & Noble Manner of the Messenger of Allah ﷺ (English Commentary)",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_03.mp3",
+      "r2Key": "shamail/ch-3-en-075_Shamael_03.mp3",
+      "cdnUrl": "https://audio.amal.life/shamail/ch-3-en-075_Shamael_03.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-1",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 1",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2801%29%20Arab%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-1-%2801%29%20Arab%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-1-%2801%29%20Arab%20before%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-2",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 2",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-2-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-2-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-3",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 3",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-3-%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-3-%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-4",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 4",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-4-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-4-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-5",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 5",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2815%29%20Boycott%20of%20Prophet%20Muhammad%20%28s%29%20and%20Muslim_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-5-%2815%29%20Boycott%20of%20Prophet%20Muhammad%20%28s%29%20and%20Muslim_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-5-%2815%29%20Boycott%20of%20Prophet%20Muhammad%20%28s%29%20and%20Muslim_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-6",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 6",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-6-%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-6-%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-7",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 7",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-7-%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-7-%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-8",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 8",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-8-%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-8-%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-9",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 9",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "r2Key": "sirah/raheeq/ch-9-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-9-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-10",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 10",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-10-%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-10-%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-RAHEEQ-11",
+      "category": "SIRAH_MASTER",
+      "title": "Ar-Raheeq Al-Makhtum (The Sealed Nectar) — Ch 11",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/raheeq/ch-11-%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/raheeq/ch-11-%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-1",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 1",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2806%29%20Story%20of%20Elephant_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-1-%2806%29%20Story%20of%20Elephant_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-1-%2806%29%20Story%20of%20Elephant_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-2",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 2",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-2-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-2-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-3",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 3",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-3-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-3-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-4",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 4",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-4-%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-4-%2818%29%20Meraaj%20ka%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-5",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 5",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-5-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-5-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-6",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 6",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-6-%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-6-%2830%29%20Fateh%20Makkah_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ZIA_UN_NABI-7",
+      "category": "SIRAH_MASTER",
+      "title": "Zia-un-Nabi ﷺ (The Radiant Prophet) — Ch 7",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/zia_un_nabi/ch-7-%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/zia_un_nabi/ch-7-%2833%29%20Muhammad%20%28s%29%20ki%20zindagi%20ke%20akhri%20lamhaat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-1",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 1",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2808%29%20Childhood%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-1-%2808%29%20Childhood%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-1-%2808%29%20Childhood%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-2",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 2",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-2-%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-2-%2809%29%201st%20marriage%20of%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-3",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 3",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2816%29%20Muhammad%20%28s%29%20ka%20taif%20ki%20taraf%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-3-%2816%29%20Muhammad%20%28s%29%20ka%20taif%20ki%20taraf%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-3-%2816%29%20Muhammad%20%28s%29%20ka%20taif%20ki%20taraf%20safar_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-4",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 4",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2821%29%20Muhammad%20%28s%29%20ki%20madina%20me%20aamad_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-4-%2821%29%20Muhammad%20%28s%29%20ki%20madina%20me%20aamad_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-4-%2821%29%20Muhammad%20%28s%29%20ki%20madina%20me%20aamad_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-5",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 5",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2826%29%20Jung%20e%20Ahzaab_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-5-%2826%29%20Jung%20e%20Ahzaab_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-5-%2826%29%20Jung%20e%20Ahzaab_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-SEERAT_E_MUSTAFA-6",
+      "category": "SIRAH_MASTER",
+      "title": "Seerat-e-Mustafa ﷺ — Ch 6",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2834%29%20Ahle%20bayt%20ka%20taaruf%20_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/seerat_e_mustafa/ch-6-%2834%29%20Ahle%20bayt%20ka%20taaruf%20_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/seerat_e_mustafa/ch-6-%2834%29%20Ahle%20bayt%20ka%20taaruf%20_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-KITAB_ASH_SHIFA-1",
+      "category": "SIRAH_MASTER",
+      "title": "Kitab ash-Shifa bi Ta'rif Huquq al-Mustafa ﷺ — Ch 1",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_01.mp3",
+      "r2Key": "sirah/kitab_ash_shifa/ch-1-075_Shamael_01.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/kitab_ash_shifa/ch-1-075_Shamael_01.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-KITAB_ASH_SHIFA-2",
+      "category": "SIRAH_MASTER",
+      "title": "Kitab ash-Shifa bi Ta'rif Huquq al-Mustafa ﷺ — Ch 2",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_02.mp3",
+      "r2Key": "sirah/kitab_ash_shifa/ch-2-075_Shamael_02.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/kitab_ash_shifa/ch-2-075_Shamael_02.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-KITAB_ASH_SHIFA-3",
+      "category": "SIRAH_MASTER",
+      "title": "Kitab ash-Shifa bi Ta'rif Huquq al-Mustafa ﷺ — Ch 3",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_03.mp3",
+      "r2Key": "sirah/kitab_ash_shifa/ch-3-075_Shamael_03.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/kitab_ash_shifa/ch-3-075_Shamael_03.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-KITAB_ASH_SHIFA-4",
+      "category": "SIRAH_MASTER",
+      "title": "Kitab ash-Shifa bi Ta'rif Huquq al-Mustafa ﷺ — Ch 4",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_04.mp3",
+      "r2Key": "sirah/kitab_ash_shifa/ch-4-075_Shamael_04.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/kitab_ash_shifa/ch-4-075_Shamael_04.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-KITAB_ASH_SHIFA-5",
+      "category": "SIRAH_MASTER",
+      "title": "Kitab ash-Shifa bi Ta'rif Huquq al-Mustafa ﷺ — Ch 5",
+      "sourceUrl": "https://ia800905.us.archive.org/10/items/minisi-shamail/075_Shamael_05.mp3",
+      "r2Key": "sirah/kitab_ash_shifa/ch-5-075_Shamael_05.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/kitab_ash_shifa/ch-5-075_Shamael_05.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ep-1",
+      "category": "SIRAH_EPISODE",
+      "title": "Episode 1: The Blessed Birth and Early Childhood in the Desert of Banu Sa'd",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/episodes/ep-1-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/episodes/ep-1-%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ep-2",
+      "category": "SIRAH_EPISODE",
+      "title": "Episode 2: The First Revelation in the Cave of Hira and the Steadfast Support of Sayyidah Khadijah",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/episodes/ep-2-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/episodes/ep-2-%2811%29%20Wahi%20on%20Prophet%20Muhammad%20%28s%29_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ep-3",
+      "category": "SIRAH_EPISODE",
+      "title": "Episode 3: The Blessed Hijrah to Madinah al-Munawwarah",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/episodes/ep-3-%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/episodes/ep-3-%2820%29%20Muhammad%20%28s%29%20ki%20Hijrat_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ep-4",
+      "category": "SIRAH_EPISODE",
+      "title": "Episode 4: Construction of Masjid an-Nabawi & The Pact of Islamic Brotherhood (Muwakhat)",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "r2Key": "sirah/episodes/ep-4-%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/episodes/ep-4-%2822%29%20Masjid%20e%20Nabwi%20ki%20tameer_-_Seerat-un-Nabi_in_Urdu.mp3",
+      "verified": true
+    },
+    {
+      "id": "sirah-ep-5",
+      "category": "SIRAH_EPISODE",
+      "title": "Episode 5: The Day of Criterion: The Battle of Badr (Ghazwah Badr al-Kubra)",
+      "sourceUrl": "https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "r2Key": "sirah/episodes/ep-5-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "cdnUrl": "https://audio.amal.life/sirah/episodes/ep-5-%2823%29%20Jung%20e%20Badr_-_Seerat-un-Nabi_in_Urdu.mp3.mp3",
+      "verified": true
+    }
+  ]
+}

@@ -7,6 +7,7 @@ export interface AudioTrack {
   title: string;
   subtitle?: string;
   audioUrl: string;
+  mirrors?: string[];
   reciter?: string;
   arabicSnippet?: string;
   lang?: 'ar' | 'ur' | 'en';
@@ -161,65 +162,95 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       if (audioRef.current) {
         const audio = audioRef.current;
         audio.pause();
-        audio.src = resolvedUrl;
-        audio.playbackRate = playbackSpeed;
 
-        // Handle stream errors gracefully by falling back to SpeechSynthesis
-        audio.onerror = () => {
-          console.warn('Audio stream error on URL:', resolvedUrl);
-          triggerSpeechFallback(track);
+        const sources = [resolvedUrl, ...(track.mirrors || [])].filter(
+          (s): s is string => Boolean(s) && typeof s === 'string'
+        );
+
+        const setupMediaSession = () => {
+          if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+            try {
+              navigator.mediaSession.metadata = new MediaMetadata({
+                title: track.title,
+                artist: track.reciter || 'AMAL Classical Recitation',
+                album: track.subtitle || 'Holy Quran & Classical Exegesis',
+                artwork: [
+                  { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+                  { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+                ],
+              });
+              navigator.mediaSession.setActionHandler('play', () => {
+                audio.play();
+                setIsPlaying(true);
+              });
+              navigator.mediaSession.setActionHandler('pause', () => {
+                audio.pause();
+                setIsPlaying(false);
+              });
+              navigator.mediaSession.setActionHandler('seekbackward', () => skipBy(-10));
+              navigator.mediaSession.setActionHandler('seekforward', () => skipBy(10));
+              navigator.mediaSession.setActionHandler('seekto', (details) => {
+                if (details.seekTime !== undefined) {
+                  seek(details.seekTime);
+                }
+              });
+              navigator.mediaSession.setActionHandler('stop', () => closePlayer());
+            } catch (e) {
+              console.debug('MediaSession handler setup bypassed:', e);
+            }
+          }
         };
 
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setIsPlaying(true);
-              const isOffline = resolvedUrl.startsWith('blob:');
-              showAmalToast(
-                isOffline ? `Playing offline track: ${track.title}` : `Playing recitation: ${track.title}`,
-                'success'
-              );
+        const attemptPlaySource = (srcIndex: number) => {
+          if (srcIndex >= sources.length) {
+            console.warn('All audio stream sources failed for track:', track.title);
+            triggerSpeechFallback(track);
+            return;
+          }
 
-              // Wire browser lock-screen and hardware media keys
-              if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
-                try {
-                  navigator.mediaSession.metadata = new MediaMetadata({
-                  title: track.title,
-                  artist: track.reciter || 'AMAL Classical Recitation',
-                  album: track.subtitle || 'Holy Quran & Classical Exegesis',
-                  artwork: [
-                    { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-                    { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-                  ],
-                });
-                navigator.mediaSession.setActionHandler('play', () => {
-                  audio.play();
-                  setIsPlaying(true);
-                });
-                navigator.mediaSession.setActionHandler('pause', () => {
-                  audio.pause();
-                  setIsPlaying(false);
-                });
-                navigator.mediaSession.setActionHandler('seekbackward', () => skipBy(-10));
-                navigator.mediaSession.setActionHandler('seekforward', () => skipBy(10));
-                navigator.mediaSession.setActionHandler('seekto', (details) => {
-                  if (details.seekTime !== undefined) {
-                    seek(details.seekTime);
-                  }
-                });
-                navigator.mediaSession.setActionHandler('stop', () => closePlayer());
-              } catch (e) {
-                console.debug('MediaSession handler setup bypassed:', e);
-              }
-            }
-          })
-            .catch((err) => {
-              console.warn('Browser audio play error:', err);
-              // Autoplay blocked or network error -> activate fallback
+          const currentSrc = sources[srcIndex];
+          if (!currentSrc) {
+            triggerSpeechFallback(track);
+            return;
+          }
+          audio.src = currentSrc;
+          audio.playbackRate = playbackSpeed;
+
+          // Handle stream errors gracefully by trying alternate mirrors first
+          audio.onerror = () => {
+            console.warn(`Audio stream failed on source [${srcIndex}]:`, currentSrc);
+            if (srcIndex + 1 < sources.length) {
+              showAmalToast(`Network slow/throttled. Switching to audio mirror ${srcIndex + 2}...`, 'info');
+              attemptPlaySource(srcIndex + 1);
+            } else {
               triggerSpeechFallback(track);
-            });
-        }
+            }
+          };
+
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                setIsPlaying(true);
+                const isOffline = currentSrc.startsWith('blob:');
+                showAmalToast(
+                  isOffline ? `Playing offline track: ${track.title}` : `Playing recitation: ${track.title}`,
+                  'success'
+                );
+                setupMediaSession();
+              })
+              .catch((err) => {
+                console.warn(`Browser audio play error on source [${srcIndex}]:`, err);
+                if (srcIndex + 1 < sources.length) {
+                  attemptPlaySource(srcIndex + 1);
+                } else {
+                  triggerSpeechFallback(track);
+                }
+              });
+          }
+        };
+
+        attemptPlaySource(0);
       } else {
         triggerSpeechFallback(track);
       }
