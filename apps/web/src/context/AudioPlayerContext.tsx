@@ -203,6 +203,11 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
                 });
                 navigator.mediaSession.setActionHandler('seekbackward', () => skipBy(-10));
                 navigator.mediaSession.setActionHandler('seekforward', () => skipBy(10));
+                navigator.mediaSession.setActionHandler('seekto', (details) => {
+                  if (details.seekTime !== undefined) {
+                    seek(details.seekTime);
+                  }
+                });
                 navigator.mediaSession.setActionHandler('stop', () => closePlayer());
               } catch (e) {
                 console.debug('MediaSession handler setup bypassed:', e);
@@ -257,14 +262,21 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const seek = (seconds: number) => {
     if (audioRef.current && !isSpeechFallback) {
-      audioRef.current.currentTime = seconds;
-      setCurrentTime(seconds);
+      const maxDuration = audioRef.current.duration || duration || 0;
+      const targetTime = maxDuration > 0
+        ? Math.max(0, Math.min(seconds, maxDuration))
+        : Math.max(0, seconds);
+      audioRef.current.currentTime = targetTime;
+      setCurrentTime(targetTime);
     }
   };
 
   const skipBy = (seconds: number) => {
     if (audioRef.current && !isSpeechFallback) {
-      const nextTime = Math.max(0, Math.min(audioRef.current.currentTime + seconds, duration));
+      const maxDuration = audioRef.current.duration || duration || 0;
+      const nextTime = maxDuration > 0
+        ? Math.max(0, Math.min(audioRef.current.currentTime + seconds, maxDuration))
+        : Math.max(0, audioRef.current.currentTime + seconds);
       audioRef.current.currentTime = nextTime;
       setCurrentTime(nextTime);
     }

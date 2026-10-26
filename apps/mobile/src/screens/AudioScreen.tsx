@@ -1,18 +1,63 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { audioStreamingEngine } from '@amal/amal-engine';
 
 export const AudioScreen: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
   const [playingTitle, setPlayingTitle] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(360);
+
+  // Auto-progress simulated playback timer when playing
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (playingTitle && isPlaying) {
+      interval = setInterval(() => {
+        setCurrentTime((prev) => {
+          if (prev >= duration) {
+            setIsPlaying(false);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [playingTitle, isPlaying, duration]);
 
   const togglePlay = (title: string) => {
     if (playingTitle === title) {
-      setPlayingTitle(null);
+      setIsPlaying(!isPlaying);
     } else {
       setPlayingTitle(title);
+      setIsPlaying(true);
+      setCurrentTime(0);
+      setDuration(360);
     }
   };
+
+  const skipBy = (seconds: number) => {
+    setCurrentTime((prev) => Math.max(0, Math.min(prev + seconds, duration)));
+  };
+
+  const handleSeekTouch = (e: GestureResponderEvent) => {
+    const touchX = e.nativeEvent.locationX;
+    // Assuming scrubber bar width around 280-320
+    const barWidth = 280;
+    const pct = Math.max(0, Math.min(touchX / barWidth, 1));
+    setCurrentTime(Math.round(pct * duration));
+  };
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const progressPct = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <View style={styles.container}>
@@ -56,10 +101,10 @@ export const AudioScreen: React.FC = () => {
                   </View>
                 </View>
                 <TouchableOpacity
-                  style={[styles.playBtn, playingTitle === s.nameEnglish && styles.playBtnActive]}
+                  style={[styles.playBtn, playingTitle === s.nameEnglish && isPlaying && styles.playBtnActive]}
                   onPress={() => togglePlay(s.nameEnglish)}
                 >
-                  <Text style={styles.playBtnText}>{playingTitle === s.nameEnglish ? '⏸' : '▶'}</Text>
+                  <Text style={styles.playBtnText}>{playingTitle === s.nameEnglish && isPlaying ? '⏸' : '▶'}</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -75,10 +120,10 @@ export const AudioScreen: React.FC = () => {
                   <Text style={styles.trackSub}>{ch.titleUrdu}</Text>
                 </View>
                 <TouchableOpacity
-                  style={[styles.playBtn, playingTitle === ch.titleEnglish && styles.playBtnActive]}
+                  style={[styles.playBtn, playingTitle === ch.titleEnglish && isPlaying && styles.playBtnActive]}
                   onPress={() => togglePlay(ch.titleEnglish)}
                 >
-                  <Text style={styles.playBtnText}>{playingTitle === ch.titleEnglish ? '⏸' : '▶'}</Text>
+                  <Text style={styles.playBtnText}>{playingTitle === ch.titleEnglish && isPlaying ? '⏸' : '▶'}</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -95,10 +140,10 @@ export const AudioScreen: React.FC = () => {
                   <Text style={styles.trackSub}>{ep.yearHijriOrGregorian}</Text>
                 </View>
                 <TouchableOpacity
-                  style={[styles.playBtn, playingTitle === ep.titleEnglish && styles.playBtnActive]}
+                  style={[styles.playBtn, playingTitle === ep.titleEnglish && isPlaying && styles.playBtnActive]}
                   onPress={() => togglePlay(ep.titleEnglish)}
                 >
-                  <Text style={styles.playBtnText}>{playingTitle === ep.titleEnglish ? '⏸' : '▶'}</Text>
+                  <Text style={styles.playBtnText}>{playingTitle === ep.titleEnglish && isPlaying ? '⏸' : '▶'}</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -106,16 +151,52 @@ export const AudioScreen: React.FC = () => {
         )}
       </ScrollView>
 
-      {/* Mini Player Bar */}
+      {/* Enhanced Mini Player Bar with Skip Controls & Interactive Scrubber */}
       {playingTitle && (
         <View style={styles.miniPlayer}>
-          <View>
-            <Text style={styles.nowPlayingLabel}>NOW PLAYING</Text>
-            <Text style={styles.nowPlayingTitle}>{playingTitle}</Text>
+          {/* Top Row: Track Title & Action Controls */}
+          <View style={styles.miniPlayerTop}>
+            <View style={{ flex: 1, marginRight: 10 }}>
+              <Text style={styles.nowPlayingLabel}>NOW PLAYING</Text>
+              <Text style={styles.nowPlayingTitle} numberOfLines={1}>{playingTitle}</Text>
+            </View>
+
+            {/* Skip Backward -10s */}
+            <TouchableOpacity style={styles.skipBtn} onPress={() => skipBy(-10)}>
+              <Text style={styles.skipBtnText}>-10s</Text>
+            </TouchableOpacity>
+
+            {/* Play/Pause */}
+            <TouchableOpacity style={styles.miniPlayBtn} onPress={() => setIsPlaying(!isPlaying)}>
+              <Text style={styles.miniPlayBtnText}>{isPlaying ? '⏸' : '▶'}</Text>
+            </TouchableOpacity>
+
+            {/* Skip Forward +10s */}
+            <TouchableOpacity style={styles.skipBtn} onPress={() => skipBy(10)}>
+              <Text style={styles.skipBtnText}>+10s</Text>
+            </TouchableOpacity>
+
+            {/* Close */}
+            <TouchableOpacity onPress={() => setPlayingTitle(null)} style={{ padding: 6, marginLeft: 4 }}>
+              <Text style={styles.closePlayer}>✕</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => setPlayingTitle(null)}>
-            <Text style={styles.closePlayer}>✕</Text>
-          </TouchableOpacity>
+
+          {/* Bottom Row: Scrubber Timeline Bar */}
+          <View style={styles.scrubberRow}>
+            <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              style={styles.scrubberHitbox}
+              onPress={handleSeekTouch}
+            >
+              <View style={styles.scrubberRail}>
+                <View style={[styles.scrubberFill, { width: `${progressPct}%` }]} />
+              </View>
+              <View style={[styles.scrubberKnob, { left: `${progressPct}%` }]} />
+            </TouchableOpacity>
+            <Text style={styles.timeText}>{formatTime(duration)}</Text>
+          </View>
         </View>
       )}
     </View>
@@ -124,7 +205,7 @@ export const AudioScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F9FA' },
-  content: { padding: 16, paddingBottom: 80 },
+  content: { padding: 16, paddingBottom: 110 },
   title: { fontSize: 22, fontWeight: '800', color: '#1B4332' },
   subtitle: { fontSize: 13, color: '#6B7280', marginTop: 2, marginBottom: 16 },
   tabRow: { flexDirection: 'row', gap: 10, marginBottom: 16 },
@@ -157,13 +238,74 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#1B4332',
-    padding: 14,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    backgroundColor: '#1E293B',
+    padding: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#334155',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 10,
   },
-  nowPlayingLabel: { color: '#86EFAC', fontSize: 10, fontWeight: '700' },
+  miniPlayerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  nowPlayingLabel: { color: '#38BDF8', fontSize: 9, fontWeight: '800', letterSpacing: 0.5 },
   nowPlayingTitle: { color: '#FFFFFF', fontSize: 13, fontWeight: '700' },
-  closePlayer: { color: '#FFFFFF', fontSize: 16, padding: 6 },
+  skipBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    backgroundColor: '#334155',
+    borderRadius: 6,
+    marginHorizontal: 3,
+  },
+  skipBtnText: { color: '#E2E8F0', fontSize: 11, fontWeight: '700' },
+  miniPlayBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#059669',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 4,
+  },
+  miniPlayBtnText: { color: '#FFFFFF', fontSize: 14, fontWeight: 'bold' },
+  closePlayer: { color: '#94A3B8', fontSize: 16, fontWeight: '700' },
+  scrubberRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  timeText: { color: '#94A3B8', fontSize: 10, width: 32, textAlign: 'center' },
+  scrubberHitbox: {
+    flex: 1,
+    height: 20,
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  scrubberRail: {
+    height: 4,
+    backgroundColor: '#334155',
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  scrubberFill: {
+    height: '100%',
+    backgroundColor: '#38BDF8',
+    borderRadius: 2,
+  },
+  scrubberKnob: {
+    position: 'absolute',
+    top: 4,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: '#38BDF8',
+    marginLeft: -6,
+  },
 });
