@@ -101,13 +101,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sahih al-Bukhari 883',
         },
         featuredDua: {
-          titleUrdu: 'جمعہ کے دن درودِ ابراہیمی',
-          titleEnglish: 'Salawat on the Prophet ﷺ on Friday',
-          arabicText: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ',
-          translationUrdu: 'اے اللہ! رحمت نازل فرما محمد ﷺ پر اور ان کی آل پر جیسا کہ تو نے رحمت نازل فرمائی ابراہیم علیہ السلام پر اور ان کی آل پر۔',
-          translationEnglish: 'O Allah, bestow peace upon Muhammad and upon his family as You bestowed peace upon Ibrahim and his family.',
+          titleUrdu: 'جمعۃ المبارک پر قرآنی درود و سلام',
+          titleEnglish: 'Quranic Injunction for Salawat on Friday',
+          arabicText: 'إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا',
+          translationUrdu: 'بیشک اللہ اور اس کے فرشتے نبی پر درود بھیجتے ہیں۔ اے ایمان والو! تم بھی ان پر درود و سلام بھیجو۔',
+          translationEnglish: 'Indeed, Allah and His angels confer blessings upon the Prophet. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.',
           audioUrl: 'https://everyayah.com/data/Husary_128kbps/033056.mp3',
-          source: 'Sahih al-Bukhari 3370',
+          source: 'Surah Al-Ahzab (33:56)',
         },
       };
     }
@@ -135,13 +135,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sahih al-Bukhari 6306 (Chief of prayers for forgiveness)',
         },
         featuredDua: {
-          titleUrdu: 'صبح کی دعا (سید الاستغفار)',
-          titleEnglish: 'Sayyid al-Istighfar (Chief of Forgiveness)',
-          arabicText: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ',
-          translationUrdu: 'اے اللہ! تو میرا رب ہے، تیرے سوا کوئی معبود نہیں، تو نے مجھے پیدا کیا اور میں تیرا بندہ ہوں۔',
-          translationEnglish: 'O Allah, You are my Lord; there is no deity worthy of worship except You. You created me and I am Your servant.',
-          audioUrl: 'https://everyayah.com/data/Husary_128kbps/071010.mp3',
-          source: 'Sahih al-Bukhari 6306',
+          titleUrdu: 'صبح کی قرآنی دعائے مغفرت و والدین',
+          titleEnglish: 'Quranic Morning Du\'a for Forgiveness & Parents',
+          arabicText: 'رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ',
+          translationUrdu: 'اے ہمارے رب! مجھے اور میرے والدین کو اور تمام ایمان والوں کو بخش دے جس دن حساب قائم ہوگا۔',
+          translationEnglish: 'Our Lord, forgive me and my parents and the believers the Day the account is established.',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/014041.mp3',
+          source: 'Surah Ibrahim (14:41)',
         },
       };
     }
@@ -169,13 +169,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sunan Ibn Majah 925 (Sahih)',
         },
         featuredDua: {
-          titleUrdu: 'علمِ نافع اور رزقِ طیب کی دعا',
-          titleEnglish: 'Du\'a for Beneficial Knowledge & Halal Sustenance',
-          arabicText: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا',
-          translationUrdu: 'اے اللہ! میں تجھ سے نفع بخش علم، پاکیزہ رزق اور قبول ہونے والے عمل کا سوال کرتا ہوں۔',
-          translationEnglish: 'O Allah, I ask You for knowledge that is of benefit, a good and lawful provision, and deeds that are accepted.',
+          titleUrdu: 'علم و بصیرت کی قرآنی دعا (رب زدنی علما)',
+          titleEnglish: 'Quranic Du\'a for Knowledge (Rabbi Zidni \'Ilma)',
+          arabicText: 'رَّبِّ زِدْنِي عِلْمًا',
+          translationUrdu: 'اے میرے رب! میرے علم میں اضافہ فرما۔',
+          translationEnglish: 'My Lord, increase me in knowledge.',
           audioUrl: 'https://everyayah.com/data/Husary_128kbps/020114.mp3',
-          source: 'Sunan Ibn Majah 925',
+          source: 'Surah Ta-Ha (20:114)',
         },
       };
     }
@@ -203,13 +203,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sahih al-Bukhari 614',
         },
         featuredDua: {
-          titleUrdu: 'اذان کے بعد کی مسنون دعا',
-          titleEnglish: 'Supplication After the Adhan',
-          arabicText: 'اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ',
-          translationUrdu: 'اے اللہ! اس کامل پکار اور قائم رہنے والی نماز کے رب! محمد ﷺ کو وسیلہ اور فضیلت عطا فرما اور انہیں مقامِ محمود پر فائز فرما۔',
-          translationEnglish: 'O Allah, Lord of this perfect call and established prayer, grant Muhammad the Wasilah and virtue, and resurrect him to the praised station You promised.',
-          audioUrl: 'https://everyayah.com/data/Husary_128kbps/017079.mp3',
-          source: 'Sahih al-Bukhari 614',
+          titleUrdu: 'دنیا و آخرت کی جامع بھلائی کی قرآنی دعا',
+          titleEnglish: 'Du\'a for Goodness in This World & the Hereafter',
+          arabicText: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+          translationUrdu: 'اے ہمارے رب! ہمیں دنیا میں بھی بھلائی عطا فرما اور آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔',
+          translationEnglish: 'Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire.',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/002201.mp3',
+          source: 'Surah Al-Baqarah (2:201)',
         },
       };
     }
@@ -237,13 +237,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sahih Muslim 2733 (Angels reply: And for you the same)',
         },
         featuredDua: {
-          titleUrdu: 'شام کی دعا',
-          titleEnglish: 'Evening Remembrance',
-          arabicText: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
-          translationUrdu: 'ہم نے شام کی اور شام کے وقت تمام بادشاہی اللہ کے لیے ہے، اور تمام تعریف اللہ کے لیے ہے۔',
-          translationEnglish: 'We have entered the evening, and the kingdom belongs to Allah, and all praise is for Allah.',
+          titleUrdu: 'شام کی جامع قرآنی حفاظت (آیۃ الکرسی)',
+          titleEnglish: 'Evening Protection & Grandeur (Ayat al-Kursi)',
+          arabicText: 'اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ',
+          translationUrdu: 'اللہ! اس کے سوا کوئی عبادت کے لائق نہیں، وہ خود زندہ اور سب کو قائم رکھنے والا ہے، اسے نہ اونگھ آتی ہے نہ نیند۔',
+          translationEnglish: 'Allah! There is no deity except Him, the Ever-Living, the Sustainer of all existence. Neither drowsiness overtakes Him nor sleep.',
           audioUrl: 'https://everyayah.com/data/Husary_128kbps/002255.mp3',
-          source: 'Sahih Muslim 2723',
+          source: 'Surah Al-Baqarah (2:255)',
         },
       };
     }
@@ -271,13 +271,13 @@ export class DailyMamoolEngine {
           hadithProof: 'Sahih Muslim 2709',
         },
         featuredDua: {
-          titleUrdu: 'شام کی حفاظت کی دعا',
-          titleEnglish: 'Evening Protection Supplication',
-          arabicText: 'أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ',
-          translationUrdu: 'میں اللہ کے مکمل کلمات کی پناہ مانگتا ہوں اس کی پیدا کردہ تمام مخلوق کے شر سے۔',
-          translationEnglish: 'I seek refuge in the perfect words of Allah from the evil of that which He has created.',
+          titleUrdu: 'غروبِ آفتاب پر شرور سے پناہ کی قرآنی دعا',
+          titleEnglish: 'Supplication for Divine Refuge at Sunset (Surah al-Falaq)',
+          arabicText: 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ',
+          translationUrdu: 'آپ فرمائیے کہ میں صبح کے رب کی پناہ مانگتا ہوں، اس کی تمام مخلوق کے شر سے۔',
+          translationEnglish: 'Say, "I seek refuge in the Lord of daybreak from the evil of that which He created."',
           audioUrl: 'https://everyayah.com/data/Husary_128kbps/113001.mp3',
-          source: 'Sahih Muslim 2709',
+          source: 'Surah Al-Falaq (113:1-2)',
         },
       };
     }
@@ -305,13 +305,13 @@ export class DailyMamoolEngine {
         hadithProof: 'Musnad Ahmad 12697 (Habit of the man promised Jannah)',
       },
       featuredDua: {
-        titleUrdu: 'سوتے وقت کی مسنون دعا',
-        titleEnglish: 'Bedtime Supplication',
-        arabicText: 'بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ، فَإِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا',
-        translationUrdu: 'تیرے نام سے اے میرے رب میں نے اپنا پہلو رکھا اور تیرے ہی نام سے اٹھاؤں گا۔ پس اگر تو میری جان روک لے تو اس پر رحم فرما۔',
-        translationEnglish: 'In Your name, my Lord, I lay down my side and in Your name I raise it up. If You take my soul, have mercy upon it.',
-        audioUrl: 'https://everyayah.com/data/Husary_128kbps/067001.mp3',
-        source: 'Sahih al-Bukhari 6320',
+        titleUrdu: 'سوتے وقت حفاظت و ایمان کی قرآنی دعا',
+        titleEnglish: 'Bedtime Faith & Deliverance (Last Verses of al-Baqarah)',
+        arabicText: 'آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ',
+        translationUrdu: 'رسول اس پر ایمان لائے جو ان کے رب کی طرف سے ان پر نازل ہوا اور تمام مومنین بھی۔',
+        translationEnglish: 'The Messenger has believed in what was revealed to him from his Lord, and [so have] the believers.',
+        audioUrl: 'https://everyayah.com/data/Husary_128kbps/002285.mp3',
+        source: 'Surah Al-Baqarah (2:285)',
       },
     };
   }

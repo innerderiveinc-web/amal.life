@@ -72,9 +72,9 @@ export const DailyMamoolBar: React.FC = () => {
     playTrack({
       id: `dua-${mamool.nextPrayerName}`,
       title: isUrdu ? mamool.featuredDua.titleUrdu : mamool.featuredDua.titleEnglish,
-      subtitle: isUrdu ? mamool.featuredDua.titleEnglish : mamool.featuredDua.translationEnglish,
+      subtitle: `${mamool.featuredDua.source} • ${isUrdu ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}`,
       audioUrl: mamool.featuredDua.audioUrl,
-      reciter: 'Masnoon Supplication',
+      reciter: 'Qari Mahmood Khalil Al-Husary',
       arabicSnippet: mamool.featuredDua.arabicText,
     });
   };

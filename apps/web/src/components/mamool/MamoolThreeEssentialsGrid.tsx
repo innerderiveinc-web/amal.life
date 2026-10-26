@@ -136,17 +136,28 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           <div
             className="font-arabic"
             style={{
-              fontSize: 14,
+              fontSize: 16,
               color: '#064E3B',
               marginBottom: 8,
               backgroundColor: '#F1F5F9',
-              padding: '8px 12px',
+              padding: '10px 14px',
               borderRadius: 8,
               border: '1px solid #E2E8F0',
               lineHeight: 1.8,
+              textAlign: 'center',
             }}
           >
-            {mamool.featuredDua.arabicText.slice(0, 70)}...
+            {mamool.featuredDua.arabicText.length > 70
+              ? `${mamool.featuredDua.arabicText.slice(0, 70)}...`
+              : mamool.featuredDua.arabicText}
+          </div>
+
+          <div style={{ fontSize: 12, color: '#475569', marginBottom: 6, lineHeight: 1.5 }}>
+            {isUrdu ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}
+          </div>
+
+          <div style={{ fontSize: 11, color: '#64748B', marginBottom: 12, fontWeight: 600 }}>
+            {mamool.featuredDua.source}
           </div>
         </div>
 
