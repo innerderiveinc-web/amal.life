@@ -173,15 +173,16 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
             display: 'flex',
             alignItems: 'center',
             gap: 5,
+            border: activeDropdown === 'family' ? '1px solid rgba(244, 114, 182, 0.4)' : '1px solid transparent',
             background: 'none',
             fontSize: 13,
             fontWeight: activeDropdown === 'family' ? 700 : 600,
-            color: activeDropdown === 'family' ? '#831843' : '#9D174D',
+            color: activeDropdown === 'family' ? '#9D174D' : '#374151',
             cursor: 'pointer',
             padding: '6px 10px',
             borderRadius: 6,
-            backgroundColor: activeDropdown === 'family' ? '#FDF2F8' : 'rgba(253, 242, 248, 0.5)',
-            border: '1px solid rgba(244, 114, 182, 0.3)',
+            backgroundColor: activeDropdown === 'family' ? '#FDF2F8' : 'transparent',
+            transition: 'all 0.15s ease',
           }}
         >
           <span>🌸</span>
