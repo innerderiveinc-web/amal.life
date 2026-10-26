@@ -44,6 +44,8 @@ apps/mobile/
 │   ├── settings/                # Memory, privacy, and safety switches
 │   └── scholar/                 # Mobile scholar triage desk
 ├── components/                  # Shared React Native UI components
+├── hooks/                       # Custom React Native hooks (useColorScheme, usePrayerTimes)
+├── store/                       # Lightweight sovereign mobile state (useAppStore)
 └── services/                    # Native offline sync & API clients
 ```
 
