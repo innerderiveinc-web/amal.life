@@ -7,11 +7,19 @@ import {
   getSurahTafseerAudioUrl,
 } from '../../lib/quran-wisdom-data';
 import { showAmalToast } from '../Toast';
+import { useAudioPlayer } from '../../context/AudioPlayerContext';
 
 export function useWisdomAudio() {
   const [activeAudioKey, setActiveAudioKey] = useState<string | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
   const [continuousIndex, setContinuousIndex] = useState<number | null>(null);
+
+  let globalAudio: ReturnType<typeof useAudioPlayer> | null = null;
+  try {
+    globalAudio = useAudioPlayer();
+  } catch (e) {
+    globalAudio = null;
+  }
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const watchdogRef = useRef<NodeJS.Timeout | null>(null);
@@ -46,6 +54,26 @@ export function useWisdomAudio() {
       type === 'URDU'
         ? getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber)
         : getAyahAudioUrl(card.surahNumber, card.ayahNumber, 'alafasy');
+
+    if (globalAudio) {
+      if (globalAudio.currentTrack?.id === key && globalAudio.isPlaying) {
+        globalAudio.pause();
+        setIsPlayingAudio(false);
+        setActiveAudioKey(null);
+        return;
+      }
+      globalAudio.playTrack({
+        id: key,
+        title: `Surah ${card.surahNameTransliterated} (${card.surahNameUrdu}) — Ayah ${card.ayahNumber}`,
+        subtitle: type === 'URDU' ? 'Kanz-ul-Iman Urdu Translation (کنز الایمان)' : 'Mishary Rashid Al-Afasy (عربی تلاوت)',
+        audioUrl: url,
+        reciter: type === 'URDU' ? 'Kanz-ul-Iman (اردو)' : 'Mishary Alafasy (مشاری العفاسی)',
+        arabicSnippet: card.textArabic,
+      });
+      setActiveAudioKey(key);
+      setIsPlayingAudio(true);
+      return;
+    }
 
     if (audioRef.current) {
       audioRef.current.src = url;
@@ -97,6 +125,25 @@ export function useWisdomAudio() {
     const tafseerUrl = getSurahTafseerAudioUrl(card.surahNumber);
     const fastAyahUrl = getAyahUrduAudioUrl(card.surahNumber, card.ayahNumber);
     const audioToPlay = tafseerUrl || fastAyahUrl;
+
+    if (globalAudio) {
+      if (globalAudio.currentTrack?.id === key && globalAudio.isPlaying) {
+        globalAudio.pause();
+        setActiveAudioKey(null);
+        setIsPlayingAudio(false);
+        return;
+      }
+      globalAudio.playTrack({
+        id: key,
+        title: `Surah ${card.surahNameTransliterated} (${card.surahNameUrdu}) — Dars-e-Quran Tafseer`,
+        subtitle: 'Classical Exegesis (تفسیر خزائن العرفان / صراط الجنان)',
+        audioUrl: audioToPlay,
+        reciter: 'Classical Scholar Exegesis',
+      });
+      setActiveAudioKey(key);
+      setIsPlayingAudio(true);
+      return;
+    }
 
     if (audioRef.current) {
       audioRef.current.src = audioToPlay;

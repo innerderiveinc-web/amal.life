@@ -159,6 +159,34 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
           .then(() => {
             setIsPlaying(true);
             showAmalToast(`Playing recitation: ${track.title}`, 'success');
+
+            // Wire browser lock-screen and hardware media keys
+            if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+              try {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                  title: track.title,
+                  artist: track.reciter || 'AMAL Classical Recitation',
+                  album: track.subtitle || 'Holy Quran & Classical Exegesis',
+                  artwork: [
+                    { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+                    { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+                  ],
+                });
+                navigator.mediaSession.setActionHandler('play', () => {
+                  audio.play();
+                  setIsPlaying(true);
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                  audio.pause();
+                  setIsPlaying(false);
+                });
+                navigator.mediaSession.setActionHandler('seekbackward', () => skipBy(-10));
+                navigator.mediaSession.setActionHandler('seekforward', () => skipBy(10));
+                navigator.mediaSession.setActionHandler('stop', () => closePlayer());
+              } catch (e) {
+                console.debug('MediaSession handler setup bypassed:', e);
+              }
+            }
           })
           .catch((err) => {
             console.warn('Browser audio play error:', err);
