@@ -19,7 +19,7 @@
     "test": "tsx --tsconfig services/api/tsconfig.json scripts/verify-full-production-loop.ts",
     "test:all": "python3 test/run-all-tests.py",
     "test:turbo": "turbo run test",
-    "test:unit": "tsx test/unit/amal-score.test.ts && tsx test/unit/family-firewall.test.ts && tsx test/unit/fatwa-firewall.test.ts",
+    "test:unit": "tsx test/unit/amal-score.test.ts && tsx test/unit/family-firewall.test.ts && tsx test/unit/fatwa-firewall.test.ts && tsx test/unit/scholar-governance.test.ts && tsx test/unit/mobile-screens.test.ts",
     "test:benchmark": "python3 test/test-quran-wisdom-standards.py",
     "test:security": "python3 test/security-penetration-suite.py",
     "test:auth": "python3 test/test-auth-security.py",

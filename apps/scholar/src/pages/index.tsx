@@ -125,7 +125,11 @@ export default function ScholarPortal() {
       </Head>
 
       {/* Top Header */}
-      <ScholarHeader activeScholar={activeScholar} setActiveScholar={setActiveScholar} />
+      <ScholarHeader
+        activeScholar={activeScholar}
+        setActiveScholar={setActiveScholar}
+        currentTab="TRIAGE"
+      />
 
       {/* Main Workspace Layout */}
       <div style={{ display: 'flex', height: 'calc(100vh - 65px)' }}>

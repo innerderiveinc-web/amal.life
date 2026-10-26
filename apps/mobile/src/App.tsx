@@ -11,8 +11,31 @@ import { SirahScreen } from './screens/SirahScreen';
 import { CalendarScreen } from './screens/CalendarScreen';
 import { FamilyScreen } from './screens/FamilyScreen';
 import { AboutScreen } from './screens/AboutScreen';
+import { AudioScreen } from './screens/AudioScreen';
+import { VaultScreen } from './screens/VaultScreen';
+import { JourneyScreen } from './screens/JourneyScreen';
+import { ReflectionScreen } from './screens/ReflectionScreen';
+import { PrivacyCenterScreen } from './screens/PrivacyCenterScreen';
+import { ReplayScreen } from './screens/ReplayScreen';
 
-type Tab = 'TODAY' | 'QURAN' | 'ASK_AMAL' | 'PRAYER' | 'TASBIH' | 'CALCULATOR' | 'LIBRARY' | 'SIRAH' | 'CALENDAR' | 'FAMILY' | 'ABOUT';
+type Tab =
+  | 'TODAY'
+  | 'QURAN'
+  | 'ASK_AMAL'
+  | 'PRAYER'
+  | 'TASBIH'
+  | 'CALCULATOR'
+  | 'LIBRARY'
+  | 'SIRAH'
+  | 'CALENDAR'
+  | 'FAMILY'
+  | 'ABOUT'
+  | 'AUDIO'
+  | 'VAULT'
+  | 'JOURNEY'
+  | 'REFLECTION'
+  | 'PRIVACY'
+  | 'REPLAY';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('TODAY');
@@ -26,12 +49,26 @@ export const App: React.FC = () => {
     { id: 'TASBIH', label: 'Tasbih', labelUrdu: 'تسبیح', icon: '📿' },
   ];
 
-  const moreApps: { id: Tab; title: string; subtitle: string; icon: string }[] = [
-    { id: 'CALCULATOR', title: 'Zakat & Miras Calculator', subtitle: 'زکوٰۃ و وراثت تقسیم', icon: '💰' },
+  const isMainTab = mainTabs.some((t) => t.id === activeTab);
+
+  const canonicalSciences: { id: Tab; title: string; subtitle: string; icon: string }[] = [
     { id: 'LIBRARY', title: '106-Book Canonical Library', subtitle: 'کتب خانہ السواد الاعظم', icon: '📚' },
     { id: 'SIRAH', title: 'Living Sirah & Shama\'il', subtitle: 'سیرت النبی ﷺ و شمائل', icon: '🕊️' },
+    { id: 'AUDIO', title: 'Recitations & Audio Streaming', subtitle: 'صوتی تلاوت و اشعار و شمائل', icon: '🎧' },
+    { id: 'VAULT', title: 'Knowledge Vault & Note Verification', subtitle: 'ذخیرہ علم و تصدیقِ نوٹس', icon: '🔐' },
+    { id: 'REPLAY', title: 'Deen Replay & Annual Insights', subtitle: 'سالانہ سفر دین و مشاہدات', icon: '📈' },
+  ];
+
+  const devotionalPractices: { id: Tab; title: string; subtitle: string; icon: string }[] = [
+    { id: 'CALCULATOR', title: 'Zakat & Miras Calculator', subtitle: 'زکوٰۃ و وراثت تقسیم', icon: '💰' },
     { id: 'CALENDAR', title: 'Hijri Calendar & Fasting', subtitle: 'ہجری کیلنڈر و روزے', icon: '🌙' },
+    { id: 'JOURNEY', title: 'Adaptive Spiritual Journeys', subtitle: 'روحانی تربیت و منازل', icon: '🌱' },
+    { id: 'REFLECTION', title: 'Daily Muhasabah & Reflections', subtitle: 'روزانہ محاسبہ و فکروتدبر', icon: '📝' },
+  ];
+
+  const governanceAndFamily: { id: Tab; title: string; subtitle: string; icon: string }[] = [
     { id: 'FAMILY', title: 'Family Deen Circle', subtitle: 'فیملی سرکل و معمولات', icon: '👨‍👩‍👧‍👦' },
+    { id: 'PRIVACY', title: 'Sovereign Privacy Center', subtitle: 'خود مختار پرائیویسی و ڈیفنس', icon: '🛡️' },
     { id: 'ABOUT', title: 'About & Methodology', subtitle: 'تعارف و منہج عمل', icon: 'ℹ️' },
   ];
 
@@ -45,6 +82,14 @@ export const App: React.FC = () => {
       {/* 1. TOP DIGNIFIED HEADER */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
+          {!isMainTab && (
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => setActiveTab('TODAY')}
+            >
+              <Text style={styles.backButtonText}>← واپس</Text>
+            </TouchableOpacity>
+          )}
           <Text style={styles.logo}>AMAL</Text>
           <View style={styles.deeniBadge}>
             <Text style={styles.deeniBadgeText}>اہلسنت تصدیق شدہ</Text>
@@ -53,7 +98,7 @@ export const App: React.FC = () => {
 
         <TouchableOpacity style={styles.moreHeaderBtn} onPress={() => setIsMoreMenuOpen(true)}>
           <Text style={styles.moreHeaderIcon}>☰</Text>
-          <Text style={styles.moreHeaderText}>دیگر کتب و خدمات</Text>
+          <Text style={styles.moreHeaderText}>دیگر کتب و خدمات (17)</Text>
         </TouchableOpacity>
       </View>
 
@@ -70,6 +115,12 @@ export const App: React.FC = () => {
         {activeTab === 'CALENDAR' && <CalendarScreen />}
         {activeTab === 'FAMILY' && <FamilyScreen />}
         {activeTab === 'ABOUT' && <AboutScreen />}
+        {activeTab === 'AUDIO' && <AudioScreen />}
+        {activeTab === 'VAULT' && <VaultScreen />}
+        {activeTab === 'JOURNEY' && <JourneyScreen />}
+        {activeTab === 'REFLECTION' && <ReflectionScreen />}
+        {activeTab === 'PRIVACY' && <PrivacyCenterScreen />}
+        {activeTab === 'REPLAY' && <ReplayScreen />}
       </View>
 
       {/* 3. 5-PILLAR CALM BOTTOM NAVIGATION (فکسڈ اور واضح ۵ ارکان) */}
@@ -97,14 +148,50 @@ export const App: React.FC = () => {
           <View style={styles.modalOverlay}>
             <View style={styles.modalSheet}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>دیگر اسلامی خدمات (All AMAL Services)</Text>
+                <Text style={styles.modalTitle}>تمام اسلامی خدمات (All 17 AMAL Services)</Text>
                 <TouchableOpacity onPress={() => setIsMoreMenuOpen(false)}>
                   <Text style={styles.modalClose}>✕</Text>
                 </TouchableOpacity>
               </View>
 
               <ScrollView style={styles.modalBody}>
-                {moreApps.map((app) => (
+                {/* Section 1: Canonical Sciences */}
+                <Text style={styles.drawerSectionTitle}>کتب و علوم (Canonical Sciences & Vault)</Text>
+                {canonicalSciences.map((app) => (
+                  <TouchableOpacity
+                    key={app.id}
+                    style={styles.moreAppRow}
+                    onPress={() => handleSelectMoreApp(app.id)}
+                  >
+                    <Text style={styles.moreAppIcon}>{app.icon}</Text>
+                    <View style={styles.moreAppDetails}>
+                      <Text style={styles.moreAppTitle}>{app.title}</Text>
+                      <Text style={styles.moreAppSub}>{app.subtitle}</Text>
+                    </View>
+                    <Text style={styles.moreAppArrow}>➔</Text>
+                  </TouchableOpacity>
+                ))}
+
+                {/* Section 2: Devotional Practices */}
+                <Text style={styles.drawerSectionTitle}>عبادات، منازل و محاسبہ (Practices & Growth)</Text>
+                {devotionalPractices.map((app) => (
+                  <TouchableOpacity
+                    key={app.id}
+                    style={styles.moreAppRow}
+                    onPress={() => handleSelectMoreApp(app.id)}
+                  >
+                    <Text style={styles.moreAppIcon}>{app.icon}</Text>
+                    <View style={styles.moreAppDetails}>
+                      <Text style={styles.moreAppTitle}>{app.title}</Text>
+                      <Text style={styles.moreAppSub}>{app.subtitle}</Text>
+                    </View>
+                    <Text style={styles.moreAppArrow}>➔</Text>
+                  </TouchableOpacity>
+                ))}
+
+                {/* Section 3: Family & Governance */}
+                <Text style={styles.drawerSectionTitle}>خاندان و خود مختار تحفظ (Family & Sovereignty)</Text>
+                {governanceAndFamily.map((app) => (
                   <TouchableOpacity
                     key={app.id}
                     style={styles.moreAppRow}
@@ -146,6 +233,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  backButton: {
+    backgroundColor: '#065F46',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    marginRight: 4,
+  },
+  backButtonText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   logo: {
     fontSize: 20,
@@ -234,7 +333,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '70%',
+    maxHeight: '75%',
     padding: 20,
   },
   modalHeader: {
@@ -257,18 +356,28 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   modalBody: {
-    paddingBottom: 20,
+    paddingBottom: 24,
+  },
+  drawerSectionTitle: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#047857',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    marginTop: 14,
+    marginBottom: 6,
+    paddingHorizontal: 4,
   },
   moreAppRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#F1F5F9',
   },
   moreAppIcon: {
-    fontSize: 24,
-    marginRight: 14,
+    fontSize: 22,
+    marginRight: 12,
   },
   moreAppDetails: {
     flex: 1,
