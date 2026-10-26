@@ -47,6 +47,33 @@ export default function App({ Component, pageProps }: AppProps) {
       window.dispatchEvent(new CustomEvent('amal-pwa-installed'));
     };
 
+    // Register Service Worker with intelligent update detection
+    const registerSW = () => {
+      if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then((reg) => {
+            reg.onupdatefound = () => {
+              const installingWorker = reg.installing;
+              if (installingWorker) {
+                installingWorker.onstatechange = () => {
+                  if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    const isUrdu = localStorage.getItem('amal_app_language') === 'ur';
+                    showAmalToast(
+                      isUrdu
+                        ? 'نیا ورژن دستیاب ہے! ایپ خودکار طور پر اپڈیٹ ہو گئی ہے۔'
+                        : 'New version available! App updated automatically.',
+                      'info'
+                    );
+                  }
+                };
+              }
+            };
+          })
+          .catch(() => {});
+      }
+    };
+
     // Register Service Worker for offline PWA & Request Persistent Storage Protection
     if (typeof window !== 'undefined') {
       enablePersistentStorage();
@@ -67,31 +94,10 @@ export default function App({ Component, pageProps }: AppProps) {
         } catch {}
       }, 5000);
 
-      // Register Service Worker with intelligent update detection
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('/sw.js')
-            .then((reg) => {
-              reg.onupdatefound = () => {
-                const installingWorker = reg.installing;
-                if (installingWorker) {
-                  installingWorker.onstatechange = () => {
-                    if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                      const isUrdu = localStorage.getItem('amal_app_language') === 'ur';
-                      showAmalToast(
-                        isUrdu
-                          ? 'نیا ورژن دستیاب ہے! ایپ خودکار طور پر اپڈیٹ ہو گئی ہے۔'
-                          : 'New version available! App updated automatically.',
-                        'info'
-                      );
-                    }
-                  };
-                }
-              };
-            })
-            .catch(() => {});
-        });
+      if (document.readyState === 'complete') {
+        registerSW();
+      } else {
+        window.addEventListener('load', registerSW);
       }
 
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -165,6 +171,7 @@ export default function App({ Component, pageProps }: AppProps) {
       window.removeEventListener('amal-toggle-tahajjud', handleToggleTahajjud);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
+      window.removeEventListener('load', registerSW);
     };
   }, []);
 
