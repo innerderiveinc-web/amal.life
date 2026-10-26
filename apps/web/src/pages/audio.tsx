@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { audioStreamingEngine, SirahMasterWork, SirahMasterChapter } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 export default function AudioPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
   const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
   const [selectedSirahWorkId, setSelectedSirahWorkId] = useState<string>('RAHEEQ');
   const [sirahViewMode, setSirahViewMode] = useState<'MASTER_WORKS' | 'TIMELINE'>('MASTER_WORKS');
   const { playTrack, currentTrack, isPlaying, togglePlay, pause } = useAudioPlayer();
+
+  // Support direct deep linking via URL query params (e.g. /audio?tab=SIRAH&work=ZIA_UN_NABI)
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (router.query.tab) {
+      const tab = String(router.query.tab).toUpperCase();
+      if (tab === 'SIRAH' || tab === 'SHAMAIL' || tab === 'QURAN') {
+        setActiveTab(tab as any);
+      }
+    }
+    if (router.query.work) {
+      const work = String(router.query.work).toUpperCase();
+      setSelectedSirahWorkId(work);
+    }
+  }, [router.isReady, router.query]);
 
   const handlePlayAudio = (
     title: string,

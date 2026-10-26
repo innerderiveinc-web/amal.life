@@ -320,7 +320,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2100,
           summaryUrdu: 'عام الفیل کا واقعہ، مکہ میں ولادت اور صحرا میں تربیت و برکات۔',
           summaryEnglish: 'The Year of the Elephant, the birth in Makkah, and nursing in Banu Sa\'d.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29_and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3',
+          audioStreamUrl: 'https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3',
         },
         {
           chapterNumber: 3,
@@ -449,7 +449,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2400,
           summaryUrdu: 'مکہ میں سیدہ آمنہ کی گود میں ظہورِ قدسی اور دیارِ بنو سعد میں خیر و برکت کا نزول۔',
           summaryEnglish: 'Miracles surrounding the blessed delivery and childhood in Banu Sa\'d.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29_and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3',
+          audioStreamUrl: 'https://archive.org/download/Seerat-un-nabi-seerah-urdu-mp3-audio/%2807%29%20Birth%20of%20Muhammad%20%28s%29%20and%20his%20family_-_Seerat-un-Nabi_in_Urdu.mp3',
         },
         {
           chapterNumber: 3,
