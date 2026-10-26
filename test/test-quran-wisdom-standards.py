@@ -20,7 +20,9 @@ def test_quran_wisdom():
     print("======================================================================")
     
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    wisdom_file = os.path.join(repo_root, "apps", "web", "src", "lib", "quran-wisdom-data.ts")
+    wisdom_file = os.path.join(repo_root, "apps", "web", "src", "data", "quran-wisdom-data.ts")
+    if not os.path.exists(wisdom_file):
+        wisdom_file = os.path.join(repo_root, "apps", "web", "src", "lib", "quran-wisdom-data.ts")
     quran_page = os.path.join(repo_root, "apps", "web", "src", "pages", "quran.tsx")
     modal_comp = os.path.join(repo_root, "apps", "web", "src", "components", "AyahWisdomModal.tsx")
     nav_comp = os.path.join(repo_root, "apps", "web", "src", "components", "Navigation.tsx")

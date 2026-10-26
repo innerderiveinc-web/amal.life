@@ -3298,7 +3298,9 @@ def test_quran_wisdom_standards():
     log_header("TEST 36: QURAN WISDOM, KANZ-UL-IMAN & CLASSICAL EXEGESIS BENCHMARK")
     import re
 
-    wisdom_file = os.path.join(REPO_ROOT, "apps", "web", "src", "lib", "quran-wisdom-data.ts")
+    wisdom_file = os.path.join(REPO_ROOT, "apps", "web", "src", "data", "quran-wisdom-data.ts")
+    if not os.path.exists(wisdom_file):
+        wisdom_file = os.path.join(REPO_ROOT, "apps", "web", "src", "lib", "quran-wisdom-data.ts")
     quran_page = os.path.join(REPO_ROOT, "apps", "web", "src", "pages", "quran.tsx")
     modal_comp = os.path.join(REPO_ROOT, "apps", "web", "src", "components", "AyahWisdomModal.tsx")
     nav_comp = os.path.join(REPO_ROOT, "apps", "web", "src", "components", "Navigation.tsx")
