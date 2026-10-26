@@ -48,7 +48,15 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             border: '1px solid rgba(255,255,255,0.12)',
             fontSize: 12,
             fontWeight: 600,
-            transition: 'all 0.2s',
+            transition: 'all 0.15s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
           {isUrdu ? 'شرائط و ضوابط' : 'Terms & Conditions'}
@@ -65,7 +73,15 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             border: '1px solid rgba(52, 211, 153, 0.3)',
             fontSize: 12,
             fontWeight: 700,
-            transition: 'all 0.2s',
+            transition: 'all 0.15s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.22)';
+            e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.5)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.12)';
+            e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
           }}
         >
           {isUrdu ? 'پرائیویسی پالیسی' : 'Privacy Policy'}
@@ -82,7 +98,15 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             border: '1px solid rgba(255,255,255,0.12)',
             fontSize: 12,
             fontWeight: 600,
-            transition: 'all 0.2s',
+            transition: 'all 0.15s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
           {isUrdu ? 'کاپی رائٹ و وقف' : 'Copyright & Waqf'}
@@ -99,10 +123,18 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             border: '1px solid rgba(255,255,255,0.12)',
             fontSize: 12,
             fontWeight: 600,
-            transition: 'all 0.2s',
+            transition: 'all 0.15s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {isUrdu ? 'رابطہ' : 'Contact & Support'}
+          {isUrdu ? 'رابطہ و تعاون' : 'Contact & Support'}
         </Link>
       </div>
     </div>
