@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
 import { showAmalToast } from '../components/Toast';
+import { offlineAudioCache } from '../services/offline-audio-cache';
 
 export interface AudioTrack {
   id: string;
@@ -155,29 +156,35 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // Play subtle auditory feedback chime
     playTestChime();
 
-    if (audioRef.current) {
-      const audio = audioRef.current;
-      audio.pause();
-      audio.src = track.audioUrl;
-      audio.playbackRate = playbackSpeed;
+    // Resolve local offline cache if downloaded, otherwise stream online
+    offlineAudioCache.getPlaybackUrl(track.audioUrl).then((resolvedUrl) => {
+      if (audioRef.current) {
+        const audio = audioRef.current;
+        audio.pause();
+        audio.src = resolvedUrl;
+        audio.playbackRate = playbackSpeed;
 
-      // Handle stream errors gracefully by falling back to SpeechSynthesis
-      audio.onerror = () => {
-        console.warn('Audio stream error on URL:', track.audioUrl);
-        triggerSpeechFallback(track);
-      };
+        // Handle stream errors gracefully by falling back to SpeechSynthesis
+        audio.onerror = () => {
+          console.warn('Audio stream error on URL:', resolvedUrl);
+          triggerSpeechFallback(track);
+        };
 
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-            showAmalToast(`Playing recitation: ${track.title}`, 'success');
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+              const isOffline = resolvedUrl.startsWith('blob:');
+              showAmalToast(
+                isOffline ? `Playing offline track: ${track.title}` : `Playing recitation: ${track.title}`,
+                'success'
+              );
 
-            // Wire browser lock-screen and hardware media keys
-            if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
-              try {
-                navigator.mediaSession.metadata = new MediaMetadata({
+              // Wire browser lock-screen and hardware media keys
+              if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+                try {
+                  navigator.mediaSession.metadata = new MediaMetadata({
                   title: track.title,
                   artist: track.reciter || 'AMAL Classical Recitation',
                   album: track.subtitle || 'Holy Quran & Classical Exegesis',
@@ -202,15 +209,16 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
               }
             }
           })
-          .catch((err) => {
-            console.warn('Browser audio play error:', err);
-            // Autoplay blocked or network error -> activate fallback
-            triggerSpeechFallback(track);
-          });
+            .catch((err) => {
+              console.warn('Browser audio play error:', err);
+              // Autoplay blocked or network error -> activate fallback
+              triggerSpeechFallback(track);
+            });
+        }
+      } else {
+        triggerSpeechFallback(track);
       }
-    } else {
-      triggerSpeechFallback(track);
-    }
+    });
   };
 
   const togglePlay = () => {

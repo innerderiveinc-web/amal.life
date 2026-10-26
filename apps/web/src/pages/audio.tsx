@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { audioStreamingEngine, SirahMasterWork, SirahMasterChapter } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { offlineAudioCache } from '../services/offline-audio-cache';
+import { AmalTokens } from '../styles/tokens';
 
 export default function AudioPage() {
   const router = useRouter();
@@ -13,7 +15,50 @@ export default function AudioPage() {
   const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
   const [selectedSirahWorkId, setSelectedSirahWorkId] = useState<string>('RAHEEQ');
   const [sirahViewMode, setSirahViewMode] = useState<'MASTER_WORKS' | 'TIMELINE'>('MASTER_WORKS');
+  const [cachedUrls, setCachedUrls] = useState<Set<string>>(new Set());
+  const [downloadingUrl, setDownloadingUrl] = useState<string | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState<number>(0);
+  const [totalCacheMb, setTotalCacheMb] = useState<number>(0);
   const { playTrack, currentTrack, isPlaying, togglePlay, pause } = useAudioPlayer();
+
+  // Sync cached offline tracks on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const manifest = offlineAudioCache.getCachedManifest();
+      setCachedUrls(new Set(manifest.map((m) => m.url)));
+      setTotalCacheMb(offlineAudioCache.getTotalStorageMb());
+    }
+  }, []);
+
+  const handleToggleOffline = async (url: string, title: string, subtitle?: string) => {
+    if (cachedUrls.has(url)) {
+      await offlineAudioCache.removeTrack(url);
+      setCachedUrls((prev) => {
+        const next = new Set(prev);
+        next.delete(url);
+        return next;
+      });
+      setTotalCacheMb(offlineAudioCache.getTotalStorageMb());
+    } else {
+      try {
+        setDownloadingUrl(url);
+        setDownloadProgress(20);
+        await offlineAudioCache.downloadTrack(
+          url,
+          title,
+          { subtitle },
+          (pct) => setDownloadProgress(pct)
+        );
+        setCachedUrls((prev) => new Set(prev).add(url));
+        setTotalCacheMb(offlineAudioCache.getTotalStorageMb());
+      } catch (e) {
+        console.error('Offline download failed:', e);
+      } finally {
+        setDownloadingUrl(null);
+        setDownloadProgress(0);
+      }
+    }
+  };
 
   // Support direct deep linking via URL query params (e.g. /audio?tab=SIRAH&work=ZIA_UN_NABI)
   useEffect(() => {
@@ -188,6 +233,36 @@ export default function AudioPage() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Offline Airplane Mode Storage Indicator */}
+            <div
+              style={{
+                backgroundColor: cachedUrls.size > 0 ? '#F0FDF4' : '#F8FAFC',
+                border: cachedUrls.size > 0 ? '1px solid #BBF7D0' : '1px solid #E2E8F0',
+                borderRadius: 10,
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: 8,
+                fontSize: 12.5,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span>✈️</span>
+                <span style={{ fontWeight: 700, color: cachedUrls.size > 0 ? '#166534' : '#475569' }}>
+                  {cachedUrls.size > 0
+                    ? `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`
+                    : 'آف لائن لسننگ (Offline Listening): کسی بھی باب کو بغیر انٹرنیٹ سننے کے لیے "⬇️ Save Offline" دبائیں۔'}
+                </span>
+              </div>
+              {cachedUrls.size > 0 && (
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#047857', backgroundColor: '#DCFCE7', padding: '2px 8px', borderRadius: 6 }}>
+                  Offline Ready • No Data Used
+                </span>
+              )}
             </div>
 
             {/* Surah List */}
@@ -503,6 +578,36 @@ export default function AudioPage() {
               </div>
             </div>
 
+            {/* Offline Airplane Mode Storage Indicator */}
+            <div
+              style={{
+                backgroundColor: cachedUrls.size > 0 ? '#F0FDF4' : '#F8FAFC',
+                border: cachedUrls.size > 0 ? '1px solid #BBF7D0' : '1px solid #E2E8F0',
+                borderRadius: 10,
+                padding: '10px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: 8,
+                fontSize: 12.5,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span>✈️</span>
+                <span style={{ fontWeight: 700, color: cachedUrls.size > 0 ? '#166534' : '#475569' }}>
+                  {cachedUrls.size > 0
+                    ? `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`
+                    : 'آف لائن لسننگ (Offline Listening): کسی بھی باب کو بغیر انٹرنیٹ سننے کے لیے "⬇️ Save Offline" دبائیں۔'}
+                </span>
+              </div>
+              {cachedUrls.size > 0 && (
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#047857', backgroundColor: '#DCFCE7', padding: '2px 8px', borderRadius: 6 }}>
+                  Offline Ready • No Data Used
+                </span>
+              )}
+            </div>
+
             {/* MASTER WORKS VIEW */}
             {sirahViewMode === 'MASTER_WORKS' && (() => {
               const currentWork = (audioStreamingEngine.sirahMasterWorks.find((w) => w.id === selectedSirahWorkId) ??
@@ -810,7 +915,7 @@ export default function AudioPage() {
                               </div>
                             </div>
 
-                            {/* Action Buttons: Play/Pause & YouTube */}
+                            {/* Action Buttons: Play/Pause, Offline Save & YouTube */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                               <button
                                 onClick={() =>
@@ -841,6 +946,47 @@ export default function AudioPage() {
                                 <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
                                 <span>{isThisPlaying ? 'Pause Audio' : `Play (${Math.round(ch.durationSeconds / 60)}m)`}</span>
                               </button>
+
+                              {/* Offline Airplane Mode Save Button */}
+                              {(() => {
+                                const isOfflineCached = cachedUrls.has(ch.audioStreamUrl);
+                                const isDownloading = downloadingUrl === ch.audioStreamUrl;
+
+                                return (
+                                  <button
+                                    onClick={() =>
+                                      handleToggleOffline(
+                                        ch.audioStreamUrl,
+                                        `${currentWorkShortEn} — Ch ${ch.chapterNumber}: ${ch.titleEnglish}`,
+                                        `${currentWorkShortUr} • ${ch.titleUrdu}`
+                                      )
+                                    }
+                                    style={{
+                                      padding: '8px 12px',
+                                      borderRadius: 8,
+                                      backgroundColor: isOfflineCached ? '#ECFDF5' : '#F9FAFB',
+                                      color: isOfflineCached ? '#065F46' : '#4B5563',
+                                      fontSize: 12,
+                                      fontWeight: 700,
+                                      border: isOfflineCached ? '1px solid #A7F3D0' : '1px solid #D1D5DB',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 4,
+                                      transition: 'all 0.15s ease',
+                                    }}
+                                    title={isOfflineCached ? 'Click to delete from offline cache' : 'Download for offline airplane mode'}
+                                  >
+                                    <span>
+                                      {isDownloading
+                                        ? `⏳ ${downloadProgress}%`
+                                        : isOfflineCached
+                                        ? '🟢 آف لائن محفوظ'
+                                        : '⬇️ Save Offline'}
+                                    </span>
+                                  </button>
+                                );
+                              })()}
 
                               <a
                                 href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
