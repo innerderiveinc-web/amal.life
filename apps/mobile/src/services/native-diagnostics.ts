@@ -43,7 +43,7 @@ export class NativeDiagnosticEngine {
    * Run non-intrusive diagnostic probe on device capabilities
    */
   public static async runDiagnostics(): Promise<NativeDiagnosticReport> {
-    const isNodeOrTest = typeof window === 'undefined';
+    const isNodeOrTest = typeof (globalThis as any).window === 'undefined';
 
     // 1. Location capability check
     const locationReport = {

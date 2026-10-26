@@ -8,6 +8,7 @@ export interface AudioTrack {
   audioUrl: string;
   reciter?: string;
   arabicSnippet?: string;
+  lang?: 'ar' | 'ur' | 'en';
 }
 
 interface AudioPlayerContextType {
@@ -104,7 +105,20 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       window.speechSynthesis.cancel();
       const text = track.arabicSnippet || track.title;
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ar-SA';
+
+      if (track.lang === 'ur') {
+        utterance.lang = 'ur-PK';
+      } else if (track.lang === 'en') {
+        utterance.lang = 'en-US';
+      } else if (track.lang === 'ar') {
+        utterance.lang = 'ar-SA';
+      } else if (/[\u0600-\u06FF]/.test(text)) {
+        const isUrduSpecific = /[\u0679\u0688\u0691\u06BA\u06D2\u06C1]/.test(text);
+        utterance.lang = isUrduSpecific ? 'ur-PK' : 'ar-SA';
+      } else {
+        utterance.lang = 'en-US';
+      }
+
       utterance.rate = 0.85;
 
       utterance.onstart = () => {

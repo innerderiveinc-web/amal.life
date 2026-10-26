@@ -2,30 +2,36 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
-import { audioStreamingEngine, Reciter, QuranSurahAudio, ShamailAudioChapter, SirahAudioEpisode } from '@amal/amal-engine';
+import { audioStreamingEngine } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 export default function AudioPage() {
   const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
-  const { playTrack, currentTrack, isPlaying: globalPlaying } = useAudioPlayer();
+  const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
+  const { playTrack, currentTrack, isPlaying, togglePlay, pause } = useAudioPlayer();
 
-  // Currently playing state
-  const [currentPlayingTitle, setCurrentPlayingTitle] = useState<string | null>(null);
-  const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
-  const handlePlay = (title: string, url: string, subtitle?: string, reciter?: string) => {
-    setCurrentPlayingTitle(title);
-    setCurrentAudioUrl(url);
-    setIsPlaying(true);
-    playTrack({
-      id: `audio-${url}`,
-      title,
-      subtitle: subtitle || 'Master Recitation',
-      audioUrl: url,
-      reciter: reciter || selectedReciter,
-    });
+  const handlePlayAudio = (
+    title: string,
+    url: string,
+    subtitle: string,
+    reciterName: string,
+    lang: 'ar' | 'ur' | 'en' = 'ar'
+  ) => {
+    if (currentTrack?.audioUrl === url && isPlaying) {
+      pause();
+    } else if (currentTrack?.audioUrl === url && !isPlaying) {
+      togglePlay();
+    } else {
+      playTrack({
+        id: `audio-${url}`,
+        title,
+        subtitle,
+        audioUrl: url,
+        reciter: reciterName,
+        lang,
+      });
+    }
   };
 
   return (
@@ -78,7 +84,7 @@ export default function AudioPage() {
             🎧 Audio Recitations & Sirah Audiobooks
           </h1>
           <p style={{ color: '#4B5563', margin: 0, fontSize: 14 }}>
-            Verified public-domain recitations from master Qurra, blessed Shama'il audio chapters, and Prophetic Sirah audio narratives.
+            Verified public-domain recitations from master Qurra, blessed Shama'il audio chapters with classical commentary, and authentic Prophetic Sirah audio narratives.
           </p>
         </div>
 
@@ -95,6 +101,7 @@ export default function AudioPage() {
               border: 'none',
               backgroundColor: activeTab === 'QURAN' ? '#1B4332' : '#E5E7EB',
               color: activeTab === 'QURAN' ? '#FFFFFF' : '#374151',
+              transition: 'all 0.2s',
             }}
           >
             📖 Holy Quran Recitations
@@ -110,6 +117,7 @@ export default function AudioPage() {
               border: 'none',
               backgroundColor: activeTab === 'SHAMAIL' ? '#1B4332' : '#E5E7EB',
               color: activeTab === 'SHAMAIL' ? '#FFFFFF' : '#374151',
+              transition: 'all 0.2s',
             }}
           >
             🌹 Shama'il al-Muhammadiyyah Audio
@@ -125,6 +133,7 @@ export default function AudioPage() {
               border: 'none',
               backgroundColor: activeTab === 'SIRAH' ? '#1B4332' : '#E5E7EB',
               color: activeTab === 'SIRAH' ? '#FFFFFF' : '#374151',
+              transition: 'all 0.2s',
             }}
           >
             🕌 Prophetic Sirah Episodes
@@ -134,52 +143,6 @@ export default function AudioPage() {
         {/* QURAN TAB */}
         {activeTab === 'QURAN' && (
           <div>
-            {/* Premier Quran Wisdom Module Jump Banner */}
-            <div
-              style={{
-                backgroundColor: '#F0FDF4',
-                borderRadius: 12,
-                padding: '14px 18px',
-                border: '1px solid #86EFAC',
-                marginBottom: 16,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: 12,
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 22 }}>📖</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: '#166534' }}>
-                    Looking for Verse-by-Verse Recitation with Kanz-ul-Iman &amp; Khaza&apos;in-ul-Irfan?
-                  </div>
-                  <div style={{ fontSize: 11, color: '#4B5563' }}>
-                    Listen to certified Qari tilawat synchronized with Urdu/English translations and daily wisdom cards.
-                  </div>
-                </div>
-              </div>
-
-              <a
-                href="/quran"
-                style={{
-                  padding: '7px 14px',
-                  borderRadius: 8,
-                  backgroundColor: '#166534',
-                  color: '#FFFFFF',
-                  textDecoration: 'none',
-                  fontSize: 12,
-                  fontWeight: 700,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                }}
-              >
-                <span>Open Quran &amp; Wisdom</span>
-                <span>➔</span>
-              </a>
-            </div>
             {/* Reciter Selector */}
             <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E5E7EB', marginBottom: 20 }}>
               <label style={{ fontSize: 12, fontWeight: 700, color: '#374151', display: 'block', marginBottom: 10 }}>
@@ -212,7 +175,7 @@ export default function AudioPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {audioStreamingEngine.sampleSurahs.map((surah) => {
                 const streamUrl = surah.audioStreams[selectedReciter] || surah.audioStreams['husary'] || '';
-                const isThisPlaying = currentAudioUrl === streamUrl && isPlaying;
+                const isThisPlaying = currentTrack?.audioUrl === streamUrl && isPlaying;
                 return (
                   <div
                     key={surah.surahNumber}
@@ -220,10 +183,11 @@ export default function AudioPage() {
                       backgroundColor: '#FFFFFF',
                       borderRadius: 12,
                       padding: '16px 20px',
-                      border: '1px solid #E5E7EB',
+                      border: isThisPlaying ? '2px solid #059669' : '1px solid #E5E7EB',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
+                      boxShadow: isThisPlaying ? '0 4px 12px rgba(5, 150, 105, 0.12)' : 'none',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -231,7 +195,7 @@ export default function AudioPage() {
                         width: 36,
                         height: 36,
                         borderRadius: '50%',
-                        backgroundColor: '#1B4332',
+                        backgroundColor: isThisPlaying ? '#059669' : '#1B4332',
                         color: '#FFFFFF',
                         display: 'flex',
                         alignItems: 'center',
@@ -252,7 +216,13 @@ export default function AudioPage() {
                     </div>
 
                     <button
-                      onClick={() => handlePlay(`Surah ${surah.nameEnglish}`, streamUrl)}
+                      onClick={() => handlePlayAudio(
+                        `Surah ${surah.nameEnglish}`,
+                        streamUrl,
+                        `Recited by ${selectedReciter.toUpperCase()}`,
+                        selectedReciter,
+                        'ar'
+                      )}
                       style={{
                         padding: '8px 18px',
                         borderRadius: 8,
@@ -265,6 +235,7 @@ export default function AudioPage() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: 6,
+                        transition: 'all 0.15s ease-in-out',
                       }}
                     >
                       {isThisPlaying ? '⏸ Pause' : '▶ Play'}
@@ -279,121 +250,275 @@ export default function AudioPage() {
         {/* SHAMAIL TAB */}
         {activeTab === 'SHAMAIL' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {audioStreamingEngine.shamailChapters.map((ch) => (
-              <div key={ch.chapterNumber} style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E5E7EB' }}>
-                <div style={{ fontWeight: 700, fontSize: 16, color: '#1B4332', marginBottom: 4 }}>
-                  {ch.titleEnglish}
-                </div>
-                <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', marginBottom: 6 }}>
-                  {ch.titleArabic}
-                </div>
-                <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 14 }}>
-                  {ch.titleUrdu} • {ch.hadithCount} Prophetic Reports
-                </div>
+            <div style={{
+              backgroundColor: '#FEF3C7',
+              border: '1px solid #FCD34D',
+              borderRadius: 12,
+              padding: '12px 16px',
+              fontSize: 13,
+              color: '#92400E',
+            }}>
+              🌹 <strong>Imam al-Tirmidhi's Shama'il al-Muhammadiyyah:</strong> High-fidelity audio lectures in Arabic (Dr. Waleed Al-Meneese) and detailed Urdu Sharh with verified prophetic hadith matn.
+            </div>
 
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => handlePlay(`${ch.titleEnglish} (Arabic Matn)`, ch.audioUrlArabicMatn)}
-                    style={{ padding: '6px 14px', borderRadius: 6, backgroundColor: '#1B4332', color: '#FFF', fontSize: 12, border: 'none', cursor: 'pointer' }}
-                  >
-                    ▶ Arabic Matn ({Math.round(ch.durationSeconds / 60)} min)
-                  </button>
-                  <button
-                    onClick={() => handlePlay(`${ch.titleEnglish} (Urdu Sharh)`, ch.audioUrlUrduSharh)}
-                    style={{ padding: '6px 14px', borderRadius: 6, backgroundColor: '#065F46', color: '#FFF', fontSize: 12, border: 'none', cursor: 'pointer' }}
-                  >
-                    ▶ Urdu Sharh
-                  </button>
-                  <button
-                    onClick={() => handlePlay(`${ch.titleEnglish} (English Commentary)`, ch.audioUrlEnglishCommentary)}
-                    style={{ padding: '6px 14px', borderRadius: 6, backgroundColor: '#374151', color: '#FFF', fontSize: 12, border: 'none', cursor: 'pointer' }}
-                  >
-                    ▶ English Commentary
-                  </button>
+            {audioStreamingEngine.shamailChapters.map((ch) => {
+              const isArabicPlaying = currentTrack?.audioUrl === ch.audioUrlArabicMatn && isPlaying;
+              const isUrduPlaying = currentTrack?.audioUrl === ch.audioUrlUrduSharh && isPlaying;
+              const isExpanded = expandedChapter === ch.chapterNumber;
+
+              return (
+                <div
+                  key={ch.chapterNumber}
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: 14,
+                    padding: 22,
+                    border: (isArabicPlaying || isUrduPlaying) ? '2px solid #059669' : '1px solid #E5E7EB',
+                    boxShadow: (isArabicPlaying || isUrduPlaying) ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: 17, color: '#1B4332' }}>
+                        {ch.titleEnglish}
+                      </div>
+                      <div style={{ fontSize: 15, color: '#047857', direction: 'rtl', marginTop: 4, fontFamily: 'Traditional Arabic, Amiri, serif', fontWeight: 700 }}>
+                        {ch.titleArabic}
+                      </div>
+                      <div style={{ fontSize: 13, color: '#4B5563', marginTop: 4 }}>
+                        {ch.titleUrdu}
+                      </div>
+                    </div>
+
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      backgroundColor: '#ECFDF5',
+                      color: '#065F46',
+                      padding: '4px 10px',
+                      borderRadius: 12,
+                      border: '1px solid #A7F3D0',
+                    }}>
+                      {ch.hadithCount} Prophetic Reports
+                    </span>
+                  </div>
+
+                  {ch.narrator && (
+                    <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 12 }}>
+                      <strong>راوی (Narrator):</strong> {ch.narrator}
+                    </div>
+                  )}
+
+                  {/* Hadith Matn Excerpt Preview */}
+                  {ch.arabicExcerpt && (
+                    <div style={{
+                      backgroundColor: '#F8FAFC',
+                      border: '1px solid #E2E8F0',
+                      borderRadius: 10,
+                      padding: '12px 16px',
+                      marginBottom: 16,
+                    }}>
+                      <div style={{
+                        direction: 'rtl',
+                        textAlign: 'right',
+                        fontFamily: 'Traditional Arabic, Amiri, serif',
+                        fontSize: 17,
+                        lineHeight: 1.8,
+                        color: '#0F172A',
+                        fontWeight: 600,
+                        marginBottom: 8,
+                      }}>
+                        {ch.arabicExcerpt}
+                      </div>
+                      <div style={{
+                        direction: 'rtl',
+                        textAlign: 'right',
+                        fontSize: 13,
+                        lineHeight: 1.6,
+                        color: '#475569',
+                      }}>
+                        {ch.urduExcerpt}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Audio Controls */}
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                    <button
+                      onClick={() => handlePlayAudio(
+                        `${ch.titleEnglish} (Arabic Matn & Dars)`,
+                        ch.audioUrlArabicMatn,
+                        'Dr. Waleed Al-Meneese • Classical Shama\'il Audio',
+                        'Dr. Waleed Al-Meneese',
+                        'ar'
+                      )}
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: 8,
+                        backgroundColor: isArabicPlaying ? '#DC2626' : '#1B4332',
+                        color: '#FFF',
+                        fontSize: 13,
+                        fontWeight: 700,
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      <span>{isArabicPlaying ? '⏸ Pause' : '▶ Play'}</span>
+                      <span>Arabic Dars ({Math.round(ch.durationSeconds / 60)} min)</span>
+                    </button>
+
+                    <button
+                      onClick={() => handlePlayAudio(
+                        `${ch.titleEnglish} (Urdu Sharh)`,
+                        ch.audioUrlUrduSharh,
+                        'اردو شرح و دراساتِ نبوی • Seerat-un-Nabi',
+                        'Urdu Scholarly Dars',
+                        'ur'
+                      )}
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: 8,
+                        backgroundColor: isUrduPlaying ? '#DC2626' : '#065F46',
+                        color: '#FFF',
+                        fontSize: 13,
+                        fontWeight: 700,
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      <span>{isUrduPlaying ? '⏸ Pause' : '▶ Play'}</span>
+                      <span>Urdu Sharh (30 min)</span>
+                    </button>
+
+                    <button
+                      onClick={() => setExpandedChapter(isExpanded ? null : ch.chapterNumber)}
+                      style={{
+                        padding: '8px 14px',
+                        borderRadius: 8,
+                        backgroundColor: '#F3F4F6',
+                        color: '#374151',
+                        fontSize: 12,
+                        fontWeight: 600,
+                        border: '1px solid #D1D5DB',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {isExpanded ? '▲ Hide Details' : '▼ Read Hadiths & Notes'}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
         {/* SIRAH TAB */}
         {activeTab === 'SIRAH' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {audioStreamingEngine.sirahEpisodes.map((ep) => (
-              <div key={ep.episodeNumber} style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E5E7EB' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                  <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: '#047857', backgroundColor: '#F0FDF4', padding: '2px 8px', borderRadius: 4 }}>
-                      EPISODE {ep.episodeNumber} • {ep.era}
-                    </span>
-                    <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '6px 0 2px' }}>
-                      {ep.titleEnglish}
-                    </h3>
-                    <div style={{ fontSize: 12, color: '#6B7280' }}>{ep.titleUrdu} • {ep.yearHijriOrGregorian}</div>
+            <div style={{
+              backgroundColor: '#EFF6FF',
+              border: '1px solid #BFDBFE',
+              borderRadius: 12,
+              padding: '12px 16px',
+              fontSize: 13,
+              color: '#1E40AF',
+            }}>
+              🕌 <strong>Authentic Chronological Sirah Audiobooks (اردو سیرت النبی):</strong> High-fidelity audio lessons detailing the life and milestones of the Prophet Muhammad ﷺ from birth through the Madinan era.
+            </div>
+
+            {audioStreamingEngine.sirahEpisodes.map((ep) => {
+              const isThisPlaying = currentTrack?.audioUrl === ep.audioUrl && isPlaying;
+
+              return (
+                <div
+                  key={ep.episodeNumber}
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: 14,
+                    padding: 22,
+                    border: isThisPlaying ? '2px solid #059669' : '1px solid #E5E7EB',
+                    boxShadow: isThisPlaying ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
+                    <div>
+                      <span style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        color: '#047857',
+                        backgroundColor: '#F0FDF4',
+                        padding: '3px 10px',
+                        borderRadius: 6,
+                        border: '1px solid #A7F3D0',
+                      }}>
+                        EPISODE {ep.episodeNumber} • {ep.era}
+                      </span>
+                      <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: '8px 0 2px' }}>
+                        {ep.titleEnglish}
+                      </h3>
+                      <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', fontWeight: 600, marginTop: 4 }}>
+                        {ep.titleUrdu}
+                      </div>
+                      <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
+                        📅 {ep.yearHijriOrGregorian}
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handlePlayAudio(
+                        `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
+                        ep.audioUrl,
+                        `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`,
+                        'Authentic Seerat-un-Nabi Audio',
+                        'ur'
+                      )}
+                      style={{
+                        padding: '10px 20px',
+                        borderRadius: 8,
+                        backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
+                        color: '#FFF',
+                        fontSize: 13,
+                        fontWeight: 700,
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                        transition: 'all 0.15s ease-in-out',
+                      }}
+                    >
+                      <span>{isThisPlaying ? '⏸' : '▶'}</span>
+                      <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
+                    </button>
                   </div>
-                  <button
-                    onClick={() => handlePlay(`Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`, ep.audioUrl)}
-                    style={{ padding: '8px 16px', borderRadius: 8, backgroundColor: '#1B4332', color: '#FFF', fontSize: 13, border: 'none', cursor: 'pointer' }}
-                  >
-                    ▶ Listen ({Math.round(ep.durationSeconds / 60)}m)
-                  </button>
+
+                  <p style={{
+                    fontSize: 13.5,
+                    color: '#374151',
+                    margin: '12px 0 0',
+                    lineHeight: 1.6,
+                    backgroundColor: '#F9FAFB',
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    border: '1px solid #F3F4F6',
+                  }}>
+                    {ep.summary}
+                  </p>
                 </div>
-                <p style={{ fontSize: 13, color: '#4B5563', margin: '8px 0 0' }}>{ep.summary}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>
-
-      {/* Persistent Audio Player Dock */}
-      {currentPlayingTitle && (
-        <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#1B4332',
-          color: '#FFFFFF',
-          padding: '14px 24px',
-          boxShadow: '0 -4px 16px rgba(0,0,0,0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          zIndex: 1000,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <span style={{ fontSize: 24 }}>🎵</span>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 14 }}>{currentPlayingTitle}</div>
-              <div style={{ fontSize: 11, color: '#A7F3D0' }}>Now Streaming High-Fidelity Audio</div>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            {currentAudioUrl && (
-              <audio controls autoPlay src={currentAudioUrl} style={{ height: 36, outline: 'none' }} />
-            )}
-            <button
-              onClick={() => {
-                setCurrentPlayingTitle(null);
-                setCurrentAudioUrl(null);
-                setIsPlaying(false);
-              }}
-              style={{
-                backgroundColor: 'transparent',
-                border: '1px solid #A7F3D0',
-                color: '#A7F3D0',
-                padding: '4px 10px',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontSize: 12,
-              }}
-            >
-              ✕ Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
