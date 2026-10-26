@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
-import { audioStreamingEngine } from '@amal/amal-engine';
+import { audioStreamingEngine, SirahMasterWork, SirahMasterChapter } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 export default function AudioPage() {
   const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
   const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
+  const [selectedSirahWorkId, setSelectedSirahWorkId] = useState<string>('RAHEEQ');
+  const [sirahViewMode, setSirahViewMode] = useState<'MASTER_WORKS' | 'TIMELINE'>('MASTER_WORKS');
   const { playTrack, currentTrack, isPlaying, togglePlay, pause } = useAudioPlayer();
 
   const handlePlayAudio = (
@@ -422,100 +424,566 @@ export default function AudioPage() {
 
         {/* SIRAH TAB */}
         {activeTab === 'SIRAH' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{
-              backgroundColor: '#EFF6FF',
-              border: '1px solid #BFDBFE',
-              borderRadius: 12,
-              padding: '12px 16px',
-              fontSize: 13,
-              color: '#1E40AF',
-            }}>
-              🕌 <strong>Authentic Chronological Sirah Audiobooks (اردو سیرت النبی):</strong> High-fidelity audio lessons detailing the life and milestones of the Prophet Muhammad ﷺ from birth through the Madinan era.
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {/* Header Announcement Banner */}
+            <div
+              style={{
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                borderRadius: 14,
+                padding: '16px 20px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 12,
+              }}
+            >
+              <div>
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#065F46', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>🕌</span>
+                  <span>سیرت النبی ﷺ آڈیو بکس و تفصیلی شروحات (Prophetic Sirah Audio Library)</span>
+                </div>
+                <p style={{ margin: '4px 0 0', fontSize: 13, color: '#047857', lineHeight: 1.5 }}>
+                  اہل سنت و جماعت (سوادِ اعظم) کے جید ائمہ و محققین کی مستند کتبِ سیرت، مکمل بے حذف آڈیو کتب اور سلسلہ وار دروس کا صوتی انسائیکلوپیڈیا۔
+                </p>
+              </div>
 
-            {audioStreamingEngine.sirahEpisodes.map((ep) => {
-              const isThisPlaying = currentTrack?.audioUrl === ep.audioUrl && isPlaying;
-
-              return (
-                <div
-                  key={ep.episodeNumber}
+              {/* View Switcher: Master Works vs Timeline */}
+              <div style={{ display: 'flex', gap: 8, backgroundColor: '#D1FAE5', padding: 4, borderRadius: 10 }}>
+                <button
+                  onClick={() => setSirahViewMode('MASTER_WORKS')}
                   style={{
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: 14,
-                    padding: 22,
-                    border: isThisPlaying ? '2px solid #059669' : '1px solid #E5E7EB',
-                    boxShadow: isThisPlaying ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
+                    padding: '8px 14px',
+                    borderRadius: 8,
+                    fontWeight: 700,
+                    fontSize: 12.5,
+                    border: 'none',
+                    cursor: 'pointer',
+                    backgroundColor: sirahViewMode === 'MASTER_WORKS' ? '#065F46' : 'transparent',
+                    color: sirahViewMode === 'MASTER_WORKS' ? '#FFFFFF' : '#047857',
+                    transition: 'all 0.15s ease',
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
-                    <div>
-                      <span style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: '#047857',
-                        backgroundColor: '#F0FDF4',
-                        padding: '3px 10px',
-                        borderRadius: 6,
-                        border: '1px solid #A7F3D0',
-                      }}>
-                        EPISODE {ep.episodeNumber} • {ep.era}
-                      </span>
-                      <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: '8px 0 2px' }}>
-                        {ep.titleEnglish}
-                      </h3>
-                      <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', fontWeight: 600, marginTop: 4 }}>
-                        {ep.titleUrdu}
+                  📚 ۴ شاہکار کتبِ سیرت (Master Works)
+                </button>
+                <button
+                  onClick={() => setSirahViewMode('TIMELINE')}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: 8,
+                    fontWeight: 700,
+                    fontSize: 12.5,
+                    border: 'none',
+                    cursor: 'pointer',
+                    backgroundColor: sirahViewMode === 'TIMELINE' ? '#065F46' : 'transparent',
+                    color: sirahViewMode === 'TIMELINE' ? '#FFFFFF' : '#047857',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  ⏳ خلاصۂ تاریخ (Timeline Lessons)
+                </button>
+              </div>
+            </div>
+
+            {/* MASTER WORKS VIEW */}
+            {sirahViewMode === 'MASTER_WORKS' && (() => {
+              const currentWork = (audioStreamingEngine.sirahMasterWorks.find((w) => w.id === selectedSirahWorkId) ??
+                audioStreamingEngine.sirahMasterWorks[0]) as SirahMasterWork | undefined;
+
+              if (!currentWork) return null;
+
+              const currentWorkShortEn = (currentWork.titleEnglish.split('(')[0] ?? currentWork.titleEnglish).trim();
+              const currentWorkShortUr = (currentWork.titleUrdu.split('(')[0] ?? currentWork.titleUrdu).trim();
+
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  {/* Master Works Selector Grid */}
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                      gap: 12,
+                    }}
+                  >
+                    {audioStreamingEngine.sirahMasterWorks.map((work) => {
+                      const isSelected = work.id === selectedSirahWorkId;
+                      const icons: Record<string, string> = {
+                        RAHEEQ: '📖',
+                        ZIA_UN_NABI: '📚',
+                        SEERAT_E_MUSTAFA: '🌹',
+                        KITAB_ASH_SHIFA: '💎',
+                      };
+                      const shortEn = (work.titleEnglish.split('(')[0] ?? work.titleEnglish).trim();
+                      const shortUr = (work.titleUrdu.split('(')[0] ?? work.titleUrdu).trim();
+                      const shortAuth = (work.author.split('(')[0] ?? work.author).trim();
+
+                      return (
+                        <button
+                          key={work.id}
+                          onClick={() => setSelectedSirahWorkId(work.id)}
+                          style={{
+                            textAlign: 'left',
+                            padding: '14px 16px',
+                            borderRadius: 12,
+                            border: isSelected ? '2px solid #059669' : '1px solid #E5E7EB',
+                            backgroundColor: isSelected ? '#F0FDF4' : '#FFFFFF',
+                            boxShadow: isSelected ? '0 4px 12px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.04)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 4,
+                            transition: 'all 0.15s ease',
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span style={{ fontSize: 22 }}>{icons[work.id] || '📖'}</span>
+                            <span
+                              style={{
+                                fontSize: 10.5,
+                                fontWeight: 700,
+                                padding: '2px 8px',
+                                borderRadius: 12,
+                                backgroundColor: isSelected ? '#059669' : '#F3F4F6',
+                                color: isSelected ? '#FFFFFF' : '#4B5563',
+                              }}
+                            >
+                              {work.chapters.length} ابواب / دروس
+                            </span>
+                          </div>
+                          <div style={{ fontSize: 15, fontWeight: 800, color: isSelected ? '#065F46' : '#111827', marginTop: 4 }}>
+                            {shortEn}
+                          </div>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? '#047857' : '#374151', direction: 'rtl' }}>
+                            {shortUr}
+                          </div>
+                          <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
+                            {shortAuth}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Selected Master Work Hero Card */}
+                  <div
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: 16,
+                      border: '1px solid #D1FAE5',
+                      padding: 24,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        width: 6,
+                        height: '100%',
+                        backgroundColor: '#059669',
+                      }}
+                    />
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+                      <div style={{ flex: '1 1 500px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: '#065F46',
+                              backgroundColor: '#ECFDF5',
+                              padding: '3px 10px',
+                              borderRadius: 6,
+                              border: '1px solid #A7F3D0',
+                            }}
+                          >
+                            مستند کلاسیکی شاہکار • Canonical Masterwork
+                          </span>
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: '#1E40AF',
+                              backgroundColor: '#EFF6FF',
+                              padding: '3px 10px',
+                              borderRadius: 6,
+                              border: '1px solid #BFDBFE',
+                            }}
+                          >
+                            {currentWork.volumesOrLength}
+                          </span>
+                        </div>
+
+                        <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111827', margin: '4px 0 2px' }}>
+                          {currentWork.titleEnglish}
+                        </h2>
+                        <div style={{ fontSize: 18, fontWeight: 800, color: '#065F46', direction: 'rtl', marginTop: 4 }}>
+                          {currentWork.titleArabic} — {currentWork.titleUrdu}
+                        </div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#4B5563', marginTop: 6, direction: 'rtl' }}>
+                          ✍️ مصنف: <strong>{currentWork.authorUrdu}</strong> ({currentWork.author})
+                        </div>
                       </div>
-                      <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
-                        📅 {ep.yearHijriOrGregorian}
+
+                      {/* External Resource Action Buttons */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 }}>
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(currentWork.externalSources.youtubeSearchQuery)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            padding: '8px 14px',
+                            backgroundColor: '#FEF2F2',
+                            border: '1px solid #FECACA',
+                            color: '#991B1B',
+                            borderRadius: 8,
+                            fontSize: 12,
+                            fontWeight: 700,
+                            textDecoration: 'none',
+                            transition: 'all 0.15s ease',
+                          }}
+                        >
+                          <span>🎬 یوٹیوب مکمل پلے لسٹ ↗</span>
+                        </a>
+
+                        {currentWork.externalSources.archiveOrgUrl && (
+                          <a
+                            href={currentWork.externalSources.archiveOrgUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                              padding: '8px 14px',
+                              backgroundColor: '#F8FAFC',
+                              border: '1px solid #E2E8F0',
+                              color: '#334155',
+                              borderRadius: 8,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              transition: 'all 0.15s ease',
+                            }}
+                          >
+                            <span>🏛️ Archive.org MP3 پورٹل ↗</span>
+                          </a>
+                        )}
+
+                        {currentWork.externalSources.officialPortalUrl && (
+                          <a
+                            href={currentWork.externalSources.officialPortalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                              padding: '8px 14px',
+                              backgroundColor: '#F0FDF4',
+                              border: '1px solid #BBF7D0',
+                              color: '#166534',
+                              borderRadius: 8,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              transition: 'all 0.15s ease',
+                            }}
+                          >
+                            <span>🌐 سرکاری پبلیکیشن ریفرنس ↗</span>
+                          </a>
+                        )}
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => handlePlayAudio(
-                        `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
-                        ep.audioUrl,
-                        `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`,
-                        'Authentic Seerat-un-Nabi Audio',
-                        'ur'
-                      )}
+                    {/* Historical Significance Callout */}
+                    <div
                       style={{
-                        padding: '10px 20px',
-                        borderRadius: 8,
-                        backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
-                        color: '#FFF',
-                        fontSize: 13,
-                        fontWeight: 700,
-                        border: 'none',
-                        cursor: 'pointer',
+                        marginTop: 18,
+                        backgroundColor: '#F9FAFB',
+                        borderRadius: 10,
+                        padding: '14px 18px',
+                        border: '1px solid #F3F4F6',
                         display: 'flex',
-                        alignItems: 'center',
+                        flexDirection: 'column',
                         gap: 8,
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                        transition: 'all 0.15s ease-in-out',
                       }}
                     >
-                      <span>{isThisPlaying ? '⏸' : '▶'}</span>
-                      <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
-                    </button>
+                      <div style={{ fontSize: 13.5, color: '#1F2937', direction: 'rtl', lineHeight: 1.7, fontWeight: 500 }}>
+                        {currentWork.historicalSignificanceUrdu}
+                      </div>
+                      <div style={{ fontSize: 12.5, color: '#4B5563', lineHeight: 1.5, borderTop: '1px dashed #E5E7EB', paddingTop: 8 }}>
+                        💡 <em>Format:</em> {currentWork.audioFormatDescription} • {currentWork.significanceEnglish}
+                      </div>
+                    </div>
                   </div>
 
-                  <p style={{
-                    fontSize: 13.5,
-                    color: '#374151',
-                    margin: '12px 0 0',
-                    lineHeight: 1.6,
-                    backgroundColor: '#F9FAFB',
-                    padding: '10px 14px',
-                    borderRadius: 8,
-                    border: '1px solid #F3F4F6',
-                  }}>
-                    {ep.summary}
-                  </p>
+                  {/* Chapter-by-Chapter Streaming Audio List */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: 0 }}>
+                        سلسلہ وار صوتی ابواب ({currentWork.chapters.length} Chapters & Lessons)
+                      </h3>
+                      <span style={{ fontSize: 12, color: '#6B7280' }}>
+                        Click ▶ to stream instantly or choose from YouTube
+                      </span>
+                    </div>
+
+                    {currentWork.chapters.map((ch) => {
+                      const isThisPlaying = currentTrack?.audioUrl === ch.audioStreamUrl && isPlaying;
+                      const eraColors: Record<string, { bg: string; border: string; text: string; labelUrdu: string }> = {
+                        PRE_PROPHETHOOD: { bg: '#FEF3C7', border: '#FDE68A', text: '#92400E', labelUrdu: 'قبل از نبوت' },
+                        MAKKAN: { bg: '#E0E7FF', border: '#C7D2FE', text: '#3730A3', labelUrdu: 'دورِ مکی' },
+                        MADINAN: { bg: '#DCFCE7', border: '#BBF7D0', text: '#166534', labelUrdu: 'دورِ مدنی' },
+                        SHAMAIL_HUQUQ: { bg: '#FFE4E6', border: '#FECDD3', text: '#9F1239', labelUrdu: 'شمائل و حقوقِ نبوی' },
+                      };
+                      const eraBadge = eraColors[ch.era] ?? {
+                        bg: '#DCFCE7',
+                        border: '#BBF7D0',
+                        text: '#166534',
+                        labelUrdu: 'دورِ مدنی',
+                      };
+
+                      return (
+                        <div
+                          key={ch.chapterNumber}
+                          style={{
+                            backgroundColor: '#FFFFFF',
+                            borderRadius: 14,
+                            padding: 20,
+                            border: isThisPlaying ? '2px solid #059669' : '1px solid #E5E7EB',
+                            boxShadow: isThisPlaying ? '0 4px 16px rgba(5, 150, 105, 0.14)' : '0 1px 3px rgba(0,0,0,0.04)',
+                            transition: 'all 0.15s ease',
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+                            <div style={{ flex: '1 1 450px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                                <span
+                                  style={{
+                                    fontSize: 10.5,
+                                    fontWeight: 700,
+                                    color: eraBadge.text,
+                                    backgroundColor: eraBadge.bg,
+                                    border: `1px solid ${eraBadge.border}`,
+                                    padding: '2px 8px',
+                                    borderRadius: 6,
+                                  }}
+                                >
+                                  باب {ch.chapterNumber} • {eraBadge.labelUrdu} ({ch.era})
+                                </span>
+                                <span style={{ fontSize: 11, color: '#6B7280', fontWeight: 600 }}>
+                                  ⏱️ {Math.round(ch.durationSeconds / 60)} منٹ
+                                </span>
+                              </div>
+
+                              <h4 style={{ fontSize: 16, fontWeight: 800, color: '#111827', margin: '4px 0 2px' }}>
+                                {ch.titleEnglish}
+                              </h4>
+                              <div style={{ fontSize: 15, fontWeight: 700, color: '#047857', direction: 'rtl', marginTop: 2 }}>
+                                {ch.titleUrdu}
+                              </div>
+                            </div>
+
+                            {/* Action Buttons: Play/Pause & YouTube */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                              <button
+                                onClick={() =>
+                                  handlePlayAudio(
+                                    `${currentWorkShortEn} — Ch ${ch.chapterNumber}: ${ch.titleEnglish}`,
+                                    ch.audioStreamUrl,
+                                    `${currentWorkShortUr} • ${ch.titleUrdu}`,
+                                    currentWork.author,
+                                    'ur'
+                                  )
+                                }
+                                style={{
+                                  padding: '9px 18px',
+                                  borderRadius: 8,
+                                  backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
+                                  color: '#FFFFFF',
+                                  fontSize: 13,
+                                  fontWeight: 700,
+                                  border: 'none',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 6,
+                                  boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
+                                  transition: 'all 0.15s ease',
+                                }}
+                              >
+                                <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
+                                <span>{isThisPlaying ? 'Pause Audio' : `Play (${Math.round(ch.durationSeconds / 60)}m)`}</span>
+                              </button>
+
+                              <a
+                                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                                  ch.youtubeSearchTerm || `${currentWork.author} ${ch.titleUrdu}`
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  padding: '8px 12px',
+                                  borderRadius: 8,
+                                  backgroundColor: '#F3F4F6',
+                                  color: '#374151',
+                                  fontSize: 12,
+                                  fontWeight: 600,
+                                  border: '1px solid #D1D5DB',
+                                  textDecoration: 'none',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 4,
+                                }}
+                              >
+                                <span>📺 یوٹیوب ↗</span>
+                              </a>
+                            </div>
+                          </div>
+
+                          {/* Dual Summaries */}
+                          <div
+                            style={{
+                              marginTop: 12,
+                              backgroundColor: '#F9FAFB',
+                              padding: '10px 14px',
+                              borderRadius: 8,
+                              border: '1px solid #F3F4F6',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: 4,
+                            }}
+                          >
+                            <div style={{ fontSize: 13, color: '#374151', direction: 'rtl', lineHeight: 1.6 }}>
+                              {ch.summaryUrdu}
+                            </div>
+                            <div style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.4, borderTop: '1px dashed #E5E7EB', paddingTop: 4 }}>
+                              {ch.summaryEnglish}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               );
-            })}
+            })()}
+
+            {/* TIMELINE VIEW (Chronological Episodes) */}
+            {sirahViewMode === 'TIMELINE' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div
+                  style={{
+                    backgroundColor: '#EFF6FF',
+                    border: '1px solid #BFDBFE',
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    fontSize: 13,
+                    color: '#1E40AF',
+                  }}
+                >
+                  🕌 <strong>Authentic Chronological Sirah Lessons (خلاصۂ سیرت النبی):</strong> High-fidelity audio lessons detailing the life and milestones of the Prophet Muhammad ﷺ from birth through the Madinan era.
+                </div>
+
+                {audioStreamingEngine.sirahEpisodes.map((ep) => {
+                  const isThisPlaying = currentTrack?.audioUrl === ep.audioUrl && isPlaying;
+
+                  return (
+                    <div
+                      key={ep.episodeNumber}
+                      style={{
+                        backgroundColor: '#FFFFFF',
+                        borderRadius: 14,
+                        padding: 22,
+                        border: isThisPlaying ? '2px solid #059669' : '1px solid #E5E7EB',
+                        boxShadow: isThisPlaying ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
+                        <div>
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: '#047857',
+                              backgroundColor: '#F0FDF4',
+                              padding: '3px 10px',
+                              borderRadius: 6,
+                              border: '1px solid #A7F3D0',
+                            }}
+                          >
+                            EPISODE {ep.episodeNumber} • {ep.era}
+                          </span>
+                          <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: '8px 0 2px' }}>
+                            {ep.titleEnglish}
+                          </h3>
+                          <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', fontWeight: 600, marginTop: 4 }}>
+                            {ep.titleUrdu}
+                          </div>
+                          <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
+                            📅 {ep.yearHijriOrGregorian}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() =>
+                            handlePlayAudio(
+                              `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
+                              ep.audioUrl,
+                              `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`,
+                              'Authentic Seerat-un-Nabi Audio',
+                              'ur'
+                            )
+                          }
+                          style={{
+                            padding: '10px 20px',
+                            borderRadius: 8,
+                            backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
+                            color: '#FFF',
+                            fontSize: 13,
+                            fontWeight: 700,
+                            border: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                            transition: 'all 0.15s ease-in-out',
+                          }}
+                        >
+                          <span>{isThisPlaying ? '⏸' : '▶'}</span>
+                          <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
+                        </button>
+                      </div>
+
+                      <p
+                        style={{
+                          fontSize: 13.5,
+                          color: '#374151',
+                          margin: '12px 0 0',
+                          lineHeight: 1.6,
+                          backgroundColor: '#F9FAFB',
+                          padding: '10px 14px',
+                          borderRadius: 8,
+                          border: '1px solid #F3F4F6',
+                        }}
+                      >
+                        {ep.summary}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </main>
