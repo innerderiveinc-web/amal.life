@@ -16,12 +16,13 @@ export const CloudSyncBadge: React.FC<CloudSyncBadgeProps> = ({ currentLang }) =
   }, []);
 
   const handleClick = () => {
-    if (syncState.status === 'LOCAL_ONLY') {
-      window.dispatchEvent(new CustomEvent('amal-open-auth'));
-    } else {
-      cloudSyncService.pushSync();
-    }
+    cloudSyncService.pushSync();
   };
+
+  // When not authenticated (LOCAL_ONLY), hide the badge so the ribbon displays a single clean "Sign In" button
+  if (syncState.status === 'LOCAL_ONLY') {
+    return null;
+  }
 
   const isUrdu = currentLang === 'ur';
 
@@ -39,13 +40,6 @@ export const CloudSyncBadge: React.FC<CloudSyncBadgeProps> = ({ currentLang }) =
     bg = 'rgba(59, 130, 246, 0.15)';
     border = 'rgba(96, 165, 250, 0.3)';
     color = '#93C5FD';
-  } else if (syncState.status === 'LOCAL_ONLY') {
-    icon = '📱';
-    label = isUrdu ? 'مقامی ڈیوائس' : 'On-Device';
-    title = 'Saved strictly on this browser. Sign in to enable cross-device cloud sync.';
-    bg = 'rgba(255, 255, 255, 0.06)';
-    border = 'rgba(255, 255, 255, 0.12)';
-    color = '#D1D5DB';
   } else if (syncState.status === 'OFFLINE') {
     icon = '📡';
     label = isUrdu ? 'آف لائن' : 'Offline';

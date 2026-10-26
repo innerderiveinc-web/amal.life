@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { showAmalToast } from '../components/Toast';
-import { api } from '../lib/api';
+import { api, AmalApiClient } from '../lib/api';
 
 export interface AuthUser {
   id: string;
@@ -59,7 +59,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const saved = localStorage.getItem('amal_auth_user');
         if (saved) {
-          setUser(JSON.parse(saved));
+          const parsed = JSON.parse(saved);
+          setUser(parsed);
+          if (!parsed.isGuest) {
+            const token = localStorage.getItem('amal_token') || `token_${parsed.id}`;
+            AmalApiClient.setAuthToken(token);
+          }
         } else {
           // Default to Sovereign Guest Mode
           setUser(DEFAULT_GUEST_USER);
@@ -76,6 +81,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(u);
     if (typeof window !== 'undefined') {
       localStorage.setItem('amal_auth_user', JSON.stringify(u));
+      if (!u.isGuest) {
+        const token = `token_${u.id}_${Date.now()}`;
+        AmalApiClient.setAuthToken(token);
+      } else {
+        AmalApiClient.setAuthToken('');
+      }
+      window.dispatchEvent(new CustomEvent('amal_auth_changed', { detail: u }));
     }
   };
 
@@ -155,6 +167,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = () => {
     saveUser(DEFAULT_GUEST_USER);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('amal_last_cloud_sync');
+      localStorage.removeItem('amal_token');
+    }
     showAmalToast('Signed out. Local guest mode restored.', 'info');
   };
 
