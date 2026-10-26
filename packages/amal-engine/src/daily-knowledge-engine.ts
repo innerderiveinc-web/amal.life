@@ -43,6 +43,7 @@ export interface DailyDua {
   englishTranslation: string;
   timeSlot: 'MORNING' | 'EVENING' | 'NIGHT' | 'FRIDAY' | 'GENERAL';
   virtue: string;
+  audioUrl?: string;
 }
 
 export interface DailyHikmat {
@@ -227,6 +228,7 @@ export class DailyKnowledgeEngine {
       englishTranslation: 'Our Lord, give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire.',
       timeSlot: 'GENERAL',
       virtue: 'Recited abundantly in Tawaf, Tashahhud, and daily supplication; covers all physical and spiritual needs.',
+      audioUrl: 'https://everyayah.com/data/Husary_128kbps/002201.mp3',
     },
     {
       sourceBook: 'Hisn al-Muslim (Morning Supplications)',
@@ -249,6 +251,7 @@ export class DailyKnowledgeEngine {
       englishTranslation: 'Our Lord, let not our hearts deviate after You have guided us, and grant us from Yourself mercy. Indeed, You are the Bestower.',
       timeSlot: 'GENERAL',
       virtue: 'Protects the heart from spiritual doubts, hypocrisy, and deviation from the straight path.',
+      audioUrl: 'https://everyayah.com/data/Husary_128kbps/003008.mp3',
     },
     {
       sourceBook: 'Hisn al-Muslim (Evening Adhkar)',
@@ -266,11 +269,12 @@ export class DailyKnowledgeEngine {
       titleArabic: 'الصلاة والسلام على شفيع المذنبين ﷺ',
       titleUrdu: 'بارگاہِ رسالت ﷺ میں سلام و درود',
       titleEnglish: 'Salawat & Salam upon the Messenger of Allah ﷺ',
-      arabicText: 'الصَّلَاةُ وَالسَّلَامُ عَلَيْكَ يَا سَيِّدِي يَا رَسُولَ اللَّهِ، وَعَلَى آلِكَ وَأَصْحَابِكَ يَا شَفِيعَ الْمُذْنِبِينَ',
-      urduTranslation: 'مصطفیٰ جانِ رحمت پہ لاکھوں سلام • شمعِ بزمِ ہدایت پہ لاکھوں سلام • یا رسول اللہ آپ پر اور آپ کی آل و اصحاب پر رحمت و سلامتی ہو۔',
-      englishTranslation: 'Peace and blessings be upon you, O Master, O Messenger of Allah, and upon your Noble Household and Companions.',
+      arabicText: 'إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا',
+      urduTranslation: 'بیشک اللہ اور اس کے فرشتے نبی پر درود بھیجتے ہیں۔ اے ایمان والو! تم بھی ان پر درود و سلام بھیجو۔',
+      englishTranslation: 'Indeed, Allah and His angels confer blessings upon the Prophet. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.',
       timeSlot: 'FRIDAY',
       virtue: 'Whoever sends one blessing upon the Prophet ﷺ, Allah sends ten blessings upon him (Sahih Muslim). Special on Jumu\'ah.',
+      audioUrl: 'https://everyayah.com/data/Husary_128kbps/033056.mp3',
     },
   ];
 
@@ -330,18 +334,30 @@ export class DailyKnowledgeEngine {
   /**
    * Generates the automated daily knowledge broadcast
    */
-  public static getBroadcast(date: Date = new Date()): DailyKnowledgeBroadcast {
+  public static getBroadcast(
+    date: Date = new Date(),
+    slotOverride?: 'FAJR' | 'CHASHT' | 'DHUHR' | 'ASR' | 'MAGHRIB' | 'ISHA_NIGHT'
+  ): DailyKnowledgeBroadcast {
     const dayOfYear = this.getDayOfYear(date);
     const currentHour = date.getHours();
     const isFriday = date.getDay() === 5;
 
-    let activeTimeSlot: 'FAJR' | 'CHASHT' | 'DHUHR' | 'ASR' | 'MAGHRIB' | 'ISHA_NIGHT' = 'DHUHR';
-    if (currentHour >= 4 && currentHour < 7) activeTimeSlot = 'FAJR';
-    else if (currentHour >= 7 && currentHour < 12) activeTimeSlot = 'CHASHT';
-    else if (currentHour >= 12 && currentHour < 16) activeTimeSlot = 'DHUHR';
-    else if (currentHour >= 16 && currentHour < 18) activeTimeSlot = 'ASR';
-    else if (currentHour >= 18 && currentHour < 20) activeTimeSlot = 'MAGHRIB';
-    else activeTimeSlot = 'ISHA_NIGHT';
+    let activeTimeSlot: 'FAJR' | 'CHASHT' | 'DHUHR' | 'ASR' | 'MAGHRIB' | 'ISHA_NIGHT';
+    if (slotOverride) {
+      activeTimeSlot = slotOverride;
+    } else if (currentHour >= 4 && currentHour < 7) {
+      activeTimeSlot = 'FAJR';
+    } else if (currentHour >= 7 && currentHour < 12) {
+      activeTimeSlot = 'CHASHT';
+    } else if (currentHour >= 12 && currentHour < 16) {
+      activeTimeSlot = 'DHUHR';
+    } else if (currentHour >= 16 && currentHour < 18) {
+      activeTimeSlot = 'ASR';
+    } else if (currentHour >= 18 && currentHour < 20) {
+      activeTimeSlot = 'MAGHRIB';
+    } else {
+      activeTimeSlot = 'ISHA_NIGHT';
+    }
 
     // Rotating Ayah
     const ayahIndex = dayOfYear % this.AYAHS_CORPUS.length;

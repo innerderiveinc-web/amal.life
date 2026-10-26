@@ -6,12 +6,14 @@ export interface BroadcastHikmatTabProps {
   hikmat: DailyKnowledgeBroadcast['hikmat'];
   copied: boolean;
   onCopy: (text: string) => void;
+  onMakeCard?: () => void;
 }
 
 export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
   hikmat,
   copied,
   onCopy,
+  onMakeCard,
 }) => {
   return (
     <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
@@ -108,7 +110,29 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
       </div>
 
       {/* Action Footer */}
-      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+        {onMakeCard && (
+          <button
+            onClick={onMakeCard}
+            style={{
+              backgroundColor: '#5B21B6',
+              color: '#FFFFFF',
+              border: 'none',
+              fontSize: 13,
+              fontWeight: 700,
+              padding: '8px 16px',
+              borderRadius: 8,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              cursor: 'pointer',
+              boxShadow: '0 2px 4px rgba(91, 33, 182, 0.2)',
+            }}
+          >
+            <span>📸 حکمت کارڈ بنائیں</span>
+          </button>
+        )}
+
         <Link
           href="/vault"
           style={{

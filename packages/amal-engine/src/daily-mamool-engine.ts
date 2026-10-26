@@ -44,7 +44,10 @@ export class DailyMamoolEngine {
   /**
    * Generates Aaj Ka Mamool based on current hour and prayer schedule
    */
-  public static getMamool(currentHour: number = new Date().getHours()): DailyMamool {
+  public static getMamool(
+    currentHour: number = new Date().getHours(),
+    slotOverride?: 'FAJR' | 'CHASHT' | 'DHUHR' | 'ASR' | 'MAGHRIB' | 'ISHA_NIGHT' | 'JUMUAH'
+  ): DailyMamool {
     const isFriday = new Date().getDay() === 5;
 
     // Default prayer approximations for Karachi/Standard coordinate
@@ -52,7 +55,16 @@ export class DailyMamoolEngine {
     let nextPrayer = 'Dhuhr';
     let minsToNext = 75;
 
-    if (currentHour >= 4 && currentHour < 7) {
+    if (slotOverride) {
+      slot = slotOverride;
+      if (slot === 'FAJR') { nextPrayer = 'Ishraq / Sunrise'; minsToNext = 45; }
+      else if (slot === 'CHASHT') { nextPrayer = 'Dhuhr'; minsToNext = 110; }
+      else if (slot === 'DHUHR') { nextPrayer = 'Asr'; minsToNext = 140; }
+      else if (slot === 'ASR') { nextPrayer = 'Maghrib'; minsToNext = 52; }
+      else if (slot === 'MAGHRIB') { nextPrayer = 'Isha'; minsToNext = 65; }
+      else if (slot === 'ISHA_NIGHT') { nextPrayer = 'Fajr'; minsToNext = 380; }
+      else if (slot === 'JUMUAH') { nextPrayer = 'Asr'; minsToNext = 120; }
+    } else if (currentHour >= 4 && currentHour < 7) {
       slot = 'FAJR';
       nextPrayer = 'Ishraq / Sunrise';
       minsToNext = 45;
@@ -78,7 +90,7 @@ export class DailyMamoolEngine {
       minsToNext = 380;
     }
 
-    if (isFriday && (slot === 'CHASHT' || slot === 'DHUHR')) {
+    if (slot === 'JUMUAH' || (isFriday && !slotOverride && (slot === 'CHASHT' || slot === 'DHUHR'))) {
       return {
         currentSlotNameUrdu: 'جمعۃ المبارک کا مبارک وقت',
         currentSlotNameEnglish: 'Blessed Hours of Jumu\'ah',
