@@ -647,7 +647,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-FIQ-HNF-004': {
     workId: 'CANON-FIQ-HNF-004',
-    verifiedExternalUrl: 'https://archive.org/details/nur-al-idah',
+    verifiedExternalUrl: 'https://archive.org/search?query=nur+al+idah',
     verifiedExternalName: 'Al-Azhar Classical Curriculum (Nur al-Idah)',
     chapters: [
       {
@@ -694,7 +694,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-DUA-005': {
     workId: 'CANON-DUA-005',
-    verifiedExternalUrl: 'https://archive.org/details/dalail-khayrat-al-jazuli',
+    verifiedExternalUrl: 'https://archive.org/search?query=dalail+khayrat+al+jazuli',
     verifiedExternalName: 'Classical Liturgies Archives (Dala\'il al-Khayrat)',
     chapters: [
       {
@@ -719,7 +719,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-TAZ-002': {
     workId: 'CANON-TAZ-002',
-    verifiedExternalUrl: 'https://archive.org/details/bidayat-al-hidayah-ghazali',
+    verifiedExternalUrl: 'https://archive.org/search?query=bidayat+al+hidayah+ghazali',
     verifiedExternalName: 'Classical Ethics Archives (Bidayat al-Hidayah)',
     chapters: [
       {
@@ -742,7 +742,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-AQD-002': {
     workId: 'CANON-AQD-002',
-    verifiedExternalUrl: 'https://archive.org/details/al-fiqh-al-akbar-abu-hanifa',
+    verifiedExternalUrl: 'https://archive.org/search?query=al+fiqh+al+akbar+abu+hanifa',
     verifiedExternalName: 'Sunni Creed Archives (Al-Fiqh al-Akbar)',
     chapters: [
       {
@@ -765,7 +765,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-TAZ-004': {
     workId: 'CANON-TAZ-004',
-    verifiedExternalUrl: 'https://archive.org/details/gulistan-bustan-sadi',
+    verifiedExternalUrl: 'https://archive.org/search?query=gulistan+bustan+sadi',
     verifiedExternalName: 'Classical Ethics Archives (Gulistan & Bustan)',
     chapters: [
       {
@@ -1495,7 +1495,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-TAZ-005': {
     workId: 'CANON-TAZ-005',
-    verifiedExternalUrl: 'https://archive.org/details/futuh-al-ghayb-jilani',
+    verifiedExternalUrl: 'https://archive.org/search?query=futuh+al+ghayb+jilani',
     verifiedExternalName: 'Classical Spiritual Archives (Futuh al-Ghayb - Shaykh Abdul Qadir Jilani)',
     chapters: [
       {
@@ -1586,7 +1586,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-DUA-003': {
     workId: 'CANON-DUA-003',
-    verifiedExternalUrl: 'https://archive.org/details/al-hisn-al-hasin',
+    verifiedExternalUrl: 'https://archive.org/search?query=al+hisn+al+hasin',
     verifiedExternalName: 'Classical Hadith Archives (Al-Hisn al-Hasin - Ibn al-Jazari)',
     chapters: [
       {
@@ -1670,7 +1670,7 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
   // =========================================================================
   'CANON-SIR-MADARIJ': {
     workId: 'CANON-SIR-MADARIJ',
-    verifiedExternalUrl: 'https://archive.org/details/MadarijUnNabuwatUrduComplete',
+    verifiedExternalUrl: 'https://archive.org/search?query=MadarijUnNabuwatUrduComplete',
     verifiedExternalName: 'Al-Maktaba (Madarij-un-Nubuwwah - Shaykh Abd al-Haqq Muhaddith Dehlawi)',
     chapters: [
       {
@@ -2131,7 +2131,7 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-SIR-002': { url: "https://shamela.ws/book/4445", name: "Al-Maktaba al-Shamela (Al-Bidayah wan-Nihayah)" },
   'CANON-SIR-003': { url: "https://shamela.ws/book/10839", name: "Al-Maktaba al-Shamela (Al-Shifa bi-Ta'rif Huquq al-Mustafa)" },
   'CANON-TAZ-001': { url: "https://shamela.ws/book/21650", name: "Al-Maktaba al-Shamela (Ihya 'Ulum al-Din - Imam al-Ghazali)" },
-  'CANON-TAZ-002': { url: "https://archive.org/details/ghunyat-talibeen", name: "Classical Sufism Archives (Al-Ghuniyah - Shaykh Abdul Qadir Jilani)" },
+  'CANON-TAZ-002': { url: "https://archive.org/search?query=ghunyat+talibeen", name: "Classical Sufism Archives (Al-Ghuniyah - Shaykh Abdul Qadir Jilani)" },
   'CANON-TAZ-003': { url: "https://shamela.ws/book/21703", name: "Al-Maktaba al-Shamela (Al-Risalah al-Qushayriyyah / Ayyuhal Walad)" },
   'CANON-TAZ-004': { url: "https://shamela.ws/book/22756", name: "Al-Maktaba al-Shamela (Al-Hikam al-Ata'iyyah)" },
 
@@ -2153,12 +2153,12 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-SIR-004': { url: "https://www.dawateislami.net/bookslibrary/ur/seerat-e-mustafa", name: "Maktaba-tul-Madina (Sirat-e-Mustafa - Allama Abdul Mustafa Azmi)" },
   'CANON-SIR-005': { url: "https://shamela.ws/book/11133", name: "Al-Maktaba al-Shamela (Ar-Raheeq al-Makhtum / Dala'il al-Nubuwwah)" },
   'CANON-SIR-006': { url: "https://shamela.ws/book/10840", name: "Al-Maktaba al-Shamela (Al-Mawahib al-Ladunniyyah - Al-Qastallani)" },
-  'CANON-SIR-MADARIJ': { url: "https://archive.org/details/MadarijUnNabuwatUrduComplete", name: "Al-Maktaba (Madarij-un-Nubuwwah - Shaykh Abd al-Haqq Muhaddith Dehlawi)" },
-  'CANON-TAZ-005': { url: "https://archive.org/details/futuh-al-ghayb-jilani", name: "Classical Spiritual Archives (Futuh al-Ghayb - Shaykh Abdul Qadir Jilani)" },
+  'CANON-SIR-MADARIJ': { url: "https://archive.org/search?query=MadarijUnNabuwatUrduComplete", name: "Al-Maktaba (Madarij-un-Nubuwwah - Shaykh Abd al-Haqq Muhaddith Dehlawi)" },
+  'CANON-TAZ-005': { url: "https://archive.org/search?query=futuh+al+ghayb+jilani", name: "Classical Spiritual Archives (Futuh al-Ghayb - Shaykh Abdul Qadir Jilani)" },
   'CANON-TAZ-006': { url: "https://shamela.ws/book/21651", name: "Al-Maktaba al-Shamela (Qut al-Qulub - Abu Talib al-Makki)" },
   'CANON-TAZ-007': { url: "https://shamela.ws/book/21704", name: "Al-Maktaba al-Shamela (Awarif al-Ma'arif - Al-Suhrawardi)" },
   'CANON-TAZ-008': { url: "https://shamela.ws/book/828", name: "Al-Maktaba al-Shamela (Hilyat al-Awliya - Abu Nu'aym)" },
-  'CANON-TAZ-009': { url: "https://archive.org/details/masnavi-rumi-complete", name: "Classical Persian Heritage (Masnavi Ma'navi - Mawlana Rumi)" },
+  'CANON-TAZ-009': { url: "https://archive.org/search?query=masnavi+rumi+complete", name: "Classical Persian Heritage (Masnavi Ma'navi - Mawlana Rumi)" },
 
   // Wave 3
   'CANON-MST-001': { url: "https://shamela.ws/book/22757", name: "Al-Maktaba al-Shamela (Muqaddimat Ibn al-Salah)" },
@@ -2172,7 +2172,7 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-QWD-002': { url: "https://shamela.ws/book/21595", name: "Al-Maktaba al-Shamela (Al-Ashbah wa al-Naza'ir - Al-Suyuti al-Shafi'i)" },
   'CANON-QWD-003': { url: "https://shamela.ws/book/21596", name: "Al-Maktaba al-Shamela (Qawa'id al-Ahkam - Izz al-Din ibn 'Abd al-Salam)" },
   'CANON-AQD-001': { url: "https://shamela.ws/book/22760", name: "Al-Maktaba al-Shamela (Al-Aqidah al-Tahawiyyah)" },
-  'CANON-AQD-002': { url: "https://archive.org/details/fiqh-akbar-abu-hanifa", name: "Classical Aqeedah Archives (Al-Fiqh al-Akbar - Abu Hanifah)" },
+  'CANON-AQD-002': { url: "https://archive.org/search?query=fiqh+akbar+abu+hanifa", name: "Classical Aqeedah Archives (Al-Fiqh al-Akbar - Abu Hanifah)" },
   'CANON-AQD-003': { url: "https://shamela.ws/book/22761", name: "Al-Maktaba al-Shamela (Al-Ibanah - Abu al-Hasan al-Ash'ari)" },
   'CANON-AQD-004': { url: "https://shamela.ws/book/22762", name: "Al-Maktaba al-Shamela (Kitab al-Tawhid - Al-Maturidi)" },
   'CANON-AQD-005': { url: "https://shamela.ws/book/22763", name: "Al-Maktaba al-Shamela (Jawharat al-Tawhid - Al-Laqqani)" },
@@ -2187,11 +2187,11 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   // Treasures
   'CANON-DUA-001': { url: "https://quran.com", name: "Quran.com (The 40 Rabbana Duas of the Quran)" },
   'CANON-DUA-002': { url: "https://sunnah.com/hisn", name: "Sunnah.com (Hisn al-Muslim)" },
-  'CANON-DUA-003': { url: "https://archive.org/details/al-hisn-al-hasin", name: "Classical Hadith Archives (Al-Hisn al-Hasin - Ibn al-Jazari)" },
-  'CANON-DUA-004': { url: "https://archive.org/details/munajat-maqbool", name: "Classical Duas Archive (Munajat-e-Maqbool - Mawlana Thanvi)" },
-  'CANON-DUA-005': { url: "https://archive.org/details/dalail-al-khayrat-jazuli", name: "Classical Salawat Archives (Dala'il al-Khayrat - Al-Jazuli)" },
-  'CANON-DUA-006': { url: "https://archive.org/details/manzil-shifa-hizb-bahr", name: "Classical Awrad Archives (Manzil al-Shifa & Hizb al-Bahr)" },
-  'CANON-DEV-001': { url: "https://archive.org/details/qasida-burda-busiri", name: "Classical Devotional Archives (Qasidah al-Burdah - Al-Busiri)" },
+  'CANON-DUA-003': { url: "https://archive.org/search?query=al+hisn+al+hasin", name: "Classical Hadith Archives (Al-Hisn al-Hasin - Ibn al-Jazari)" },
+  'CANON-DUA-004': { url: "https://archive.org/search?query=munajat+maqbool", name: "Classical Duas Archive (Munajat-e-Maqbool - Mawlana Thanvi)" },
+  'CANON-DUA-005': { url: "https://archive.org/search?query=dalail+al+khayrat+jazuli", name: "Classical Salawat Archives (Dala'il al-Khayrat - Al-Jazuli)" },
+  'CANON-DUA-006': { url: "https://archive.org/search?query=manzil+shifa+hizb+bahr", name: "Classical Awrad Archives (Manzil al-Shifa & Hizb al-Bahr)" },
+  'CANON-DEV-001': { url: "https://archive.org/search?query=qasida+burda+busiri", name: "Classical Devotional Archives (Qasidah al-Burdah - Al-Busiri)" },
   'CANON-DEV-002': { url: "https://www.dawateislami.net/bookslibrary/ur/hadaiq-e-bakhshish", name: "Maktaba-tul-Madina (Hadaiq-e-Bakhshish / Salam-e-Raza)" },
   'CANON-HAD-040': { url: "https://sunnah.com/nawawi40", name: "Sunnah.com (Al-Arba'un al-Nawawiyyah)" },
   'CANON-FIQ-HNF-001': { url: "https://www.dawateislami.net/bookslibrary/ur/bahar-e-shariat", name: "Maktaba-tul-Madina / Al-Majlis al-Madinat-ul-Ilmiyyah (Bahar-e-Shariat 3 Vols)" },
@@ -2226,7 +2226,7 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-SIR-009': { url: "https://shamela.ws/book/11133", name: "Al-Maktaba al-Shamela (Ar-Raheeq al-Makhtum)" },
   'CANON-TAZ-012': { url: "https://shamela.ws/book/21654", name: "Maktaba-tul-Madina / Shamela (Bidayat al-Hidayah - Imam al-Ghazali)" },
   'CANON-TAZ-016': { url: "https://shamela.ws/book/21703", name: "Maktaba-tul-Madina / Shamela (Ayyuhal Walad - Imam al-Ghazali)" },
-  'CANON-TAZ-017': { url: "https://archive.org/details/gulistan-bostan-sadi", name: "Classical Heritage (Hikayat-e-Sa'di - Sa'di Shirazi)" },
+  'CANON-TAZ-017': { url: "https://archive.org/search?query=gulistan+bostan+sadi", name: "Classical Heritage (Hikayat-e-Sa'di - Sa'di Shirazi)" },
   'CANON-FIQ-MAL-006': { url: "https://shamela.ws/book/7522", name: "Al-Maktaba al-Shamela (Matn Ibn Ashir)" },
   'CANON-FIQ-MAL-007': { url: "https://shamela.ws/book/7521", name: "Al-Maktaba al-Shamela (Risalah Ibn Abi Zayd al-Qayrawani)" },
   'CANON-HAD-013': { url: "https://shamela.ws/book/1329", name: "Al-Maktaba al-Shamela (Sunan al-Darimi)" },

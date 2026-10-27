@@ -32,21 +32,50 @@ export function SistersLibraryTab({
   const [readingBook, setReadingBook] = useState<SanctuaryBook | null>(null);
   const [activeChapter, setActiveChapter] = useState<SanctuaryBookChapter | null>(null);
 
-  // Filtered Books
+  // Filtered Books with cross-category & Arabic/Urdu normalized search
   const filteredBooks = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    const normQ = q
+      .replace(/[\u064B-\u065F\u0670]/g, '')
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/[يىئ]/g, 'ی')
+      .replace(/ك/g, 'ک')
+      .replace(/[ةهہ]/g, 'ہ')
+      .replace(/[ؤ]/g, 'و')
+      .trim();
+
     return WOMEN_CLASSICAL_CANON.filter((book) => {
-      const matchesCategory =
-        selectedBookCategory === 'all' || book.category === selectedBookCategory;
-      const q = searchQuery.toLowerCase();
-      const matchesQuery =
-        !searchQuery ||
-        book.titleUrdu.includes(searchQuery) ||
-        book.titleEnglish.toLowerCase().includes(q) ||
-        book.authorUrdu.includes(searchQuery) ||
-        book.authorEnglish.toLowerCase().includes(q) ||
-        book.descriptionUrdu.includes(searchQuery) ||
-        book.descriptionEnglish.toLowerCase().includes(q);
-      return matchesCategory && matchesQuery;
+      if (q.length > 0) {
+        const titleUrduNorm = (book.titleUrdu || '')
+          .replace(/[\u064B-\u065F\u0670]/g, '')
+          .replace(/[أإآٱ]/g, 'ا')
+          .replace(/[يىئ]/g, 'ی')
+          .replace(/ك/g, 'ک')
+          .replace(/[ةهہ]/g, 'ہ');
+        const descUrduNorm = (book.descriptionUrdu || '')
+          .replace(/[\u064B-\u065F\u0670]/g, '')
+          .replace(/[أإآٱ]/g, 'ا')
+          .replace(/[يىئ]/g, 'ی')
+          .replace(/ك/g, 'ک')
+          .replace(/[ةهہ]/g, 'ہ');
+
+        const matchesQuery =
+          titleUrduNorm.includes(normQ) ||
+          book.titleEnglish.toLowerCase().includes(q) ||
+          book.titleUrdu.includes(searchQuery) ||
+          book.authorUrdu.includes(searchQuery) ||
+          book.authorEnglish.toLowerCase().includes(q) ||
+          descUrduNorm.includes(normQ) ||
+          book.descriptionEnglish.toLowerCase().includes(q) ||
+          normQ.split(' ').every((tok) => titleUrduNorm.includes(tok) || book.titleEnglish.toLowerCase().includes(tok));
+
+        if (!matchesQuery) return false;
+      } else {
+        const matchesCategory =
+          selectedBookCategory === 'all' || book.category === selectedBookCategory;
+        if (!matchesCategory) return false;
+      }
+      return true;
     });
   }, [selectedBookCategory, searchQuery]);
 

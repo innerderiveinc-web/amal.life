@@ -89,31 +89,62 @@ export default function LibraryPage() {
     { key: 'HISTORY', label: 'Tarikh & Tabaqat' },
   ];
 
-  const filteredWorks = MASTER_CANONICAL_CORPUS.filter((item) => {
-    if (selectedDiscipline === 'DUA' && !item.work_id.includes('DUA') && !item.work_id.includes('DEV')) return false;
-    if (selectedDiscipline === 'HANAFI' && item.discipline !== 'HANAFI_FIQH') return false;
-    if (selectedDiscipline === 'MALIKI' && item.discipline !== 'MALIKI_FIQH') return false;
-    if (selectedDiscipline === 'SHAFII' && item.discipline !== 'SHAFII_FIQH') return false;
-    if (selectedDiscipline === 'HANBALI' && item.discipline !== 'HANBALI_FIQH') return false;
-    if (selectedDiscipline === 'SIRAH' && item.discipline !== 'SIRAH' && item.discipline !== 'SHAMAIL') return false;
-    if (selectedDiscipline === 'TAZKIYAH' && item.discipline !== 'TAZKIYAH' && item.discipline !== 'SPIRITUAL_HERITAGE') return false;
-    if (selectedDiscipline === 'USUL' && item.discipline !== 'USUL_AL_FIQH') return false;
-    if (selectedDiscipline === 'MUSTALAH' && item.discipline !== 'MUSTALAH_AL_HADITH') return false;
-    if (selectedDiscipline === 'HISTORY' && item.discipline !== 'ISLAMIC_HISTORY') return false;
-    if (selectedDiscipline === 'HADITH' && item.discipline !== 'HADITH') return false;
-    if (selectedDiscipline === 'TAFSIR' && item.discipline !== 'TAFSIR') return false;
-    if (selectedDiscipline === 'AQEEDAH' && item.discipline !== 'AQEEDAH') return false;
+  const normalizeSearchText = (str: string): string => {
+    if (!str) return '';
+    return str
+      .toLowerCase()
+      .replace(/[\u064B-\u065F\u0670]/g, '') // Arabic diacritics / Tashkeel
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/[يىئ]/g, 'ی')
+      .replace(/ك/g, 'ک')
+      .replace(/[ةهہ]/g, 'ہ')
+      .replace(/[ؤ]/g, 'و')
+      .replace(/[\s\-_]+/g, ' ')
+      .trim();
+  };
 
+  const filteredWorks = MASTER_CANONICAL_CORPUS.filter((item) => {
     if (search.trim()) {
-      const q = search.toLowerCase();
-      const match =
-        item.title_arabic.includes(search) ||
-        item.title_transliterated.toLowerCase().includes(q) ||
-        item.author_name.toLowerCase().includes(q) ||
-        item.edition_publisher.toLowerCase().includes(q) ||
-        item.critical_editor_muhaqqiq.toLowerCase().includes(q);
-      if (!match) return false;
+      const normSearch = normalizeSearchText(search);
+      const q = search.toLowerCase().trim();
+
+      const normAr = normalizeSearchText(item.title_arabic);
+      const normTrans = item.title_transliterated.toLowerCase();
+      const normAuthor = item.author_name.toLowerCase();
+      const normPub = item.edition_publisher.toLowerCase();
+      const normEditor = item.critical_editor_muhaqqiq.toLowerCase();
+      const normId = item.work_id.toLowerCase();
+
+      const matchesSearch =
+        normAr.includes(normSearch) ||
+        normTrans.includes(q) ||
+        normAuthor.includes(q) ||
+        normPub.includes(q) ||
+        normEditor.includes(q) ||
+        normId.includes(q) ||
+        // Check partial transliteration matches (e.g. "bukhari", "nawawi", "quran", "tafsir", "sirah")
+        normSearch.split(' ').every((token) => normTrans.includes(token) || normAuthor.includes(token) || normAr.includes(token));
+
+      if (!matchesSearch) return false;
     }
+
+    // Only apply discipline filter if user has not entered a cross-cutting search query
+    if (!search.trim()) {
+      if (selectedDiscipline === 'DUA' && !item.work_id.includes('DUA') && !item.work_id.includes('DEV')) return false;
+      if (selectedDiscipline === 'HANAFI' && item.discipline !== 'HANAFI_FIQH') return false;
+      if (selectedDiscipline === 'MALIKI' && item.discipline !== 'MALIKI_FIQH') return false;
+      if (selectedDiscipline === 'SHAFII' && item.discipline !== 'SHAFII_FIQH') return false;
+      if (selectedDiscipline === 'HANBALI' && item.discipline !== 'HANBALI_FIQH') return false;
+      if (selectedDiscipline === 'SIRAH' && item.discipline !== 'SIRAH' && item.discipline !== 'SHAMAIL') return false;
+      if (selectedDiscipline === 'TAZKIYAH' && item.discipline !== 'TAZKIYAH' && item.discipline !== 'SPIRITUAL_HERITAGE') return false;
+      if (selectedDiscipline === 'USUL' && item.discipline !== 'USUL_AL_FIQH') return false;
+      if (selectedDiscipline === 'MUSTALAH' && item.discipline !== 'MUSTALAH_AL_HADITH') return false;
+      if (selectedDiscipline === 'HISTORY' && item.discipline !== 'ISLAMIC_HISTORY') return false;
+      if (selectedDiscipline === 'HADITH' && item.discipline !== 'HADITH') return false;
+      if (selectedDiscipline === 'TAFSIR' && item.discipline !== 'TAFSIR') return false;
+      if (selectedDiscipline === 'AQEEDAH' && item.discipline !== 'AQEEDAH') return false;
+    }
+
     return true;
   });
 
