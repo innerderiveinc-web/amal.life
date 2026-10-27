@@ -535,7 +535,7 @@ export class AudioStreamingEngine {
           durationSeconds: 1800,
           summaryUrdu: 'نبی پاک ﷺ کے مبارک آباؤ اجداد، مکہ میں ظہور اور دائی حلیمہ کے گھر برکات۔',
           summaryEnglish: 'Pure prophetic lineage and early childhood miracles.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_01.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+1+wiladat',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 1 wiladat ancestry',
         },
         {
@@ -546,7 +546,7 @@ export class AudioStreamingEngine {
           durationSeconds: 1800,
           summaryUrdu: 'حجرِ اسود کی تنصیب پر حکمت آمیز فیصلہ اور قریش کے دلوں پر امانت کی دھاک۔',
           summaryEnglish: 'Arbitration during the Ka\'bah reconstruction and marriage to Sayyidah Khadijah.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_02.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+2+kabah+khadijah',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 2 kabah nikah Khadijah',
         },
         {
@@ -557,7 +557,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2400,
           summaryUrdu: 'مکہ کے سخت حالات، چاند کے دو ٹکڑے ہونے کا معجزہ اور جبرائیل کے ہمراہ معراج۔',
           summaryEnglish: 'Splitting of the moon miracle, steadfastness in Ta\'if, and the ascension.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_03.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+3+wahi+miraj',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 3 wahi miraj taif',
         },
         {
@@ -568,7 +568,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2100,
           summaryUrdu: 'طلع البدر علینا کے نغمات، حضرت ابو ایوب انصاری کا گھر اور مسجد کی تعمیر۔',
           summaryEnglish: 'The joyful welcome by the Ansar and building the Prophet’s Mosque.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_04.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+4+hijrat+madinah',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 4 hijrat madinah ansar',
         },
         {
@@ -579,7 +579,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2700,
           summaryUrdu: 'مجاہدینِ اسلام کی شجاعت، سید الشہداء حمزہ کی قربانی اور باطل کا پسپا ہونا۔',
           summaryEnglish: 'Defending the Islamic sanctuary in the epic encounters of Badr, Uhud, and Khandaq.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_05.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+5+ghazwat+badr',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 5 ghazwat badr uhud ahzab',
         },
         {
@@ -590,7 +590,7 @@ export class AudioStreamingEngine {
           durationSeconds: 2100,
           summaryUrdu: 'ازواجِ مطہرات کی پاکیزہ زندگی، حسنین کریمین اور سیدہ فاطمہ زہرا کا مقام۔',
           summaryEnglish: 'The sublime status of the Mothers of the Believers and the Ahl al-Bayt.',
-          audioStreamUrl: 'https://archive.org/download/Seerat-e-Mustafa_Azami/Seerat-e-Mustafa_06.mp3',
+          audioStreamUrl: 'https://www.youtube.com/results?search_query=Seerat+e+Mustafa+Abdul+Mustafa+Azami+chapter+6+ahle+bayt',
           youtubeSearchTerm: 'Seerat e Mustafa Abdul Mustafa Azami chapter 6 azwaj ahle bayt',
         },
       ],

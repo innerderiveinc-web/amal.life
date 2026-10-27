@@ -144,7 +144,25 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  const isDirectAudioUrl = (url: string): boolean => {
+    if (!url) return false;
+    if (url.includes('youtube.com') || url.includes('youtu.be')) return false;
+    if (url.startsWith('blob:') || url.startsWith('data:')) return true;
+    if (url.includes('archive.org/download') || url.includes('quranicaudio.com') || url.includes('everyayah.com') || url.includes('audio.amal.life')) return true;
+    return /\.(mp3|m4a|wav|aac|ogg)(\?.*)?$/i.test(url);
+  };
+
   const playTrack = (track: AudioTrack) => {
+    // If track is an external video / dars link (e.g. YouTube), open externally and never feed to <audio>
+    if (!isDirectAudioUrl(track.audioUrl)) {
+      if (typeof window !== 'undefined') {
+        window.open(track.audioUrl, '_blank', 'noopener,noreferrer');
+        showAmalToast(`Opening external lecture / dars: ${track.title}`, 'info');
+      }
+      setIsPlaying(false);
+      return;
+    }
+
     setCurrentTrack(track);
     setIsSpeechFallback(false);
     setCurrentTime(0);
@@ -164,7 +182,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         audio.pause();
 
         const sources = [resolvedUrl, ...(track.mirrors || [])].filter(
-          (s): s is string => Boolean(s) && typeof s === 'string'
+          (s): s is string => Boolean(s) && typeof s === 'string' && isDirectAudioUrl(s)
         );
 
         const setupMediaSession = () => {
@@ -204,13 +222,23 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const attemptPlaySource = (srcIndex: number) => {
           if (srcIndex >= sources.length) {
             console.warn('All audio stream sources failed for track:', track.title);
-            triggerSpeechFallback(track);
+            setIsPlaying(false);
+            if (track.arabicSnippet && track.arabicSnippet.length <= 150) {
+              triggerSpeechFallback(track);
+            } else {
+              showAmalToast('Audio stream unavailable. Please check your internet connection or CDN.', 'warning');
+            }
             return;
           }
 
           const currentSrc = sources[srcIndex];
-          if (!currentSrc) {
-            triggerSpeechFallback(track);
+          if (!currentSrc || !isDirectAudioUrl(currentSrc)) {
+            if (srcIndex + 1 < sources.length) {
+              attemptPlaySource(srcIndex + 1);
+            } else {
+              setIsPlaying(false);
+              showAmalToast('Audio stream unavailable. Please check connection.', 'warning');
+            }
             return;
           }
           audio.src = currentSrc;
@@ -223,7 +251,12 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
               showAmalToast(`Network slow/throttled. Switching to audio mirror ${srcIndex + 2}...`, 'info');
               attemptPlaySource(srcIndex + 1);
             } else {
-              triggerSpeechFallback(track);
+              setIsPlaying(false);
+              if (track.arabicSnippet && track.arabicSnippet.length <= 150) {
+                triggerSpeechFallback(track);
+              } else {
+                showAmalToast('Audio stream unavailable on this network. Please try another mirror or check connection.', 'warning');
+              }
             }
           };
 

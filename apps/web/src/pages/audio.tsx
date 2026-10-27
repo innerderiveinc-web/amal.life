@@ -465,32 +465,56 @@ export default function AudioPage() {
                       <span>Arabic Dars ({Math.round(ch.durationSeconds / 60)} min)</span>
                     </button>
 
-                    <button
-                      onClick={() => handlePlayAudio(
-                        `${ch.titleEnglish} (Urdu Sharh)`,
-                        ch.audioUrlUrduSharh,
-                        'اردو شرح و دراساتِ نبوی • Seerat-un-Nabi',
-                        'Urdu Scholarly Dars',
-                        'ur'
-                      )}
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: 8,
-                        backgroundColor: isUrduPlaying ? '#DC2626' : '#065F46',
-                        color: '#FFF',
-                        fontSize: 13,
-                        fontWeight: 700,
-                        border: 'none',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 6,
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <span>{isUrduPlaying ? '⏸ Pause' : '▶ Play'}</span>
-                      <span>Urdu Sharh (30 min)</span>
-                    </button>
+                    {ch.audioUrlUrduSharh.includes('youtube.com') ? (
+                      <a
+                        href={ch.audioUrlUrduSharh}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          padding: '8px 16px',
+                          borderRadius: 8,
+                          backgroundColor: '#065F46',
+                          color: '#FFF',
+                          fontSize: 13,
+                          fontWeight: 700,
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                          transition: 'all 0.15s ease',
+                        }}
+                      >
+                        <span>📺 اردو شرح (YouTube Dars) ↗</span>
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => handlePlayAudio(
+                          `${ch.titleEnglish} (Urdu Sharh)`,
+                          ch.audioUrlUrduSharh,
+                          'اردو شرح و دراساتِ نبوی • Seerat-un-Nabi',
+                          'Urdu Scholarly Dars',
+                          'ur'
+                        )}
+                        style={{
+                          padding: '8px 16px',
+                          borderRadius: 8,
+                          backgroundColor: isUrduPlaying ? '#DC2626' : '#065F46',
+                          color: '#FFF',
+                          fontSize: 13,
+                          fontWeight: 700,
+                          border: 'none',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        }}
+                      >
+                        <span>{isUrduPlaying ? '⏸ Pause' : '▶ Play'}</span>
+                        <span>Urdu Sharh (30 min)</span>
+                      </button>
+                    )}
 
                     <button
                       onClick={() => setExpandedChapter(isExpanded ? null : ch.chapterNumber)}
@@ -852,15 +876,18 @@ export default function AudioPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: 0 }}>
-                        سلسلہ وار صوتی ابواب ({currentWork.chapters.length} Chapters & Lessons)
+                        سلسلہ وار ابواب و دروس ({currentWork.chapters.length} Chapters & Lessons)
                       </h3>
                       <span style={{ fontSize: 12, color: '#6B7280' }}>
-                        Click ▶ to stream instantly or choose from YouTube
+                        {currentWork.id === 'RAHEEQ'
+                          ? 'Click ▶ to stream instantly with player & offline mode'
+                          : '📺 Click to watch/listen verified scholarly Dars series'}
                       </span>
                     </div>
 
                     {currentWork.chapters.map((ch) => {
-                      const isThisPlaying = currentTrack?.audioUrl === ch.audioStreamUrl && isPlaying;
+                      const isExternalDars = ch.audioStreamUrl.includes('youtube.com') || ch.audioStreamUrl.includes('youtu.be') || !ch.audioStreamUrl.endsWith('.mp3');
+                      const isThisPlaying = !isExternalDars && currentTrack?.audioUrl === ch.audioStreamUrl && isPlaying;
                       const eraColors: Record<string, { bg: string; border: string; text: string; labelUrdu: string }> = {
                         PRE_PROPHETHOOD: { bg: '#FEF3C7', border: '#FDE68A', text: '#92400E', labelUrdu: 'قبل از نبوت' },
                         MAKKAN: { bg: '#E0E7FF', border: '#C7D2FE', text: '#3730A3', labelUrdu: 'دورِ مکی' },
@@ -915,101 +942,153 @@ export default function AudioPage() {
                               </div>
                             </div>
 
-                            {/* Action Buttons: Play/Pause, Offline Save & YouTube */}
+                            {/* Action Buttons: Either Direct Audio Player or Verified Dars Link */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                              <button
-                                onClick={() =>
-                                  handlePlayAudio(
-                                    `${currentWorkShortEn} — Ch ${ch.chapterNumber}: ${ch.titleEnglish}`,
-                                    ch.audioStreamUrl,
-                                    `${currentWorkShortUr} • ${ch.titleUrdu}`,
-                                    currentWork.author,
-                                    'ur'
-                                  )
-                                }
-                                style={{
-                                  padding: '9px 18px',
-                                  borderRadius: 8,
-                                  backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
-                                  color: '#FFFFFF',
-                                  fontSize: 13,
-                                  fontWeight: 700,
-                                  border: 'none',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 6,
-                                  boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
-                                  transition: 'all 0.15s ease',
-                                }}
-                              >
-                                <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
-                                <span>{isThisPlaying ? 'Pause Audio' : `Play (${Math.round(ch.durationSeconds / 60)}m)`}</span>
-                              </button>
+                              {isExternalDars ? (
+                                <>
+                                  <a
+                                    href={ch.audioStreamUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      padding: '9px 18px',
+                                      borderRadius: 8,
+                                      backgroundColor: '#DC2626',
+                                      color: '#FFFFFF',
+                                      fontSize: 13,
+                                      fontWeight: 700,
+                                      textDecoration: 'none',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 6,
+                                      boxShadow: '0 2px 6px rgba(220, 38, 38, 0.22)',
+                                      transition: 'all 0.15s ease',
+                                    }}
+                                  >
+                                    <span>📺 یوٹیوب درس سنیں</span>
+                                    <span>Watch / Listen Dars ({Math.round(ch.durationSeconds / 60)}m) ↗</span>
+                                  </a>
 
-                              {/* Offline Airplane Mode Save Button */}
-                              {(() => {
-                                const isOfflineCached = cachedUrls.has(ch.audioStreamUrl);
-                                const isDownloading = downloadingUrl === ch.audioStreamUrl;
-
-                                return (
+                                  {currentWork.externalSources?.officialPortalUrl && (
+                                    <a
+                                      href={currentWork.externalSources.officialPortalUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{
+                                        padding: '8px 12px',
+                                        borderRadius: 8,
+                                        backgroundColor: '#F3F4F6',
+                                        color: '#374151',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        border: '1px solid #D1D5DB',
+                                        textDecoration: 'none',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 4,
+                                      }}
+                                    >
+                                      <span>📖 باضابطہ پورٹل ↗</span>
+                                    </a>
+                                  )}
+                                </>
+                              ) : (
+                                <>
                                   <button
                                     onClick={() =>
-                                      handleToggleOffline(
-                                        ch.audioStreamUrl,
+                                      handlePlayAudio(
                                         `${currentWorkShortEn} — Ch ${ch.chapterNumber}: ${ch.titleEnglish}`,
-                                        `${currentWorkShortUr} • ${ch.titleUrdu}`
+                                        ch.audioStreamUrl,
+                                        `${currentWorkShortUr} • ${ch.titleUrdu}`,
+                                        currentWork.author,
+                                        'ur'
                                       )
                                     }
                                     style={{
-                                      padding: '8px 12px',
+                                      padding: '9px 18px',
                                       borderRadius: 8,
-                                      backgroundColor: isOfflineCached ? '#ECFDF5' : '#F9FAFB',
-                                      color: isOfflineCached ? '#065F46' : '#4B5563',
-                                      fontSize: 12,
+                                      backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
+                                      color: '#FFFFFF',
+                                      fontSize: 13,
                                       fontWeight: 700,
-                                      border: isOfflineCached ? '1px solid #A7F3D0' : '1px solid #D1D5DB',
+                                      border: 'none',
                                       cursor: 'pointer',
                                       display: 'flex',
                                       alignItems: 'center',
-                                      gap: 4,
+                                      gap: 6,
+                                      boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
                                       transition: 'all 0.15s ease',
                                     }}
-                                    title={isOfflineCached ? 'Click to delete from offline cache' : 'Download for offline airplane mode'}
                                   >
-                                    <span>
-                                      {isDownloading
-                                        ? `⏳ ${downloadProgress}%`
-                                        : isOfflineCached
-                                        ? '🟢 آف لائن محفوظ'
-                                        : '⬇️ Save Offline'}
-                                    </span>
+                                    <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
+                                    <span>{isThisPlaying ? 'Pause Audio' : `Play (${Math.round(ch.durationSeconds / 60)}m)`}</span>
                                   </button>
-                                );
-                              })()}
 
-                              <a
-                                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
-                                  ch.youtubeSearchTerm || `${currentWork.author} ${ch.titleUrdu}`
-                                )}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                  padding: '8px 12px',
-                                  borderRadius: 8,
-                                  backgroundColor: '#F3F4F6',
-                                  color: '#374151',
-                                  fontSize: 12,
-                                  fontWeight: 600,
-                                  border: '1px solid #D1D5DB',
-                                  textDecoration: 'none',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 4,
-                                }}
-                              >
-                                <span>📺 یوٹیوب ↗</span>
-                              </a>
+                                  {/* Offline Airplane Mode Save Button */}
+                                  {(() => {
+                                    const isOfflineCached = cachedUrls.has(ch.audioStreamUrl);
+                                    const isDownloading = downloadingUrl === ch.audioStreamUrl;
+
+                                    return (
+                                      <button
+                                        onClick={() =>
+                                          handleToggleOffline(
+                                            ch.audioStreamUrl,
+                                            `${currentWorkShortEn} — Ch ${ch.chapterNumber}: ${ch.titleEnglish}`,
+                                            `${currentWorkShortUr} • ${ch.titleUrdu}`
+                                          )
+                                        }
+                                        style={{
+                                          padding: '8px 12px',
+                                          borderRadius: 8,
+                                          backgroundColor: isOfflineCached ? '#ECFDF5' : '#F9FAFB',
+                                          color: isOfflineCached ? '#065F46' : '#4B5563',
+                                          fontSize: 12,
+                                          fontWeight: 700,
+                                          border: isOfflineCached ? '1px solid #A7F3D0' : '1px solid #D1D5DB',
+                                          cursor: 'pointer',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 4,
+                                          transition: 'all 0.15s ease',
+                                        }}
+                                        title={isOfflineCached ? 'Click to delete from offline cache' : 'Download for offline airplane mode'}
+                                      >
+                                        <span>
+                                          {isDownloading
+                                            ? `⏳ ${downloadProgress}%`
+                                            : isOfflineCached
+                                            ? '🟢 آف لائن محفوظ'
+                                            : '⬇️ Save Offline'}
+                                        </span>
+                                      </button>
+                                    );
+                                  })()}
+
+                                  <a
+                                    href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                                      ch.youtubeSearchTerm || `${currentWork.author} ${ch.titleUrdu}`
+                                    )}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      padding: '8px 12px',
+                                      borderRadius: 8,
+                                      backgroundColor: '#F3F4F6',
+                                      color: '#374151',
+                                      fontSize: 12,
+                                      fontWeight: 600,
+                                      border: '1px solid #D1D5DB',
+                                      textDecoration: 'none',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 4,
+                                    }}
+                                  >
+                                    <span>📺 یوٹیوب ↗</span>
+                                  </a>
+                                </>
+                              )}
                             </div>
                           </div>
 
