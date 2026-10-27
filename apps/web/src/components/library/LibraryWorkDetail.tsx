@@ -115,9 +115,11 @@ export function LibraryWorkDetail({
           <span>
             {isQuran
               ? 'Read All 114 Surahs In-App (قرآنِ مجید کی مکمل ۱۱۴ سورتیں پڑھیں)'
+              : localPdf
+              ? `📖 مطالعہ شروع کریں: منتخب اسباق و مکمل کتاب (Read Lessons & Full Edition — ${selectedWork.title_transliterated})`
               : hasSelectedInAppChapters
-              ? `Read Selected Chapters In-App (مطالعہ شروع کریں — ${selectedWork.title_transliterated})`
-              : `View Manuscript Credentials & Source (علمی اسناد و ماخذ — ${selectedWork.title_transliterated})`}
+              ? `📖 مطالعہ شروع کریں: منتخب اسباق و ماخذ (Read Lessons & Source — ${selectedWork.title_transliterated})`
+              : `🏛️ علمی اسناد و ماخذ کا معائنہ کریں (View Manuscript Credentials — ${selectedWork.title_transliterated})`}
           </span>
         </button>
 
@@ -147,7 +149,7 @@ export function LibraryWorkDetail({
           >
             <span>📥</span>
             <span>
-              Download / Read Full Official PDF ({localPdf.fileSizeBytes}) · مکمل پی ڈی ایف
+              مکمل پی ڈی ایف ڈاؤن لوڈ / الگ ونڈو میں مطالعہ کریں ({localPdf.fileSizeBytes}) · Download Full PDF
             </span>
           </a>
         )}

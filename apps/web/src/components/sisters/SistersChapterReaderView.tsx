@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SanctuaryBook, SanctuaryBookChapter } from '../../lib/women-sanctuary-data';
 
 export interface SistersChapterReaderViewProps {
@@ -26,6 +26,8 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
   onGenerateChapterCard,
   onOpenSanad,
 }) => {
+  const [showFullPdf, setShowFullPdf] = useState(false);
+
   return (
     <div
       style={{
@@ -44,6 +46,8 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
           marginBottom: 16,
           borderBottom: '1px solid #F3F4F6',
           paddingBottom: 12,
+          flexWrap: 'wrap',
+          gap: 10,
         }}
       >
         <button
@@ -60,39 +64,122 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
         >
           {isUrdu ? '← کتاب کی فہرست پر واپس' : '← Back to Book Index'}
         </button>
-        <span
-          style={{
-            backgroundColor: '#ECFDF5',
-            color: '#064E3B',
-            padding: '4px 10px',
-            borderRadius: 8,
-            fontSize: 12,
-            fontWeight: 700,
-          }}
-        >
-          {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
-        </span>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {readingBook.pdfUrl && (
+            <button
+              onClick={() => setShowFullPdf(!showFullPdf)}
+              style={{
+                backgroundColor: showFullPdf ? '#064E3B' : '#FEF3C7',
+                color: showFullPdf ? '#FFFFFF' : '#92400E',
+                border: '1px solid #FDE68A',
+                padding: '6px 14px',
+                borderRadius: 8,
+                fontSize: 12.5,
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              {showFullPdf
+                ? isUrdu
+                  ? '📜 منتخب باب دیکھیں'
+                  : '📜 View Chapter Notes'
+                : isUrdu
+                ? '📑 مکمل اصل پی ڈی ایف کھولیں'
+                : '📑 View Full Original PDF'}
+            </button>
+          )}
+
+          <span
+            style={{
+              backgroundColor: '#ECFDF5',
+              color: '#064E3B',
+              padding: '4px 10px',
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 700,
+            }}
+          >
+            {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
+          </span>
+        </div>
       </div>
 
-      <h2
-        style={{
-          fontSize: 22,
-          fontWeight: 800,
-          color: '#064E3B',
-          marginBottom: 8,
-        }}
-      >
-        {isUrdu ? activeChapter.titleUrdu : activeChapter.titleEnglish}
-      </h2>
-      <p
-        style={{
-          fontSize: 14,
-          color: '#6B7280',
-          marginBottom: 16,
-        }}
-      >
-        {isUrdu ? activeChapter.titleEnglish : activeChapter.titleUrdu} • {activeChapter.hadithOrFiqhReference}
-      </p>
+      {showFullPdf && readingBook.pdfUrl ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#F8FAFC',
+              padding: '10px 16px',
+              borderRadius: 10,
+              border: '1px solid #E2E8F0',
+            }}
+          >
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>
+              📑 مکمل اصل مطبوعہ نسخہ — {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
+            </div>
+            <a
+              href={readingBook.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#064E3B',
+                textDecoration: 'none',
+                padding: '4px 10px',
+                borderRadius: 6,
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+              }}
+            >
+              ↗ الگ ونڈو میں کھولیں
+            </a>
+          </div>
+
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '750px',
+              borderRadius: 12,
+              overflow: 'hidden',
+              border: '1px solid #CBD5E1',
+            }}
+          >
+            <iframe
+              src={`${readingBook.pdfUrl}#toolbar=1&navpanes=1`}
+              width="100%"
+              height="100%"
+              style={{ border: 'none' }}
+              title={readingBook.titleEnglish}
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          <h2
+            style={{
+              fontSize: 22,
+              fontWeight: 800,
+              color: '#064E3B',
+              marginBottom: 8,
+            }}
+          >
+            {isUrdu ? activeChapter.titleUrdu : activeChapter.titleEnglish}
+          </h2>
+          <p
+            style={{
+              fontSize: 14,
+              color: '#6B7280',
+              marginBottom: 16,
+            }}
+          >
+            {isUrdu ? activeChapter.titleEnglish : activeChapter.titleUrdu} • {activeChapter.hadithOrFiqhReference}
+          </p>
 
       <div
         style={{
@@ -192,6 +279,8 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
           </button>
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 };

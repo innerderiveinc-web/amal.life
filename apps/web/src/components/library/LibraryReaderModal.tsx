@@ -77,7 +77,7 @@ export function LibraryReaderModal({
       <div
         style={{
           width: '95%',
-          maxWidth: 900,
+          maxWidth: 1040,
           backgroundColor:
             readerTheme === 'SEPIA'
               ? '#FBF0D9'
