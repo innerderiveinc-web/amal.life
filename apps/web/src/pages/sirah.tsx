@@ -226,30 +226,30 @@ export default function SirahPage() {
                       onClick={() => setExpandedQA((prev) => ({ ...prev, [qa.qNum]: !prev[qa.qNum] }))}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
-                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                          <span style={{ fontSize: 12, fontWeight: 800, color: '#047857', backgroundColor: '#DCFCE7', padding: '2px 6px', borderRadius: 6 }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                          <span style={{ fontSize: 13, fontWeight: 800, color: '#047857', backgroundColor: '#DCFCE7', padding: '3px 8px', borderRadius: 6 }}>
                             س {qa.qNum}
                           </span>
                           <div>
-                            <div style={{ fontSize: 14, fontWeight: 700, color: '#1E293B', direction: 'rtl', textAlign: 'right' }}>
+                            <div style={{ fontSize: 16.5, fontWeight: 800, color: '#0F172A', direction: 'rtl', textAlign: 'right', lineHeight: 1.4, fontFamily: 'var(--font-urdu), serif' }}>
                               {qa.qUrdu}
                             </div>
-                            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+                            <div style={{ fontSize: 13.5, color: '#475569', marginTop: 3 }}>
                               {qa.qEn}
                             </div>
                           </div>
                         </div>
-                        <span style={{ fontSize: 13, color: '#047857', fontWeight: 800 }}>
+                        <span style={{ fontSize: 14, color: '#047857', fontWeight: 800 }}>
                           {isOpen ? '▲' : '▼'}
                         </span>
                       </div>
 
                       {isOpen && (
-                        <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #BBF7D0' }}>
-                          <div style={{ fontSize: 13.5, fontWeight: 700, color: '#065F46', direction: 'rtl', textAlign: 'right', lineHeight: 1.6 }}>
+                        <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid #BBF7D0' }}>
+                          <div style={{ fontSize: 16, fontWeight: 700, color: '#065F46', direction: 'rtl', textAlign: 'right', lineHeight: 1.7, fontFamily: 'var(--font-urdu), serif' }}>
                             <strong>جواب:</strong> {qa.aUrdu}
                           </div>
-                          <div style={{ fontSize: 12, color: '#334155', marginTop: 4, lineHeight: 1.5 }}>
+                          <div style={{ fontSize: 13.5, color: '#1E293B', marginTop: 6, lineHeight: 1.6 }}>
                             <strong>Answer:</strong> {qa.aEn}
                           </div>
                         </div>

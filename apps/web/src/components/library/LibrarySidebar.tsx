@@ -136,12 +136,12 @@ export function LibrarySidebar({
                   alignItems: 'flex-start',
                 }}
               >
-                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
                   <span
                     style={{
-                      fontSize: 10,
+                      fontSize: 11.5,
                       fontWeight: 700,
-                      padding: '2px 8px',
+                      padding: '3px 9px',
                       borderRadius: 10,
                       backgroundColor: '#E2E8F0',
                       color: '#334155',
@@ -151,9 +151,9 @@ export function LibrarySidebar({
                   </span>
                   <span
                     style={{
-                      fontSize: 9,
+                      fontSize: 11,
                       fontWeight: 700,
-                      padding: '2px 6px',
+                      padding: '3px 8px',
                       borderRadius: 8,
                       backgroundColor: isWorkQuran
                         ? '#DCFCE7'
@@ -174,7 +174,7 @@ export function LibrarySidebar({
                       : 'VERIFIED REPOSITORY'}
                   </span>
                 </div>
-                <span style={{ fontSize: 11, color: '#888' }}>
+                <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
                   {work.author_death_hijri > 0
                     ? `${work.author_death_hijri} AH`
                     : 'Revelation'}
@@ -184,22 +184,23 @@ export function LibrarySidebar({
               <div
                 style={{
                   fontFamily: 'var(--font-arabic), serif',
-                  fontSize: 16,
-                  fontWeight: 700,
-                  margin: '6px 0 2px',
+                  fontSize: 18.5,
+                  fontWeight: 800,
+                  margin: '8px 0 3px',
                   direction: 'rtl',
                   textAlign: 'right',
                   color: '#0F172A',
+                  lineHeight: 1.4,
                 }}
               >
                 {work.title_arabic}
               </div>
 
-              <div style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>
+              <div style={{ fontSize: 14.5, fontWeight: 700, color: '#1E293B', lineHeight: 1.3 }}>
                 {work.title_transliterated}
               </div>
 
-              <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
+              <div style={{ fontSize: 13, color: '#475569', marginTop: 3 }}>
                 {work.author_name}
               </div>
             </div>

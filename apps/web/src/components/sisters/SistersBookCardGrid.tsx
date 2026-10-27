@@ -131,9 +131,9 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   style={{
                     backgroundColor: '#FEF3C7',
                     color: '#92400E',
-                    padding: '2px 8px',
+                    padding: '3px 10px',
                     borderRadius: 6,
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: 700,
                   }}
                 >
@@ -143,10 +143,10 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   style={{
                     backgroundColor: '#ECFDF5',
                     color: '#064E3B',
-                    padding: '2px 8px',
+                    padding: '3px 10px',
                     borderRadius: 6,
-                    fontSize: 11,
-                    fontWeight: 600,
+                    fontSize: 12,
+                    fontWeight: 700,
                   }}
                 >
                   {book.sanadGrade}
@@ -155,39 +155,40 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
 
               <h3
                 style={{
-                  margin: '4px 0',
-                  fontSize: 19,
+                  margin: '6px 0 2px',
+                  fontSize: 20.5,
                   fontWeight: 800,
                   color: '#064E3B',
+                  lineHeight: 1.3,
                 }}
               >
                 {isUrdu ? book.titleUrdu : book.titleEnglish}
               </h3>
               <div
                 style={{
-                  fontSize: 12,
+                  fontSize: 14,
                   color: '#059669',
-                  fontWeight: 600,
-                  marginBottom: 4,
+                  fontWeight: 700,
+                  marginBottom: 6,
                 }}
               >
                 {isUrdu ? book.titleEnglish : book.titleUrdu}
               </div>
               <div
                 style={{
-                  fontSize: 13,
-                  color: '#4B5563',
+                  fontSize: 14,
+                  color: '#334155',
                   fontWeight: 600,
-                  marginBottom: 8,
+                  marginBottom: 10,
                 }}
               >
                 {isUrdu ? book.authorUrdu : book.authorEnglish} ({book.authorEra})
               </div>
               <p
                 style={{
-                  fontSize: 13,
-                  color: '#6B7280',
-                  lineHeight: 1.6,
+                  fontSize: 14,
+                  color: '#475569',
+                  lineHeight: 1.65,
                   marginBottom: 16,
                   display: '-webkit-box',
                   WebkitLineClamp: 3,

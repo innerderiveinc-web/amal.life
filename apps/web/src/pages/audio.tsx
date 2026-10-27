@@ -679,7 +679,7 @@ export default function AudioPage() {
                           onClick={() => setSelectedSirahWorkId(work.id)}
                           style={{
                             textAlign: 'left',
-                            padding: '16px',
+                            padding: '18px',
                             borderRadius: 14,
                             border: isSelected ? '2px solid #059669' : '1px solid #E5E7EB',
                             backgroundColor: isSelected ? '#F0FDF4' : '#FFFFFF',
@@ -688,32 +688,32 @@ export default function AudioPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             height: '100%',
-                            minHeight: 155,
+                            minHeight: 175,
                             transition: 'all 0.15s ease',
                           }}
                         >
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
-                            <span style={{ fontSize: 24 }}>{icons[work.id] || '📖'}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 12 }}>
+                            <span style={{ fontSize: 26 }}>{icons[work.id] || '📖'}</span>
                             <span
                               style={{
-                                fontSize: 11,
+                                fontSize: 12,
                                 fontWeight: 700,
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: 8,
                                 backgroundColor: isSelected ? '#059669' : '#F1F5F9',
-                                color: isSelected ? '#FFFFFF' : '#475569',
+                                color: isSelected ? '#FFFFFF' : '#334155',
                               }}
                             >
                               {work.chapters.length} ابواب / دروس
                             </span>
                           </div>
-                          <div style={{ fontSize: 15, fontWeight: 800, color: isSelected ? '#065F46' : '#111827', lineHeight: 1.3 }}>
+                          <div style={{ fontSize: 16.5, fontWeight: 800, color: isSelected ? '#065F46' : '#0F172A', lineHeight: 1.3 }}>
                             {shortEn}
                           </div>
-                          <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? '#047857' : '#374151', direction: 'rtl', textAlign: 'right', marginTop: 4 }}>
+                          <div style={{ fontSize: 16.5, fontWeight: 800, color: isSelected ? '#047857' : '#1E293B', direction: 'rtl', textAlign: 'right', marginTop: 6, fontFamily: 'var(--font-urdu), serif' }}>
                             {shortUr}
                           </div>
-                          <div style={{ fontSize: 11, color: '#64748B', marginTop: 'auto', paddingTop: 8 }}>
+                          <div style={{ fontSize: 13, color: isSelected ? '#065F46' : '#475569', marginTop: 'auto', paddingTop: 10, fontWeight: 500 }}>
                             {shortAuth}
                           </div>
                         </button>
@@ -949,29 +949,29 @@ export default function AudioPage() {
                         >
                           <div className="chapter-card-header">
                             <div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
                                 <span
                                   style={{
-                                    fontSize: 10.5,
+                                    fontSize: 12,
                                     fontWeight: 700,
                                     color: eraBadge.text,
                                     backgroundColor: eraBadge.bg,
                                     border: `1px solid ${eraBadge.border}`,
-                                    padding: '2px 8px',
+                                    padding: '3px 10px',
                                     borderRadius: 6,
                                   }}
                                 >
                                   باب {ch.chapterNumber} • {eraBadge.labelUrdu} ({ch.era})
                                 </span>
-                                <span style={{ fontSize: 11, color: '#6B7280', fontWeight: 600 }}>
+                                <span style={{ fontSize: 12.5, color: '#4B5563', fontWeight: 600 }}>
                                   ⏱️ {Math.round(ch.durationSeconds / 60)} منٹ
                                 </span>
                               </div>
 
-                              <h4 style={{ fontSize: 16, fontWeight: 800, color: '#111827', margin: '4px 0 2px', lineHeight: 1.3 }}>
+                              <h4 style={{ fontSize: 17.5, fontWeight: 800, color: '#0F172A', margin: '4px 0 3px', lineHeight: 1.3 }}>
                                 {ch.titleEnglish}
                               </h4>
-                              <div style={{ fontSize: 15, fontWeight: 700, color: '#047857', direction: 'rtl', textAlign: 'right', marginTop: 2 }}>
+                              <div style={{ fontSize: 17.5, fontWeight: 800, color: '#047857', direction: 'rtl', textAlign: 'right', marginTop: 4, fontFamily: 'var(--font-urdu), serif' }}>
                                 {ch.titleUrdu}
                               </div>
                             </div>

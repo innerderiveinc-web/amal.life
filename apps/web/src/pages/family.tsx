@@ -356,21 +356,21 @@ export default function FamilyPage() {
               >
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                    <h4 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#065F46' }}>
+                    <h4 style={{ margin: 0, fontSize: 17.5, fontWeight: 800, color: '#065F46', direction: 'rtl', textAlign: 'right', fontFamily: 'var(--font-urdu), serif', lineHeight: 1.4 }}>
                       {story.title}
                     </h4>
-                    <span style={{ fontSize: 10, color: '#92400E', backgroundColor: '#FEF3C7', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+                    <span style={{ fontSize: 11.5, color: '#92400E', backgroundColor: '#FEF3C7', padding: '3px 8px', borderRadius: 4, fontWeight: 700, whiteSpace: 'nowrap' }}>
                       {story.reference}
                     </span>
                   </div>
-                  <div style={{ fontSize: 12, color: '#6B7280', fontStyle: 'italic', marginBottom: 10 }}>
+                  <div style={{ fontSize: 13, color: '#4B5563', fontStyle: 'italic', marginBottom: 10 }}>
                     {story.titleEn}
                   </div>
-                  <p style={{ fontSize: 13, color: '#374151', lineHeight: 1.6, marginBottom: 12 }}>
+                  <p style={{ fontSize: 14.5, color: '#1F2937', lineHeight: 1.75, marginBottom: 14, direction: 'rtl', textAlign: 'right', fontFamily: 'var(--font-urdu), serif' }}>
                     {story.content}
                   </p>
                 </div>
-                <div style={{ backgroundColor: '#F0FDF4', padding: '8px 10px', borderRadius: 6, fontSize: 11, color: '#166534', border: '1px solid #BBF7D0' }}>
+                <div style={{ backgroundColor: '#F0FDF4', padding: '10px 12px', borderRadius: 8, fontSize: 13, color: '#166534', border: '1px solid #BBF7D0', direction: 'rtl', textAlign: 'right', lineHeight: 1.5 }}>
                   <strong>سبق و نصیحت:</strong> {story.lesson}
                 </div>
               </div>
