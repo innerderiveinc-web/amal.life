@@ -371,34 +371,49 @@ export default function AudioPage() {
                     boxShadow: (isArabicPlaying || isUrduPlaying) ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
+                  <div className="chapter-card-header" style={{ marginBottom: 12 }}>
                     <div>
-                      <div style={{ fontWeight: 800, fontSize: 17, color: '#1B4332' }}>
+                      <h3 style={{ fontWeight: 800, fontSize: 17, color: '#111827', margin: 0, lineHeight: 1.3 }}>
                         {ch.titleEnglish}
-                      </div>
-                      <div style={{ fontSize: 15, color: '#047857', direction: 'rtl', marginTop: 4, fontFamily: 'Traditional Arabic, Amiri, serif', fontWeight: 700 }}>
+                      </h3>
+                      <div style={{ fontSize: 16, color: '#047857', direction: 'rtl', textAlign: 'right', marginTop: 4, fontFamily: 'Traditional Arabic, Amiri, serif', fontWeight: 700 }}>
                         {ch.titleArabic}
                       </div>
-                      <div style={{ fontSize: 13, color: '#4B5563', marginTop: 4 }}>
+                      <div style={{ fontSize: 13.5, color: '#374151', direction: 'rtl', textAlign: 'right', marginTop: 4, fontWeight: 600 }}>
                         {ch.titleUrdu}
                       </div>
                     </div>
 
-                    <span style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      backgroundColor: '#ECFDF5',
-                      color: '#065F46',
-                      padding: '4px 10px',
-                      borderRadius: 12,
-                      border: '1px solid #A7F3D0',
-                    }}>
-                      {ch.hadithCount} Prophetic Reports
-                    </span>
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <span style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        backgroundColor: '#ECFDF5',
+                        color: '#065F46',
+                        padding: '4px 10px',
+                        borderRadius: 8,
+                        border: '1px solid #A7F3D0',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        باب {ch.chapterNumber}
+                      </span>
+                      <span style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        backgroundColor: '#FEF3C7',
+                        color: '#92400E',
+                        padding: '4px 10px',
+                        borderRadius: 8,
+                        border: '1px solid #FDE68A',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {ch.hadithCount} احادیث و روایات
+                      </span>
+                    </div>
                   </div>
 
                   {ch.narrator && (
-                    <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 12 }}>
+                    <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 12, direction: 'rtl', textAlign: 'right' }}>
                       <strong>راوی (Narrator):</strong> {ch.narrator}
                     </div>
                   )}
@@ -437,7 +452,7 @@ export default function AudioPage() {
                   )}
 
                   {/* Audio Controls */}
-                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                  <div className="chapter-actions-group">
                     <button
                       onClick={() => handlePlayAudio(
                         `${ch.titleEnglish} (Arabic Matn & Dars)`,
@@ -645,13 +660,7 @@ export default function AudioPage() {
               return (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                   {/* Master Works Selector Grid */}
-                  <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                      gap: 12,
-                    }}
-                  >
+                  <div className="master-works-grid">
                     {audioStreamingEngine.sirahMasterWorks.map((work) => {
                       const isSelected = work.id === selectedSirahWorkId;
                       const icons: Record<string, string> = {
@@ -670,40 +679,41 @@ export default function AudioPage() {
                           onClick={() => setSelectedSirahWorkId(work.id)}
                           style={{
                             textAlign: 'left',
-                            padding: '14px 16px',
-                            borderRadius: 12,
+                            padding: '16px',
+                            borderRadius: 14,
                             border: isSelected ? '2px solid #059669' : '1px solid #E5E7EB',
                             backgroundColor: isSelected ? '#F0FDF4' : '#FFFFFF',
-                            boxShadow: isSelected ? '0 4px 12px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.04)',
+                            boxShadow: isSelected ? '0 4px 14px rgba(5, 150, 105, 0.14)' : '0 1px 3px rgba(0,0,0,0.04)',
                             cursor: 'pointer',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 4,
+                            height: '100%',
+                            minHeight: 155,
                             transition: 'all 0.15s ease',
                           }}
                         >
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span style={{ fontSize: 22 }}>{icons[work.id] || '📖'}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
+                            <span style={{ fontSize: 24 }}>{icons[work.id] || '📖'}</span>
                             <span
                               style={{
-                                fontSize: 10.5,
+                                fontSize: 11,
                                 fontWeight: 700,
-                                padding: '2px 8px',
-                                borderRadius: 12,
-                                backgroundColor: isSelected ? '#059669' : '#F3F4F6',
-                                color: isSelected ? '#FFFFFF' : '#4B5563',
+                                padding: '3px 8px',
+                                borderRadius: 8,
+                                backgroundColor: isSelected ? '#059669' : '#F1F5F9',
+                                color: isSelected ? '#FFFFFF' : '#475569',
                               }}
                             >
                               {work.chapters.length} ابواب / دروس
                             </span>
                           </div>
-                          <div style={{ fontSize: 15, fontWeight: 800, color: isSelected ? '#065F46' : '#111827', marginTop: 4 }}>
+                          <div style={{ fontSize: 15, fontWeight: 800, color: isSelected ? '#065F46' : '#111827', lineHeight: 1.3 }}>
                             {shortEn}
                           </div>
-                          <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? '#047857' : '#374151', direction: 'rtl' }}>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? '#047857' : '#374151', direction: 'rtl', textAlign: 'right', marginTop: 4 }}>
                             {shortUr}
                           </div>
-                          <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
+                          <div style={{ fontSize: 11, color: '#64748B', marginTop: 'auto', paddingTop: 8 }}>
                             {shortAuth}
                           </div>
                         </button>
@@ -734,9 +744,9 @@ export default function AudioPage() {
                       }}
                     />
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
-                      <div style={{ flex: '1 1 500px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                    <div className="hero-card-grid">
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
                           <span
                             style={{
                               fontSize: 11,
@@ -765,19 +775,19 @@ export default function AudioPage() {
                           </span>
                         </div>
 
-                        <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111827', margin: '4px 0 2px' }}>
+                        <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111827', margin: '4px 0 2px', lineHeight: 1.25 }}>
                           {currentWork.titleEnglish}
                         </h2>
-                        <div style={{ fontSize: 18, fontWeight: 800, color: '#065F46', direction: 'rtl', marginTop: 4 }}>
+                        <div style={{ fontSize: 18, fontWeight: 800, color: '#065F46', direction: 'rtl', textAlign: 'right', marginTop: 4 }}>
                           {currentWork.titleArabic} — {currentWork.titleUrdu}
                         </div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: '#4B5563', marginTop: 6, direction: 'rtl' }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#4B5563', marginTop: 6, direction: 'rtl', textAlign: 'right' }}>
                           ✍️ مصنف: <strong>{currentWork.authorUrdu}</strong> ({currentWork.author})
                         </div>
                       </div>
 
                       {/* External Resource Action Buttons */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 }}>
+                      <div className="hero-actions-column">
                         <a
                           href={`https://www.youtube.com/results?search_query=${encodeURIComponent(currentWork.externalSources.youtubeSearchQuery)}`}
                           target="_blank"
@@ -913,9 +923,9 @@ export default function AudioPage() {
                             transition: 'all 0.15s ease',
                           }}
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-                            <div style={{ flex: '1 1 450px' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                          <div className="chapter-card-header">
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
                                 <span
                                   style={{
                                     fontSize: 10.5,
@@ -934,16 +944,16 @@ export default function AudioPage() {
                                 </span>
                               </div>
 
-                              <h4 style={{ fontSize: 16, fontWeight: 800, color: '#111827', margin: '4px 0 2px' }}>
+                              <h4 style={{ fontSize: 16, fontWeight: 800, color: '#111827', margin: '4px 0 2px', lineHeight: 1.3 }}>
                                 {ch.titleEnglish}
                               </h4>
-                              <div style={{ fontSize: 15, fontWeight: 700, color: '#047857', direction: 'rtl', marginTop: 2 }}>
+                              <div style={{ fontSize: 15, fontWeight: 700, color: '#047857', direction: 'rtl', textAlign: 'right', marginTop: 2 }}>
                                 {ch.titleUrdu}
                               </div>
                             </div>
 
                             {/* Action Buttons: Either Direct Audio Player or Verified Dars Link */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                            <div className="chapter-actions-group">
                               {isExternalDars ? (
                                 <>
                                   <a
@@ -960,9 +970,11 @@ export default function AudioPage() {
                                       textDecoration: 'none',
                                       display: 'flex',
                                       alignItems: 'center',
+                                      justifyContent: 'center',
                                       gap: 6,
                                       boxShadow: '0 2px 6px rgba(220, 38, 38, 0.22)',
                                       transition: 'all 0.15s ease',
+                                      whiteSpace: 'nowrap',
                                     }}
                                   >
                                     <span>📺 یوٹیوب درس سنیں</span>
@@ -985,7 +997,9 @@ export default function AudioPage() {
                                         textDecoration: 'none',
                                         display: 'flex',
                                         alignItems: 'center',
+                                        justifyContent: 'center',
                                         gap: 4,
+                                        whiteSpace: 'nowrap',
                                       }}
                                     >
                                       <span>📖 باضابطہ پورٹل ↗</span>
@@ -1015,9 +1029,11 @@ export default function AudioPage() {
                                       cursor: 'pointer',
                                       display: 'flex',
                                       alignItems: 'center',
+                                      justifyContent: 'center',
                                       gap: 6,
                                       boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
                                       transition: 'all 0.15s ease',
+                                      whiteSpace: 'nowrap',
                                     }}
                                   >
                                     <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
@@ -1049,8 +1065,10 @@ export default function AudioPage() {
                                           cursor: 'pointer',
                                           display: 'flex',
                                           alignItems: 'center',
+                                          justifyContent: 'center',
                                           gap: 4,
                                           transition: 'all 0.15s ease',
+                                          whiteSpace: 'nowrap',
                                         }}
                                         title={isOfflineCached ? 'Click to delete from offline cache' : 'Download for offline airplane mode'}
                                       >
@@ -1082,7 +1100,9 @@ export default function AudioPage() {
                                       textDecoration: 'none',
                                       display: 'flex',
                                       alignItems: 'center',
+                                      justifyContent: 'center',
                                       gap: 4,
+                                      whiteSpace: 'nowrap',
                                     }}
                                   >
                                     <span>📺 یوٹیوب ↗</span>
@@ -1092,23 +1112,29 @@ export default function AudioPage() {
                             </div>
                           </div>
 
-                          {/* Dual Summaries */}
+                          {/* Dual Summaries with Balanced Proportions */}
                           <div
                             style={{
-                              marginTop: 12,
+                              marginTop: 14,
                               backgroundColor: '#F9FAFB',
-                              padding: '10px 14px',
-                              borderRadius: 8,
+                              padding: '12px 16px',
+                              borderRadius: 10,
                               border: '1px solid #F3F4F6',
                               display: 'flex',
                               flexDirection: 'column',
-                              gap: 4,
+                              gap: 8,
                             }}
                           >
-                            <div style={{ fontSize: 13, color: '#374151', direction: 'rtl', lineHeight: 1.6 }}>
+                            <div style={{ fontSize: 13, color: '#1F2937', direction: 'rtl', textAlign: 'right', lineHeight: 1.6 }}>
+                              <span style={{ fontSize: 10.5, fontWeight: 700, color: '#047857', backgroundColor: '#ECFDF5', padding: '1px 6px', borderRadius: 4, marginLeft: 6 }}>
+                                خلاصۂ باب
+                              </span>
                               {ch.summaryUrdu}
                             </div>
-                            <div style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.4, borderTop: '1px dashed #E5E7EB', paddingTop: 4 }}>
+                            <div style={{ fontSize: 12.5, color: '#4B5563', lineHeight: 1.5, borderTop: '1px dashed #E5E7EB', paddingTop: 8, direction: 'ltr', textAlign: 'left' }}>
+                              <span style={{ fontSize: 10.5, fontWeight: 700, color: '#475569', backgroundColor: '#F1F5F9', padding: '1px 6px', borderRadius: 4, marginRight: 6 }}>
+                                Summary
+                              </span>
                               {ch.summaryEnglish}
                             </div>
                           </div>
@@ -1150,71 +1176,77 @@ export default function AudioPage() {
                         boxShadow: isThisPlaying ? '0 4px 16px rgba(5, 150, 105, 0.12)' : '0 1px 3px rgba(0,0,0,0.05)',
                       }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
+                      <div className="chapter-card-header">
                         <div>
-                          <span
-                            style={{
-                              fontSize: 11,
-                              fontWeight: 700,
-                              color: '#047857',
-                              backgroundColor: '#F0FDF4',
-                              padding: '3px 10px',
-                              borderRadius: 6,
-                              border: '1px solid #A7F3D0',
-                            }}
-                          >
-                            EPISODE {ep.episodeNumber} • {ep.era}
-                          </span>
-                          <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: '8px 0 2px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
+                            <span
+                              style={{
+                                fontSize: 11,
+                                fontWeight: 700,
+                                color: '#047857',
+                                backgroundColor: '#F0FDF4',
+                                padding: '3px 10px',
+                                borderRadius: 6,
+                                border: '1px solid #A7F3D0',
+                              }}
+                            >
+                              EPISODE {ep.episodeNumber} • {ep.era}
+                            </span>
+                            <span style={{ fontSize: 11, color: '#6B7280', fontWeight: 600 }}>
+                              📅 {ep.yearHijriOrGregorian}
+                            </span>
+                          </div>
+                          <h3 style={{ fontSize: 17, fontWeight: 800, color: '#111827', margin: '4px 0 2px', lineHeight: 1.3 }}>
                             {ep.titleEnglish}
                           </h3>
-                          <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', fontWeight: 600, marginTop: 4 }}>
+                          <div style={{ fontSize: 14, color: '#047857', direction: 'rtl', textAlign: 'right', fontWeight: 700, marginTop: 4 }}>
                             {ep.titleUrdu}
-                          </div>
-                          <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
-                            📅 {ep.yearHijriOrGregorian}
                           </div>
                         </div>
 
-                        <button
-                          onClick={() =>
-                            handlePlayAudio(
-                              `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
-                              ep.audioUrl,
-                              `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`,
-                              'Authentic Seerat-un-Nabi Audio',
-                              'ur'
-                            )
-                          }
-                          style={{
-                            padding: '10px 20px',
-                            borderRadius: 8,
-                            backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
-                            color: '#FFF',
-                            fontSize: 13,
-                            fontWeight: 700,
-                            border: 'none',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                            transition: 'all 0.15s ease-in-out',
-                          }}
-                        >
-                          <span>{isThisPlaying ? '⏸' : '▶'}</span>
-                          <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
-                        </button>
+                        <div className="chapter-actions-group">
+                          <button
+                            onClick={() =>
+                              handlePlayAudio(
+                                `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
+                                ep.audioUrl,
+                                `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`,
+                                'Authentic Seerat-un-Nabi Audio',
+                                'ur'
+                              )
+                            }
+                            style={{
+                              padding: '9px 18px',
+                              borderRadius: 8,
+                              backgroundColor: isThisPlaying ? '#DC2626' : '#1B4332',
+                              color: '#FFF',
+                              fontSize: 13,
+                              fontWeight: 700,
+                              border: 'none',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: 8,
+                              boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                              transition: 'all 0.15s ease-in-out',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            <span>{isThisPlaying ? '⏸' : '▶'}</span>
+                            <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
+                          </button>
+                        </div>
                       </div>
 
                       <p
                         style={{
                           fontSize: 13.5,
                           color: '#374151',
-                          margin: '12px 0 0',
+                          margin: '14px 0 0',
                           lineHeight: 1.6,
                           backgroundColor: '#F9FAFB',
-                          padding: '10px 14px',
+                          padding: '12px 16px',
                           borderRadius: 8,
                           border: '1px solid #F3F4F6',
                         }}
@@ -1229,6 +1261,86 @@ export default function AudioPage() {
           </div>
         )}
       </main>
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        /* Responsive Grid & Card Ratio System */
+        .master-works-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 14px;
+        }
+        @media (max-width: 1080px) {
+          .master-works-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+          }
+        }
+        @media (max-width: 540px) {
+          .master-works-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+          }
+        }
+
+        .hero-card-grid {
+          display: grid;
+          grid-template-columns: 1fr 230px;
+          gap: 24px;
+          align-items: center;
+        }
+        @media (max-width: 860px) {
+          .hero-card-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+        }
+
+        .hero-actions-column {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+        }
+        @media (max-width: 860px) {
+          .hero-actions-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+          }
+        }
+
+        .chapter-card-header {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 16px;
+          align-items: center;
+        }
+        @media (max-width: 768px) {
+          .chapter-card-header {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+        }
+
+        .chapter-actions-group {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: nowrap;
+        }
+        @media (max-width: 768px) {
+          .chapter-actions-group {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+          }
+        }
+      `,
+        }}
+      />
     </div>
   );
 }
