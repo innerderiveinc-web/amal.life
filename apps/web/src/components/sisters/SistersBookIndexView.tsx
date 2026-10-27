@@ -56,31 +56,56 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
         >
           {isUrdu ? '← کتب خانے کی فہرست پر واپس' : '← Back to All Books'}
         </button>
-        <button
-          onClick={() =>
-            onOpenSanad(
-              readingBook.titleUrdu,
-              readingBook.authorUrdu,
-              readingBook.verificationHash,
-              readingBook.authorEra,
-              readingBook.descriptionUrdu,
-              readingBook.descriptionEnglish,
-              readingBook.scholarlyConsensusUrdu
-            )
-          }
-          style={{
-            backgroundColor: '#ECFDF5',
-            color: '#064E3B',
-            border: '1px solid #A7F3D0',
-            padding: '6px 12px',
-            borderRadius: 8,
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
-        >
-          ✓ {isUrdu ? 'تحقیق و سندِ کتاب' : 'Sanad Certificate'}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {readingBook.pdfUrl && (
+            <a
+              href={readingBook.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: '#FEF3C7',
+                color: '#92400E',
+                border: '1px solid #FDE68A',
+                padding: '6px 14px',
+                borderRadius: 8,
+                fontSize: 12,
+                fontWeight: 700,
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span>📥</span>
+              <span>{isUrdu ? 'مکمل اصل پی ڈی ایف ڈاؤن لوڈ کریں' : 'Download Complete PDF'}</span>
+            </a>
+          )}
+          <button
+            onClick={() =>
+              onOpenSanad(
+                readingBook.titleUrdu,
+                readingBook.authorUrdu,
+                readingBook.verificationHash,
+                readingBook.authorEra,
+                readingBook.descriptionUrdu,
+                readingBook.descriptionEnglish,
+                readingBook.scholarlyConsensusUrdu
+              )
+            }
+            style={{
+              backgroundColor: '#ECFDF5',
+              color: '#064E3B',
+              border: '1px solid #A7F3D0',
+              padding: '6px 12px',
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            ✓ {isUrdu ? 'تحقیق و سندِ کتاب' : 'Sanad Certificate'}
+          </button>
+        </div>
       </div>
 
       <h2 style={{ fontSize: 24, fontWeight: 800, color: '#064E3B', margin: '4px 0' }}>

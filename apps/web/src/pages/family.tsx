@@ -215,6 +215,83 @@ export default function FamilyPage() {
 
         {/* BEDTIME SUNNAH STORIES & TARBIYAH FOR CHILDREN */}
         <div style={{ marginTop: 32 }}>
+          {/* Featured Child Seerah Book Spotlight */}
+          <div
+            style={{
+              backgroundColor: '#EFF6FF',
+              borderRadius: 14,
+              padding: '20px 24px',
+              border: '1px solid #BFDBFE',
+              marginBottom: 24,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 16,
+              boxShadow: '0 2px 8px rgba(30, 64, 175, 0.06)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, maxWidth: 640 }}>
+              <span style={{ fontSize: 32 }}>📗</span>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: '#1E40AF', backgroundColor: '#DBEAFE', padding: '2px 8px', borderRadius: 4 }}>
+                    نصابِ تربیتِ اطفال (CHILD TARBIYAH CURRICULUM)
+                  </span>
+                  <span style={{ fontSize: 11, color: '#6B7280' }}>مکمل مستند ایڈیشن</span>
+                </div>
+                <h4 style={{ fontSize: 18, fontWeight: 800, color: '#1E3A8A', margin: '2px 0 4px' }}>
+                  ہمارے حضور ﷺ (بچوں کے لیے آسان اور پرتاثیر سیرت النبی ﷺ)
+                </h4>
+                <p style={{ fontSize: 13, color: '#374151', margin: 0, lineHeight: 1.5 }}>
+                  بچوں کو پیارے نبی ﷺ کی شفقت، آدابِ زندگی اور سچی محبت سکھانے کے لیے مستند تصنیف۔ اب مکمل کتاب ان-ایپ دستیاب ہے۔
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <a
+                href="/library?work=CANON-SIRAH-HAMARE-HUZOOR"
+                style={{
+                  padding: '9px 16px',
+                  borderRadius: 8,
+                  backgroundColor: '#1E40AF',
+                  color: '#FFFFFF',
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>📖</span>
+                <span>ان-ایپ مطالعہ کریں</span>
+              </a>
+              <a
+                href="/books/hamare-huzoor-sallallahu-alayhi-wasallam.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  padding: '9px 16px',
+                  borderRadius: 8,
+                  backgroundColor: '#FFFFFF',
+                  color: '#1E40AF',
+                  border: '1px solid #93C5FD',
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>📥</span>
+                <span>ڈاؤن لوڈ PDF (2 MB)</span>
+              </a>
+            </div>
+          </div>
+
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
             <div>
               <span style={{ fontSize: 11, fontWeight: 800, color: '#9D174D', backgroundColor: '#FDF2F8', padding: '3px 8px', borderRadius: 4 }}>

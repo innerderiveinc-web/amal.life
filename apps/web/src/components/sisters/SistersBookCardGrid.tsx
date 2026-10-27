@@ -50,10 +50,10 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
         {/* Category Filter Pills */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {[
-            { id: 'all', labelUrdu: 'تمام کتب (۲۰)', labelEn: 'All 20 Books' },
+            { id: 'all', labelUrdu: 'تمام کتب (۲۱)', labelEn: 'All 21 Books' },
             { id: 'fiqh_taharah', labelUrdu: 'احکام و فقہِ نسواں (۵)', labelEn: 'Fiqh & Purity (5)' },
             { id: 'ummahat_banat', labelUrdu: 'امہات و بناتِ رسول (۸)', labelEn: 'Mothers & Daughters (8)' },
-            { id: 'sahabiyyat_muhaddithat', labelUrdu: 'اسوۂ صحابیات (۴)', labelEn: 'Sahabiyyat & Scholars (4)' },
+            { id: 'sahabiyyat_muhaddithat', labelUrdu: 'اسوۂ صحابیات (۵)', labelEn: 'Sahabiyyat & Scholars (5)' },
             { id: 'salihat_tarbiyat', labelUrdu: 'صالحات و تربیت (۳)', labelEn: 'Ascetics & Motherhood (3)' },
           ].map((cat) => (
             <button
@@ -236,21 +236,49 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                 <span>{isUrdu ? 'مستند سند' : 'Sanad'}</span>
               </button>
 
-              <button
-                onClick={() => onSelectBook(book)}
-                style={{
-                  backgroundColor: '#064E3B',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  padding: '6px 14px',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                {isUrdu ? 'مطالعہ کریں' : 'Read Book'}
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                {book.pdfUrl && (
+                  <a
+                    href={book.pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      backgroundColor: '#FEF3C7',
+                      color: '#92400E',
+                      border: '1px solid #FDE68A',
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                    title={isUrdu ? 'مکمل پی ڈی ایف ڈاؤن لوڈ کریں' : 'Download Complete PDF'}
+                  >
+                    <span>📥</span>
+                    <span>PDF</span>
+                  </a>
+                )}
+
+                <button
+                  onClick={() => onSelectBook(book)}
+                  style={{
+                    backgroundColor: '#064E3B',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    padding: '6px 14px',
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {isUrdu ? 'مطالعہ کریں' : 'Read Book'}
+                </button>
+              </div>
             </div>
           </div>
         ))}

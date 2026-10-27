@@ -857,6 +857,30 @@ export default function AudioPage() {
                             <span>🌐 سرکاری پبلیکیشن ریفرنس ↗</span>
                           </a>
                         )}
+
+                        {currentWork.id === 'SEERAT_E_MUSTAFA' && (
+                          <a
+                            href="/books/seerate-mustafa-english.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                              padding: '8px 14px',
+                              backgroundColor: '#EFF6FF',
+                              border: '1px solid #BFDBFE',
+                              color: '#1E40AF',
+                              borderRadius: 8,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              transition: 'all 0.15s ease',
+                            }}
+                          >
+                            <span>📖 English Edition PDF (13.3 MB) ↗</span>
+                          </a>
+                        )}
                       </div>
                     </div>
 

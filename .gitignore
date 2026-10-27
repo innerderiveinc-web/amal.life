@@ -27,3 +27,7 @@ apps/*/components/**/*.js
 apps/*/components/**/*.d.ts
 apps/*/services/**/*.js
 apps/*/services/**/*.d.ts
+
+# Large PDF Digital Library storage (kept local / served via CDN)
+apps/web/public/books/
+

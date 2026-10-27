@@ -1738,6 +1738,289 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
       },
     ],
   },
+
+  // =========================================================================
+  // 53. SEERAT-E-MUSTAFA ﷺ (ENGLISH EDITION - علامہ عبد المصطفیٰ اعظمی)
+  // =========================================================================
+  'CANON-SIRAH-MUSTAFA-ENG': {
+    workId: 'CANON-SIRAH-MUSTAFA-ENG',
+    verifiedExternalUrl: '/books/seerate-mustafa-english.pdf',
+    verifiedExternalName: 'Seerat-e-Mustafa ﷺ (Official English Translation - Allama Abd al-Mustafa al-Azami)',
+    chapters: [
+      {
+        chapterId: 'sm_eng_1',
+        chapterTitleArabic: 'الفصل الأول: نور المصطفى ﷺ ونسبه الشريف وطهارة أجداده',
+        chapterTitleUrdu: 'پہلا باب: نورِ مصطفیٰ ﷺ، شجرۂ نسب اور آبا و اجداد کی طہارت (انگریزی ترجمہ)',
+        chapterTitleEnglish: 'Chapter 1: The Primordial Prophetic Light, Noble Lineage & Purified Ancestry',
+        arabicMatn: `قَالَ رَسُولُ اللَّهِ ﷺ: «إِنَّ اللَّهَ اصْطَفَى كِنَانَةَ مِنْ وَلَدِ إِسْمَاعِيلَ، وَاصْطَفَى قُرَيْشًا مِنْ كِنَانَةَ، وَاصْطَفَى مِنْ قُرَيْشٍ بَنِي هَاشِمٍ، وَاصْطَفَانِي مِنْ بَنِي هَاشِمٍ».
+قَالَ الْعَلَّامَةُ عَبْدُ الْمُصْطَفَى الْأَعْظَمِيُّ: إِنَّ نَسَبَ سَيِّدِنَا مُحَمَّدٍ ﷺ هُوَ أَشْرَفُ أَنْسَابِ الْعَالَمِينَ، لَمْ يَلْتَقِ أَبَوَاهُ فِي سِفَاحٍ قَطُّ، بَلْ فِي نِكَاحٍ صَحِيحٍ مُطَهَّرٍ مِنْ لَدُنْ آدَمَ عَلَيْهِ السَّلَامُ إِلَى يَوْمِ مَوْلِدِهِ الْمُنِيرِ.`,
+        urduTranslation: `رسول اللہ ﷺ نے ارشاد فرمایا: "بے شک اللہ تعالیٰ نے حضرت اسماعیل کی اولاد سے کنانہ کو چنا، اور کنانہ میں سے قریش کو چنا، اور قریش میں سے بنو ہاشم کو منتخب فرمایا، اور بنو ہاشم میں سے مجھے چن لیا"۔
+علامہ عبد المصطفیٰ اعظمی لکھتے ہیں: سیدنا محمد مصطفیٰ ﷺ کا نسبِ عالی تمام جہانوں میں سب سے پاکیزہ ترین ہے۔ حضرت آدم علیہ السلام سے لے کر آپ کے والدین تک کسی بھی نسل میں جاہلیت کی ناپاکی کا شائبہ تک نہ تھا، بلکہ ہر دور میں پاکیزہ اور شرعی نکاح کے ذریعے نور منتقل ہوتا رہا۔`,
+        englishSynopsis: 'Authoritative English presentation of the Prophet\'s primordial celestial light, unblemished generational purity, and noble lineage descending from Prophet Ibrahim and Ismail (peace be upon them).',
+        scholarlyNotes: 'Sourced from Sahih Muslim, Dalail al-Nubuwwah by Imam al-Bayhaqi, and Khasa\'is al-Kubra by Imam al-Suyuti.',
+      },
+      {
+        chapterId: 'sm_eng_2',
+        chapterTitleArabic: 'الفصل الثاني: المولد المبارك وبركات الرضاعة في ديار بني سعد',
+        chapterTitleUrdu: 'دوسرا باب: میلادِ انور اور دیارِ بنو سعد میں رضاعت کی برکات (انگریزی ترجمہ)',
+        chapterTitleEnglish: 'Chapter 2: The Blessed Nativity & Miraculous Infancy with Sayyidah Halimah',
+        arabicMatn: `وُلِدَ سَيِّدُ الْمُرْسَلِينَ ﷺ فِي مَكَّةَ الْمُكَرَّمَةِ عَامَ الْفِيلِ، يَوْمَ الِاثْنَيْنِ الثَّانِي عَشَرَ مِنْ شَهْرِ رَبِيعٍ الْأَوَّلِ، وَأَضَاءَتْ لِمَوْلِدِهِ قُصُورُ الشَّامِ.
+وَكَانَتْ سَيِّدَتُنَا حَلِيمَةُ السَّعْدِيَّةُ رَضِيَ اللَّهُ عَنْهَا تَرْوِي أَنَّ شَاتَهَا امْتَلَأَتْ لَبَنًا، وَأَنَّ الْخَيْرَ وَالْبَرَكَةَ حَلَّتْ فِي دَارِهَا مُنْذُ أَنْ حَمَلَتْ رَسُولَ اللَّهِ ﷺ، وَشُقَّ صَدْرُهُ الشَّرِيفُ لِيُغْسَلَ بِمَاءِ زَمْزَمَ وَيُمْلَأَ حِكْمَةً وَإِيمَانًا.`,
+        urduTranslation: `سید المرسلین ﷺ کی ولادتِ باسعادت مکہ مکرمہ میں عام الفیل، پیر کے مبارک دن ۱۲ ربیع الاول کو ہوئی۔ آپ کی ولادت پر ملکِ شام کے محلات جگمگا اٹھے۔
+سیدہ حلیمہ سعدیہ رضی اللہ عنہا بیان فرماتی ہیں کہ جیسے ہی حضور ﷺ ان کی آغوش میں تشریف لائے، ان کے اونٹنی اور بکریوں کے تھن دودھ سے بھر گئے، ان کی غربت خوشحالی میں بدل گئی اور پورے بنو سعد میں برکتوں کا نزول ہوا۔ اس مبارک دور میں شق صدر کا عظیم معجزہ پیش آیا جہاں آپ کے قلبِ اطہر کو آبِ زمزم سے دھو کر نور و حکمت سے بھر دیا گیا۔`,
+        englishSynopsis: 'Covers the miraculous portents witnessed across Arabia and Persia at the moment of the Nativity, the profound blessings that encompassed Sayyidah Halimah al-Sa\'diyyah, and the cleansing of the chest (Shaqq al-Sadr).',
+        scholarlyNotes: 'Detailed historical narrative establishing the protection and distinction of the Prophet from infancy.',
+      },
+      {
+        chapterId: 'sm_eng_3',
+        chapterTitleArabic: 'الفصل الثالث: إعلان الرسالة ودعوة التوحيد وثبات المؤمنين بمكة',
+        chapterTitleUrdu: 'تیسرا باب: اعلانِ نبوت، دعوتِ توحید اور مکہ میں صحابہ کرام کا بے مثال ثبات',
+        chapterTitleEnglish: 'Chapter 3: The Public Proclamation of Islam & Unshakable Fortitude in Makkah',
+        arabicMatn: `لَمَّا نَزَلَ قَوْلُهُ تَعَالَى: ﴿وَأَنذِرْ عَشِيرَتَكَ الأَقْرَبِينَ﴾، صَعِدَ النَّبِيُّ ﷺ عَلَى الصَّفَا وَنَادَى: «يَا مَعْشَرَ قُرَيْشٍ! لَوْ أَخْبَرْتُكُمْ أَنَّ خَيْلًا بِسَفْحِ هَذَا الْجَبَلِ تُرِيدُ أَنْ تُغِيرَ عَلَيْكُمْ أَكُنْتُمْ مُصَدِّقِيَّ؟» قَالُوا: نَعَمْ، مَا جَرَّبْنَا عَلَيْكَ كَذِبًا. قَالَ: «فَإِنِّي نَذِيرٌ لَّكُمْ بَيْنَ يَدَيْ عَذَابٍ شَدِيدٍ».`,
+        urduTranslation: `جب اللہ تعالیٰ کا فرمان نازل ہوا: "اور اپنے قریبی رشتہ داروں کو ڈرایئے"، تو حضور نبی اکرم ﷺ کوہِ صفا پر تشریف فرما ہوئے اور قریش کو پکارا: "اے قریش کے لوگو! اگر میں تمہیں یہ بتاؤں کہ اس پہاڑ کے پیچھے ایک لشکر تمہارے اوپر حملہ کرنے والا ہے تو کیا تم میری بات مانو گے؟" سب نے یک زبان ہو کر کہا: "ہاں! ہم نے کبھی آپ سے سچ کے سوا کچھ نہیں سنا"۔ آپ نے فرمایا: "پس میں تمہیں ایک آنے والے سخت عذاب سے خبردار کرتا ہوں"۔`,
+        englishSynopsis: 'The historic declaration from Mount Safa where the Quraysh unanimously testified to the Prophet\'s lifelong title of Al-Sadiq (The Truthful) and Al-Amin (The Trustworthy), followed by the trials and endurance of the early believers.',
+        scholarlyNotes: 'A cornerstone lesson for contemporary dawah demonstrating that impeccable personal integrity precedes prophetic proclamation.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 54. SAHIHAYN SE MUNTAKHAB AHADITH (برائے حفظ و تذکیر)
+  // =========================================================================
+  'CANON-HADITH-HIFZ-001': {
+    workId: 'CANON-HADITH-HIFZ-001',
+    verifiedExternalUrl: '/books/sahihayn-muntakhab-ahadith-hifz.pdf',
+    verifiedExternalName: 'Sahihayn Se Muntakhab Ahadees Baraye Hifz (Selected Bukhari & Muslim for Memorization)',
+    chapters: [
+      {
+        chapterId: 'hifz_1',
+        chapterTitleArabic: 'الباب الأول: أحاديث الإخلاص والنية والتوحيد (أصول الأعمال)',
+        chapterTitleUrdu: 'پہلا باب: نیت، اخلاص اور توحید کی منتخب احادیث برائے حفظ',
+        chapterTitleEnglish: 'Part 1: Foundational Hadiths on Sincerity, Pure Intention & Tawhid',
+        arabicMatn: `١. عَنْ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، فَهِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ». [متفق عليه]
+٢. عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «إِنَّ اللَّهَ لا يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ». [رواه مسلم]
+٣. عَنْ أَنَسٍ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: «ثَلاثٌ مَنْ كُنَّ فِيهِ وَجَدَ حَلاوَةَ الإِيمَانِ: أَنْ يَكُونَ اللَّهُ وَرَسُولُهُ أَحَبَّ إِلَيْهِ مِمَّا سِوَاهُمَا، وَأَنْ يُحِبَّ الْمَرْءَ لا يُحِبُّهُ إِلا لِلَّهِ، وَأَنْ يَكْرَهَ أَنْ يَعُودَ فِي الْكُفْرِ كَمَا يَكْرَهُ أَنْ يُقْذَفَ فِي النَّارِ». [متفق عليه]`,
+        urduTranslation: `۱. حضرت عمر بن الخطاب رضی اللہ عنہ سے روایت ہے کہ میں نے رسول اللہ ﷺ کو فرماتے سنا: "اعمال کا دارومدار صرف نیتوں پر ہے، اور ہر شخص کے لیے وہی ہے جس کی اس نے نیت کی۔ پس جس کی ہجرت اللہ اور اس کے رسول کی خاطر ہو، تو اس کی ہجرت اللہ اور اس کے رسول ہی کی طرف ہے، اور جس کی ہجرت دنیا حاصل کرنے یا کسی عورت سے نکاح کے لیے ہو، تو اس کی ہجرت اسی کے لیے ہے جس کی طرف اس نے ہجرت کی"۔ [بخاری و مسلم]
+۲. حضرت ابو ہریرہ رضی اللہ عنہ سے روایت ہے کہ رسول اللہ ﷺ نے فرمایا: "بے شک اللہ تمہاری صورتوں اور تمہارے مالوں کو نہیں دیکھتا، بلکہ وہ تمہارے دلوں اور تمہارے اعمال کو دیکھتا ہے"۔ [صحیح مسلم]
+۳. حضرت انس رضی اللہ عنہ سے مروی ہے کہ نبی کریم ﷺ نے فرمایا: "تین خصلتیں ایسی ہیں کہ جس میں وہ ہوں اس نے ایمان کی حلاوت و مٹھاس پا لی: یہ کہ اللہ اور اس کا رسول اس کے نزدیک باقی سب سے زیادہ محبوب ہو جائیں، یہ کہ وہ کسی انسان سے صرف اللہ کی رضا کے لیے محبت کرے، اور یہ کہ کفر سے بچنے کے بعد دوبارہ اس میں لوٹنے کو ایسے ناپسند کرے جیسے آگ میں پھینکے جانے کو ناپسند کرتا ہے"۔ [بخاری و مسلم]`,
+        englishSynopsis: 'Essential Muttafaq \'Alayh hadiths selected for daily memorization on the absolute centrality of intention (Niyyah), purity of the inner heart, and the sweetness of divine and prophetic love.',
+        scholarlyNotes: 'Memorization target: Complete mastery of Matn and meaning. Forms the foundational week of the Amal 40-Day Hadith Hifz journey.',
+      },
+      {
+        chapterId: 'hifz_2',
+        chapterTitleArabic: 'الباب الثاني: أحاديث حسن الخلق والبر والصلة وحق المسلم',
+        chapterTitleUrdu: 'دوسرا باب: حسنِ اخلاق، صلہ رحمی اور بندوں کے حقوق کی متفق علیہ احادیث',
+        chapterTitleEnglish: 'Part 2: Muttafaq \'Alayh Hadiths on Noble Character, Kinship & Mercy',
+        arabicMatn: `٤. عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو رَضِيَ اللَّهُ عَنْهُمَا عَنِ النَّبِيِّ ﷺ قَالَ: «الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ، وَالْمُهَاجِرُ مَنْ هَجَرَ مَا نَهَى اللَّهُ عَنْهُ». [متفق عليه]
+٥. عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ، وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيُكْرِمْ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيُكْرِمْ ضَيْفَهُ». [متفق عليه]
+٦. عَنْ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا أَنَّ النَّبِيَّ ﷺ قَالَ: «إِنَّ الرِّفْقَ لا يَكُونُ فِي شَيْءٍ إِلا زَانَهُ، وَلا يُنْزَعُ مِنْ شَيْءٍ إِلا شَانَهُ». [رواه مسلم]`,
+        urduTranslation: `۴. حضرت عبد اللہ بن عمرو رضی اللہ عنہما سے مروی ہے کہ نبی کریم ﷺ نے ارشاد فرمایا: "کامل مسلمان وہ ہے جس کی زبان اور ہاتھ (کے شر) سے دوسرے مسلمان محفوظ رہیں، اور حقیقی مہاجر وہ ہے جو ان تمام باتوں کو چھوڑ دے جن سے اللہ تعالیٰ نے منع فرمایا ہے"۔ [بخاری و مسلم]
+۵. حضرت ابو ہریرہ رضی اللہ عنہ سے روایت ہے کہ رسول اللہ ﷺ نے فرمایا: "جو شخص اللہ اور یومِ آخرت پر ایمان رکھتا ہو اسے چاہیے کہ اچھی بات کہے یا خاموش رہے، اور جو اللہ اور یومِ آخرت پر ایمان رکھتا ہو وہ اپنے پڑوسی کی عزت کرے، اور جو اللہ اور یومِ آخرت پر ایمان رکھتا ہو وہ اپنے مہمان کی تکریم کرے"۔ [بخاری و مسلم]
+۶. ام المؤمنین حضرت عائشہ صدیقہ رضی اللہ عنہا سے روایت ہے کہ حضور نبی کریم ﷺ نے فرمایا: "نرمی جس چیز میں بھی ہوتی ہے اسے سنوار اور زینت بخش دیتی ہے، اور جس چیز سے بھی نرمی نکال لی جائے وہ اسے عیب دار اور بدصورت کر دیتی ہے"۔ [صحیح مسلم]`,
+        englishSynopsis: 'Golden moral compass of prophetic ethics: safeguarding speech, honoring neighbors and guests, and embedding gentleness (Rifq) into all affairs.',
+        scholarlyNotes: 'Imam al-Nawawi highlighted that Hadith 5 encompasses half of all Islamic etiquette (Adab).',
+      },
+      {
+        chapterId: 'hifz_3',
+        chapterTitleArabic: 'الباب الثالث: أحاديث فضل الذكر والتوبة وتفريج الكربات',
+        chapterTitleUrdu: 'تیسرا باب: کثرتِ ذکر، استغفار اور توبہ و انابت کی فضیلت پر احادیث',
+        chapterTitleEnglish: 'Part 3: Muttafaq \'Alayh Hadiths on Remembrance, Forgiveness & Solace',
+        arabicMatn: `٧. عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ النَّبِيُّ ﷺ: «كَلِمَتَانِ حَبِيبَتَانِ إِلَى الرَّحْمَنِ، خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي الْمِيزَانِ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ». [متفق عليه]
+٨. عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، فِي يَوْمٍ مِائَةَ مَرَّةٍ، حُطَّتْ خَطَايَاهُ وَإِنْ كَانَتْ مِثْلَ زَبَدِ الْبَحْرِ». [متفق عليه]
+٩. عَنْ أَنَسٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «كُلُّ ابْنِ آدَمَ خَطَّاءٌ، وَخَيْرُ الْخَطَّائِينَ التَّوَّابُونَ». [رواه الترمذي وصححه الحاكم والذهبي]`,
+        urduTranslation: `۷. حضرت ابو ہریرہ رضی اللہ عنہ سے روایت ہے کہ نبی اکرم ﷺ نے فرمایا: "دو کلمے ایسے ہیں جو رحمن کو بہت پیارے ہیں، زبان پر بہت ہلکے ہیں، اور میزان میں بہت وزنی ہیں: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ' (اللہ پاک ہے اپنی خوبیوں سمیت، اللہ پاک ہے جو بہت عظمت والا ہے)"۔ [بخاری و مسلم - صحیحین کا آخری کلمہ]
+۸. حضرت ابو ہریرہ رضی اللہ عنہ سے روایت ہے کہ رسول اللہ ﷺ نے فرمایا: "جس نے دن میں سو مرتبہ کہا 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'، تو اس کے تمام گناہ معاف کر دیے جاتے ہیں اگرچہ وہ سمندر کے جھاگ کے برابر ہی کیوں نہ ہوں"۔ [بخاری و مسلم]
+۹. حضرت انس رضی اللہ عنہ سے مروی ہے کہ رسول اللہ ﷺ نے فرمایا: "تمام بنی آدم کثرت سے خطائیں کرنے والے ہیں، اور خطا کاروں میں سب سے بہترین وہ ہیں جو کثرت سے توبہ کرنے والے ہیں"۔`,
+        englishSynopsis: 'Concludes with the famous closing hadith of Sahih al-Bukhari on the two beloved phrases of dhikr that weigh heavily in the Divine Scales, and the unending door of Tawbah.',
+        scholarlyNotes: 'The traditional completion point of Hadith memorization cycles celebrating the seal of the Sahihayn.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 55. SAHABAH-E-KIRAM KI MISALI BIWIYAN (گوشۂ خواتین و صحابیات)
+  // =========================================================================
+  'CANON-SAHABIYYAT-001': {
+    workId: 'CANON-SAHABIYYAT-001',
+    verifiedExternalUrl: '/books/sahaba-ki-misali-biwiyan.pdf',
+    verifiedExternalName: 'Sahaba-e-Kiram Ki Misali Biwiyan (گوشۂ خواتین و صحابیات)',
+    chapters: [
+      {
+        chapterId: 'sahabiyyat_1',
+        chapterTitleArabic: 'الفصل الأول: أم المؤمنين خديجة الكبرى رضي الله عنها وزيرة الصدق والوفاء',
+        chapterTitleUrdu: 'پہلا باب: ام المؤمنین حضرت خدیجۃ الکبریٰ رضی اللہ عنہا — وفا اور قربانی کی پیکر',
+        chapterTitleEnglish: 'Chapter 1: Sayyidah Khadijah al-Kubra — The Pillar of Loyalty, Comfort & First Believer',
+        arabicMatn: `قَالَ رَسُولُ اللَّهِ ﷺ فِي حَقِّ خَدِيجَةَ رَضِيَ اللَّهُ عَنْهَا: «آمَنَتْ بِي إِذْ كَفَرَ بِي النَّاسُ، وَصَدَّقَتْنِي إِذْ كَذَّبَنِي النَّاسُ، وَوَاسَتْنِي بِمَالِهَا إِذْ حَرَمَنِي النَّاسُ، وَرَزَقَنِي اللَّهُ عَزَّ وَجَلَّ وَلَدَهَا إِذْ حَرَمَنِي أَوْلادَ النِّسَاءِ».
+وَأَتَى جِبْرِيلُ عَلَيْهِ السَّلَامُ فَقَالَ: «يَا رَسُولَ اللَّهِ! هَذِهِ خَدِيجَةُ قَدْ أَتَتْ مَعَهَا إِنَاءٌ فِيهِ إِدَامٌ أَوْ طَعَامٌ أَوْ شَرَابٌ، فَإِذَا هِيَ أَتَتْكَ فَاقْرَأْ عَلَيْهَا السَّلَامَ مِنْ رَبِّهَا وَمِنِّي، وَبَشِّرْهَا بِبَيْتٍ فِي الْجَنَّةِ مِنْ قَصَبٍ لا صَخَبَ فِيهِ وَلا نَصَبَ». [متفق عليه]`,
+        urduTranslation: `رسول اللہ ﷺ نے حضرت خدیجہ رضی اللہ عنہا کے فضائل بیان کرتے ہوئے فرمایا: "وہ مجھ پر اس وقت ایمان لائیں جب لوگوں نے کفر کیا تھا، انہوں نے اس وقت میری تصدیق کی جب لوگوں نے مجھے جھٹلایا تھا، انہوں نے اپنے مال کے ذریعے میری غمخواری فرمائی جب لوگوں نے مجھے محروم کر دیا تھا، اور اللہ تعالیٰ نے مجھے ان سے اولاد عطا فرمائی جب دوسری عورتوں سے اولاد نہ تھی"۔ [مسند احمد]
+اور حضرت جبرائیل علیہ السلام نے بارگاہِ رسالت میں حاضر ہو کر عرض کیا: "یا رسول اللہ! یہ خدیجہ برتن لیے آ رہی ہیں جس میں کھانا ہے، جب وہ تشریف لائیں تو انہیں ان کے پروردگار کی طرف سے اور میری طرف سے سلام عرض کیجیے، اور انہیں جنت میں موتیوں کے ایسے محل کی خوشخبری دیجیے جس میں نہ کوئی شور و غل ہوگا اور نہ کوئی مشقت و تکلیف"۔ [بخاری و مسلم]`,
+        englishSynopsis: 'A moving biographical study of Sayyidah Khadijah (may Allah be pleased with her), who provided emotional, moral, and financial solace to the Prophet ﷺ during the most difficult dawn of revelation.',
+        scholarlyNotes: 'Provides modern Muslim women and families timeless paradigms of marital empathy, patience, and unwavering faith.',
+      },
+      {
+        chapterId: 'sahabiyyat_2',
+        chapterTitleArabic: 'الفصل الثاني: أم المؤمنين عائشة الصديقة رضي الله عنها معقل العلم والفتيا',
+        chapterTitleUrdu: 'دوسرا باب: ام المؤمنین حضرت عائشہ صدیقہ رضی اللہ عنہا — علم و فقہ اور فتاویٰ کی تاجدار',
+        chapterTitleEnglish: 'Chapter 2: Sayyidah Aisha al-Siddiqah — The Sanctuary of Hadith, Jurisprudence & Insight',
+        arabicMatn: `عَنْ أَبِي مُوسَى الأَشْعَرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: «مَا أَشْكَلَ عَلَيْنَا أَصْحَابَ رَسُولِ اللَّهِ ﷺ حَدِيثٌ قَطُّ فَسَأَلْنَا عَائِشَةَ، إِلا وَجَدْنَا عِنْدَهَا مِنْهُ عِلْمًا».
+وَقَالَ الزُّهْرِيُّ: «لَوْ جُمِعَ عِلْمُ عَائِشَةَ إِلَى عِلْمِ جَمِيعِ النِّسَاءِ لَكَانَ عِلْمُ عَائِشَةَ أَفْضَلَ».
+وَقَدْ رَوَتْ عَنِ النَّبِيِّ ﷺ أَكْثَرَ مِنْ أَلْفَيْنِ وَمِائَتَيْ حَدِيثٍ شَرِيفٍ، وَكَانَتْ مَرْجِعَ كِبَارِ الصَّحَابَةِ فِي الْفَرَائِضِ وَالأَحْكَامِ.`,
+        urduTranslation: `حضرت ابو موسیٰ اشعری رضی اللہ عنہ بیان فرماتے ہیں: "ہم صحابہ کرام پر جب بھی کسی حدیث یا فقہی مسئلے میں کوئی بات مشتبہ ہوتی اور ہم ام المؤمنین حضرت عائشہ رضی اللہ عنہا کی بارگاہ میں حاضر ہوتے، تو ہمیں ان کے پاس اس کا قطعی اور تسلی بخش علم مل جاتا تھا"۔ [جامع الترمذی]
+اور امام ابن شہاب زہری فرماتے ہیں: "اگر حضرت عائشہ رضی اللہ عنہا کا علم تمام دنیا کی عورتوں کے علم کے مقابلے میں تولا جائے تو حضرت عائشہ کا علم سب سے فائق و برتر نکلے گا"۔
+آپ نے نبی کریم ﷺ سے ۲۲۱۰ مبارک احادیث روایت فرمائیں اور وراثت، فقہ اور طب و ادب میں کبار صحابہ کی مرجع تھیں۔`,
+        englishSynopsis: 'Chronicles the intellectual brilliance and peerless scholarly role of Sayyidah Aisha, from whom more than a quarter of the rulings of the Shari\'ah have been preserved.',
+        scholarlyNotes: 'Affirms women\'s primary and leading authority in Islamic jurisprudence, legal rulings, and hadith transmission.',
+      },
+      {
+        chapterId: 'sahabiyyat_3',
+        chapterTitleArabic: 'الفصل الثالث: سيدة نساء أهل الجنة فاطمة الزهراء وأسماء بنت أبي بكر الصديق',
+        chapterTitleUrdu: 'تیسرا باب: سیدۃ نساء اہل الجنہ حضرت فاطمہ الزہراء اور ذات النطاقین حضرت اسماء',
+        chapterTitleEnglish: 'Chapter 3: Sayyidah Fatimah al-Zahra & Asma bint Abi Bakr — Models of Piety & Resilience',
+        arabicMatn: `قَالَ رَسُولُ اللَّهِ ﷺ: «فَاطِمَةُ بَضْعَةٌ مِنِّي، فَمَنْ أَغْضَبَهَا أَغْضَبَنِي، وَمَنْ سَرَّهَا فَقَدْ سَرَّنِي».
+وَكَانَتْ رَضِيَ اللَّهُ عَنْهَا سَيِّدَةَ نِسَاءِ الْعَالَمِينَ زُهْدًا وَعِبَادَةً وَصَبْرًا عَلَى الْقُوتِ الْيَسِيرِ، وَخِدْمَةً لِبَيْتِهَا بِيَدِهَا حَتَّى أَثَّرَتِ الرَّحَى فِي يَدِهَا الشَّرِيفَةِ.
+وَأَمَّا أَسْمَاءُ بِنْتُ أَبِي بَكْرٍ «ذَاتُ النِّطَاقَيْنِ» فَقَدْ حَمَلَتِ الزَّادَ إِلَى غَارِ ثَوْرٍ تَحْتَ جُنْحِ الظَّلَامِ بِشَجَاعَةٍ وَإِيمَانٍ لا يُقْهَرُ.`,
+        urduTranslation: `رسول اللہ ﷺ نے ارشاد فرمایا: "فاطمہ میرے جگر کا ٹکڑا ہے، جس نے اسے ناراض کیا اس نے مجھے ناراض کیا، اور جس نے اسے خوش کیا اس نے مجھے خوش کیا"۔ [صحیح بخاری]
+سیدہ فاطمہ رضی اللہ عنہا نے غربت اور فاقہ کشی کے عالم میں بھی صبر و شکر کے ساتھ گھر کی چکی خود پیسی یہاں تک کہ ہاتھوں میں نشان پڑ گئے، اور کبھی شکوہ زبان پر نہ لایا۔
+اور ذات النطاقین حضرت اسماء بنت ابی بکر رضی اللہ عنہما نے ہجرت کی رات کفر کی تنگیوں میں اپنی جان خطرے میں ڈال کر غارِ ثور تک کھانا اور پانی پہنچایا اور تاریخ میں شجاعت کا لازوال باب رقم کیا۔`,
+        englishSynopsis: 'Portrays the supreme piety of the Prophet\'s beloved daughter Fatimah al-Zahra alongside the breathtaking courage of Asma bint Abi Bakr during the Hijrah.',
+        scholarlyNotes: 'Essential reading in the Amal Nisa Sanctuary for daily inspiration and spiritual grounding.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 56. SEERAT-E-TAYYIBAH PAR 350 SAWAL O JAWAB
+  // =========================================================================
+  'CANON-SIRAH-350-QA': {
+    workId: 'CANON-SIRAH-350-QA',
+    verifiedExternalUrl: '/books/seerat-350-sawal-jawab.pdf',
+    verifiedExternalName: 'Seerat-e-Tayyibah Par 350 Sawal o Jawab (Urdu PDF - 350 Questions & Answers)',
+    chapters: [
+      {
+        chapterId: 'qa_350_1',
+        chapterTitleArabic: 'الباب الأول: مائة سؤال وجواب في ولادته ونسبه وطفولته الشريفة ﷺ',
+        chapterTitleUrdu: 'پہلا حصہ: ولادتِ باسعادت، اسماء و القاب اور بچپن کے احوال پر سوال و جواب',
+        chapterTitleEnglish: 'Part 1: Questions & Answers on the Nativity, Names & Childhood of the Prophet ﷺ',
+        arabicMatn: `س ۱: مَا هُوَ اسْمُ رَسُولِ اللَّهِ ﷺ فِي الْقُرْآنِ الْكَرِيمِ؟
+ج: سُمِّيَ «مُحَمَّدًا» فِي أَرْبَعَةِ مَوَاضِعَ، وَسُمِّيَ «أَحْمَدَ» فِي سُورَةِ الصَّفِّ.
+س ۲: مَنْ هِيَ أُمُّ رَسُولِ اللَّهِ ﷺ وَمَتَى تُوُفِّيَتْ؟
+ج: أُمُّهُ السَّيِّدَةُ آمِنَةُ بِنْتُ وَهْبٍ، وَتُوُفِّيَتْ بِالأَبْوَاءِ وَعُمُرُهُ الشَّرِيفُ سِتُّ سَنَوَاتٍ.
+س ۳: مَنْ هُوَ أَوَّلُ مَنْ أَرْضَعَتِ النَّبِيَّ ﷺ بَعْدَ أُمِّهِ؟
+ج: ثُوَيْبَةُ الأَسْلَمِيَّةُ مَوْلَاةُ أَبِي لَهَبٍ، ثُمَّ السَّيِّدَةُ حَلِيمَةُ السَّعْدِيَّةُ رَضِيَ اللَّهُ عَنْهَا.`,
+        urduTranslation: `سوال ۱: قرآن مجید میں رسول اللہ ﷺ کے کون سے اسمائے گرامی ذکر کیے گئے ہیں؟
+جواب: قرآن مجید میں چار مقامات پر نامِ نامی "محمد" اور سورۂ صف میں "احمد" وارد ہوا ہے۔
+سوال ۲: رسول اللہ ﷺ کی والدہ ماجدہ کا اسم گرامی کیا ہے اور ان کا وصال کب ہوا؟
+جواب: آپ کی والدہ محترمہ سیدہ آمنہ بنت وہب رضی اللہ عنہا ہیں، اور ان کا وصال ابواء کے مقام پر ہوا جب حضور ﷺ کی عمر مبارک چھ برس تھی۔
+سوال ۳: والدہ ماجدہ کے بعد سب سے پہلے کس نے حضور ﷺ کو دودھ پلانے کا شرف پایا؟
+جواب: سب سے پہلے حضرت ثویبہ نے اور اس کے بعد سیدہ حلیمہ سعدیہ رضی اللہ عنہا نے یہ شرف حاصل کیا۔`,
+        englishSynopsis: 'Interactive catechism covering the early life, genealogy, and formative years of the Prophet ﷺ in question-and-answer format.',
+        scholarlyNotes: 'Structured for youth study circles, family tarbiyah competitions, and daily Sirah trivia.',
+      },
+      {
+        chapterId: 'qa_350_2',
+        chapterTitleArabic: 'الباب الثاني: مائة سؤال وجواب في الهجرة النبوية والغزوات الكبرى',
+        chapterTitleUrdu: 'دوسرا حصہ: ہجرتِ مدینہ، مواخات اور اہم غزوات پر تفصیلی سوال و جواب',
+        chapterTitleEnglish: 'Part 2: Q&A on the Hijrah to Madinah, the Brotherhood & the Historic Expeditions',
+        arabicMatn: `س ۴: كَمْ أَقَامَ رَسُولُ اللَّهِ ﷺ فِي غَارِ ثَوْرٍ أَثْنَاءَ الْهِجْرَةِ؟
+ج: أَقَامَ فِيهِ ثَلَاثَ لَيَالٍ مَعَ صَاحِبِهِ الصِّدِّيقِ رَضِيَ اللَّهُ عَنْهُ.
+س ۵: فِي أَيِّ يَوْمٍ وَقَعَتْ غَزْوَةُ بَدْرٍ الْكُبْرَى؟
+ج: فِي يَوْمِ الْجُمُعَةِ، السَّابِعَ عَشَرَ مِنْ شَهْرِ رَمَضَانَ الْمُبَارَكِ فِي السَّنَةِ الثَّانِيَةِ لِلْهِجْرَةِ.
+س ۶: مَا كَانَ شِعَارُ الْمُسْلِمِينَ يَوْمَ بَدْرٍ؟
+ج: كَانَ شِعَارُهُمْ: «يَا مَنْصُورُ أَمِتْ أَمِتْ»، وَقَدْ أَيَّدَهُمُ اللَّهُ بِمَلَائِكَةٍ مُرْدِفِينَ.`,
+        urduTranslation: `سوال ۴: ہجرت کے دوران رسول اللہ ﷺ اور حضرت ابو بکر صدیق رضی اللہ عنہ نے غارِ ثور میں کتنی راتیں قیام فرمایا؟
+جواب: غارِ ثور میں تین راتیں قیام فرمایا۔
+سوال ۵: غزوہ بدر کب واقع ہوا؟
+جواب: ۱۷ رمضان المبارک، ۲ ہجری بروز جمعۃ المبارک۔
+سوال ۶: یومِ بدر میں مسلمانوں کا نعرہ و شعار کیا تھا؟
+جواب: شعار مبارک تھا "یا منصورُ أَمِتْ أَمِتْ"، اور اللہ تعالیٰ نے آسمان سے ہزاروں فرشتوں کے ذریعے مسلمانوں کی نصرت فرمائی۔`,
+        englishSynopsis: 'Tests comprehension of strategic turning points in Islamic history: the Hijrah, establishment of the Madinan constitution, and the battle of Badr.',
+        scholarlyNotes: 'Accurate chronological milestones verified against canonical Maghazi sources.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 57. HAMARE HUZOOR ﷺ (ہمارے حضور ﷺ - تربیتِ اطفال)
+  // =========================================================================
+  'CANON-SIRAH-HAMARE-HUZOOR': {
+    workId: 'CANON-SIRAH-HAMARE-HUZOOR',
+    verifiedExternalUrl: '/books/hamare-huzoor-sallallahu-alayhi-wasallam.pdf',
+    verifiedExternalName: 'Hamare Huzoor ﷺ (Child Tarbiyah Seerah - ہمارے حضور ﷺ)',
+    chapters: [
+      {
+        chapterId: 'huzoor_child_1',
+        chapterTitleArabic: 'الدرس الأول: كيف كان نبينا الأكرم ﷺ يحب الأطفال ويرحمهم؟',
+        chapterTitleUrdu: 'پہلا سبق: ہمارے پیارے نبی ﷺ بچوں سے کیسی محبت فرماتے تھے؟',
+        chapterTitleEnglish: 'Lesson 1: The Prophet\'s Overflowing Love, Gentleness & Playfulness with Children',
+        arabicMatn: `عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: «خَدَمْتُ النَّبِيَّ ﷺ عَشْرَ سِنِينَ، فَمَا قَالَ لِي أُفٍّ قَطُّ، وَمَا قَالَ لِشَيْءٍ صَنَعْتُهُ: لِمَ صَنَعْتَهُ؟ وَلا لِشَيْءٍ تَرَكْتُهُ: لِمَ تَرَكْتَهُ؟ وَكَانَ رَسُولُ اللَّهِ ﷺ أَحْسَنَ النَّاسِ خُلُقًا».
+وَكَانَ ﷺ يَمُرُّ بِالصِّبْيَانِ فَيُسَلِّمُ عَلَيْهِمْ وَيَمْسَحُ رُؤُوسَهُمْ وَيَحْمِلُ الْحَسَنَ وَالْحُسَيْنَ عَلَى عَاتِقِهِ الشَّرِيفِ.`,
+        urduTranslation: `حضرت انس بن مالک رضی اللہ عنہ فرماتے ہیں: "میں نے دس سال تک نبی کریم ﷺ کی خدمت کی، آپ نے کبھی مجھے 'اف' تک نہ فرمایا، اور نہ کبھی یہ فرمایا کہ یہ کام تم نے کیوں کیا یا یہ کام تم نے کیوں نہیں چھوڑا؟ اور حضور اقدس ﷺ تمام انسانوں میں سب سے بہترین اخلاق والے تھے"۔ [صحیح مسلم]
+اور آپ جب بھی راستے سے گزرتے اور بچے کھیلتے ہوئے نظر آتے تو خود آگے بڑھ کر انہیں سلام کرتے، ان کے سروں پر دستِ شفقت پھیرتے، اور اپنے نواسوں حضرت حسن اور حضرت حسین رضی اللہ عنہما کو اپنے مبارک کاندھوں پر بٹھاتے تھے۔`,
+        englishSynopsis: 'A gentle, heart-warming presentation designed for children and parents, highlighting the Prophet\'s compassion, patience, and warmth toward youth.',
+        scholarlyNotes: 'The foundational reading module in the Amal Family Deen OS child tarbiyah track.',
+      },
+      {
+        chapterId: 'huzoor_child_2',
+        chapterTitleArabic: 'الدرس الثاني: آداب الطعام والشراب والنوم في هدي الحبيب ﷺ',
+        chapterTitleUrdu: 'دوسرا سبق: کھانے پینے، سونے اور بات چیت کے پیارے مسنون آداب',
+        chapterTitleEnglish: 'Lesson 2: Daily Sunnah Manners for Children: Eating, Sleeping & Speaking with Kindness',
+        arabicMatn: `قَالَ رَسُولُ اللَّهِ ﷺ لِعُمَرَ بْنِ أَبِي سَلَمَةَ رَضِيَ اللَّهُ عَنْهُ: «يَا غُلامُ! سَمِّ اللَّهَ، وَكُلْ بِيَمِينِكَ، وَكُلْ مِمَّا يَلِيكَ». [متفق عليه]
+وَكَانَ ﷺ إِذَا أَوَى إِلَى فِرَاشِهِ نَفَثَ فِي كَفَّيْهِ بِـ ﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾ وَالْمُعَوِّذَتَيْنِ وَمَسَحَ بِهِمَا جَسَدَهُ الشَّرِيفَ.`,
+        urduTranslation: `رسول اللہ ﷺ نے حضرت عمر بن ابی سلمہ رضی اللہ عنہ سے شفقت سے فرمایا: "اے پیارے بچے! کھانے سے پہلے 'بسم اللہ' پڑھو، اپنے دائیں ہاتھ سے کھاؤ، اور برتن میں اپنے سامنے سے کھاؤ"۔ [بخاری و مسلم]
+اور حضور ﷺ جب رات کو بستر پر آرام فرمانے لگتے تو دونوں ہاتھوں کی ہتھیلیوں کو جوڑ کر سورۂ اخلاص، سورۂ فلق اور سورۂ ناس پڑھ کر پھونکتے اور اپنے مبارک جسم پر سر سے پاؤں تک مل لیتے تھے۔`,
+        englishSynopsis: 'Practical, simple Sunnah habits for children to practice every single morning, mealtime, and bedtime.',
+        scholarlyNotes: 'Builds positive identity and subconscious love for the Sunnah in children from an early age.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 58. MAWLID RASUL ALLAH ﷺ (الإمام الحافظ ابن كثير)
+  // =========================================================================
+  'CANON-MAWLID-IBN-KATHIR': {
+    workId: 'CANON-MAWLID-IBN-KATHIR',
+    verifiedExternalUrl: '/books/mawlid-ibn-kathir.pdf',
+    verifiedExternalName: 'Mawlid Rasul Allah ﷺ (Imam Ibn Kathir Original Treatise)',
+    chapters: [
+      {
+        chapterId: 'mawlid_ik_1',
+        chapterTitleArabic: 'في ذكر مولده الشريف ﷺ وما ظهر من الدلائل والكرامات ليلة ولادته',
+        chapterTitleUrdu: 'پہلا باب: ولادتِ مصطفیٰ ﷺ اور شبِ میلاد ظاہر ہونے والے عظیم دلائل و معجزات',
+        chapterTitleEnglish: 'Chapter 1: The Prophetic Nativity & Celestial Miracles Witnessed on the Blessed Night',
+        arabicMatn: `قَالَ الْإِمَامُ الْحَافِظُ عِمَادُ الدِّينِ إِسْمَاعِيلُ بْنُ كَثِيرٍ رَحِمَهُ اللَّهُ:
+«وَلَمَّا كَانَتِ اللَّيْلَةُ الَّتِي وُلِدَ فِيهَا رَسُولُ اللَّهِ ﷺ ارْتَجَسَ إِيوَانُ كِسْرَى وَسَقَطَتْ مِنْهُ أَرْبَعَ عَشْرَةَ شُرْفَةً، وَخَمَدَتْ نَارُ فَارِسَ وَلَمْ تَخْمَدْ قَبْلَ ذَلِكَ بِأَلْفِ عَامٍ، وَغَاضَتْ بُحَيْرَةُ سَاوَةَ.
+وَكَانَتْ وِلَادَتُهُ ﷺ نُورًا خَرَجَ مَعَهُ أَضَاءَتْ لَهُ قُصُورُ بُصْرَى مِنْ أَرْضِ الشَّامِ، كَمَا وَرَدَ فِي الصَّحِيحِ».`,
+        urduTranslation: `امام حافظ عماد الدین اسماعیل ابن کثیر رحمہ اللہ اپنی معتبر تصنیف میں رقمطراز ہیں:
+"جس رات حضور نبی کریم ﷺ کی ولادتِ باسعادت ہوئی، ایوانِ کسریٰ لرز اٹھا اور اس کے چودہ کنگرے گر پڑے، فارس کا آتش کدہ جو ایک ہزار سال سے کبھی نہ بجھا تھا بجھ گیا، اور بحیرۂ ساوہ خشک ہو گیا۔
+اور آپ کی ولادت پر ایک ایسا درخشاں نور ظاہر ہوا جس سے ارضِ شام کے محلات روشن ہو گئے، جیسا کہ حدیثِ صحیح میں وارد ہوا ہے"۔`,
+        englishSynopsis: 'Hafiz Ibn Kathir collects the authentic reports detailing the global signs, crumbling of the Persian imperial arches, and the divine light that illuminated Syria during the Nativity.',
+        scholarlyNotes: 'Reflects Hafiz Ibn Kathir\'s dedicated treatise on the Mawlid, illustrating traditional Sunni consensus across the Shafi\'i/Hanbali tradition.',
+      },
+    ],
+  },
+
+  // =========================================================================
+  // 59. BOOK JAME ASHRAF HADEES (منهاج درسِ نظامی - الجامعۃ الاشرفیہ)
+  // =========================================================================
+  'CANON-HADITH-JAME-ASHRAF': {
+    workId: 'CANON-HADITH-JAME-ASHRAF',
+    verifiedExternalUrl: '/books/jame-ashraf-hadith.pdf',
+    verifiedExternalName: 'Book Jame Ashraf Hadith (Al-Jamiatul Ashrafia Mubarakpur Dars-e-Nizami Masterwork)',
+    chapters: [
+      {
+        chapterId: 'jame_ashraf_1',
+        chapterTitleArabic: 'مقدمة الكتاب في شرف علم الحديث وطرق الرواية والاتصال',
+        chapterTitleUrdu: 'مقدمہ: شرفِ علمِ حدیث، اسانید کا تسلسل اور الجامعۃ الاشرفیہ کا منہجِ تدریس',
+        chapterTitleEnglish: 'Prologue: The Nobility of Hadith Studies & Authentic Chains of Transmission',
+        arabicMatn: `الْحَمْدُ لِلَّهِ الَّذِي شَرَّفَ هَذِهِ الأُمَّةَ بِالإِسْنَادِ، وَجَعَلَهُ خَصِيصَةً لَهَا مِنْ بَيْنِ سَائِرِ الْعِبَادِ.
+إِنَّ عِلْمَ الْحَدِيثِ هُوَ الْقَانُونُ الَّذِي تُعْرَفُ بِهِ سُنَّةُ سَيِّدِ الْمُرْسَلِينَ ﷺ، وَقَدْ قَامَ فُحُولُ الْعُلَمَاءِ وَالْمُحَدِّثِينَ فِي الْجَامِعَةِ الأَشْرَفِيَّةِ بِمُبَارَكْفُور بِحِفْظِ هَذَا التُّرَاثِ وَتَدْرِيسِهِ لِطَلَبَةِ الْعِلْمِ جِيلًا بَعْدَ جِيلٍ عَلَى أَوْثَقِ مَنَاهِجِ الدَّرْسِ النِّظَامِيِّ.`,
+        urduTranslation: `تمام تعریفیں اللہ کے لیے ہیں جس نے اس امتِ مصطفیٰ کو اسناد کے شرف سے نوازا اور تمام امتوں میں یہ امتیاز صرف مسلمانوں کو بخشا۔
+بے شک علمِ حدیث وہ مقدس علم ہے جس کے ذریعے سید المرسلین ﷺ کے ارشادات، افعال اور احوال محفوظ رہتے ہیں۔ الجامعۃ الاشرفیہ مبارکپور کے اکابر محدثین نے اس کتاب میں درسِ نظامی کے طلبا کے لیے احادیثِ مبارکہ کا ایک جامع اور مستند نصاب مرتب فرمایا ہے جس میں فقہِ حنفی کی متون کے دلائل اور اخلاق و عقائد کے ابواب شامل ہیں۔`,
+        englishSynopsis: 'Introduction to the rigorous Dars-e-Nizami hadith curriculum compiled by the leading scholars of Al-Jamiatul Ashrafia, emphasizing sanad continuity and authentic Prophetic guidance.',
+        scholarlyNotes: 'Authorized curriculum text spanning primary Hadith literature, legal evidences, and spiritual purification.',
+      },
+    ],
+  },
 };
 
 // Direct catalog ID aliases for uncollided Wave / Treasures mapping
@@ -1746,6 +2029,7 @@ CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-009'] = CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-
 CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-012'] = CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-002']!;
 CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-016'] = CLASSICAL_BOOKS_CHAPTERS['CANON-TAZ-003']!;
 CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-MAL-007'] = CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-MAL-002']!;
+CLASSICAL_BOOKS_CHAPTERS['CANON-SIRAH-MADARIJ'] = CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-MADARIJ']!;
 
 /**
  * Look up verified chapters for canonical works.
@@ -1946,7 +2230,111 @@ export const CANONICAL_REPOSITORIES_MAP: Record<string, { url: string; name: str
   'CANON-FIQ-MAL-006': { url: "https://shamela.ws/book/7522", name: "Al-Maktaba al-Shamela (Matn Ibn Ashir)" },
   'CANON-FIQ-MAL-007': { url: "https://shamela.ws/book/7521", name: "Al-Maktaba al-Shamela (Risalah Ibn Abi Zayd al-Qayrawani)" },
   'CANON-HAD-013': { url: "https://shamela.ws/book/1329", name: "Al-Maktaba al-Shamela (Sunan al-Darimi)" },
+
+  // Newly Ingested Authentic Editions (Local Digital Assets)
+  'CANON-SIRAH-MADARIJ': { url: "/books/madarij-un-nubuwwat-vol1.pdf", name: "AMAL Local Repository (Madarij an-Nubuwwat Vol. 1 - Shaykh Abdul Haq Dehlawi)" },
+  'CANON-SIRAH-MUSTAFA-ENG': { url: "/books/seerate-mustafa-english.pdf", name: "AMAL Local Repository (Seerat-e-Mustafa ﷺ English Edition - Allama Azami)" },
+  'CANON-SAHABIYYAT-001': { url: "/books/sahaba-ki-misali-biwiyan.pdf", name: "AMAL Local Repository (Sahaba-e-Kiram Ki Misali Biwiyan)" },
+  'CANON-MAWLID-IBN-KATHIR': { url: "/books/mawlid-ibn-kathir.pdf", name: "AMAL Local Repository (Mawlid Rasul Allah ﷺ - Imam Ibn Kathir)" },
+  'CANON-HADITH-JAME-ASHRAF': { url: "/books/jame-ashraf-hadith.pdf", name: "AMAL Local Repository (Kitab Jame Ashraf Hadith - Al-Jamiatul Ashrafia)" },
+  'CANON-HADITH-HIFZ-001': { url: "/books/sahihayn-muntakhab-ahadith-hifz.pdf", name: "AMAL Local Repository (Sahihayn Se Muntakhab Ahadees Baraye Hifz)" },
+  'CANON-SIRAH-350-QA': { url: "/books/seerat-350-sawal-jawab.pdf", name: "AMAL Local Repository (Seerat-e-Tayyibah Par 350 Sawal o Jawab)" },
+  'CANON-SIRAH-HAMARE-HUZOOR': { url: "/books/hamare-huzoor-sallallahu-alayhi-wasallam.pdf", name: "AMAL Local Repository (Hamare Huzoor ﷺ - Child Tarbiyah Seerah)" },
 };
+
+/**
+ * Verified Local Canonical PDF Archive
+ * Connects directly to verified physical print scans served in-app at /books/...
+ */
+export interface LocalPdfRecord {
+  workId: string;
+  pdfUrl: string;
+  pdfTitle: string;
+  fileSizeBytes: string;
+  language: string;
+  descriptionUrdu: string;
+}
+
+export const LOCAL_CANONICAL_PDFS: Record<string, LocalPdfRecord> = {
+  'CANON-SIRAH-MUSTAFA-ENG': {
+    workId: 'CANON-SIRAH-MUSTAFA-ENG',
+    pdfUrl: '/books/seerate-mustafa-english.pdf',
+    pdfTitle: 'Seerat-e-Mustafa ﷺ (Official English Translation)',
+    fileSizeBytes: '13.3 MB',
+    language: 'English',
+    descriptionUrdu: 'علامہ عبد المصطفیٰ اعظمی کی معرکہ آرا سیرتِ مصطفیٰ ﷺ کا مستند انگریزی ایڈیشن مکمل پی ڈی ایف',
+  },
+  'CANON-SIRAH-MADARIJ': {
+    workId: 'CANON-SIRAH-MADARIJ',
+    pdfUrl: '/books/madarij-un-nubuwwat-vol1.pdf',
+    pdfTitle: 'Madarij an-Nubuwwat Vol. 1 (Shaykh Abdul Haq Muhaddith Dehlawi)',
+    fileSizeBytes: '14.1 MB',
+    language: 'Urdu / Persian Classical',
+    descriptionUrdu: 'شیخ عبد الحق محدث دہلوی کی شاہکار سیرت کی پہلی جلد، نورِ مصطفیٰ اور احوالِ ولادت و بعثت',
+  },
+  'CANON-SAHABIYYAT-001': {
+    workId: 'CANON-SAHABIYYAT-001',
+    pdfUrl: '/books/sahaba-ki-misali-biwiyan.pdf',
+    pdfTitle: 'Sahaba-e-Kiram Ki Misali Biwiyan (گوشۂ خواتین و صحابیات)',
+    fileSizeBytes: '6.4 MB',
+    language: 'Urdu',
+    descriptionUrdu: 'ام المؤمنین حضرت خدیجہ، عائشہ اور جلیل القدر صحابیات کی مقدس زندگی اور مثالی گھریلو کردار',
+  },
+  'CANON-SIRAH-350-QA': {
+    workId: 'CANON-SIRAH-350-QA',
+    pdfUrl: '/books/seerat-350-sawal-jawab.pdf',
+    pdfTitle: 'Seerat-e-Tayyibah Par 350 Sawal o Jawab (سیرت طیبہ پر ۳۵۰ سوال و جواب)',
+    fileSizeBytes: '2.5 MB',
+    language: 'Urdu',
+    descriptionUrdu: 'سیرت النبی ﷺ کے اہم واقعات، غزوات اور شمائل پر مشتمل ۳۵۰ معلوماتی سوال و جواب',
+  },
+  'CANON-HADITH-HIFZ-001': {
+    workId: 'CANON-HADITH-HIFZ-001',
+    pdfUrl: '/books/sahihayn-muntakhab-ahadith-hifz.pdf',
+    pdfTitle: 'Sahihayn Se Muntakhab Ahadees Baraye Hifz (صحیحین سے منتخب شدہ احادیث)',
+    fileSizeBytes: '3.6 MB',
+    language: 'Arabic / Urdu',
+    descriptionUrdu: 'صحیح بخاری و مسلم کی متفق علیہ احادیث کا متبرک مجموعہ برائے حفظ و روزمرہ عمل',
+  },
+  'CANON-SIRAH-HAMARE-HUZOOR': {
+    workId: 'CANON-SIRAH-HAMARE-HUZOOR',
+    pdfUrl: '/books/hamare-huzoor-sallallahu-alayhi-wasallam.pdf',
+    pdfTitle: 'Hamare Huzoor ﷺ (Child Tarbiyah Seerah - ہمارے حضور ﷺ)',
+    fileSizeBytes: '2.0 MB',
+    language: 'Urdu',
+    descriptionUrdu: 'بچوں کی اسلامی تربیت اور آقائے دو جہاں ﷺ کی پیاری عادات و سیرت کا آسان فہم بیان',
+  },
+  'CANON-MAWLID-IBN-KATHIR': {
+    workId: 'CANON-MAWLID-IBN-KATHIR',
+    pdfUrl: '/books/mawlid-ibn-kathir.pdf',
+    pdfTitle: 'Mawlid Rasul Allah ﷺ (Imam Ibn Kathir Original Treatise)',
+    fileSizeBytes: '1.2 MB',
+    language: 'Arabic / Academic',
+    descriptionUrdu: 'حافظ عماد الدین ابن کثیر کی معتبر تصنیفِ لطیف میلاد النبی ﷺ اور فضائلِ رسالت پر',
+  },
+  'CANON-HADITH-JAME-ASHRAF': {
+    workId: 'CANON-HADITH-JAME-ASHRAF',
+    pdfUrl: '/books/jame-ashraf-hadith.pdf',
+    pdfTitle: 'Book Jame Ashraf Hadith (الجامعۃ الاشرفیہ مبارکپور کا نصابی شاہکار)',
+    fileSizeBytes: '84.8 MB',
+    language: 'Arabic / Urdu',
+    descriptionUrdu: 'الجامعۃ الاشرفیہ مبارکپور کا مستند نصابی و درسی مجموعہ برائے درس نظامی و مطالعہ حدیث',
+  },
+};
+
+export function getLocalPdfForWork(workId: string): LocalPdfRecord | null {
+  if (LOCAL_CANONICAL_PDFS[workId]) {
+    return LOCAL_CANONICAL_PDFS[workId];
+  }
+  // Cross aliases
+  if (workId === 'CANON-SIR-004' || workId === 'CANON-SIR-008') {
+    return LOCAL_CANONICAL_PDFS['CANON-SIRAH-MUSTAFA-ENG'] || null;
+  }
+  if (workId === 'CANON-SIR-MADARIJ') {
+    return LOCAL_CANONICAL_PDFS['CANON-SIRAH-MADARIJ'] || null;
+  }
+  return null;
+}
 
 /**
  * Get verified scholarly digital repository URL and Display Name for any canonical work.

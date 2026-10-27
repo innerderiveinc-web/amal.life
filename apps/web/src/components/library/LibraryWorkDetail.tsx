@@ -1,7 +1,7 @@
 import React from 'react';
 import { CanonicalEditionRecord } from '@amal/evidence';
 import { AmalTheme } from '@amal/ui';
-import { getBookChapters, getVerifiedSourceUrl } from '../../lib/classical-chapters-data';
+import { getBookChapters, getVerifiedSourceUrl, getLocalPdfForWork } from '../../lib/classical-chapters-data';
 import { showAmalToast } from '../Toast';
 
 interface LibraryWorkDetailProps {
@@ -25,6 +25,7 @@ export function LibraryWorkDetail({
     selectedWork.discipline === 'QURAN' || selectedWork.work_id === 'CANON-QUR-001';
   const hasSelectedInAppChapters = isQuran || !!getBookChapters(selectedWork.work_id);
   const verifiedSource = getVerifiedSourceUrl(selectedWork.work_id);
+  const localPdf = getLocalPdfForWork(selectedWork.work_id);
 
   return (
     <div
@@ -119,6 +120,37 @@ export function LibraryWorkDetail({
               : `View Manuscript Credentials & Source (علمی اسناد و ماخذ — ${selectedWork.title_transliterated})`}
           </span>
         </button>
+
+        {localPdf && (
+          <a
+            href={localPdf.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              width: '100%',
+              padding: '12px 18px',
+              borderRadius: 10,
+              backgroundColor: '#FEF3C7',
+              color: '#92400E',
+              border: '1px solid #FDE68A',
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              boxShadow: '0 2px 4px rgba(180, 83, 9, 0.08)',
+              transition: 'background-color 0.15s ease',
+              boxSizing: 'border-box',
+            }}
+          >
+            <span>📥</span>
+            <span>
+              Download / Read Full Official PDF ({localPdf.fileSizeBytes}) · مکمل پی ڈی ایف
+            </span>
+          </a>
+        )}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {isQuran ? (

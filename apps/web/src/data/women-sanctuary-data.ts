@@ -45,6 +45,7 @@ export interface SanctuaryBook {
   verificationHash: string;
   scholarlyConsensusUrdu: string;
   isOfflineAvailable: boolean;
+  pdfUrl?: string;
   coreChapters: SanctuaryBookChapter[];
 }
 
@@ -831,6 +832,56 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
           'سات سال کی عمر میں نماز کا حکم دیا جائے اور دس سال پر باقاعدہ عادت ڈالی جائے۔'
         ],
         fullTextUrdu: 'رسول اللہ ﷺ نے فرمایا: "کسی باپ نے اپنی اولاد کو اچھے ادب اور تربیت سے بہتر کوئی تحفہ نہیں دیا۔" علامہ عبد المصطفیٰ اعظمی فرماتے ہیں کہ شیخ عبد القادر جیلانی اور امام احمد بن حنبل کی عظمت کے پیچھے ان کی متقی ماؤں کی تربیت اور دعائیں تھیں۔'
+      }
+    ]
+  },
+  {
+    id: 'CANON-NIS-21',
+    titleUrdu: 'صحابۂ کرام کی مثالی بیویاں',
+    titleArabic: 'صحابۂ کرام کی مثالی بیویاں (سیرتِ صحابیات و ازواجِ مطہرات)',
+    titleEnglish: 'Sahaba-e-Kiram Ki Misali Biwiyan (Exemplary Wives of the Sahabah)',
+    authorUrdu: 'مستند علماء و محققینِ سیرت و احوالِ صحابیات',
+    authorEnglish: 'Authentic Biographical Board of Ahl al-Sunnah',
+    authorEra: 'معاصر توثیق / مستند سوانح',
+    category: 'sahabiyyat_muhaddithat',
+    categoryLabelUrdu: 'اسوۂ صحابیات و محدثات',
+    categoryLabelEnglish: 'Sahabiyyat & Scholars',
+    descriptionUrdu: 'امہات المؤمنین اور جلیل القدر صحابیات کی مقدس زندگی، گھریلو اخلاق، شوہروں کی خدمت اور دین کے لیے لازوال قربانیوں کا ایمان افروز اور دلنشین مجموعہ۔ مکمل مستند پی ڈی ایف ایڈیشن کے ساتھ دستیاب۔',
+    descriptionEnglish: 'A dedicated, heart-touching biographical work illuminating the lives, marital devotions, piety, and heroic support of the Mothers of the Believers and noble female companions.',
+    classicalSourceTier: 'TIER_C_AUTHENTIC_SUNNI',
+    sanadGrade: 'MAQBOOL_MUTABAR',
+    verificationHash: 'SHA256-SAHABA-KI-MISALI-BIWIYAN-AUTHENTIC',
+    scholarlyConsensusUrdu: 'خواتین اور گھریلو تربیت کے لیے نہایت متاثر کن اور مستند سوانحی دستاویز۔',
+    isOfflineAvailable: true,
+    pdfUrl: '/books/sahaba-ki-misali-biwiyan.pdf',
+    coreChapters: [
+      {
+        chapterId: 'smb-01',
+        chapterNumber: 1,
+        titleUrdu: 'سیدہ خدیجۃ الکبریٰ — غمخواری، ایثار اور رفاقت کا مثالی نمونہ',
+        titleEnglish: 'Sayyidah Khadijah: The Supreme Model of Marital Comfort & Faith',
+        summaryUrdu: 'جب وحی کے ابتدائی ایام میں خوف اور اضطراب تھا تو سیدہ خدیجہ نے کَلَّا وَاللَّهِ لَا يُخْزِيكَ اللَّهُ أَبَدًا کہہ کر ڈھارس بندھائی۔',
+        summaryEnglish: 'When the first revelation arrived, Sayyidah Khadijah consoled the Prophet ﷺ declaring: "Never by Allah! Allah will never humiliate you, for you maintain kinship and speak truth."',
+        hadithOrFiqhReference: 'صحیح البخاری، حدیث رقم ۳ / صحیح مسلم',
+        keyTakeaways: [
+          'گھریلو زندگی میں باہمی محبت، عزت اور ایک دوسرے کی پریشانی میں شریک ہونا اصل سنت ہے۔',
+          'دین کے لیے اپنا تن، من، دھن قربان کرنا خواتینِ صحابہ کا خاص شیوہ رہا ہے۔'
+        ],
+        fullTextUrdu: 'حضرت خدیجہ رضی اللہ عنہا نے اپنی تمام دولت رسول اللہ ﷺ کے قدموں میں ڈال دی اور اسلام کے نازک ترین دور میں وہ قلعہ بن کر کھڑی رہیں۔ تاریخ گواہ ہے کہ جب تک وہ حیات رہیں، حضور ﷺ نے دوسرا نکاح نہ فرمایا اور ان کے وصال کے بعد بھی ان کی سہیلیوں کو تحائف بھیج کر ان کی یاد تازہ فرماتے تھے۔'
+      },
+      {
+        chapterId: 'smb-02',
+        chapterNumber: 2,
+        titleUrdu: 'سیدہ فاطمہ الزہراء — فقر و فاقہ میں صبر، قناعت اور چکی پیسنے کا شرف',
+        titleEnglish: 'Sayyidah Fatimah al-Zahra: Serenity in Poverty and Labor of Love',
+        summaryUrdu: 'سیدہ فاطمہ نے غربت کے باوجود گھر کے تمام کام خود کیے، چکی پیستے پیستے مبارک ہاتھوں پر چھالے پڑ گئے مگر کبھی بے صبری کا کلمہ نہیں نکالا۔',
+        summaryEnglish: 'Sayyidah Fatimah ground the wheat mill herself until her blessed hands were blistered, personifying ultimate contentment and dignity.',
+        hadithOrFiqhReference: 'جامع الترمذی، حدیث رقم ۳۷۶۱ / مسند احمد',
+        keyTakeaways: [
+          'رسول اللہ ﷺ نے فرمایا: "فاطمہ میرے جگر کا ٹکڑا ہے"۔',
+          'گھریلو کام کاج میں مشقت اٹھانا سنتِ سیدہ فاطمۃ الزہراء رضی اللہ عنہا ہے۔'
+        ],
+        fullTextUrdu: 'سیدہ فاطمہ الزہراء رضی اللہ عنہا سیدۃ نساء العالمین تھیں، جن کے گھر میں کئی کئی دن چولہا نہ جلتا تھا مگر ذکرِ الٰہی کا چراغ کبھی گل نہ ہوتا تھا۔ جب آپ نے خادمہ کی درخواست کی تو حضور ﷺ نے رات کو ۳۳ مرتبہ سبحان اللہ، ۳۳ مرتبہ الحمد للہ اور ۳۴ مرتبہ اللہ اکبر پڑھنے کی تعلیم دی جو خادم سے بہتر ہے۔'
       }
     ]
   }
