@@ -46,6 +46,8 @@ export interface SanctuaryBook {
   scholarlyConsensusUrdu: string;
   isOfflineAvailable: boolean;
   pdfUrl?: string;
+  onlineArchiveUrl?: string;
+  onlineArchiveName?: string;
   coreChapters: SanctuaryBookChapter[];
 }
 
@@ -120,6 +122,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-JANNATI-ZEWAR-AZMI-8819A',
     scholarlyConsensusUrdu: 'جمہور علمائے اہل سنت کے نزدیک خواتین کے مسائل کے لیے نہایت قابلِ اعتماد اور مستند کتاب ہے۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://www.dawateislami.net/bookslibrary/ur/jannati-zewar',
+    onlineArchiveName: 'Maktaba-tul-Madina Official Research Desk (Jannati Zewar Complete)',
     coreChapters: [
       {
         chapterId: 'jz-01',
@@ -171,6 +175,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-BAHAR-E-SHARIAT-AMJADI-9921B',
     scholarlyConsensusUrdu: 'فقہ حنفی میں برصغیر کا مستند ترین حوالہ، جس کے فتاویٰ پر تمام دار الافتاء اعتماد کرتے ہیں۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://www.dawateislami.net/bookslibrary/ur/bahar-e-shariat',
+    onlineArchiveName: 'Maktaba-tul-Madina (Bahar-e-Shari\'at Complete 3 Volumes)',
     coreChapters: [
       {
         chapterId: 'bs-01',
@@ -207,6 +213,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-FATAWA-RAZAWIYYAH-NISWAN-7712C',
     scholarlyConsensusUrdu: 'تحقیقی اور استدلالی لحاظ سے بے مثال فتاویٰ کا مجموعہ۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://www.dawateislami.net/bookslibrary/ur/fatawa-razawiyya',
+    onlineArchiveName: 'Maktaba-tul-Madina (Fatawa Razawiyyah Complete 30 Volumes)',
     coreChapters: [
       {
         chapterId: 'fr-01',
@@ -243,6 +251,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-SISTERS-SALAH-GUIDE-3312D',
     scholarlyConsensusUrdu: 'مبتدی اور متوسط بہنوں کے لیے روزمرہ مسائل کا آسان و صحیح حل۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://www.dawateislami.net/bookslibrary/ur/islami-behno-ki-namaz',
+    onlineArchiveName: 'Maktaba-tul-Madina (Islami Behnon Ki Namaz Complete Edition)',
     coreChapters: [
       {
         chapterId: 'ssg-01',
@@ -279,6 +289,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-HUQUQ-ZAWJAYN-AMJADI-4411E',
     scholarlyConsensusUrdu: 'خاندانی استحکام اور گھریلو امن کے لیے اہل سنت کی انتہائی مفید کتاب۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/huqooq-e-zowjain',
+    onlineArchiveName: 'Classical Sunnah Heritage Archive (Huquq-e-Zawjayn - Mufti Jalaluddin Amjadi)',
     coreChapters: [
       {
         chapterId: 'hz-01',
@@ -317,6 +329,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-KHADIJAH-AL-KUBRA-MALIKI-5512F',
     scholarlyConsensusUrdu: 'عالمِ اسلام کے اکابر محدثین کے نزدیک انتہائی پرتاثیر اور ثقہ تصنیف۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/AlSayyidahKhadijahAlKubra',
+    onlineArchiveName: 'Makkan Classical Archives (Al-Sayyidah Khadijah al-Kubra - Sayyid Muhammad Alawi al-Maliki)',
     coreChapters: [
       {
         chapterId: 'sk-01',
@@ -353,6 +367,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-AL-IJABAH-ZARKASHI-SUYUTI-6612G',
     scholarlyConsensusUrdu: 'تمام محدثین کے نزدیک ام المؤمنین عائشہ کے فقہی مقام کو سمجھنے کے لیے بنیادی کلاسیکی ماخذ ہے۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://shamela.ws/book/8381',
+    onlineArchiveName: 'Al-Maktaba al-Shamela (Al-Ijabah - Imam al-Zarkashi & al-Suyuti)',
     coreChapters: [
       {
         chapterId: 'ai-01',
@@ -389,6 +405,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-SEERAT-AISHA-OWAISI-7711H',
     scholarlyConsensusUrdu: 'اہل سنت کے ہاں ازواجِ مطہرات کی پاکیزگی اور عظمت کو اجاگر کرنے کے لیے معتبر تالیف۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/seerat-hazrat-aisha-siddiqa',
+    onlineArchiveName: 'Sunni Classical Heritage (Seerat Hazrat Aisha Siddiqah - Mufti Faiz Ahmad Owaisi)',
     coreChapters: [
       {
         chapterId: 'sa-01',
@@ -425,6 +443,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-THUGHUR-AL-BASIM-SUYUTI-8812I',
     scholarlyConsensusUrdu: 'مناقبِ اہل بیت اور سیدہ زہراء کی سیرت کے لیے متفقہ کلاسیکی مرجع۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://shamela.ws/book/21774',
+    onlineArchiveName: 'Al-Maktaba al-Shamela (Thughur al-Basim - Imam Jalal al-Din al-Suyuti)',
     coreChapters: [
       {
         chapterId: 'tb-01',
@@ -461,6 +481,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-SEERAT-FATIMAH-OWAISI-9912J',
     scholarlyConsensusUrdu: 'اہل سنت کے ہاں حسنین کریمین کی والدہ ماجدہ کی سیرت پر مستند تالیف۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/seerat-hazrat-fatima-zahra',
+    onlineArchiveName: 'Sunni Classical Heritage (Seerat Sayyidat an-Nisa Fatimah - Mufti Faiz Ahmad Owaisi)',
     coreChapters: [
       {
         chapterId: 'sf-01',
@@ -496,6 +518,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-BANAT-MUSTAFA-AZMI-1101K',
     scholarlyConsensusUrdu: 'اہل سنت کے ہاں چاروں بناتِ رسول کے احوال پر متفقہ اور مستند کتاب۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/banat-e-mustafa',
+    onlineArchiveName: 'Ahl al-Sunnah Digital Heritage (Banat-e-Mustafa ﷺ - Allama Abdul Mustafa Azmi)',
     coreChapters: [
       {
         chapterId: 'bm-01',
@@ -532,6 +556,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-HALIMAH-SAADIYYAH-OWAISI-2202L',
     scholarlyConsensusUrdu: 'حضور ﷺ کی رضاعت اور برکاتِ نبوی کے حوالے سے نہایت مقبول کتاب۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/hazrat-halima-sadiya',
+    onlineArchiveName: 'Sunni Classical Heritage (Sayyidatuna Halimah al-Sa\'diyyah - Mufti Faiz Ahmad Owaisi)',
     coreChapters: [
       {
         chapterId: 'hs-01',
@@ -567,6 +593,7 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-MADARIJ-UMMAHAT-DEHLAWI-3303M',
     scholarlyConsensusUrdu: 'برصغیر میں سیرت کا سب سے معتمد اور بنیادی کلاسیکی حوالہ۔',
     isOfflineAvailable: true,
+    pdfUrl: '/books/madarij-un-nubuwwat-vol1.pdf',
     coreChapters: [
       {
         chapterId: 'md-01',
@@ -604,6 +631,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-TAZKAR-SAHABIYYAT-OWAISI-4404N',
     scholarlyConsensusUrdu: 'صحابیات کے ایمان افروز جہاد اور تقویٰ پر اردو کا بہترین گلدستہ۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/tazkar-e-sahabiyat',
+    onlineArchiveName: 'Sunni Classical Heritage (Tazkar-e-Sahabiyyat - Mufti Faiz Ahmad Owaisi)',
     coreChapters: [
       {
         chapterId: 'ts-01',
@@ -639,6 +668,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-AL-ISABAH-IBN-HAJAR-5505O',
     scholarlyConsensusUrdu: 'تمام ائمۂ حدیث کے ہاں صحابہ اور صحابیات کی شناخت کا آخری اور حتمی فیصلہ کن ماخذ۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://shamela.ws/book/9767',
+    onlineArchiveName: 'Al-Maktaba al-Shamela (Al-Isabah - Ibn Hajar al-Asqalani Complete 8 Vols)',
     coreChapters: [
       {
         chapterId: 'is-01',
@@ -675,6 +706,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-TABAQAT-IBN-SAD-VOL8-6606P',
     scholarlyConsensusUrdu: 'خواتینِ اسلام کی تاریخ کا سب سے قدیم اور معتبر ترین بنیادی ماخذ۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://shamela.ws/book/1420',
+    onlineArchiveName: 'Al-Maktaba al-Shamela (Al-Tabaqat al-Kubra - Ibn Sa\'d Vol 8)',
     coreChapters: [
       {
         chapterId: 't8-01',
@@ -710,6 +743,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-MUHADDITHAT-HADITH-MASTERS-7707Q',
     scholarlyConsensusUrdu: 'علمِ حدیث کی تاریخ میں خواتین کے بے مثال کردار کی معتبر دستاویز۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/al-muhaddithat',
+    onlineArchiveName: 'Classical Hadith Research Archives (Al-Muhaddithat: Women Scholars in Islam)',
     coreChapters: [
       {
         chapterId: 'mh-01',
@@ -747,6 +782,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-NISWA-SULAMI-SUFI-WOMEN-8808R',
     scholarlyConsensusUrdu: 'تصوف اور باطنی پاکیزگی کے میدان میں خواتین کے مقام کا مستند ترین کلاسیکی ذخیرہ۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/dhikr-al-niswah',
+    onlineArchiveName: 'Al-Maktaba al-Shamela / Archive (Dhikr al-Niswa - Imam Abu Abd al-Rahman al-Sulami)',
     coreChapters: [
       {
         chapterId: 'ns-01',
@@ -782,6 +819,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-RABIAH-ADAWIYYAH-SULTAN-9909S',
     scholarlyConsensusUrdu: 'عشقِ الٰہی اور خلوصِ نیت کے لیے عالمگیر مسلمہ مثال۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/hazrat-rabia-basri',
+    onlineArchiveName: 'Sunni Classical Heritage (Tazkirah Sayyidatuna Rabia al-Adawiyyah)',
     coreChapters: [
       {
         chapterId: 'ra-01',
@@ -817,6 +856,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     verificationHash: 'SHA256-MOTHER-CRADLE-AZMI-1010T',
     scholarlyConsensusUrdu: 'مسلم ماؤں کے لیے اولاد کی اسلامی تربیت کا بہترین اور مستند دستور العمل۔',
     isOfflineAvailable: true,
+    onlineArchiveUrl: 'https://archive.org/details/maa-ki-godh',
+    onlineArchiveName: 'Ahl al-Sunnah Digital Heritage (Maan Ki Goud - Allama Abdul Mustafa Azmi)',
     coreChapters: [
       {
         chapterId: 'mg-01',
@@ -854,6 +895,8 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
     scholarlyConsensusUrdu: 'خواتین اور گھریلو تربیت کے لیے نہایت متاثر کن اور مستند سوانحی دستاویز۔',
     isOfflineAvailable: true,
     pdfUrl: '/books/sahaba-ki-misali-biwiyan.pdf',
+    onlineArchiveUrl: 'https://archive.org/details/sahaba-ki-misali-biwiyan',
+    onlineArchiveName: 'AMAL Local Digital Repository (Sahaba-e-Kiram Ki Misali Biwiyan Complete Scan)',
     coreChapters: [
       {
         chapterId: 'smb-01',
