@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { wordByWordTajweedEngine, TajweedAudioPassage } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 export default function TajweedPage() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/quran?tab=tajweed');
+  }, [router]);
   const passages = wordByWordTajweedEngine.getAvailablePassages();
   const [activePassageId, setActivePassageId] = useState(passages[0]?.passageId || 'tajweed_fatihah_v1');
   const [speed, setSpeed] = useState<'NORMAL' | 'SLOW_075' | 'DRILL_05'>('SLOW_075');

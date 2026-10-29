@@ -241,6 +241,64 @@ export function MirasCalculatorTab({
           </div>
         )}
 
+        {/* DOCTRINE OF INHERITANCE EXCLUSION (قواعد حجبِ میراث) */}
+        <div
+          style={{
+            marginTop: 16,
+            padding: 16,
+            borderRadius: 10,
+            backgroundColor: '#F8FAFC',
+            border: '1px solid #CBD5E1',
+            fontSize: 12,
+            lineHeight: 1.6,
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+            <span style={{ fontWeight: 800, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span>⚖️</span>
+              <span>{isUrdu ? 'قواعدِ حجب (اصولِ محرومی و تخفیفِ وراثت)' : 'The Classical Doctrine of Exclusion (Al-Hajb)'}</span>
+            </span>
+            <span style={{ fontSize: 10, backgroundColor: '#E2E8F0', padding: '2px 6px', borderRadius: 4, fontWeight: 700, color: '#334155' }}>
+              فقہ الفرائض (السراجی)
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, color: '#334155' }}>
+            <div style={{ backgroundColor: '#FFFFFF', padding: 8, borderRadius: 6, border: '1px solid #E2E8F0' }}>
+              <strong style={{ color: '#065F46' }}>
+                {isUrdu ? '۱. حجبِ نقصان (حصے میں تخفیف):' : '1. Hajb al-Nuqsan (Reduction of Share):'}
+              </strong>
+              <div style={{ marginTop: 2 }}>
+                {isUrdu
+                  ? 'اولاد کی موجودگی میں بیوی کا حصہ 1/4 سے گھٹ کر 1/8، شوہر کا حصہ 1/2 سے گھٹ کر 1/4، اور ماں کا حصہ 1/3 سے گھٹ کر 1/6 ہو جاتا ہے۔'
+                  : 'Children reduce the Wife\'s share from 1/4 to 1/8, the Husband\'s from 1/2 to 1/4, and the Mother\'s from 1/3 to 1/6.'}
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#FFFFFF', padding: 8, borderRadius: 6, border: '1px solid #E2E8F0' }}>
+              <strong style={{ color: '#991B1B' }}>
+                {isUrdu ? '۲. حجبِ حرمان (مکمل محرومی):' : '2. Hajb al-Hirman (Total Exclusion):'}
+              </strong>
+              <div style={{ marginTop: 2 }}>
+                {isUrdu
+                  ? 'باپ کی موجودگی میں دادا محروم ہو جاتا ہے؛ بیٹے کی موجودگی میں پوتے/پوتیاں محروم ہو جاتے ہیں؛ باپ یا بیٹے کی موجودگی میں سگے اور سوتیلے بھائی بہن مکمل محروم ہو جاتے ہیں۔'
+                  : 'Father excludes Grandfather; Son excludes Grandchildren; Father or Son completely excludes all brothers and sisters.'}
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#ECFDF5', padding: 8, borderRadius: 6, border: '1px solid #A7F3D0', color: '#064E3B' }}>
+              <strong>
+                {isUrdu ? 'چھ وارث جو کبھی محروم نہیں ہوتے:' : 'Six Heirs Who Can NEVER Be Excluded:'}
+              </strong>
+              <div style={{ marginTop: 2, fontSize: 11 }}>
+                {isUrdu
+                  ? 'باپ، ماں، بیٹا، بیٹی، شوہر اور بیوی۔ شریعت میں ان چھ کا حقِ وراثت حتمی اور ناقابلِ سلب ہے۔'
+                  : 'Father, Mother, Son, Daughter, Husband, and Wife. Their right to inheritance is absolute under divine law.'}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div style={{ marginTop: 14, padding: 12, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE', fontSize: 12, color: '#1E40AF', lineHeight: 1.5 }}>
           ⚖️ <strong>{t('Scholarly & Legal Guidance:', 'علمی و شرعی رہنمائی:')}</strong> {t('This calculation is based on classical Quranic principles and authenticated jurisprudence. For complex disputes or court distributions, please verify with your local certified Dar-ul-Ifta.', 'یہ تخمینہ قرآن و سنت کے بنیادی اصولوں پر مبنی ہے۔ خاندانی پیچیدہ وراثت، تنازعات یا عدالتی تقسیم سے قبل اپنے مقامی دار الافتاء یا مستند مفتی کرام سے حتمی توثیق ضرور حاصل فرمائیں۔')}
         </div>

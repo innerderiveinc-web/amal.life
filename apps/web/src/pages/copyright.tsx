@@ -49,8 +49,11 @@ export default function CopyrightPage() {
             <div style={{ fontSize: 18, fontWeight: 800, color: '#A7F3D0' }}>
               © 2026 AMAL OS by Qsura India Pvt Ltd. All Rights Reserved.
             </div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: '#6EE7B7', marginTop: 2 }}>
+              Founder &amp; Chief Architect: Dr. Irfan Ashraf
+            </div>
             <p style={{ fontSize: 13, color: '#9CA3AF', margin: '4px 0 0' }}>
-              Software runtime, design architecture, and compilation engines are developed and stewarded by Qsura India Pvt Ltd, protected by global intellectual property law, and dedicated as a perpetual Waqf for the service of the Ummah.
+              Software runtime, design architecture, and compilation engines are the proprietary property of Qsura India Pvt Ltd, founded and architected by Dr. Irfan Ashraf, protected by global intellectual property law, and dedicated as a perpetual Waqf for the service of the Ummah.
             </p>
           </div>
           <div style={{

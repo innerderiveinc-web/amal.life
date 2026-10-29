@@ -17,11 +17,11 @@ export const ibadatItems: NavigationItem[] = [
 // Pillar 2: Quran & Sacred Knowledge (قرآن و علومِ سلف)
 export const ilmItems: NavigationItem[] = [
   { title: 'Al-Quran Al-Kareem (114 Surahs)', titleUrdu: 'قرآن کریم (کنز الایمان)', href: '/quran', icon: '📖' },
+  { title: 'Quran Audio Hub (4 Master Qurra)', titleUrdu: 'تلاوت قرآن (۴ قراء)', href: '/quran?tab=audio', icon: '🎧' },
+  { title: 'Word-by-Word Tajweed & Makharij', titleUrdu: 'تجوید و مخارج آڈیو', href: '/quran?tab=tajweed', icon: '🎙️' },
   { title: 'Ayah Wisdom & Sunnah Cards Studio', titleUrdu: 'قرآنی حکمت و تدبر کارڈز', href: '/wisdom', icon: '✨' },
   { title: '106-Book Canonical Library', titleUrdu: 'کتب خانہ السواد الاعظم', href: '/library', icon: '📚' },
-  { title: 'Living Sirah & Shama\'il', titleUrdu: 'سیرت النبی ﷺ و شمائل', href: '/sirah', icon: '🕊️' },
-  { title: 'Human Voice Quran Audio (4 Qurra)', titleUrdu: 'تلاوت قرآن (۴ قراء)', href: '/audio', icon: '🎧' },
-  { title: 'Tajweed & Makharij Audio', titleUrdu: 'تجوید و مخارج آڈیو', href: '/tajweed', icon: '🎙️' },
+  { title: 'Living Sirah & Shama\'il Audiobooks', titleUrdu: 'سیرت النبی ﷺ و شمائل آڈیو بکس', href: '/audio?tab=SIRAH', icon: '🕊️' },
   { title: 'Classical Dars & Knowledge Vault', titleUrdu: 'خطبات و درس کا خزانہ', href: '/vault', icon: '🏛️' },
 ];
 
@@ -29,7 +29,7 @@ export const ilmItems: NavigationItem[] = [
 export const familySistersItems: NavigationItem[] = [
   { title: 'The Sisters Sanctuary (Amal Nisa)', titleUrdu: 'گوشۂ خواتین و صحابیات', href: '/sisters', icon: '🌸' },
   { title: '20 Classical Women\'s Masterworks', titleUrdu: '۲۰ کتبِ نسواں (جنتی زیور وغیرہ)', href: '/sisters?tab=library', icon: '📖' },
-  { title: '10 Noble Sahabiyyat Models', titleUrdu: '۱۰ جلیل القدر صحابیات', href: '/sisters?tab=sahabiyyat', icon: '🌺' },
+  { title: '15 Noble Sahabiyyat & Paragons', titleUrdu: '۱۵ جلیل القدر صحابیات و امہات المؤمنین', href: '/sisters?tab=sahabiyyat', icon: '🌺' },
   { title: 'Taharah & Hanafi Fiqh Guide', titleUrdu: 'احکامِ طہارت و حیض', href: '/sisters?tab=fiqh', icon: '⚖️' },
   { title: 'Motherhood & Family Duas', titleUrdu: 'ماؤں کی دعائیں و برکت', href: '/sisters?tab=duas', icon: '🤲' },
   { title: 'Family Deen OS & Child Tarbiyah', titleUrdu: 'فیملی سرکل و معمولات', href: '/family', icon: '👨‍👩‍👧‍👦' },
@@ -37,8 +37,9 @@ export const familySistersItems: NavigationItem[] = [
 
 // Pillar 4: Fiqh, Miras & Suluk Journeys (احکام، میراث و سلوک)
 export const ahkamItems: NavigationItem[] = [
-  { title: 'Zakat & Gold Jewelry Calculator', titleUrdu: 'زکوٰۃ و نصاب کیلکولیٹر', href: '/calculator', icon: '💰' },
-  { title: 'Miras (Fara\'id) Shares & PDF', titleUrdu: 'میراث و فرائض تقسیم', href: '/calculator', icon: '📜' },
+  { title: 'Zakat & Gold Jewelry Calculator', titleUrdu: 'زکوٰۃ و نصاب کیلکولیٹر', href: '/calculator?tab=zakat', icon: '💰' },
+  { title: 'Miras (Fara\'id) Shares & PDF', titleUrdu: 'میراث و فرائض تقسیم', href: '/calculator?tab=miras', icon: '📜' },
+  { title: 'Qadha-e-Umri & Contemporary Fiqh', titleUrdu: 'قضائے عمری و جدید فقہی مسائل', href: '/calculator?tab=qadha', icon: '⏳' },
   { title: 'Deen Decision Room (Mufti Packet)', titleUrdu: 'ڈیسیژن روم (مفتی پیکٹ)', href: '/decision-room', icon: '⚖️' },
   { title: '14-Day Structured Journeys (Suluk)', titleUrdu: 'منظم دینی سفر (سلوک)', href: '/journeys', icon: '🛤️' },
   { title: 'Niyyah Goals & Spiritual Baselines', titleUrdu: 'دینی اہداف و نیت', href: '/goals', icon: '🎯' },

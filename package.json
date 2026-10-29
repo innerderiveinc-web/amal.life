@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "AMAL OS V1 - Muslim Life Intelligence Platform. From Niyyah to Amal.",
+  "author": "Dr. Irfan Ashraf (Founder & Chief Architect)",
+  "company": "Qsura India Pvt Ltd",
+  "copyright": "© 2026 Qsura India Pvt Ltd. All rights reserved.",
   "packageManager": "pnpm@9.0.0",
   "workspaces": [
     "apps/*",

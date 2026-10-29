@@ -150,7 +150,7 @@ export default function HajjUmrahOfflinePage() {
                         id: `hajj-dua-${i}`,
                         title: dua.title,
                         subtitle: `${activePack.title} • ${dua.reference}`,
-                        audioUrl: 'https://cdn.islamic.network/quran/audio/talbiyah.mp3',
+                        audioUrl: dua.audioUrl || 'https://archive.org/download/talbiyat/Talbiya.mp3',
                         reciter: 'Hajj Supplication',
                         arabicSnippet: dua.arabic,
                       })

@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { Navigation } from '../components/Navigation';
 import { useLanguage } from '../context/LanguageContext';
-
-// Dynamically import real-time client clock & location dependent widgets to eliminate React hydration mismatch errors
-const DailyMamoolBar = dynamic(
-  () => import('../components/DailyMamoolBar').then((m) => m.DailyMamoolBar),
-  { ssr: false }
-);
-
-const DailyKnowledgeBroadcastCard = dynamic(
-  () => import('../components/DailyKnowledgeBroadcastCard').then((m) => m.DailyKnowledgeBroadcastCard),
-  { ssr: false }
-);
-
-const SpiritualCoachHub = dynamic(
-  () => import('../components/coach/SpiritualCoachHub').then((m) => m.SpiritualCoachHub),
-  { ssr: false }
-);
+import { ClientOnly } from '../components/ClientOnly';
+import { DailyMamoolBar } from '../components/DailyMamoolBar';
+import { DailyKnowledgeBroadcastCard } from '../components/DailyKnowledgeBroadcastCard';
+import { DailySunnahChecklistCard } from '../components/home/DailySunnahChecklistCard';
+import { SpiritualCoachHub } from '../components/coach/SpiritualCoachHub';
 import {
   signatureCapabilitiesEngine,
   CompiledAmalPlan,
@@ -117,7 +105,7 @@ export default function Home() {
   };
 
   return (
-    <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', paddingBottom: 80 }}>
+    <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', paddingBottom: 120 }}>
       <Head>
         <title>AMAL OS by Qsura India Pvt Ltd — From Niyyah to Amal</title>
         <meta name="author" content="Qsura India Pvt Ltd" />
@@ -201,10 +189,21 @@ export default function Home() {
         </div>
 
         {/* 1-Tap Daily Essentials Bar */}
-        <DailyMamoolBar />
+        <ClientOnly fallback={<div style={{ minHeight: 180, backgroundColor: '#FFFFFF', borderRadius: 18, marginBottom: 24, border: '1px solid #E2E8F0' }} />}>
+          <DailyMamoolBar />
+        </ClientOnly>
+
+        {/* Daily Practical Sunnah Checklist & Routine Tracker */}
+        <div style={{ marginTop: 16 }}>
+          <ClientOnly fallback={<div style={{ minHeight: 120, backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px solid #E2E8F0' }} />}>
+            <DailySunnahChecklistCard />
+          </ClientOnly>
+        </div>
 
         {/* Automated Daily Knowledge Broadcast Stream */}
-        <DailyKnowledgeBroadcastCard />
+        <ClientOnly fallback={<div style={{ minHeight: 160, backgroundColor: '#FFFFFF', borderRadius: 16, marginTop: 16, border: '1px solid #E2E8F0' }} />}>
+          <DailyKnowledgeBroadcastCard />
+        </ClientOnly>
 
         {/* 4 SACRED PILLARS MATRIX - EXECUTIVE ARCHITECTURAL GATEWAY */}
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -213,7 +212,9 @@ export default function Home() {
 
         {/* Smart Spiritual Coach Hub & Muhasabah Agent */}
         <div style={{ marginBottom: 28 }}>
-          <SpiritualCoachHub />
+          <ClientOnly fallback={<div style={{ minHeight: 160, backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px solid #E2E8F0' }} />}>
+            <SpiritualCoachHub />
+          </ClientOnly>
         </div>
 
         {/* SIGNATURE CAPABILITIES: LIFE OS MODES, NIYYAH COMPILER & PROPHETIC CONTEXT */}
@@ -253,14 +254,14 @@ export default function Home() {
                       letterSpacing: 0.5,
                     }}
                   >
-                    {isUrdu ? 'خصوصی انجن' : 'AMAL SIGNATURE ENGINES'}
+                    {isUrdu ? 'روزمرہ رہنمائی' : 'DAILY GUIDANCE'}
                   </span>
                   <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
-                    {isUrdu ? 'نیت، طرزِ زندگی اور نبوی حکمت' : 'Intention, Life Modes & Prophetic Guidance'}
+                    {isUrdu ? 'نیت، طرزِ زندگی اور نبوی حکمت' : 'Intention, Life Context & Prophetic Guidance'}
                   </span>
                 </div>
                 <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
-                  {isUrdu ? 'نظامِ نیت، اسوۂ نبوی اور حالاتِ زندگی' : 'Niyyah Compiler & Prophetic Context Engine'}
+                  {isUrdu ? 'نیت سے عمل تک اور اسوۂ رسول ﷺ' : 'From Intention to Action & Prophetic Guidance'}
                 </h2>
               </div>
 

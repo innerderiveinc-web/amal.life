@@ -10,7 +10,7 @@ import { AmalTokens } from '../styles/tokens';
 
 export default function AudioPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
+  const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('SIRAH');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
   const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
   const [selectedSirahWorkId, setSelectedSirahWorkId] = useState<string>('RAHEEQ');
@@ -207,6 +207,52 @@ export default function AudioPage() {
         {/* QURAN TAB */}
         {activeTab === 'QURAN' && (
           <div>
+            {/* Unified Hub Announcement Banner */}
+            <div
+              style={{
+                backgroundColor: '#ECFDF5',
+                border: '1.5px solid #059669',
+                borderRadius: 14,
+                padding: '16px 20px',
+                marginBottom: 20,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 12,
+                boxShadow: '0 2px 8px rgba(5, 150, 105, 0.08)',
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 800, fontSize: 15, color: '#065F46', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>🎧</span>
+                  <span>Unified 114-Surah Quran Audio Hub Available</span>
+                </div>
+                <div style={{ fontSize: 13, color: '#047857', marginTop: 4, lineHeight: 1.4 }}>
+                  Listen to the entire Holy Quran (all 114 Surahs) by 4 world-renowned Qurra with continuous playback and synchronized Ayah tracking inside the Unified Quran Hub.
+                </div>
+              </div>
+              <Link
+                href="/quran?tab=audio"
+                style={{
+                  backgroundColor: '#059669',
+                  color: '#FFFFFF',
+                  padding: '9px 18px',
+                  borderRadius: 8,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                }}
+              >
+                <span>Open All 114 Surahs</span>
+                <span>➔</span>
+              </Link>
+            </div>
+
             {/* Reciter Selector */}
             <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E5E7EB', marginBottom: 20 }}>
               <label style={{ fontSize: 12, fontWeight: 700, color: '#374151', display: 'block', marginBottom: 10 }}>
@@ -913,7 +959,7 @@ export default function AudioPage() {
                         سلسلہ وار ابواب و دروس ({currentWork.chapters.length} Chapters & Lessons)
                       </h3>
                       <span style={{ fontSize: 12, color: '#6B7280' }}>
-                        {currentWork.id === 'RAHEEQ'
+                        {currentWork.id === 'RAHEEQ' || currentWork.id === 'KITAB_ASH_SHIFA'
                           ? 'Click ▶ to stream instantly with player & offline mode'
                           : '📺 Click to watch/listen verified scholarly Dars series'}
                       </span>
@@ -1260,6 +1306,48 @@ export default function AudioPage() {
                             <span>{isThisPlaying ? '⏸' : '▶'}</span>
                             <span>{isThisPlaying ? 'Pause Audio' : `Listen (${Math.round(ep.durationSeconds / 60)}m)`}</span>
                           </button>
+
+                          {(() => {
+                            const isOfflineCached = cachedUrls.has(ep.audioUrl);
+                            const isDownloading = downloadingUrl === ep.audioUrl;
+
+                            return (
+                              <button
+                                onClick={() =>
+                                  handleToggleOffline(
+                                    ep.audioUrl,
+                                    `Sirah Ep ${ep.episodeNumber}: ${ep.titleEnglish}`,
+                                    `${ep.titleUrdu} • ${ep.yearHijriOrGregorian}`
+                                  )
+                                }
+                                style={{
+                                  padding: '8px 12px',
+                                  borderRadius: 8,
+                                  backgroundColor: isOfflineCached ? '#ECFDF5' : '#F9FAFB',
+                                  color: isOfflineCached ? '#065F46' : '#4B5563',
+                                  fontSize: 12,
+                                  fontWeight: 700,
+                                  border: isOfflineCached ? '1px solid #A7F3D0' : '1px solid #D1D5DB',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: 4,
+                                  transition: 'all 0.15s ease',
+                                  whiteSpace: 'nowrap',
+                                }}
+                                title={isOfflineCached ? 'Click to delete from offline cache' : 'Download for offline airplane mode'}
+                              >
+                                <span>
+                                  {isDownloading
+                                    ? `⏳ ${downloadProgress}%`
+                                    : isOfflineCached
+                                    ? '🟢 آف لائن محفوظ'
+                                    : '⬇️ Save Offline'}
+                                </span>
+                              </button>
+                            );
+                          })()}
                         </div>
                       </div>
 

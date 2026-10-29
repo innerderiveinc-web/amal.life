@@ -51,6 +51,21 @@ export interface SanctuaryBook {
   coreChapters: SanctuaryBookChapter[];
 }
 
+export interface SahabiyyatMilestone {
+  eventTitleUrdu: string;
+  eventTitleEnglish: string;
+  descriptionUrdu: string;
+  descriptionEnglish: string;
+}
+
+export interface ClassicalScholarEndorsement {
+  scholarNameUrdu: string;
+  scholarNameEnglish: string;
+  bookTitle: string;
+  verbatimQuoteUrdu: string;
+  verbatimQuoteEnglish: string;
+}
+
 export interface SahabiyyatProfile {
   id: string;
   nameUrdu: string;
@@ -69,6 +84,18 @@ export interface SahabiyyatProfile {
     en: string;
   }[];
   sanadVerificationHash: string;
+
+  // Rich Scholarly Dimensions for Revered Female Personalities
+  lineageAndBackgroundUrdu?: string;
+  lineageAndBackgroundEnglish?: string;
+  propheticPraiseHadithArabic?: string;
+  propheticPraiseHadithUrdu?: string;
+  propheticPraiseHadithEnglish?: string;
+  propheticPraiseSource?: string;
+  exhaustiveBiographyUrdu?: string[];
+  exhaustiveBiographyEnglish?: string[];
+  majorHistoricalMilestones?: SahabiyyatMilestone[];
+  classicalScholarlyEndorsements?: ClassicalScholarEndorsement[];
 }
 
 export interface FiqhRulingItem {
@@ -154,6 +181,70 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
           'تشہد میں دونوں پاؤں دائیں جانب نکال کر بیٹھا جائے (تورک)۔'
         ],
         fullTextUrdu: 'شریعتِ مطہرہ نے عورت کے لیے نماز میں حیا اور ستر کو بنیاد بنایا ہے۔ تکبیر تحریمہ میں ہاتھ صرف سینے یا کندھوں تک چادر کے اندر سے اٹھائے جائیں۔ سجدے میں سمٹ کر سجدہ کرے، یعنی بازو زمین پر بچھا دے اور پیٹ کو رانوں سے چپکا لے۔ قعدہ میں تورک کرے یعنی دونوں پاؤں داہنی طرف نکال کر بائیں چوتڑ پر بیٹھے۔'
+      },
+      {
+        chapterId: 'jz-03',
+        chapterNumber: 3,
+        titleUrdu: 'عورتوں کے زیورات اور زکوٰۃ کے شرعی احکام',
+        titleEnglish: 'Zakat on Gold, Silver & Women\'s Jewelry',
+        summaryUrdu: 'فقہ حنفی میں عورت کے ملکیتی سونے اور چاندی کے زیورات پر زکوٰۃ فرض ہے اگر وہ نصاب (ساڑھے سات تولہ سونا یا ساڑھے باون تولہ چاندی) کو پہنچ جائیں اور سال گزر جائے۔',
+        summaryEnglish: 'In Hanafi fiqh, personal gold and silver jewelry owned by women is subject to 2.5% Zakat once reaching the Nisab threshold and completing one lunar year.',
+        hadithOrFiqhReference: 'سنن ابی داؤد، حدیث رقم ۱۵۶۳ / الہدایہ کتاب الزکاۃ',
+        keyTakeaways: [
+          'استعمال کے زیورات ہوں یا رکھے ہوئے، حنفی مذہب میں دونوں پر زکوٰۃ واجب ہے۔',
+          'صرف سونا ہو تو ساڑھے سات تولہ (۸۷.۴۸ گرام) نصاب ہے۔',
+          'اگر سونا اور چاندی دونوں ملے جلے ہوں تو چاندی کے نصاب (۵۲.۵ تولہ = ۶۱۲.۳۶ گرام) کی قیمت کے اعتبار سے حساب کیا جائے گا۔',
+          'زکوٰۃ ادا کرنے کی شرعی ذمہ داری زیور کی مالکہ (عورت) پر ہے، شوہر اپنی خوشی سے ادا کرے تو جائز ہے۔'
+        ],
+        fullTextUrdu: 'حضرت عمرو بن شعیب اپنے والد سے اور وہ اپنے دادا سے روایت کرتے ہیں کہ ایک خاتون رسول اللہ ﷺ کی خدمت میں حاضر ہوئیں اور ان کی بیٹی کے ہاتھ میں سونے کے دو موٹے کنگن تھے۔ آپ ﷺ نے فرمایا: "کیا تم اس کی زکوٰۃ دیتی ہو؟" انہوں نے عرض کیا: نہیں! آپ ﷺ نے فرمایا: "کیا تمہیں یہ پسند ہے کہ قیامت کے دن اللہ تعالیٰ تمہیں ان کے بدلے آگ کے کنگن پہنائے؟" پس انہوں نے وہ فوراً اتار کر پیش کر دیے۔ فقہ حنفی کی تمام معتمد کتب (ہدایہ، رد المحتار، بہارِ شریعت) میں یہی راجح ہے کہ زیورات خواہ روزمرہ پہنے جاتے ہوں، سال مکمل ہونے پر ڈھائی فیصد زکوٰۃ نکالنا فرض ہے۔'
+      },
+      {
+        chapterId: 'jz-04',
+        chapterNumber: 4,
+        titleUrdu: 'خواتین کے روزے: حمل، رضاعت اور قضا کا طریقہ',
+        titleEnglish: 'Fasting Rulings for Women: Pregnancy, Nursing & Makeup Fasts',
+        summaryUrdu: 'حاملہ یا دودھ پلانے والی عورت کو اگر اپنی یا بچے کی جان یا صحت کے شدید نقصان کا اندیشہ ہو تو روزہ مؤخر کرنے کی اجازت ہے، بعد میں صرف قضا لازم ہوگی، کفارہ نہیں۔',
+        summaryEnglish: 'Pregnant and nursing mothers may defer fasting if there is genuine medical risk to mother or infant; only single-day makeup (Qadha) is owed later without expiation (Kaffarah).',
+        hadithOrFiqhReference: 'سنن الترمذی، حدیث رقم ৭১৫ / رد المحتار باب ما یفسد الصوم',
+        keyTakeaways: [
+          'ماہر مسلمان طبیب یا ذاتی تجربے کی بنیاد پر اگر صحت کو خطرہ ہو تو روزہ نہ رکھنے کی رخصت ہے۔',
+          'ان دنوں کی بعد میں صحت یابی اور فراغت کے بعد ایک ایک روزہ قضا رکھنا لازم ہوگا۔',
+          'حیض کے چھوٹنے والے روزے بھی زندگی میں کسی بھی وقت قضا کیے جا سکتے ہیں، البتہ جلد ادا کرنا مستحب ہے۔',
+          'اگر کوئی عورت بڑھاپے یا دائمی مرض کے سبب زندگی بھر قضا رکھنے پر قادر نہ رہے تو وہ ہر روزے کا فدیہ (ایک صدقہ فطر کی مقدار) ادا کرے۔'
+        ],
+        fullTextUrdu: 'رسول اللہ ﷺ نے فرمایا: "بے شک اللہ تعالیٰ نے مسافر پر سے آدھی نماز معاف فرما دی، اور مسافر، حاملہ اور دودھ پلانے والی عورت پر سے روزے کی پابندی (اس وقت کے لیے) اٹھا لی ہے"۔ پس جو بہن حمل یا بچے کو دودھ پلانے کے زمانے میں کمزوری کی وجہ سے روزہ نہ رکھ سکے وہ گناہ گار نہیں ہوگی، بلکہ بعد کے مہینوں میں جب آسانی ہو قضا رکھ لے۔ اگر شوہر یا گھر والے بلاوجہ اصرار کریں جبکہ ڈاکٹر نے منع کیا ہو، تو شریعت کی رخصت پر عمل کرنا افضل ہے۔'
+      },
+      {
+        chapterId: 'jz-05',
+        chapterNumber: 5,
+        titleUrdu: 'نکاح، مہر کی شرعی ملکیت اور گھریلو حقوقِ زوجین',
+        titleEnglish: 'Nikah, Sanctity of Mahr & Mutual Domestic Rights',
+        summaryUrdu: 'مہر عورت کا خالص ذاتی حق اور شرعی ملکیت ہے جس میں شوہر یا سسرال والوں کا کوئی دخل نہیں، اور حسنِ معاشرت دونوں جانب سے واجب ہے۔',
+        summaryEnglish: 'Mahr is the exclusive divinely mandated financial right of the bride; neither husband nor in-laws may usurp it, and harmonious companionship is mutually binding.',
+        hadithOrFiqhReference: 'سورۃ النساء آیت ۴ / درِ مختار کتاب النکاح',
+        keyTakeaways: [
+          'قرآن کریم کا صریح حکم ہے: "اور عورتوں کو ان کے مہر خوش دلی سے ادا کرو"۔',
+          'مہر معاف کروانے کے لیے عورت پر کسی بھی قسم کا گھریلو دباؤ ڈالنا شرعاً باطل اور حرام ہے۔',
+          'نان و نفقہ، رہائش اور علاج معالجہ کا مکمل خرچہ شوہر کے ذمے ہے خواہ بیوی خود صاحبِ ثروت ہو۔',
+          'گھر کے اندر باہمی مشاورت، محبت اور درگزر سے زندگی گزارنا سنتِ نبوی ہے۔'
+        ],
+        fullTextUrdu: 'اسلام نے عورت کو وہ مالی خود مختاری اور عزت عطا فرمائی ہے جو دنیا کے کسی قانون نے نہیں دی۔ نکاح کے وقت مقرر کردہ مہر عورت کی ذاتی ملکیت ہے، وہ جس طرح چاہے اسے خرچ کرے یا محفوظ رکھے۔ شوہر کے ذمے نان و نفقہ، مناسب رہائش اور عزت دار سلوک واجب ہے۔ رسول اللہ ﷺ نے حجۃ الوداع کے موقع پر خطبہ دیتے ہوئے ارشاد فرمایا: "لوگو! عورتوں کے معاملے میں اللہ سے ڈرو، تم نے انہیں اللہ کی امان سے اپنی رفاقت میں لیا ہے، پس ان کے ساتھ بھلائی اور نرمی کا برتاؤ کرو"۔'
+      },
+      {
+        chapterId: 'jz-06',
+        chapterNumber: 6,
+        titleUrdu: 'خواتین کے اخلاق: غیبت، چغلی سے اجتناب اور زبان کی حفاظت',
+        titleEnglish: 'Moral Conduct for Women: Safeguarding the Tongue from Gheebah & Slander',
+        summaryUrdu: 'گھریلو فتنوں اور معاشرتی بگاڑ کی سب سے بڑی جڑ زبان کی بے احتیاطی ہے؛ غیبت، چغلی اور طعنہ زنی سے بچنا اور گھر میں درود و استغفار کی فضا بنانا باعثِ برکت ہے۔',
+        summaryEnglish: 'The primary cause of domestic discord is negligence of the tongue. Preserving one\'s speech from backbiting, gossiping, and harsh mockery creates angels of peace in the home.',
+        hadithOrFiqhReference: 'صحیح البخاری، حدیث رقم ۶۴۷۴ / ریاض الصالحین',
+        keyTakeaways: [
+          'رسول اللہ ﷺ نے فرمایا: "مسلمان وہ ہے جس کی زبان اور ہاتھ سے دوسرے مسلمان محفوظ رہیں"۔',
+          'سسرال، ہمسایوں یا رشتہ داروں کی چھوٹی موٹی باتوں کو دوسروں کے سامنے اچھالنا (چغلی) سخت گناہِ کبیرہ ہے۔',
+          'گھر کے کام کاج کرتے وقت زبان پر استغفار، درود شریف اور سبحان اللہ کا ورد رکھنا گھر میں سکینہ لاتا ہے۔',
+          'غصے کے وقت خاموشی اختیار کرنا اور معاف کر دینا اللہ کی بارگاہ میں اعلیٰ مقام دلاتا ہے۔'
+        ],
+        fullTextUrdu: 'سیدہ عائشہ صدیقہ رضی اللہ عنہا بیان فرماتی ہیں کہ میں نے ایک بار رسول اللہ ﷺ کے سامنے کسی کے چھوٹے قد کی طرف اشارہ کیا تو آپ ﷺ نے سخت ناراضگی کا اظہار کرتے ہوئے فرمایا: "عائشہ! تم نے ایسا کلمہ بولا ہے کہ اگر سمندر کے پانی میں ملا دیا جائے تو اس کا سارا پانی کڑوا ہو جائے!" پس ایک مسلمان بہن کا زیور صرف سونا چاندی نہیں بلکہ اس کی میٹھی، پاکیزہ زبان اور پاک دامن اخلاق ہے جو اس کے گھر کو جنت کا نمونہ بنا دیتا ہے۔'
       }
     ]
   },
@@ -192,6 +283,51 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
           'اس حالت میں تلاوتِ قرآن اور کعبہ کا طواف باوضو جائز ہے۔'
         ],
         fullTextUrdu: 'رسول اللہ ﷺ نے حضرت فاطمہ بنت ابی حبیش رضی اللہ عنہا سے فرمایا: "یہ حیض نہیں بلکہ رگ کا خون (استحاضہ) ہے۔ جب حیض کے دن آئیں تو نماز چھوڑ دو اور جب وہ مدت گزر جائے تو غسل کر کے نماز پڑھو اور ہر نماز کے لیے وضو کرو۔" (صحیح بخاری)'
+      },
+      {
+        chapterId: 'bs-02',
+        chapterNumber: 2,
+        titleUrdu: 'غسل کے فرائض اور مینڈھیوں (چوٹیوں) کے احکام',
+        titleEnglish: 'Obligations of Ghusl & Rulings on Braided Hair',
+        summaryUrdu: 'غسل میں تین فرائض ہیں: کلی کرنا، ناک کی نرم ہڈی تک پانی پہنچانا اور پورے بدن پر پانی بہانا؛ گندھے بالوں والی عورت کے لیے چوٹیاں کھولنا واجب نہیں بشرطیکہ جڑوں تک پانی پہنچ جائے۔',
+        summaryEnglish: 'Ghusl has 3 obligatory acts: gargling mouth, rinsing nose to bone, and washing entirety of body. Braided hair does not need unbraiding if roots receive water.',
+        hadithOrFiqhReference: 'صحیح مسلم، حدیث رقم ۳۳۰ (حدیث ام سلمہ) / بہارِ شریعت حصہ ۲',
+        keyTakeaways: [
+          'اگر بالوں کی جڑوں تک پانی پہنچ جائے تو چوٹیاں کھولنا فرض نہیں ہے۔',
+          'اگر بال کھلے ہوں تو ایک ایک بال کا دھونا فرض ہے۔',
+          'انگوٹھی، نتھ، بالیوں اور چوڑیوں کو ہلا کر نیچے پانی پہنچانا لازم ہے۔'
+        ],
+        fullTextUrdu: 'ام المؤمنین حضرت ام سلمہ رضی اللہ عنہا نے بارگاہِ رسالت ﷺ میں عرض کیا: "یا رسول اللہ! میں اپنے سر کے بال گوندھ کر رکھتی ہوں، کیا حیض اور جنابت کے غسل کے لیے انہیں کھولوں؟" آپ ﷺ نے فرمایا: "نہیں! تمہارے لیے صرف یہ کافی ہے کہ تم اپنے سر پر تین چلو پانی ڈال لو، پھر تمام بدن پر پانی بہا لو، تم پاک ہو جاؤ گی۔" صدر الشریعہ فرماتے ہیں: یہ رخصت صرف عورتوں کے لیے ہے اور اس شرط کے ساتھ ہے کہ بالوں کی جڑوں میں پانی پہنچ جائے۔'
+      },
+      {
+        chapterId: 'bs-03',
+        chapterNumber: 3,
+        titleUrdu: 'نفاس (ولادت کے بعد کا خون) اور چالیس دن کی شرعی حدود',
+        titleEnglish: 'Postnatal Bleeding (Nifas) & The 40-Day Maximum Ceiling',
+        summaryUrdu: 'نفاس کی زیادہ سے زیادہ مدت ۴۰ دن اور ۴۰ راتیں ہیں، کم کی کوئی حد نہیں۔ اگر خون ۴۰ دن سے پہلے رک جائے تو فوراً غسل کر کے نمازیں پڑھنا فرض ہے۔',
+        summaryEnglish: 'The absolute maximum limit for Nifas is 40 days; there is no minimum. If bleeding stops before 40 days, the mother must immediately perform Ghusl and resume Salah.',
+        hadithOrFiqhReference: 'جامع الترمذی، حدیث رقم ۱۳۹ / بہارِ شریعت حصہ ۲',
+        keyTakeaways: [
+          'یہ عوامی وہم باطل ہے کہ ہر عورت پر ۴۰ دن پورے کرنا لازم ہے۔',
+          'خون ۱۰ یا ۲۰ دن میں رک جائے تو اسی وقت پاک شمار ہوگی اور غسل کر کے نماز شروع کرے۔',
+          '۴۰ دن سے زیادہ آنے والا خون استحاضہ ہے، اس میں غسل کر کے ہر نماز کے لیے وضو کرے گی۔'
+        ],
+        fullTextUrdu: 'سیدہ ام سلمہ رضی اللہ عنہا فرماتی ہیں: "رسول اللہ ﷺ کے مبارک زمانے میں نفاس والی خواتین چالیس دن تک انتظار کیا کرتی تھیں"۔ فقہ حنفی میں اس کی کم سے کم کوئی مدت نہیں، اگر ولادت کے بعد ایک گھنٹے میں بھی خون بند ہو جائے تو فوراً غسل کر کے نماز اور روزے شروع کرنا فرض ہے۔ چالیس دن کے بعد آنے والا خون استحاضہ (بیماری) ہے جس میں نماز نہیں چھوڑی جائے گی۔'
+      },
+      {
+        chapterId: 'bs-04',
+        chapterNumber: 4,
+        titleUrdu: 'طہارت کی حتمی علامات: قصۂ بیضاء اور سفیدی کا ظہور',
+        titleEnglish: 'Final Markers of Purity: White Discharge (Qassah Bayda) & Dryness',
+        summaryUrdu: 'عورت اس وقت پاک شمار ہوتی ہے جب پیڈ یا روئی پر خالص سفید رطوبت (قصۂ بیضاء) نظر آئے یا کپڑا بالکل سوکھا نکلے۔',
+        summaryEnglish: 'A woman is officially pure when white discharge (Qassah Bayda) appears or the cotton pad emerges completely clean and dry.',
+        hadithOrFiqhReference: 'صحیح البخاری، کتاب الحیض، تعلیقاً / بہارِ شریعت حصہ ۲',
+        keyTakeaways: [
+          'جب تک زردی یا خاکی رنگت باقی ہے حیض ختم نہیں مانا جائے گا۔',
+          'سیدہ عائشہ نے فرمایا: جلدی نہ کرو جب تک سفید دھاگے کی طرح سفیدی نہ دیکھ لو۔',
+          'عادت کے دن پورے ہونے پر سفید رطوبت آتے ہی غسل کر لیا جائے۔'
+        ],
+        fullTextUrdu: 'حضرت عائشہ صدیقہ رضی اللہ عنہا کی خدمت میں خواتین روئی کے ٹکڑے بھیجتی تھیں جن پر پیلاہٹ ہوتی تھی، تو آپ فرماتی تھیں: "جلدی نہ کرو، یہاں تک کہ تم خالص سفید رطوبت (قصۂ بیضاء) نہ دیکھ لو"۔ پس جب تک سفید رطوبت ظاہر نہ ہو یا روئی بالکل خشک نہ نکلے، طہارت مکمل نہیں ہوتی۔'
       }
     ]
   },
@@ -230,6 +366,36 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
           'عورت کی وراثت کو دبا لینا گناہِ کبیرہ اور جہنم کی وعید کا سبب ہے۔'
         ],
         fullTextUrdu: 'قرآن کریم نے واضح ارشاد فرمایا: "اور عورتوں کو ان کے مہر خوشی سے دو" (النساء: ۴)۔ امام احمد رضا خان فرماتے ہیں کہ عورت اپنے مہر اور ذاتی مال کی آزاد مالکہ ہے، شوہر اس کا محتاج نہیں ہو سکتا اور نہ ہی زبردستی معاف کروا سکتا ہے۔'
+      },
+      {
+        chapterId: 'fr-02',
+        chapterNumber: 2,
+        titleUrdu: 'خواتین کے حجاب اور ستر کی شرعی حدود',
+        titleEnglish: 'Canonical Boundaries of Modesty & Hijab for Muslim Women',
+        summaryUrdu: 'نامحرم مردوں کے سامنے چہرے اور پورے بدن کا پردہ لازم ہے؛ شریعت نے حیا کو عورت کا فطری اور دینی زیور قرار دیا ہے۔',
+        summaryEnglish: 'Full modesty before non-Mahram men is mandatory; classical jurisprudence establishes modesty as the inherent spiritual ornament of the believer.',
+        hadithOrFiqhReference: 'فتاویٰ رضویہ، جلد ۲۲، رسالہ "مسئلہ حجاب"',
+        keyTakeaways: [
+          'فتنے کے دور میں نامحرم کے سامنے چہرہ چھپانا واجب ہے۔',
+          'باریک اور چست لباس پہننا جس سے جسم کے خدوخال ظاہر ہوں حرام ہے۔',
+          'خوشبو لگا کر غیر محرموں کے مجمع میں جانا سخت گناہ ہے۔'
+        ],
+        fullTextUrdu: 'اعلیٰ حضرت امام احمد رضا خان فرماتے ہیں: قرآن مجید میں ارشاد ہے: "اے نبی! اپنی بیویوں اور بیٹیوں اور مسلمانوں کی عورتوں سے فرما دیجیے کہ اپنے اوپر اپنی چادروں کا گھونگھٹ ڈال لیا کریں" (الاحزاب: ۵۹)۔ عورت کا وقار اور تقدس اس کے پردے میں مضمر ہے، اور سچے دل سے حجاب کی پابندی درحقیقت سیدہ فاطمۃ الزہراء رضی اللہ عنہا کی سنت کی پیروی ہے۔'
+      },
+      {
+        chapterId: 'fr-03',
+        chapterNumber: 3,
+        titleUrdu: 'وراثت میں بہنوں اور بیٹیوں کے حقوق کی سختی سے حفاظت',
+        titleEnglish: 'Protecting Daughters and Sisters Inheritance Rights from Coercion',
+        summaryUrdu: 'بہنوں یا بیٹیوں کو جائداد کے حصے سے محروم کرنا یا رسمی طور پر "معاف" کروانا شرعاً باطل اور حرامِ قطعی ہے۔',
+        summaryEnglish: 'Depriving daughters or sisters of their estate shares or coercing formal "forgiveness" is completely void and strictly prohibited.',
+        hadithOrFiqhReference: 'فتاویٰ رضویہ، جلد ۲۶، کتاب الفرائض',
+        keyTakeaways: [
+          'وراثت اللہ تعالیٰ کا قطعی طے کردہ فریضہ ہے جس میں کوئی رشتہ دار کمی بیشی نہیں کر سکتا۔',
+          'بھائیوں کا بہنوں کا حصہ دبا لینا دوزخ کی آگ کھانا ہے۔',
+          'دباؤ کے تحت کروایا گیا معاف نامہ شریعت میں باطل ہے۔'
+        ],
+        fullTextUrdu: 'اعلیٰ حضرت لکھتے ہیں: روئے زمین پر سب سے بڑا ظلم یہ ہے کہ لوگ بیٹیوں اور بہنوں کا وراثت کا حصہ غصب کر لیتے ہیں اور حیلے بہانوں سے کہتے ہیں کہ "ہماری بہن نے معاف کر دیا"۔ یاد رکھو! جو معافی خاندانی دباؤ یا شرمندگی میں لی جائے وہ عند اللہ کالعدم ہے، اور ایسا کرنے والے قیامت کے دن سخت عذاب میں مبتلا ہوں گے۔'
       }
     ]
   },
@@ -268,6 +434,36 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
           'ناخن پالش اگر جمی ہو تو اسے ہٹائے بغیر وضو اور غسل نہیں ہوگا۔'
         ],
         fullTextUrdu: 'جب حیض کا خون بند ہو جائے تو غسل فرض ہے۔ غسل میں پہلے استنجا کرے اور نجاست دھوئے، پھر نماز کا وضو کرے۔ اس کے بعد تین بار سر پر، تین بار دائیں اور تین بار بائیں کاندھے پر پانی بہائے۔ کلی کرنا اور ناک کی نرم ہڈی تک پانی پہنچانا فرض ہے۔'
+      },
+      {
+        chapterId: 'ssg-02',
+        chapterNumber: 2,
+        titleUrdu: 'وضو کے چار فرائض اور خواتین کی عام غلطیاں',
+        titleEnglish: 'Four Pillars of Wudu & Rectifying Common Female Errors',
+        summaryUrdu: 'پیشانی کے بالوں سے ٹھوڑی تک اور ایک کان کی لو سے دوسرے کان کی لو تک چہرہ دھونا، کہنیوں سمیت ہاتھ دھونا، چوتھائی سر کا مسح اور ٹخنوں سمیت پاؤں دھونا فرض ہے۔',
+        summaryEnglish: 'The four non-negotiable obligations of Wudu: washing entire face ear to ear, washing hands past elbows, wiping quarter head, washing feet with ankles.',
+        hadithOrFiqhReference: 'بہارِ شریعت، حصہ اول و دوم / قانونِ شریعت',
+        keyTakeaways: [
+          'کان کی لو اور گلے کے قریب خشکی رہ جانے سے وضو نہیں ہوتا۔',
+          'آنکھوں کے کونوں میں کیچڑ یا کاجل کی پپڑی کو صاف کرنا ضروری ہے۔',
+          'ایڑیوں اور انگلیوں کے درمیانی خلا کو اچھی طرح تر کیا جائے۔'
+        ],
+        fullTextUrdu: 'فقہ حنفی میں وضو کے چار فرائض ہیں: (۱) چہرہ دھونا (پیشانی سے ٹھوڑی اور ایک کان سے دوسرے کان تک)، (۲) کہنیوں سمیت دونوں ہاتھ دھونا، (۳) چوتھائی سر کا مسح کرنا، (۴) ٹخنوں سمیت دونوں پاؤں دھونا۔ خواتین کو چاہیے کہ وضو کرتے وقت چوڑیوں اور انگوٹھیوں کو حرکت دیں تاکہ نیچے پانی پہنچ جائے، اور کاجل یا واٹر پروف میک اپ کی تہہ کو پہلے مکمل صاف کر لیں۔'
+      },
+      {
+        chapterId: 'ssg-03',
+        chapterNumber: 3,
+        titleUrdu: 'نماز میں ستر کے احکام اور دوپٹہ اوڑھنے کا طریقہ',
+        titleEnglish: 'Rules of Aurah in Prayer & Correct Dupatta/Scarf Coverage',
+        summaryUrdu: 'عورت کی نماز میں چہرہ، دونوں ہتھیلیاں اور پاؤں کے علاوہ پورا بدن چھپانا فرض ہے؛ بالوں کی ایک لٹ یا گردن کا چوتھائی حصہ بھی ایک رکن کی مقدار کھلا رہا تو نماز فاسد ہو جائے گی۔',
+        summaryEnglish: 'In prayer, the woman\'s entire body is Aurah except face, palms, and feet; if a quarter of the neck, ear, or hair remains exposed for one pillar duration, Salah is invalidated.',
+        hadithOrFiqhReference: 'سنن ابی داؤد، حدیث رقم ۶۴۱ / درِ مختار',
+        keyTakeaways: [
+          'باریک دوپٹہ جس سے بالوں کی سیاہی چمکے نماز کے لیے ناکافی ہے۔',
+          'ٹھوڑی کے نیچے کا حصہ اور کلائیاں مکمل طور پر ڈھانپی ہونی چاہئیں۔',
+          'سجدے میں جاتے وقت اگر پچھلی طرف سے بال یا پیٹھ ننگی ہو گئی تو نماز ٹوٹ جائے گی۔'
+        ],
+        fullTextUrdu: 'رسول اللہ ﷺ نے ارشاد فرمایا: "اللہ تعالیٰ کسی بالغہ عورت کی نماز بغیر اوڑھنی (خمار) کے قبول نہیں فرماتا" (سنن ابی داؤد)۔ پس بہنوں پر لازم ہے کہ نماز کے وقت موٹی چادر یا ایسا اسکارف استعمال کریں جس سے بال اور گردن بالکل نہ جھلکیں۔ اگر غفلت کی وجہ سے بال یا گلا کھل جائے اور فوراً نہ ڈھانپا جائے تو نماز کا لوٹانا فرض ہے۔'
       }
     ]
   },
@@ -302,10 +498,40 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
         hadithOrFiqhReference: 'جامع الترمذی، حدیث رقم ۳۸۹۵ (حسن صحیح)',
         keyTakeaways: [
           'گھر میں غصہ اور تلخی کے بجائے معافی اور درگزر کا مزاج اپنایا جائے۔',
-          'چھوٹی چھوٹی باتوں پر صبر کرنا دونوں جہانوں میں سرخروئی کا ذریعہ ہے۔',
-          'نیک بی بی وہ ہے جسے دیکھ کر شوہر خوش ہو اور جو شوہر کی عزت اور مال کی حفاظت کرے۔'
+          'چھوٹی چھوٹی باتوں پر طعنے دینا گھر کی برکت کو ختم کر دیتا ہے۔',
+          'باہمی گفتگو میں نرمی اور پیار سنتِ نبوی ﷺ ہے۔'
         ],
-        fullTextUrdu: 'نبی کریم ﷺ کا اپنی ازواجِ مطہرات کے ساتھ رویہ انتہائی نرم، خوش اخلاق اور عزت افزا تھا۔ گھر میں کام کاج میں ہاتھ بٹاتے اور کبھی کسی بات پر نہ جھڑکتے۔ یہی اسوہ ہر مسلمان مرد اور عورت کے لیے مشعلِ راہ ہے۔'
+        fullTextUrdu: 'رسولِ اکرم ﷺ نے اپنے مبارک گھرانے میں کبھی کسی پر ہاتھ نہیں اٹھایا اور نہ ہی کبھی بدکلامی فرمائی۔ آپ ﷺ نے فرمایا: "تم میں سب سے بہتر وہ ہے جو اپنے گھر والوں کے ساتھ سب سے اچھا سلوک کرے"۔ مفتی جلال الدین امجدی فرماتے ہیں کہ میاں بیوی کے درمیان جھگڑوں کا خاتمہ اس وقت ممکن ہے جب دونوں اپنے فرائض پر نظر رکھیں اور ایک دوسرے کی خطاؤں کو معاف کرنے کا حوصلہ پیدا کریں۔'
+      },
+      {
+        chapterId: 'hz-02',
+        chapterNumber: 2,
+        titleUrdu: 'بیوی کے واجب حقوق: نان و نفقہ، علاج اور عزت دار رہائش',
+        titleEnglish: 'The Inviolable Rights of the Wife: Maintenance, Healthcare & Dignity',
+        summaryUrdu: 'بیوی کا کھانا پینا، لباس، رہائش اور علاج کا مکمل خرچ شوہر کے ذمے شرعاً واجب ہے؛ اس میں کوتاہی کرنا سخت گناہ ہے۔',
+        summaryEnglish: 'A wife\'s sustenance, seasonal clothing, private accommodation, and medical expenses are strictly binding on the husband according to Islamic law.',
+        hadithOrFiqhReference: 'سنن ابی داؤد، حدیث رقم ۲۱۴۲ / درِ مختار کتاب النفقات',
+        keyTakeaways: [
+          'شوہر پر فرض ہے کہ وہ اپنی استطاعت کے مطابق بیوی کو باعزت نفقہ دے۔',
+          'بیوی کو ایسا کمرہ دینا واجب ہے جس میں اس کا پردہ اور ذاتی سکون محفوظ ہو۔',
+          'بیوی کی بیماری میں علاج معالجہ کروانا شوہر کی اخلاقی اور شرعی ذمہ داری ہے۔'
+        ],
+        fullTextUrdu: 'حضرت معاویہ قشیری رضی اللہ عنہ نے رسول اللہ ﷺ سے دریافت کیا: "ہم پر ہماری بیوی کا کیا حق ہے؟" آپ ﷺ نے فرمایا: "جب تم کھاؤ تو اسے بھی کھلاؤ، جب تم پہنو تو اسے بھی پہناؤ، اس کے چہرے پر نہ مارو، اسے برا بھلا نہ کہو، اور گھر کے علاوہ اس سے قطع تعلق نہ کرو" (سنن ابی داؤد)۔ اسلام نے بیوی کو نوکرانی نہیں بلکہ گھر کی ملکہ اور سکون کا ذریعہ بنایا ہے۔'
+      },
+      {
+        chapterId: 'hz-03',
+        chapterNumber: 3,
+        titleUrdu: 'شوہر کے حقوق، خاندانی آداب اور ساس سسر کا احترام',
+        titleEnglish: 'Respect, In-Laws & Establishing Domestic Serenity',
+        summaryUrdu: 'شوہر کی جائز امور میں اطاعت اور اس کے والدین کا احترام عورت کے لیے باعثِ اجر و ثواب ہے، اور سسرال میں صبر و حکمت گھر کو جنت بناتی ہے۔',
+        summaryEnglish: 'Obedience in lawful matters and honoring in-laws with patience and wisdom earns divine reward and establishes lasting generational peace.',
+        hadithOrFiqhReference: 'صحیح ابن حبان، حدیث رقم ۴۱۶۳ / فتاویٰ فیض الرسول',
+        keyTakeaways: [
+          'رسول اللہ ﷺ نے فرمایا: جس عورت نے ۵ وقت کی نماز پڑھی، رمضان کے روزے رکھے، پاکدامن رہی اور شوہر کی خیرخواہی کی وہ جس دروازے سے چاہے جنت میں داخل ہو جائے۔',
+          'ساس سسر کی خدمت اخلاقی اور نیکی کا اعلیٰ درجہ ہے جو نسلوں کو سنوارتا ہے۔',
+          'شوہر کے رازوں اور مال کی حفاظت کرنا نیک عورت کی نشانی ہے۔'
+        ],
+        fullTextUrdu: 'نبی کریم ﷺ نے ارشاد فرمایا: "اگر عورت پانچوں وقت کی نماز پڑھے، اپنے مہینے کے روزے رکھے، اپنی عفت کی حفاظت کرے اور اپنے شوہر کی اطاعت کرے، تو اس سے کہا جائے گا کہ جنت کے جس دروازے سے چاہے داخل ہو جا"۔ فقیہ ملت فرماتے ہیں کہ سسرال والوں کے ساتھ شفقت اور درگزر سے پیش آنا گھر میں محبت کی بنیاد ہے اور یہی وہ صفت ہے جو مومنہ عورت کو دنیا اور آخرت میں معزز بناتی ہے۔'
       }
     ]
   },
@@ -931,272 +1157,10 @@ export const WOMEN_CLASSICAL_CANON: SanctuaryBook[] = [
 ];
 
 // ==========================================
-// 2. 10 NOBLE SAHABIYYAT PROFILES
+// 2. 10 NOBLE SAHABIYYAT PROFILES (DELEGATED TO DETAILED SCHOLARLY DATASET)
 // ==========================================
-export const SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
-  {
-    id: 'sah-01',
-    nameUrdu: 'سیدتنا خدیجہ الکبریٰ',
-    nameArabic: 'خديجة بنت خويلد القرشية الأسدية',
-    nameEnglish: 'Sayyidatuna Khadijah al-Kubra (رضي الله عنها)',
-    titleUrdu: 'طاہرہ، ام المؤمنین، رفیقۂ نبوت',
-    titleEnglish: 'At-Tahirah, Mother of the Believers, First Believer',
-    kinshipToProphet: 'پہلی زوجۂ مطہرہ، سیدہ فاطمہ و بنات کی والدہ ماجدہ',
-    classicalCitation: 'صحیح البخاری، حدیث ۳ / صحیح مسلم، حدیث ۲۴۳۲',
-    era: 'قبلِ ہجرت ۳ سال قبل وصال (عام الحزن)',
-    biographyUrdu: 'مکہ کی سب سے باعزت اور کامیاب تاجر خاتون جنہوں نے حضور ﷺ کے اخلاق اور دیانت کو دیکھ کر خود نکاح کا پیغام بھیجا۔ نبوت کے آغاز پر سب سے پہلے کلمہ پڑھا، شعبِ ابی طالب کی سختیاں جھیلیں اور اسلام کے لیے اپنی تمام دولت نچھاور کر دی۔ اللہ تعالیٰ نے جبرائیل علیہ السلام کے ذریعے ان کے لیے سلام بھیجا۔',
-    biographyEnglish: 'The premier noble businesswoman of Makkah known as At-Tahirah (The Pure). She recognized the Prophet\'s integrity, initiated marriage, was the first human to accept Islam, sacrificed her vast wealth for the Da\'wah, and received salutations directly from Allah Almighty via Angel Jibril.',
-    heroicAttributes: ['بے پناہ استقامت', 'کامل مالی ایثار', 'شوہر کی بہترین ڈھارس'],
-    dailySunnahLessons: [
-      {
-        ur: 'مشکل اور پریشانی کے وقت شوہر اور گھر والوں کو تسلی دینا اور ان کی ہمت بندھانا۔',
-        en: 'Providing calm, reassuring emotional solace to spouses and family during severe crises.'
-      },
-      {
-        ur: 'کاروبار اور روزگار میں دیانت داری اور کذب و جھوٹ سے پرہیز کرنا۔',
-        en: 'Practicing uncompromising honesty, trustworthiness, and ethical integrity in enterprise.'
-      },
-      {
-        ur: 'اللہ کی راہ میں بغیر احسان جتائے خاموشی سے خرچ کرنا۔',
-        en: 'Spending silently and generously in the path of Allah without ever seeking credit.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-KHADIJAH-BUKHARI-SAHIH-001'
-  },
-  {
-    id: 'sah-02',
-    nameUrdu: 'سیدتنا عائشہ صدیقہ',
-    nameArabic: 'عائشة بنت أبي بكر الصديق التيمية',
-    nameEnglish: 'Sayyidatuna Aisha Siddiqah (رضي الله عنها)',
-    titleUrdu: 'صدیقہ، حمیراء، فقیہۃ الامت، ام المؤمنین',
-    titleEnglish: 'As-Siddiqah, The Great Jurist, Mother of the Believers',
-    kinshipToProphet: 'محبوبۂ رسول، حضرت ابوبکر صدیق کی لختِ جگر',
-    classicalCitation: 'صحیح البخاری، حدیث ۳۷۶۸ / جامع الترمذی، حدیث ۳۸۸۳',
-    era: 'متوفی ۵۸ ہجری مدینہ منورہ (جنت البقیع)',
-    biographyUrdu: 'امتِ مسلمہ کی سب سے بڑی فقیہہ اور عالمہ۔ آپ نے رسول اللہ ﷺ سے ۲,۲۱۰ سے زیادہ احادیث روایت فرمائیں۔ صحابہ کرام جب بھی فقہ یا فرائض میں الجھتے تو آپ کی طرف رجوع کرتے۔ قرآن مجید میں ان کی براءت نازل ہوئی۔ ان کا حجرہ مبارکہ ہی رسول اللہ ﷺ اور شیخین کا روضہ بنا۔',
-    biographyEnglish: 'The supreme female scholar of Islam. Transmitter of 2,210+ Hadiths, master of jurisprudence, medicine, and Arabic poetry. Senior companions consulted her for legal decrees. Her innocence was enshrined forever in Surah An-Nur.',
-    heroicAttributes: ['بے مثال علمی و اجتہادی ذہانت', 'بے پناہ فیاضی و صدقہ', 'شب بیداری و روزے'],
-    dailySunnahLessons: [
-      {
-        ur: 'دین کے علم اور فقہ کو باریکی سے سیکھنا اور اگلی نسلوں تک صحیح طور پر منتقل کرنا۔',
-        en: 'Pursuing deep sacred knowledge and transmitting accurate Islamic understanding to others.'
-      },
-      {
-        ur: 'غیبت اور الزام تراشی سے اپنی زبان کی مکمل حفاظت کرنا۔',
-        en: 'Guarding one\'s tongue strictly against backbiting, rumors, and slanders.'
-      },
-      {
-        ur: 'حاجت مندوں پر سخاوت سے خرچ کرنا چاہے خود تنگی میں ہو۔',
-        en: 'Giving charity to the needy selflessly even when facing personal hardship.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-AISHA-TIRMIDHI-SAHIH-002'
-  },
-  {
-    id: 'sah-03',
-    nameUrdu: 'سیدتنا فاطمۃ الزہراء',
-    nameArabic: 'فاطمة بنت رسول الله الزهراء البتول',
-    nameEnglish: 'Sayyidatuna Fatimah az-Zahra (رضي الله عنها)',
-    titleUrdu: 'سیدۃ نساء العالمین، بتول، بضعۃ النبی',
-    titleEnglish: 'Leader of the Women of Paradise, Az-Zahra, The Chaste',
-    kinshipToProphet: 'رسول اللہ ﷺ کی محبوب ترین صاحبزادی، حضرت علی کی زوجہ، حسنین کی والدہ',
-    classicalCitation: 'صحیح البخاری، حدیث ۳۷۱۴ / صحیح مسلم، حدیث ۲۴۴۹',
-    era: 'متوفی ۱۱ ہجری (وصالِ نبوی کے ۶ ماہ بعد)',
-    biographyUrdu: 'رسول اللہ ﷺ نے فرمایا: "فاطمہ میرے جگر کا ٹکڑا ہے"۔ آپ حسن و اخلاق میں سرکارِ دو عالم ﷺ کے ہو بہو تھیں۔ سادگی کا یہ عالم تھا کہ چکی پیستے پیستے ہاتھوں میں چھالے پڑ جاتے مگر صبر و شکر کا دامن کبھی نہ چھوٹا۔ جنت میں تمام مومنہ عورتوں کی قائد ہیں۔',
-    biographyEnglish: 'Sayyidat Nisa\' Ahl al-Jannah (Leader of the Women of Paradise). The youngest daughter of the Prophet ﷺ who bore an uncanny resemblance to him in noble carriage, speech, and ascetic devotion. The mother of the sacred Ahl al-Bayt.',
-    heroicAttributes: ['اعلیٰ ترین حیا اور عفت', 'بے مثال زہد و قناعت', 'والدین اور اولاد کی بے لوث خدمت'],
-    dailySunnahLessons: [
-      {
-        ur: 'سادگی اور قناعت اختیار کرنا اور دنیا کی پرتعیش نمائش سے بچنا۔',
-        en: 'Adopting contentment and modesty, steering clear of ostentatious worldly displays.'
-      },
-      {
-        ur: 'گھر کے کام کاج کو بوجھ نہ سمجھنا بلکہ ثواب کی نیت سے صبر کے ساتھ انجام دینا۔',
-        en: 'Carrying out household duties with patience, viewing family care as rewarded worship.'
-      },
-      {
-        ur: 'تسبیحِ فاطمہ (۳۳ سبحان اللہ، ۳۳ الحمد للہ، ۳۴ اللہ اکبر) کو ہر رات سوتے وقت پڑھنا۔',
-        en: 'Reciting Tasbih-e-Fatimah before sleeping every night for spiritual and physical strength.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-FATIMAH-BUKHARI-SAHIH-003'
-  },
-  {
-    id: 'sah-04',
-    nameUrdu: 'سیدتنا ام سلمہ',
-    nameArabic: 'هند بنت أبي أمية المخزومية (أم سلمة)',
-    nameEnglish: 'Sayyidatuna Umm Salamah (رضي الله عنها)',
-    titleUrdu: 'ام المؤمنین، صاحبۃ الرائے الصائب',
-    titleEnglish: 'Mother of the Believers, The Wise Counselor',
-    kinshipToProphet: 'زوجۂ مطہرہ، کبار صحابیہ',
-    classicalCitation: 'صحیح البخاری، حدیث ۲۷۳۱ (صلح حدیبیہ)',
-    era: 'متوفی ۶۲ ہجری مدینہ منورہ',
-    biographyUrdu: 'حبشہ اور مدینہ دونوں کی طرف ہجرت کرنے والی جلیل القدر خاتون۔ ان کے فہم اور حکمت کا اندازہ اس سے لگایا جا سکتا ہے کہ صلحِ حدیبیہ کے موقع پر جب صحابہ غم و صدمے سے سر نہیں منڈوا رہے تھے، تو آپ نے حضور ﷺ کو مشورہ دیا کہ آپ خود احرام کھول کر قربانی کریں، چنانچہ صحابہ نے فورا پیروی کی۔',
-    biographyEnglish: 'Migrant of both Abyssinia and Madinah. Renowned for her profound wisdom and political counsel. At the Treaty of Hudaybiyyah, her brilliant advice resolved the companions\' shock and preserved unity.',
-    heroicAttributes: ['گہری سیاسی و معاشرتی بصیرت', 'مصیبت پر انا للہ وانا الیہ راجعون کا ورد', 'حق پر قائم رہنا'],
-    dailySunnahLessons: [
-      {
-        ur: 'کسی بھی مصیبت کے وقت یہ مسنون دعا پڑھنا: "اللهم أجرني في مصيبتي وأخلف لي خيراً منها"۔',
-        en: 'Supplicating during any loss: "O Allah, reward me in my affliction and grant me better in return."'
-      },
-      {
-        ur: 'مشورے کے وقت دانشمندی، عقل اور خیر خواہی کو بنیاد بنانا۔',
-        en: 'Offering thoughtful, sincere, and constructive counsel when asked for guidance.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-UMM-SALAMAH-BUKHARI-004'
-  },
-  {
-    id: 'sah-05',
-    nameUrdu: 'سیدتنا اسماء بنت ابی بکر',
-    nameArabic: 'أسماء بنت أبي بكر الصديق',
-    nameEnglish: 'Sayyidatuna Asma bint Abi Bakr (رضي الله عنها)',
-    titleUrdu: 'ذات النطاقین، شجاعۃ الایمان',
-    titleEnglish: 'Dhat an-Nitaqayn (Possessor of the Two Belts)',
-    kinshipToProphet: 'ام المؤمنین عائشہ کی بڑی ہمشیرہ، حضرت ابوبکر کی بیٹی، عبداللہ بن زبیر کی والدہ',
-    classicalCitation: 'صحیح البخاری، حدیث ۲۹۷۹ / صحیح مسلم، حدیث ۲۵۰۵',
-    era: 'متوفی ۷۳ ہجری (۱۰۰ سال کی عمر مبارک)',
-    biographyUrdu: 'ہجرت کی رات غارِ ثور میں کھانا پہنچانے والی دلیر خاتون۔ ابو جہل نے گھر آ کر ان کے چہرے پر طمانچہ مارا مگر انہوں نے ہجرت کا راز نہ کھولا۔ جب گھوڑے کی دیکھ بھال اور تین میل سے کھجور کی گٹھلیاں سر پر اٹھا کر لاتیں مگر کبھی شکایت نہ کی۔ سو سال کی عمر میں بھی ان کا ذہن چٹان کی طرح مضبوط تھا۔',
-    biographyEnglish: 'Heroine of the Hijrah who delivered food to Cave Thawr, steadfastly withstanding Abu Jahl\'s violent strike without breaking silence. She worked tirelessly, nurtured Abdullah ibn al-Zubayr, and confronted tyranny at age 100 with unshakable faith.',
-    heroicAttributes: ['جبر کے سامنے سینہ تان کر کھڑے ہونا', 'راز داری اور امانت داری', 'اولاد میں حق کی شجاعت پیدا کرنا'],
-    dailySunnahLessons: [
-      {
-        ur: 'خاندان اور دوستوں کے رازوں کی سینے میں مکمل حفاظت کرنا۔',
-        en: 'Guarding family confidences and trust with ironclad loyalty.'
-      },
-      {
-        ur: 'محنت اور مشقت سے نہ گھبرانا اور وقار کے ساتھ زندگی گزارنا۔',
-        en: 'Embracing hard work with dignity, fortitude, and reliance on Allah.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-ASMA-BUKHARI-SAHIH-005'
-  },
-  {
-    id: 'sah-06',
-    nameUrdu: 'سیدتنا نسیبہ بنت کعب (ام عمارہ)',
-    nameArabic: 'نسيبة بنت كعب المازنية الأنصارية (أم عمارة)',
-    nameEnglish: 'Sayyidatuna Nusaybah bint Ka\'b / Umm \'Umarah (رضي الله عنها)',
-    titleUrdu: 'فارسۃ الاسلام، مجاہدۂ احد',
-    titleEnglish: 'The Knight of Islam, Defender of the Prophet at Uhud',
-    kinshipToProphet: 'انصار کی بیعتِ عقبہ ثانیہ والی جلیل القدر صحابیہ',
-    classicalCitation: 'الطبقات الکبریٰ لابن سعد، ج ۸ / سیرت ابن ہشام',
-    era: 'متوفی ۱۳ ہجری (جنگ یمامہ کے بعد)',
-    biographyUrdu: 'غزوۂ احد کی وہ عظیم الشان مجاہدہ جنہوں نے اس وقت تلوار اور تیر چلا کر رسول اللہ ﷺ کا دفاع کیا جب مردوں کے پاؤں اکھڑ رہے تھے۔ رسول اللہ ﷺ نے فرمایا کہ میں جس طرف بھی دیکھتا، ام عمارہ کو اپنی حفاظت میں لڑتے پاتا تھا۔ جنگِ یمامہ میں مسیلمہ کذاب کے خلاف جنگ میں ان کا ایک ہاتھ شہید ہوا مگر کذاب کے خاتمے تک ڈٹی رہیں۔',
-    biographyEnglish: 'The legendary warrior companion at Uhud who drew her sword and bow to shield the Prophet ﷺ when others retreated. The Prophet ﷺ prayed that she and her family would be his companions in Paradise. Later lost an arm at the Battle of Yamamah fighting Musaylimah.',
-    heroicAttributes: ['بے جگر شجاعت', 'دین کے تحفظ کے لیے ہر قربانی', 'حضور ﷺ سے والہانہ عشق'],
-    dailySunnahLessons: [
-      {
-        ur: 'دینِ حق کے دفاع میں بزدلی چھوڑ کر بہادری اور استقامت پیدا کرنا۔',
-        en: 'Cultivating moral courage and steadfastness in upholding sacred truth.'
-      },
-      {
-        ur: 'ہر نماز کے بعد حضور ﷺ کی رفاقتِ جنت کی دعا مانگنا۔',
-        en: 'Supplicating for the Prophet\'s close companionship in Jannat al-Firdaws.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-UMM-UMARAH-IBN-SAD-006'
-  },
-  {
-    id: 'sah-07',
-    nameUrdu: 'سیدتنا سمیہ بنت خیاط',
-    nameArabic: 'سمية بنت خياط أم عمار بن ياسر',
-    nameEnglish: 'Sayyidatuna Sumayyah bint Khayyat (رضي الله عنها)',
-    titleUrdu: 'اول شہیدہ فی الاسلام',
-    titleEnglish: 'The First Martyr of Islam',
-    kinshipToProphet: 'عمار بن یاسر کی والدہ، سابقینِ اولین',
-    classicalCitation: 'الطبقات الکبریٰ لابن سعد، ج ۸ / الاصابة لابن حجر',
-    era: 'قبلِ ہجرت ۷ سال قبل (مکہ مکرمہ)',
-    biographyUrdu: 'اسلام کی سب سے پہلی شہید خاتون۔ جب مکہ کے جابر مشرک ابو جہل نے ان پر بدترین تشدد کیا اور کلمہ کفر کہنے کا مطالبہ کیا، تو اس ضعیفہ نے ابو جہل کے منہ پر تھوک دیا اور "اللہ اکبر" کہا۔ ابو جہل نے غصے میں آ کر نیزہ مار کر شہید کر دیا۔ ان کی شہادت قیامت تک کے لیے ایمان کی فتح کی علامت بن گئی۔',
-    biographyEnglish: 'The first martyr in the history of Islam. An elderly, physically fragile woman who withstood brutal tortures under the desert sun from Abu Jahl, refusing to recant Tawhid. Struck down by Abu Jahl\'s spear, her martyrdom became an eternal monument of unyielding faith.',
-    heroicAttributes: ['عقیدۂ توحید پر چٹان جیسا ثبات', 'موت کے خوف پر ایمان کی برتری'],
-    dailySunnahLessons: [
-      {
-        ur: 'عقیدے پر کبھی سمجھوتہ نہ کرنا، چاہے حالات کتنے ہی مخالف کیوں نہ ہوں۔',
-        en: 'Never compromising core Islamic faith and values, regardless of worldly pressure.'
-      },
-      {
-        ur: 'مشکل ترین حالات میں بھی اللہ کے فضل سے مایوس نہ ہونا۔',
-        en: 'Maintaining absolute trust in Allah\'s ultimate justice during times of persecution.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-SUMAYYAH-FIRST-MARTYR-007'
-  },
-  {
-    id: 'sah-08',
-    nameUrdu: 'سیدتنا ام سلیم بنت ملحان (رميصاء)',
-    nameArabic: 'الرميصاء أم سليم بنت ملحان الأنصارية',
-    nameEnglish: 'Sayyidatuna Umm Sulaym / Al-Rumaysa (رضي الله عنها)',
-    titleUrdu: 'رميصاء، عاقلۃ النساء، امِ انس',
-    titleEnglish: 'Al-Rumaysa, The Wise Woman, Mother of Anas',
-    kinshipToProphet: 'حضرت انس بن مالک کی والدہ ماجدہ، رضاعی خالہ',
-    classicalCitation: 'صحیح البخاری، حدیث ۵۰۴۹ / صحیح مسلم، حدیث ۲۴۵۶',
-    era: 'متوفی ۳۰ ہجری مدینہ منورہ',
-    biographyUrdu: 'وہ دانشمند خاتون جن کے نکاح کا مہر اسلام تھا۔ جب ابو طلحہ نے نکاح کا پیغام دیا تو فرمایا: تم سونے چاندی کے بت پوجتے ہو جو نہ نفع دے سکتے ہیں نہ نقصان، اگر تم اسلام قبول کر لو تو وہی میرا مہر ہوگا! چنانچہ وہ مسلمان ہوئے۔ انہوں نے اپنے لختِ جگر حضرت انس کو دس سال حضور ﷺ کی خدمت میں وقف کیا۔',
-    biographyEnglish: 'The extraordinary woman whose Mahr was Islam itself. When Abu Talha proposed, she refused worldly wealth and stated that his acceptance of Islam was her dowry. She dedicated her young son Anas ibn Malik to the personal service of the Prophet ﷺ for a decade.',
-    heroicAttributes: ['دولت پر ایمان کو ترجیح دینا', 'اولاد کو خدمتِ دین کے لیے وقف کرنا', 'صبر و ضبط'],
-    dailySunnahLessons: [
-      {
-        ur: 'رشتوں کے انتخاب میں دنیاوی مال و دولت کے بجائے دینداری اور اخلاق کو اولیت دینا۔',
-        en: 'Prioritizing sound religious practice and good character over worldly wealth in marriage.'
-      },
-      {
-        ur: 'بچوں کو علمائے حق اور دیندار ماحول سے وابستہ رکھنا۔',
-        en: 'Keeping children connected to righteous company, scholars, and spiritual environments.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-UMM-SULAYM-BUKHARI-008'
-  },
-  {
-    id: 'sah-09',
-    nameUrdu: 'سیدتنا رفیدہ الاسلمیہ',
-    nameArabic: 'رفيدة بنت سعد الأسلمية الأنصارية',
-    nameEnglish: 'Sayyidatuna Rufaydah al-Aslamiyyah (رضي الله عنها)',
-    titleUrdu: 'رائدۃ الطب فی الاسلام (پہلی مسلم ڈاکٹر و نرس)',
-    titleEnglish: 'Pioneer of Field Medicine and Compassionate Healthcare',
-    kinshipToProphet: 'مسجد نبوی میں حضور ﷺ کے حکم سے خیمہ لگانے والی صحابیہ',
-    classicalCitation: 'صحیح البخاری (الادب المفرد، حدیث ۱۱۲۹) / اسد الغابۃ',
-    era: 'دورِ نبوت مدینہ منورہ',
-    biographyUrdu: 'اسلام کی پہلی پیشہ ور معالجہ اور فیلڈ سرجن۔ غزوۂ خندق کے موقع پر جب حضرت سعد بن معاذ رضی اللہ عنہ شدید زخمی ہوئے، تو رسول اللہ ﷺ نے حکم دیا: "سعد کو رفیدہ کے خیمے میں منتقل کر دو تاکہ میں قریب سے ان کی عیادت کر سکوں"۔ انہوں نے رضاکارانہ طور پر خواتین کو طب اور زخمیوں کی مرہم پٹی کی باقاعدہ تربیت دی۔',
-    biographyEnglish: 'The pioneer of field medicine and public health in Islam. Established a dedicated medical tent in the Prophet\'s Mosque. When Sa\'d ibn Mu\'adh was mortally wounded at the Trench, the Prophet ﷺ personally ordered his care under Rufaydah. She trained Muslim women in clinical nursing.',
-    heroicAttributes: ['طبی مہارت اور خدمتِ خلق', 'دکھی انسانیت کی بے لوث مرہم پٹی', 'منظم فلاحی سوچ'],
-    dailySunnahLessons: [
-      {
-        ur: 'بیماروں، زخمیوں اور کمزوروں کی دیکھ بھال کو عظیم عبادت سمجھنا۔',
-        en: 'Treating the care of the sick, elderly, and vulnerable as a profound act of worship.'
-      },
-      {
-        ur: 'مفید دنیاوی علوم و فنون (جیسے طب، نرسنگ، تعلیم) کو سیکھ کر امت کے فائدے میں لگانا۔',
-        en: 'Acquiring beneficial skills (medicine, nursing, education) for the welfare of the Ummah.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-RUFAYDAH-ADAB-MUFRAD-009'
-  },
-  {
-    id: 'sah-10',
-    nameUrdu: 'سیدتنا الشفاء بنت عبد اللہ',
-    nameArabic: 'الشفاء بنت عبد الله القرشية العدوية',
-    nameEnglish: 'Sayyidatuna Ash-Shifa bint Abdullah (رضي الله عنها)',
-    titleUrdu: 'معلمۃ القراءۃ، نگرانِ بازارِ مدینہ',
-    titleEnglish: 'The Teacher of Literacy, Market Administrator of Madinah',
-    kinshipToProphet: 'حضور ﷺ کی رشتہ دار اور ام المؤمنین حفصہ کی معلمہ',
-    classicalCitation: 'سنن ابی داؤد، حدیث ۳۸۸۷ / الاصابة، ج ۸',
-    era: 'دورِ خلافتِ فاروقی متوفی ۲۰ ہجری',
-    biographyUrdu: 'مکہ مکرمہ کی ان گنی چنی ہستیوں میں سے تھیں جو لکھنا پڑھنا جانتی تھیں۔ رسول اللہ ﷺ نے ان کی حوصلہ افزائی فرمائی اور انہیں ام المؤمنین سیدتنا حفصہ رضی اللہ عنہا کو خطاطی اور کتابت سکھانے کا حکم دیا۔ حضرت عمر فاروق رضی اللہ عنہ نے اپنے دورِ خلافت میں ان کی امانت اور ذہانت کی بنا پر مدینہ کے بازار کے نظم و نسق کا نگران مقرر فرمایا۔',
-    biographyEnglish: 'One of the very few literate individuals of Makkah before Islam. The Prophet ﷺ encouraged her teaching skills, requesting her to instruct Mother of the Believers Hafsah in writing. Caliph Umar ibn al-Khattab respected her acumen so deeply that he consulted her on marketplace ethics.',
-    heroicAttributes: ['اعلیٰ تعلیم و تدریس', 'انتظامی فراست اور تجارت کے اصولوں کا فہم', 'عفت کے ساتھ سماجی خدمات'],
-    dailySunnahLessons: [
-      {
-        ur: 'دوسروں کو پڑھنا لکھنا اور ہنر سکھانا صدقہ جاریہ ہے۔',
-        en: 'Teaching literacy, beneficial skills, and Quran to others is perpetual charity (Sadaqah Jariyah).'
-      },
-      {
-        ur: 'عورت پردے اور شرعی حدود کے اندر رہتے ہوئے معاشرے کے لیے مفید کام کر سکتی ہے۔',
-        en: 'Muslim women can contribute fruitfully to community welfare within the boundaries of Haya.'
-      }
-    ],
-    sanadVerificationHash: 'SANAD-SHIFA-ABI-DAWUD-010'
-  }
-];
+import { DETAILED_SAHABIYYAT_PROFILES } from './sahabiyyat-detailed-biographies';
+export const SAHABIYYAT_PROFILES: SahabiyyatProfile[] = DETAILED_SAHABIYYAT_PROFILES;
 
 // ==========================================
 // 3. AHKAM-E-NISWAN & TAHARAH FIQH GUIDE
@@ -1325,6 +1289,132 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
       'Abound in Salawat upon the Prophet ﷺ; there are zero restrictions on sending blessings.',
       'Listening to Quranic recitation via audio and contemplating its meanings is permissible and deeply spiritually comforting.'
     ]
+  },
+  {
+    id: 'f-07',
+    titleUrdu: 'اسقاطِ حمل (مِس کیرج) کے بعد آنے والے خون کے تفصیلی احکام',
+    titleEnglish: 'Rulings on Bleeding Following Miscarriage (Isqat-e-Haml)',
+    category: 'nifas',
+    summaryUrdu: 'حمل ضائع ہونے پر اگر جنین کے کچھ اعضاء (انگلی، ناخن، بال) بن چکے تھے تو آنے والا خون نفاس ہے، ورنہ وہ نفاس نہیں بلکہ استحاضہ یا حیض ہے۔',
+    summaryEnglish: 'If physical limbs (finger, nail, hair) had formed before miscarriage (~120 days), the subsequent bleeding is Nifas; if an unformed clot, it is not Nifas but Istihadha.',
+    detailedRulingUrdu: 'فقہ حنفی کے مطابق اعضاء بننے کی مدت عموماً ۱۲۰ دن (چار ماہ) اور بعض اوقات ۸۱ دن میں بھی خدوخال ظاہر ہو سکتے ہیں۔ پس اگر ڈاکٹر یا دائی تصدیق کرے کہ ہاتھ، پاؤں یا انگلیوں کی بناوٹ شروع ہو چکی تھی تو ولادت کے بعد آنے والا خون "نفاس" ہے (جس میں نماز بالکل معاف ہے)۔ لیکن اگر محض خون کا لوتھڑا یا بغیر اعضاء کے گوشت گرا تو وہ نفاس نہیں۔ ایسی صورت میں اگر پچھلے طہر کے بعد ۱۵ دن گزر چکے تھے اور ۳ دن سے زیادہ خون آیا تو وہ حیض ہے، ورنہ "استحاضہ" (بیماری کا خون) ہے جس میں نماز بالکل معاف نہیں اور غسل کے بعد وضو کر کے ہر نماز پڑھنا فرض ہے۔',
+    detailedRulingEnglish: 'According to Hanafi jurisprudence (Al-Hidayah & Radd al-Muhtar), limb differentiation typically occurs by 120 days. If medical inspection confirms any limbs or features were visible, the bleeding is strictly Nifas (prayers are completely exempt). If the miscarriage was merely an unformed clot or tissue, it cannot be Nifas: it is classified as Haidh if 15 days of purity intervened and bleeding lasts 3+ days, otherwise it is Istihadha (prayers are strictly obligatory and cannot be abandoned).',
+    hanafiReference: 'بہارِ شریعت، حصہ ۲، باب النفاس / درِ مختار و رد المحتار، کتاب الطہارۃ، ج ۱',
+    practicalGuidelines: [
+      'ہسپتال میں ڈاکٹر سے جنین (Fetus) کی حالت دریافت کریں کہ کیا اعضاء کے نقوش بن چکے تھے یا نہیں۔',
+      'اگر اعضاء نہیں بنے تھے اور خون جاری رہے تو اسے نفاس سمجھ کر نمازیں ہرگز نہ چھوڑیں، بلکہ غسل کر کے معذور کی طرح نماز ادا کریں۔',
+      'اگر ناواقفیت میں نمازیں چھوٹ گئیں تو اعضاء نہ بننے کی صورت میں ان نمازوں کی قضا پڑھنا لازم ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Ask the attending physician whether any morphological features or embryonic limbs had formed.',
+      'If limbs were absent and bleeding persists, do not abandon prayer; perform Ghusl and pray under the rules of an excused person.',
+      'If prayers were missed out of ignorance without formed limbs, those missed prayers must be made up as Qadha.'
+    ]
+  },
+  {
+    id: 'f-08',
+    titleUrdu: 'خون کے مختلف رنگ اور طہارت کی حتمی علامت (قصۂ بیضاء)',
+    titleEnglish: 'Colors of Menstrual Discharge (Alwan-e-Damm) & The Purity Marker',
+    category: 'haidh',
+    summaryUrdu: 'حیض کے ایام میں سرخ کے علاوہ کالا، زرد (پیلا)، مٹیالا (خاکی)، اور سبز رنگ کا اخراج بھی حیض ہی شمار ہوتا ہے جب تک کہ مکمل سفیدی ظاہر نہ ہو۔',
+    summaryEnglish: 'During menstrual habit days, red, black, yellow, turbid (earthy/brown), and greenish discharge are all considered Haidh until pure white (Al-Qassah al-Bayda) or total dryness appears.',
+    detailedRulingUrdu: 'ام المؤمنین سیدتنا عائشہ صدیقہ رضی اللہ عنہا کی خدمت میں عورتیں روئی کے ٹکڑے بھیجتی تھیں جن پر زردی ہوتی تھی، تو آپ فرماتی تھیں: "جلدی نہ کرو جب تک کہ تم سفید دھاگہ یا سفید رطوبت (القصة البيضاء) نہ دیکھ لو"۔ فقہ حنفی میں عادت کے دنوں کے دوران اگر زرد، براؤن، خاکی یا مٹیالے رنگ کے دھبے بھی لگیں تو وہ سب حیض ہیں جب تک کہ ۱۰ دن کے اندر ہوں۔ طہارت اسی وقت مانی جائے گی جب بالکل صاف سفید رطوبت آئے یا پیڈ بالکل خشک نکلے۔',
+    detailedRulingEnglish: 'Women would send cotton pads with yellowish traces to Mother of the Believers Aisha, and she would instruct: "Do not hasten until you see the white discharge (Al-Qassah al-Bayda)." In Hanafi Fiqh, any yellow, brown, or turbid staining within habit days (up to 10 days) is legally Haidh. True purification occurs only when completely clear/white discharge appears or the hygiene pad emerges totally dry.',
+    hanafiReference: 'موطا امام مالک، باب الحیض / رد المحتار علی الدر المختار / جنتی زیور، ص ۸۱',
+    practicalGuidelines: [
+      'ہلکے پیلے یا براؤن داغوں کو نظر انداز کر کے نماز شروع نہ کریں اگر وہ عادت کے ایام میں ہوں۔',
+      'صبح اٹھ کر یا رات سوتے وقت پیڈ کا معائنہ کریں، جب خالص سفیدی آ جائے تو سمجھیں طہر حاصل ہو گیا۔',
+      'طہر ظاہر ہوتے ہی تاخیر کے بغیر غسل کر کے نماز شروع کر دیں۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Do not dismiss light yellow or brown spots as non-menstrual if they occur within your customary cycle days.',
+      'Inspect hygiene pads upon waking or before sleep; once pure white discharge or total dryness appears, purity is established.',
+      'Once purity is confirmed, perform Ghusl without unnecessary delay and resume obligatory prayers.'
+    ]
+  },
+  {
+    id: 'f-09',
+    titleUrdu: 'عورت کے غسل میں مینڈھیاں اور گندھے ہوئے بال کھولنے کا حکم',
+    titleEnglish: 'Rulings on Braided Hair During Women\'s Obligatory Ghusl (Naqd al-Dhafa\'ir)',
+    category: 'haidh',
+    summaryUrdu: 'اگر عورت کے بال گندھے ہوئے ہوں (مینڈھیاں ہوں) تو غسل میں بالوں کو کھولنا فرض نہیں، بشرطیکہ پانی بالوں کی جڑوں تک بغیر کھولے پہنچ جائے۔',
+    summaryEnglish: 'A woman with tightly braided or plaited hair is not legally required to undo her braids for Ghusl, provided water reaches the roots of her scalp.',
+    detailedRulingUrdu: 'صحیح مسلم میں سیدتنا ام سلمہ رضی اللہ عنہا کی حدیث ہے کہ انہوں نے عرض کیا: "یا رسول اللہ! میں اپنے سر کی مینڈھیاں مضبوطی سے باندھتی ہوں، کیا غسلِ جنابت و حیض کے لیے انہیں کھولوں؟" حضور ﷺ نے فرمایا: "نہیں! تمہارے لیے یہی کافی ہے کہ تم اپنے سر پر تین لپ پانی ڈال لو اور پھر اپنے سارے جسم پر پانی بہا دو"۔ فقہ حنفی میں عورت کے لیے تخفیف ہے کہ اگر بال گندھے ہیں تو صرف جڑوں کو گیلا کرنا اور ہر بال کی جڑ تک پانی پہنچانا فرض ہے۔ ہاں اگر بال کھلے ہوئے ہوں تو ہر ایک بال کو اوپر سے نیچے تک تر کرنا فرض ہے؛ اسی طرح اگر بال اتنے سخت گندھے ہوں کہ جڑوں تک پانی نہ پہنچ سکے تو کھولنا لازم ہوگا۔',
+    detailedRulingEnglish: 'In Sahih Muslim, Sayyidatuna Umm Salamah inquired: "O Messenger of Allah, I braid my hair tightly; should I undo it for Ghusl?" The Prophet ﷺ replied: "No, it is sufficient for you to pour three handfuls of water over your head, then pour water over the rest of your body." Hanafi jurists rule this a merciful divine dispensation for women: if hair is braided, only moistening the scalp roots is obligatory. However, if hair is loose/unbraided, every single strand must be wetted completely.',
+    hanafiReference: 'صحیح مسلم، حدیث رقم ۳۳۰ / الہدایہ شرح بدایۃ المبتدی، کتاب الطہارۃ / بہارِ شریعت',
+    practicalGuidelines: [
+      'مینڈھیاں باندھی ہوں تو سر کی جلد پر ہاتھ کی انگلیوں سے پانی کو اچھی طرح جڑوں تک پہنچائیں۔',
+      'اگر بال کھلے (unbraided) ہوں تو پورے بالوں کو بھگونا اور دھونا فرض ہے، ایک بال بھی سوکھا نہ رہے۔',
+      'اگر بالوں میں ایسا تیل، جیل یا ویکس ہو جس سے پانی بالوں تک نہ پہنچے تو پہلے اسے دھو کر صاف کریں۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'When hair is plaited, work water deeply into the scalp with your fingertips so all roots are soaked.',
+      'If hair is worn loose, every strand must be completely soaked from root to tip without exception.',
+      'If heavy styling wax or impenetrable oils are applied, wash them out first to ensure water penetrates.'
+    ]
+  },
+  {
+    id: 'f-10',
+    titleUrdu: 'واٹر پروف میک اپ، نیل پالش، مصنوعی ناخن اور مہندی کے احکام',
+    titleEnglish: 'Waterproof Cosmetics, Nail Polish, Acrylic Nails & Henna in Wudu/Ghusl',
+    category: 'namaz_posture',
+    summaryUrdu: 'ایسا میک اپ، نیل پالش یا مصنوعی ناخن جو ناخن یا جلد تک پانی پہنچنے سے مانع ہو، اس کی موجودگی میں وضو اور غسل نہیں ہوتا اور نماز باطل ہو جاتی ہے۔',
+    summaryEnglish: 'Any cosmetic coating, commercial nail polish, or acrylic nails that form an impermeable barrier preventing water contact invalidates both Wudu and Ghusl.',
+    detailedRulingUrdu: 'وضو اور غسل کے ارکانِ فرضیہ میں سے ہے کہ اعضائے مغسولہ کے ہر حصے تک پانی پہنچے۔ روایتی نیل پالش، مصنوعی ایکریلک ناخن اور واٹر پروف فاؤنڈیشن جلد پر پلاسٹک جیسی پرت چڑھا دیتے ہیں جو پانی کو چھونے نہیں دیتے۔ نام نہاد "سانس لینے والی نیل پالش (Breathable Nail Polish)" کے متعلق ائمۂ فتویٰ کا فتویٰ ہے کہ چونکہ وہ مکمل اور فوری طور پر پورے ناخن تک پانی نہیں پہنچاتی، لہٰذا اس پر وضو و غسل کرنا سخت خطرناک اور نماز کو مشکوک بنانا ہے۔ اس کے برعکس قدرتی مہندی (حناء) صرف رنگ چھوڑتی ہے اور کوئی پرت نہیں بناتی، اس لیے مہندی کے ساتھ وضو اور غسل بالکل درست اور سنت ہے۔',
+    detailedRulingEnglish: 'It is a strict legal requirement of Wudu and Ghusl that water must directly touch the outer skin and nail surface. Commercial nail enamels, artificial acrylic nails, and waterproof adhesives form an impermeable barrier preventing water contact, rendering purification void. Permeable ("breathable") polishes remain contentious and unsafe for valid Salah according to conservative fatwa councils. In contrast, pure natural Henna (Mehndi) merely deposits organic color stain without forming a physical crust, making it entirely permissible and Sunnah.',
+    hanafiReference: 'فتاویٰ عالمگیری (الہندیہ)، ج ۱، کتاب الطہارۃ / فتاویٰ رضویہ، ج ۱ / بہارِ شریعت',
+    practicalGuidelines: [
+      'وضو اور غسل سے پہلے نیل پالش ریموور سے ناخنوں کو بالکل صاف کریں۔',
+      'ہاتھوں اور پیروں پر مصنوعی ایکریلک یا جیل ناخن نماز اور غسل کی صحت کے منافی ہیں۔',
+      'خوبصورتی اور زینت کے لیے خالص قدرتی مہندی استعمال کریں جو مسنون اور شرعاً بے داغ ہے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Remove all nail polish completely with polish remover prior to making Wudu or Ghusl.',
+      'Avoid acrylic, plastic, or glued-on artificial nails as they prevent water contact with nail beds.',
+      'Opt for natural Henna/Mehndi for beautification, which is recommended in the Sunnah and leaves no barrier.'
+    ]
+  },
+  {
+    id: 'f-11',
+    titleUrdu: 'مانع حمل ادویات، ہارمونل امپلانٹس اور بے قاعدہ داغوں کے احکام',
+    titleEnglish: 'Hormonal Spotting & Contraceptive Irregular Bleeding (IUDs, Pills)',
+    category: 'istihadha',
+    summaryUrdu: 'برتھ کنٹرول گولیوں یا آئی یو ڈی کی وجہ سے اگر عادت کے ایام سے ہٹ کر ہلکے داغ آئیں تو وہ "استحاضہ" ہیں، ان میں نماز اور روزہ نہیں چھوڑا جا سکتا۔',
+    summaryEnglish: 'Irregular spotting caused by contraceptive implants, pills, or IUDs outside of customary cycle days is classified as Istihadha (illness); Salah and Sawm must never be suspended.',
+    detailedRulingUrdu: 'فقہ حنفی کا زریں اصول ہے کہ حیض کے لیے عادت (Aadat) اور دو حیض کے درمیان کم از کم ۱۵ دن کی طہارت کی شرط ہے۔ اگر کسی خاتون نے مانع حمل تدابیر کی وجہ سے ہر چند دن بعد ایک دو قطرے خون دیکھا، جبکہ اس کے حیض کا مہینہ پورا نہیں ہوا یا عادت کے دن نہیں ہیں، تو وہ قطرے محض استحاضہ (بیماری و عارضہ) شمار ہوں گے۔ ایسی بہن ہر نماز کے لیے وضو کرے، پرائیویٹ پارٹ کو صاف کر کے نیا پیڈ لگائے اور فرض و نفل نمازیں ادا کرے۔ ان داغوں کی وجہ سے نمازیں چھوڑنا سخت گناہ کا باعث ہے۔',
+    detailedRulingEnglish: 'A fundamental canon of Hanafi jurisprudence stipulates that regular habit (Aadat) governs menses, alongside a mandatory minimum interval of 15 days of purity (Tuhr) between cycles. Spotting caused by hormonal medications, birth control pills, or intrauterine devices (IUDs) outside customary menstruation days is legally Istihadha. A sister experiencing this washes the area, applies a fresh pad, performs fresh Wudu at each prayer time, and fulfills all obligatory prayers and fasts.',
+    hanafiReference: 'رد المحتار علی الدر المختار، باب الحیض / فتاویٰ فیض الرسول / جنتی زیور',
+    practicalGuidelines: [
+      'اپنے ہارمونل ادویات شروع کرنے کی تاریخ اور سابقہ عادت کا مکمل تقابلی ریکارڈ رکھیں۔',
+      'عادت کے علاوہ دنوں میں آنے والے ہلکے دھبوں پر نماز ہرگز قضا نہ کریں بلکہ تازہ وضو کر کے پڑھیں۔',
+      'اگر مسلسل خون بہتا رہے تو وہ معذور کے حکم میں ہے اور ہر نماز کے وقت نیا وضو کرے۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Maintain a precise medical log of your previous natural habit vs post-medication spotting dates.',
+      'Never abandon Salah due to irregular spotting outside your normal habit; perform fresh Wudu and pray.',
+      'If continuous bleeding occurs throughout the prayer window, you carry the legal status of an excused person (Ma\'dhur).'
+    ]
+  },
+  {
+    id: 'f-12',
+    titleUrdu: 'مخصوص ایام میں سجدۂ تلاوت، نمازِ جنازہ اور اذان کے جواب کا حکم',
+    titleEnglish: 'Sajdah-e-Tilawah, Janazah Prayer, and Adhan Answering During Menses',
+    category: 'spiritual_rhythm',
+    summaryUrdu: 'حیض کے دوران اگر عورت سجدۂ تلاوت کی آیت سنے تو پاک ہونے کے بعد بھی اس پر سجدۂ تلاوت واجب نہیں ہوتا، یہ مکمل معاف ہے۔',
+    summaryEnglish: 'Hearing an Ayah of Sajdah during menses incurs zero obligation for Sajdah-e-Tilawah even after purification; it is completely waived like prayer.',
+    detailedRulingUrdu: 'فقہ حنفی کے مطابق سجدۂ تلاوت کا وجوب اس وقت عائد ہوتا ہے جب سننے والا نماز کا اہل ہو۔ چونکہ حیض اور نفاس کے ایام میں عورت نماز کی مکلف نہیں رہتی، اس لیے اگر اس نے قرآن پاک کی سجدے والی آیت کسی قاری سے سنی یا لاؤڈ اسپیکر سے سنی، تو پاک ہونے کے بعد اس سجدے کی کوئی قضا نہیں اور نہ ہی وہ گنہگار ہوگی۔ اسی طرح نمازِ جنازہ پڑھنا بھی مخصوص ایام میں ناجائز ہے۔ البتہ اذان سن کر دل میں یا زبان سے کلماتِ اذان دہرانا اور اذان کے بعد کی مسنون دعا پڑھنا بالکل جائز اور مستحب ہے کیونکہ یہ ذکر و تسبیح ہے تلاوت نہیں۔',
+    detailedRulingEnglish: 'In Hanafi jurisprudence (Nur al-Idah & Bahar-e-Shari\'at), the obligation to perform Sajdah-e-Tilawah only falls upon those legally eligible for prayer at the moment of hearing. Because a menstruating woman is legally exempt from Salah, hearing a verse of prostration incurs no Qadha or sin whatsoever once purified. Similarly, Janazah prayer is prohibited during menses. However, repeating the words of the Adhan and supplicating with the post-Adhan Du\'a is permissible and rewarded, as it constitutes remembrance (Dhikr), not Quranic recitation.',
+    hanafiReference: 'نور الایضاح، فصل فی سجود التلاوۃ / بہارِ شریعت، حصہ ۴ / درِ مختار',
+    practicalGuidelines: [
+      'حیض کے دوران سجدۂ تلاوت سننے پر پریشان نہ ہوں، اس کی قضا شریعت نے معاف فرمائی ہے۔',
+      'اذان سن کر احتراماً خاموشی اختیار کریں اور دل ہی دل میں اذان کا مسنون جواب دیں۔',
+      'اذان کے بعد کا مسنون درود اور دعا (اللهم رب هذه الدعوة التامة) پڑھ کر ثواب حاصل کریں۔'
+    ],
+    practicalGuidelinesEnglish: [
+      'Do not be troubled when hearing an Ayah of Sajdah during menstruation; its performance is entirely waived.',
+      'Maintain quiet respect during the Adhan and repeat the sacred phrases mentally or verbally.',
+      'Recite Salawat and the post-Adhan supplication (Allahumma Rabba hadhihid-da\'wah) to earn intercession.'
+    ]
   }
 ];
 
@@ -1396,6 +1486,71 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     reference: 'الاذکار للامام النووی / تحفۃ المودود لابن القیم',
     spiritualVirtueUrdu: 'ولادت کے مبارک سنت آداب: دائیں کان میں اذان اور بائیں میں اقامت، میٹھی کھجور چبا کر تالو سے لگانا (تحنیک)، ساتویں دن اچھا نام رکھنا، سر کے بال منڈوا کر بالوں کے وزن کے برابر چاندی صدقہ کرنا، اور عقیقہ کرنا۔',
     spiritualVirtueEnglish: 'Blessed newborn Sunnah rites: Adhan in right ear, Iqamah in left ear, Tahneek with softened date, naming on 7th day, shaving head and giving equivalent silver in charity, and performing Aqeeqah.'
+  },
+  {
+    id: 'dua-06',
+    titleUrdu: 'میاں بیوی میں محبت، الفت اور ناچاقی دور کرنے کی قرآنی دعا',
+    titleEnglish: 'Dua for Mutual Marital Love, Softening Hearts & Harmony',
+    category: 'marital_peace',
+    arabicText: 'وَأَلَّفَ بَيْنَ قُلُوبِهِمْ ۚ لَوْ أَنفَقْتَ مَا فِي الْأَرْضِ جَمِيعًا مَّا أَلَّفْتَ بَيْنَ قُلُوبِهِمْ وَلَٰكِنَّ اللَّهَ أَلَّفَ بَيْنَهُمْ ۚ إِنَّهُ عَزِيزٌ حَكِيمٌ',
+    transliteration: 'Wa allafa bayna quloobihim, law anfaqta ma fil-ardi jamee\'an ma allafta bayna quloobihim wa lakinnallaha allafa baynahum, innahu \'Azeezun Hakeem.',
+    translationUrdu: 'اور ان کے دلوں میں الفت پیدا کر دی۔ اگر آپ زمین میں جو کچھ ہے سب خرچ کر دیتے تب بھی ان کے دلوں میں الفت نہ ڈال سکتے، لیکن اللہ نے ان کے درمیان الفت پیدا کر دی، بیشک وہ غالب، حکمت والا ہے۔',
+    translationEnglish: 'And He brought together their hearts. If you had spent all that is in the earth, you could not have brought their hearts together; but Allah brought them together. Indeed, He is Exalted in Might and Wise.',
+    reference: 'سورۃ الانفال، آیت ۶۳',
+    spiritualVirtueUrdu: 'میاں بیوی میں رنجش یا دوری پیدا ہو تو اس قرآنی آیت کو روزانہ ۱۱ مرتبہ پڑھ کر دعا کرنا دلوں کی سختی دور کرنے اور باہمی الفت کے لیے مجرب ہے۔',
+    spiritualVirtueEnglish: 'Recited 11 times daily to soften hearts, resolve spousal discord, and rekindle compassionate warmth in marriage.'
+  },
+  {
+    id: 'dua-07',
+    titleUrdu: 'بچے کو دودھ پلاتے وقت برکت اور نیکی کی دعا',
+    titleEnglish: 'Supplication for Nursing Mothers: Barakah in Maternal Milk & Infant Nurture',
+    category: 'newborn_sunnah',
+    arabicText: 'اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ، وَاجْعَلْهُ رِزْقًا طَيِّبًا وَشِفَاءً مُبَارَكًا',
+    transliteration: 'Allahumma barik lana feehi wa zidna minhu, waj\'alhu rizqan tayyiban wa shifa\'an mubaraka.',
+    translationUrdu: 'اے اللہ! ہمارے لیے اس دودھ میں برکت عطا فرما اور ہمیں اس میں زیادتی بخش، اور اسے پاکیزہ رزق اور بابرکت شفا بنا۔',
+    translationEnglish: 'O Allah, bless us in this milk and increase it for us, and make it wholesome sustenance and blessed healing.',
+    reference: 'سنن ابی داؤد، حدیث ۳۷۳۰ / جامع الترمذی، حدیث ۳۴۵۵',
+    spiritualVirtueUrdu: 'رسول اللہ ﷺ نے فرمایا کہ دودھ کے علاوہ کوئی چیز ایسی نہیں جو کھانے اور پینے دونوں کی جگہ کافی ہو جائے۔ مائیں دودھ پلاتے وقت بسم اللہ کے بعد یہ دعا پڑھیں تو بچے میں برکت اور صالحیت پیدا ہوتی ہے۔',
+    spiritualVirtueEnglish: 'Prophetic prayer upon drinking milk. When recited by nursing mothers, it invites divine Barakah into the child\'s growth, nutrition, and righteous disposition.'
+  },
+  {
+    id: 'dua-08',
+    titleUrdu: 'بعد از ولادت ذہنی دباؤ، اداسی اور خوف سے پناہ کی نبوی دعا',
+    titleEnglish: 'Prophetic Solace for Postpartum Anxiety, Depression & Mental Anguish',
+    category: 'pregnancy_labor',
+    arabicText: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ',
+    transliteration: 'Allahumma inni a\'udhu bika minal-hammi wal-hazani, wal-\'ajzi wal-kasali, wal-bukhli wal-jubni, wa dala\'id-dayni wa ghalabatir-rijal.',
+    translationUrdu: 'اے اللہ! میں تیری پناہ مانگتی ہوں فکر و پریشانی اور غم سے، اور عاجزی و کمزوری اور سستی سے، اور بخل اور بزدلی سے، اور قرض کے بوجھ اور لوگوں کے دباؤ سے۔',
+    translationEnglish: 'O Allah, I seek refuge in You from anxiety and grief, from incapacity and laziness, from stinginess and cowardice, from the burden of debt, and from the overpowering of people.',
+    reference: 'صحیح البخاری، حدیث ۲۸۹۳',
+    spiritualVirtueUrdu: 'زچگی کے بعد ہارمونز کے عدم توازن سے پیدا ہونے والے ڈپریشن (Postpartum Depression)، بے سبب رونے اور اداسی کے وقت اس دعا کا ورد دل کو گہری تسکین اور روحانی ڈھارس دیتا ہے۔',
+    spiritualVirtueEnglish: 'The premier Prophetic shield against clinical grief, postpartum anxiety, emotional depletion, and irrational fear after childbirth.'
+  },
+  {
+    id: 'dua-09',
+    titleUrdu: 'والدین کے حق میں رحمت اور حسنِ سلوک کی قرآنی دعا',
+    titleEnglish: 'Supplication for Aging Parents: Filial Compassion and Mercy',
+    category: 'marital_peace',
+    arabicText: 'رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
+    transliteration: 'Rabbi irhamhuma kama rabbayani sagheera.',
+    translationUrdu: 'اے میرے رب! تو ان دونوں (والدین) پر رحم فرما جیسا کہ انہوں نے مجھے بچپن میں پالا اور میری پرورش کی۔',
+    translationEnglish: 'My Lord, have mercy upon them both as they raised me when I was small.',
+    reference: 'سورۃ الاسراء، آیت ۲۴',
+    spiritualVirtueUrdu: 'والدین کی حیات میں ان کی خوشنودی اور وفات کے بعد ان کی مغفرت اور درجات کی بلندی کے لیے ہر فرض نماز کے بعد یہ دعا مانگنا اولاد کی اولین ذمہ داری ہے۔',
+    spiritualVirtueEnglish: 'The direct Quranic command for honoring parents. Recited after obligatory prayers to seek divine mercy upon one\'s mother and father in this world and the Barzakh.'
+  },
+  {
+    id: 'dua-10',
+    titleUrdu: 'بیمار بچے کے بخار اور تکلیف کے وقت کی نبوی دم و شفا',
+    titleEnglish: 'Prophetic Ruqyah for Sick Children, Fever & Relieving Pain',
+    category: 'children_protection',
+    arabicText: 'بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ',
+    transliteration: 'Bismillahi arqeeka, min kulli shay\'in yu\'dheeka, min sharri kulli nafsin aw \'ayni hasidin, Allahu yashfeeka, Bismillahi arqeeka.',
+    translationUrdu: 'اللہ کے نام سے میں تجھے دم کرتی ہوں، ہر اس چیز سے جو تجھے تکلیف پہنچائے، ہر جان کے شر سے یا حسد کرنے والی آنکھ سے، اللہ تجھے شفا عطا فرمائے، اللہ کے نام سے میں تجھے دم کرتی ہوں۔',
+    translationEnglish: 'In the Name of Allah I perform Ruqyah for you, from everything that harms you, from the evil of every soul or envious eye, may Allah heal you, in the Name of Allah I perform Ruqyah for you.',
+    reference: 'صحیح مسلم، حدیث رقم ۲۱۸۶ (عن ابی سعید الخدری)',
+    spiritualVirtueUrdu: 'جب بچے کو بخار ہو، دانت نکلنے کی تکلیف ہو یا بیمار ہو، تو ماں اپنا دایاں ہاتھ بچے کے سر پر رکھ کر ۳ بار یہ دعا پڑھے۔ حضرت جبرائیل علیہ السلام نے حضور ﷺ کی عیادت کے وقت یہی مسنون دم فرمایا تھا۔',
+    spiritualVirtueEnglish: 'The authentic Ruqyah performed by Archangel Jibril upon the Prophet ﷺ. Mothers should place their right hand upon a feverish or distressed child\'s forehead and recite thrice.'
   }
 ];
 

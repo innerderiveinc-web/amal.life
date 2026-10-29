@@ -362,15 +362,12 @@ export default function QuranWisdomPage() {
             masterAudioRef.current.removeAttribute('src');
           }
 
-          if (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') {
-            handleMasterAudioEnded();
-          } else {
-            setIsPlayingPaused(false);
-            setSurahWideAudioType(null);
-            setActiveTafseerCardKey(null);
-            setContinuousTafseerIndex(null);
-            showAmalToast('آڈیو سرور سے رابطہ میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
-          }
+          setIsPlayingPaused(false);
+          setPlayingAyahNumberState(null);
+          setSurahWideAudioType(null);
+          setActiveTafseerCardKey(null);
+          setContinuousTafseerIndex(null);
+          showAmalToast('آڈیو سرور سے رابطہ میں تاخیر ہوئی۔ برائے مہربانی دوبارہ پلے دبائیں۔', 'warning');
         }}
         style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />

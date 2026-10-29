@@ -1,5 +1,5 @@
 // AMAL OS — Service Worker (Offline Resilience, Sacred Corpus Caching & PWA)
-const CACHE_NAME = 'amal-os-cache-v3';
+const CACHE_NAME = 'amal-os-cache-v4';
 const AUDIO_CACHE_NAME = 'amal-os-audio-v1';
 
 const PRECACHE_ASSETS = [

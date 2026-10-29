@@ -2,12 +2,70 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { Navigation } from '../components/Navigation';
 import { familyDeenOsEngine, FamilyCircle } from '@amal/amal-engine';
+import { showAmalToast } from '../components/Toast';
+
+const FAMILY_HALAQAH_BLUEPRINTS = [
+  {
+    id: 'bp_kahf_friday',
+    title: 'Friday Surah Al-Kahf & Salawat Circle',
+    titleUrdu: 'جمعہ مبارک درود و کہف سرکل',
+    category: 'WEEKLY_HALAQAH',
+    icon: '🕌',
+    description: 'Recite Surah Al-Kahf together, send 100 Salawat upon the Prophet ﷺ, and give family charity on blessed Friday.',
+    tasks: [
+      'Collective recitation of Surah Al-Kahf',
+      '100 Salawat (Durood-e-Ibrahimi) by each member',
+      'Friday family charity (Sadaqah box deposit)'
+    ]
+  },
+  {
+    id: 'bp_sirah_evening',
+    title: 'Prophetic Sirah & Sahaba Story Night',
+    titleUrdu: 'سیرت النبی ﷺ و قصصِ صحابہ کی شام',
+    category: 'TARBIYAH_CIRCLE',
+    icon: '🕊️',
+    description: 'Read one short chapter from Seerat-e-Mustafa or Zia-un-Nabi and discuss practical lessons for family life.',
+    tasks: [
+      'Read 1 Prophetic biography chapter aloud',
+      'Family moral discussion & children questions',
+      'Collective evening Masnoon Duas'
+    ]
+  },
+  {
+    id: 'bp_fajr_habit',
+    title: 'Family Fajr Congregation & Morning Adhkar',
+    titleUrdu: 'صبح کی نماز باجماعت و مسنون اذکار',
+    category: 'DAILY_RHYTHM',
+    icon: '🌅',
+    description: 'Awaken gently for Fajr, pray together in home congregation or send boys to local masjid, read Ayatul Kursi together.',
+    tasks: [
+      'Gentle family wakeup for Fajr prayer',
+      'Pray Fajr in home congregation or local masjid',
+      'Recite Ayatul Kursi & 3 Quls together before breakfast'
+    ]
+  },
+];
 
 export default function FamilyPage() {
   const [family, setFamily] = useState<FamilyCircle>(familyDeenOsEngine.getFamilyCircle('fam_demo_1'));
   const [newJourneyTitle, setNewJourneyTitle] = useState('');
   const [newJourneyDesc, setNewJourneyDesc] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+
+  const handleActivateBlueprint = (blueprint: typeof FAMILY_HALAQAH_BLUEPRINTS[0]) => {
+    const j = familyDeenOsEngine.createSharedJourney('fam_demo_1', {
+      title: blueprint.title,
+      category: blueprint.category as any,
+      description: blueprint.description,
+      assignedTasks: blueprint.tasks.map((taskText, idx) => ({
+        assignedToMemberId: family.members[idx % family.members.length]?.memberId || 'mem_1',
+        taskTitle: taskText,
+        isCompleted: false,
+      })),
+    });
+    setFamily(prev => ({ ...prev, sharedJourneys: [j, ...prev.sharedJourneys] }));
+    showAmalToast(`✨ فیملی سرکل شروع ہو گیا: ${blueprint.title}`, 'success');
+  };
 
   const handleAddJourney = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +163,82 @@ export default function FamilyPage() {
           <span style={{ fontSize: 20 }}>🛡️</span>
           <div style={{ fontSize: 12, color: '#166534', lineHeight: 1.5 }}>
             <strong>Domestic Privacy Guarantee:</strong> Personal repentance, private journaling, and individual Muhasabah are kept in your Zero-Knowledge Vault. Family members only see explicitly shared collective circles.
+          </div>
+        </div>
+
+        {/* Pre-Made Weekly Family Halaqah Blueprints (1-Tap Activation) */}
+        <div style={{ marginBottom: 26 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+            <div>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', letterSpacing: 0.8, textTransform: 'uppercase' }}>
+                READY-TO-USE TARBIYAH
+              </span>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: '2px 0 0' }}>
+                Weekly Family Halaqah Blueprints (ہفتہ وار فیملی حلقہ)
+              </h3>
+            </div>
+            <span style={{ fontSize: 12, color: '#64748B' }}>
+              1-Tap Add to Family
+            </span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {FAMILY_HALAQAH_BLUEPRINTS.map((bp) => (
+              <div
+                key={bp.id}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 12,
+                  padding: 16,
+                  border: '1px solid #E2E8F0',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontSize: 24 }}>{bp.icon}</span>
+                    <span style={{ fontSize: 10, fontWeight: 800, color: '#065F46', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: 4 }}>
+                      {bp.category}
+                    </span>
+                  </div>
+                  <h4 style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', margin: '0 0 4px' }}>
+                    {bp.title}
+                  </h4>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#047857', direction: 'rtl', marginBottom: 6 }}>
+                    {bp.titleUrdu}
+                  </div>
+                  <p style={{ fontSize: 12, color: '#475569', margin: '0 0 10px', lineHeight: 1.4 }}>
+                    {bp.description}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => handleActivateBlueprint(bp)}
+                  style={{
+                    padding: '7px 12px',
+                    borderRadius: 8,
+                    backgroundColor: '#065F46',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    fontWeight: 700,
+                    fontSize: 12,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 6,
+                    width: '100%',
+                    marginTop: 8,
+                  }}
+                >
+                  <span>+</span>
+                  <span>1-Tap Add to Family Circle</span>
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 

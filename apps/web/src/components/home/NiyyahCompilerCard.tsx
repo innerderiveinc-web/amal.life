@@ -168,12 +168,12 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
         <div style={{ marginTop: 20, padding: 20, borderRadius: 10, backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontSize: 12, fontWeight: 800, color: '#047857', backgroundColor: '#ECFDF5', padding: '3px 8px', borderRadius: 4 }}>
-              COMPILED DOMAIN: {compiledPlan.spiritualDomain}
+              دینی عنوان: {compiledPlan.spiritualDomain}
             </span>
 
             <button
               onClick={() => onOpenPassport(compiledPlan.spiritualDomain, compiledPlan.microAmal.concreteAction)}
-              aria-label="Open Evidence Passport"
+              aria-label="View Classical Evidence"
               style={{
                 backgroundColor: '#1B4332',
                 color: '#FFFFFF',
@@ -185,7 +185,7 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
                 cursor: 'pointer',
               }}
             >
-              📜 Evidence Passport (Show Me Why)
+              📜 شرعی دلائل و مراجع (View Proofs)
             </button>
           </div>
 
@@ -193,7 +193,7 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
           <div style={{ backgroundColor: '#FFFFFF', padding: 16, borderRadius: 8, border: '1px solid #86EFAC', marginBottom: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: 11, fontWeight: 800, color: '#166534', letterSpacing: 0.5 }}>
-                YOUR CONCRETE MICRO-AMAL (NON-OVERWHELMING)
+                آسان اور مستند روزمرہ عمل (RECOMMENDED DAILY AMAL)
               </span>
               <button
                 onClick={() => setShowWhyRec(!showWhyRec)}
@@ -209,14 +209,14 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
                   cursor: 'pointer',
                 }}
               >
-                {showWhyRec ? 'Hide Reason ▲' : 'Why This Recommendation? ▼'}
+                {showWhyRec ? 'حکمت چھپائیں ▲' : 'یہ عمل کیوں منتخب ہوا؟ ▼'}
               </button>
             </div>
             <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '6px 0 2px' }}>
               {compiledPlan.microAmal.concreteAction}
             </div>
             <div style={{ fontSize: 12, color: '#6B7280' }}>
-              Timing: {compiledPlan.microAmal.timing} • Failsafe: {compiledPlan.microAmal.frictionFailsafe}
+              مناسب وقت: {compiledPlan.microAmal.timing} • آسانی: {compiledPlan.microAmal.frictionFailsafe}
             </div>
           </div>
 
@@ -252,12 +252,12 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
 
           {/* Friction Detector */}
           <div style={{ backgroundColor: '#FEF3C7', padding: 12, borderRadius: 8, border: '1px solid #FDE68A', fontSize: 12, marginBottom: 14 }}>
-            <span style={{ fontWeight: 800, color: '#92400E' }}>⚠️ ANTICIPATED FRICTION &amp; FAILURE MODE:</span>
+            <span style={{ fontWeight: 800, color: '#92400E' }}>⚠️ ممکنہ سستی یا غفلت اور اس کا نبوی علاج:</span>
             <div style={{ color: '#78350F', marginTop: 2 }}>
               {compiledPlan.frictionDetector.anticipatedFailureMode}
             </div>
             <div style={{ color: '#92400E', fontWeight: 700, marginTop: 4 }}>
-              Counter-Measure: {compiledPlan.frictionDetector.counterMeasure}
+              نبوی تدبیر: {compiledPlan.frictionDetector.counterMeasure}
             </div>
           </div>
 
@@ -266,20 +266,20 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
             <div style={{ backgroundColor: '#FFFFFF', padding: 14, borderRadius: 8, border: '1px solid #CBD5E1', fontSize: 12 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, color: '#1B4332', letterSpacing: 0.5 }}>
-                  🛡️ AMAL TRUST LAYER (VERIFIED THEOLOGY)
+                  🛡️ سند اور فقہی تحقیق (SCHOLARLY HADITH &amp; FIQH VERIFICATION)
                 </span>
                 <span style={{ fontSize: 10, backgroundColor: '#E0F2FE', color: '#0369A1', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-                  Dual Jurist Protocol Active
+                  Ahl al-Sunnah Verification
                 </span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, color: '#334155', fontSize: 11 }}>
-                <div><strong>Evidence:</strong> {trustLayer.evidence.gradingOrIsnadQuality}</div>
-                <div><strong>Consensus:</strong> {trustLayer.interpretation.classicalConsensusLevel}</div>
-                <div><strong>Certainty:</strong> {trustLayer.uncertainty.whatIsClearAndDefinite}</div>
-                <div><strong>Traditions:</strong> {trustLayer.scholarship.participatingTraditions.join(', ')}</div>
+                <div><strong>حدیث کی اسناد:</strong> {trustLayer.evidence.gradingOrIsnadQuality}</div>
+                <div><strong>اجماع و اتفاق:</strong> {trustLayer.interpretation.classicalConsensusLevel}</div>
+                <div><strong>حکم کا درجہ:</strong> {trustLayer.uncertainty.whatIsClearAndDefinite}</div>
+                <div><strong>فقہی مکاتب:</strong> {trustLayer.scholarship.participatingTraditions.join(', ')}</div>
               </div>
               <div style={{ marginTop: 6, fontSize: 11, color: '#64748B', fontStyle: 'italic' }}>
-                Note: {trustLayer.recommendation.cautionOrBoundary}
+                احتیاط: {trustLayer.recommendation.cautionOrBoundary}
               </div>
             </div>
           )}

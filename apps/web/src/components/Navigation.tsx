@@ -9,6 +9,7 @@ import { NavigationMobileMenu } from './navigation/NavigationMobileMenu';
 import { NavigationUtilityRibbon } from './navigation/NavigationUtilityRibbon';
 import { NavigationPillarsDesktop } from './navigation/NavigationPillarsDesktop';
 import { useNavigationLiveStatus } from './navigation/useNavigationLiveStatus';
+import { SavedBookmarksModal } from './navigation/SavedBookmarksModal';
 import { ibadatItems, ilmItems, familySistersItems, ahkamItems, allApps } from './navigation/navigation-items';
 
 export const Navigation: React.FC = () => {
@@ -17,6 +18,7 @@ export const Navigation: React.FC = () => {
   const { language: currentLang, setLanguage: switchLanguage } = useLanguage();
   const [isMounted, setIsMounted] = useState(false);
   const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
+  const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -179,6 +181,30 @@ export const Navigation: React.FC = () => {
             <kbd style={{ fontSize: 10, backgroundColor: '#E2E8F0', color: '#475569', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>⌘K</kbd>
           </button>
 
+          {/* Bookmarks & Reading History Quick Action */}
+          <button
+            onClick={() => setIsBookmarksOpen(true)}
+            aria-label="Open Saved Bookmarks & History"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              border: '1px solid #E2E8F0',
+              borderRadius: 8,
+              padding: '6px 10px',
+              backgroundColor: '#F8FAFC',
+              color: '#1B4332',
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease',
+            }}
+            title={currentLang === 'ur' ? 'محفوظ شدہ اسباق (Bookmarks)' : 'Saved Bookmarks & Reading History'}
+          >
+            <span>🔖</span>
+            <span className="desktop-only">{currentLang === 'ur' ? 'محفوظات' : 'Bookmarks'}</span>
+          </button>
+
           {/* 9-Dots All 15 Apps Launcher */}
           <AppsLauncherPopover
             isOpen={isAppsMenuOpen}
@@ -225,6 +251,12 @@ export const Navigation: React.FC = () => {
         ilmItems={ilmItems}
         familySistersItems={familySistersItems}
         ahkamItems={ahkamItems}
+      />
+
+      {/* Global Saved Bookmarks & History Modal */}
+      <SavedBookmarksModal
+        isOpen={isBookmarksOpen}
+        onClose={() => setIsBookmarksOpen(false)}
       />
     </header>
   );

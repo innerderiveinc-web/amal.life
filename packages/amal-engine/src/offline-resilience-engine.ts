@@ -20,6 +20,7 @@ export interface OfflinePilgrimageRitesPack {
     arabic: string;
     urdu: string;
     reference: string;
+    audioUrl?: string;
   }>;
   commonMistakesToAvoid: string[];
 }
@@ -50,6 +51,7 @@ export class OfflineResilienceEngine {
           arabic: 'لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ',
           urdu: 'میں حاضر ہوں اے اللہ! میں حاضر ہوں، تیرا کوئی شریک نہیں، میں حاضر ہوں۔ تمام تعریفیں اور نعمتیں تیرے ہی لیے ہیں اور بادشاہی بھی تیری ہی ہے، تیرا کوئی شریک نہیں۔',
           reference: 'Sahih al-Bukhari #1549',
+          audioUrl: 'https://archive.org/download/talbiyat/Talbiya.mp3',
         },
       ],
       commonMistakesToAvoid: [
@@ -74,6 +76,7 @@ export class OfflineResilienceEngine {
           arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
           urdu: 'اے ہمارے رب! ہمیں دنیا میں بھی بھلائی عطا فرما اور آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔',
           reference: 'Sunan Abi Dawud #1892 (Sahih)',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/002201.mp3',
         },
       ],
       commonMistakesToAvoid: [
@@ -97,6 +100,7 @@ export class OfflineResilienceEngine {
           arabic: 'إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ ۖ أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ',
           urdu: 'بیشک صفا اور مروہ اللہ کی نشانیوں میں سے ہیں۔ میں وہیں سے ابتدا کرتا ہوں جہاں سے اللہ نے ابتدا فرمائی۔',
           reference: 'Sahih Muslim #1218',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/002158.mp3',
         },
       ],
       commonMistakesToAvoid: [

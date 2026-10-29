@@ -363,3 +363,21 @@ body.theme-tahajjud input {
 .drawer-slide-in {
   animation: slide-in-right 0.25s var(--ease-spring);
 }
+
+/* Persistent Audio Player Mobile Clearance (Avoid MobileBottomNav Overlap) */
+.amal-persistent-audio-player {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 780px;
+  z-index: 9999;
+  transition: bottom 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .amal-persistent-audio-player {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 72px) !important;
+  }
+}

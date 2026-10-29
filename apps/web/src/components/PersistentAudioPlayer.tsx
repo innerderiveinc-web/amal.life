@@ -132,18 +132,12 @@ export const PersistentAudioPlayer: React.FC = () => {
     <div
       role="region"
       aria-label="Amal Audio Recitation Player"
+      className="amal-persistent-audio-player"
       style={{
-        position: 'fixed',
-        bottom: 16,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '92%',
-        maxWidth: 780,
         backgroundColor: '#1E293B',
         color: '#FFFFFF',
         borderRadius: 16,
         boxShadow: '0 12px 30px -5px rgba(0, 0, 0, 0.45), 0 8px 12px -6px rgba(0, 0, 0, 0.35)',
-        zIndex: 9999,
         padding: '12px 20px',
         border: '1px solid #334155',
         display: 'flex',

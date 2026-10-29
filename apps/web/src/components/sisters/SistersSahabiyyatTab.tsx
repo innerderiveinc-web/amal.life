@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SAHABIYYAT_PROFILES, SahabiyyatProfile } from '../../lib/women-sanctuary-data';
+import { SistersSahabiyyahDetailModal } from './SistersSahabiyyahDetailModal';
 
 interface SistersSahabiyyatTabProps {
   isUrdu: boolean;
@@ -20,6 +21,8 @@ export function SistersSahabiyyatTab({
   onOpenSanad,
   onGenerateSahabiyyahCard,
 }: SistersSahabiyyatTabProps) {
+  const [selectedSahabiyyahForDetail, setSelectedSahabiyyahForDetail] = useState<SahabiyyatProfile | null>(null);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <div
@@ -42,8 +45,8 @@ export function SistersSahabiyyatTab({
         </h2>
         <p style={{ margin: 0, fontSize: 14, color: '#4B5563' }}>
           {isUrdu
-            ? 'تاریخِ اسلام کی ۱۰ درخشندہ خواتین جنہوں نے ایمان، علم، شجاعت اور خدمتِ خلق میں وہ نقوش چھوڑے جو رہتی دنیا تک ہر مسلمان عورت کے لیے مشعلِ راہ ہیں۔'
-            : '10 towering female role models who exemplified faith, juristic intellect, bravery, and humanitarian service.'}
+            ? 'تاریخِ اسلام کی ۱۵ درخشندہ و برگزیدہ خواتین (امہات المؤمنین، بناتِ اربعہ، صحابیات و قرآنی نمونے) جنہوں نے ایمان، علم، شجاعت اور خدمتِ خلق میں وہ نقوش چھوڑے جو رہتی دنیا تک ہر مسلمان عورت کے لیے مشعلِ راہ ہیں۔'
+            : '15 towering female role models (Mothers of the Believers, all 4 Daughters of the Prophet ﷺ, noble Sahabiyyat, and Quranic paragons) who exemplified faith, juristic intellect, bravery, and humanitarian service.'}
         </p>
       </div>
 
@@ -170,6 +173,32 @@ export function SistersSahabiyyatTab({
                   ))}
                 </ul>
               </div>
+
+              {/* Primary Scholarly Biography Trigger */}
+              <button
+                onClick={() => setSelectedSahabiyyahForDetail(sah)}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#064E3B',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  padding: '10px 14px',
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  marginBottom: 12,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  boxShadow: '0 2px 6px rgba(6, 78, 59, 0.2)',
+                  transition: 'background 0.2s',
+                }}
+              >
+                <span>📖</span>
+                <span>{isUrdu ? 'مفصل سوانح و فضائل پڑھیں' : 'Read Exhaustive Scholarly Biography'}</span>
+              </button>
             </div>
 
             <div
@@ -235,6 +264,16 @@ export function SistersSahabiyyatTab({
           </div>
         ))}
       </div>
+
+      {selectedSahabiyyahForDetail && (
+        <SistersSahabiyyahDetailModal
+          sah={selectedSahabiyyahForDetail}
+          isUrdu={isUrdu}
+          onClose={() => setSelectedSahabiyyahForDetail(null)}
+          onOpenSanad={onOpenSanad}
+          onGenerateCard={onGenerateSahabiyyahCard}
+        />
+      )}
     </div>
   );
 }

@@ -144,12 +144,8 @@ export function useQuranMasterAudio({
           if (e && (e.name === 'AbortError' || e.message?.includes('interrupted'))) {
             return;
           }
-          console.warn('Audio play error, trying CDN fallback:', e);
-          const fallbackUrl = `https://cdn.islamic.network/quran/audio/64/ur.khan/${ayahNum}.mp3`;
-          if (masterAudioRef.current && segment !== 'ARABIC') {
-            masterAudioRef.current.src = fallbackUrl;
-            masterAudioRef.current.play().catch(() => {});
-          }
+          console.warn('Audio play error on source:', url, e);
+          showAmalToast('آڈیو پلے کرنے میں دشواری ہوئی۔ برائے مہربانی دوبارہ کوشش فرمائیں۔', 'warning');
         });
     }
   };

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { UniversalSearchEngine, SearchResultItem } from '@amal/amal-engine';
 import { AmalTheme } from '@amal/ui';
+import { SMART_FIQH_DATA, SmartFiqhItem } from '../data/smart-fiqh-finder-data';
 
 interface UniversalSearchModalProps {
   isOpen: boolean;
@@ -11,10 +12,25 @@ interface UniversalSearchModalProps {
 export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const [searchMode, setSearchMode] = useState<'ALL' | 'FIQH'>('ALL');
   const [results, setResults] = useState<SearchResultItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const suggestions = UniversalSearchEngine.getPopularSuggestions();
+
+  // Match Smart Fiqh items with deterministic accuracy
+  const matchedFiqhItems = useMemo<SmartFiqhItem[]>(() => {
+    if (!query.trim()) {
+      return searchMode === 'FIQH' ? SMART_FIQH_DATA : [];
+    }
+    const q = query.toLowerCase().trim();
+    return SMART_FIQH_DATA.filter(item => {
+      const matchKeyword = item.keywords.some(k => k.toLowerCase().includes(q) || q.includes(k.toLowerCase()));
+      const matchUrdu = item.questionUrdu.includes(q) || item.summaryUrdu.includes(q);
+      const matchEn = item.questionEnglish.toLowerCase().includes(q) || item.summaryEnglish.toLowerCase().includes(q);
+      return matchKeyword || matchUrdu || matchEn;
+    });
+  }, [query, searchMode]);
 
   useEffect(() => {
     if (isOpen) {
@@ -23,6 +39,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
     } else {
       setQuery('');
       setResults([]);
+      setSearchMode('ALL');
     }
   }, [isOpen]);
 
@@ -128,6 +145,59 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
           </span>
         </div>
 
+        {/* Search Mode Switcher Tabs */}
+        <div
+          style={{
+            display: 'flex',
+            backgroundColor: '#F8FAFC',
+            padding: '8px 20px',
+            gap: 10,
+            borderBottom: '1px solid #E2E8F0',
+          }}
+        >
+          <button
+            onClick={() => setSearchMode('ALL')}
+            style={{
+              padding: '5px 14px',
+              borderRadius: 20,
+              fontSize: 12,
+              fontWeight: 700,
+              border: 'none',
+              cursor: 'pointer',
+              backgroundColor: searchMode === 'ALL' ? '#065F46' : '#E2E8F0',
+              color: searchMode === 'ALL' ? '#FFFFFF' : '#475569',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>🔍</span>
+            <span>ہمہ جہت تلاش (All Search)</span>
+          </button>
+
+          <button
+            onClick={() => setSearchMode('FIQH')}
+            style={{
+              padding: '5px 14px',
+              borderRadius: 20,
+              fontSize: 12,
+              fontWeight: 700,
+              border: 'none',
+              cursor: 'pointer',
+              backgroundColor: searchMode === 'FIQH' ? '#065F46' : '#E2E8F0',
+              color: searchMode === 'FIQH' ? '#FFFFFF' : '#475569',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>⚡</span>
+            <span>فوری فقہی رہنمائی (Smart Fiqh Finder)</span>
+          </button>
+        </div>
+
         {/* Suggestion Chips when query is empty */}
         {query.trim().length === 0 && (
           <div style={{ padding: '16px 20px', borderBottom: '1px solid #F1F5F9' }}>
@@ -157,8 +227,114 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
         )}
 
         {/* Search Results List */}
-        <div style={{ maxHeight: 380, overflowY: 'auto', padding: '8px 0' }}>
-          {results.length === 0 && query.trim().length > 0 && (
+        <div style={{ maxHeight: 420, overflowY: 'auto', padding: '8px 0' }}>
+          {/* Smart Fiqh Finder Direct Verified Answers */}
+          {matchedFiqhItems.length > 0 && (
+            <div style={{ padding: '8px 16px', marginBottom: 8 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 800,
+                  color: '#065F46',
+                  textTransform: 'uppercase',
+                  letterSpacing: 0.8,
+                  marginBottom: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <span>⚡</span>
+                <span>مصدقہ فقہی فتاویٰ و احکام (Source-Backed Classical Rulings):</span>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {matchedFiqhItems.map((fiqh) => (
+                  <div
+                    key={fiqh.id}
+                    style={{
+                      backgroundColor: '#F0FDF4',
+                      border: '1px solid #BBF7D0',
+                      borderRadius: 12,
+                      padding: '14px 16px',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: 6 }}>
+                      <div>
+                        <div style={{ fontSize: 14, fontWeight: 800, color: '#064E3B' }}>
+                          {fiqh.questionUrdu}
+                        </div>
+                        <div style={{ fontSize: 12, color: '#334155', marginTop: 2 }}>
+                          {fiqh.questionEnglish}
+                        </div>
+                      </div>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 800,
+                          padding: '3px 8px',
+                          borderRadius: 6,
+                          backgroundColor:
+                            fiqh.hukmType === 'FARZ'
+                              ? '#DC2626'
+                              : fiqh.hukmType === 'WAJIB'
+                              ? '#D97706'
+                              : fiqh.hukmType === 'SUNNAH'
+                              ? '#059669'
+                              : '#2563EB',
+                          color: '#FFFFFF',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {fiqh.hukmUrdu}
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: 13, color: '#1E293B', lineHeight: 1.6, marginTop: 6, backgroundColor: '#FFFFFF', padding: '10px 12px', borderRadius: 8, border: '1px solid #DCFCE7' }}>
+                      <p style={{ margin: '0 0 4px', fontWeight: 600 }}>{fiqh.summaryUrdu}</p>
+                      <p style={{ margin: 0, fontSize: 12, color: '#475569' }}>{fiqh.summaryEnglish}</p>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, flexWrap: 'wrap', gap: 6 }}>
+                      <div style={{ fontSize: 11, color: '#047857', fontWeight: 700 }}>
+                        📖 حوالہ: {fiqh.canonicalReference}
+                      </div>
+                      {fiqh.libraryBookId && (
+                        <button
+                          onClick={() => handleSelect(`/library?book=${fiqh.libraryBookId}`)}
+                          style={{
+                            fontSize: 11,
+                            fontWeight: 700,
+                            backgroundColor: '#065F46',
+                            color: '#FFFFFF',
+                            border: 'none',
+                            borderRadius: 6,
+                            padding: '4px 10px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          کتاب میں مطالعہ کریں →
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {searchMode === 'FIQH' && matchedFiqhItems.length === 0 && query.trim().length > 0 && (
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#64748B', fontSize: 14 }}>
+              اس فقہی سوال کا مصدقہ حوالہ تلاش نہیں ہو سکا۔
+              <br />
+              <span style={{ fontSize: 12, color: '#94A3B8' }}>
+                نمونہ الفاظ: سفر، قصر، غسل، سجدہ سہو، زکوٰۃ، حیض، وتر، انجکشن، ناخن پالش
+              </span>
+            </div>
+          )}
+
+          {searchMode === 'ALL' && results.length === 0 && matchedFiqhItems.length === 0 && query.trim().length > 0 && (
             <div style={{ padding: '32px 20px', textAlign: 'center', color: '#64748B', fontSize: 14 }}>
               کوئی نتیجہ نہیں ملا۔ برائے مہربانی آسان الفاظ لکھیں۔
               <br />
@@ -166,7 +342,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
             </div>
           )}
 
-          {results.map(item => (
+          {searchMode === 'ALL' && results.map(item => (
             <div
               key={item.id}
               onClick={() => handleSelect(item.href)}

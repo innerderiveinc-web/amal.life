@@ -18,10 +18,15 @@ const CAROUSEL_SLIDES: KnowledgeTabType[] = ['AYAH', 'HADITH', 'DUA', 'HIKMAT'];
 
 export const DailyKnowledgeBroadcastCard: React.FC = () => {
   const { t, isUrdu } = useLanguage();
+  const [isMounted, setIsMounted] = useState(false);
   const [selectedSlotOverride, setSelectedSlotOverride] = useState<SlotFilterType>('AUTO');
-  const [broadcast, setBroadcast] = useState<DailyKnowledgeBroadcast | null>(() =>
-    DailyKnowledgeEngine.getBroadcast()
-  );
+  const [broadcast, setBroadcast] = useState<DailyKnowledgeBroadcast | null>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const slotArg = selectedSlotOverride === 'AUTO' ? undefined : selectedSlotOverride;
+    setBroadcast(DailyKnowledgeEngine.getBroadcast(new Date(), slotArg));
+  }, []);
   const [activeTab, setActiveTab] = useState<KnowledgeTabType>('AYAH');
   const [copied, setCopied] = useState(false);
   const [isAutoPlayActive, setIsAutoPlayActive] = useState<boolean>(true);
@@ -174,6 +179,21 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
     });
     setIsShareModalOpen(true);
   };
+
+  if (!isMounted || !broadcast) {
+    return (
+      <section
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 18,
+          border: '1px solid #E2E8F0',
+          padding: '24px 28px',
+          marginBottom: 24,
+          minHeight: 160,
+        }}
+      />
+    );
+  }
 
   const currentSlideNumber = CAROUSEL_SLIDES.indexOf(activeTab) + 1;
 

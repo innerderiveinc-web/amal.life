@@ -31,14 +31,22 @@ export const AboutStewardshipSection: React.FC<AboutStewardshipSectionProps> = (
           </div>
         </div>
         <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.7, margin: '0 0 14px' }}>
-          <strong>AMAL OS</strong> is conceptualized, engineered, and stewarded by{' '}
-          <strong>Qsura India Pvt Ltd</strong> as a dedicated sovereign life platform for the global
-          Muslim Ummah. Our engineering ethos unites deep technological rigor with authentic
+          <strong>AMAL OS</strong> is the proprietary intellectual property of <strong>Qsura India Pvt Ltd</strong>,
+          founded and architected by <strong>Dr. Irfan Ashraf</strong>. Designed from the ground up as a dedicated sovereign life platform for the global
+          Muslim Ummah, its engineering unites deep technological rigor with authentic
           traditional orthodoxy (Ahl al-Sunnah wal-Jama&apos;ah).
         </p>
+        <div style={{ backgroundColor: '#F8FAFC', borderRadius: 12, padding: '16px 20px', border: '1px solid #E2E8F0', marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', marginBottom: 4 }}>
+            Founder &amp; Chief Architect: <span style={{ color: '#065F46' }}>Dr. Irfan Ashraf</span>
+          </div>
+          <div style={{ fontSize: 12, color: '#64748B', lineHeight: 1.6 }}>
+            Steward Entity: <strong>Qsura India Pvt Ltd</strong> · Guiding the mission of delivering an ad-free, private, mathematically exact Islamic computing system free from sectarian deviation and commercial exploitation.
+          </div>
+        </div>
         <p style={{ fontSize: 14, color: '#4B5563', lineHeight: 1.7, margin: 0 }}>
           Qsura India Pvt Ltd commits that AMAL OS shall remain 100% ad-free, devoid of commercial
-          tracking, strictly non-sectarian, and protected against algorithmic distortion. All
+          tracking, strictly grounded in the consensus of Sawad al-A&apos;zam, and protected against algorithmic distortion. All
           digital calculation engines and foundational canons are offered as a perpetual Waqf in
           service of divine worship.
         </p>

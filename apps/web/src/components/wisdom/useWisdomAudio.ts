@@ -91,14 +91,9 @@ export function useWisdomAudio() {
         })
         .catch((e) => {
           console.warn('Audio play error:', e);
-          // Fallback to secondary CDN
-          const fallbackUrl = `https://cdn.islamic.network/quran/audio/64/ur.khan/${card.ayahNumber}.mp3`;
-          if (audioRef.current) {
-            audioRef.current.src = fallbackUrl;
-            audioRef.current.play().catch(() => {
-              showAmalToast('آڈیو لوڈ کرنے میں عارضی تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
-            });
-          }
+          setIsPlayingAudio(false);
+          setActiveAudioKey(null);
+          showAmalToast('آڈیو لوڈ کرنے میں عارضی تاخیر ہوئی۔ براہ کرم دوبارہ کوشش کریں۔', 'warning');
         });
     }
   };

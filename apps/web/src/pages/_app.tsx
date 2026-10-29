@@ -17,6 +17,7 @@ import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
 import { enablePersistentStorage, checkStorageHealth } from '../lib/storage-guard';
 import { showAmalToast } from '../components/Toast';
+import { GlobalCrashGuardErrorBoundary } from '../components/GlobalCrashGuardErrorBoundary';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -184,7 +185,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1 }}>
-            <Component {...pageProps} />
+            <GlobalCrashGuardErrorBoundary>
+              <Component {...pageProps} />
+            </GlobalCrashGuardErrorBoundary>
           </div>
 
           {/* Global Authoritative Islamic OS Footer */}

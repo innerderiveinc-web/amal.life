@@ -2,6 +2,7 @@ import React from 'react';
 import { CanonicalEditionRecord } from '@amal/evidence';
 import { AmalTheme } from '@amal/ui';
 import { getBookChapters, getVerifiedSourceUrl, getLocalPdfForWork } from '../../lib/classical-chapters-data';
+import { getCanonicalBookProfile } from '../../data/canonical-book-introductions';
 import { showAmalToast } from '../Toast';
 
 interface LibraryWorkDetailProps {
@@ -26,6 +27,7 @@ export function LibraryWorkDetail({
   const hasSelectedInAppChapters = isQuran || !!getBookChapters(selectedWork.work_id);
   const verifiedSource = getVerifiedSourceUrl(selectedWork.work_id);
   const localPdf = getLocalPdfForWork(selectedWork.work_id);
+  const bookProfile = getCanonicalBookProfile(selectedWork.work_id);
 
   return (
     <div
@@ -250,6 +252,154 @@ export function LibraryWorkDetail({
           <span style={{ fontWeight: 600, color: '#059669' }}>{selectedWork.scholarly_authority_level}</span>
         </div>
       </div>
+
+      {/* SCHOLARLY METHODOLOGY & DISCIPLINE HERMENEUTIC CONTEXT */}
+      <div
+        style={{
+          padding: '14px 18px',
+          borderRadius: 10,
+          backgroundColor: '#F0FDF4',
+          border: '1px solid #BBF7D0',
+          fontSize: 13,
+          lineHeight: 1.7,
+        }}
+      >
+        <div style={{ fontWeight: 800, color: '#166534', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span>⚖️</span>
+          <span>علمی مقام و فقہی منہج (Classical Status &amp; Scholarly Role):</span>
+        </div>
+        <div style={{ color: '#1E293B', textAlign: 'right', direction: 'rtl', marginBottom: 6 }}>
+          {selectedWork.discipline === 'QURAN' &&
+            'علومِ قرآن و وحی الٰہی — کلام اللہ کا متنِ متواتر، نزول، کتابتِ عثمانی، تجوید اور تفسیر۔ قرآن مجید تمام احکامِ شریعت کی اصلِ الاصول ہے۔'}
+          {selectedWork.discipline === 'HADITH' &&
+            'حدیث و سننِ نبویہ ﷺ — رسول اللہ ﷺ کے اقوال، افعال، تقریرات اور شمائل۔ ائمۂ حدیث (بخاری، مسلم، ابوداؤد، ترمذی، نسائی، ابن ماجہ) کی اسانیدِ متصلہ سے تصدیق شدہ متون۔'}
+          {selectedWork.discipline === 'TAFSIR' &&
+            'علمِ تفسیر و تاویل — آیاتِ قرآنیہ کی مراد، شانِ نزول، ناسخ و منسوخ اور کبار صحابہ و تابعین کے اقوال کی روشنی میں فہمِ کلامِ الٰہی۔'}
+          {selectedWork.discipline === 'HANAFI_FIQH' &&
+            'فقہِ حنفی (السواد الاعظم) — امام اعظم ابو حنیفہ، امام ابو یوسف اور امام محمد شیبانی کا مدوّن کردہ فقہی نظام، جو ظاہر الروایہ، متونِ اربعہ (ہدایہ، کنز، وقایہ، مجمع) اور کتبِ فتاویٰ (رد المحتار، عالمگیری) پر مبنی ہے۔'}
+          {selectedWork.discipline === 'MALIKI_FIQH' &&
+            'فقہِ مالکی — امام دار الہجرۃ مالک بن انس کا مکتبۂ فقہ، جو عملِ اہلِ مدینہ اور موطا پر استوار ہے۔'}
+          {selectedWork.discipline === 'SHAFII_FIQH' &&
+            'فقہِ شافعی — امام محمد بن ادریس الشافعی کا فقہی و اصولی منہج، جس نے اصولِ فقہ کی تدوین فرمائی (کتاب الام، الرسالہ)۔'}
+          {selectedWork.discipline === 'HANBALI_FIQH' &&
+            'فقہِ حنبلی — امام اہل السنہ احمد بن حنبل کا فقہی منہج، جو کثرتِ آثار اور نصوص پر قائم ہے۔'}
+          {selectedWork.discipline === 'AQEEDAH' &&
+            'عقائدِ اہل السنت والجماعت — ما انا علیہ واصحابی کا منہج، صفاتِ الٰہیہ میں تنزیہ، ختمِ نبوت، عصمتِ انبیاء، تعظیمِ صحابہ و اہلِ بیت، اور عذابِ قبر و شفاعت پر غیر متزلزل ایمان۔'}
+          {selectedWork.discipline === 'SIRAH' &&
+            'سیرتِ مصطفیٰ ﷺ — تاریخِ انسانی کی مقدس ترین زندگی، ولادت، مکی دور، ہجرت، مدنی ریاست اور فتحِ مبین کی مستند روایات۔'}
+          {selectedWork.discipline === 'SHAMAIL' &&
+            'شمائل و خصائصِ نبویہ ﷺ — آقائے دو جہاں ﷺ کے حسن و جمال، چال ڈھال، گفتگو، عاداتِ مبارکہ، عبادات اور رحمتِ عامہ کے خصائص۔'}
+          {selectedWork.discipline === 'TAZKIYAH' || selectedWork.discipline === 'SPIRITUAL_HERITAGE' &&
+            'تزکیۂ نفس و احسان — دل کو کبر، حسد، ریاکاری اور دنیا کی محبت سے پاک کر کے اخلاص، شکر، صبر اور محبتِ الٰہی سے آراستہ کرنے کا قرآنی منہج۔'}
+          {selectedWork.discipline === 'USUL_AL_FIQH' &&
+            'اصولِ فقہ — قرآن و سنت سے شرعی احکام مستنبط کرنے کے فقہی قوانین (عام، خاص، مطلق، مقید، اجماع اور قیاس)۔'}
+          {selectedWork.discipline === 'MUSTALAH_AL_HADITH' &&
+            'اصولِ حدیث — صحیح، حسن، ضعیف، متواتر اور آحاد احادیث کی پرکھ، جرح و تعدیل اور راویوں کے ضبط و عدالت کی جانچ کے اصول۔'}
+          {selectedWork.discipline === 'ISLAMIC_HISTORY' &&
+            'تاریخِ اسلام — خلافتِ راشدہ، قرونِ اولیٰ اور مجاہدین و ائمۂ اسلام کی دینی خدمات کا مستند ریکارڈ۔'}
+        </div>
+        <div style={{ fontSize: 12, color: '#475569' }}>
+          <strong>Academic Methodology: </strong>
+          Disciplined study adheres to canonical Ahl al-Sunnah consensus (Sawad al-A'zam). Inquiries are grounded in verified manuscript lines, primary Isnad, and the unbroken scholarly heritage of classical Islam.
+        </div>
+      </div>
+
+      {/* CANONICAL EXEGESIS, AUTHOR BIO & TOPICAL INDEX (IF ENRICHED PROFILE EXISTS) */}
+      {bookProfile && (
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: 12,
+            border: '1px solid #CBD5E1',
+            padding: '18px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 14,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #E2E8F0', paddingBottom: 8 }}>
+            <span style={{ fontSize: 14, fontWeight: 800, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span>🏛️</span>
+              <span>مقدمۂ کتاب، سوانحِ مصنف و تفصیلی اشاریہ</span>
+            </span>
+            <span style={{ fontSize: 11, backgroundColor: '#E0F2FE', color: '#0369A1', padding: '2px 8px', borderRadius: 4, fontWeight: 700 }}>
+              {bookProfile.madhhabOrOrientation}
+            </span>
+          </div>
+
+          {/* Significance */}
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 800, color: '#166534', marginBottom: 4 }}>
+              علمی حیثیت و مقام (Scholarly Significance):
+            </div>
+            <p style={{ margin: '0 0 6px', fontSize: 13, lineHeight: 1.8, color: '#1E293B', textAlign: 'right', direction: 'rtl' }}>
+              {bookProfile.significanceUrdu}
+            </p>
+            <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: '#475569' }}>
+              {bookProfile.significanceEnglish}
+            </p>
+          </div>
+
+          {/* Author Bio */}
+          <div style={{ backgroundColor: '#F8FAFC', padding: 12, borderRadius: 8, border: '1px solid #E2E8F0' }}>
+            <div style={{ fontSize: 11, fontWeight: 800, color: '#0F172A', marginBottom: 2 }}>
+              سوانحِ مصنف: {bookProfile.authorNameUrdu} ({bookProfile.authorEra})
+            </div>
+            <p style={{ margin: '0 0 4px', fontSize: 12, lineHeight: 1.7, color: '#334155', textAlign: 'right', direction: 'rtl' }}>
+              {bookProfile.authorBioUrdu}
+            </p>
+            <p style={{ margin: 0, fontSize: 11, color: '#64748B' }}>
+              {bookProfile.authorBioEnglish}
+            </p>
+          </div>
+
+          {/* Methodology */}
+          <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.6 }}>
+            <strong>منہجِ تدریس و استدلال: </strong>
+            <span style={{ direction: 'rtl', textAlign: 'right' }}>{bookProfile.studyMethodologyUrdu}</span>
+          </div>
+
+          {/* Topical Index / Sections */}
+          {bookProfile.topicalIndex && bookProfile.topicalIndex.length > 0 && (
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 800, color: '#0F172A', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>📑</span>
+                <span>فہرستِ ابواب و کتبِ ثلاثہ (Canonical Sections &amp; Core Themes):</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 8 }}>
+                {bookProfile.topicalIndex.map((sec) => (
+                  <div
+                    key={sec.sectionNumber}
+                    style={{
+                      padding: 10,
+                      borderRadius: 8,
+                      backgroundColor: '#FAFAFA',
+                      border: '1px solid #E5E7EB',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: '#065F46' }}>
+                        {sec.titleArabic}
+                      </span>
+                      <span style={{ fontSize: 10, color: '#9CA3AF' }}>#{sec.sectionNumber}</span>
+                    </div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: '#1E293B' }}>
+                      {sec.titleUrdu} ({sec.titleEnglish})
+                    </div>
+                    <div style={{ fontSize: 10, color: '#6B7280', marginTop: 2 }}>
+                      مضامین: {sec.coreThemes}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Scope & Authenticity Explanation */}
       <div

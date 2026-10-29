@@ -176,21 +176,41 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
       <div
         style={{
           backgroundColor: '#F0FDF4',
-          borderRadius: 12,
-          padding: '12px 16px',
-          border: '1px solid #BBF7D0',
+          borderRadius: 14,
+          padding: '14px 18px',
+          border: '1.5px solid #A7F3D0',
           marginBottom: 20,
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           gap: 12,
+          boxShadow: '0 2px 6px rgba(6, 78, 59, 0.04)',
         }}
       >
-        <span style={{ fontSize: 20 }}>⚖️</span>
-        <div style={{ fontSize: 12.5, color: '#166534', lineHeight: 1.5 }}>
-          <strong>{isUrdu ? 'علمی و تحقیقی وضاحت:' : 'Scholarly Transparency Notice:'}</strong>{' '}
-          {isUrdu
-            ? 'اس سیکشن میں اہم فقہی و اخلاقی اسباق کے ساتھ ساتھ اصل مطبوعہ کتب کی مکمل پی ڈی ایف بھی شامل کی گئی ہے تاکہ علمائے کرام اور طالبات ورق بہ ورق مکمل مطالعہ فرما سکیں۔'
-            : 'This sanctuary presents core juristic & ethical lessons alongside the unabridged original printed PDF scans for comprehensive scholarly verification.'}
+        <span style={{ fontSize: 22, marginTop: 2 }}>⚖️</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 900,
+                color: '#065F46',
+                backgroundColor: '#DCFCE7',
+                padding: '2px 8px',
+                borderRadius: 6,
+                border: '1px solid #86EFAC',
+              }}
+            >
+              «مُنتَخَبَات دِرَاسِيَّة تَعْلِيمِيَّة»
+            </span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
+              {isUrdu ? 'منتخب تدریسی ابواب برائے خواتین' : 'Selected Core Pedagogical Chapters'}
+            </span>
+          </div>
+          <div style={{ fontSize: 12.5, color: '#166534', lineHeight: 1.5 }}>
+            {isUrdu
+              ? 'یہ ابواب اس شاہکار کتاب کے کلیدی تربیتی و فقہی مسائل کے جامع خلاصے ہیں۔ مکمل غیر محذوف کتاب مع تمام ابواب کے اصل نسخے کے لیے اوپر "مکمل اصل کتاب (Full Book)" ٹیب سے استفادہ فرمائیں۔'
+              : 'These chapters represent foundational instructional selections from this masterwork. For the complete unabridged original edition, tap the "Full Book Edition" tab above.'}
+          </div>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { getLiveNextPrayer, getSavedLocation, formatCountdown } from '../lib/prayer-utils';
 import { MamoolPrayerAuqatStrip } from './mamool/MamoolPrayerAuqatStrip';
 import { MamoolThreeEssentialsGrid } from './mamool/MamoolThreeEssentialsGrid';
+import { MamoolIstiqamahStreak } from './mamool/MamoolIstiqamahStreak';
 
 const PRAYER_NAMES_URDU: Record<string, string> = {
   Fajr: 'نمازِ فجر',
@@ -39,6 +40,7 @@ export const DailyMamoolBar: React.FC = () => {
   const [selectedSlot, setSelectedSlot] = useState<MamoolSlotType>('AUTO');
   const [microAmalDone, setMicroAmalDone] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [locationVersion, setLocationVersion] = useState(0);
   const { playTrack } = useAudioPlayer();
   const { isUrdu } = useLanguage();
   const [now, setNow] = useState<Date>(() => new Date());
@@ -48,6 +50,9 @@ export const DailyMamoolBar: React.FC = () => {
     if (typeof window !== 'undefined') {
       const todayKey = `amal_micro_done_${new Date().toISOString().split('T')[0]}`;
       setMicroAmalDone(localStorage.getItem(todayKey) === 'true');
+      const handleLocationChange = () => setLocationVersion((v) => v + 1);
+      window.addEventListener('amal_prayer_settings_changed', handleLocationChange);
+      return () => window.removeEventListener('amal_prayer_settings_changed', handleLocationChange);
     }
   }, []);
 
@@ -64,7 +69,7 @@ export const DailyMamoolBar: React.FC = () => {
     } catch {
       return null;
     }
-  }, [now]);
+  }, [now, locationVersion]);
 
   const livePrayerInfo = useMemo(() => {
     if (!fullPrayerTimes) return null;
@@ -110,6 +115,21 @@ export const DailyMamoolBar: React.FC = () => {
   const formattedCountdown = livePrayerInfo
     ? { urdu: livePrayerInfo.formattedCountdownUrdu, english: livePrayerInfo.formattedCountdownEnglish }
     : formatCountdown(mamool.minutesToNextPrayer);
+
+  if (!isMounted) {
+    return (
+      <section
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 18,
+          border: '1px solid rgba(226, 232, 240, 0.85)',
+          padding: '22px 26px',
+          marginBottom: 24,
+          minHeight: 180,
+        }}
+      />
+    );
+  }
 
   return (
     <section
@@ -188,6 +208,9 @@ export const DailyMamoolBar: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* Gentle Daily Istiqamah Streak & Prayer Tracker (Quranly/Niyat-Inspired, Zero-Distraction) */}
+      <MamoolIstiqamahStreak isUrdu={isUrdu} />
 
       {/* 3 Essentials Grid (Waqt Ka Amal, 1-Min Micro-Amal, Daily Invocation) */}
       <MamoolThreeEssentialsGrid

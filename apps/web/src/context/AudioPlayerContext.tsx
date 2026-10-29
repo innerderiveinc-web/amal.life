@@ -223,11 +223,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
           if (srcIndex >= sources.length) {
             console.warn('All audio stream sources failed for track:', track.title);
             setIsPlaying(false);
-            if (track.arabicSnippet && track.arabicSnippet.length <= 150) {
-              triggerSpeechFallback(track);
-            } else {
-              showAmalToast('Audio stream unavailable. Please check your internet connection or CDN.', 'warning');
-            }
+            showAmalToast('Audio stream unavailable. Please check your internet connection or CDN.', 'warning');
             return;
           }
 
@@ -252,11 +248,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
               attemptPlaySource(srcIndex + 1);
             } else {
               setIsPlaying(false);
-              if (track.arabicSnippet && track.arabicSnippet.length <= 150) {
-                triggerSpeechFallback(track);
-              } else {
-                showAmalToast('Audio stream unavailable on this network. Please try another mirror or check connection.', 'warning');
-              }
+              showAmalToast('Audio stream unavailable on this network. Please check connection.', 'warning');
             }
           };
 
@@ -277,7 +269,8 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
                 if (srcIndex + 1 < sources.length) {
                   attemptPlaySource(srcIndex + 1);
                 } else {
-                  triggerSpeechFallback(track);
+                  setIsPlaying(false);
+                  showAmalToast('Audio playback error. Please try again.', 'warning');
                 }
               });
           }
@@ -285,7 +278,8 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
         attemptPlaySource(0);
       } else {
-        triggerSpeechFallback(track);
+        setIsPlaying(false);
+        showAmalToast('Audio stream unavailable.', 'warning');
       }
     });
   };

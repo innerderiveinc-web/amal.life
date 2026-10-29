@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import {
   zakatInheritanceEngine,
@@ -13,13 +14,24 @@ import { useLanguage } from '../context/LanguageContext';
 // Modularized Calculator Subcomponents
 import { ZakatCalculatorTab } from '../components/calculator/ZakatCalculatorTab';
 import { MirasCalculatorTab } from '../components/calculator/MirasCalculatorTab';
+import { QadhaAndContemporaryFiqhTab } from '../components/calculator/QadhaAndContemporaryFiqhTab';
 import { FinancialLifecycleBar } from '../components/calculator/FinancialLifecycleBar';
 import { MirasCertificateModal } from '../components/calculator/MirasCertificateModal';
 import { ZakatCertificateModal } from '../components/calculator/ZakatCertificateModal';
 
 export default function CalculatorPage() {
+  const router = useRouter();
   const { t, isUrdu } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'ZAKAT' | 'MIRAS'>('ZAKAT');
+  const [activeTab, setActiveTab] = useState<'ZAKAT' | 'MIRAS' | 'QADHA'>('ZAKAT');
+
+  useEffect(() => {
+    if (router.isReady && router.query.tab) {
+      const tab = String(router.query.tab).toUpperCase();
+      if (tab === 'MIRAS') setActiveTab('MIRAS');
+      else if (tab === 'QADHA') setActiveTab('QADHA');
+      else setActiveTab('ZAKAT');
+    }
+  }, [router.isReady, router.query.tab]);
   const [mirasCert, setMirasCert] = useState<MirasPdfCertificatePayload | null>(null);
   const [zakatCert, setZakatCert] = useState<ZakatClearancePayload | null>(null);
 
@@ -181,6 +193,21 @@ export default function CalculatorPage() {
           >
             📜 Miras (Inheritance / Fara'id)
           </button>
+          <button
+            onClick={() => setActiveTab('QADHA')}
+            style={{
+              padding: '10px 24px',
+              borderRadius: 8,
+              fontWeight: 700,
+              fontSize: 15,
+              cursor: 'pointer',
+              border: 'none',
+              backgroundColor: activeTab === 'QADHA' ? '#1B4332' : '#E5E7EB',
+              color: activeTab === 'QADHA' ? '#FFFFFF' : '#374151',
+            }}
+          >
+            📿 Qadha-e-Umri &amp; Fiqh FAQs
+          </button>
         </div>
 
         {/* ZAKAT SECTION */}
@@ -254,6 +281,9 @@ export default function CalculatorPage() {
             t={t}
           />
         )}
+
+        {/* QADHA-E-UMRI & CONTEMPORARY FIQH FAQS SECTION */}
+        {activeTab === 'QADHA' && <QadhaAndContemporaryFiqhTab />}
 
         {/* CHANNELIZED FINANCIAL LIFECYCLE BAR */}
         <FinancialLifecycleBar />

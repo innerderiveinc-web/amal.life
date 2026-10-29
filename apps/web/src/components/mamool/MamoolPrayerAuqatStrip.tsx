@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { DailyMamool } from '@amal/amal-engine';
+import { GLOBAL_CITIES } from '../../lib/global-locations';
+import { getSavedLocation, saveUserLocation } from '../../lib/prayer-utils';
 
 export interface PrayerTimeSlotItem {
   key: string;
@@ -42,6 +44,30 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
   formattedCountdown,
   fullPrayerTimes,
 }) => {
+  const [currentCityName, setCurrentCityName] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loc = getSavedLocation();
+      setCurrentCityName(loc.name);
+    }
+  }, []);
+
+  const handleCitySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const cityName = e.target.value;
+    const found = GLOBAL_CITIES.find((c) => c.name === cityName);
+    if (found) {
+      const fullName = `${found.name}, ${found.country}`;
+      setCurrentCityName(fullName);
+      saveUserLocation({
+        lat: found.lat,
+        lon: found.lon,
+        name: fullName,
+        city: found.name,
+        country: found.country,
+      });
+    }
+  };
   return (
     <>
       {/* Top Banner: Time Slot & Countdown */}
@@ -143,9 +169,38 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
             gap: 8,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#475569' }}>
-            <span>🕌</span>
-            <span>{isUrdu ? 'پانچوں نمازوں کے اوقات:' : 'Prayer Times:'}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#475569' }}>
+              <span>🕌</span>
+              <span>{isUrdu ? 'پانچوں نمازوں کے اوقات:' : 'Prayer Times:'}</span>
+            </div>
+
+            {/* 1-Tap Travel City Selector Dropdown */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span style={{ fontSize: 12 }}>📍</span>
+              <select
+                aria-label="Select City for Prayer Times"
+                value={GLOBAL_CITIES.find((c) => currentCityName.includes(c.name))?.name || GLOBAL_CITIES[0]?.name}
+                onChange={handleCitySelect}
+                style={{
+                  fontSize: 11.5,
+                  fontWeight: 700,
+                  padding: '2px 8px',
+                  borderRadius: 6,
+                  border: '1px solid #CBD5E1',
+                  backgroundColor: '#FFFFFF',
+                  color: '#0F172A',
+                  cursor: 'pointer',
+                  outline: 'none',
+                }}
+              >
+                {GLOBAL_CITIES.map((c) => (
+                  <option key={c.name} value={c.name}>
+                    {c.name} ({c.country})
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div suppressHydrationWarning style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>

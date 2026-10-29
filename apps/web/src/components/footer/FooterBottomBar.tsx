@@ -31,7 +31,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
           </span>
         </div>
         <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>
-          Crafted &amp; Stewarded by Qsura India Pvt Ltd · Sadaqah Jariyah Lil-Ummah · Zero Commercial Exploitation · 100% Ad-Free Sovereign Deen OS
+          Crafted &amp; Stewarded by Qsura India Pvt Ltd · Founder &amp; Chief Architect: Dr. Irfan Ashraf · Sadaqah Jariyah Lil-Ummah · 100% Ad-Free Sovereign Deen OS
         </div>
       </div>
 

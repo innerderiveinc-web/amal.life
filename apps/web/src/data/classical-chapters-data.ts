@@ -617,6 +617,51 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
         englishSynopsis: 'Imam al-Marghinani establishes the Quranic textual basis for the four obligatory pillars of Wudu and defines the legal threshold of water purity.',
         scholarlyNotes: 'The cornerstone text of Hanafi jurisprudence taught across major traditional Islamic seminaries worldwide.',
       },
+      {
+        chapterId: 'hid_2',
+        chapterTitleArabic: 'كِتَابُ الصَّلَاةِ: فِي شُرُوطِ الصَّلَاةِ وَأَرْكَانِهَا وَصِفَتِهَا',
+        chapterTitleUrdu: 'دوسرا باب: کتاب الصلاۃ — نماز کی شرائط، فرائض، اور باطنی ارکان',
+        chapterTitleEnglish: 'Chapter 2: The Book of Prayer - Prerequisites, Internal Pillars & Canonical Form',
+        arabicMatn: `«شَرَائِطُ الصَّلَاةِ الْمُتَقَدِّمَةِ عَلَيْهَا: طَهَارَةُ الْبَدَنِ مِنَ الْحَدَثِ وَالنَّجَسِ، وَطَهَارَةُ الثَّوْبِ، وَطَهَارَةُ الْمَكَانِ، وَسَتْرُ الْعَوْرَةِ، وَاسْتِقْبَالُ الْقِبْلَةِ، وَدُخُولُ الْوَقْتِ، وَالنِّيَّةُ.
+وَأَرْكَانُهَا الَّتِي هِيَ أَجْزَاؤُهَا: التَّحْرِيمَةُ، وَالْقِيَامُ، وَالْقِرَاءَةُ، وَالرُّكُوعُ، وَالسُّجُودُ، وَالْقَعْدَةُ الأَخِيرَةُ مِقْدَارَ التَّشَهُّدِ.
+فَمَنْ تَرَكَ شَرْطًا أَوْ رُكْنًا عَمْدًا أَوْ سَهْوًا لَمْ تَصِحَّ صَلَاتُهُ، وَلَا يُجْبِرُ السَّهْوَ إِلَّا تَرْكُ الْوَاجِبِ بِسَجْدَتَيِ السَّهْوِ».`,
+        urduTranslation: `امام مرغینانی رحمۃ اللہ علیہ فرماتے ہیں:
+"نماز سے پہلے کی شرائط یہ ہیں: حدث اور نجاست سے بدن کا پاک ہونا، کپڑوں کا پاک ہونا، نماز کی جگہ کا پاک ہونا، ستر کا ڈھانپنا، قبلہ رخ ہونا، وقت کا داخل ہونا، اور خلوصِ دل سے نیت کرنا۔
+اور نماز کے اندرونی ارکان (فرائضِ داخلہ) یہ ہیں: تکبیرِ تحریمہ، قیام، فرض قراءت، رکوع، دونوں سجدے، اور آخری قعدہ میں التحیات پڑھنے کی مقدار بیٹھنا۔
+پس جس نے کوئی شرط یا فرض عمداً یا بھول کر چھوڑ دیا اس کی نماز سرے سے باطل ہو گئی، اور سجدۂ سہو صرف واجب کے بھولے سے چھوٹ جانے کا ازالہ کرتا ہے نہ کہ فرض کا"۔`,
+        englishSynopsis: 'Systematic legal codification of the external conditions (Shurut) that must precede Salah and the six internal pillars (Arkan) whose omission invalidates the prayer.',
+        scholarlyNotes: 'Al-Hidayah explicitly clarifies the boundary where Sajdah Sahw is valid (omitted Wajib) versus where full repetition is mandatory (omitted Fard).',
+      },
+      {
+        chapterId: 'hid_3',
+        chapterTitleArabic: 'كِتَابُ النِّكَاحِ: فِي انْعِقَادِهِ بِالإِيجَابِ وَالْقَبُولِ وَحُقُوقِ الْمَهْرِ',
+        chapterTitleUrdu: 'تیسرا باب: کتاب النکاح — ایجاب و قبول کی شرائط، گواہوں کی موجودگی اور مہر کے احکام',
+        chapterTitleEnglish: 'Chapter 3: The Book of Marriage - Offer, Acceptance, Witnesses & Legal Dowry',
+        arabicMatn: `«النِّكَاحُ يَنْعَقِدُ بِالإِيجَابِ وَالْقَبُولِ بِلَفْظَيْنِ يُعَبَّرُ بِهِمَا عَنِ الْمَاضِي، أَوْ بِأَحَدِهِمَا عَنِ الْمَاضِي وَبِالآخَرِ عَنِ الْمُسْتَقْبَلِ إِذَا قَصَدَ الإِيجَابَ.
+وَلَا يَنْعَقِدُ نِكَاحُ الْمُسْلِمِينَ إِلَّا بِحُضُورِ شَاهِدَيْنِ حُرَّيْنِ عَاقِلَيْنِ بَالِغَيْنِ مُسْلِمَيْنِ رَجُلَيْنِ أَوْ رَجُلٍ وَامْرَأَتَيْنِ.
+وَأَقَلُّ الْمَهْرِ عَشَرَةُ دَرَاهِمَ (وَهُوَ مَا يُعَادِلُ حَوَالَيْ ۳۰.۶ غْرَام مِنَ الْفِضَّةِ)، وَلَا حَدَّ لِأَكْثَرِهِ بِاتِّفَاقِ الأَئِمَّةِ».`,
+        urduTranslation: `امام برہان الدین مرغینانی رحمۃ اللہ علیہ فرماتے ہیں:
+"نکاح ایجاب اور قبول سے منعقد ہوتا ہے ایسے دو لفظوں کے ساتھ جو ماضی پر دلالت کرتے ہوں (جیسے میں نے نکاح کیا، اور دوسرے نے کہا میں نے قبول کیا)۔
+اور مسلمانوں کا نکاح دو گواہوں کی موجودگی کے بغیر درست نہیں ہوتا جو آزاد، عاقل، بالغ اور مسلمان ہوں، خواہ دو مرد ہوں یا ایک مرد اور دو عورتیں۔
+اور شریعتِ حنفیہ میں مہر کی کم سے کم مقدار دس درہم (تقریباً ۳۰.۶ گرام چاندی کی قیمت) ہے، جبکہ زیادہ کی کوئی حد شریعت نے مقرر نہیں فرمائی"۔`,
+        englishSynopsis: 'The legal bedrock of Islamic matrimonial law, detailing the precise linguistic formula of offer (Ijab) and acceptance (Qabul), the mandatory presence of adult Muslim witnesses, and minimum dowry protections.',
+        scholarlyNotes: 'Al-Hidayah balances the sacred covenant of marriage with legal precision, safeguarding the financial and familial rights of women.',
+      },
+      {
+        chapterId: 'hid_4',
+        chapterTitleArabic: 'كِتَابُ الْبُيُوعِ: حِلُّ الْبَيْعِ وَتَحْرِيمُ الرِّبَا وَأَرْكَانُ الْعَقْدِ',
+        chapterTitleUrdu: 'چوتھا باب: کتاب البیوع — حلال تجارت کے ارکان، رضامندی کی شرط اور سود کی قطعی حرمت',
+        chapterTitleEnglish: 'Chapter 4: Book of Commercial Transactions - Halal Trade & Prohibition of Riba',
+        arabicMatn: `«الْبَيْعُ يَنْعَقِدُ بِالإِيجَابِ وَالْقَبُولِ إِذَا كَانَا بِلَفْظَيِ الْمَاضِي لِأَنَّهُ يَدُلُّ عَلَى التَّحْقِيقِ.
+وَالأَصْلُ فِيهِ قَوْلُهُ تَعَالَى: ﴿وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا﴾، وَقَوْلُهُ ﷺ: «إِنَّمَا الْبَيْعُ عَنْ تَرَاضٍ».
+وَالرِّبَا حَرَامٌ بِالْكِتَابِ وَالسُّنَّةِ وَالإِجْمَاعِ، وَهُوَ كُلُّ فَضْلٍ خَالٍ عَنْ عِوَضٍ شُرِطَ لأَحَدِ الْعَاقِدَيْنِ فِي الْمُعَاوَضَةِ الْمَالِيَّةِ، فَكُلُّ قَرْضٍ جَرَّ نَفْعًا فَهُوَ رِبًا».`,
+        urduTranslation: `امام مرغینانی رحمۃ اللہ علیہ فرماتے ہیں:
+"خرید و فروخت کا سودا ایجاب اور قبول سے منعقد ہوتا ہے جب وہ ماضی کے صیغے سے ہوں کیونکہ یہ قطعی پختگی پر دلالت کرتا ہے۔
+اور تجارت کے حلال ہونے کی اصل دلیل اللہ کا یہ فرمان ہے: ﴿اور اللہ نے تجارت کو حلال فرمایا اور سود کو حرام قرار دیا﴾، اور رسول اللہ ﷺ کا ارشاد ہے: 'سودا صرف باہمی رضامندی سے معتبر ہوتا ہے'۔
+اور سود کتاب، سنت اور اجماع سے حرامِ قطعی ہے۔ شریعت میں سود ہر اس زائد مال کا نام ہے جس کے بدلے کوئی عوض نہ ہو اور مالی معاملے میں عقد کرنے والوں میں سے کسی ایک کے لیے شرط ٹھہرایا گیا ہو، پس ہر وہ قرض جو نفع کھینچ لائے وہ سود ہے"۔`,
+        englishSynopsis: 'Foundational framework of Islamic contract law, defining offer and acceptance, voluntary consent, and the absolute prohibition of interest and exploitative usury.',
+        scholarlyNotes: 'Core textbook of Islamic commercial law (Fiqh al-Mu\'amalat) referenced universally by modern Islamic banking boards.',
+      },
     ],
   },
 
@@ -2021,7 +2066,11 @@ export const CLASSICAL_BOOKS_CHAPTERS: Record<string, ClassicalBookWithChapters>
       },
     ],
   },
+
 };
+
+// Aliases for Fatawa Shami and other duplicate entries
+CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HAN-003'] = CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-007']!;
 
 // Direct catalog ID aliases for uncollided Wave / Treasures mapping
 CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-008'] = CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-004']!;
@@ -2064,6 +2113,7 @@ export function getBookChapters(
     if (t.includes('mutaqad') || t.includes('mu\'taqad') || t.includes('mustanad')) return CLASSICAL_BOOKS_CHAPTERS['CANON-AQD-006'] || null;
 
     if (t.includes('bahar-e-shariat')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-001'] || null;
+    if (t.includes('jannati zewar') || t.includes('jannati')) return CLASSICAL_BOOKS_CHAPTERS['CANON-NIS-01'] || null;
     if (t.includes('fatawa razawiyyah') || t.includes('fatawa-e-razawiyyah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HNF-006'] || null;
     if (t.includes('sirat-e-mustafa')) return CLASSICAL_BOOKS_CHAPTERS['CANON-SIR-004'] || null;
     if (t.includes('al-hidayah')) return CLASSICAL_BOOKS_CHAPTERS['CANON-FIQ-HAN-001'] || null;

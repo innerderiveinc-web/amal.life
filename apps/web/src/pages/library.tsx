@@ -346,10 +346,13 @@ export default function LibraryPage() {
                 </span>
               </div>
               <h1 style={{ fontSize: 28, fontWeight: 800, color: '#0F172A', margin: '4px 0 8px' }}>
-                Canonical Heritage Library & In-App Reader
+                Curated Classical Reader & Research Index
               </h1>
-              <p style={{ fontSize: 14, color: '#555', maxWidth: 720, lineHeight: 1.5, margin: 0 }}>
-                Explore the verified masterworks of Islam: The Holy Quran (Full 114 Surahs), Sahih al-Bukhari, Sahih Muslim, Mukhtasar al-Quduri, and Ihya Ulum al-Din with complete in-app readers, zero dead links, and 100% theological authenticity.
+              <div style={{ fontSize: 17, fontWeight: 700, color: AmalTheme.colors.primary, direction: 'rtl', marginBottom: 8, fontFamily: 'var(--font-urdu), serif' }}>
+                مكتبة السواد الأعظم — قراءات منتخبہ ودليل البحث العلمي
+              </div>
+              <p style={{ fontSize: 14, color: '#475569', maxWidth: 740, lineHeight: 1.6, margin: 0 }}>
+                Explore 106 verified classical masterworks across 14 sacred disciplines. Featuring authentic curated pedagogical chapters (منتخب اسباق), comprehensive scholarly biographies, and direct access to complete multi-volume digital manuscripts.
               </p>
             </div>
 

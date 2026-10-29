@@ -5,6 +5,7 @@ import {
   ClassicalChapter,
   getLocalPdfForWork,
 } from '../../lib/classical-chapters-data';
+import { getCanonicalBookProfile } from '../../data/canonical-book-introductions';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
 
 export interface LibraryClassicalBookReaderViewProps {
@@ -31,6 +32,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
   onSharePayload,
 }) => {
   const localPdf = getLocalPdfForWork(selectedWork.work_id);
+  const bookProfile = getCanonicalBookProfile(selectedWork.work_id);
   // Default to FULL_PDF if chapters are not available, otherwise default to CURATED
   const [readerMode, setReaderMode] = useState<'CURATED' | 'FULL_PDF'>(
     bookChaptersData && currentChapter ? 'CURATED' : 'FULL_PDF'
@@ -75,21 +77,44 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
             <div>
               <div
                 style={{
-                  fontSize: 13.5,
+                  fontSize: 14,
                   fontWeight: 800,
                   color: readerTheme === 'DARK' ? '#34D399' : '#065F46',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
                 }}
               >
-                علمی و تحقیقی وضاحت برائے علماء و قارئینِ کرام (Scholarly Invariant)
+                <span>«مُنتَخَبَات دِرَاسِيَّة تَعْلِيمِيَّة»</span>
+                <span style={{ fontSize: 12.5, fontWeight: 700, opacity: 0.9 }}>
+                  • Selected Pedagogical Chapters (منتخب کلیدی اسباق)
+                </span>
               </div>
               <div
                 style={{
                   fontSize: 12,
                   color: readerTheme === 'DARK' ? '#94A3B8' : '#475569',
-                  marginTop: 2,
+                  marginTop: 3,
+                  lineHeight: 1.5,
                 }}
               >
-                Amal OS میں کتاب دو سطحوں پر دستیاب ہے: (۱) منتخب کلیدی اسباق برائے فوری مطالعہ، اور (۲) مکمل اصل مطبوعہ کتاب مع تمام صفحات و حواشی۔
+                یہ ابواب اس ضخیم کتاب کے بنیادی تعلیمی و تدریسی خلاصے پر مشتمل ہیں۔ مکمل غیر محذوف اصل کتاب مع حواشی و مراجع کے مطالعے کے لیے دائیں جانب &quot;Full Book Edition&quot; پر کلک فرمائیں۔
+              </div>
+              <div
+                style={{
+                  marginTop: 6,
+                  padding: '5px 10px',
+                  borderRadius: 6,
+                  backgroundColor: readerTheme === 'DARK' ? '#1E293B' : '#FEF3C7',
+                  border: readerTheme === 'DARK' ? '1px solid #334155' : '1px solid #FDE68A',
+                  fontSize: 11,
+                  color: readerTheme === 'DARK' ? '#FCD34D' : '#92400E',
+                  lineHeight: 1.4,
+                }}
+              >
+                <strong>«تَنْبِيهٌ شَرْعِيٌّ وَأَدَبُ الطَّالِب»</strong>: 
+                مطالعۂ کتب برائے معلومات و بنیادی فہم ہے؛ یہ جید علماء و مفتیانِ کرام سے باضابطہ کسبِ فیض کا متبادل نہیں ہے۔ پیچیدہ مسائل میں ہمیشہ مستند دار الافتاء سے رجوع فرمائیں۔
               </div>
             </div>
           </div>
@@ -389,46 +414,147 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
               )}
             </div>
           ) : (
-            /* Fallback if no curated chapters exist */
-            <div
-              style={{
-                padding: '36px 20px',
-                textAlign: 'center',
-                backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#F8FAFC',
-                borderRadius: 12,
-                border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
-              }}
-            >
-              <div style={{ fontSize: 40, marginBottom: 12 }}>📜</div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, margin: '0 0 8px' }}>
-                کیٹلاگ ریکارڈ محفوظ ہے — مکمل اصل نسخہ دستیاب ہے
-              </h3>
-              <p
+            /* Comprehensive Scholarly Exegesis & Topical Index View */
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {/* Introduction Box */}
+              <div
                 style={{
-                  fontSize: 13.5,
-                  color: '#6B7280',
-                  maxWidth: 540,
-                  margin: '0 auto 16px',
-                  lineHeight: 1.6,
+                  padding: '24px 22px',
+                  backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#F8FAFC',
+                  borderRadius: 14,
+                  border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
                 }}
               >
-                اس کتاب کے لیے منتخب اسباق کا خلاصہ تصدیق کے مرحلے میں ہے۔ پوری کتاب ورق بہ ورق پڑھنے کے لیے اوپر دیے گئے ٹیب <strong>"مکمل اصل کتاب"</strong> پر کلک فرمائیں۔
-              </p>
-              <button
-                onClick={() => setReaderMode('FULL_PDF')}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontSize: 18 }}>🏛️</span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
+                    مقدمہ و علمی اہمیت · Scholarly Introduction
+                  </span>
+                </div>
+
+                <div
+                  dir="rtl"
+                  style={{
+                    fontFamily: 'var(--font-urdu), serif',
+                    fontSize: 16,
+                    lineHeight: 2.1,
+                    color: readerTheme === 'DARK' ? '#E2E8F0' : '#1E293B',
+                    marginBottom: 12,
+                  }}
+                >
+                  {bookProfile?.significanceUrdu || `${selectedWork.title_transliterated} اہلِ سنت و جماعت کے معتبر ترین اور اصیل علمی مصادر میں شمار ہوتی ہے۔`}
+                </div>
+
+                {bookProfile?.authorBioUrdu && (
+                  <div
+                    dir="rtl"
+                    style={{
+                      fontFamily: 'var(--font-urdu), serif',
+                      fontSize: 14.5,
+                      lineHeight: 2.0,
+                      color: readerTheme === 'DARK' ? '#94A3B8' : '#475569',
+                      padding: 12,
+                      backgroundColor: readerTheme === 'DARK' ? '#1E293B' : '#FFFFFF',
+                      borderRadius: 10,
+                      border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E5E7EB'}`,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <strong>مصنف کا تعارف: </strong> {bookProfile.authorBioUrdu}
+                  </div>
+                )}
+
+                {bookProfile?.studyMethodologyUrdu && (
+                  <div
+                    style={{
+                      fontSize: 13,
+                      lineHeight: 1.7,
+                      color: readerTheme === 'DARK' ? '#94A3B8' : '#334155',
+                      padding: 12,
+                      backgroundColor: readerTheme === 'DARK' ? '#1E293B' : '#ECFDF5',
+                      borderRadius: 10,
+                      border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#A7F3D0'}`,
+                    }}
+                  >
+                    <strong>طریقۂ مطالعہ و منہج: </strong> {bookProfile.studyMethodologyUrdu}
+                  </div>
+                )}
+              </div>
+
+              {/* Topical Index / فهرستِ ابواب */}
+              {bookProfile?.topicalIndex && bookProfile.topicalIndex.length > 0 && (
+                <div
+                  style={{
+                    padding: '20px',
+                    backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#FFFFFF',
+                    borderRadius: 14,
+                    border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
+                  }}
+                >
+                  <h4 style={{ fontSize: 15, fontWeight: 800, margin: '0 0 12px', color: '#065F46' }}>
+                    فہرستِ ابواب و موضوعات (Topical Chapter Index)
+                  </h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10 }}>
+                    {bookProfile.topicalIndex.map((sec) => (
+                      <div
+                        key={sec.sectionNumber}
+                        style={{
+                          padding: 12,
+                          borderRadius: 10,
+                          backgroundColor: readerTheme === 'DARK' ? '#1E293B' : '#F8FAFC',
+                          border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                          <span style={{ fontSize: 11, fontWeight: 800, color: '#065F46' }}>
+                            باب {sec.sectionNumber}
+                          </span>
+                          <span style={{ fontSize: 12, fontFamily: 'var(--font-arabic)', direction: 'rtl', fontWeight: 700 }}>
+                            {sec.titleArabic}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', marginBottom: 2 }}>
+                          {sec.titleUrdu}
+                        </div>
+                        <div style={{ fontSize: 11, color: '#64748B' }}>
+                          {sec.coreThemes}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Action: Open Complete Edition Tab */}
+              <div
                 style={{
-                  padding: '10px 20px',
-                  borderRadius: 10,
-                  backgroundColor: '#065F46',
-                  color: '#FFFFFF',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  border: 'none',
-                  cursor: 'pointer',
+                  padding: 16,
+                  textAlign: 'center',
+                  backgroundColor: readerTheme === 'DARK' ? '#1E293B' : '#FEF3C7',
+                  borderRadius: 12,
+                  border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#FDE68A'}`,
                 }}
               >
-                📑 مکمل اصل کتاب کا مطالعہ شروع کریں
-              </button>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#92400E', marginBottom: 8 }}>
+                  اس کتاب کا مکمل اصل متن ({selectedWork.volume_count} جلدیں) مع اسانید و تفاسیر دستیاب ہے
+                </div>
+                <button
+                  onClick={() => setReaderMode('FULL_PDF')}
+                  style={{
+                    padding: '10px 24px',
+                    borderRadius: 10,
+                    backgroundColor: '#065F46',
+                    color: '#FFFFFF',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 6px rgba(6, 95, 70, 0.25)',
+                  }}
+                >
+                  📑 مکمل اصل کتاب کا مطالعہ شروع کریں (Read Full Manuscript)
+                </button>
+              </div>
             </div>
           )}
         </>
