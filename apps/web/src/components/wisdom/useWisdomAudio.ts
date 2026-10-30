@@ -67,7 +67,7 @@ export function useWisdomAudio() {
         title: `Surah ${card.surahNameTransliterated} (${card.surahNameUrdu}) — Ayah ${card.ayahNumber}`,
         subtitle: type === 'URDU' ? 'Kanz-ul-Iman Urdu Translation (کنز الایمان)' : 'Mishary Rashid Al-Afasy (عربی تلاوت)',
         audioUrl: url,
-        reciter: type === 'URDU' ? 'Kanz-ul-Iman (اردو)' : 'Mishary Alafasy (مشاری العفاسی)',
+        reciter: type === 'URDU' ? 'Haji Abdul Habib Attari — Kanz-ul-Iman (کنز الایمان)' : 'Mishary Alafasy (مشاری العفاسی)',
         arabicSnippet: card.textArabic,
       });
       setActiveAudioKey(key);

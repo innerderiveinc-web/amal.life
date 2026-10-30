@@ -76,9 +76,17 @@ export function getAyahAudioUrl(
 }
 
 /**
- * Returns certified EveryAyah streaming URL for Urdu translation audio (100% human reciter)
+ * Returns certified streaming URL for Urdu translation audio:
+ * Strictly KANZ-UL-IMAN Ayah-by-Ayah recited by Maulana Haji Abdul Habib Attari (Dawat-e-Islami official repository)
+ * with EveryAyah CDN as resilient fallback.
  */
 export function getAyahUrduAudioUrl(surahNumber: number, ayahNumber: number): string {
+  const s = String(surahNumber).padStart(3, '0');
+  const a = String(ayahNumber).padStart(3, '0');
+  return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/${s}/U02${s}${a}.mp3`;
+}
+
+export function getAyahUrduAudioFallbackUrl(surahNumber: number, ayahNumber: number): string {
   const s = String(surahNumber).padStart(3, '0');
   const a = String(ayahNumber).padStart(3, '0');
   return `https://everyayah.com/data/translations/urdu_shamshad_ali_khan_46kbps/${s}${a}.mp3`;
