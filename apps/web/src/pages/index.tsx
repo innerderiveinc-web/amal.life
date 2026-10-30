@@ -51,7 +51,7 @@ export default function Home() {
 
   // 5. Sakinah Focus Mode State (Tranquility vs Full Suite) - Defaults to Tranquility (True) for serene user experience
   const [isFocusMode, setIsFocusMode] = useState<boolean>(true);
-  const { isUrdu } = useLanguage();
+  const { t, isUrdu } = useLanguage();
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -107,7 +107,14 @@ export default function Home() {
   return (
     <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', paddingBottom: 120 }}>
       <Head>
-        <title>AMAL OS by Qsura India Pvt Ltd — From Niyyah to Amal</title>
+        <title>
+          {t(
+            'AMAL OS by Qsura India Pvt Ltd — From Niyyah to Amal',
+            'امل آپریٹنگ سسٹم — نیت سے عمل تک',
+            'نظام أمل — من النية إلى العمل',
+            'Amal OS — Niyyah se Amal tak'
+          )}
+        </title>
         <meta name="author" content="Qsura India Pvt Ltd" />
         <meta name="description" content="AMAL OS by Qsura India Pvt Ltd: Ad-free, zero-tracking sovereign Muslim life operating system grounded in Sawad al-A'zam orthodoxy." />
       </Head>
@@ -132,14 +139,14 @@ export default function Home() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 16 }}>{isFocusMode ? '🌿' : '🧭'}</span>
             <span style={{ fontSize: 13, fontWeight: 700, color: '#1B4332' }}>
-              {isUrdu
-                ? (isFocusMode ? 'سکینہ موڈ' : 'مکمل دینی نظام')
-                : (isFocusMode ? 'Sakinah Focus Mode' : 'Full AMAL OS Suite')}
+              {isFocusMode
+                ? t('Sakinah Focus Mode', 'سکینہ موڈ', 'وضع السكينة والتركيز', 'Sakinah Focus Mode')
+                : t('Full AMAL OS Suite', 'مکمل دینی نظام', 'منظومة أمل الكاملة', 'Mukammal Deeni Nizam')}
             </span>
             <span style={{ fontSize: 11, color: '#64748B' }}>
-              {isUrdu
-                ? (isFocusMode ? '— پرسکون روزمرہ معمول' : '— تمام ۲۴ ماڈیولز و احکام')
-                : (isFocusMode ? '— Calm Daily Essentials' : '— All 24 Modules & Tools')}
+              {isFocusMode
+                ? t('— Calm Daily Essentials', '— پرسکون روزمرہ معمول', '— الأساسيات اليومية الهادئة', '— Pur-sukoon rozmarrah ma\'mool')
+                : t('— All 24 Modules & Tools', '— تمام ۲۴ ماڈیولز و احکام', '— جميع الأدوات والوحدات الـ ٢٤', '— Tamam 24 modules wa ahkam')}
             </span>
           </div>
 
@@ -167,7 +174,7 @@ export default function Home() {
                 transition: 'all 0.15s ease',
               }}
             >
-              🌿 {isUrdu ? 'سکینہ' : 'Sakinah Calm'}
+              🌿 {t('Sakinah', 'سکینہ', 'السكينة', 'Sakinah')}
             </button>
             <button
               onClick={() => toggleFocusMode(false)}
@@ -183,7 +190,7 @@ export default function Home() {
                 transition: 'all 0.15s ease',
               }}
             >
-              🧭 {isUrdu ? 'مکمل نظام' : 'Full Suite'}
+              🧭 {t('Full Suite', 'مکمل نظام', 'المنظومة الكاملة', 'Mukammal Nizam')}
             </button>
           </div>
         </div>
@@ -254,14 +261,24 @@ export default function Home() {
                       letterSpacing: 0.5,
                     }}
                   >
-                    {isUrdu ? 'روزمرہ رہنمائی' : 'DAILY GUIDANCE'}
+                    {t('DAILY GUIDANCE', 'روزمرہ رہنمائی', 'الإرشاد اليومي', 'Rozmarrah Rahnumai')}
                   </span>
                   <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
-                    {isUrdu ? 'نیت، طرزِ زندگی اور نبوی حکمت' : 'Intention, Life Context & Prophetic Guidance'}
+                    {t(
+                      'Intention, Life Context & Prophetic Guidance',
+                      'نیت، طرزِ زندگی اور نبوی حکمت',
+                      'النية وظروف الحياة والهداية النبوية',
+                      'Niyyah, tarz-e-zindagi aur nabawi hikmat'
+                    )}
                   </span>
                 </div>
                 <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0F172A' }}>
-                  {isUrdu ? 'نیت سے عمل تک اور اسوۂ رسول ﷺ' : 'From Intention to Action & Prophetic Guidance'}
+                  {t(
+                    'From Intention to Action & Prophetic Guidance',
+                    'نیت سے عمل تک اور اسوۂ رسول ﷺ',
+                    'من النية إلى العمل وأسوة الرسول ﷺ',
+                    'Niyyah se amal tak aur uswah-e-Rasool ﷺ'
+                  )}
                 </h2>
               </div>
 
@@ -282,7 +299,7 @@ export default function Home() {
                 }}
               >
                 <span>⚖️</span>
-                <span>{isUrdu ? 'فیصلہ روم کھولیں ➔' : 'Open Decision Room ➔'}</span>
+                <span>{t('Open Decision Room ➔', 'فیصلہ روم کھولیں ➔', 'فتح غرفة القرارات الشرعية ➔', 'Decision Room Kholein ➔')}</span>
               </Link>
             </div>
 
@@ -342,10 +359,20 @@ export default function Home() {
               <span style={{ fontSize: 20 }}>⚡</span>
               <div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>
-                  {isUrdu ? 'نیت کمپائلر، حالاتِ زندگی اور نبوی حکمت انجن' : 'Advanced Signature Engines Available'}
+                  {t(
+                    'Advanced Signature Engines Available',
+                    'نیت کمپائلر، حالاتِ زندگی اور نبوی حکمت انجن',
+                    'محركات أمل المتقدمة متاحة',
+                    'Advanced Signature Engines Dastyab Hain'
+                  )}
                 </div>
                 <div style={{ fontSize: 12, color: '#64748B' }}>
-                  {isUrdu ? 'مکمل نظام موڈ فعال کر کے نیت اور حالات کے مطابق رہنمائی حاصل کریں۔' : 'Switch to Full Suite to interact with Niyyah Compiler, Life OS Modes & Prophetic Context.'}
+                  {t(
+                    'Switch to Full Suite to interact with Niyyah Compiler, Life OS Modes & Prophetic Context.',
+                    'مکمل نظام موڈ فعال کر کے نیت اور حالات کے مطابق رہنمائی حاصل کریں۔',
+                    'انتقل إلى المنظومة الكاملة للتفاعل مع محرك النوايا وأوضاع الحياة.',
+                    'Mukammal nizam mode fa\'al karke niyyah aur halat ke mutabiq rahnumai hasil karein.'
+                  )}
                 </div>
               </div>
             </div>
@@ -363,7 +390,7 @@ export default function Home() {
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? 'مکمل نظام دکھائیں ➔' : 'Show Full Suite ➔'}
+              {t('Show Full Suite ➔', 'مکمل نظام دکھائیں ➔', 'عرض المنظومة الكاملة ➔', 'Mukammal Nizam Dikhayein ➔')}
             </button>
           </div>
         )}

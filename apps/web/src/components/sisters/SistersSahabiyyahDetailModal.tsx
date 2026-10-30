@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { SahabiyyatProfile } from '../../lib/women-sanctuary-data';
 import { saveBookmark, isBookmarked, recordReadingHistory } from '../../lib/bookmarks-store';
 import { showAmalToast } from '../Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface SistersSahabiyyahDetailModalProps {
   sah: SahabiyyatProfile;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   onClose: () => void;
   onOpenSanad: (
     title: string,
@@ -21,11 +22,12 @@ interface SistersSahabiyyahDetailModalProps {
 
 export function SistersSahabiyyahDetailModal({
   sah,
-  isUrdu,
   onClose,
   onOpenSanad,
   onGenerateCard,
 }: SistersSahabiyyahDetailModalProps) {
+  const { language, t } = useLanguage();
+  const isRtl = language === 'ur' || language === 'ar';
   const [activeSection, setActiveSection] = useState<'bio' | 'hadith' | 'milestones' | 'scholars' | 'lessons'>('bio');
   const [isSaved, setIsSaved] = useState(false);
 
@@ -56,8 +58,8 @@ export function SistersSahabiyyahDetailModal({
     setIsSaved(saved);
     showAmalToast(
       saved
-        ? (isUrdu ? 'سوانح محفوظ کر لی گئی (Bookmarked)' : 'Biography saved to bookmarks')
-        : (isUrdu ? 'بک مارک ہٹا دیا گیا' : 'Bookmark removed'),
+        ? t('Biography saved to bookmarks', 'سوانح محفوظ کر لی گئی', 'تم حفظ السيرة في المفضلات', 'Sawaneh mehfooz kar li gayi')
+        : t('Bookmark removed', 'بک مارک ہٹا دیا گیا', 'تمت إزالة الإشارة المرجعية', 'Bookmark hata diya gaya'),
       saved ? 'success' : 'info'
     );
   };
@@ -111,8 +113,8 @@ export function SistersSahabiyyahDetailModal({
             style={{
               position: 'absolute',
               top: 18,
-              left: isUrdu ? 18 : 'auto',
-              right: isUrdu ? 'auto' : 18,
+              left: isRtl ? 18 : 'auto',
+              right: isRtl ? 'auto' : 18,
               display: 'flex',
               alignItems: 'center',
               gap: 8,
@@ -134,10 +136,10 @@ export function SistersSahabiyyahDetailModal({
                 gap: 5,
                 transition: 'all 0.2s',
               }}
-              title={isSaved ? 'Remove Bookmark' : 'Save for Later'}
+              title={isSaved ? t('Remove Bookmark', 'بک مارک ہٹائیں', 'إزالة الإشارة', 'Bookmark Hatayein') : t('Save for Later', 'بعد کے لیے محفوظ کریں', 'حفظ لاحقاً', 'Baad ke liye mahfooz karein')}
             >
               <span>{isSaved ? '🔖' : '📑'}</span>
-              <span>{isSaved ? (isUrdu ? 'محفوظ شدہ' : 'Saved') : (isUrdu ? 'بک مارک' : 'Bookmark')}</span>
+              <span>{isSaved ? t('Saved', 'محفوظ شدہ', 'تم الحفظ', 'Mahfooz Shuda') : t('Bookmark', 'بک مارک', 'إشارة مرجعية', 'Bookmark')}</span>
             </button>
 
             <button
@@ -175,7 +177,7 @@ export function SistersSahabiyyahDetailModal({
                 letterSpacing: 0.5,
               }}
             >
-              {isUrdu ? sah.titleUrdu : sah.titleEnglish}
+              {t(sah.titleEnglish, sah.titleUrdu, sah.titleUrdu, sah.titleEnglish)}
             </span>
             <span style={{ fontSize: 13, color: '#A7F3D0' }}>{sah.era}</span>
           </div>
@@ -185,11 +187,11 @@ export function SistersSahabiyyahDetailModal({
               fontSize: 26,
               fontWeight: 800,
               margin: '0 0 4px 0',
-              fontFamily: isUrdu ? "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif" : 'inherit',
+              fontFamily: isRtl ? "'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif" : 'inherit',
               lineHeight: 1.4,
             }}
           >
-            {isUrdu ? sah.nameUrdu : sah.nameEnglish}
+            {language === 'ar' ? sah.nameArabic : (language === 'ur' ? sah.nameUrdu : sah.nameEnglish)}
           </h2>
 
           <div style={{ fontSize: 14, color: '#D1FAE5', fontWeight: 600, direction: 'rtl' }}>
@@ -226,7 +228,7 @@ export function SistersSahabiyyahDetailModal({
               whiteSpace: 'nowrap',
             }}
           >
-            📖 {isUrdu ? 'مفصل سوانحِ حیات' : 'Detailed Biography'}
+            📖 {t('Detailed Biography', 'مفصل سوانحِ حیات', 'السيرة التفصيلية', 'Mufassal Sawaneh-e-Hayat')}
           </button>
 
           {sah.propheticPraiseHadithArabic && (
@@ -244,7 +246,7 @@ export function SistersSahabiyyahDetailModal({
                 whiteSpace: 'nowrap',
               }}
             >
-              ✨ {isUrdu ? 'فرمانِ مصطفیٰ ﷺ' : 'Prophetic Praise'}
+              ✨ {t('Prophetic Praise', 'فرمانِ مصطفیٰ ﷺ', 'المدائح النبوية ﷺ', 'Farman-e-Mustafa ﷺ')}
             </button>
           )}
 
@@ -263,7 +265,7 @@ export function SistersSahabiyyahDetailModal({
                 whiteSpace: 'nowrap',
               }}
             >
-              🏛️ {isUrdu ? 'تاریخی سنگِ میل' : 'Historical Milestones'}
+              🏛️ {t('Historical Milestones', 'تاریخی سنگِ میل', 'المحطات التاريخية', 'Tareekhi Sang-e-Meel')}
             </button>
           )}
 
@@ -282,7 +284,7 @@ export function SistersSahabiyyahDetailModal({
                 whiteSpace: 'nowrap',
               }}
             >
-              📜 {isUrdu ? 'کبار ائمہ کی توثیق' : 'Scholarly Testimonies'}
+              📜 {t('Scholarly Testimonies', 'کبار ائمہ کی توثیق', 'شهادات كبار العلماء', 'Kibar Aimma Ki Tauseeq')}
             </button>
           )}
 
@@ -300,7 +302,7 @@ export function SistersSahabiyyahDetailModal({
               whiteSpace: 'nowrap',
             }}
           >
-            💡 {isUrdu ? 'عملی اسباق' : 'Daily Sunnah Lessons'}
+            💡 {t('Daily Sunnah Lessons', 'عملی اسباق', 'الدروس والفوائد العملية', 'Amali Asbaaq')}
           </button>
         </div>
 
@@ -339,7 +341,7 @@ export function SistersSahabiyyahDetailModal({
                     }}
                   >
                     <span>🌿</span>
-                    <span>{isUrdu ? 'مبارک نسب و خاندانی پس منظر' : 'Noble Lineage & Background'}</span>
+                    <span>{t('Noble Lineage & Background', 'مبارک نسب و خاندانی پس منظر', 'النسب الشريف والخلفية الكريمة', 'Mubarak Nasab o Khandani Pas-e-Manzar')}</span>
                   </div>
                   <p
                     style={{
@@ -347,11 +349,11 @@ export function SistersSahabiyyahDetailModal({
                       fontSize: 14,
                       lineHeight: 1.8,
                       color: '#1F2937',
-                      textAlign: isUrdu ? 'right' : 'left',
-                      direction: isUrdu ? 'rtl' : 'ltr',
+                      textAlign: isRtl ? 'right' : 'left',
+                      direction: isRtl ? 'rtl' : 'ltr',
                     }}
                   >
-                    {isUrdu ? sah.lineageAndBackgroundUrdu : sah.lineageAndBackgroundEnglish}
+                    {(language === 'ur' || language === 'ar') ? sah.lineageAndBackgroundUrdu : sah.lineageAndBackgroundEnglish}
                   </p>
                 </div>
               )}
@@ -367,24 +369,24 @@ export function SistersSahabiyyahDetailModal({
                     paddingBottom: 6,
                   }}
                 >
-                  {isUrdu ? 'سیرت و سوانح کی مفصل علمی تفصیلات' : 'Exhaustive Biographical Treatise'}
+                  {t('Exhaustive Biographical Treatise', 'سیرت و سوانح کی مفصل علمی تفصیلات', 'تفاصيل السيرة والترجمة العلمية', 'Seerat o Sawaneh Ki Mufassal Ilmi Tafseelat')}
                 </h4>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                  {(isUrdu ? paragraphsUrdu : paragraphsEnglish).map((paragraph, idx) => (
+                  {((language === 'ur' || language === 'ar') ? paragraphsUrdu : paragraphsEnglish).map((paragraph, idx) => (
                     <div
                       key={idx}
                       style={{
                         fontSize: 15,
                         lineHeight: 1.9,
                         color: '#1F2937',
-                        textAlign: isUrdu ? 'right' : 'left',
-                        direction: isUrdu ? 'rtl' : 'ltr',
+                        textAlign: isRtl ? 'right' : 'left',
+                        direction: isRtl ? 'rtl' : 'ltr',
                         padding: '10px 14px',
                         backgroundColor: idx % 2 === 0 ? '#FFFFFF' : '#FAFAFA',
                         borderRadius: 8,
-                        borderLeft: !isUrdu ? '3px solid #059669' : 'none',
-                        borderRight: isUrdu ? '3px solid #059669' : 'none',
+                        borderLeft: !isRtl ? '3px solid #059669' : 'none',
+                        borderRight: isRtl ? '3px solid #059669' : 'none',
                       }}
                     >
                       {paragraph}
@@ -407,7 +409,7 @@ export function SistersSahabiyyahDetailModal({
                 }}
               >
                 <span>
-                  <strong>{isUrdu ? 'مستند مآخذ و حوالہ:' : 'Classical Reference:'}</strong> {sah.classicalCitation}
+                  <strong>{t('Classical Reference:', 'مستند مآخذ و حوالہ:', 'المصدر المعتمد والمرجع:', 'Mustanad Ma\'akhaz o Hawala:')}</strong> {sah.classicalCitation}
                 </span>
                 <span style={{ fontFamily: 'monospace', color: '#047857' }}>{sah.sanadVerificationHash}</span>
               </div>
@@ -438,7 +440,7 @@ export function SistersSahabiyyahDetailModal({
                   }}
                 >
                   <span>👑</span>
-                  <span>{isUrdu ? 'فرمانِ رسول اللہ ﷺ میں شان و منقبت' : 'Prophetic Hadith in Praise & Virtues'}</span>
+                  <span>{t('Prophetic Hadith in Praise & Virtues', 'فرمانِ رسول اللہ ﷺ میں شان و منقبت', 'أحاديث نبوية في الفضائل والمناقب', 'Farman-e-Rasool ﷺ Mein Shan o Manqabat')}</span>
                 </div>
 
                 <div
@@ -465,11 +467,11 @@ export function SistersSahabiyyahDetailModal({
                     lineHeight: 1.8,
                     color: '#374151',
                     marginBottom: 10,
-                    direction: isUrdu ? 'rtl' : 'ltr',
-                    textAlign: isUrdu ? 'right' : 'left',
+                    direction: isRtl ? 'rtl' : 'ltr',
+                    textAlign: isRtl ? 'right' : 'left',
                   }}
                 >
-                  <strong>{isUrdu ? 'اردو ترجمہ:' : 'Urdu Meaning:'} </strong>
+                  <strong>{t('Translation:', 'اردو ترجمہ:', 'الترجمة والمعنى:', 'Tarjuma:')} </strong>
                   {sah.propheticPraiseHadithUrdu}
                 </div>
 
@@ -516,7 +518,7 @@ export function SistersSahabiyyahDetailModal({
                   margin: 0,
                 }}
               >
-                {isUrdu ? 'تاریخی کارنامے اور اہم سنگِ میل' : 'Historical Achievements & Milestones'}
+                {t('Historical Achievements & Milestones', 'تاریخی کارنامے اور اہم سنگِ میل', 'الإنجازات والمحطات التاريخية', 'Tareekhi Karnamey Aur Aham Sang-e-Meel')}
               </h4>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -552,7 +554,7 @@ export function SistersSahabiyyahDetailModal({
                       {idx + 1}
                     </div>
 
-                    <div style={{ flex: 1, direction: isUrdu ? 'rtl' : 'ltr', textAlign: isUrdu ? 'right' : 'left' }}>
+                    <div style={{ flex: 1, direction: isRtl ? 'rtl' : 'ltr', textAlign: isRtl ? 'right' : 'left' }}>
                       <div
                         style={{
                           fontSize: 15,
@@ -561,10 +563,10 @@ export function SistersSahabiyyahDetailModal({
                           marginBottom: 4,
                         }}
                       >
-                        {isUrdu ? ms.eventTitleUrdu : ms.eventTitleEnglish}
+                        {(language === 'ur' || language === 'ar') ? ms.eventTitleUrdu : ms.eventTitleEnglish}
                       </div>
                       <div style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.7 }}>
-                        {isUrdu ? ms.descriptionUrdu : ms.descriptionEnglish}
+                        {(language === 'ur' || language === 'ar') ? ms.descriptionUrdu : ms.descriptionEnglish}
                       </div>
                     </div>
                   </div>
@@ -584,7 +586,7 @@ export function SistersSahabiyyahDetailModal({
                   margin: 0,
                 }}
               >
-                {isUrdu ? 'کبار ائمہ و محدثین کے ارشادات و توثیق' : 'Classical Scholars & Muhaddithin Testimonies'}
+                {t('Classical Scholars & Muhaddithin Testimonies', 'کبار ائمہ و محدثین کے ارشادات و توثیق', 'أقوال كبار الأئمة والمحدثين والشهادات', 'Kibar Aimma o Muhaddithin Ke Irshadat o Tauseeq')}
               </h4>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -609,7 +611,7 @@ export function SistersSahabiyyahDetailModal({
                       }}
                     >
                       <span style={{ fontSize: 14, fontWeight: 800, color: '#1E293B' }}>
-                        {isUrdu ? sc.scholarNameUrdu : sc.scholarNameEnglish}
+                        {(language === 'ur' || language === 'ar') ? sc.scholarNameUrdu : sc.scholarNameEnglish}
                       </span>
                       <span
                         style={{
@@ -632,11 +634,11 @@ export function SistersSahabiyyahDetailModal({
                         lineHeight: 1.8,
                         color: '#334155',
                         fontStyle: 'italic',
-                        direction: isUrdu ? 'rtl' : 'ltr',
-                        textAlign: isUrdu ? 'right' : 'left',
+                        direction: isRtl ? 'rtl' : 'ltr',
+                        textAlign: isRtl ? 'right' : 'left',
                       }}
                     >
-                      "{isUrdu ? sc.verbatimQuoteUrdu : sc.verbatimQuoteEnglish}"
+                      "{(language === 'ur' || language === 'ar') ? sc.verbatimQuoteUrdu : sc.verbatimQuoteEnglish}"
                     </p>
                   </div>
                 ))}
@@ -655,7 +657,7 @@ export function SistersSahabiyyahDetailModal({
                   margin: 0,
                 }}
               >
-                {isUrdu ? 'روزمرہ زندگی کے عملی سنہری اسباق' : 'Daily Sunnah & Moral Lessons'}
+                {t('Daily Sunnah & Moral Lessons', 'روزمرہ زندگی کے عملی سنہری اسباق', 'الدروس التربوية والسننية اليومية', 'Rozmarrah Zindagi Ke Amali Sunehri Asbaaq')}
               </h4>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -673,9 +675,9 @@ export function SistersSahabiyyahDetailModal({
                     }}
                   >
                     <span style={{ fontSize: 20 }}>🌸</span>
-                    <div style={{ flex: 1, direction: isUrdu ? 'rtl' : 'ltr', textAlign: isUrdu ? 'right' : 'left' }}>
+                    <div style={{ flex: 1, direction: isRtl ? 'rtl' : 'ltr', textAlign: isRtl ? 'right' : 'left' }}>
                       <p style={{ margin: 0, fontSize: 14, lineHeight: 1.8, color: '#14532D', fontWeight: 600 }}>
-                        {isUrdu ? lesson.ur : lesson.en}
+                        {(language === 'ur' || language === 'ar') ? lesson.ur : lesson.en}
                       </p>
                     </div>
                   </div>
@@ -685,7 +687,7 @@ export function SistersSahabiyyahDetailModal({
               {sah.heroicAttributes && (
                 <div style={{ marginTop: 10 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: '#4B5563', marginBottom: 8 }}>
-                    {isUrdu ? 'نمایاں ایمانی خصوصیات:' : 'Heroic Attributes:'}
+                    {t('Heroic Attributes:', 'نمایاں ایمانی خصوصیات:', 'الصفات الإيمانية البارزة:', 'Numayan Imani Khasoosiyat:')}
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {sah.heroicAttributes.map((attr, idx) => (
@@ -741,7 +743,7 @@ export function SistersSahabiyyahDetailModal({
               }}
             >
               <span>🎨</span>
-              <span>{isUrdu ? 'حکمت کارڈ بنائیں' : 'Generate Wisdom Card'}</span>
+              <span>{t('Generate Wisdom Card', 'حکمت کارڈ بنائیں', 'إنشاء بطاقة الحكمة', 'Hikmat Card Banayein')}</span>
             </button>
 
             <button
@@ -753,7 +755,12 @@ export function SistersSahabiyyahDetailModal({
                   sah.classicalCitation,
                   sah.biographyUrdu,
                   sah.biographyEnglish,
-                  'صحیح بخاری، مسلم، الاصابہ اور ابن سعد کی مستند اسناد سے تصدیق شدہ'
+                  t(
+                    'Authenticated from Sahih Bukhari, Muslim, Al-Isabah and Ibn Sa\'d',
+                    'صحیح بخاری، مسلم، الاصابہ اور ابن سعد کی مستند اسناد سے تصدیق شدہ',
+                    'موثق من صحيح البخاري ومسلم والإصابة وطبقات ابن سعد',
+                    'Sahih Bukhari, Muslim, Al-Isabah aur Ibn Sa\'d ki mustanad asnad se tasdeeq shuda'
+                  )
                 )
               }
               style={{
@@ -771,7 +778,7 @@ export function SistersSahabiyyahDetailModal({
               }}
             >
               <span>✓</span>
-              <span>{isUrdu ? 'مستند سند ملاحظہ کریں' : 'Verify Sanad'}</span>
+              <span>{t('Verify Sanad', 'مستند سند ملاحظہ کریں', 'التحقق من السند', 'Mustanad Sanad Mulahiza Karein')}</span>
             </button>
           </div>
 
@@ -788,7 +795,7 @@ export function SistersSahabiyyahDetailModal({
               cursor: 'pointer',
             }}
           >
-            {isUrdu ? 'مکمل پڑھ لیا (بند کریں)' : 'Done (Close)'}
+            {t('Done (Close)', 'مکمل پڑھ لیا (بند کریں)', 'إتمام القراءة (إغلاق)', 'Mukammal Parh Liya (Band Karein)')}
           </button>
         </div>
       </div>

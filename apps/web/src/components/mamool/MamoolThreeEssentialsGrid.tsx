@@ -1,5 +1,6 @@
 import React from 'react';
 import { DailyMamool } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface MamoolThreeEssentialsGridProps {
   isUrdu: boolean;
@@ -10,12 +11,13 @@ export interface MamoolThreeEssentialsGridProps {
 }
 
 export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps> = ({
-  isUrdu,
+  isUrdu: propIsUrdu,
   mamool,
   microAmalDone,
   onToggleMicroAmal,
   onPlayDua,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   return (
     <div
       style={{
@@ -42,18 +44,18 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8 }}>
             <span style={{ fontSize: 16 }}>📖</span>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#0284C7', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              {isUrdu ? 'مسنون عمل' : 'Sunnah of the Hour'}
+              {t('Sunnah of the Hour', 'مسنون عمل', 'سنة الساعة', 'Waqt ka Masnoon Amal')}
             </span>
           </div>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6, lineHeight: 1.4 }}>
-            {isUrdu ? mamool.masnoonAmal.titleUrdu : mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu}
+            {isUrdu ? mamool.masnoonAmal.titleUrdu : isArabic ? (mamool.masnoonAmal.titleUrdu || mamool.masnoonAmal.titleEnglish) : isRomanUrdu ? (mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu) : (mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu)}
           </div>
           <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6 }}>
             {isUrdu ? mamool.masnoonAmal.descriptionUrdu : mamool.masnoonAmal.descriptionEnglish || mamool.masnoonAmal.descriptionUrdu}
           </div>
         </div>
         <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
-          {isUrdu ? `سند: ${mamool.masnoonAmal.primarySource}` : `Source: ${mamool.masnoonAmal.primarySource}`}
+          {t('Source: ', 'سند: ', 'المصدر: ', 'Sanad: ')}{mamool.masnoonAmal.primarySource}
         </div>
       </div>
 
@@ -76,7 +78,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
               <span style={{ fontSize: 16 }}>🌱</span>
               <span style={{ fontSize: 12, fontWeight: 700, color: '#16A34A', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                {isUrdu ? '۱ منٹ کا عمل' : '1-Minute Micro-Amal'}
+                {t('1-Minute Micro-Amal', '۱ منٹ کا عمل', 'عمل دقيقة واحدة', '1-Minute ka Amal')}
               </span>
             </div>
             <button
@@ -94,8 +96,8 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
               }}
             >
               {microAmalDone
-                ? isUrdu ? '✓ مکمل ہوا' : '✓ Completed'
-                : isUrdu ? 'مکمل کریں' : 'Mark Done'}
+                ? t('✓ Completed', '✓ مکمل ہوا', '✓ مكتمل', '✓ Mukammal Hua')
+                : t('Mark Done', 'مکمل کریں', 'تحديد كمكتمل', 'Mukammal Karein')}
             </button>
           </div>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6, lineHeight: 1.4 }}>
@@ -106,7 +108,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           </div>
         </div>
         <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
-          {isUrdu ? `اجر: ${mamool.microAmalOfTheDay.hadithProof}` : `Reward: ${mamool.microAmalOfTheDay.hadithProof}`}
+          {t('Reward: ', 'اجر: ', 'الأجر: ', 'Ajr: ')}{mamool.microAmalOfTheDay.hadithProof}
         </div>
       </div>
 
@@ -127,7 +129,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8 }}>
             <span style={{ fontSize: 16 }}>🤲</span>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#7C3AED', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              {isUrdu ? 'مسنون دعا' : 'Daily Invocation'}
+              {t('Daily Invocation', 'مسنون دعا', 'الدعاء المسنون', 'Masnoon Dua')}
             </span>
           </div>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
@@ -180,7 +182,14 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           }}
         >
           <span>▶</span>
-          <span>{isUrdu ? 'دعا کی تلاوت سنیں' : 'Listen to Recitation'}</span>
+          <span>
+            {t(
+              'Listen to Recitation',
+              'دعا کی تلاوت سنیں',
+              'استمع إلى الدعاء المبارك',
+              'Dua ki Tilawat Sunein'
+            )}
+          </span>
         </button>
       </div>
     </div>

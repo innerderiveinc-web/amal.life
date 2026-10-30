@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { SanctuaryBook, SanctuaryBookChapter } from '../../lib/women-sanctuary-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface SistersBookIndexViewProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   readingBook: SanctuaryBook;
   onBackToAllBooks: () => void;
   onSelectChapter: (chapter: SanctuaryBookChapter) => void;
@@ -18,12 +19,12 @@ export interface SistersBookIndexViewProps {
 }
 
 export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
-  isUrdu,
   readingBook,
   onBackToAllBooks,
   onSelectChapter,
   onOpenSanad,
 }) => {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'CHAPTERS' | 'FULL_PDF'>('CHAPTERS');
 
   return (
@@ -59,7 +60,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
             fontWeight: 600,
           }}
         >
-          {isUrdu ? '← کتب خانے کی فہرست پر واپس' : '← Back to All Books'}
+          {t('← Back to All Books', '← کتب خانے کی فہرست پر واپس', '← العودة إلى قائمة الكتب', '← Kutub khane ki fehrist par wapis')}
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -86,7 +87,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                 transition: 'all 0.15s ease',
               }}
             >
-              📜 {isUrdu ? 'منتخب ابواب' : 'Curated Chapters'}
+              📜 {t('Curated Chapters', 'منتخب ابواب', 'الأبواب المختارة', 'Muntakhab Abwaab')}
             </button>
             <button
               onClick={() => setActiveTab('FULL_PDF')}
@@ -102,7 +103,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                 transition: 'all 0.15s ease',
               }}
             >
-              📑 {isUrdu ? 'مکمل اصل کتاب (Full Book)' : 'Full Book Edition'}
+              📑 {t('Full Book Edition', 'مکمل اصل کتاب (Full Book)', 'الكتاب الأصلي كاملاً', 'Mukammal Asal Kitab')}
             </button>
           </div>
 
@@ -126,7 +127,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               }}
             >
               <span>↗</span>
-              <span>{isUrdu ? 'نئی ونڈو میں مکمل نسخہ' : 'Open Full Edition'}</span>
+              <span>{t('Open Full Edition', 'نئی ونڈو میں مکمل نسخہ', 'فتح النسخة الكاملة', 'Nayi window mein mukammal nuskha')}</span>
             </a>
           )}
 
@@ -153,23 +154,23 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               cursor: 'pointer',
             }}
           >
-            ✓ {isUrdu ? 'تحقیق و سندِ کتاب' : 'Sanad Certificate'}
+            ✓ {t('Sanad Certificate', 'تحقیق و سندِ کتاب', 'شهادة السند والتوثيق', 'Tehqeeq o Sanad-e-Kitab')}
           </button>
         </div>
       </div>
 
       {/* Book Metadata Header */}
       <h2 style={{ fontSize: 24, fontWeight: 800, color: '#064E3B', margin: '4px 0' }}>
-        {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
+        {(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
       </h2>
       <div style={{ fontSize: 14, color: '#047857', fontWeight: 600, marginBottom: 6 }}>
-        {isUrdu ? readingBook.titleEnglish : readingBook.titleUrdu}
+        {language === 'en' ? readingBook.titleUrdu : readingBook.titleEnglish}
       </div>
       <div style={{ fontSize: 14, color: '#4B5563', marginBottom: 12 }}>
-        <strong>{isUrdu ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {readingBook.authorEra}
+        <strong>{(language === 'ur' || language === 'ar') ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {readingBook.authorEra}
       </div>
       <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.7, marginBottom: 20 }}>
-        {isUrdu ? readingBook.descriptionUrdu : readingBook.descriptionEnglish}
+        {(language === 'ur' || language === 'ar') ? readingBook.descriptionUrdu : readingBook.descriptionEnglish}
       </p>
 
       {/* Scholarly Transparency Callout */}
@@ -203,13 +204,16 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               «مُنتَخَبَات دِرَاسِيَّة تَعْلِيمِيَّة»
             </span>
             <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
-              {isUrdu ? 'منتخب تدریسی ابواب برائے خواتین' : 'Selected Core Pedagogical Chapters'}
+              {t('Selected Core Pedagogical Chapters', 'منتخب تدریسی ابواب برائے خواتین', 'أبواب تعليمية وتربوية مختارة', 'Muntakhab Tadreesi Abwaab')}
             </span>
           </div>
           <div style={{ fontSize: 12.5, color: '#166534', lineHeight: 1.5 }}>
-            {isUrdu
-              ? 'یہ ابواب اس شاہکار کتاب کے کلیدی تربیتی و فقہی مسائل کے جامع خلاصے ہیں۔ مکمل غیر محذوف کتاب مع تمام ابواب کے اصل نسخے کے لیے اوپر "مکمل اصل کتاب (Full Book)" ٹیب سے استفادہ فرمائیں۔'
-              : 'These chapters represent foundational instructional selections from this masterwork. For the complete unabridged original edition, tap the "Full Book Edition" tab above.'}
+            {t(
+              'These chapters represent foundational instructional selections from this masterwork. For the complete unabridged original edition, tap the "Full Book Edition" tab above.',
+              'یہ ابواب اس شاہکار کتاب کے کلیدی تربیتی و فقہی مسائل کے جامع خلاصے ہیں۔ مکمل غیر محذوف کتاب مع تمام ابواب کے اصل نسخے کے لیے اوپر "مکمل اصل کتاب (Full Book)" ٹیب سے استفادہ فرمائیں۔',
+              'تمثل هذه الأبواب خلاصات تربوية وفقهية جوهرية من هذا المصنف الأصيل. للاطلاع على النسخة الكاملة، استخدم علامة التبويب أعلاه.',
+              'Yeh abwaab is shahkaar kitab ke kaleedi tarbiyati o fiqhi masail ke jaame khulasey hain. Mukammal kitab ke liye ooper Full Book tab dekhein.'
+            )}
           </div>
         </div>
       </div>
@@ -236,10 +240,10 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               >
                 <div>
                   <div style={{ fontWeight: 800, fontSize: 15, color: '#0F172A' }}>
-                    {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish} — مکمل مطبوعہ نسخہ
+                    {((language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish)} — {t('Complete Printed Edition', 'مکمل مطبوعہ نسخہ', 'النسخة المطبوعة الكاملة', 'Mukammal Matboo\'ah Nuskha')}
                   </div>
                   <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-                    مصنف: <strong>{isUrdu ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • مکمل غیر محذوف اصل کتاب
+                    {t('Author: ', 'مصنف: ', 'المؤلف: ', 'Musannif: ')}<strong>{(language === 'ur' || language === 'ar') ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {t('Complete unabridged original book', 'مکمل غیر محذوف اصل کتاب', 'الكتاب الأصلي الكامل دون حذف', 'Mukammal ghair mahzoof asal kitab')}
                   </div>
                 </div>
 
@@ -263,7 +267,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                     }}
                   >
                     <span>↗</span>
-                    <span>{isUrdu ? 'فل اسکرین نئی ونڈو' : 'Fullscreen'}</span>
+                    <span>{t('Fullscreen', 'فل اسکرین نئی ونڈو', 'ملء الشاشة', 'Fullscreen')}</span>
                   </a>
                   <a
                     href={readingBook.pdfUrl}
@@ -282,7 +286,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                     }}
                   >
                     <span>📥</span>
-                    <span>{isUrdu ? 'ڈاؤن لوڈ PDF' : 'Download PDF'}</span>
+                    <span>{t('Download PDF', 'ڈاؤن لوڈ PDF', 'تحميل PDF', 'Download PDF')}</span>
                   </a>
                 </div>
               </div>
@@ -309,7 +313,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               </div>
 
               <div style={{ textAlign: 'center', fontSize: 12, color: '#64748B', marginTop: 8 }}>
-                💡 {isUrdu ? 'آپ اس ریڈر کے اندر ماؤس، کی بورڈ یا اسکرول بار سے تمام صفحات دیکھ سکتے ہیں، زوم کر سکتے ہیں اور تلاش کر سکتے ہیں۔' : 'Use mouse, keyboard arrows, or scroll to read all pages, zoom, or jump to any page.'}
+                💡 {t('Use mouse, keyboard arrows, or scroll to read all pages, zoom, or jump to any page.', 'آپ اس ریڈر کے اندر ماؤس، کی بورڈ یا اسکرول بار سے تمام صفحات دیکھ سکتے ہیں، زوم کر سکتے ہیں اور تلاش کر سکتے ہیں۔', 'يمكنك التصفح والتكبير والتصغير والانتقال بين الصفحات بواسطة الفأرة أو لوحة المفاتيح.', 'Aap is reader ke andar mouse, keyboard ya scroll bar se tamam safhaat dekh sakte hain, zoom kar sakte hain.')}
               </div>
             </div>
           ) : readingBook.onlineArchiveUrl ? (
@@ -336,10 +340,10 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               >
                 <div>
                   <div style={{ fontWeight: 800, fontSize: 16, color: '#064E3B' }}>
-                    🏛️ {isUrdu ? 'مستند وقف ڈیجیٹل نسخہ برائے علماء و محققین' : 'Verified Waqf Digital Archive Edition'}
+                    🏛️ {t('Verified Waqf Digital Archive Edition', 'مستند وقف ڈیجیٹل نسخہ برائے علماء و محققین', 'النسخة الوقفية الرقمية المعتمدة للباحثين', 'Mustanad Waqf Digital Nuskha Baraye Ulama o Muhaqqiqeen')}
                   </div>
                   <div style={{ fontSize: 12.5, color: '#64748B', marginTop: 2 }}>
-                    ماخذ: <strong>{readingBook.onlineArchiveName || 'مکتبۃ المدینہ و الشاملہ ریسرچ ڈیسک'}</strong>
+                    {t('Source: ', 'ماخذ: ', 'المصدر: ', 'Maakhaz: ')}<strong>{readingBook.onlineArchiveName || t('Maktaba-tul-Madina & Shamela Research Desk', 'مکتبۃ المدینہ و الشاملہ ریسرچ ڈیسک', 'مكتبة المدينة والمكتبة الشاملة', 'Maktaba-tul-Madina wa Shamela')}</strong>
                   </div>
                 </div>
 
@@ -362,7 +366,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                     }}
                   >
                     <span>↗</span>
-                    <span>{isUrdu ? 'مکمل اصل ایڈیشن کھولیں (نئی ونڈو)' : 'Open Complete Original Edition'}</span>
+                    <span>{t('Open Complete Original Edition', 'مکمل اصل ایڈیشن کھولیں (نئی ونڈو)', 'فتح النسخة الأصلية الكاملة', 'Mukammal Asal Edition Kholain')}</span>
                   </a>
                 </div>
               </div>
@@ -404,16 +408,19 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               >
                 <span>📜</span>
                 <span>
-                  <strong>{isUrdu ? 'تحقیقی ضمانت:' : 'Scholarly Verification:'}</strong>{' '}
-                  {isUrdu
-                    ? 'یہ نسخہ باضابطہ دارالافتاء و علمی مراکز سے مصدقہ اصل غیر محذوف ایڈیشن ہے۔ اگر آپ کے پاس اس کتاب کی اضافی پی ڈی ایف فائل موجود ہے تو آپ اسے بھی اپنے سسٹم میں براہِ راست لنک کر سکتے ہیں۔'
-                    : 'This edition connects directly to the unabridged manuscript certified by orthodox Islamic academic libraries.'}
+                  <strong>{t('Scholarly Verification:', 'تحقیقی ضمانت:', 'الضمانة العلمية والتوثيق:', 'Tehqeeqi Zamanat:')}</strong>{' '}
+                  {t(
+                    'This edition connects directly to the unabridged manuscript certified by orthodox Islamic academic libraries.',
+                    'یہ نسخہ باضابطہ دارالافتاء و علمی مراکز سے مصدقہ اصل غیر محذوف ایڈیشن ہے۔ اگر آپ کے پاس اس کتاب کی اضافی پی ڈی ایف فائل موجود ہے تو آپ اسے بھی اپنے سسٹم میں براہِ راست لنک کر سکتے ہیں۔',
+                    'هذه النسخة موثقة ومعتمدة من دور الإفتاء والمكتبات العلمية الإسلامية الكبرى.',
+                    'Yeh nuskha ba-zaabita Dar-ul-Ifta o ilmi marakiz se musaddiqah asal ghair mahzoof edition hai.'
+                  )}
                 </span>
               </div>
             </div>
           ) : (
             <div style={{ padding: 20, textAlign: 'center', color: '#64748B' }}>
-              {isUrdu ? 'مکمل نسخہ لوڈ ہو رہا ہے...' : 'Loading full edition...'}
+              {t('Loading full edition...', 'مکمل نسخہ لوڈ ہو رہا ہے...', 'جاري تحميل النسخة الكاملة...', 'Mukammal nuskha load ho raha hai...')}
             </div>
           )}
         </div>
@@ -429,7 +436,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               marginBottom: 16,
             }}
           >
-            {isUrdu ? 'کتاب کے منتخب ابواب و مضامین' : 'Core Included Chapters'}
+            {t('Core Included Chapters', 'کتاب کے منتخب ابواب و مضامین', 'الأبواب والموضوعات المختارة من الكتاب', 'Kitab Ke Muntakhab Abwaab o Mazameen')}
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -452,13 +459,13 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
               >
                 <div>
                   <div style={{ fontWeight: 800, fontSize: 16, color: '#064E3B', marginBottom: 4 }}>
-                    {ch.chapterNumber}. {isUrdu ? ch.titleUrdu : ch.titleEnglish}
+                    {ch.chapterNumber}. {(language === 'ur' || language === 'ar') ? ch.titleUrdu : ch.titleEnglish}
                   </div>
                   <div style={{ fontSize: 12, color: '#059669', marginBottom: 4 }}>
-                    {isUrdu ? ch.titleEnglish : ch.titleUrdu}
+                    {language === 'en' ? ch.titleUrdu : ch.titleEnglish}
                   </div>
                   <div style={{ fontSize: 13, color: '#6B7280' }}>
-                    {isUrdu ? ch.summaryUrdu : ch.summaryEnglish}
+                    {(language === 'ur' || language === 'ar') ? ch.summaryUrdu : ch.summaryEnglish}
                   </div>
                 </div>
                 <button
@@ -474,7 +481,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {isUrdu ? 'مطالعہ کریں' : 'Read Chapter'}
+                  {t('Read Chapter', 'مطالعہ کریں', 'قراءة الباب', 'Mutala\'ah Karein')}
                 </button>
               </div>
             ))}

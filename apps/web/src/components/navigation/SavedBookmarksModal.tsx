@@ -21,7 +21,7 @@ export function SavedBookmarksModal({
   onClose,
   onSelectBookmark,
 }: SavedBookmarksModalProps) {
-  const { isUrdu } = useLanguage();
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'bookmarks' | 'history'>('bookmarks');
   const [bookmarks, setBookmarks] = useState<BookmarkRecord[]>([]);
   const [history, setHistory] = useState<ReadingHistoryItem[]>([]);
@@ -39,21 +39,21 @@ export function SavedBookmarksModal({
     e.stopPropagation();
     removeBookmark(id);
     setBookmarks(getSavedBookmarks());
-    showAmalToast(isUrdu ? 'بک مارک ہٹا دیا گیا' : 'Bookmark removed', 'info');
+    showAmalToast(t('Bookmark removed', 'بک مارک ہٹا دیا گیا', 'تمت إزالة الإشارة المرجعية', 'Bookmark hata diya gaya'), 'info');
   };
 
   const getCategoryBadge = (cat: string) => {
     switch (cat) {
       case 'library':
-        return { label: isUrdu ? 'کتب خانہ' : 'Library Book', bg: '#EFF6FF', color: '#1E40AF' };
+        return { label: t('Library Book', 'کتب خانہ', 'كتب المكتبة', 'Kutub Khana'), bg: '#EFF6FF', color: '#1E40AF' };
       case 'quran':
-        return { label: isUrdu ? 'قرآنِ مجید' : 'Quran Surah', bg: '#ECFDF5', color: '#065F46' };
+        return { label: t('Quran Surah', 'قرآنِ مجید', 'سور القرآن', 'Quran Majeed'), bg: '#ECFDF5', color: '#065F46' };
       case 'sahabiyyat':
-        return { label: isUrdu ? 'صحابیات' : 'Sahabiyyat', bg: '#FDF2F8', color: '#9D174D' };
+        return { label: t('Sahabiyyat', 'صحابیات', 'الصحابيات رضي الله عنهن', 'Sahabiyyat'), bg: '#FDF2F8', color: '#9D174D' };
       case 'fiqh':
-        return { label: isUrdu ? 'احکامِ فقہ' : 'Fiqh Ruling', bg: '#FEF3C7', color: '#92400E' };
+        return { label: t('Fiqh Ruling', 'احکامِ فقہ', 'الأحكام الفقهية', 'Ahkam-e-Fiqh'), bg: '#FEF3C7', color: '#92400E' };
       default:
-        return { label: isUrdu ? 'دعا و اذکار' : 'Dua', bg: '#F3F4F6', color: '#374151' };
+        return { label: t('Dua', 'دعا و اذکار', 'الأدعية والأذكار', 'Dua o Azkaar'), bg: '#F3F4F6', color: '#374151' };
     }
   };
 
@@ -103,10 +103,10 @@ export function SavedBookmarksModal({
             <span style={{ fontSize: 24 }}>🔖</span>
             <div>
               <h3 style={{ fontSize: 18, fontWeight: 800, margin: 0, color: '#0F172A' }}>
-                {isUrdu ? 'محفوظ شدہ اسباق و مطالعہ کی تاریخ' : 'Saved Bookmarks & Reading History'}
+                {t('Saved Bookmarks & Reading History', 'محفوظ شدہ اسباق و مطالعہ کی تاریخ', 'المفضلات المحفوظة وسجل القراءة', 'Mahfooz Shuda Asbaaq o Tareekh-e-Mutala\'ah')}
               </h3>
               <span style={{ fontSize: 12, color: '#64748B' }}>
-                {isUrdu ? 'کسی بھی وقت دوبارہ مطالعہ وہیں سے شروع کریں' : 'Jump directly back to where you left off'}
+                {t('Jump directly back to where you left off', 'کسی بھی وقت دوبارہ مطالعہ وہیں سے شروع کریں', 'تابع القراءة مباشرة من حيث توقفت', 'Kisi bhi waqt dobara mutala\'ah wahin se shuru karein')}
               </span>
             </div>
           </div>
@@ -152,7 +152,7 @@ export function SavedBookmarksModal({
               color: activeTab === 'bookmarks' ? '#FFFFFF' : '#475569',
             }}
           >
-            🔖 {isUrdu ? `محفوظ شدہ (${bookmarks.length})` : `Bookmarks (${bookmarks.length})`}
+            🔖 {t(`Bookmarks (${bookmarks.length})`, `محفوظ شدہ (${bookmarks.length})`, `المفضلات (${bookmarks.length})`, `Bookmarks (${bookmarks.length})`)}
           </button>
 
           <button
@@ -168,7 +168,7 @@ export function SavedBookmarksModal({
               color: activeTab === 'history' ? '#FFFFFF' : '#475569',
             }}
           >
-            🕒 {isUrdu ? `حالیہ مطالعہ (${history.length})` : `Recent History (${history.length})`}
+            🕒 {t(`Recent History (${history.length})`, `حالیہ مطالعہ (${history.length})`, `سجل القراءة (${history.length})`, `Haliya Mutala'ah (${history.length})`)}
           </button>
         </div>
 
@@ -179,12 +179,15 @@ export function SavedBookmarksModal({
               <div style={{ textAlign: 'center', padding: '50px 20px', color: '#94A3B8' }}>
                 <div style={{ fontSize: 44, marginBottom: 12 }}>🔖</div>
                 <h4 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px', color: '#475569' }}>
-                  {isUrdu ? 'کوئی محفوظ شدہ نشان نہیں ملا' : 'No Bookmarks Saved Yet'}
+                  {t('No Bookmarks Saved Yet', 'کوئی محفوظ شدہ نشان نہیں ملا', 'لا توجد مفضلات محفوظة بعد', 'Koi mahfooz shuda nishan nahi mila')}
                 </h4>
                 <p style={{ fontSize: 13, margin: 0 }}>
-                  {isUrdu
-                    ? 'مطالعہ کے دوران کسی بھی کتاب، سورۃ یا صحابیہ کے صفحے پر 🔖 کے نشان پر کلک کریں تاکہ وہ یہاں محفوظ ہو جائے۔'
-                    : 'While reading any book chapter, Quran surah, or Sahabiyyah biography, tap the 🔖 Bookmark icon to save it here.'}
+                  {t(
+                    'While reading any book chapter, Quran surah, or Sahabiyyah biography, tap the 🔖 Bookmark icon to save it here.',
+                    'مطالعہ کے دوران کسی بھی کتاب، سورۃ یا صحابیہ کے صفحے پر 🔖 کے نشان پر کلک کریں تاکہ وہ یہاں محفوظ ہو جائے۔',
+                    'أثناء قراءة أي باب أو سورة أو ترجمة، انقر على أيقونة الإشارة المرجعية 🔖 لحفظها هنا.',
+                    'Mutala\'ah ke dauran kisi bhi kitab, surah ya sahabiyyah ke safhe par 🔖 par click karein.'
+                  )}
                 </p>
               </div>
             ) : (
@@ -233,7 +236,7 @@ export function SavedBookmarksModal({
                         </div>
 
                         <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A', marginBottom: 2 }}>
-                          {isUrdu ? b.titleUrdu : b.titleEnglish}
+                          {(language === 'ur' || language === 'ar') ? b.titleUrdu : b.titleEnglish}
                         </div>
 
                         {b.sourceOrAuthor && (
@@ -262,7 +265,7 @@ export function SavedBookmarksModal({
 
                       <button
                         onClick={(e) => handleRemove(e, b.id)}
-                        title={isUrdu ? 'بک مارک ہٹائیں' : 'Remove Bookmark'}
+                        title={t('Remove Bookmark', 'بک مارک ہٹائیں', 'إزالة الإشارة', 'Bookmark Hatayein')}
                         style={{
                           backgroundColor: '#FEE2E2',
                           color: '#DC2626',
@@ -285,12 +288,15 @@ export function SavedBookmarksModal({
             <div style={{ textAlign: 'center', padding: '50px 20px', color: '#94A3B8' }}>
               <div style={{ fontSize: 44, marginBottom: 12 }}>🕒</div>
               <h4 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px', color: '#475569' }}>
-                {isUrdu ? 'مطالعہ کی کوئی تاریخ نہیں' : 'No Reading History Recorded'}
+                {t('No Reading History Recorded', 'مطالعہ کی کوئی تاریخ نہیں', 'لا يوجد سجل قراءة حتى الآن', 'Mutala\'ah ki koi tareekh nahi')}
               </h4>
               <p style={{ fontSize: 13, margin: 0 }}>
-                {isUrdu
-                  ? 'جب آپ کتب یا صحابیات کا مطالعہ فرمائیں گے تو آپ کے آخری کھولے گئے مضامین خود بخود یہاں درج ہو جائیں گے۔'
-                  : 'As you read books, chapters, and biographies, your recently opened modules will automatically appear here.'}
+                {t(
+                  'As you read books, chapters, and biographies, your recently opened modules will automatically appear here.',
+                  'جب آپ کتب یا صحابیات کا مطالعہ فرمائیں گے تو آپ کے آخری کھولے گئے مضامین خود بخود یہاں درج ہو جائیں گے۔',
+                  'عند تصفحك للكتب والأبواب والتراجم ستظهر هنا تلقائياً.',
+                  'Jab aap kutub ya sahabiyyat ka mutala\'ah farmayein ge to aakhri kholey gaye mazameen yahan darj ho jayein ge.'
+                )}
               </p>
             </div>
           ) : (
@@ -332,7 +338,7 @@ export function SavedBookmarksModal({
                     </div>
 
                     <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>
-                      {isUrdu ? h.titleUrdu : h.titleEnglish}
+                      {(language === 'ur' || language === 'ar') ? h.titleUrdu : h.titleEnglish}
                     </div>
                   </div>
 

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const SacredPillarsMatrix: React.FC = () => {
-  const { isUrdu } = useLanguage();
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
 
   const pillars = [
     {
@@ -12,19 +12,23 @@ export const SacredPillarsMatrix: React.FC = () => {
       icon: '🕋',
       titleUrdu: 'عبادات و معمولات',
       titleEnglish: 'Worship & Daily Rhythm',
+      titleArabic: 'العبادات والمعاملات اليومية',
+      titleRoman: 'Ibadat wa Ma\'moolat',
       subtitleUrdu: 'اوقاتِ نماز، قبلہ، مسنون اذکار، تسبیح، ہجری تاریخ اور روزے',
       subtitleEnglish: 'Precise solar prayer times, Qibla azimuth, morning/evening adhkar & fasting.',
+      subtitleArabic: 'مواقيت الصلاة الدقيقة، اتجاه القبلة، أذكار الصباح والمساء، المسبحة والصيام.',
+      subtitleRoman: 'Auqat-e-namaz, qiblah, masnoon adhkar, tasbih, hijri calendar aur rozey.',
       color: '#065F46',
       bgLight: '#F0FDF4',
       borderLight: '#BBF7D0',
       badgeBg: '#DCFCE7',
       primaryLink: '/prayer',
       links: [
-        { labelUrdu: 'اوقات و قبلہ', labelEn: 'Prayer & Qibla', href: '/prayer' },
-        { labelUrdu: 'اذکارِ مسنون', labelEn: 'Daily Adhkar', href: '/adhkar' },
-        { labelUrdu: 'تسبیح کاؤنٹر', labelEn: 'Tasbih', href: '/tasbih' },
-        { labelUrdu: 'ہجری روزے', labelEn: 'Hijri Fasting', href: '/calendar' },
-        { labelUrdu: 'حج و عمرہ', labelEn: 'Hajj Pilgrimage', href: '/hajj' },
+        { labelUrdu: 'اوقات و قبلہ', labelEn: 'Prayer & Qibla', labelAr: 'الصلاة والقبلة', labelRoman: 'Auqat wa Qiblah', href: '/prayer' },
+        { labelUrdu: 'اذکارِ مسنون', labelEn: 'Daily Adhkar', labelAr: 'الأذكار المسنونة', labelRoman: 'Adhkar-e-Masnoon', href: '/adhkar' },
+        { labelUrdu: 'تسبیح کاؤنٹر', labelEn: 'Tasbih', labelAr: 'المسبحة', labelRoman: 'Tasbih Counter', href: '/tasbih' },
+        { labelUrdu: 'ہجری روزے', labelEn: 'Hijri Fasting', labelAr: 'التقويم والصيام', labelRoman: 'Hijri Rozey', href: '/calendar' },
+        { labelUrdu: 'حج و عمرہ', labelEn: 'Hajj Pilgrimage', labelAr: 'الحج والعمرة', labelRoman: 'Hajj wa Umrah', href: '/hajj' },
       ],
     },
     {
@@ -33,20 +37,24 @@ export const SacredPillarsMatrix: React.FC = () => {
       icon: '📖',
       titleUrdu: 'قرآن و علومِ سلف',
       titleEnglish: 'Al-Quran & Sacred Knowledge',
+      titleArabic: 'القرآن الكريم وعلوم السلف',
+      titleRoman: 'Quran wa Uloom-e-Salaf',
       subtitleUrdu: '۱۱۴ سورتیں، کنز الایمان، ۴ قراء آڈیو، تجوید و مخارج، اور ۱۰۶ معتبر کتب',
       subtitleEnglish: '114 Surahs with Kanz-ul-Iman, 4 master reciters, word-by-word tajweed & classical canon.',
+      subtitleArabic: '١١٤ سورة مع كنز الإيمان، ٤ قراء معتمدين، أحكام التجويد، والمكتبة الجامعة.',
+      subtitleRoman: '114 Suratein, Kanz-ul-Iman, 4 Qurra audio, tajweed wa makharij, aur 106 kutub.',
       color: '#1E40AF',
       bgLight: '#EFF6FF',
       borderLight: '#BFDBFE',
       badgeBg: '#DBEAFE',
       primaryLink: '/quran',
       links: [
-        { labelUrdu: 'قرآنِ کریم', labelEn: 'Read Quran', href: '/quran' },
-        { labelUrdu: 'تجوید و مخارج', labelEn: 'Tajweed', href: '/quran?tab=tajweed' },
-        { labelUrdu: 'حکمت کارڈز', labelEn: 'Wisdom Cards', href: '/wisdom' },
-        { labelUrdu: 'کتب خانہ', labelEn: 'Classical Canon', href: '/library' },
-        { labelUrdu: 'سیرت النبی ﷺ', labelEn: 'Living Sirah', href: '/sirah' },
-        { labelUrdu: 'درس نوٹس', labelEn: 'Dars Vault', href: '/vault' },
+        { labelUrdu: 'قرآنِ کریم', labelEn: 'Read Quran', labelAr: 'تلاوة القرآن', labelRoman: 'Quran Kareem', href: '/quran' },
+        { labelUrdu: 'تجوید و مخارج', labelEn: 'Tajweed', labelAr: 'التجويد والمخارج', labelRoman: 'Tajweed wa Makharij', href: '/quran?tab=tajweed' },
+        { labelUrdu: 'حکمت کارڈز', labelEn: 'Wisdom Cards', labelAr: 'بطاقات الحكمة', labelRoman: 'Hikmat Cards', href: '/wisdom' },
+        { labelUrdu: 'کتب خانہ', labelEn: 'Classical Canon', labelAr: 'المكتبة المعتمدة', labelRoman: 'Kutub Khana', href: '/library' },
+        { labelUrdu: 'سیرت النبی ﷺ', labelEn: 'Living Sirah', labelAr: 'السيرة النبوية', labelRoman: 'Sirat-un-Nabi ﷺ', href: '/sirah' },
+        { labelUrdu: 'درس نوٹس', labelEn: 'Dars Vault', labelAr: 'خزانة الدروس', labelRoman: 'Dars Notes Vault', href: '/vault' },
       ],
     },
     {
@@ -55,20 +63,24 @@ export const SacredPillarsMatrix: React.FC = () => {
       icon: '🌸',
       titleUrdu: 'خاندان و گوشۂ نسواں',
       titleEnglish: 'Family & Sisters Sanctuary',
+      titleArabic: 'الأسرة وواحة المرأة المسلمة',
+      titleRoman: 'Khandan wa Gosha-e-Niswan',
       subtitleUrdu: '۲۰ کتبِ نسواں، ۱۵ جلیل القدر صحابیات، احکامِ طہارت، اور خاندانی معمولات',
       subtitleEnglish: '20 classical women masterworks, 15 Sahabiyyat models, purity fiqh & family OS.',
+      subtitleArabic: '٢٠ كتاباً معتمداً، ١٥ صحابية جليلة، أحكام الطهارة والحيض، والتربية الأسرية.',
+      subtitleRoman: '20 kutub-e-niswan, 15 jaleel-ul-qadr sahabiyyat, ahkam-e-taharah, aur family tarbiyat.',
       color: '#831843',
       bgLight: '#FFF1F2',
       borderLight: '#FECDD3',
       badgeBg: '#FCE7F3',
       primaryLink: '/sisters',
       links: [
-        { labelUrdu: 'گوشۂ خواتین', labelEn: 'Sisters Sanctuary', href: '/sisters' },
-        { labelUrdu: '۲۰ کتبِ نسواں', labelEn: '20 Books', href: '/sisters?tab=library' },
-        { labelUrdu: '۱۵ صحابیات', labelEn: '15 Sahabiyyat', href: '/sisters?tab=sahabiyyat' },
-        { labelUrdu: 'احکامِ طہارت', labelEn: 'Purity Fiqh', href: '/sisters?tab=fiqh' },
-        { labelUrdu: 'ماؤں کی دعائیں', labelEn: 'Family Duas', href: '/sisters?tab=duas' },
-        { labelUrdu: 'فیملی سرکل', labelEn: 'Family Circle', href: '/family' },
+        { labelUrdu: 'گوشۂ خواتین', labelEn: 'Sisters Sanctuary', labelAr: 'واحة المرأة', labelRoman: 'Gosha-e-Khawateen', href: '/sisters' },
+        { labelUrdu: '۲۰ کتبِ نسواں', labelEn: '20 Books', labelAr: '٢٠ كتاباً', labelRoman: '20 Kutub-e-Niswan', href: '/sisters?tab=library' },
+        { labelUrdu: '۱۵ صحابیات', labelEn: '15 Sahabiyyat', labelAr: '١٥ صحابية', labelRoman: '15 Sahabiyyat', href: '/sisters?tab=sahabiyyat' },
+        { labelUrdu: 'احکامِ طہارت', labelEn: 'Purity Fiqh', labelAr: 'أحكام الطهارة', labelRoman: 'Ahkam-e-Taharah', href: '/sisters?tab=fiqh' },
+        { labelUrdu: 'ماؤں کی دعائیں', labelEn: 'Family Duas', labelAr: 'أدعية الأمهات', labelRoman: 'Maaon ki Duayein', href: '/sisters?tab=duas' },
+        { labelUrdu: 'فیملی سرکل', labelEn: 'Family Circle', labelAr: 'دائرة الأسرة', labelRoman: 'Family Circle', href: '/family' },
       ],
     },
     {
@@ -77,23 +89,35 @@ export const SacredPillarsMatrix: React.FC = () => {
       icon: '⚖️',
       titleUrdu: 'احکام، میراث و سلوک',
       titleEnglish: 'Fiqh, Miras & Suluk Journeys',
+      titleArabic: 'الأحكام والمواريث والرحلات الإيمانية',
+      titleRoman: 'Ahkam, Miras wa Suluk',
       subtitleUrdu: 'زکوٰۃ و سونا، میراث کی شرعی تقسیم، قضائے عمری، اور ۱۴ روزہ دینی اسفار',
       subtitleEnglish: 'Gold jewelry zakat, Islamic inheritance shares, lifetime missed prayers & journeys.',
+      subtitleArabic: 'حاسبة الزكاة والذهب، قسمة المواريث الشرعية، قضاء الفوائت، والرحلات الإيمانية.',
+      subtitleRoman: 'Zakat wa sona, miras ki shar\'i taqseem, qadha-e-umri, aur 14-roza deeni asfar.',
       color: '#92400E',
       bgLight: '#FEF3C7',
       borderLight: '#FDE68A',
       badgeBg: '#FEF9C3',
       primaryLink: '/calculator',
       links: [
-        { labelUrdu: 'زکوٰۃ و سونا', labelEn: 'Zakat & Gold', href: '/calculator?tab=zakat' },
-        { labelUrdu: 'میراث تقسیم (PDF)', labelEn: 'Miras Shares', href: '/calculator?tab=miras' },
-        { labelUrdu: 'قضائے عمری', labelEn: 'Qadha Calculator', href: '/calculator?tab=qadha' },
-        { labelUrdu: 'ڈیسیژن روم', labelEn: 'Decision Room', href: '/decision-room' },
-        { labelUrdu: '۱۴ روزہ اسفار', labelEn: '14-Day Journeys', href: '/journeys' },
-        { labelUrdu: 'دینی اہداف', labelEn: 'Niyyah Goals', href: '/goals' },
+        { labelUrdu: 'زکوٰۃ و سونا', labelEn: 'Zakat & Gold', labelAr: 'الزكاة والذهب', labelRoman: 'Zakat wa Sona', href: '/calculator?tab=zakat' },
+        { labelUrdu: 'میراث تقسیم (PDF)', labelEn: 'Miras Shares', labelAr: 'قسمة المواريث', labelRoman: 'Miras Taqseem (PDF)', href: '/calculator?tab=miras' },
+        { labelUrdu: 'قضائے عمری', labelEn: 'Qadha Calculator', labelAr: 'قضاء الفوائت', labelRoman: 'Qadha-e-Umri', href: '/calculator?tab=qadha' },
+        { labelUrdu: 'ڈیسیژن روم', labelEn: 'Decision Room', labelAr: 'غرفة القرارات', labelRoman: 'Decision Room', href: '/decision-room' },
+        { labelUrdu: '۱۴ روزہ اسفار', labelEn: '14-Day Journeys', labelAr: 'رحلات ١٤ يوماً', labelRoman: '14-Day Asfar', href: '/journeys' },
+        { labelUrdu: 'دینی اہداف', labelEn: 'Niyyah Goals', labelAr: 'الأهداف والنيات', labelRoman: 'Deeni Ahdaf', href: '/goals' },
       ],
     },
   ];
+
+  const getPillarTitle = (p: typeof pillars[0]) => {
+    return t(p.titleEnglish, p.titleUrdu, p.titleArabic, p.titleRoman);
+  };
+
+  const getPillarSubtitle = (p: typeof pillars[0]) => {
+    return t(p.subtitleEnglish, p.subtitleUrdu, p.subtitleArabic, p.subtitleRoman);
+  };
 
   return (
     <div
@@ -126,16 +150,24 @@ export const SacredPillarsMatrix: React.FC = () => {
               textTransform: 'uppercase',
             }}
           >
-            {isUrdu ? 'چار بنیادی دینی ستون' : 'THE 4 SACRED PILLARS'}
+            {t('THE 4 SACRED PILLARS', 'چار بنیادی دینی ستون', 'الأركان الأربعة الأساسية', 'Chaar Bunyadi Deeni Sutoon')}
           </span>
           <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: '2px 0 0' }}>
-            {isUrdu ? 'دینی و عملی شعبہ جات — مربوط نظامِ حیات' : 'Core Life Dimensions — Amal OS Gateways'}
+            {t(
+              'Core Life Dimensions — Amal OS Gateways',
+              'دینی و عملی شعبہ جات — مربوط نظامِ حیات',
+              'أبعاد الحياة الإيمانية — بوابات نظام أمل',
+              'Deeni wa Amali Shobajat — Marboot Nizam-e-Hayat'
+            )}
           </h2>
         </div>
         <span style={{ fontSize: 13, color: '#64748B' }}>
-          {isUrdu
-            ? 'عبادت، علم و قرآن، خاندان و نسواں، اور مالی و باطنی احکام'
-            : 'Worship, Quran & Heritage, Family & Sanctuary, Fiqh & Suluk'}
+          {t(
+            'Worship, Quran & Heritage, Family & Sanctuary, Fiqh & Suluk',
+            'عبادت، علم و قرآن، خاندان و نسواں، اور مالی و باطنی احکام',
+            'العبادة والقرآن والأسرة والمواريث والسلوك',
+            'Ibadat, Ilm wa Quran, Khandan wa Niswan, Ahkam wa Suluk'
+          )}
         </span>
       </div>
 
@@ -169,15 +201,15 @@ export const SacredPillarsMatrix: React.FC = () => {
                     letterSpacing: 0.5,
                   }}
                 >
-                  PILLAR {p.number}
+                  {t(`PILLAR ${p.number}`, `ستون ${p.number}`, `الركن ${p.number}`, `Sutoon ${p.number}`)}
                 </span>
               </div>
 
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: p.color }}>
-                {isUrdu ? p.titleUrdu : p.titleEnglish}
+                {getPillarTitle(p)}
               </h3>
               <p style={{ margin: '4px 0 12px', fontSize: 12, color: '#4B5563', lineHeight: 1.5 }}>
-                {isUrdu ? p.subtitleUrdu : p.subtitleEnglish}
+                {getPillarSubtitle(p)}
               </p>
             </div>
 
@@ -200,7 +232,7 @@ export const SacredPillarsMatrix: React.FC = () => {
                       transition: 'all 0.12s ease',
                     }}
                   >
-                    {isUrdu ? link.labelUrdu : link.labelEn}
+                    {t(link.labelEn, link.labelUrdu, link.labelAr, link.labelRoman)}
                   </Link>
                 ))}
               </div>
@@ -221,7 +253,14 @@ export const SacredPillarsMatrix: React.FC = () => {
                   transition: 'opacity 0.15s ease',
                 }}
               >
-                <span>{isUrdu ? `${p.titleUrdu} میں جائیں` : `Open ${p.titleEnglish}`}</span>
+                <span>
+                  {t(
+                    `Open ${p.titleEnglish}`,
+                    `${p.titleUrdu} میں جائیں`,
+                    `فتح ${p.titleArabic}`,
+                    `${p.titleRoman} Kholein`
+                  )}
+                </span>
                 <span>➔</span>
               </Link>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface PrayerItem {
   key: string;
@@ -15,8 +16,8 @@ interface PrayerScheduleCardProps {
   nextPrayer: any;
   makroohTimes: any;
   selectedCityName: string;
-  isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  isUrdu?: boolean;
+  t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function PrayerScheduleCard({
@@ -25,9 +26,9 @@ export function PrayerScheduleCard({
   nextPrayer,
   makroohTimes,
   selectedCityName,
-  isUrdu,
-  t,
 }: PrayerScheduleCardProps) {
+  const { language, t } = useLanguage();
+
   // Precautionary Sehri Calculation
   const sehriCutoff = (() => {
     const parts = (prayerTimes.fajr || '05:00').split(':').map(Number);
@@ -43,36 +44,43 @@ export function PrayerScheduleCard({
     <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', margin: 0 }}>
-          Daily Auqat-e-Namaz ({prayerTimes.date})
+          {t('Daily Auqat-e-Namaz', 'اوقاتِ نماز برائے آج', 'مواقيت الصلاة اليومية', 'Daily Auqat-e-Namaz')} ({prayerTimes.date})
         </h2>
         <span style={{ fontSize: 12, color: '#6B7280' }}>
           {selectedCityName}
         </span>
       </div>
 
-      <div suppressHydrationWarning style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Main 5 Prayers Grid */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {prayerList.map((p) => {
-          const isNext = nextPrayer?.key === p.key;
+          const isNext = nextPrayer && nextPrayer.name === p.name;
           return (
             <div
               key={p.key}
-              suppressHydrationWarning
               style={{
                 display: 'flex',
-                alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '14px 16px',
-                borderRadius: 10,
-                backgroundColor: isNext ? '#F0FDF4' : '#F9FAFB',
-                border: isNext ? '1.5px solid #10B981' : '1px solid #E5E7EB',
-                boxShadow: isNext ? '0 2px 10px rgba(16, 185, 129, 0.12)' : 'none',
+                alignItems: 'center',
+                padding: '12px 16px',
+                borderRadius: 8,
+                backgroundColor: isNext ? '#ECFDF5' : '#F9FAFB',
+                border: isNext ? '1.5px solid #059669' : '1px solid #F3F4F6',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ fontSize: 20 }}>{p.icon}</span>
+                <span style={{ fontSize: 18 }}>{p.icon}</span>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                    <span style={{ fontWeight: 700, color: '#111827', fontSize: 15 }}>{p.name}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span
+                      style={{
+                        fontSize: 14,
+                        fontWeight: isNext ? 800 : 600,
+                        color: isNext ? '#065F46' : '#111827',
+                      }}
+                    >
+                      {(language === 'ur' || language === 'ar') ? p.nameUrdu : p.name}
+                    </span>
                     {isNext && (
                       <span
                         suppressHydrationWarning
@@ -86,12 +94,12 @@ export function PrayerScheduleCard({
                           letterSpacing: 0.3,
                         }}
                       >
-                        {t('Next Prayer', 'اگلی نماز')} · {nextPrayer.formattedCountdownEnglish}
+                        {t('Next Prayer', 'اگلی نماز', 'الصلاة القادمة', 'Agli Namaz')} · {nextPrayer.formattedCountdownEnglish}
                       </span>
                     )}
                   </div>
                   <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
-                    {p.nameArabic} • {isUrdu ? p.nameUrdu : p.name}
+                    {p.nameArabic} • {(language === 'ur' || language === 'ar') ? p.nameUrdu : p.name}
                   </div>
                 </div>
               </div>
@@ -118,13 +126,13 @@ export function PrayerScheduleCard({
         }}
       >
         <div>
-          <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>Islamic Midnight</span>
+          <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>{t('Islamic Midnight', 'نصف اللیل الشرعی', 'منتصف الليل الشرعي', 'Nisf-ul-Lail Shar\'i')}</span>
           <span suppressHydrationWarning style={{ fontSize: 14, fontWeight: 700, color: '#374151' }}>
             {prayerTimes.midnight}
           </span>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>Tahajjud (Last 1/3)</span>
+          <span style={{ fontSize: 12, color: '#6B7280', display: 'block' }}>{t('Tahajjud (Last 1/3)', 'تہجد (آخری تہائی)', 'التهجد (الثلث الأخير)', 'Tahajjud (Aakhri Tihai)')}</span>
           <span suppressHydrationWarning style={{ fontSize: 14, fontWeight: 700, color: '#15803D' }}>
             {prayerTimes.qiyamThird}
           </span>
@@ -154,12 +162,12 @@ export function PrayerScheduleCard({
               letterSpacing: 0.5,
             }}
           >
-            {t('🌙 Imsak / Sehri Cutoff (Precautionary)', '🌙 سحری کا احتیاطی وقت')}
+            {t('🌙 Imsak / Sehri Cutoff (Precautionary)', '🌙 سحری کا احتیاطی وقت', '🌙 وقت الإمساك الاحتياطي', '🌙 Sehri Ka Ihtiyati Waqt')}
           </span>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#065F46', marginTop: 2 }}>
             {sehriCutoff}
             <span style={{ fontSize: 11, fontWeight: 500, color: '#047857', marginLeft: 6 }}>
-              {t('(3m buffer before Fajr)', '(فجر سے ۳ منٹ قبل)')}
+              {t('(3m buffer before Fajr)', '(فجر سے ۳ منٹ قبل)', '(احتياط ٣ دقائق قبل الفجر)', '(Fajr se 3m qabal)')}
             </span>
           </div>
         </div>
@@ -174,12 +182,12 @@ export function PrayerScheduleCard({
               letterSpacing: 0.5,
             }}
           >
-            {t('🌅 Iftar / Sunset', '🌅 افطار کا وقت')}
+            {t('🌅 Iftar / Sunset', '🌅 افطار کا وقت', '🌅 موعد الإفطار / الغروب', '🌅 Iftar Ka Waqt')}
           </span>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#92400E', marginTop: 2 }}>
             {prayerTimes.maghrib}
             <span style={{ fontSize: 11, fontWeight: 500, color: '#B45309', marginLeft: 6 }}>
-              {t('(Maghrib entry)', '(دخولِ مغرب)')}
+              {t('(Maghrib entry)', '(دخولِ مغرب)', '(دخول وقت المغرب)', '(Dukhol-e-Maghrib)')}
             </span>
           </div>
         </div>
@@ -199,24 +207,24 @@ export function PrayerScheduleCard({
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span>⚠️</span>
             <span style={{ fontWeight: 800, color: '#991B1B', fontSize: 13 }}>
-              {t('Prohibited Prayer Times (Auqat-e-Makrooha)', 'مکروہ اوقات (نماز ممنوع ہے)')}
+              {t('Prohibited Prayer Times (Auqat-e-Makrooha)', 'مکروہ اوقات (نماز ممنوع ہے)', 'الأوقات المكروهة تحريماً للصلوات', 'Auqat-e-Makrooha')}
             </span>
           </div>
           <span style={{ fontSize: 11, color: '#DC2626', fontWeight: 700 }}>
-            {t('Strict Prohibition', 'تحریمی')}
+            {t('Strict Prohibition', 'تحریمی', 'تحريمي', 'Tahreemi')}
           </span>
         </div>
         <div style={{ fontSize: 12, color: '#7F1D1D', display: 'flex', flexDirection: 'column', gap: 6 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{t('Sunrise to Ishraq Window:', 'طلوعِ آفتاب تا اشراق:')}</span>
+            <span>{t('Sunrise to Ishraq Window:', 'طلوعِ آفتاب تا اشراق:', 'شروق الشمس إلى الإشراق:', 'Tulu-e-Aftab ta Ishraq:')}</span>
             <strong>{makroohTimes.sunrise.start} — {makroohTimes.sunrise.end}</strong>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{t('Solar Noon / Zawal Window:', 'نصف النہار / زوال:')}</span>
+            <span>{t('Solar Noon / Zawal Window:', 'نصف النہار / زوال:', 'استواء الشمس / الزوال:', 'Nisf-un-Nahar / Zawal:')}</span>
             <strong>{makroohTimes.zawal.start} — {makroohTimes.zawal.end}</strong>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{t('Sunset Window:', 'غروبِ آفتاب:')}</span>
+            <span>{t('Sunset Window:', 'غروبِ آفتاب:', 'غروب الشمس:', 'Ghuroob-e-Aftab:')}</span>
             <strong>{makroohTimes.sunset.start} — {makroohTimes.sunset.end}</strong>
           </div>
         </div>
@@ -232,7 +240,9 @@ export function PrayerScheduleCard({
         >
           {t(
             '* Voluntary, missed prayers (Qada), Sajdah Tilawat, and Janazah are strictly prohibited during these windows (Mukhtasar al-Quduri & Fatawa Razawiyya).',
-            '* ان اوقات میں نفل، قضا، سجدۂ تلاوت اور نمازِ جنازہ پڑھنا مکروہِ تحریمی ہے (القدوری و فتاویٰ رضویہ)۔'
+            '* ان اوقات میں نفل، قضا، سجدۂ تلاوت اور نمازِ جنازہ پڑھنا مکروہِ تحریمی ہے (القدوری و فتاویٰ رضویہ)۔',
+            '* يُكره تحريماً صلاة النفل والقضاء وسجدة التلاوة وصلاة الجنازة في هذه الأوقات (مختصر القدوري وفتاوى رضوية).',
+            '* In auqat mein nafal, qadha, sajdah tilawat aur janazah parhna makrooh-e-tahreemi hai.'
           )}
         </div>
       </div>

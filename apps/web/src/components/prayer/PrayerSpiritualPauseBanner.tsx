@@ -1,16 +1,18 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface PrayerSpiritualPauseBannerProps {
   isSpiritualPause: boolean;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   toggleSpiritualPause: () => void;
 }
 
 export function PrayerSpiritualPauseBanner({
   isSpiritualPause,
-  isUrdu,
   toggleSpiritualPause,
 }: PrayerSpiritualPauseBannerProps) {
+  const { t } = useLanguage();
+
   if (!isSpiritualPause) return null;
 
   return (
@@ -43,28 +45,41 @@ export function PrayerSpiritualPauseBanner({
                 borderRadius: 10,
               }}
             >
-              {isUrdu ? 'ایامِ معافی متحرک ہے' : 'SPIRITUAL PAUSE ACTIVE'}
+              {t(
+                'SPIRITUAL PAUSE ACTIVE',
+                'ایامِ معافی متحرک ہے',
+                'وضع العذر الشرعي مفعّل',
+                'Ayyam-e-Ma\'afi Active'
+              )}
             </span>
             <span style={{ fontSize: 12, color: '#9D174D', fontWeight: 700 }}>
-              {isUrdu ? 'بہارِ شریعت کے مطابق نمازیں معاف ہیں • اسٹریک محفوظ ہے' : 'Prayer Exemptions Active · Streaks Preserved With Zero Guilt'}
+              {t(
+                'Prayer Exemptions Active · Streaks Preserved With Zero Guilt',
+                'بہارِ شریعت کے مطابق نمازیں معاف ہیں • اسٹریک محفوظ ہے',
+                'رخصة الصلاة مفعّلة وفق الشريعة • الحفاظ على الاستمرارية',
+                'Bahar-e-Shari\'at ke mutabiq namazein mu\'af hain • Streak mehfooz hai'
+              )}
             </span>
           </div>
           <p style={{ margin: 0, fontSize: 13, color: '#374151', lineHeight: 1.5 }}>
-            {isUrdu
-              ? 'نماز کے اوقات کو ذکر، استغفار، اور درود شریف کے پاکیزہ ورد میں بدل دیا گیا ہے۔ آپ کے تمام معمولات محفوظ ہیں۔'
-              : 'Prayer alerts are gently silenced. Prayer windows are transformed into blessed Dhikr, Istighfar, and Salawat opportunities.'}
+            {t(
+              'Prayer alerts are gently silenced. Prayer windows are transformed into blessed Dhikr, Istighfar, and Salawat opportunities.',
+              'نماز کے اوقات کو ذکر، استغفار، اور درود شریف کے پاکیزہ ورد میں بدل دیا گیا ہے۔ آپ کے تمام معمولات محفوظ ہیں۔',
+              'تم تحويل أوقات الصلاة إلى فرص مباركة للذكر والاستغفار والصلاة على النبي ﷺ. سجلاتك واستمراريتك محفوظة.',
+              'Namaz ke auqat ko zikr, istighfar, aur Durood Sharif ke pakeeza wird mein badal diya gaya hai. Aapke tamam mamoolat mehfooz hain.'
+            )}
           </p>
 
           {/* Micro Dhikr Suggestions during pause */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10 }}>
             <span style={{ backgroundColor: '#FFFFFF', border: '1px solid #FECDD3', padding: '3px 10px', borderRadius: 12, fontSize: 11, color: '#9D174D', fontWeight: 600 }}>
-              📿 {isUrdu ? '۱۰۰ مرتبہ استغفار' : '100x Astaghfirullah'}
+              📿 {t('100x Astaghfirullah', '۱۰۰ مرتبہ استغفار', '١٠٠ مرة استغفار', '100x Astaghfirullah')}
             </span>
             <span style={{ backgroundColor: '#FFFFFF', border: '1px solid #FECDD3', padding: '3px 10px', borderRadius: 12, fontSize: 11, color: '#9D174D', fontWeight: 600 }}>
-              🌸 {isUrdu ? '۱۰۰ مرتبہ درودِ پاک' : '100x Salawat upon the Prophet ﷺ'}
+              🌸 {t('100x Salawat upon the Prophet ﷺ', '۱۰۰ مرتبہ درودِ پاک ﷺ', '١٠٠ مرة الصلاة على النبي ﷺ', '100x Durood Sharif ﷺ')}
             </span>
             <span style={{ backgroundColor: '#FFFFFF', border: '1px solid #FECDD3', padding: '3px 10px', borderRadius: 12, fontSize: 11, color: '#9D174D', fontWeight: 600 }}>
-              🎧 {isUrdu ? 'تلاوتِ قرآن سماعت فرمائیں' : 'Listen to Quran Audios'}
+              🎧 {t('Listen to Quran Audios', 'تلاوتِ قرآن سماعت فرمائیں', 'الاستماع لتلاوة القرآن الكريم', 'Tilawat-e-Quran Sama\'at Farmayein')}
             </span>
           </div>
         </div>
@@ -83,7 +98,12 @@ export function PrayerSpiritualPauseBanner({
           cursor: 'pointer',
         }}
       >
-        {isUrdu ? 'طہارت کے بعد ختم کریں' : 'Resume Prayer Routine'}
+        {t(
+          'Resume Prayer Routine',
+          'طہارت کے بعد ختم کریں',
+          'إنهاء وضع العذر واستئناف الصلاة',
+          'Taharat ke baad khatam karein'
+        )}
       </button>
     </div>
   );

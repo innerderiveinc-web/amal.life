@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { SanctuaryBook, SanctuaryBookChapter } from '../../lib/women-sanctuary-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface SistersChapterReaderViewProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   readingBook: SanctuaryBook;
   activeChapter: SanctuaryBookChapter;
   onBackToBookIndex: () => void;
@@ -19,13 +20,13 @@ export interface SistersChapterReaderViewProps {
 }
 
 export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> = ({
-  isUrdu,
   readingBook,
   activeChapter,
   onBackToBookIndex,
   onGenerateChapterCard,
   onOpenSanad,
 }) => {
+  const { language, t } = useLanguage();
   const [showFullPdf, setShowFullPdf] = useState(false);
 
   return (
@@ -62,7 +63,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
             fontWeight: 600,
           }}
         >
-          {isUrdu ? '← کتاب کی فہرست پر واپس' : '← Back to Book Index'}
+          {t('← Back to Book Index', '← کتاب کی فہرست پر واپس', '← العودة إلى فهرس الكتاب', '← Kitab ki fehrist par wapis')}
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -81,12 +82,8 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               }}
             >
               {showFullPdf
-                ? isUrdu
-                  ? '📜 منتخب باب دیکھیں'
-                  : '📜 View Chapter Notes'
-                : isUrdu
-                ? '📑 مکمل اصل پی ڈی ایف کھولیں'
-                : '📑 View Full Original PDF'}
+                ? t('📜 View Chapter Notes', '📜 منتخب باب دیکھیں', '📜 عرض الباب المختار', '📜 Muntakhab baab dekhein')
+                : t('📑 View Full Original PDF', '📑 مکمل اصل پی ڈی ایف کھولیں', '📑 فتح نسخة PDF الأصلية الكاملة', '📑 Mukammal asal PDF kholain')}
             </button>
           )}
 
@@ -100,7 +97,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               fontWeight: 700,
             }}
           >
-            {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
+            {(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
           </span>
         </div>
       </div>
@@ -119,7 +116,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
             }}
           >
             <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>
-              📑 مکمل اصل مطبوعہ نسخہ — {isUrdu ? readingBook.titleUrdu : readingBook.titleEnglish}
+              📑 {t('Complete Printed Edition — ', 'مکمل اصل مطبوعہ نسخہ — ', 'النسخة المطبوعة الأصلية الكاملة — ', 'Mukammal asal matboo\'ah nuskha — ')}{(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
             </div>
             <a
               href={readingBook.pdfUrl}
@@ -136,7 +133,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
                 border: '1px solid #A7F3D0',
               }}
             >
-              ↗ الگ ونڈو میں کھولیں
+              ↗ {t('Open in New Window', 'الگ ونڈو میں کھولیں', 'فتح في نافذة جديدة', 'Alag window mein kholain')}
             </a>
           </div>
 
@@ -169,7 +166,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               marginBottom: 8,
             }}
           >
-            {isUrdu ? activeChapter.titleUrdu : activeChapter.titleEnglish}
+            {(language === 'ur' || language === 'ar') ? activeChapter.titleUrdu : activeChapter.titleEnglish}
           </h2>
           <p
             style={{
@@ -178,7 +175,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               marginBottom: 16,
             }}
           >
-            {isUrdu ? activeChapter.titleEnglish : activeChapter.titleUrdu} • {activeChapter.hadithOrFiqhReference}
+            {language === 'en' ? activeChapter.titleUrdu : activeChapter.titleEnglish} • {activeChapter.hadithOrFiqhReference}
           </p>
 
       <div
@@ -191,7 +188,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
         }}
       >
         <div style={{ fontWeight: 700, marginBottom: 6, color: '#374151' }}>
-          {isUrdu ? 'اہم ترین نکات (Key Takeaways):' : 'Key Takeaways:'}
+          {t('Key Takeaways:', 'اہم ترین نکات (Key Takeaways):', 'أهم الفوائد والنقاط:', 'Aham Tareen Nukaat:')}
         </div>
         <ul style={{ margin: 0, paddingInlineStart: 20, lineHeight: 1.8 }}>
           {activeChapter.keyTakeaways.map((point, idx) => (
@@ -204,7 +201,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
 
       <div
         style={{
-          fontSize: isUrdu ? 17 : 15,
+          fontSize: (language === 'ur' || language === 'ar') ? 17 : 15,
           lineHeight: 2,
           color: '#111827',
           whiteSpace: 'pre-line',
@@ -225,7 +222,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
         }}
       >
         <span style={{ fontSize: 12, color: '#6B7280' }}>
-          {isUrdu ? 'ماخذ:' : 'Source:'} {activeChapter.hadithOrFiqhReference}
+          {t('Source:', 'ماخذ:', 'المصدر:', 'Maakhaz:')} {activeChapter.hadithOrFiqhReference}
         </span>
         <div style={{ display: 'flex', gap: 8 }}>
           <button
@@ -245,7 +242,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
             }}
           >
             <span>🎨</span>
-            <span>{isUrdu ? 'حکمت کارڈ بنائیں' : 'Create Wisdom Card'}</span>
+            <span>{t('Create Wisdom Card', 'حکمت کارڈ بنائیں', 'إنشاء بطاقة الحكمة', 'Hikmat Card Banayein')}</span>
           </button>
 
           <button
@@ -275,7 +272,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
             }}
           >
             <span>✓</span>
-            <span>{isUrdu ? 'مستند سند دیکھیں' : 'Verify Sanad'}</span>
+            <span>{t('Verify Sanad', 'مستند سند دیکھیں', 'التحقق من السند', 'Mustanad Sanad Dekhein')}</span>
           </button>
         </div>
       </div>

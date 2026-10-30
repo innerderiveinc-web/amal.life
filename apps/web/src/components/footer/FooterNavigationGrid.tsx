@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface FooterNavigationGridProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
 }
 
-export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUrdu }) => {
+export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
+  const { t } = useLanguage();
+
   return (
     <div
       style={{
@@ -30,7 +33,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
           }}
         >
           <span>🕋</span>
-          <span>{isUrdu ? 'عبادات و کلامِ پاک' : 'Worship & Al-Quran'}</span>
+          <span>{t('Worship & Al-Quran', 'عبادات و کلامِ پاک', 'العبادات والقرآن الكريم', 'Ibadat o Kalam-e-Paak')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
@@ -47,7 +50,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
               }}
             >
               <span style={{ color: '#10B981' }}>✦</span>
-              <span>{isUrdu ? 'قرآنِ کریم (تلاوت و ترجمہ)' : 'Al-Quran Reader & Audio'}</span>
+              <span>{t('Al-Quran Reader & Audio', 'قرآنِ کریم (تلاوت و ترجمہ)', 'القرآن الكريم (تلاوة وترجمة)', 'Quran-e-Kareem (Tilawat o Tarjuma)')}</span>
             </Link>
           </li>
           <li>
@@ -64,32 +67,32 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
               }}
             >
               <span style={{ color: '#F59E0B' }}>★</span>
-              <span>{isUrdu ? 'قرآنی حکمت کارڈز' : 'Sacred Knowledge Cards'}</span>
+              <span>{t('Sacred Knowledge Cards', 'قرآنی حکمت کارڈز', 'بطاقات الحكمة القرآنية', 'Qurani Hikmat Cards')}</span>
             </Link>
           </li>
           <li>
             <Link href="/prayer" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'اوقاتِ نماز و قبلہ نما' : 'Prayer Times & Qibla Compass'}
+              {t('Prayer Times & Qibla Compass', 'اوقاتِ نماز و قبلہ نما', 'مواقيت الصلاة وبوصلة القبلة', 'Auqat-e-Namaz o Qibla Numa')}
             </Link>
           </li>
           <li>
             <Link href="/tasbih" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'مسنون تسبیح و اذکار' : 'Digital Masnoon Tasbih'}
+              {t('Digital Masnoon Tasbih', 'مسنون تسبیح و اذکار', 'المسبحة المسنونة والأذكار', 'Masnoon Tasbih o Azkaar')}
             </Link>
           </li>
           <li>
             <Link href="/calendar" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'ہجری کیلنڈر و مسنون روزے' : 'Hijri Calendar & Sunnah Fasting'}
+              {t('Hijri Calendar & Sunnah Fasting', 'ہجری کیلنڈر و مسنون روزے', 'التقويم الهجري وصيام السنة', 'Hijri Calendar o Masnoon Rozay')}
             </Link>
           </li>
           <li>
             <Link href="/tajweed" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'تجوید و مخارج صوتی مشق' : 'Tajweed & Audio Pronunciation'}
+              {t('Tajweed & Audio Pronunciation', 'تجوید و مخارج صوتی مشق', 'التجويد ومخارج الحروف الصوتية', 'Tajweed o Makharij')}
             </Link>
           </li>
           <li>
             <Link href="/hajj" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'حج و عمرہ رہنمائی' : 'Hajj & Umrah Pilgrimage Guide'}
+              {t('Hajj & Umrah Pilgrimage Guide', 'حج و عمرہ رہنمائی', 'دليل مناسك الحج والعمرة', 'Hajj o Umrah Rehnumai')}
             </Link>
           </li>
         </ul>
@@ -110,37 +113,37 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
           }}
         >
           <span>📚</span>
-          <span>{isUrdu ? 'علم و سیرتِ مبارکہ ﷺ' : 'Knowledge & Prophetic Sirah'}</span>
+          <span>{t('Knowledge & Prophetic Sirah', 'علم و سیرتِ مبارکہ ﷺ', 'العلم والسيرة النبوية الشريفة ﷺ', 'Ilm o Seerat-e-Mubarakah ﷺ')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
             <Link href="/sirah" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'سیرت النبی ﷺ و شمائل' : 'Living Sirah & Shama\'il'}
+              {t('Living Sirah & Shama\'il', 'سیرت النبی ﷺ و شمائل', 'السيرة النبوية والشمائل المحمدية', 'Seerat-un-Nabi ﷺ wa Shamail')}
             </Link>
           </li>
           <li>
             <Link href="/library" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? '106 معتمد کتبِ اہل سنت' : '106-Book Canonical Library'}
+              {t('106-Book Canonical Library', '106 معتمد کتبِ اہل سنت', 'المكتبة المعتمدة (١٠٦ كتب)', '106 Mu\'tamad Kutub-e-Ahl-e-Sunnat')}
             </Link>
           </li>
           <li>
             <Link href="/audio" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'تلاوتِ قرآن (۴ معتمد قراء)' : 'Quran Audio (4 Master Qurra)'}
+              {t('Quran Audio (4 Master Qurra)', 'تلاوتِ قرآن (۴ معتمد قراء)', 'تلاوات القرآن (٤ قراء معتمدين)', 'Tilawat-e-Quran (4 Mu\'tamad Qurra)')}
             </Link>
           </li>
           <li>
             <Link href="/ask" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'دینی سوال و مستند حوالہ جات' : 'Ask AMAL (Evidence Inquiries)'}
+              {t('Ask AMAL (Evidence Inquiries)', 'دینی سوال و مستند حوالہ جات', 'اسأل أمل (استفسارات موثقة)', 'Ask AMAL (Dini Sawal o Hawala Jaat)')}
             </Link>
           </li>
           <li>
             <Link href="/vault" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'علمی ذخیرہ و خطبات کے نوٹس' : 'Knowledge Vault & Study Notes'}
+              {t('Knowledge Vault & Study Notes', 'علمی ذخیرہ و خطبات کے نوٹس', 'خزانة المعرفة وملاحظات الخطب', 'Ilmi Zakheera o Khutbat Notes')}
             </Link>
           </li>
           <li>
             <Link href="/journeys" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? '40 روزہ دینی سفر' : '40-Day Spiritual Journeys'}
+              {t('40-Day Spiritual Journeys', '40 روزہ دینی سفر', 'الرحلات الإيمانية الأربعينية', '40 Roza Dini Safar')}
             </Link>
           </li>
         </ul>
@@ -161,37 +164,37 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
           }}
         >
           <span>⚖️</span>
-          <span>{isUrdu ? 'فقہی احکام و خاندانی نظام' : 'Fiqh Guidance & Family OS'}</span>
+          <span>{t('Fiqh Guidance & Family OS', 'فقہی احکام و خاندانی نظام', 'الأحكام الفقهية والنظام الأسري', 'Fiqhi Ahkam o Khandani Nizam')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
             <Link href="/calculator" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'زکوٰۃ و نصاب کیلکولیٹر' : 'Zakat & Nisab Calculator'}
+              {t('Zakat & Nisab Calculator', 'زکوٰۃ و نصاب کیلکولیٹر', 'حاسبة الزكاة والنصاب', 'Zakat o Nisab Calculator')}
             </Link>
           </li>
           <li>
             <Link href="/calculator" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'میراثِ شرعیہ و فرائض کی تقسیم' : 'Miras Quranic Inheritance Shares'}
+              {t('Miras Quranic Inheritance Shares', 'میراثِ شرعیہ و فرائض کی تقسیم', 'الميراث الشرعي وحساب الفرائض', 'Miras Shar\'iyah o Faraiz')}
             </Link>
           </li>
           <li>
             <Link href="/decision-room" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'ڈیسیژن روم و مفتی پیکٹ' : 'Decision Room & Scholar Packet'}
+              {t('Decision Room & Scholar Packet', 'ڈیسیژن روم و مفتی پیکٹ', 'غرفة القرار وحزمة المستفتي', 'Decision Room o Mufti Packet')}
             </Link>
           </li>
           <li>
             <Link href="/family" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'خاندانی دینی نظام و حفاظت' : 'Family Deen Hub & Supervisions'}
+              {t('Family Deen Hub & Supervisions', 'خاندانی دینی نظام و حفاظت', 'حماية ورقابة الأسرة المسلمة', 'Khandani Dini Nizam o Hifazat')}
             </Link>
           </li>
           <li>
             <Link href="/reflections" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'شام کا محاسبہ و نجی ڈائری' : 'Evening Muhasabah & Reflections'}
+              {t('Evening Muhasabah & Reflections', 'شام کا محاسبہ و نجی ڈائری', 'محاسبة المساء والخواطر الخاصة', 'Shaam Ka Muhasabah o Diary')}
             </Link>
           </li>
           <li>
             <Link href="/goals" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'دینی مقاصد و عادات' : 'Spiritual Habits & Goals Tracker'}
+              {t('Spiritual Habits & Goals Tracker', 'دینی مقاصد و عادات', 'متتبع الأهداف والعادات الإيمانية', 'Dini Maqasid o Aadat Tracker')}
             </Link>
           </li>
         </ul>
@@ -212,7 +215,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
           }}
         >
           <span>🛡️</span>
-          <span>{isUrdu ? 'پالیسی، شرعی قواعد و امانت' : 'Sovereign Trust & Governance'}</span>
+          <span>{t('Sovereign Trust & Governance', 'پالیسی، شرعی قواعد و امانت', 'السياسة والأمانة الشرعية والحوكمة', 'Policy, Shar\'i Qawaid o Amanat')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
@@ -229,7 +232,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
               }}
             >
               <span>📜</span>
-              <span>{isUrdu ? 'شرائط و شرعی آداب' : 'Terms of Service & Adab'}</span>
+              <span>{t('Terms of Service & Adab', 'شرائط و شرعی آداب', 'شروط الاستخدام والآداب الشرعية', 'Shara\'it o Shar\'i Adaab')}</span>
             </Link>
           </li>
           <li>
@@ -246,7 +249,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
               }}
             >
               <span>🔒</span>
-              <span>{isUrdu ? 'پرائیویسی و صفر ٹریکنگ امانت' : 'Privacy Policy & Zero-Ad Guarantee'}</span>
+              <span>{t('Privacy Policy & Zero-Ad Guarantee', 'پرائیویسی و صفر ٹریکنگ امانت', 'سياسة الخصوصية وضمان عدم التتبع', 'Privacy Policy o Zero Tracking')}</span>
             </Link>
           </li>
           <li>
@@ -263,17 +266,17 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
               }}
             >
               <span>⚖️</span>
-              <span>{isUrdu ? 'کاپی رائٹ، وقف و اوپن سورس' : 'Copyright, Waqf & Attribution'}</span>
+              <span>{t('Copyright, Waqf & Attribution', 'کاپی رائٹ، وقف و اوپن سورس', 'حقوق التأليف والوقف والمصادر', 'Copyright, Waqf o Open Source')}</span>
             </Link>
           </li>
           <li>
             <Link href="/about" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'تعارف و شرعی منہج' : 'About AMAL OS & Epistemic Creed'}
+              {t('About AMAL OS & Epistemic Creed', 'تعارف و شرعی منہج', 'عن نظام أمل والمنهج المعرفي', 'Ta\'aruf o Shar\'i Manhaj')}
             </Link>
           </li>
           <li>
             <Link href="/contact" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {isUrdu ? 'رابطہ و شرعی استفسار' : 'Contact & Scholarly Inquiries'}
+              {t('Contact & Scholarly Inquiries', 'رابطہ و شرعی استفسار', 'الاتصال والاستفسار العلمي الشرعي', 'Rabtah o Shar\'i Istifsaar')}
             </Link>
           </li>
           <li>
@@ -286,7 +289,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = ({ isUr
                 fontWeight: 700,
               }}
             >
-              ⚙️ {isUrdu ? 'مرکزی ترتیبات' : 'System Settings & Control'}
+              ⚙️ {t('System Settings & Control', 'مرکزی ترتیبات', 'إعدادات النظام العامة', 'Markazi Tarteebat')}
             </Link>
           </li>
         </ul>

@@ -1,19 +1,35 @@
 import React from 'react';
 import { SavedBookmarkItem } from './default-bookmarks-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface BookmarkItemCardProps {
   bookmark: SavedBookmarkItem;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   onCopyText: (text: string, title: string) => void;
   onPlayBookmark: (bm: SavedBookmarkItem) => void;
 }
 
 export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
   bookmark: bm,
-  isUrdu,
   onCopyText,
   onPlayBookmark,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
+
+  const title = isArabic
+    ? (bm.titleUrdu || bm.titleEnglish)
+    : isUrdu
+    ? bm.titleUrdu
+    : isRomanUrdu
+    ? (bm.titleEnglish || bm.titleUrdu)
+    : bm.titleEnglish;
+
+  const subTitle = isArabic
+    ? bm.titleEnglish
+    : isUrdu
+    ? bm.titleEnglish
+    : bm.titleUrdu;
+
   return (
     <div
       style={{
@@ -30,11 +46,13 @@ export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <h4 style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.4 }}>
-            {isUrdu ? bm.titleUrdu : bm.titleEnglish}
+            {title}
           </h4>
-          <span style={{ fontSize: 11, color: '#64748B' }}>
-            {isUrdu ? bm.titleEnglish : bm.titleUrdu || ''}
-          </span>
+          {subTitle && (
+            <span style={{ fontSize: 11, color: '#64748B' }}>
+              {subTitle}
+            </span>
+          )}
         </div>
         <span
           style={{
@@ -67,7 +85,7 @@ export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
         {bm.arabicText}
       </div>
 
-      {/* Urdu Translation */}
+      {/* Translation */}
       <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.6 }}>
         {bm.translationUrdu}
       </div>
@@ -100,9 +118,9 @@ export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
               color: '#475569',
               cursor: 'pointer',
             }}
-            title="کاپی کریں"
+            title={t('Copy text', 'کاپی کریں', 'نسخ النص', 'Copy Karein')}
           >
-            📋 کاپی
+            📋 {t('Copy', 'کاپی', 'نسخ', 'Copy')}
           </button>
 
           {bm.audioUrl && (
@@ -123,7 +141,7 @@ export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
               }}
             >
               <span>▶</span>
-              <span>سنیں</span>
+              <span>{t('Listen', 'سنیں', 'استمع', 'Sunein')}</span>
             </button>
           )}
         </div>

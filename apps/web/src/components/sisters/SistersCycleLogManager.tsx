@@ -162,7 +162,12 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
           }}
         >
           <div style={{ fontWeight: 700, color: '#991B1B', marginBottom: 8, fontSize: 14 }}>
-            {isUrdu ? '۴ ہندسوں کا نیا پن درج کریں:' : 'Set New 4-Digit PIN:'}
+            {t(
+              'Set New 4-Digit PIN:',
+              '۴ ہندسوں کا نیا پن درج کریں:',
+              'أدخل الرمز السري الجديد المكون من ٤ أرقام:',
+              '4 Hindson ka Naya PIN Darj Karein:'
+            )}
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <input
@@ -194,7 +199,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? 'محفوظ کریں' : 'Save'}
+              {t('Save', 'محفوظ کریں', 'حفظ', 'Mehfooz Karein')}
             </button>
             <button
               onClick={onCancelPinSetup}
@@ -207,7 +212,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? 'منسوخ' : 'Cancel'}
+              {t('Cancel', 'منسوخ', 'إلغاء', 'Mansookh')}
             </button>
           </div>
           {pinError && (

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { DailyMamool } from '@amal/amal-engine';
 import { GLOBAL_CITIES } from '../../lib/global-locations';
 import { getSavedLocation, saveUserLocation } from '../../lib/prayer-utils';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface PrayerTimeSlotItem {
   key: string;
@@ -12,7 +13,7 @@ export interface PrayerTimeSlotItem {
 }
 
 export interface MamoolPrayerAuqatStripProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   mamool: DailyMamool;
   targetPrayerNameUrdu: string;
   livePrayerInfo: {
@@ -37,13 +38,13 @@ export interface MamoolPrayerAuqatStripProps {
 }
 
 export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
-  isUrdu,
   mamool,
   targetPrayerNameUrdu,
   livePrayerInfo,
   formattedCountdown,
   fullPrayerTimes,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const [currentCityName, setCurrentCityName] = useState<string>('');
 
   useEffect(() => {
@@ -68,6 +69,15 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
       });
     }
   };
+
+  const currentSlotDisplay = isUrdu
+    ? mamool.currentSlotNameUrdu
+    : isArabic
+    ? (mamool.currentSlotNameUrdu || mamool.currentSlotNameEnglish)
+    : isRomanUrdu
+    ? (mamool.currentSlotNameEnglish || mamool.currentSlotNameUrdu)
+    : mamool.currentSlotNameEnglish;
+
   return (
     <>
       {/* Top Banner: Time Slot & Countdown */}
@@ -102,7 +112,12 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <h2 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: -0.2 }}>
-                {isUrdu ? 'آج کا معمول و اوقاتِ عبادت' : 'Daily Worship & Prayer Routine'}
+                {t(
+                  'Daily Worship & Prayer Routine',
+                  'آج کا معمول و اوقاتِ عبادت',
+                  'الورد اليومي ومواقيت العبادة',
+                  'Aaj ka Mamool wa Auqat-e-Ibadat'
+                )}
               </h2>
               <span
                 style={{
@@ -114,11 +129,11 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
                   borderRadius: 20,
                 }}
               >
-                {isUrdu ? 'روزمرہ معمول' : 'Daily Routine'}
+                {t('Daily Routine', 'روزمرہ معمول', 'الورد اليومي', 'Rozmarrah Mamool')}
               </span>
             </div>
             <div suppressHydrationWarning style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
-              {isUrdu ? mamool.currentSlotNameUrdu : mamool.currentSlotNameEnglish}
+              {currentSlotDisplay}
             </div>
           </div>
         </div>
@@ -143,6 +158,14 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
           {isUrdu ? (
             <span dir="rtl" suppressHydrationWarning style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
               <bdi suppressHydrationWarning style={{ fontWeight: 800, color: '#064E3B' }}>{targetPrayerNameUrdu}</bdi> میں تقریباً {formattedCountdown.urdu} باقی ہیں
+            </span>
+          ) : isArabic ? (
+            <span dir="rtl" suppressHydrationWarning>
+              الصلاة القادمة: <bdi suppressHydrationWarning style={{ fontWeight: 800, color: '#064E3B' }}>{livePrayerInfo?.nameEnglish || mamool.nextPrayerName}</bdi> متبقي {formattedCountdown.english}
+            </span>
+          ) : isRomanUrdu ? (
+            <span suppressHydrationWarning>
+              Agli Namaz: <strong style={{ color: '#064E3B' }}>{livePrayerInfo?.nameEnglish || mamool.nextPrayerName}</strong> mein taqreeban {formattedCountdown.urdu} baqi hain
             </span>
           ) : (
             <span suppressHydrationWarning>
@@ -172,20 +195,19 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#475569' }}>
               <span>🕌</span>
-              <span>{isUrdu ? 'پانچوں نمازوں کے اوقات:' : 'Prayer Times:'}</span>
+              <span>{t('Prayer Times:', 'پانچوں نمازوں کے اوقات:', 'مواقيت الصلوات الخمس:', 'Namaz ke Auqat:')}</span>
             </div>
 
             {/* 1-Tap Travel City Selector Dropdown */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <span style={{ fontSize: 12 }}>📍</span>
               <select
-                aria-label="Select City for Prayer Times"
-                value={GLOBAL_CITIES.find((c) => currentCityName.includes(c.name))?.name || GLOBAL_CITIES[0]?.name}
+                value={currentCityName ? (currentCityName.split(',')[0] || '').trim() : ''}
                 onChange={handleCitySelect}
                 style={{
-                  fontSize: 11.5,
+                  fontSize: 12,
                   fontWeight: 700,
-                  padding: '2px 8px',
+                  padding: '3px 8px',
                   borderRadius: 6,
                   border: '1px solid #CBD5E1',
                   backgroundColor: '#FFFFFF',
@@ -205,12 +227,36 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
 
           <div suppressHydrationWarning style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
             {[
-              { key: 'fajr', labelEn: 'Fajr', labelUr: 'فجر', time: fullPrayerTimes.fajr },
-              { key: 'sunrise', labelEn: 'Sunrise', labelUr: 'طلوع', time: fullPrayerTimes.sunrise },
-              { key: 'dhuhr', labelEn: 'Dhuhr', labelUr: 'ظہر', time: fullPrayerTimes.dhuhr },
-              { key: 'asr', labelEn: 'Asr', labelUr: 'عصر', time: fullPrayerTimes.asr },
-              { key: 'maghrib', labelEn: 'Maghrib', labelUr: 'مغرب', time: fullPrayerTimes.maghrib },
-              { key: 'isha', labelEn: 'Isha', labelUr: 'عشاء', time: fullPrayerTimes.isha },
+              {
+                key: 'fajr',
+                label: t('Fajr', 'فجر', 'الفجر', 'Fajr'),
+                time: fullPrayerTimes.fajr,
+              },
+              {
+                key: 'sunrise',
+                label: t('Sunrise', 'طلوع', 'الشروق', 'Tulu'),
+                time: fullPrayerTimes.sunrise,
+              },
+              {
+                key: 'dhuhr',
+                label: t('Dhuhr', 'ظہر', 'الظهر', 'Zohar'),
+                time: fullPrayerTimes.dhuhr,
+              },
+              {
+                key: 'asr',
+                label: t('Asr', 'عصر', 'العصر', 'Asr'),
+                time: fullPrayerTimes.asr,
+              },
+              {
+                key: 'maghrib',
+                label: t('Maghrib', 'مغرب', 'المغرب', 'Maghrib'),
+                time: fullPrayerTimes.maghrib,
+              },
+              {
+                key: 'isha',
+                label: t('Isha', 'عشاء', 'العشاء', 'Isha'),
+                time: fullPrayerTimes.isha,
+              },
             ].map((p) => {
               const isNext = livePrayerInfo?.key === p.key;
               return (
@@ -231,11 +277,11 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
                     boxShadow: isNext ? '0 2px 6px rgba(16, 185, 129, 0.15)' : 'none',
                   }}
                 >
-                  <span suppressHydrationWarning>{isUrdu ? p.labelUr : p.labelEn}</span>
+                  <span suppressHydrationWarning>{p.label}</span>
                   <span suppressHydrationWarning style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
                   {isNext && (
                     <span suppressHydrationWarning style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
-                      {isUrdu ? 'اگلی' : 'NEXT'}
+                      {t('NEXT', 'اگلی', 'القادمة', 'Agli')}
                     </span>
                   )}
                 </div>
@@ -257,10 +303,10 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
                 alignItems: 'center',
                 gap: 4,
               }}
-              title={isUrdu ? 'صبح و شام کے مسنون اذکار' : 'Morning & Evening Sunnah Adhkar'}
+              title={t('Morning & Evening Sunnah Adhkar', 'صبح و شام کے مسنون اذکار', 'أذكار الصباح والمساء المسنونة', 'Subh wa Sham ke Masnoon Adhkar')}
             >
               <span>🌅</span>
-              <span>{isUrdu ? 'مسنون اذکار' : 'Daily Adhkar'}</span>
+              <span>{t('Daily Adhkar', 'مسنون اذکار', 'الأذكار اليومية', 'Daily Adhkar')}</span>
             </Link>
 
             <Link
@@ -278,10 +324,10 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
                 alignItems: 'center',
                 gap: 4,
               }}
-              title={isUrdu ? 'تفصیلات، تہجد کیلکولیٹر و قبلہ کمپاس' : 'Qibla Compass & Full Schedule'}
+              title={t('Qibla Compass & Full Schedule', 'تفصیلات، تہجد کیلکولیٹر و قبلہ کمپاس', 'بوصلة القبلة والجدول الكامل', 'Qibla Compass wa Schedule')}
             >
               <span>🕋</span>
-              <span>{isUrdu ? 'تفصیل و قبلہ ➔' : 'Qibla & Times ➔'}</span>
+              <span>{t('Qibla & Times ➔', 'تفصیل و قبلہ ➔', 'القبلة والمواقيت ➔', 'Qibla wa Auqat ➔')}</span>
             </Link>
           </div>
         </div>

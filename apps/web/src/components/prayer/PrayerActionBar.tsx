@@ -1,5 +1,6 @@
 import React from 'react';
 import { GlobalCity } from '../../lib/global-locations';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface PrayerActionBarProps {
   selectedCity: GlobalCity;
@@ -10,7 +11,7 @@ interface PrayerActionBarProps {
   onOpenOffsets: () => void;
   offsets: Record<string, number>;
   onOpenPrecision: () => void;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   isSpiritualPause: boolean;
   toggleSpiritualPause: () => void;
   isManualCoordsOpen: boolean;
@@ -26,12 +27,12 @@ export function PrayerActionBar({
   onOpenOffsets,
   offsets,
   onOpenPrecision,
-  isUrdu,
   isSpiritualPause,
   toggleSpiritualPause,
   isManualCoordsOpen,
   setIsManualCoordsOpen,
 }: PrayerActionBarProps) {
+  const { t } = useLanguage();
   const hasOffsets = Object.values(offsets).some((v) => v !== 0);
 
   return (
@@ -66,11 +67,16 @@ export function PrayerActionBar({
               fontWeight: 700,
             }}
           >
-            ACTIVE
+            {t('ACTIVE', 'فعال', 'نشط', 'Fa\'al')}
           </span>
         </div>
         <div style={{ fontSize: 12, color: '#9CA3AF', marginTop: 4 }}>
-          Coordinates: {selectedCity.lat.toFixed(4)}° N, {selectedCity.lon.toFixed(4)}° E • Qibla Bearing: {qibla.bearingDegrees}° ({qibla.compassDirection}) • Distance to Kaaba: {qibla.distanceKm.toLocaleString()} km
+          {t('Coordinates:', 'مقام / بلدیاتی کوآرڈینیٹس:', 'الإحداثيات:', 'Coordinates:')}{' '}
+          {selectedCity.lat.toFixed(4)}° N, {selectedCity.lon.toFixed(4)}° E •{' '}
+          {t('Qibla Bearing:', 'سمتِ قبلہ:', 'اتجاه القبلة:', 'Simt-e-Qibla:')}{' '}
+          {qibla.bearingDegrees}° ({qibla.compassDirection}) •{' '}
+          {t('Distance to Kaaba:', 'فاصلہ تا کعبہ معظمہ:', 'المسافة إلى الكعبة:', 'Faasla ta Ka\'ba:')}{' '}
+          {qibla.distanceKm.toLocaleString()} {t('km', 'کلومیٹر', 'كم', 'km')}
         </div>
       </div>
 
@@ -94,7 +100,11 @@ export function PrayerActionBar({
           }}
         >
           <span>{isLocating ? '⏳' : '🎯'}</span>
-          <span>{isLocating ? 'Detecting GPS...' : 'Use My GPS'}</span>
+          <span>
+            {isLocating
+              ? t('Detecting GPS...', 'جی پی ایس تلاش جاری ہے...', 'جارٍ تحديد الموقع...', 'GPS Talash Jari Hai...')
+              : t('Use My GPS', 'میرا جی پی ایس مقام', 'استخدام موقعي (GPS)', 'Mera GPS Muqam')}
+          </span>
         </button>
 
         <button
@@ -114,7 +124,7 @@ export function PrayerActionBar({
           }}
         >
           <span>🔍</span>
-          <span>Search Any City / Town</span>
+          <span>{t('Search Any City / Town', 'شہر تلاش کریں', 'البحث عن مدينة أو بلدة', 'Shehr Talash Karein')}</span>
         </button>
 
         <button
@@ -134,7 +144,11 @@ export function PrayerActionBar({
           }}
         >
           <span>⚙️</span>
-          <span>{hasOffsets ? 'Calibrated (± Min)' : 'Calibrate / ± Minutes'}</span>
+          <span>
+            {hasOffsets
+              ? t('Calibrated (± Min)', 'اوقات ایڈجسٹ شدہ (± منٹ)', 'مُعاير (± دقيقة)', 'Adjust Shuda (± Min)')
+              : t('Calibrate / ± Minutes', 'اوقات ایڈجسٹمنٹ (± منٹ)', 'معايرة الأوقات (± دقيقة)', 'Auqat Adjustment (± Min)')}
+          </span>
         </button>
 
         <button
@@ -152,10 +166,22 @@ export function PrayerActionBar({
             fontSize: 13,
             cursor: 'pointer',
           }}
-          title={isUrdu ? 'فقہی و فلکیاتی موازنہ دیکھیں' : 'Compare 5 Global Fiqh Authorities & Asr Shadow Rules'}
+          title={t(
+            'Compare 5 Global Fiqh Authorities & Asr Shadow Rules',
+            'فقہی و فلکیاتی موازنہ دیکھیں',
+            'مقارنة بين ٥ هيئات فقهية وقواعد ظل العصر',
+            'Fiqhi wa Falakiyati Muwazna Dekhein'
+          )}
         >
           <span>🔭</span>
-          <span>{isUrdu ? 'فقہی و فلکیاتی تحقیق' : 'Multi-Fiqh Verifier'}</span>
+          <span>
+            {t(
+              'Multi-Fiqh Verifier',
+              'فقہی و فلکیاتی تحقیق',
+              'التحقيق الفلكي والفقهي',
+              'Fiqhi wa Falakiyati Tehqeeq'
+            )}
+          </span>
         </button>
 
         {/* Spiritual Pause Mode Toggle (For Sisters) */}
@@ -174,13 +200,18 @@ export function PrayerActionBar({
             fontSize: 13,
             cursor: 'pointer',
           }}
-          title={isUrdu ? 'ایامِ معافی و طہارت موڈ' : 'Toggle Spiritual Pause Mode for Sisters'}
+          title={t(
+            'Toggle Spiritual Pause Mode for Sisters',
+            'ایامِ معافی و طہارت موڈ',
+            'تبديل وضع العذر الشرعي للأخوات',
+            'Ayyam-e-Ma\'afi wa Taharat Mode'
+          )}
         >
           <span>🌸</span>
           <span>
             {isSpiritualPause
-              ? isUrdu ? 'ایامِ معافی: فعال' : 'Cycle Pause: ON'
-              : isUrdu ? 'ایامِ معافی موڈ' : 'Spiritual Pause'}
+              ? t('Cycle Pause: ON', 'ایامِ معافی: فعال', 'العذر الشرعي: مفعّل', 'Ayyam-e-Ma\'afi: Fa\'al')
+              : t('Spiritual Pause', 'ایامِ معافی موڈ', 'وضع العذر الشرعي', 'Ayyam-e-Ma\'afi Mode')}
           </span>
         </button>
 
@@ -201,7 +232,14 @@ export function PrayerActionBar({
           }}
         >
           <span>🌐</span>
-          <span>Manual Lat/Lon</span>
+          <span>
+            {t(
+              'Manual Lat/Lon',
+              'دستی طول بلد و عرض بلد',
+              'إحداثيات يدوية (خط العرض/الطول)',
+              'Dasti Lat/Lon Coordinates'
+            )}
+          </span>
         </button>
       </div>
     </div>

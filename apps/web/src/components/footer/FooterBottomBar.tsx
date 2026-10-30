@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface FooterBottomBarProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
 }
 
-export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
+export const FooterBottomBar: React.FC<FooterBottomBarProps> = () => {
+  const { t } = useLanguage();
+
   return (
     <div
       style={{
@@ -24,10 +27,20 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 800, color: '#FFFFFF' }}>© 2026 AMAL OS by Qsura India Pvt Ltd.</span>
           <span style={{ color: '#6B7280' }}>
-            {isUrdu ? 'تمام حقوق شرعی اغراض کے لیے محفوظ ہیں۔' : 'All Rights Reserved.'}
+            {t(
+              'All Rights Reserved.',
+              'تمام حقوق شرعی اغراض کے لیے محفوظ ہیں۔',
+              'جميع الحقوق محفوظة للأغراض الشرعية.',
+              'Tamam huqooq shar\'i aghraz ke liye mehfooz hain.'
+            )}
           </span>
           <span style={{ color: '#10B981', fontWeight: 700 }}>
-            · {isUrdu ? 'وقف برائے خدمتِ امتِ محمدیہ ﷺ' : 'Waqf Lil-Ummah'}
+            · {t(
+              'Waqf Lil-Ummah',
+              'وقف برائے خدمتِ امتِ محمدیہ ﷺ',
+              'وقف لخدمة الأمة المحمدية ﷺ',
+              'Waqf baraye khidmat-e-Ummat-e-Muhammadiyyah ﷺ'
+            )}
           </span>
         </div>
         <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>
@@ -59,7 +72,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {isUrdu ? 'شرائط و ضوابط' : 'Terms & Conditions'}
+          {t('Terms & Conditions', 'شرائط و ضوابط', 'الشروط والأحكام', 'Sharait wa Zawabit')}
         </Link>
 
         <Link
@@ -84,7 +97,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.3)';
           }}
         >
-          {isUrdu ? 'پرائیویسی پالیسی' : 'Privacy Policy'}
+          {t('Privacy Policy', 'پرائیویسی پالیسی', 'سياسة الخصوصية', 'Privacy Policy')}
         </Link>
 
         <Link
@@ -109,7 +122,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {isUrdu ? 'کاپی رائٹ و وقف' : 'Copyright & Waqf'}
+          {t('Copyright & Waqf', 'کاپی رائٹ و وقف', 'حقوق النشر والوقف', 'Copyright wa Waqf')}
         </Link>
 
         <Link
@@ -134,7 +147,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = ({ isUrdu }) => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {isUrdu ? 'رابطہ و تعاون' : 'Contact & Support'}
+          {t('Contact & Support', 'رابطہ و تعاون', 'التواصل والدعم', 'Rabtah wa Ta\'awun')}
         </Link>
       </div>
     </div>

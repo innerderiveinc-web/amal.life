@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { SistersPinLockView } from './SistersPinLockView';
 import { SistersCycleLogManager, SavedCycleRecord } from './SistersCycleLogManager';
 
@@ -21,6 +22,7 @@ export function SistersVaultTab({
   isSettingUpPin,
   setIsSettingUpPin,
 }: SistersVaultTabProps) {
+  const { t } = useLanguage();
   const [enteredPin, setEnteredPin] = useState('');
   const [newPin, setNewPin] = useState('');
   const [pinError, setPinError] = useState('');
@@ -51,7 +53,14 @@ export function SistersVaultTab({
       setPinError('');
       setEnteredPin('');
     } else {
-      setPinError(isUrdu ? 'غلط پن کوڈ! براہِ کرم دوبارہ کوشش کریں۔' : 'Incorrect PIN! Please try again.');
+      setPinError(
+        t(
+          'Incorrect PIN! Please try again.',
+          'غلط پن کوڈ! براہِ کرم دوبارہ کوشش کریں۔',
+          'الرمز السري غير صحيح! يرجى المحاولة مرة أخرى.',
+          'Ghalat PIN code! Barah-e-karam dobara koshish karein.'
+        )
+      );
     }
   };
 
@@ -64,12 +73,28 @@ export function SistersVaultTab({
       setNewPin('');
       setPinError('');
     } else {
-      setPinError(isUrdu ? 'براہِ کرم ۴ ہندسوں پر مشتمل درست پن کوڈ درج کریں۔' : 'Please enter a valid 4-digit numeric PIN.');
+      setPinError(
+        t(
+          'Please enter a valid 4-digit numeric PIN.',
+          'براہِ کرم ۴ ہندسوں پر مشتمل درست پن کوڈ درج کریں۔',
+          'يرجى إدخال رمز سري صحيح مكون من ٤ أرقام.',
+          'Barah-e-karam 4 hindson par mushtamil durust PIN darj karein.'
+        )
+      );
     }
   };
 
   const handleRemovePin = () => {
-    if (window.confirm(isUrdu ? 'کیا آپ واقعی پن لاک ختم کرنا چاہتے ہیں؟' : 'Are you sure you want to remove the PIN lock?')) {
+    if (
+      window.confirm(
+        t(
+          'Are you sure you want to remove the PIN lock?',
+          'کیا آپ واقعی پن لاک ختم کرنا چاہتے ہیں؟',
+          'هل أنت متأكد من رغبتك في إزالة قفل الرمز السري؟',
+          'Kya aap waqai PIN lock khatam karna chahte hain?'
+        )
+      )
+    ) {
       localStorage.removeItem('amal_nisa_pin');
       setHasPinConfigured(false);
       setIsPinLocked(false);
@@ -91,7 +116,7 @@ export function SistersVaultTab({
     const newEntry = {
       id: Date.now().toString(),
       start: cycleStartDate,
-      end: cycleEndDate || (isUrdu ? 'جاری ہے' : 'Ongoing'),
+      end: cycleEndDate || t('Ongoing', 'جاری ہے', 'مستمر', 'Jari hai'),
       notes: cycleNotes,
       durationDays,
     };

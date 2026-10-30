@@ -3,6 +3,7 @@ import { DetailedZakatCalculationResult, ZakatClearancePayload } from '@amal/ama
 import { ZakatGoldSilverNisabCard } from './ZakatGoldSilverNisabCard';
 import { ZakatAssetsDeductionsForm } from './ZakatAssetsDeductionsForm';
 import { ZakatAssessmentSummaryCard } from './ZakatAssessmentSummaryCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface ZakatCalculatorTabProps {
   currency: string;
@@ -87,6 +88,8 @@ export function ZakatCalculatorTab({
   isUrdu,
   t,
 }: ZakatCalculatorTabProps) {
+  const { t: ctxT } = useLanguage();
+  const tr = (en: string, ur?: string, ar?: string, roman?: string) => ctxT(en, ur, ar, roman);
   const [calcMode, setCalcMode] = React.useState<'WIZARD' | 'ALL'>('WIZARD');
   const [wizardStep, setWizardStep] = React.useState<1 | 2 | 3>(1);
 
@@ -109,12 +112,12 @@ export function ZakatCalculatorTab({
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 16 }}>💰</span>
           <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
-            {isUrdu ? 'زکوٰۃ و نصاب کیلکولیٹر' : 'Zakat & Nisab Calculator'}
+            {tr('Zakat & Nisab Calculator', 'زکوٰۃ و نصاب کیلکولیٹر', 'حاسبة الزكاة والنصاب', 'Zakat o Nisab Calculator')}
           </span>
           <span style={{ fontSize: 12, color: '#64748B' }}>
             {calcMode === 'WIZARD'
-              ? (isUrdu ? `(مرحلہ ${wizardStep} از ۳)` : `(Step ${wizardStep} of 3)`)
-              : (isUrdu ? '(مکمل فارم)' : '(Full Form)')}
+              ? tr(`(Step ${wizardStep} of 3)`, `(مرحلہ ${wizardStep} از ۳)`, `(المرحلة ${wizardStep} من ٣)`, `(Marhala ${wizardStep} az 3)`)
+              : tr('(Full Form)', '(مکمل فارم)', '(الاستمارة الكاملة)', '(Mukammal Form)')}
           </span>
         </div>
 
@@ -132,7 +135,7 @@ export function ZakatCalculatorTab({
               color: calcMode === 'WIZARD' ? '#FFFFFF' : '#475569',
             }}
           >
-            📱 {isUrdu ? 'آسان ۳ مراحل' : '3-Step Wizard'}
+            📱 {tr('3-Step Wizard', 'آسان ۳ مراحل', 'المرشد السريع (٣ خطوات)', 'Aasan 3 Marahil')}
           </button>
           <button
             onClick={() => setCalcMode('ALL')}
@@ -147,7 +150,7 @@ export function ZakatCalculatorTab({
               color: calcMode === 'ALL' ? '#FFFFFF' : '#475569',
             }}
           >
-            📄 {isUrdu ? 'مکمل فارم' : 'Full Form'}
+            📄 {tr('Full Form', 'مکمل فارم', 'الاستمارة الكاملة', 'Mukammal Form')}
           </button>
         </div>
       </div>
@@ -156,9 +159,9 @@ export function ZakatCalculatorTab({
       {calcMode === 'WIZARD' && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
           {[
-            { step: 1, titleEn: '1. Cash & Jewelry', titleUr: '۱. نقدی و زیورات' },
-            { step: 2, titleEn: '2. Investments', titleUr: '۲. شیئرز و مالِ تجارت' },
-            { step: 3, titleEn: '3. Debts & Result', titleUr: '۳. قرضے و نتیجہ' },
+            { step: 1, en: '1. Cash & Jewelry', ur: '۱. نقدی و زیورات', ar: '١. النقد والذهب والمجوهرات', roman: '1. Naqdi o Zewarat' },
+            { step: 2, en: '2. Investments', ur: '۲. شیئرز و مالِ تجارت', ar: '٢. عروض التجارة والأسهم', roman: '2. Shares o Maal-e-Tijarat' },
+            { step: 3, en: '3. Debts & Result', ur: '۳. قرضے و نتیجہ', ar: '٣. الديون والنتيجة النهائية', roman: '3. Qarzey o Nateeja' },
           ].map((s) => (
             <button
               key={s.step}
@@ -175,7 +178,7 @@ export function ZakatCalculatorTab({
                 textAlign: 'center',
               }}
             >
-              {isUrdu ? s.titleUr : s.titleEn}
+              {tr(s.en, s.ur, s.ar, s.roman)}
             </button>
           ))}
         </div>
@@ -202,7 +205,7 @@ export function ZakatCalculatorTab({
           {(calcMode === 'ALL' || wizardStep === 1) && (
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1B4332', margin: '0 0 14px' }}>
-                {isUrdu ? 'مرحلہ ۱: نقدی، سونا، چاندی اور زنانہ زیورات' : 'Step 1: Cash, Precious Metals & Jewelry'}
+                {tr('Step 1: Cash, Precious Metals & Jewelry', 'مرحلہ ۱: نقدی، سونا، چاندی اور زنانہ زیورات', 'المرحلة الأولى: النقد والذهب والفضة والمجوهرات', 'Marhala 1: Naqdi, Sona, Chandi o Zewarat')}
               </h3>
               <ZakatGoldSilverNisabCard
                 currency={currency}
@@ -243,7 +246,7 @@ export function ZakatCalculatorTab({
                     cursor: 'pointer',
                   }}
                 >
-                  {isUrdu ? 'اگلا مرحلہ: تجارت و شیئرز ➔' : 'Next: Business & Shares ➔'}
+                  {tr('Next: Business & Shares ➔', 'اگلا مرحلہ: تجارت و شیئرز ➔', 'التالي: عروض التجارة والأسهم ➔', 'Agla Marhala: Tijarat o Shares ➔')}
                 </button>
               )}
             </div>
@@ -253,7 +256,7 @@ export function ZakatCalculatorTab({
           {(calcMode === 'ALL' || wizardStep === 2) && (
             <div style={{ marginTop: calcMode === 'ALL' ? 20 : 0 }}>
               <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1B4332', margin: '0 0 14px' }}>
-                {isUrdu ? 'مرحلہ ۲: مالِ تجارت، شیئرز اور کرپٹو' : 'Step 2: Business Stock, Shares & Receivables'}
+                {tr('Step 2: Business Stock, Shares & Receivables', 'مرحلہ ۲: مالِ تجارت، شیئرز اور کرپٹو', 'المرحلة الثانية: عروض التجارة والأسهم والأموال المرجوة', 'Marhala 2: Maal-e-Tijarat, Shares o Crypto')}
               </h3>
               <ZakatAssetsDeductionsForm
                 businessStock={businessStock}
@@ -289,7 +292,7 @@ export function ZakatCalculatorTab({
                       cursor: 'pointer',
                     }}
                   >
-                    {isUrdu ? '← پچھلا مرحلہ' : '← Back'}
+                    {tr('← Back', '← پچھلا مرحلہ', '← السابق', '← Pichhla Marhala')}
                   </button>
                   <button
                     onClick={() => setWizardStep(3)}
@@ -305,7 +308,7 @@ export function ZakatCalculatorTab({
                       cursor: 'pointer',
                     }}
                   >
-                    {isUrdu ? 'اگلا مرحلہ: نتیجہ و قرضے ➔' : 'Next: Debts & Result ➔'}
+                    {tr('Next: Debts & Result ➔', 'اگلا مرحلہ: نتیجہ و قرضے ➔', 'التالي: الديون والخلاصة ➔', 'Agla Marhala: Nateeja o Qarzey ➔')}
                   </button>
                 </div>
               )}
@@ -316,11 +319,11 @@ export function ZakatCalculatorTab({
           {calcMode === 'WIZARD' && wizardStep === 3 && (
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1B4332', margin: '0 0 14px' }}>
-                {isUrdu ? 'مرحلہ ۳: واجب الادا قرضے اور حتمی خلاصہ' : 'Step 3: Immediate Debts & Final Clearance'}
+                {tr('Step 3: Immediate Debts & Final Clearance', 'مرحلہ ۳: واجب الادا قرضے اور حتمی خلاصہ', 'المرحلة الثالثة: الديون الحالّة وبراءة الذمة', 'Marhala 3: Wajib-ul-Ada Qarzey o Hatmi Khulasa')}
               </h3>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ fontSize: 13, fontWeight: 700, color: '#374151', display: 'block', marginBottom: 4 }}>
-                  {isUrdu ? `واجب الادا فوری قرضے (${currency}):` : `Deductible Debts & Immediate Liabilities (${currency}):`}
+                  {tr(`Deductible Debts & Immediate Liabilities (${currency}):`, `واجب الادا فوری قرضے (${currency}):`, `الديون الحالة واجبة الخصم (${currency}):`, `Wajib-ul-Ada Fori Qarzey (${currency}):`)}
                 </label>
                 <input
                   type="number"
@@ -336,9 +339,12 @@ export function ZakatCalculatorTab({
                   }}
                 />
                 <p style={{ fontSize: 11.5, color: '#64748B', marginTop: 4 }}>
-                  {isUrdu
-                    ? 'صرف فوری واجب الادا قرضے منہا کیے جائیں گے، ذاتی رہائشی مکان اور گاڑی کے طویل مدتی قرضے منہا نہیں ہوتے۔'
-                    : 'Only immediate liabilities due now are deductible; long-term personal home mortgages are excluded in classical Hanafi Fiqh.'}
+                  {tr(
+                    'Only immediate liabilities due now are deductible; long-term personal home mortgages are excluded in classical Hanafi Fiqh.',
+                    'صرف فوری واجب الادا قرضے منہا کیے جائیں گے، ذاتی رہائشی مکان اور گاڑی کے طویل مدتی قرضے منہا نہیں ہوتے۔',
+                    'تخصم الديون الحالة الواجب سدادها فوراً فقط، أما الديون المؤجلة طويلة الأجل كتمويل المنازل فلا تخصم في المعتمد.',
+                    'Sirf fori wajib-ul-ada qarzey minha kiye jayein ge.'
+                  )}
                 </p>
               </div>
 
@@ -356,7 +362,7 @@ export function ZakatCalculatorTab({
                   cursor: 'pointer',
                 }}
               >
-                {isUrdu ? '← اثاثہ جات پر واپس' : '← Back to Assets'}
+                {tr('← Back to Assets', '← اثاثہ جات پر واپس', '← العودة إلى الأصول', '← Asasa Jaat Par Wapis')}
               </button>
             </div>
           )}

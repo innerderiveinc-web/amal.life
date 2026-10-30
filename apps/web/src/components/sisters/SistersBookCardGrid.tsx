@@ -32,6 +32,46 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
   onOpenSanad,
 }) => {
   const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
+
+  const getCategoryLabel = (book: SanctuaryBook) => {
+    if (isArabic) {
+      if (book.category === 'fiqh_taharah') return 'الفقه والطهارة';
+      if (book.category === 'ummahat_banat') return 'أمهات وبنات الرسول';
+      if (book.category === 'sahabiyyat_muhaddithat') return 'الصحابيات والمحدثات';
+      if (book.category === 'salihat_tarbiyat') return 'الصالحات والتربية';
+    }
+    if (isRomanUrdu) {
+      if (book.category === 'fiqh_taharah') return 'Ahkam wa Fiqh-e-Niswan';
+      if (book.category === 'ummahat_banat') return 'Ummahat wa Banat-e-Rasool';
+      if (book.category === 'sahabiyyat_muhaddithat') return 'Uswah-e-Sahabiyyat';
+      if (book.category === 'salihat_tarbiyat') return 'Salihat wa Tarbiyat';
+    }
+    if (isUrdu) return book.categoryLabelUrdu;
+    return book.categoryLabelEnglish;
+  };
+
+  const getBookTitle = (book: SanctuaryBook) => {
+    if (isArabic) return book.titleArabic || book.titleUrdu;
+    if (isUrdu) return book.titleUrdu;
+    if (isRomanUrdu) return book.titleEnglish || book.titleUrdu;
+    return book.titleEnglish;
+  };
+
+  const getBookSubTitle = (book: SanctuaryBook) => {
+    if (isArabic) return book.titleEnglish;
+    if (isUrdu) return book.titleEnglish;
+    return book.titleUrdu;
+  };
+
+  const getBookAuthor = (book: SanctuaryBook) => {
+    if (isUrdu || isArabic) return book.authorUrdu;
+    return book.authorEnglish;
+  };
+
+  const getBookDesc = (book: SanctuaryBook) => {
+    if (isUrdu || isArabic) return book.descriptionUrdu;
+    return book.descriptionEnglish;
+  };
   return (
     <div>
       {/* Search & Category Filter */}
@@ -159,7 +199,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                     fontWeight: 700,
                   }}
                 >
-                  {isUrdu ? book.categoryLabelUrdu : book.categoryLabelEnglish}
+                  {getCategoryLabel(book)}
                 </span>
                 <span
                   style={{
@@ -184,7 +224,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   lineHeight: 1.3,
                 }}
               >
-                {isUrdu ? book.titleUrdu : book.titleEnglish}
+                {getBookTitle(book)}
               </h3>
               <div
                 style={{
@@ -194,7 +234,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   marginBottom: 6,
                 }}
               >
-                {isUrdu ? book.titleEnglish : book.titleUrdu}
+                {getBookSubTitle(book)}
               </div>
               <div
                 style={{
@@ -204,7 +244,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   marginBottom: 10,
                 }}
               >
-                {isUrdu ? book.authorUrdu : book.authorEnglish} ({book.authorEra})
+                {getBookAuthor(book)} ({book.authorEra})
               </div>
               <p
                 style={{
@@ -218,7 +258,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                   overflow: 'hidden',
                 }}
               >
-                {isUrdu ? book.descriptionUrdu : book.descriptionEnglish}
+                {getBookDesc(book)}
               </p>
             </div>
 

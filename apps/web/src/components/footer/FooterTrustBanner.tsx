@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface FooterTrustBannerProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
 }
 
-export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = ({ isUrdu }) => {
+export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = () => {
+  const { t } = useLanguage();
+
   return (
     <div
       style={{
@@ -36,9 +39,12 @@ export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = ({ isUrdu }) 
                   letterSpacing: 0.5,
                 }}
               >
-                {isUrdu
-                  ? 'اہلسنت والجماعت (السواد الأعظم) · مستند شرعی ورثہ'
-                  : 'AHL AL-SUNNAH HERITAGE · AL-SAWAD AL-A\'ZAM'}
+                {t(
+                  'AHL AL-SUNNAH HERITAGE · AL-SAWAD AL-A\'ZAM',
+                  'اہلسنت والجماعت (السواد الأعظم) · مستند شرعی ورثہ',
+                  'تراث أهل السنة والجماعة · السواد الأعظم المعتمد',
+                  'Ahl al-Sunnah Heritage · Al-Sawad al-A\'zam'
+                )}
               </span>
               <span
                 style={{
@@ -53,13 +59,16 @@ export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = ({ isUrdu }) 
                   border: '1px solid rgba(52, 211, 153, 0.3)',
                 }}
               >
-                {isUrdu ? 'مستند شرعی منہج' : 'VERIFIED CANON'}
+                {t('VERIFIED CANON', 'مستند شرعی منہج', 'منهج شرعي موثق', 'Verified Shar\'i Manhaj')}
               </span>
             </div>
             <p style={{ margin: '4px 0 0', fontSize: 13, color: '#9CA3AF', lineHeight: 1.5 }}>
-              {isUrdu
-                ? '100% مستند سنی عقائد و معمولات · فقہ حنفی، شافعی، مالکی و حنبلی کی 106 معتبر کتب کا تحقیقی پلیٹ فارم'
-                : '100% Authentic Sunni Orthodox Practice · 106 Classical Masterworks across Hanafi, Shafi\'i, Maliki & Hanbali Heritage'}
+              {t(
+                '100% Authentic Sunni Orthodox Practice · 106 Classical Masterworks across Hanafi, Shafi\'i, Maliki & Hanbali Heritage',
+                '100% مستند سنی عقائد و معمولات · فقہ حنفی، شافعی، مالکی و حنبلی کی 106 معتبر کتب کا تحقیقی پلیٹ فارم',
+                '١٠٠٪ عقائد وممارسات سنية معتمدة · ١٠٦ أمهات الكتب عبر الفقه الحنفي والشافعي والمالكي والحنبلي',
+                '100% Mustanad Sunni Aqaid wa Mamoolat · Fiqh Hanafi, Shafi\'i, Maliki wa Hanbali ki 106 motabar kutub ka tehqeeqi platform'
+              )}
             </p>
           </div>
         </div>
@@ -89,7 +98,14 @@ export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = ({ isUrdu }) 
                 boxShadow: '0 0 8px #10B981',
               }}
             />
-            <span>{isUrdu ? 'وقف لوجہ اللہ تعالیٰ · صدقہ جاریہ' : 'Sadaqah Jariyah Lil-Ummah · Sacred Public Trust'}</span>
+            <span>
+              {t(
+                'Sadaqah Jariyah Lil-Ummah · Sacred Public Trust',
+                'وقف لوجہ اللہ تعالیٰ · صدقہ جاریہ برائے امت',
+                'وقف لوجه الله تعالى · صدقة جارية للأمة',
+                'Waqf Li-Wajh-illah Ta\'ala · Sadaqah Jariyah'
+              )}
+            </span>
           </div>
         </div>
       </div>

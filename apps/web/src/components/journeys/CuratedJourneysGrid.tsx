@@ -1,5 +1,6 @@
 import React from 'react';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface JourneyTemplateItem {
   id: string;
@@ -9,6 +10,10 @@ export interface JourneyTemplateItem {
   description: string;
   urTitle: string;
   urDescription: string;
+  arTitle?: string;
+  arDescription?: string;
+  romanTitle?: string;
+  romanDescription?: string;
 }
 
 export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
@@ -22,6 +27,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '14 روزہ فجر استقامت',
     urDescription:
       'بغیر احساس جرم یا مایوسی کے، سنت نبوی کے مطابق فجر کی مستقل عادت قائم کرنے کا 14 روزہ سفر۔',
+    arTitle: 'رحلة ١٤ يوماً للاستقامة على صلاة الفجر',
+    arDescription:
+      'خطوات متدرجة ومباركة لتثبيت أداء صلاة الفجر في وقتها وفق هدي النبوة دون إرهاق أو يأس.',
+    romanTitle: '14-Roza Fajr Istiqamah Safar',
+    romanDescription:
+      'Baghair ehsas-e-jurm ya mayoosi ke, Sunnat-e-Nabawi ke mutabiq Fajr ki mustaqil aadat qayam karne ka 14 roza safar.',
   },
   {
     id: 'tmpl-salah-consistency',
@@ -33,6 +44,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: 'نماز میں مداومت اور خشوع',
     urDescription:
       'پنجوقتہ نمازوں کو روزمرہ زندگی کا اٹوٹ حصہ بنانے اور خشوع پیدا کرنے کا 21 روزہ سفر۔',
+    arTitle: 'المداومة على الصلوات الخمس والخشوع',
+    arDescription:
+      'رحلة ٢١ يوماً لتثبيت الصلوات الخمس كركيزة يومية ثابتة مع تعميق الخشوع والطمأنينة.',
+    romanTitle: 'Namaz mein Mudawamat aur Khushu',
+    romanDescription:
+      'Panj-waqta namazon ko rozmarrah zindagi ka hissa banane aur khushu paida karne ka 21 roza safar.',
   },
   {
     id: 'tmpl-quran-restart',
@@ -44,6 +61,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: 'روزانہ قرآن تجدید (1 صفحہ / دن)',
     urDescription:
       'روزانہ صبح ایک صفحہ تلاوت اور تدبر کے ذریعے قرآن مجید سے اٹوٹ رشتہ قائم کرنے کا 30 روزہ سفر۔',
+    arTitle: 'الورد القرآني اليومي (صفحة يومياً)',
+    arDescription:
+      'بناء علاقة وثيقة ومستدامة مع القرآن الكريم من خلال تلاوة وتدبر صفحة واحدة يومياً لمدة ٣٠ يوماً.',
+    romanTitle: 'Rozana Quran Tajdeed (1 Safha / Din)',
+    romanDescription:
+      'Rozana subh ek safha tilawat aur tadabbur ke zariye Quran Majeed se atoot rishta qayam karne ka 30 roza safar.',
   },
   {
     id: 'tmpl-anger-patience',
@@ -55,6 +78,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: 'غصے پر قابو اور سنت صبر',
     urDescription:
       'اشتعال اور غصے کے لمحات میں نبوی سنت اور تدابیر پر عمل کرنے کا 10 روزہ عملی سفر۔',
+    arTitle: 'ضبط الغضب والتحلي بالصبر النبوي',
+    arDescription:
+      'تمارين سلوكية ونبوية عملية عند مواجهة الغضب والانفعال لترسيخ خلق الحلم والصبر.',
+    romanTitle: 'Ghusse par Qaboo aur Sunnat-e-Sabr',
+    romanDescription:
+      'Ishte\'al aur ghosse ke lamhat mein Nabawi Sunnat aur tadabeer par amal karne ka 10 roza amali safar.',
   },
   {
     id: 'tmpl-tahajjud-7d',
@@ -66,6 +95,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '7 روزہ تہجد اور قیام اللیل',
     urDescription:
       'رات کی خاموشی میں اللہ کے حضور کھڑے ہونے، مناجات اور دل کی تسکین کا 7 روزہ سفر۔',
+    arTitle: 'رحلة ٧ أيام لقيام الليل والتهجد',
+    arDescription:
+      'تذوق سكينة الأسحار، والمناجاة الخالصة، والقرب الإلهي في جوف الليل.',
+    romanTitle: '7-Roza Tahajjud wa Qiyam al-Layl',
+    romanDescription:
+      'Raat ki khamoshi mein Allah ke huzoor khare hone, munajat aur dil ki taskeen ka 7 roza safar.',
   },
   {
     id: 'tmpl-istighfar-21d',
@@ -77,6 +112,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '21 روزہ توبہ و استغفار',
     urDescription:
       'روزانہ 100 مرتبہ استغفار اور سید الاستغفار کے ذریعے دل کو گناہوں کے زنگ سے پاک کرنے کا 21 روزہ سفر۔',
+    arTitle: 'تطهير القلوب والتوبة (٢١ يوماً)',
+    arDescription:
+      'جلاء ران القلوب من خلال ملازمة الاستغفار وسيد الاستغفار يومياً لمدة ٢١ يوماً.',
+    romanTitle: '21-Roza Taubah wa Istighfar',
+    romanDescription:
+      'Rozana 100 martaba istighfar aur Sayyid al-Istighfar ke zariye dil ko gunahon ke zang se pak karne ka 21 roza safar.',
   },
   {
     id: 'tmpl-tongue-discipline-14d',
@@ -88,6 +129,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '14 روزہ حفاظتِ زبان و انسدادِ غیبت',
     urDescription:
       'غیبت، طنز اور لایعنی باتوں سے زبان کو محفوظ رکھ کر ذکر اور نرم کلامی اختیار کرنے کا 14 روزہ سفر۔',
+    arTitle: 'حفظ اللسان والبعد عن الغيبة (١٤ يوماً)',
+    arDescription:
+      'التخلص من الغيبة واللمز وفضول الكلام والارتقاء إلى أدب المنطق النبوي والقول السديد.',
+    romanTitle: '14-Roza Hifazat-e-Zaban wa Insidad-e-Gheebat',
+    romanDescription:
+      'Gheebat, tanz aur layani baton se zaban ko mehfooz rakh kar zikr aur narm kalami ikhtiyar karne ka 14 roza safar.',
   },
   {
     id: 'tmpl-gratitude-14d',
@@ -99,6 +146,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '14 روزہ شکر گزاری اور قناعت',
     urDescription:
       'حسد اور بے چینی سے نجات پا کر رب کی نعمتوں پر دلی شکر اور قناعت اختیار کرنے کا 14 روزہ سفر۔',
+    arTitle: 'الشكر النبوي والقناعة (١٤ يوماً)',
+    arDescription:
+      'التحرر من القلق والاستهلاك، وترسيخ الرضا الداخلي والشكر العميق لنعم الله الظاهرة والباطنة.',
+    romanTitle: '14-Roza Shukr-Guzari aur Qana\'at',
+    romanDescription:
+      'Hasad aur be-chaini se nijat pa kar Rab ki nematon par dili shukr aur qana\'at ikhtiyar karne ka 14 roza safar.',
   },
   {
     id: 'tmpl-sahabiyyat-14d',
@@ -110,6 +163,12 @@ export const JOURNEY_ROADMAP_TEMPLATES: JourneyTemplateItem[] = [
     urTitle: '14 روزہ سفرِ اسوۂ صحابیات',
     urDescription:
       'سیدتنا خدیجہ، عائشہ، اور فاطمہ رضی اللہ عنہن کی سیرت و کردار کو اپنی روزمرہ زندگی میں اپنانے کا 14 روزہ باوقار روحانی سفر۔',
+    arTitle: 'اقتفاء أثر الصحابيات وأمهات المؤمنين',
+    arDescription:
+      'بناء الشخصية الإيمانية بالاقتداء بأمهات المؤمنين: خديجة وعائشة وفاطمة الزهراء والصحابيات الجليلات.',
+    romanTitle: '14-Roza Safar-e-Uswah-e-Sahabiyyat',
+    romanDescription:
+      'Sayyidatina Khadijah, Aisha, aur Fatimah (Razi Allahu Anhunna) ki seerat wa kirdar ko rozmarrah zindagi mein apnane ka 14 roza safar.',
   },
 ];
 
@@ -117,27 +176,43 @@ interface CuratedJourneysGridProps {
   activeJourneys: any[];
   loading: boolean;
   onStartJourney: (templateId: string, title: string) => void;
-  isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  isUrdu?: boolean;
+  t?: (en: string, ur: string, ar?: string, roman?: string) => string;
 }
 
 export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
   activeJourneys,
   loading,
   onStartJourney,
-  isUrdu,
-  t,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
+
+  const getTemplateTitle = (item: JourneyTemplateItem) => {
+    if (isArabic) return item.arTitle || item.title;
+    if (isUrdu) return item.urTitle;
+    if (isRomanUrdu) return item.romanTitle || item.title;
+    return item.title;
+  };
+
+  const getTemplateDesc = (item: JourneyTemplateItem) => {
+    if (isArabic) return item.arDescription || item.description;
+    if (isUrdu) return item.urDescription;
+    if (isRomanUrdu) return item.romanDescription || item.description;
+    return item.description;
+  };
+
   return (
     <section>
       <div style={{ marginBottom: 16 }}>
         <h2 style={{ fontSize: 20, fontWeight: 800, margin: '0 0 4px', color: '#111827' }}>
-          {t('Curated Journey Roadmaps', 'منتخب روحانی اسفار')}
+          {t('Curated Journey Roadmaps', 'منتخب روحانی اسفار', 'الخرائط والمسارات الروحية المختارة', 'Muntakhab Ruhani Asfar')}
         </h2>
         <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>
           {t(
             'Pinned to canonical Sunnah templates. Each journey contains daily steps, authentic Hadith references, and flexible pacing.',
-            'مستند سنت نبوی کے رہنما خطوط۔ ہر سفر میں روزمرہ اعمال، احادیث کے حوالہ جات اور نرم رفتار شامل ہے۔'
+            'مستند سنت نبوی کے رہنما خطوط۔ ہر سفر میں روزمرہ اعمال، احادیث کے حوالہ جات اور نرم رفتار شامل ہے۔',
+            'مسارات مستمدة من السنة النبوية الشريفة. كل مسار يشتمل على خطوات يومية وأدلة حديثية معتمدة.',
+            'Mustanad Sunnat-e-Nabawi ke rehnuma khutoot. Har safar mein rozmarrah aamaal aur Ahadees ke hawale shamil hain.'
           )}
         </p>
       </div>
@@ -153,6 +228,9 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
           const isAlreadyActive = activeJourneys.some(
             (j) => (j.templateId || '') === tItem.id && j.state === 'ACTIVE'
           );
+
+          const cardTitle = getTemplateTitle(tItem);
+          const cardDesc = getTemplateDesc(tItem);
 
           return (
             <div
@@ -201,7 +279,7 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
                     color: '#111827',
                   }}
                 >
-                  {isUrdu ? tItem.urTitle : tItem.title}
+                  {cardTitle}
                 </h3>
                 <p
                   style={{
@@ -211,7 +289,7 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
                     margin: '0 0 16px',
                   }}
                 >
-                  {isUrdu ? tItem.urDescription : tItem.description}
+                  {cardDesc}
                 </p>
               </div>
 
@@ -226,14 +304,12 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
               >
                 <span style={{ fontSize: 12, color: '#9CA3AF' }}>
                   {isAlreadyActive
-                    ? t('Currently Active', 'پہلے سے جاری ہے')
-                    : t('100% Private (On-Device)', 'مکمل نجی (ڈیوائس پر)')}
+                    ? t('Currently Active', 'پہلے سے جاری ہے', 'مفعّل حالياً', 'Pehle se jari hai')
+                    : t('100% Private (On-Device)', 'مکمل نجی (ڈیوائس پر)', 'خصوصية تامة (على جهازك)', 'Mukammal Niji (Device par)')}
                 </span>
                 <button
                   disabled={loading}
-                  onClick={() =>
-                    onStartJourney(tItem.id, isUrdu ? tItem.urTitle : tItem.title)
-                  }
+                  onClick={() => onStartJourney(tItem.id, cardTitle)}
                   style={{
                     backgroundColor: isAlreadyActive ? '#F3F4F6' : AmalTheme.colors.primary,
                     color: isAlreadyActive ? '#6B7280' : '#FFFFFF',
@@ -243,12 +319,11 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
                     fontWeight: 700,
                     fontSize: 13,
                     cursor: loading ? 'wait' : 'pointer',
-                    transition: 'all 0.15s ease',
                   }}
                 >
                   {isAlreadyActive
-                    ? t('Start Again', 'دوبارہ شروع کریں')
-                    : t('Start Journey', 'سفر شروع کریں')}
+                    ? t('Continue Journey ➔', 'سفر جاری رکھیں ➔', 'متابعة المسار ➔', 'Safar Jari Rakhein ➔')
+                    : t('Embark on Journey', 'سفر شروع کریں', 'بدء المسار المبارك', 'Safar Shuru Karein')}
                 </button>
               </div>
             </div>

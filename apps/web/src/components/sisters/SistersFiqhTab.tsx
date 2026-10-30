@@ -17,7 +17,8 @@ export interface SistersFiqhTabProps {
 export function SistersFiqhTab({
   onGenerateFiqhCard,
 }: SistersFiqhTabProps) {
-  const { isUrdu, isRomanUrdu, t } = useLanguage();
+  const { isUrdu, isRomanUrdu, isArabic, t } = useLanguage();
+  const isRtl = isUrdu || isArabic;
   const [selectedFiqhCategory, setSelectedFiqhCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [calcTotalDays, setCalcTotalDays] = useState<number>(6);
@@ -85,7 +86,7 @@ export function SistersFiqhTab({
         {/* Instant Search Bar for Urgent Fiqh Dilemmas */}
         <div style={{ marginTop: 14, display: 'flex', gap: 10, alignItems: 'center' }}>
           <div style={{ position: 'relative', flex: 1 }}>
-            <span style={{ position: 'absolute', left: isUrdu ? undefined : 12, right: isUrdu ? 12 : undefined, top: '50%', transform: 'translateY(-50%)', fontSize: 16 }}>
+            <span style={{ position: 'absolute', left: isRtl ? undefined : 12, right: isRtl ? 12 : undefined, top: '50%', transform: 'translateY(-50%)', fontSize: 16 }}>
               🔍
             </span>
             <input
@@ -100,7 +101,7 @@ export function SistersFiqhTab({
               )}
               style={{
                 width: '100%',
-                padding: isUrdu ? '10px 38px 10px 14px' : '10px 14px 10px 38px',
+                padding: isRtl ? '10px 38px 10px 14px' : '10px 14px 10px 38px',
                 borderRadius: 10,
                 border: '1.5px solid #CBD5E1',
                 fontSize: 13.5,
@@ -116,8 +117,8 @@ export function SistersFiqhTab({
                 onClick={() => setSearchQuery('')}
                 style={{
                   position: 'absolute',
-                  right: isUrdu ? undefined : 12,
-                  left: isUrdu ? 12 : undefined,
+                  right: isRtl ? undefined : 12,
+                  left: isRtl ? 12 : undefined,
                   top: '50%',
                   transform: 'translateY(-50%)',
                   background: 'none',

@@ -161,7 +161,12 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
             </span>
           </div>
           <span style={{ fontSize: 11, color: '#6B7280' }}>
-            {isUrdu ? 'اگر عادت معلوم نہیں تو عام عادت ۶ دن ہے' : 'Default standard habit: 6 days'}
+            {t(
+              'Default standard habit: 6 days',
+              'اگر عادت معلوم نہیں تو عام عادت ۶ دن ہے',
+              'العادة الافتراضية إذا لم تعلم: ٦ أيام',
+              'Agar aadat maloom nahi to aam aadat 6 din hai'
+            )}
           </span>
         </div>
       </div>

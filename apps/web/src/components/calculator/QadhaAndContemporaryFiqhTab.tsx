@@ -12,7 +12,7 @@ interface QadhaTrackerState {
 }
 
 export function QadhaAndContemporaryFiqhTab() {
-  const { isUrdu } = useLanguage();
+  const { language, t } = useLanguage();
 
   // 1. Calculator Inputs
   const [missedYears, setMissedYears] = useState<number>(2);
@@ -69,7 +69,10 @@ export function QadhaAndContemporaryFiqhTab() {
   const incrementPrayer = (prayer: keyof QadhaTrackerState) => {
     const updated = { ...completedCounts, [prayer]: completedCounts[prayer] + 1 };
     saveTracker(updated);
-    showAmalToast(isUrdu ? `ایک ${prayer} قضا نماز کا اندراج ہو گیا` : `Recorded 1 ${prayer} Qadha Salah`, 'success');
+    showAmalToast(
+      t('Recorded 1 ' + prayer + ' Qadha Salah', 'ایک ' + prayer + ' قضا نماز کا اندراج ہو گیا', 'تم تسجيل صلاة قضاء واحدة لـ ' + prayer, 'Ek ' + prayer + ' qadha namaz ka indiraaj ho gaya'),
+      'success'
+    );
   };
 
   const decrementPrayer = (prayer: keyof QadhaTrackerState) => {
@@ -199,13 +202,16 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
           <span style={{ fontSize: 26 }}>📿</span>
           <h2 style={{ fontSize: 22, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-            {isUrdu ? 'قضاءِ عمری کا حسابی نظام اور معاصر فقہی مسائل' : 'Qadha-e-Umri Calculator & Contemporary Fiqh FAQs'}
+            {t('Qadha-e-Umri Calculator & Contemporary Fiqh FAQs', 'قضاءِ عمری کا حسابی نظام اور معاصر فقہی مسائل', 'حاسبة قضاء العمر والمسائل الفقهية المعاصرة', 'Qadha-e-Umri Calculator o Mu\'asir Fiqhi Masail')}
           </h2>
         </div>
         <p style={{ margin: 0, fontSize: 14, color: '#64748B', lineHeight: 1.6 }}>
-          {isUrdu
-            ? 'سالہا سال کی چھوٹ جانے والی نمازوں کا مکمل تخمینہ، فقہ حنفی کے مطابق آسان تخفیف کا طریقہ، اور جدید مسلم خاندانوں کے سلگتے مسائل (سفر، طبی عوارض، اور دفتری نماز) کے مستند حل۔'
-            : 'Deterministic calculator for lifetime missed prayers with classical Hanafi expedited rules (Takhfif) and authoritative guidance for contemporary dilemmas.'}
+          {t(
+            'Deterministic calculator for lifetime missed prayers with classical Hanafi expedited rules (Takhfif) and authoritative guidance for contemporary dilemmas.',
+            'سالہا سال کی چھوٹ جانے والی نمازوں کا مکمل تخمینہ، فقہ حنفی کے مطابق آسان تخفیف کا طریقہ، اور جدید مسلم خاندانوں کے سلگتے مسائل (سفر، طبی عوارض، اور دفتری نماز) کے مستند حل۔',
+            'حساب دقيق لصلوات العمر الفائتة وفق قواعد التخفيف الحنفية المعتمدة مع حلول موثقة للنوازل المعاصرة.',
+            'Salha saal ki chhoot janey wali namazon ka takhmeenah, fiqh Hanafi ke mutabiq aasan takhfeef ka tareeqa.'
+          )}
         </p>
       </div>
 
@@ -222,16 +228,16 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 18 }}>
           <div>
             <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: '0 0 4px 0' }}>
-              {isUrdu ? 'قضاء عمری کیلکولیٹر (چھوٹی ہوئی نمازوں کا حساب)' : 'Lifetime Missed Salah (Qadha-e-Umri) Calculator'}
+              {t('Lifetime Missed Salah (Qadha-e-Umri) Calculator', 'قضاء عمری کیلکولیٹر (چھوٹی ہوئی نمازوں کا حساب)', 'حاسبة قضاء صلوات العمر الفائتة', 'Qadha-e-Umri Calculator')}
             </h3>
             <span style={{ fontSize: 12, color: '#64748B' }}>
-              {isUrdu ? 'بلوغت کے بعد سے چھوٹی ہوئی نمازوں کی مدت درج کریں' : 'Enter years and months of unprayed Salah since puberty (Bulugh)'}
+              {t('Enter years and months of unprayed Salah since puberty (Bulugh)', 'بلوغت کے بعد سے چھوٹی ہوئی نمازوں کی مدت درج کریں', 'أدخل السنوات والشهور التي فاتت فيها الصلاة بعد سن البلوغ', 'Bulooghat ke baad se chhooti hui namazon ki muddat darj karein')}
             </span>
           </div>
 
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#065F46', backgroundColor: '#ECFDF5', padding: '4px 10px', borderRadius: 8 }}>
-              {isUrdu ? `${totalDaysOwed} کل ایام (${totalAllPrayersOwed} نمازیں)` : `${totalDaysOwed} Total Days (${totalAllPrayersOwed} Prayers)`}
+              {totalDaysOwed} {t('Total Days', 'کل ایام', 'إجمالي الأيام', 'Kul Ayaam')} ({totalAllPrayersOwed} {t('Prayers', 'نمازیں', 'صلاة', 'Namazain')})
             </span>
           </div>
         </div>
@@ -241,9 +247,9 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
           <div style={{ backgroundColor: '#F8FAFC', padding: 16, borderRadius: 12, border: '1px solid #E2E8F0' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>
-                {isUrdu ? 'چھوٹے ہوئے سال:' : 'Missed Years:'}
+                {t('Missed Years:', 'چھوٹے ہوئے سال:', 'السنوات الفائتة:', 'Chhotey Huway Saal:')}
               </label>
-              <span style={{ fontSize: 14, fontWeight: 800, color: '#1B4332' }}>{missedYears} {isUrdu ? 'سال' : 'Years'}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: '#1B4332' }}>{missedYears} {t('Years', 'سال', 'سنة', 'Saal')}</span>
             </div>
             <input
               type="range"
@@ -258,9 +264,9 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
           <div style={{ backgroundColor: '#F8FAFC', padding: 16, borderRadius: 12, border: '1px solid #E2E8F0' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>
-                {isUrdu ? 'اضافی مہینے:' : 'Additional Months:'}
+                {t('Additional Months:', 'اضافی مہینے:', 'الشهور الإضافية:', 'Izafi Mahinay:')}
               </label>
-              <span style={{ fontSize: 14, fontWeight: 800, color: '#1B4332' }}>{missedMonths} {isUrdu ? 'ماہ' : 'Months'}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: '#1B4332' }}>{missedMonths} {t('Months', 'ماہ', 'شهر', 'Maah')}</span>
             </div>
             <input
               type="range"
@@ -277,7 +283,7 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
         <div style={{ marginBottom: 24, padding: 16, backgroundColor: '#F0FDF4', borderRadius: 12, border: '1px solid #BBF7D0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: '#166534' }}>
-              {isUrdu ? 'مجموعی قضاء کی ادائیگی کا تناسب:' : 'Overall Debt Liquidation Progress:'}
+              {t('Overall Debt Liquidation Progress:', 'مجموعی قضاء کی ادائیگی کا تناسب:', 'نسبة قضاء الدَّين الإجمالية:', 'Majmoo\'i Qadha Ki Adayegi Ka Tanasub:')}
             </span>
             <span style={{ fontSize: 14, fontWeight: 800, color: '#166534' }}>
               {totalAllPrayersCompleted} / {totalAllPrayersOwed} ({overallProgressPercentage}%)
@@ -298,16 +304,16 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
 
         {/* Individual Daily Prayers Counter Grid */}
         <h4 style={{ fontSize: 14, fontWeight: 800, color: '#334155', margin: '0 0 12px 0' }}>
-          {isUrdu ? 'روزانہ کی قضا نمازوں کا ٹریکر (۱ کلک پر اضافہ):' : '1-Tap Daily Qadha Completed Tracker:'}
+          {t('1-Tap Daily Qadha Completed Tracker:', 'روزانہ کی قضا نمازوں کا ٹریکر (۱ کلک پر اضافہ):', 'متتبع قضاء الصلوات اليومية (بنقرة واحدة):', 'Rozana Ki Qadha Namazon Ka Tracker (1 Click Par Izafa):')}
         </h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12 }}>
           {[
-            { key: 'fajr' as const, nameUrdu: 'فجر (۲ فرض)', nameEn: 'Fajr (2 Fard)' },
-            { key: 'dhuhr' as const, nameUrdu: 'ظہر (۴ فرض)', nameEn: 'Dhuhr (4 Fard)' },
-            { key: 'asr' as const, nameUrdu: 'عصر (۴ فرض)', nameEn: 'Asr (4 Fard)' },
-            { key: 'maghrib' as const, nameUrdu: 'مغرب (۳ فرض)', nameEn: 'Maghrib (3 Fard)' },
-            { key: 'isha' as const, nameUrdu: 'عشاء (۴ فرض)', nameEn: 'Isha (4 Fard)' },
-            { key: 'witr' as const, nameUrdu: 'وتر (۳ واجب)', nameEn: 'Witr (3 Wajib)' },
+            { key: 'fajr' as const, nameUrdu: 'فجر (۲ فرض)', nameEn: 'Fajr (2 Fard)', nameAr: 'الفجر (٢ فرض)', nameRoman: 'Fajr (2 Farz)' },
+            { key: 'dhuhr' as const, nameUrdu: 'ظہر (۴ فرض)', nameEn: 'Dhuhr (4 Fard)', nameAr: 'الظهر (٤ فرض)', nameRoman: 'Zohar (4 Farz)' },
+            { key: 'asr' as const, nameUrdu: 'عصر (۴ فرض)', nameEn: 'Asr (4 Fard)', nameAr: 'العصر (٤ فرض)', nameRoman: 'Asr (4 Farz)' },
+            { key: 'maghrib' as const, nameUrdu: 'مغرب (۳ فرض)', nameEn: 'Maghrib (3 Fard)', nameAr: 'المغرب (٣ فرض)', nameRoman: 'Maghrib (3 Farz)' },
+            { key: 'isha' as const, nameUrdu: 'عشاء (۴ فرض)', nameEn: 'Isha (4 Fard)', nameAr: 'العشاء (٤ فرض)', nameRoman: 'Isha (4 Farz)' },
+            { key: 'witr' as const, nameUrdu: 'وتر (۳ واجب)', nameEn: 'Witr (3 Wajib)', nameAr: 'الوتر (٣ واجب)', nameRoman: 'Witr (3 Wajib)' },
           ].map((item) => {
             const count = completedCounts[item.key];
             const remaining = Math.max(0, totalPrayersPerType - count);
@@ -324,13 +330,13 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
                 }}
               >
                 <div style={{ fontSize: 12, fontWeight: 800, color: '#1E293B', marginBottom: 4 }}>
-                  {isUrdu ? item.nameUrdu : item.nameEn}
+                  {t(item.nameEn, item.nameUrdu, item.nameAr, item.nameRoman)}
                 </div>
                 <div style={{ fontSize: 18, fontWeight: 800, color: '#065F46', marginBottom: 2 }}>
                   {count}
                 </div>
                 <div style={{ fontSize: 10, color: '#94A3B8', marginBottom: 8 }}>
-                  {isUrdu ? `باقی: ${remaining}` : `Left: ${remaining}`}
+                  {t('Left: ', 'باقی: ', 'المتبقي: ', 'Baqi: ')}{remaining}
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>
@@ -387,10 +393,10 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
           <span style={{ fontSize: 24 }}>💡</span>
           <div>
             <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: 0 }}>
-              {isUrdu ? 'عصری فقہی سوال و جواب (معاصر فتاویٰ)' : 'Contemporary Practical Fiqh FAQs'}
+              {t('Contemporary Practical Fiqh FAQs', 'عصری فقہی سوال و جواب (معاصر فتاویٰ)', 'أسئلة وأجوبة الفقه المعاصر والنوازل', 'Asri Fiqhi Sawal o Jawab')}
             </h3>
             <span style={{ fontSize: 12, color: '#64748B' }}>
-              {isUrdu ? 'جدید دور کے حقیقی معمولات پر مستند فقہ حنفی کی رہنمائی' : 'Vetted solutions for modern travel, medical treatments, and workplace devotion'}
+              {t('Vetted solutions for modern travel, medical treatments, and workplace devotion', 'جدید دور کے حقیقی معمولات پر مستند فقہ حنفی کی رہنمائی', 'حلول شرعية موثقة للسفر والعلاجات الطبية والعمل المعاصر', 'Jadeed daur ke mamoolat par mustanad Fiqh Hanafi ki rehnumai')}
             </span>
           </div>
         </div>
@@ -437,7 +443,7 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
                       {faq.category}
                     </span>
                     <span style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
-                      {isUrdu ? faq.titleUrdu : faq.titleEnglish}
+                      {(language === 'ur' || language === 'ar') ? faq.titleUrdu : faq.titleEnglish}
                     </span>
                   </div>
 
@@ -458,7 +464,7 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
                         marginBottom: 12,
                       }}
                     >
-                      {isUrdu ? `مستند حوالہ: ${faq.source}` : `Scholarly Reference: ${faq.source}`}
+                      {t('Scholarly Reference: ', 'مستند حوالہ: ', 'المرجع الفقهي المعتمد: ', 'Mustanad Hawala: ')}{faq.source}
                     </div>
 
                     <div
@@ -469,7 +475,7 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
                         whiteSpace: 'pre-line',
                       }}
                     >
-                      {isUrdu ? faq.urduContent : faq.englishContent}
+                      {(language === 'ur' || language === 'ar') ? faq.urduContent : faq.englishContent}
                     </div>
                   </div>
                 )}

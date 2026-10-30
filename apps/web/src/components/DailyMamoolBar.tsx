@@ -22,18 +22,20 @@ interface SlotTabDef {
   id: MamoolSlotType;
   labelUrdu: string;
   labelEnglish: string;
+  labelArabic: string;
+  labelRoman: string;
   icon: string;
 }
 
 const PRAYER_SLOTS: SlotTabDef[] = [
-  { id: 'AUTO', labelUrdu: 'لائیو وقت', labelEnglish: 'Live Auto', icon: '🟢' },
-  { id: 'FAJR', labelUrdu: 'فجر و اشراق', labelEnglish: 'Fajr', icon: '🌅' },
-  { id: 'CHASHT', labelUrdu: 'چاشت', labelEnglish: 'Chasht', icon: '☀️' },
-  { id: 'DHUHR', labelUrdu: 'ظہر', labelEnglish: 'Dhuhr', icon: '☀️' },
-  { id: 'ASR', labelUrdu: 'عصر', labelEnglish: 'Asr', icon: '🌤️' },
-  { id: 'MAGHRIB', labelUrdu: 'مغرب', labelEnglish: 'Maghrib', icon: '🌇' },
-  { id: 'ISHA_NIGHT', labelUrdu: 'عشاء و رات', labelEnglish: 'Isha', icon: '🌙' },
-  { id: 'JUMUAH', labelUrdu: 'جمعۃ المبارک', labelEnglish: 'Jumu\'ah', icon: '🕌' },
+  { id: 'AUTO', labelUrdu: 'لائیو وقت', labelEnglish: 'Live Auto', labelArabic: 'الوقت الحي', labelRoman: 'Live Waqt', icon: '🟢' },
+  { id: 'FAJR', labelUrdu: 'فجر و اشراق', labelEnglish: 'Fajr', labelArabic: 'الفجر والإشراق', labelRoman: 'Fajr wa Ishraq', icon: '🌅' },
+  { id: 'CHASHT', labelUrdu: 'چاشت', labelEnglish: 'Chasht', labelArabic: 'الضحى', labelRoman: 'Chasht', icon: '☀️' },
+  { id: 'DHUHR', labelUrdu: 'ظہر', labelEnglish: 'Dhuhr', labelArabic: 'الظهر', labelRoman: 'Dhuhr', icon: '☀️' },
+  { id: 'ASR', labelUrdu: 'عصر', labelEnglish: 'Asr', labelArabic: 'العصر', labelRoman: 'Asr', icon: '🌤️' },
+  { id: 'MAGHRIB', labelUrdu: 'مغرب', labelEnglish: 'Maghrib', labelArabic: 'المغرب', labelRoman: 'Maghrib', icon: '🌇' },
+  { id: 'ISHA_NIGHT', labelUrdu: 'عشاء و رات', labelEnglish: 'Isha', labelArabic: 'العشاء والليل', labelRoman: 'Isha wa Raat', icon: '🌙' },
+  { id: 'JUMUAH', labelUrdu: 'جمعۃ المبارک', labelEnglish: 'Jumu\'ah', labelArabic: 'الجمعة المباركة', labelRoman: 'Juma-tul-Mubarak', icon: '🕌' },
 ];
 
 export const DailyMamoolBar: React.FC = () => {
@@ -42,7 +44,7 @@ export const DailyMamoolBar: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [locationVersion, setLocationVersion] = useState(0);
   const { playTrack } = useAudioPlayer();
-  const { isUrdu } = useLanguage();
+  const { t, isUrdu } = useLanguage();
   const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
@@ -157,7 +159,12 @@ export const DailyMamoolBar: React.FC = () => {
       <div style={{ marginTop: 16, marginBottom: 4 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 6 }}>
           <span style={{ fontSize: 11, fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: 0.8 }}>
-            {isUrdu ? 'وقت کا انتخاب فرمائیں (تمام اوقات کے اعمال و دعائیں دیکھیں):' : 'Select Prayer Slot (Preview All Hours):'}
+            {t(
+              'Select Prayer Slot (Preview All Hours):',
+              'وقت کا انتخاب فرمائیں (تمام اوقات کے اعمال و دعائیں دیکھیں):',
+              'اختر وقت الصلاة (معاينة جميع الأوقات والأدعية):',
+              'Waqt ka intekhab farmaiye (Tamam auqat ke a\'mal wa duayein dekhein):'
+            )}
           </span>
           {selectedSlot !== 'AUTO' && (
             <button
@@ -173,7 +180,12 @@ export const DailyMamoolBar: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? '↺ واپس لائیو وقت پر جائیں' : '↺ Reset to Live Auto'}
+              {t(
+                '↺ Reset to Live Auto',
+                '↺ واپس لائیو وقت پر جائیں',
+                '↺ العودة إلى الوقت الحي التلقائي',
+                '↺ Wapis Live Waqt par jayein'
+              )}
             </button>
           )}
         </div>
@@ -202,7 +214,7 @@ export const DailyMamoolBar: React.FC = () => {
                 }}
               >
                 <span>{s.icon}</span>
-                <span>{isUrdu ? s.labelUrdu : s.labelEnglish}</span>
+                <span>{t(s.labelEnglish, s.labelUrdu, s.labelArabic, s.labelRoman)}</span>
               </button>
             );
           })}

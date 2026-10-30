@@ -3,13 +3,12 @@ import {
   SpiritualCoachState,
   getSmartCoachGuidance,
   saveDailyMuhasabah,
-  DailyMuhasabahEntry,
 } from '../../lib/spiritual-coach-agent';
 import { useLanguage } from '../../context/LanguageContext';
 import { showAmalToast } from '../Toast';
 
 export const SpiritualCoachHub: React.FC = () => {
-  const { t, isUrdu } = useLanguage();
+  const { language, t } = useLanguage();
   const [coachState, setCoachState] = useState<SpiritualCoachState>(() => getSmartCoachGuidance());
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
 
@@ -28,56 +27,48 @@ export const SpiritualCoachHub: React.FC = () => {
     forgaveOthers: true,
   });
   const [gratitude, setGratitude] = useState('');
-  const [adaptiveResult, setAdaptiveResult] = useState<string | null>(null);
 
   useEffect(() => {
-    const fresh = getSmartCoachGuidance();
-    setCoachState(fresh);
-    if (fresh.recentAudit) {
-      setPrayers(fresh.recentAudit.prayersCompleted);
-      setCharacter(fresh.recentAudit.characterAudit);
-      setGratitude(fresh.recentAudit.gratitudeNote);
-      setAdaptiveResult(fresh.recentAudit.suggestedAdaptiveStep);
-    }
+    // Re-check guidance on window focus or initial mount
+    const handleFocus = () => setCoachState(getSmartCoachGuidance());
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   const handleSaveAudit = (e: React.FormEvent) => {
     e.preventDefault();
-    const saved = saveDailyMuhasabah({
+    saveDailyMuhasabah({
       date: todayStr,
       prayersCompleted: prayers,
       characterAudit: character,
       gratitudeNote: gratitude.trim() || 'الحمد للہ علی کل حال',
     });
-    setAdaptiveResult(saved.suggestedAdaptiveStep);
     setCoachState(getSmartCoachGuidance());
     setIsAuditModalOpen(false);
     showAmalToast(
-      isUrdu
-        ? 'ماشاءاللہ! آج کا محاسبہ کامیابی سے محفوظ ہو گیا۔'
-        : 'Muhasabah saved successfully. Keep up your consistency!',
+      t('Muhasabah saved successfully. Keep up your consistency!', 'ماشاءاللہ! آج کا محاسبہ کامیابی سے محفوظ ہو گیا۔', 'ما شاء الله! تم حفظ المحاسبة بنجاح، واصل ثباتك!', 'MashaAllah! Aaj ka muhasabah kamyabi se mehfooz ho gaya.'),
       'success'
     );
   };
 
   const phaseNames = {
     MORNING_INTENT: {
-      title: t('Morning Intent & Focus', 'صبح کا ارادہ و نیت'),
+      title: t('Morning Intent & Focus', 'صبح کا ارادہ و نیت', 'نية الصباح والتركيز', 'Subah Ka Irada o Niyyat'),
       icon: '🌅',
       badge: '#047857',
     },
     MIDDAY_CHECK: {
-      title: t('Midday Guard & Dhikr', 'دوپہر کی پاسبانی و ذکر'),
+      title: t('Midday Guard & Dhikr', 'دوپہر کی پاسبانی و ذکر', 'حراسة الظهيرة والذكر', 'Dopahar Ki Pasbani o Zikr'),
       icon: '☀️',
       badge: '#D97706',
     },
     EVENING_RECONNECT: {
-      title: t('Evening Reconnect & Family', 'شام کا قرآنی تعلق و نرمی'),
+      title: t('Evening Reconnect & Family', 'شام کا قرآنی تعلق و نرمی', 'تجديد العهد المسائي والأسرة', 'Shaam Ka Qurani Ta\'alluq'),
       icon: '🌇',
       badge: '#4338CA',
     },
     NIGHT_MUHASABAH: {
-      title: t('Nightly 60s Muhasabah', 'رات کا ۶۰ سیکنڈ محاسبہ نفس'),
+      title: t('Nightly 60s Muhasabah', 'رات کا ۶۰ سیکنڈ محاسبہ نفس', 'محاسبة النفس الليلية في ٦٠ ثانية', 'Raat Ka 60-Second Muhasabah'),
       icon: '🌙',
       badge: '#1E293B',
     },
@@ -117,7 +108,7 @@ export const SpiritualCoachHub: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#064E3B' }}>
-                {t('Smart Spiritual Coach', 'سمارٹ روحانی مشیر')}
+                {t('Smart Spiritual Coach', 'سمارٹ روحانی مشیر', 'المستشار الروحي الذكي', 'Smart Rohani Musheer')}
               </h3>
               <span
                 style={{
@@ -133,7 +124,7 @@ export const SpiritualCoachHub: React.FC = () => {
               </span>
             </div>
             <p style={{ margin: '3px 0 0 0', fontSize: 12, color: '#4B5563' }}>
-              {t('Deterministic, 100% on-device Prophetic routine guidance', 'مکمل محفوظ، آف لائن اور نبوی طرزِ عمل پر مبنی رہنمائی')}
+              {t('Deterministic, 100% on-device Prophetic routine guidance', 'مکمل محفوظ، آف لائن اور نبوی طرزِ عمل پر مبنی رہنمائی', 'إرشاد قطعي محلي بالكامل مستند إلى السنة النبوية', 'Mukammal mehfooz, offline aur nabawi tarz-e-amal')}
             </p>
           </div>
         </div>
@@ -156,7 +147,7 @@ export const SpiritualCoachHub: React.FC = () => {
           }}
         >
           <span>⚖️</span>
-          <span>{coachState.recentAudit ? t('Update Daily Muhasabah', 'محاسبہ اپڈیٹ کریں') : t('Quick 60s Muhasabah', '۶۰ سیکنڈ محاسبہ')}</span>
+          <span>{coachState.recentAudit ? t('Update Daily Muhasabah', 'محاسبہ اپڈیٹ کریں', 'تحديث المحاسبة اليومية', 'Muhasabah Update Karein') : t('Quick 60s Muhasabah', '۶۰ سیکنڈ محاسبہ', 'محاسبة سريعة ٦٠ ثانية', 'Quick 60s Muhasabah')}</span>
         </button>
       </div>
 
@@ -176,37 +167,16 @@ export const SpiritualCoachHub: React.FC = () => {
         <span style={{ fontSize: 20 }}>💡</span>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#065F46', marginBottom: 2 }}>
-            {t('Today\'s Recommended Micro-Action', 'آج کا تجویز کردہ نبوی عمل')}
+            {t('Today\'s Recommended Micro-Action', 'آج کا تجویز کردہ نبوی عمل', 'العمل النبوي الدقيق الموصى به اليوم', 'Aaj Ka Tajweez Karda Nabawi Amal')}
           </div>
           <div style={{ fontSize: 13, color: '#1F2937', fontWeight: 600, lineHeight: 1.5 }}>
-            {isUrdu ? coachState.currentMicroAction.ur : coachState.currentMicroAction.en}
+            {(language === 'ur' || language === 'ar') ? coachState.currentMicroAction.ur : coachState.currentMicroAction.en}
           </div>
           <div style={{ fontSize: 10, color: '#6B7280', marginTop: 4, fontStyle: 'italic' }}>
             {coachState.currentMicroAction.source}
           </div>
         </div>
       </div>
-
-      {/* Adaptive Result Display if Available */}
-      {adaptiveResult && (
-        <div
-          style={{
-            marginTop: 12,
-            backgroundColor: '#FEF3C7',
-            padding: '10px 14px',
-            borderRadius: 10,
-            border: '1px solid #FCD34D',
-            fontSize: 12,
-            color: '#92400E',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          <span>🌱</span>
-          <span>{adaptiveResult}</span>
-        </div>
-      )}
 
       {/* 60-Second Muhasabah Modal */}
       {isAuditModalOpen && (
@@ -242,7 +212,7 @@ export const SpiritualCoachHub: React.FC = () => {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800, color: '#064E3B' }}>
-                {t('60-Second Daily Muhasabah', '۶۰ سیکنڈ روزانہ کا محاسبہ')}
+                {t('60-Second Daily Muhasabah', '۶۰ سیکنڈ روزانہ کا محاسبہ', 'محاسبة النفس اليومية في ٦٠ ثانية', '60-Second Rozana Ka Muhasabah')}
               </h3>
               <button
                 onClick={() => setIsAuditModalOpen(false)}
@@ -256,7 +226,7 @@ export const SpiritualCoachHub: React.FC = () => {
               {/* 1. Salah Check */}
               <div style={{ marginBottom: 16 }}>
                 <label style={{ fontSize: 12, fontWeight: 800, color: '#374151', display: 'block', marginBottom: 6 }}>
-                  {t('1. Today\'s 5 Prayers (Farz Salah):', '۱. آج کی ۵ نمازیں:')}
+                  {t('1. Today\'s 5 Prayers (Farz Salah):', '۱. آج کی ۵ نمازیں:', '١. الصلوات الخمس المفروضة اليوم:', '1. Aaj Ki 5 Namazain:')}
                 </label>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 }}>
                   {(['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const).map((p) => (
@@ -286,7 +256,7 @@ export const SpiritualCoachHub: React.FC = () => {
               {/* 2. Character Audit */}
               <div style={{ marginBottom: 16 }}>
                 <label style={{ fontSize: 12, fontWeight: 800, color: '#374151', display: 'block', marginBottom: 6 }}>
-                  {t('2. Heart & Tongue Guard (حفظِ زبان و قلب):', '۲. دل و زبان کی پاسبانی:')}
+                  {t('2. Heart & Tongue Guard (حفظِ زبان و قلب):', '۲. دل و زبان کی پاسبانی:', '٢. حفظ القلب واللسان:', '2. Dil o Zuban Ki Pasbani:')}
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 12 }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
@@ -295,7 +265,7 @@ export const SpiritualCoachHub: React.FC = () => {
                       checked={character.avoidedAnger}
                       onChange={(e) => setCharacter((prev) => ({ ...prev, avoidedAnger: e.target.checked }))}
                     />
-                    <span>{t('Avoided anger and harsh words', 'غصے اور سخت کلامی سے پرہیز کیا')}</span>
+                    <span>{t('Avoided anger and harsh words', 'غصے اور سخت کلامی سے پرہیز کیا', 'اجتناب الغضب والكلام الجارح', 'Ghusse aur sakht kalami se parhez kiya')}</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
                     <input
@@ -303,7 +273,7 @@ export const SpiritualCoachHub: React.FC = () => {
                       checked={character.guardedTongue}
                       onChange={(e) => setCharacter((prev) => ({ ...prev, guardedTongue: e.target.checked }))}
                     />
-                    <span>{t('Guarded tongue against backbiting (Gheebat)', 'غیبت اور فضول گوئی سے زبان محفوظ رکھی')}</span>
+                    <span>{t('Guarded tongue against backbiting (Gheebat)', 'غیبت اور فضول گوئی سے زبان محفوظ رکھی', 'حفظ اللسان من الغيبة وفضول الكلام', 'Gheebat aur fazool goi se zuban mehfooz rakhi')}</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
                     <input
@@ -311,7 +281,7 @@ export const SpiritualCoachHub: React.FC = () => {
                       checked={character.forgaveOthers}
                       onChange={(e) => setCharacter((prev) => ({ ...prev, forgaveOthers: e.target.checked }))}
                     />
-                    <span>{t('Forgave anyone who hurt my feelings', 'دل سے سب کو معاف کر کے سو رہا ہوں')}</span>
+                    <span>{t('Forgave anyone who hurt my feelings', 'دل سے سب کو معاف کر کے سو رہا ہوں', 'العفو عن كل من أساء إليّ وسلامة الصدر', 'Dil se sab ko maaf kar ke so raha hoon')}</span>
                   </label>
                 </div>
               </div>
@@ -319,13 +289,13 @@ export const SpiritualCoachHub: React.FC = () => {
               {/* 3. Gratitude Note */}
               <div style={{ marginBottom: 20 }}>
                 <label style={{ fontSize: 12, fontWeight: 800, color: '#374151', display: 'block', marginBottom: 6 }}>
-                  {t('3. One thing I am grateful for today (شکر گزاری):', '۳. آج کی ایک خاص نعمت جس پر شکر ادا کیا:')}
+                  {t('3. One thing I am grateful for today (شکر گزاری):', '۳. آج کی ایک خاص نعمت جس پر شکر ادا کیا:', '٣. نعمة أشكر الله عليها اليوم:', '3. Aaj Ki Ek Khas Naimat (Shukr):')}
                 </label>
                 <input
                   type="text"
                   value={gratitude}
                   onChange={(e) => setGratitude(e.target.value)}
-                  placeholder={isUrdu ? 'مثلاً صحت، والدین کا سایہ، ایمان...' : 'e.g., Health, family, peace of mind...'}
+                  placeholder={t('e.g., Health, family, peace of mind...', 'مثلاً صحت، والدین کا سایہ، ایمان...', 'مثال: الصحة، الأهل، راحة البال، الإيمان...', 'Maslan sehat, walidain, aman-o-sukoon...')}
                   style={{
                     width: '100%',
                     padding: '8px 12px',
@@ -351,7 +321,7 @@ export const SpiritualCoachHub: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                {t('Save Muhasabah & Recalibrate Routine', 'محاسبہ محفوظ کریں')}
+                {t('Save Muhasabah & Recalibrate Routine', 'محاسبہ محفوظ کریں', 'حفظ المحاسبة وتحديث الجدول', 'Muhasabah Mehfooz Karein')}
               </button>
             </form>
           </div>

@@ -13,9 +13,41 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { t, isUrdu } = useLanguage();
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
 
   if (!isOpen || !report) return null;
+
+  const gradingText = isArabic
+    ? report.gradingUrdu
+    : isUrdu
+    ? report.gradingUrdu
+    : isRomanUrdu
+    ? (report.gradingEnglish || report.gradingUrdu)
+    : report.gradingEnglish;
+
+  const sourceNameText = isArabic
+    ? report.sourceNameArabic || report.sourceNameUrdu
+    : isUrdu
+    ? report.sourceNameUrdu
+    : isRomanUrdu
+    ? (report.sourceNameEnglish || report.sourceNameUrdu)
+    : report.sourceNameEnglish;
+
+  const auditNotes = isArabic
+    ? (report.verificationAuditNotes.ur || report.verificationAuditNotes.en)
+    : isUrdu
+    ? report.verificationAuditNotes.ur
+    : isRomanUrdu
+    ? (report.verificationAuditNotes.en || report.verificationAuditNotes.ur)
+    : report.verificationAuditNotes.en;
+
+  const consensusText = isArabic
+    ? (report.scholarlyConsensus.ur || report.scholarlyConsensus.en)
+    : isUrdu
+    ? report.scholarlyConsensus.ur
+    : isRomanUrdu
+    ? (report.scholarlyConsensus.en || report.scholarlyConsensus.ur)
+    : report.scholarlyConsensus.en;
 
   return (
     <div
@@ -75,10 +107,20 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
               </div>
               <div>
                 <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800 }}>
-                  {t('Sanad & Authenticity Certificate', 'سند و حوالہ تصدیقی سرٹیفکیٹ')}
+                  {t(
+                    'Sanad & Authenticity Certificate',
+                    'سند و حوالہ تصدیقی سرٹیفکیٹ',
+                    'شهادة توثيق السند والاعتماد الشرعي',
+                    'Sanad wa Hawala Tasdeeqi Certificate'
+                  )}
                 </h3>
                 <span style={{ fontSize: 11, color: '#A7F3D0' }}>
-                  {t('Verified by AMAL Deeni Verification Pipeline', 'امل دینی تفتیش و تخریج انجن سے تصدیق شدہ')}
+                  {t(
+                    'Verified by AMAL Deeni Verification Pipeline',
+                    'امل دینی تفتیش و تخریج انجن سے تصدیق شدہ',
+                    'موثق عبر محرك التوثيق والتخريج الديني لنظام عمل',
+                    'AMAL Deeni Taftish wa Takhreej se Musaddiq'
+                  )}
                 </span>
               </div>
             </div>
@@ -117,10 +159,15 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
           >
             <div>
               <div style={{ fontSize: 11, fontWeight: 800, color: '#065F46', textTransform: 'uppercase' }}>
-                {t('Authenticity Grading', 'صحتِ حدیث و معتبریت')}
+                {t(
+                  'Authenticity Grading',
+                  'صحتِ حدیث و معتبریت',
+                  'درجة صحة الحديث والاعتماد',
+                  'Sehat-e-Hadith wa Motabariyat'
+                )}
               </div>
               <div style={{ fontSize: 15, fontWeight: 800, color: '#047857', marginTop: 2 }}>
-                {isUrdu ? report.gradingUrdu : report.gradingEnglish}
+                {gradingText}
               </div>
             </div>
             <div
@@ -143,16 +190,16 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, fontSize: 13 }}>
             <div>
               <span style={{ fontWeight: 700, color: '#6B7280', display: 'block', fontSize: 11 }}>
-                {t('Source Corpus', 'کتاب / ماخذ:')}
+                {t('Source Corpus', 'کتاب / ماخذ:', 'المصدر / الكتاب:', 'Kitab / Makhaz:')}
               </span>
               <span style={{ fontWeight: 800, color: '#1F2937', fontSize: 14 }}>
-                {isUrdu ? report.sourceNameUrdu : report.sourceNameEnglish} ({report.sourceNameArabic})
+                {sourceNameText} ({report.sourceNameArabic})
               </span>
             </div>
 
             <div>
               <span style={{ fontWeight: 700, color: '#6B7280', display: 'block', fontSize: 11 }}>
-                {t('Citation Reference', 'تخریج و حوالہ:')}
+                {t('Citation Reference', 'تخریج و حوالہ:', 'التخريج والإسناد:', 'Takhreej wa Hawala:')}
               </span>
               <span style={{ fontWeight: 700, color: '#1F2937' }}>
                 {report.citationReference}
@@ -162,7 +209,7 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
             {report.primaryNarrator && (
               <div>
                 <span style={{ fontWeight: 700, color: '#6B7280', display: 'block', fontSize: 11 }}>
-                  {t('Primary Narrator / Rawi', 'راویِ حدیث (صحابیِ رسول):')}
+                  {t('Primary Narrator / Rawi', 'راویِ حدیث (صحابیِ رسول):', 'راوي الحديث:', 'Rawi-e-Hadith (Sahabi-e-Rasool):')}
                 </span>
                 <span style={{ fontWeight: 700, color: '#065F46' }}>
                   {report.primaryNarrator}
@@ -172,19 +219,19 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
 
             <div>
               <span style={{ fontWeight: 700, color: '#6B7280', display: 'block', fontSize: 11 }}>
-                {t('Sanad & Takhrij Audit Notes', 'تحقیقی و اسنادی نوٹ:')}
+                {t('Sanad & Takhrij Audit Notes', 'تحقیقی و اسنادی نوٹ:', 'ملاحظات التحقيق والإسناد:', 'Tehqeeqi wa Isnadi Note:')}
               </span>
               <p style={{ margin: '4px 0 0 0', color: '#374151', lineHeight: 1.5 }}>
-                {isUrdu ? report.verificationAuditNotes.ur : report.verificationAuditNotes.en}
+                {auditNotes}
               </p>
             </div>
 
             <div>
               <span style={{ fontWeight: 700, color: '#6B7280', display: 'block', fontSize: 11 }}>
-                {t('Scholarly Consensus', 'جمہور اہل علم کا موقف:')}
+                {t('Scholarly Consensus', 'جمہور اہل علم کا موقف:', 'إجماع وجمهور أهل العلم:', 'Jamhoor Ahl-e-Ilm ka Mauqaf:')}
               </span>
               <p style={{ margin: '4px 0 0 0', color: '#374151', lineHeight: 1.5 }}>
-                {isUrdu ? report.scholarlyConsensus.ur : report.scholarlyConsensus.en}
+                {consensusText}
               </p>
             </div>
           </div>
@@ -208,7 +255,9 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
             <span>
               {t(
                 '100% Guaranteed: No AI-generated or unverified content enters AMAL OS databases.',
-                '۱۰۰٪ ضمانت: امل او ایس میں کوئی بھی من گھڑت یا غیر مصدقہ روایت شامل نہیں کی جاتی۔'
+                '۱۰۰٪ ضمانت: امل او ایس میں کوئی بھی من گھڑت یا غیر مصدقہ روایت شامل نہیں کی جاتی۔',
+                'ضمان ١٠٠٪: لا يتم إدخال أي محتوى مولّد بالذكاء الاصطناعي أو غير موثق إلى قواعد بيانات نظام عمل.',
+                '100% Zamanat: AMAL OS mein koi bhi ghair-musaddiq riwayat shamil nahi ki jati.'
               )}
             </span>
           </div>

@@ -100,7 +100,7 @@ export function SistersSahabiyyatTab({
                     fontWeight: 700,
                   }}
                 >
-                  {isUrdu ? sah.titleUrdu : sah.titleEnglish}
+                  {t(sah.titleEnglish, sah.titleUrdu, sah.titleUrdu, sah.titleEnglish)}
                 </span>
                 <span style={{ fontSize: 12, color: '#9CA3AF' }}>{sah.era}</span>
               </div>
@@ -113,7 +113,7 @@ export function SistersSahabiyyatTab({
                   margin: '4px 0',
                 }}
               >
-                {isUrdu ? sah.nameUrdu : sah.nameEnglish}
+                {isArabic ? sah.nameArabic : (isUrdu ? sah.nameUrdu : sah.nameEnglish)}
               </h3>
               <div
                 style={{
@@ -123,7 +123,7 @@ export function SistersSahabiyyatTab({
                   marginBottom: 4,
                 }}
               >
-                {isUrdu ? sah.nameEnglish : sah.nameArabic}
+                {isArabic ? sah.nameEnglish : (isUrdu ? sah.nameEnglish : sah.nameArabic)}
               </div>
               <div
                 style={{
@@ -144,7 +144,7 @@ export function SistersSahabiyyatTab({
                   marginBottom: 14,
                 }}
               >
-                {isUrdu ? sah.biographyUrdu : sah.biographyEnglish}
+                {(isUrdu || isArabic) ? sah.biographyUrdu : sah.biographyEnglish}
               </p>
 
               {/* 3 Practical Daily Sunnah Lessons */}
@@ -183,7 +183,7 @@ export function SistersSahabiyyatTab({
                 >
                   {sah.dailySunnahLessons.map((lesson, idx) => (
                     <li key={idx} style={{ marginBottom: 4 }}>
-                      {isUrdu ? lesson.ur : lesson.en}
+                      {(isUrdu || isArabic) ? lesson.ur : lesson.en}
                     </li>
                   ))}
                 </ul>

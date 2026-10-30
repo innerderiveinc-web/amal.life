@@ -1,6 +1,7 @@
 import React from 'react';
 import { InheritanceCalculationResult, shariPdfExportEngine, MirasPdfCertificatePayload } from '@amal/amal-engine';
 import { showAmalToast } from '../Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface MirasCalculatorTabProps {
   estateValue: number;
@@ -22,8 +23,8 @@ interface MirasCalculatorTabProps {
   setHasMother: (has: boolean) => void;
   mirasResult: InheritanceCalculationResult;
   setMirasCert: (cert: MirasPdfCertificatePayload | null) => void;
-  isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  isUrdu?: boolean;
+  t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function MirasCalculatorTab({
@@ -46,9 +47,8 @@ export function MirasCalculatorTab({
   setHasMother,
   mirasResult,
   setMirasCert,
-  isUrdu,
-  t,
 }: MirasCalculatorTabProps) {
+  const { t } = useLanguage();
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
       {/* Estate & Heirs Input */}
@@ -70,23 +70,26 @@ export function MirasCalculatorTab({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
             <span style={{ fontSize: 20 }}>📜</span>
             <strong style={{ fontSize: 14, color: '#991B1B' }}>
-              {isUrdu ? 'حرمتِ اکلِ میراثِ نسواں — خواتین کے شرعی و لازمی حقوق' : 'Sacred Inviolability of Women\'s Inheritance (Quran & Sunnah)'}
+              {t('Sacred Inviolability of Women\'s Inheritance (Quran & Sunnah)', 'حرمتِ اکلِ میراثِ نسواں — خواتین کے شرعی و لازمی حقوق', 'حرمة أكل ميراث المرأة وحقوقها الشرعية القطعية', 'Hurmat-e-Akl-e-Miras-e-Niswan')}
             </strong>
           </div>
           <p style={{ margin: '0 0 8px', fontSize: 12, color: '#374151', lineHeight: 1.5 }}>
-            {isUrdu
-              ? 'اللہ تعالیٰ نے قرآن کریم میں ماؤں، بیٹیوں، بیویوں اور بہنوں کا حصہ خود مقرر فرمایا ہے۔ شریعت میں عورت کے حصے کو دبا لینا، محروم کرنا یا زبردستی معاف کروانا گناہِ کبیرہ اور جہنم کی سخت وعید کا موجب ہے۔ (فتاویٰ رضویہ، جلد ۲۶)'
-              : 'Allah Almighty has divinely decreed the protected legal shares of mothers, wives, daughters, and sisters in Surah An-Nisa (4:7-14). Disinheriting women or coercing them into forfeiting their inheritance is an unforgivable injustice.'}
+            {t(
+              'Allah Almighty has divinely decreed the protected legal shares of mothers, wives, daughters, and sisters in Surah An-Nisa (4:7-14). Disinheriting women or coercing them into forfeiting their inheritance is an unforgivable injustice.',
+              'اللہ تعالیٰ نے قرآن کریم میں ماؤں، بیٹیوں، بیویوں اور بہنوں کا حصہ خود مقرر فرمایا ہے۔ شریعت میں عورت کے حصے کو دبا لینا، محروم کرنا یا زبردستی معاف کروانا گناہِ کبیرہ اور جہنم کی سخت وعید کا موجب ہے۔ (فتاویٰ رضویہ، جلد ۲۶)',
+              'فرض الله سبحانه في سورة النساء حصص الأمهات والزوجات والبنات والأخوات. وحرمان المرأة من ميراثها أو إجبارها على التنازل عنه من كبائر الإثم وظلم مبين.',
+              'Allah Ta\'ala ne Quran Majeed mein aurton ke hissay khud muqarrar farmaye hain. Shariat mein aurat ke hissay ko daba lena gunah-e-kabeera hai.'
+            )}
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-              بیٹی کا حصہ: اکیلی ہو تو نصف (1/2)، دو یا زیادہ ہوں تو دو تہائی (2/3)
+              {t('Daughter\'s Share: 1/2 if sole, 2/3 if multiple', 'بیٹی کا حصہ: اکیلی ہو تو نصف (1/2)، دو یا زیادہ ہوں تو دو تہائی (2/3)', 'نصيب البنت: النصف للواحدة، والثلثان لأكثر', 'Beti Ka Hissa: Akeli ho to 1/2, do ya zyada hon to 2/3')}
             </span>
             <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-              بیوی کا حصہ: اولاد ہو تو آٹھواں (1/8)، نہ ہو تو چوتھائی (1/4)
+              {t('Wife\'s Share: 1/8 with children, 1/4 without', 'بیوی کا حصہ: اولاد ہو تو آٹھواں (1/8)، نہ ہو تو چوتھائی (1/4)', 'نصيب الزوجة: الثمن مع الفرع الوارث، والربع عند عدمه', 'Biwi Ka Hissa: Aulad ho to 1/8, na ho to 1/4')}
             </span>
             <span style={{ backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontSize: 11, color: '#7F1D1D', fontWeight: 600, border: '1px solid #FECACA' }}>
-              ماں کا حصہ: اولاد ہو تو چھٹا (1/6)، نہ ہو تو تہائی (1/3)
+              {t('Mother\'s Share: 1/6 with children, 1/3 without', 'ماں کا حصہ: اولاد ہو تو چھٹا (1/6)، نہ ہو تو تہائی (1/3)', 'نصيب الأم: السدس مع الفرع الوارث، والثلث عند عدمه', 'Maa Ka Hissa: Aulad ho to 1/6, na ho to 1/3')}
             </span>
           </div>
         </div>
@@ -256,44 +259,53 @@ export function MirasCalculatorTab({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
             <span style={{ fontWeight: 800, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 6 }}>
               <span>⚖️</span>
-              <span>{isUrdu ? 'قواعدِ حجب (اصولِ محرومی و تخفیفِ وراثت)' : 'The Classical Doctrine of Exclusion (Al-Hajb)'}</span>
+              <span>{t('The Classical Doctrine of Exclusion (Al-Hajb)', 'قواعدِ حجب (اصولِ محرومی و تخفیفِ وراثت)', 'قواعد الحجب في فقه المواريث (الحرمان والنقصان)', 'Qawaid-e-Hajb (Usool-e-Mahroomi o Takhfeef)')}</span>
             </span>
             <span style={{ fontSize: 10, backgroundColor: '#E2E8F0', padding: '2px 6px', borderRadius: 4, fontWeight: 700, color: '#334155' }}>
-              فقہ الفرائض (السراجی)
+              {t('Classical Hanafi Fiqh (Al-Sirajiyyah)', 'فقہ الفرائض (السراجی)', 'فقه الفرائض (السراجية)', 'Fiqh-ul-Faraiz (Al-Sirajiyyah)')}
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, color: '#334155' }}>
             <div style={{ backgroundColor: '#FFFFFF', padding: 8, borderRadius: 6, border: '1px solid #E2E8F0' }}>
               <strong style={{ color: '#065F46' }}>
-                {isUrdu ? '۱. حجبِ نقصان (حصے میں تخفیف):' : '1. Hajb al-Nuqsan (Reduction of Share):'}
+                {t('1. Hajb al-Nuqsan (Reduction of Share):', '۱. حجبِ نقصان (حصے میں تخفیف):', '١. حجب النقصان (تقليل النصيب):', '1. Hajb al-Nuqsan (Hissay Mein Takhfeef):')}
               </strong>
               <div style={{ marginTop: 2 }}>
-                {isUrdu
-                  ? 'اولاد کی موجودگی میں بیوی کا حصہ 1/4 سے گھٹ کر 1/8، شوہر کا حصہ 1/2 سے گھٹ کر 1/4، اور ماں کا حصہ 1/3 سے گھٹ کر 1/6 ہو جاتا ہے۔'
-                  : 'Children reduce the Wife\'s share from 1/4 to 1/8, the Husband\'s from 1/2 to 1/4, and the Mother\'s from 1/3 to 1/6.'}
+                {t(
+                  'Children reduce the Wife\'s share from 1/4 to 1/8, the Husband\'s from 1/2 to 1/4, and the Mother\'s from 1/3 to 1/6.',
+                  'اولاد کی موجودگی میں بیوی کا حصہ 1/4 سے گھٹ کر 1/8، شوہر کا حصہ 1/2 سے گھٹ کر 1/4، اور ماں کا حصہ 1/3 سے گھٹ کر 1/6 ہو جاتا ہے۔',
+                  'ينقص الفرع الوارث نصيب الزوجة من الربع للثمن، والزوج من النصف للربع، والأم من الثلث للسدس.',
+                  'Aulad ki maujoodgi mein biwi ka hissa 1/4 se ghat kar 1/8, shohar ka 1/2 se 1/4, aur maa ka 1/3 se 1/6 ho jata hai.'
+                )}
               </div>
             </div>
 
             <div style={{ backgroundColor: '#FFFFFF', padding: 8, borderRadius: 6, border: '1px solid #E2E8F0' }}>
               <strong style={{ color: '#991B1B' }}>
-                {isUrdu ? '۲. حجبِ حرمان (مکمل محرومی):' : '2. Hajb al-Hirman (Total Exclusion):'}
+                {t('2. Hajb al-Hirman (Total Exclusion):', '۲. حجبِ حرمان (مکمل محرومی):', '٢. حجب الحرمان (المنع التام):', '2. Hajb al-Hirman (Mukammal Mahroomi):')}
               </strong>
               <div style={{ marginTop: 2 }}>
-                {isUrdu
-                  ? 'باپ کی موجودگی میں دادا محروم ہو جاتا ہے؛ بیٹے کی موجودگی میں پوتے/پوتیاں محروم ہو جاتے ہیں؛ باپ یا بیٹے کی موجودگی میں سگے اور سوتیلے بھائی بہن مکمل محروم ہو جاتے ہیں۔'
-                  : 'Father excludes Grandfather; Son excludes Grandchildren; Father or Son completely excludes all brothers and sisters.'}
+                {t(
+                  'Father excludes Grandfather; Son excludes Grandchildren; Father or Son completely excludes all brothers and sisters.',
+                  'باپ کی موجودگی میں دادا محروم ہو جاتا ہے؛ بیٹے کی موجودگی میں پوتے/پوتیاں محروم ہو جاتے ہیں؛ باپ یا بیٹے کی موجودگی میں سگے اور سوتیلے بھائی بہن مکمل محروم ہو جاتے ہیں۔',
+                  'يحجب الأبُ الجدَّ، والابنُ ابنَ الابن، ويحجب الأبُ أو الابنُ الإخوةَ والأخواتِ جميعاً.',
+                  'Baap ki maujoodgi mein dada mahroom hota hai; betay ki maujoodgi mein potay/potiyan; baap ya betay se bhai behan mahroom ho jatay hain.'
+                )}
               </div>
             </div>
 
             <div style={{ backgroundColor: '#ECFDF5', padding: 8, borderRadius: 6, border: '1px solid #A7F3D0', color: '#064E3B' }}>
               <strong>
-                {isUrdu ? 'چھ وارث جو کبھی محروم نہیں ہوتے:' : 'Six Heirs Who Can NEVER Be Excluded:'}
+                {t('Six Heirs Who Can NEVER Be Excluded:', 'چھ وارث جو کبھی محروم نہیں ہوتے:', 'ستة ورثة لا يُحجبون حجب حرمان أبداً:', 'Chhe Waris Jo Kabhi Mahroom Nahi Hotay:')}
               </strong>
               <div style={{ marginTop: 2, fontSize: 11 }}>
-                {isUrdu
-                  ? 'باپ، ماں، بیٹا، بیٹی، شوہر اور بیوی۔ شریعت میں ان چھ کا حقِ وراثت حتمی اور ناقابلِ سلب ہے۔'
-                  : 'Father, Mother, Son, Daughter, Husband, and Wife. Their right to inheritance is absolute under divine law.'}
+                {t(
+                  'Father, Mother, Son, Daughter, Husband, and Wife. Their right to inheritance is absolute under divine law.',
+                  'باپ، ماں، بیٹا، بیٹی، شوہر اور بیوی۔ شریعت میں ان چھ کا حقِ وراثت حتمی اور ناقابلِ سلب ہے۔',
+                  'الأب والأم والابن والبنت والزوج والزوجة. حقهم في الميراث قطعي ثابت بالقرآن.',
+                  'Baap, Maa, Beta, Beti, Shohar aur Biwi. Shariat mein in chhe ka haq-e-wirathat hatmi hai.'
+                )}
               </div>
             </div>
           </div>

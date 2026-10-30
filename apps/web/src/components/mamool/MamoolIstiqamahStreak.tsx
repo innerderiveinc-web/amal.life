@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface IstiqamahData {
   streak: number;
@@ -13,10 +14,11 @@ interface IstiqamahData {
 }
 
 interface MamoolIstiqamahStreakProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
 }
 
-export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ isUrdu }) => {
+export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const [data, setData] = useState<IstiqamahData>({
     streak: 1,
     lastDate: '',
@@ -41,7 +43,6 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
       const yesterdayStr = yesterday.toISOString().split('T')[0] || '';
 
       if (lastDate !== yesterdayStr) {
-        // Gap of more than 1 day
         currentStreak = 1;
       }
     }
@@ -63,7 +64,6 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
     const todayStr = new Date().toISOString().split('T')[0] || '';
     const updatedPrayers = { ...data.prayers, [prayerKey]: !data.prayers[prayerKey] };
 
-    // Check if streak should be incremented if this is first action today
     let newStreak = data.streak;
     const lastDate = localStorage.getItem('amal_istiqamah_last_date') || '';
 
@@ -94,12 +94,12 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
   const completedCount = Object.values(data.prayers).filter(Boolean).length;
   const isAllCompleted = completedCount === 5;
 
-  const PRAYER_BUTTONS: { key: keyof IstiqamahData['prayers']; labelUrdu: string; labelEn: string }[] = [
-    { key: 'fajr', labelUrdu: 'فجر', labelEn: 'Fajr' },
-    { key: 'dhuhr', labelUrdu: 'ظہر', labelEn: 'Dhuhr' },
-    { key: 'asr', labelUrdu: 'عصر', labelEn: 'Asr' },
-    { key: 'maghrib', labelUrdu: 'مغرب', labelEn: 'Maghrib' },
-    { key: 'isha', labelUrdu: 'عشاء', labelEn: 'Isha' },
+  const PRAYER_BUTTONS: { key: keyof IstiqamahData['prayers']; label: string }[] = [
+    { key: 'fajr', label: t('Fajr', 'فجر', 'الفجر', 'Fajr') },
+    { key: 'dhuhr', label: t('Dhuhr', 'ظہر', 'الظهر', 'Zohar') },
+    { key: 'asr', label: t('Asr', 'عصر', 'العصر', 'Asr') },
+    { key: 'maghrib', label: t('Maghrib', 'مغرب', 'المغرب', 'Maghrib') },
+    { key: 'isha', label: t('Isha', 'عشاء', 'العشاء', 'Isha') },
   ];
 
   return (
@@ -143,9 +143,12 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: '#0F172A' }}>
-                {isUrdu
-                  ? `${data.streak} دن استقامت (Istiqamah Streak)`
-                  : `${data.streak}-Day Istiqamah Streak`}
+                {t(
+                  `${data.streak}-Day Istiqamah Streak`,
+                  `${data.streak} دن استقامت (Istiqamah Streak)`,
+                  `سلسلة الاستقامة: ${data.streak} أيام`,
+                  `${data.streak} Din Istiqamah Streak`
+                )}
               </span>
               <span
                 style={{
@@ -158,13 +161,16 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
                   border: `1px solid ${completedCount > 0 ? '#A7F3D0' : '#CBD5E1'}`,
                 }}
               >
-                {completedCount}/5 {isUrdu ? 'نمازیں ادا' : 'Prayers Logged'}
+                {completedCount}/5 {t('Prayers Logged', 'نمازیں ادا', 'صلوات مؤداة', 'Namazein Ada')}
               </span>
             </div>
             <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
-              {isUrdu
-                ? '«أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ» — روزانہ کی مسلسل بندگی'
-                : 'Consistency is most beloved to Allah — 1-tap prayer accountability'}
+              {t(
+                'Consistency is most beloved to Allah — 1-tap prayer accountability',
+                '«أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ» — روزانہ کی مسلسل بندگی',
+                '«أحب الأعمال إلى الله أدومها وإن قل» — محاسبة الصلوات اليومية',
+                'Allah ko wo amal mehboob hai jo daaimi ho — Rozmarrah namaz ki pabandi'
+              )}
             </div>
           </div>
         </div>
@@ -190,8 +196,8 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
           <span>{isExpanded ? '▲' : '▼'}</span>
           <span>
             {isExpanded
-              ? (isUrdu ? 'مختصر کریں' : 'Hide Checklist')
-              : (isUrdu ? 'روزانہ نماز چیک لسٹ' : 'Log Daily Prayers')}
+              ? t('Hide Checklist', 'مختصر کریں', 'إخفاء القائمة', 'Mukhtasar Karein')
+              : t('Log Daily Prayers', 'روزانہ نماز چیک لسٹ', 'تسجيل الصلوات اليومية', 'Rozana Namaz Checklist')}
           </span>
         </button>
       </div>
@@ -233,7 +239,7 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = ({ is
                 }}
               >
                 <span>{isDone ? '✓' : '○'}</span>
-                <span>{isUrdu ? p.labelUrdu : p.labelEn}</span>
+                <span>{p.label}</span>
               </button>
             );
           })}

@@ -13,7 +13,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
   isOpen,
   onClose,
 }) => {
-  const { t, isUrdu } = useLanguage();
+  const { language, t } = useLanguage();
 
   if (!isOpen || !report) return null;
 
@@ -164,7 +164,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
                       }}
                     >
                       <td style={{ padding: '8px 10px', fontWeight: idx === 0 ? 800 : 600 }}>
-                        {isUrdu ? auth.authorityNameUrdu : auth.authorityNameEnglish}
+                        {(language === 'ur' || language === 'ar') ? auth.authorityNameUrdu : auth.authorityNameEnglish}
                         {idx === 0 && <span style={{ color: '#047857', fontSize: 10, display: 'block' }}>★ Default</span>}
                       </td>
                       <td style={{ padding: '8px 8px', fontWeight: 700 }}>{auth.fajrTime}</td>
@@ -192,13 +192,13 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
             }}
           >
             <strong>🌐 {t('Geographical Altitude Check:', 'جغرافیائی خطہ و شفق کی حالت:')} </strong>
-            <span>{isUrdu ? report.highLatitude.explanationUrdu : report.highLatitude.explanationEnglish}</span>
+            <span>{(language === 'ur' || language === 'ar') ? report.highLatitude.explanationUrdu : report.highLatitude.explanationEnglish}</span>
           </div>
 
           {/* Scholarly Ihtiyat Notes */}
           <div style={{ fontSize: 11, color: '#6B7280', lineHeight: 1.5, borderTop: '1px solid #E5E7EB', paddingTop: 12 }}>
             <strong>💡 {t('Local Mosque Discrepancies:', 'مقامی مسجد کے وقت میں فرق کی وجہ:')} </strong>
-            <span>{isUrdu ? report.scholarlyIhtiyatNotes.ur : report.scholarlyIhtiyatNotes.en}</span>
+            <span>{(language === 'ur' || language === 'ar') ? report.scholarlyIhtiyatNotes.ur : report.scholarlyIhtiyatNotes.en}</span>
           </div>
         </div>
       </div>
