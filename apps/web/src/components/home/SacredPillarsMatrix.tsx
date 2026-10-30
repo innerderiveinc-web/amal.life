@@ -175,16 +175,15 @@ export const SacredPillarsMatrix: React.FC = () => {
         {pillars.map((p) => (
           <div
             key={p.id}
-            className="amal-card-hover"
+            className="amal-glass-card amal-pressable"
             style={{
-              padding: 18,
-              borderRadius: 12,
+              padding: 20,
+              borderRadius: 18,
               backgroundColor: p.bgLight,
-              border: `1px solid ${p.borderLight}`,
+              border: `1.5px solid ${p.borderLight}`,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              transition: 'transform 0.15s ease, box-shadow 0.15s ease',
             }}
           >
             <div>
@@ -219,17 +218,18 @@ export const SacredPillarsMatrix: React.FC = () => {
                   <Link
                     key={link.href}
                     href={link.href}
+                    className="amal-glass-pill"
                     style={{
                       fontSize: 11,
-                      padding: '3px 8px',
-                      borderRadius: 6,
-                      backgroundColor: '#FFFFFF',
+                      padding: '4px 10px',
+                      borderRadius: 14,
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
                       color: p.color,
                       textDecoration: 'none',
                       fontWeight: 700,
                       border: `1px solid ${p.borderLight}`,
-                      boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
-                      transition: 'all 0.12s ease',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+                      transition: 'all 0.16s ease',
                     }}
                   >
                     {t(link.labelEn, link.labelUrdu, link.labelAr, link.labelRoman)}
@@ -239,18 +239,20 @@ export const SacredPillarsMatrix: React.FC = () => {
 
               <Link
                 href={p.primaryLink}
+                className="amal-pressable"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '7px 12px',
-                  borderRadius: 8,
+                  padding: '8px 14px',
+                  borderRadius: 10,
                   backgroundColor: p.color,
                   color: '#FFFFFF',
                   textDecoration: 'none',
                   fontSize: 12,
                   fontWeight: 700,
-                  transition: 'opacity 0.15s ease',
+                  boxShadow: `0 4px 14px ${p.color}33`,
+                  transition: 'transform 0.18s ease, box-shadow 0.18s ease',
                 }}
               >
                 <span>

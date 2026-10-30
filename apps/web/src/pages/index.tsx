@@ -23,6 +23,7 @@ import { SacredPillarsMatrix } from '../components/home/SacredPillarsMatrix';
 import { NiyyahCompilerCard } from '../components/home/NiyyahCompilerCard';
 import { PropheticContextCard } from '../components/home/PropheticContextCard';
 import { EvidencePassportModal } from '../components/home/EvidencePassportModal';
+import { ShimmerCardSkeleton } from '../components/ui/ShimmerSkeleton';
 
 export default function Home() {
   // 1. Niyyah Compiler State
@@ -202,13 +203,13 @@ export default function Home() {
 
         {/* Daily Practical Sunnah Checklist & Routine Tracker */}
         <div style={{ marginTop: 16 }}>
-          <ClientOnly fallback={<div style={{ minHeight: 120, backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px solid #E2E8F0' }} />}>
+          <ClientOnly fallback={<ShimmerCardSkeleton rows={3} />}>
             <DailySunnahChecklistCard />
           </ClientOnly>
         </div>
 
         {/* Automated Daily Knowledge Broadcast Stream */}
-        <ClientOnly fallback={<div style={{ minHeight: 160, backgroundColor: '#FFFFFF', borderRadius: 16, marginTop: 16, border: '1px solid #E2E8F0' }} />}>
+        <ClientOnly fallback={<ShimmerCardSkeleton rows={2} />}>
           <DailyKnowledgeBroadcastCard />
         </ClientOnly>
 
@@ -219,7 +220,7 @@ export default function Home() {
 
         {/* Smart Spiritual Coach Hub & Muhasabah Agent */}
         <div style={{ marginBottom: 28 }}>
-          <ClientOnly fallback={<div style={{ minHeight: 160, backgroundColor: '#FFFFFF', borderRadius: 16, border: '1px solid #E2E8F0' }} />}>
+          <ClientOnly fallback={<ShimmerCardSkeleton rows={3} />}>
             <SpiritualCoachHub />
           </ClientOnly>
         </div>
@@ -227,13 +228,10 @@ export default function Home() {
         {/* SIGNATURE CAPABILITIES: LIFE OS MODES, NIYYAH COMPILER & PROPHETIC CONTEXT */}
         {!isFocusMode ? (
           <div
+            className="amal-ambient-card"
             style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: 16,
-              border: '1px solid #E2E8F0',
-              padding: '24px 24px',
+              padding: '26px 26px',
               marginBottom: 32,
-              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
             }}
           >
             <div

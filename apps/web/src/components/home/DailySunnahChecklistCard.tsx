@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { showAmalToast } from '../Toast';
+import { CelebrationRipple } from '../ui/CelebrationRipple';
 
 interface SunnahTask {
   id: string;
@@ -200,6 +201,7 @@ export const DailySunnahChecklistCard: React.FC = () => {
   const isRtl = language === 'ur' || language === 'ar';
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
   const [selectedSlotFilter, setSelectedSlotFilter] = useState<string>('ALL');
+  const [celebrating, setCelebrating] = useState<boolean>(false);
   const [isExpanded, setIsExpandedState] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('amal_sunnah_checklist_expanded');
@@ -247,6 +249,7 @@ export const DailySunnahChecklistCard: React.FC = () => {
       }
     }
     if (nextState) {
+      setCelebrating(true);
       showAmalToast(
         t('MashaAllah! Sunnah action completed: ', 'ما شاء اللہ! سنت پر عمل مکمل ہوا: ', 'ما شاء الله! تم إنجاز العمل بالسنة: ', 'MashaAllah! Sunnat par amal mukammal hua: ') + title,
         'success'
@@ -267,15 +270,15 @@ export const DailySunnahChecklistCard: React.FC = () => {
 
   return (
     <div
+      className="amal-ambient-card"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
+        position: 'relative',
         padding: '22px 24px',
-        border: '1px solid #E2E8F0',
-        boxShadow: '0 4px 12px rgba(15, 23, 42, 0.03)',
         marginBottom: 28,
+        overflow: 'hidden',
       }}
     >
+      <CelebrationRipple active={celebrating} onComplete={() => setCelebrating(false)} />
       {/* Header & Daily Progress */}
       <div
         style={{
@@ -528,16 +531,18 @@ export const DailySunnahChecklistCard: React.FC = () => {
                 <div
                   key={task.id}
                   onClick={() => toggleTask(task.id, taskTitle)}
+                  className="amal-pressable"
                   style={{
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: 12,
                     padding: '12px 14px',
-                    borderRadius: 10,
+                    borderRadius: 12,
                     backgroundColor: isDone ? '#F0FDF4' : '#FAFAFA',
-                    border: isDone ? '1px solid #86EFAC' : '1px solid #E5E7EB',
+                    border: isDone ? '1.5px solid #86EFAC' : '1px solid #E5E7EB',
+                    boxShadow: isDone ? '0 4px 14px rgba(16, 185, 129, 0.1)' : '0 1px 3px rgba(0, 0, 0, 0.02)',
                     cursor: 'pointer',
-                    transition: 'all 0.15s ease',
+                    transition: 'all 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
                   {/* Checkbox Icon */}

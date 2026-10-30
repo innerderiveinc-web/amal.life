@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { CelebrationRipple } from '../ui/CelebrationRipple';
 
 interface IstiqamahData {
   streak: number;
@@ -26,6 +27,7 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
   });
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [celebrating, setCelebrating] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
@@ -62,7 +64,12 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
     if (typeof window === 'undefined') return;
 
     const todayStr = new Date().toISOString().split('T')[0] || '';
-    const updatedPrayers = { ...data.prayers, [prayerKey]: !data.prayers[prayerKey] };
+    const isActivating = !data.prayers[prayerKey];
+    const updatedPrayers = { ...data.prayers, [prayerKey]: isActivating };
+
+    if (isActivating) {
+      setCelebrating(true);
+    }
 
     let newStreak = data.streak;
     const lastDate = localStorage.getItem('amal_istiqamah_last_date') || '';
@@ -104,15 +111,17 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
 
   return (
     <div
+      className="amal-ambient-card"
       style={{
-        backgroundColor: '#F8FAFC',
-        border: '1px solid #E2E8F0',
-        borderRadius: 14,
-        padding: '12px 16px',
+        position: 'relative',
+        borderRadius: 16,
+        padding: '14px 18px',
         marginTop: 14,
         marginBottom: 8,
+        overflow: 'hidden',
       }}
     >
+      <CelebrationRipple active={celebrating} onComplete={() => setCelebrating(false)} />
       <div
         style={{
           display: 'flex',
@@ -220,6 +229,7 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
               <button
                 key={p.key}
                 onClick={() => togglePrayer(p.key)}
+                className="amal-pressable"
                 style={{
                   flex: '1 1 70px',
                   display: 'flex',
@@ -227,15 +237,15 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
                   justifyContent: 'center',
                   gap: 6,
                   padding: '8px 10px',
-                  borderRadius: 10,
+                  borderRadius: 12,
                   fontSize: 12,
                   fontWeight: 700,
                   cursor: 'pointer',
                   backgroundColor: isDone ? '#065F46' : '#FFFFFF',
                   color: isDone ? '#FFFFFF' : '#334155',
-                  border: isDone ? '1px solid #065F46' : '1px solid #CBD5E1',
-                  boxShadow: isDone ? '0 2px 6px rgba(6, 95, 70, 0.2)' : 'none',
-                  transition: 'all 0.15s ease',
+                  border: isDone ? '1.5px solid #065F46' : '1px solid #CBD5E1',
+                  boxShadow: isDone ? '0 4px 12px rgba(6, 95, 70, 0.22)' : '0 1px 3px rgba(0, 0, 0, 0.02)',
+                  transition: 'all 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
                 <span>{isDone ? '✓' : '○'}</span>

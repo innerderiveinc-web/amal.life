@@ -381,3 +381,134 @@ body.theme-tahajjud input {
     bottom: calc(env(safe-area-inset-bottom, 0px) + 72px) !important;
   }
 }
+
+
+/* ======================================================================
+   8. WORLD-CLASS UI POLISH: APPLE / SILICON VALLEY DESIGN SYSTEM UPGRADE
+   ====================================================================== */
+
+/* 8.1 Shimmer Wave Animation */
+@keyframes amal-shimmer-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 8.2 Particle Celebration Physics */
+@keyframes amal-particle-float {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+/* 8.3 Apple-Grade Glassmorphism & Translucency */
+.amal-glass-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 10px 30px -10px rgba(6, 78, 59, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+  border-radius: 18px;
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-spring), border-color 0.2s ease;
+}
+
+.amal-glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -15px rgba(6, 78, 59, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+.amal-glass-pill {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(229, 231, 235, 0.7) !important;
+  border-radius: 9999px;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.amal-glass-pill:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #10B981 !important;
+  transform: scale(1.02);
+}
+
+/* 8.4 Tactile Pressable Feedback */
+.amal-pressable {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.amal-pressable:hover {
+  filter: brightness(1.03);
+}
+
+.amal-pressable:active {
+  transform: scale(0.96) !important;
+}
+
+/* 8.5 Soft Ambient Layered Shadows (Zero Harsh Black Lines) */
+.amal-ambient-card {
+  background-color: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-spring);
+}
+
+.amal-ambient-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+}
+
+/* 8.6 Dynamic Script Typography Tuning */
+body.script-ur {
+  line-height: 2.1 !important;
+  letter-spacing: 0 !important;
+}
+
+body.script-ur h1,
+body.script-ur h2,
+body.script-ur h3,
+body.script-ur h4 {
+  line-height: 1.85 !important;
+  letter-spacing: 0 !important;
+  font-family: var(--font-urdu), serif !important;
+}
+
+body.script-ar {
+  line-height: 1.95 !important;
+  letter-spacing: 0 !important;
+}
+
+body.script-ar h1,
+body.script-ar h2,
+body.script-ar h3,
+body.script-ar h4 {
+  line-height: 1.8 !important;
+  letter-spacing: 0 !important;
+  font-family: var(--font-arabic), serif !important;
+}
+
+body.script-en {
+  line-height: 1.55 !important;
+  letter-spacing: -0.015em !important;
+}
+
+body.script-roman {
+  line-height: 1.6 !important;
+  letter-spacing: -0.01em !important;
+}
