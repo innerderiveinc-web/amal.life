@@ -113,7 +113,7 @@ export function SistersSahabiyyatTab({
                   margin: '4px 0',
                 }}
               >
-                {isArabic ? sah.nameArabic : (isUrdu ? sah.nameUrdu : sah.nameEnglish)}
+                {isArabic ? sah.nameArabic : isUrdu ? sah.nameUrdu : isRomanUrdu ? (sah.nameEnglish || sah.nameUrdu) : sah.nameEnglish}
               </h3>
               <div
                 style={{

@@ -2,6 +2,7 @@ import React from 'react';
 import { QuranAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
 import { verifyContentCitation, SanadVerificationReport } from '../../lib/authenticity-pipeline';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface WisdomQuranGridProps {
   cards: QuranAyahWisdomCard[];
@@ -28,6 +29,8 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
   onShareCard,
   onVerifySanad,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
+
   return (
     <div
       style={{
@@ -78,10 +81,14 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                       borderRadius: 6,
                     }}
                   >
-                    سورۃ {card.surahNameUrdu} ({card.ayahNumber})
+                    {t('Surah', 'سورۃ', 'سورة', 'Surah')}{' '}
+                    {isArabic ? card.surahNameArabic : isUrdu ? card.surahNameUrdu : card.surahNameTransliterated}{' '}
+                    ({card.ayahNumber})
                   </span>
                   <span style={{ fontSize: 11, color: '#64748B' }}>
-                    {card.revelationType === 'MECCAN' ? 'مکی' : 'مدنی'}
+                    {card.revelationType === 'MECCAN'
+                      ? t('Meccan', 'مکی', 'مكية', 'Makki')
+                      : t('Medinan', 'مدنی', 'مدنية', 'Madani')}
                   </span>
                 </div>
 
@@ -115,10 +122,10 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                       alignItems: 'center',
                       gap: 4,
                     }}
-                    title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+                    title={t('Generate social media image card', 'خوبصورت سوشل میڈیا کارڈ بنائیں', 'إنشاء بطاقة لمواقع التواصل', 'Image Card Banayein')}
                   >
                     <span>📸</span>
-                    <span>کارڈ</span>
+                    <span>{t('Card', 'کارڈ', 'بطاقة', 'Card')}</span>
                   </button>
 
                   <button
@@ -142,10 +149,10 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                       alignItems: 'center',
                       gap: 3,
                     }}
-                    title="تحقیق و سندِ روایت دیکھیں"
+                    title={t('Inspect scholarly authenticity and lineage', 'تحقیق و سندِ روایت دیکھیں', 'فحص السند والتوثيق العلمي', 'Sanad o Tehqeeq dekhein')}
                   >
                     <span>✓</span>
-                    <span>مستند سند</span>
+                    <span>{t('Sanad Verified', 'مستند سند', 'سند موثق', 'Sanad Verified')}</span>
                   </button>
 
                   <button
@@ -157,7 +164,7 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                       cursor: 'pointer',
                       fontSize: 18,
                     }}
-                    title={isBookmarked ? 'محفوظ فہرست سے ہٹائیں' : 'پسندیدہ کارڈ محفوظ کریں'}
+                    title={isBookmarked ? t('Remove from saved', 'محفوظ فہرست سے ہٹائیں', 'إزالة من المحفوظات', 'Mehfooz list se hatayein') : t('Save to favorites', 'پسندیدہ کارڈ محفوظ کریں', 'حفظ إلى المفضلة', 'Favorites mein mehfooz karein')}
                   >
                     {isBookmarked ? '⭐' : '☆'}
                   </button>
@@ -180,29 +187,35 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 {card.textArabic}
               </div>
 
-              {/* Urdu Translation: Kanz-ul-Iman */}
+              {/* Translation Box */}
               <div
-                dir="rtl"
+                dir={isUrdu || isArabic ? 'rtl' : 'ltr'}
                 style={{
                   backgroundColor: '#F8FAFC',
                   padding: 12,
                   borderRadius: 10,
-                  borderRight: '3px solid #059669',
+                  borderRight: isUrdu || isArabic ? '3px solid #059669' : 'none',
+                  borderLeft: !(isUrdu || isArabic) ? '3px solid #059669' : 'none',
                   marginBottom: 12,
                 }}
               >
                 <div style={{ fontSize: 10, fontWeight: 700, color: '#065F46', marginBottom: 2 }}>
-                  ترجمہ کنز الایمان فی ترجمۃ القرآن:
+                  {t(
+                    'Translation: Kanz-ul-Iman',
+                    'ترجمہ کنز الایمان فی ترجمۃ القرآن:',
+                    'ترجمة كنز الإيمان في ترجمة القرآن:',
+                    'Tarjuma Kanz-ul-Iman:'
+                  )}
                 </div>
                 <div
                   style={{
                     fontSize: 13,
                     lineHeight: 1.6,
                     color: '#1E293B',
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontFamily: isUrdu ? 'var(--font-urdu), serif' : 'system-ui, -apple-system, sans-serif',
                   }}
                 >
-                  {card.tarjumaKanzulIman}
+                  {isUrdu || isArabic ? card.tarjumaKanzulIman : card.tarjumaEnglish}
                 </div>
               </div>
 
@@ -218,7 +231,12 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 }}
               >
                 <div style={{ fontSize: 10, fontWeight: 700, color: '#92400E', marginBottom: 2 }}>
-                  تفسیر خزائن العرفان (صدر الافاضل نعیم الدین مراد آبادی):
+                  {t(
+                    "Tafsir Khaza'in-ul-Irfan:",
+                    'تفسیر خزائن العرفان (صدر الافاضل نعیم الدین مراد آبادی):',
+                    'تفسير خزائن العرفان:',
+                    "Tafseer Khaza'in-ul-Irfan:"
+                  )}
                 </div>
                 <div style={{ fontSize: 12, lineHeight: 1.6, color: '#78350F' }}>
                   {card.tafseerKhazainUlIrfan.excerptUrdu}
@@ -256,7 +274,11 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 }}
               >
                 <span>{isPlayingArabic ? '⏸' : '▶'}</span>
-                <span>{isPlayingArabic ? 'جاری' : 'تلاوت'}</span>
+                <span>
+                  {isPlayingArabic
+                    ? t('Pause', 'روکیں', 'إيقاف', 'Pause')
+                    : t('Recite', 'تلاوت', 'تلاوة', 'Tilawat')}
+                </span>
               </button>
 
               {/* Urdu Translation */}
@@ -279,7 +301,11 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 }}
               >
                 <span>{isPlayingUrdu ? '⏸' : '🎙️'}</span>
-                <span>{isPlayingUrdu ? 'ترجمہ جاری' : 'اردو ترجمہ'}</span>
+                <span>
+                  {isPlayingUrdu
+                    ? t('Playing', 'ترجمہ جاری', 'ترجمة جارية', 'Tarjuma Jari')
+                    : t('Urdu Audio', 'اردو ترجمہ', 'صوت الترجمة', 'Urdu Audio')}
+                </span>
               </button>
 
               {/* Tafseer Spoken Audio */}
@@ -302,7 +328,11 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 }}
               >
                 <span>{isPlayingTafseer ? '⏹' : '📖'}</span>
-                <span>{isPlayingTafseer ? 'تفسیر جاری' : 'تفسیر آڈیو'}</span>
+                <span>
+                  {isPlayingTafseer
+                    ? t('Playing', 'تفسیر جاری', 'تفسير جاري', 'Tafseer Jari')
+                    : t('Tafsir Audio', 'تفسیر آڈیو', 'التفسير الصوتي', 'Tafseer Audio')}
+                </span>
               </button>
 
               {/* Deep Study Modal */}
@@ -325,7 +355,7 @@ export const WisdomQuranGrid: React.FC<WisdomQuranGridProps> = ({
                 }}
               >
                 <span>🔍</span>
-                <span>تفصیل و تدبر</span>
+                <span>{t('Study', 'تفصیل و تدبر', 'دراسة وتدبر', 'Tafseel o Tadabbur')}</span>
               </button>
             </div>
           </div>

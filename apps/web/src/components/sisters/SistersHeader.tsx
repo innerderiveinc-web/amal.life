@@ -21,7 +21,7 @@ export function SistersHeader({
   onOpenVault,
   installSuccessMessage,
 }: SistersHeaderProps) {
-  const { isUrdu, t } = useLanguage();
+  const { isUrdu, isArabic, t } = useLanguage();
 
   return (
     <>
@@ -85,9 +85,9 @@ export function SistersHeader({
                 <h1
                   style={{
                     margin: 0,
-                    fontSize: isUrdu ? 28 : 24,
+                    fontSize: isUrdu || isArabic ? 28 : 24,
                     fontWeight: 800,
-                    letterSpacing: isUrdu ? 0 : '-0.02em',
+                    letterSpacing: isUrdu || isArabic ? 0 : '-0.02em',
                     color: '#FFFFFF',
                   }}
                 >

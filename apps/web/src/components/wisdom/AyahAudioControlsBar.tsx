@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface AyahAudioControlsBarProps {
   audioSrc: string;
@@ -31,6 +32,8 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
   tafseerStudioUrl,
   modalAudioRef,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div
       style={{
@@ -48,8 +51,18 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
           <span>🎙️</span>
           <span>
             {selectedAudioType === 'urdu'
-              ? 'اردو ترجمہ کنز الایمان (100% Real Human Voice)'
-              : 'Certified Medina Qari Tilawat (100% Real Human Reciter)'}
+              ? t(
+                  'Urdu Tarjuma Kanz-ul-Iman (100% Real Human Voice)',
+                  'اردو ترجمہ کنز الایمان (خالص انسانی آواز)',
+                  'ترجمة كنز الإيمان بصوت بشري حقيقي',
+                  'Urdu Tarjuma Kanz-ul-Iman (Real Human Voice)'
+                )
+              : t(
+                  'Certified Medina Qari Tilawat (100% Real Human Reciter)',
+                  'مستند مدینہ قاری تلاوت (خالص انسانی آواز)',
+                  'تلاوة قراء المدينة المعتمدين (صوت بشري حقيقي)',
+                  'Certified Medina Qari Tilawat (Real Human Reciter)'
+                )}
           </span>
         </div>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -67,7 +80,7 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
               cursor: 'pointer',
             }}
           >
-            العفاسی (Arabic)
+            {t('Alafasy (Arabic)', 'العفاسی (عربی)', 'العفاسي (عربي)', 'Alafasy (Arabic)')}
           </button>
           <button
             onClick={() => setSelectedAudioType('husary')}
@@ -83,7 +96,7 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
               cursor: 'pointer',
             }}
           >
-            الحصری (Arabic)
+            {t('Husary (Arabic)', 'الحصری (عربی)', 'الحصري (عربي)', 'Husary (Arabic)')}
           </button>
           <button
             onClick={() => setSelectedAudioType('minshawi')}
@@ -99,7 +112,7 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
               cursor: 'pointer',
             }}
           >
-            المنشاوی (Arabic)
+            {t('Minshawi (Arabic)', 'المنشاوی (عربی)', 'المنشاوي (عربي)', 'Minshawi (Arabic)')}
           </button>
           <button
             onClick={() => setSelectedAudioType('urdu')}
@@ -109,151 +122,121 @@ export const AyahAudioControlsBar: React.FC<AyahAudioControlsBarProps> = ({
               fontSize: 11,
               fontWeight: 700,
               border: '1px solid',
-              borderColor: selectedAudioType === 'urdu' ? '#047857' : '#FDE68A',
-              backgroundColor: selectedAudioType === 'urdu' ? '#047857' : '#FEF3C7',
-              color: selectedAudioType === 'urdu' ? '#FFFFFF' : '#92400E',
+              borderColor: selectedAudioType === 'urdu' ? '#047857' : '#CBD5E1',
+              backgroundColor: selectedAudioType === 'urdu' ? '#047857' : '#FFFFFF',
+              color: selectedAudioType === 'urdu' ? '#FFFFFF' : '#334155',
               cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
             }}
           >
-            <span>🎧</span>
-            <span>اردو ترجمہ (Urdu Audio)</span>
-          </button>
-          <button
-            onClick={() => setSelectedAudioType('tafseer')}
-            style={{
-              padding: '4px 10px',
-              borderRadius: 6,
-              fontSize: 11,
-              fontWeight: 700,
-              border: '1px solid',
-              borderColor: selectedAudioType === 'tafseer' ? '#92400E' : '#FDE68A',
-              backgroundColor: selectedAudioType === 'tafseer' ? '#92400E' : '#FFFBEB',
-              color: selectedAudioType === 'tafseer' ? '#FFFFFF' : '#92400E',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <span>📖</span>
-            <span>صوتی تفسیر (Tafseer)</span>
+            {t('Urdu Tarjuma (Human)', 'اردو ترجمہ (انسانی آواز)', 'الترجمة الأردية', 'Urdu Tarjuma (Insani Awaz)')}
           </button>
         </div>
       </div>
 
-      {/* Embedded HTML5 Player */}
-      <audio
-        ref={modalAudioRef}
-        controls
-        src={audioSrc}
-        style={{ width: '100%', height: 38, borderRadius: 8 }}
-      />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
+        {/* Native Audio Element with Ref */}
+        <audio ref={modalAudioRef} src={audioSrc} controls style={{ height: 36, flex: 1, minWidth: 220 }} />
 
-      {/* Speed, Cache & Offline Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>رفتار (Speed):</span>
-          <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
-            {[0.75, 1, 1.25, 1.5].map((speed) => (
-              <button
-                key={speed}
-                type="button"
-                onClick={() => setPlaybackSpeed(speed)}
-                style={{
-                  padding: '2px 6px',
-                  borderRadius: 4,
-                  fontSize: 10,
-                  fontWeight: 700,
-                  border: 'none',
-                  backgroundColor: playbackSpeed === speed ? '#166534' : 'transparent',
-                  color: playbackSpeed === speed ? '#FFFFFF' : '#64748B',
-                  cursor: 'pointer',
-                }}
-              >
-                {speed}x
-              </button>
-            ))}
-          </div>
+        {/* Speed Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <span style={{ fontSize: 11, color: '#475569', fontWeight: 600 }}>
+            {t('Speed:', 'رفتار:', 'السرعة:', 'Raftaar:')}
+          </span>
+          {[0.75, 1, 1.25, 1.5].map((spd) => (
+            <button
+              key={spd}
+              onClick={() => setPlaybackSpeed(spd)}
+              style={{
+                padding: '3px 7px',
+                borderRadius: 4,
+                fontSize: 10,
+                fontWeight: 700,
+                border: 'none',
+                backgroundColor: playbackSpeed === spd ? '#166534' : '#E2E8F0',
+                color: playbackSpeed === spd ? '#FFFFFF' : '#475569',
+                cursor: 'pointer',
+              }}
+            >
+              {spd}x
+            </button>
+          ))}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        {/* Action Controls: Tafseer Audio + Offline Cache + Download */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           <button
-            type="button"
+            onClick={handleToggleSpeakTafseer}
+            style={{
+              padding: '6px 12px',
+              borderRadius: 6,
+              backgroundColor: isSpeakingTafseer ? '#047857' : '#ECFDF5',
+              color: isSpeakingTafseer ? '#FFFFFF' : '#065F46',
+              border: '1px solid #A7F3D0',
+              fontSize: 11,
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <span>{isSpeakingTafseer ? '⏸' : '🎙️'}</span>
+            <span>
+              {isSpeakingTafseer
+                ? t('Pause Audio', 'آڈیو روکیں', 'إيقاف الصوت', 'Audio Rokein')
+                : t('Listen Tafseer / Tarjuma', 'تفسیری آڈیو سنیں', 'استمع للتفسير الصوتي', 'Tafseeri Audio Sunein')}
+            </span>
+          </button>
+
+          <button
             onClick={handleCacheAudioOffline}
             disabled={isCaching}
             style={{
-              padding: '4px 10px',
+              padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: isCachedOffline ? '#DCFCE7' : '#FFFFFF',
               color: isCachedOffline ? '#166534' : '#334155',
-              border: '1px solid',
-              borderColor: isCachedOffline ? '#86EFAC' : '#CBD5E1',
+              border: '1px solid #CBD5E1',
               fontSize: 11,
-              fontWeight: 700,
+              fontWeight: 600,
               cursor: isCaching ? 'wait' : 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
             }}
-            title="براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
+            title={t('Save for offline listening', 'آف لائن سننے کے لیے محفوظ کریں', 'حفظ للاستماع دون اتصال', 'Offline sunne ke liye mehfooz karein')}
           >
             <span>{isCachedOffline ? '✓' : '📥'}</span>
-            <span>{isCaching ? 'محفوظ ہو رہا ہے...' : isCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن محفوظ کریں'}</span>
+            <span>
+              {isCaching
+                ? t('Saving...', 'محفوظ ہو رہا ہے...', 'جاري الحفظ...', 'Mehfooz ho raha hai...')
+                : isCachedOffline
+                ? t('Offline Saved', 'آف لائن محفوظ ہے', 'محفوظ دون اتصال', 'Offline Mehfooz')
+                : t('Cache Offline', 'آف لائن کیش', 'حفظ دون اتصال', 'Offline Cache')}
+            </span>
           </button>
 
           <button
-            type="button"
             onClick={handleDownloadAudioFile}
             style={{
-              padding: '4px 10px',
+              padding: '6px 10px',
               borderRadius: 6,
               backgroundColor: '#FFFFFF',
               color: '#334155',
               border: '1px solid #CBD5E1',
               fontSize: 11,
-              fontWeight: 700,
+              fontWeight: 600,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: 4,
             }}
-            title="MP3 فائل ڈاؤنلوڈ کریں"
+            title={t('Download MP3 file', 'MP3 فائل ڈاؤنلوڈ کریں', 'تحميل ملف MP3', 'MP3 file download karein')}
           >
             <span>💾</span>
-            <span>MP3 ڈاؤنلوڈ</span>
+            <span>{t('MP3', 'MP3 فائل', 'ملف MP3', 'MP3 File')}</span>
           </button>
         </div>
-      </div>
-
-      {/* Tafseer Narration Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFBEB', padding: '8px 12px', borderRadius: 8, border: '1px solid #FDE68A' }}>
-        <span style={{ fontSize: 11, color: '#78350F', fontWeight: 600 }}>
-          {tafseerStudioUrl
-            ? '✓ صراط الجنان / کنز الایمان تفسیری آڈیو:'
-            : 'مستند اردو ترجمہ و تفسیری قرأت (کنز الایمان):'}
-        </span>
-        <button
-          type="button"
-          onClick={handleToggleSpeakTafseer}
-          style={{
-            padding: '4px 12px',
-            borderRadius: 6,
-            backgroundColor: isSpeakingTafseer ? '#DC2626' : '#166534',
-            color: '#FFFFFF',
-            border: 'none',
-            fontSize: 11,
-            fontWeight: 700,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-          }}
-        >
-          <span>{isSpeakingTafseer ? '⏹ موقوف کریں' : '🔊 صوتی تفسیر سنیں (Sirat-ul-Jinan)'}</span>
-        </button>
       </div>
     </div>
   );

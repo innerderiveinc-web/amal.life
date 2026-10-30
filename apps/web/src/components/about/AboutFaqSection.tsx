@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface FaqItem {
   q: string;
@@ -48,20 +49,31 @@ export const AMAL_FAQS: FaqItem[] = [
 ];
 
 interface AboutFaqSectionProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
 }
 
-export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
+export const AboutFaqSection: React.FC<AboutFaqSectionProps> = () => {
+  const { t, isUrdu, isArabic } = useLanguage();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   return (
     <section style={{ marginBottom: 56 }}>
       <div style={{ textAlign: 'center', marginBottom: 32 }}>
         <h2 style={{ fontSize: 24, fontWeight: 800, color: '#1B4332' }}>
-          Frequently Asked Questions (FAQ)
+          {t(
+            'Frequently Asked Questions (FAQ)',
+            'اکثر پوچھے جانے والے سوالات',
+            'الأسئلة الشائعة والأجوبة المعتمدة',
+            'Aksar Puche Jane Wale Sawalat (FAQ)'
+          )}
         </h2>
         <p style={{ fontSize: 14, color: '#6B7280', marginTop: 4 }}>
-          Aksar Puche Jane Wale Sawalat — Clear answers to common questions
+          {t(
+            'Clear answers to common questions about AMAL OS',
+            'امل او ایس کے بارے میں عام سوالات کے واضح اور مستند جوابات',
+            'إجابات واضحة عن الأسئلة الشائعة حول نظام عمل',
+            'AMAL OS ke bare mein aam sawalat ke wazeh jawabat'
+          )}
         </p>
       </div>
 
@@ -76,6 +88,8 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
       >
         {AMAL_FAQS.map((faq, idx) => {
           const isOpen = activeFaq === idx;
+          const questionText = isUrdu || isArabic ? faq.qUrdu : faq.q;
+          const answerText = (isUrdu || isArabic ? (faq.aUrdu || faq.a) : faq.a);
           return (
             <div
               key={idx}
@@ -84,9 +98,11 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
                 borderRadius: 10,
                 border: '1px solid #E5E7EB',
                 overflow: 'hidden',
+                transition: 'border-color 0.15s ease',
               }}
             >
               <button
+                type="button"
                 onClick={() => setActiveFaq(isOpen ? null : idx)}
                 style={{
                   width: '100%',
@@ -97,13 +113,13 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  textAlign: 'left',
+                  textAlign: isUrdu || isArabic ? 'right' : 'left',
                   fontWeight: 700,
                   fontSize: 15,
                   color: isOpen ? '#166534' : '#111827',
                 }}
               >
-                <span>{isUrdu ? faq.qUrdu : faq.q}</span>
+                <span>{questionText}</span>
                 <span style={{ fontSize: 18, color: '#9CA3AF', marginLeft: 12 }}>
                   {isOpen ? '▲' : '▼'}
                 </span>
@@ -111,7 +127,7 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
 
               {isOpen && (
                 <div style={{ padding: '0 20px 18px', borderTop: '1px solid #F3F4F6' }}>
-                  {isUrdu ? (
+                  {isUrdu || isArabic ? (
                     <p
                       style={{
                         fontSize: 15,
@@ -123,18 +139,18 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ isUrdu }) => {
                       dir="rtl"
                       className="font-urdu"
                     >
-                      {faq.aUrdu || faq.a}
+                      {answerText}
                     </p>
                   ) : (
                     <p
                       style={{
                         fontSize: 14,
-                        color: '#374151',
-                        lineHeight: 1.6,
+                        color: '#4B5563',
+                        lineHeight: 1.7,
                         margin: '10px 0 0',
                       }}
                     >
-                      {faq.a}
+                      {answerText}
                     </p>
                   )}
                 </div>

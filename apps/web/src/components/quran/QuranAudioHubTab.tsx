@@ -4,7 +4,7 @@ import { useAudioPlayer } from '../../context/AudioPlayerContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 export function QuranAudioHubTab() {
-  const { isUrdu } = useLanguage();
+  const { t, isUrdu } = useLanguage();
   const [activeSubTab, setActiveSubTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('QURAN');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
   const { playTrack, currentTrack, isPlaying } = useAudioPlayer();
@@ -13,7 +13,7 @@ export function QuranAudioHubTab() {
     playTrack({
       id: `audio-${url}`,
       title,
-      subtitle: subtitle || (isUrdu ? 'تلاوتِ قرآنِ کریم' : 'Master Recitation'),
+      subtitle: subtitle || t('Master Recitation', 'تلاوتِ قرآنِ کریم', 'تلاوة القرآن الكريم', 'Tilawat-e-Quran-e-Kareem'),
       audioUrl: url,
       reciter: reciter || selectedReciter,
     });
@@ -47,7 +47,7 @@ export function QuranAudioHubTab() {
             transition: 'all 0.15s ease',
           }}
         >
-          📖 {isUrdu ? 'تلاوتِ قرآنِ مجید' : 'Holy Quran Recitations'}
+          📖 {t('Holy Quran Recitations', 'تلاوتِ قرآنِ مجید', 'تلاوات القرآن الكريم', 'Tilawat-e-Quran-e-Majeed')}
         </button>
         <button
           onClick={() => setActiveSubTab('SHAMAIL')}
@@ -63,7 +63,7 @@ export function QuranAudioHubTab() {
             transition: 'all 0.15s ease',
           }}
         >
-          🌹 {isUrdu ? 'شمائلِ محمدیہ آڈیو' : 'Shama\'il al-Muhammadiyyah Audio'}
+          🌹 {t("Shama'il al-Muhammadiyyah Audio", 'شمائلِ محمدیہ آڈیو', 'صوتيات الشمائل المحمدية', "Shama'il al-Muhammadiyyah Audio")}
         </button>
         <button
           onClick={() => setActiveSubTab('SIRAH')}
@@ -79,7 +79,7 @@ export function QuranAudioHubTab() {
             transition: 'all 0.15s ease',
           }}
         >
-          🕌 {isUrdu ? 'سیرت النبی ﷺ آڈیو' : 'Prophetic Sirah Episodes'}
+          🕌 {t('Prophetic Sirah Episodes', 'سیرت النبی ﷺ آڈیو', 'حلقات السيرة النبوية الشريفة', 'Seerat-un-Nabi ﷺ Audio')}
         </button>
       </div>
 
@@ -105,7 +105,7 @@ export function QuranAudioHubTab() {
                 letterSpacing: 0.5,
               }}
             >
-              {isUrdu ? 'قاری صاحب کا انتخاب کریں:' : 'SELECT CERTIFIED MASTER RECITER:'}
+              {t('SELECT CERTIFIED MASTER RECITER:', 'قاری صاحب کا انتخاب کریں:', 'اختر القارئ المعتمد:', 'Certified Qari Sahab ka intikhab karein:')}
             </label>
             <div
               style={{
@@ -196,7 +196,7 @@ export function QuranAudioHubTab() {
                         Surah {surah.nameEnglish} ({surah.nameArabic})
                       </div>
                       <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>
-                        {surah.nameUrdu} • {surah.ayahCount} {isUrdu ? 'آیات' : 'Ayahs'} • {surah.revelationType}
+                        {surah.nameUrdu} • {surah.ayahCount} {t('Ayahs', 'آیات', 'آيات', 'Aayatein')} • {surah.revelationType === 'MAKKI' ? t('Meccan', 'مکی', 'مكية', 'Makki') : t('Medinan', 'مدنی', 'مدنية', 'Madani')}
                       </div>
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export function QuranAudioHubTab() {
                       gap: 6,
                     }}
                   >
-                    {isThisPlaying ? (isUrdu ? '⏸ وقفہ' : '⏸ Pause') : (isUrdu ? '▶ سنیں' : '▶ Play')}
+                    {isThisPlaying ? t('⏸ Pause', '⏸ وقفہ', '⏸ إيقاف', '⏸ Pause') : t('▶ Play', '▶ سنیں', '▶ استمع', '▶ Sunein')}
                   </button>
                 </div>
               );
@@ -246,7 +246,7 @@ export function QuranAudioHubTab() {
                 {ch.titleArabic}
               </div>
               <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 14 }}>
-                {ch.titleUrdu} • {ch.hadithCount} {isUrdu ? 'احادیث' : 'Prophetic Reports'}
+                {ch.titleUrdu} • {ch.hadithCount} {t('Prophetic Reports', 'احادیث', 'أحاديث نبوية', 'Ahadeeth')}
               </div>
 
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -360,7 +360,7 @@ export function QuranAudioHubTab() {
                   cursor: 'pointer',
                 }}
               >
-                ▶ {isUrdu ? 'سنیں' : 'Play Episode'}
+                ▶ {t('Play Episode', 'سنیں', 'استمع للحلقة', 'Episode Sunein')}
               </button>
             </div>
           ))}

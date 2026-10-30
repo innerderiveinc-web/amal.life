@@ -1,6 +1,7 @@
 import React from 'react';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
 import { showAmalToast } from '../Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface ClassicalWisdomItem {
   id: string;
@@ -24,6 +25,8 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
   items,
   onShareCard,
 }) => {
+  const { t, isUrdu, isArabic } = useLanguage();
+
   return (
     <div
       style={{
@@ -84,7 +87,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                     secondaryTextEnglish: item.englishSynopsis
                       ? item.englishSynopsis.slice(0, 240)
                       : undefined,
-                    sourceCitation: `${item.sourceWork} · مصدقہ علمی سند`,
+                    sourceCitation: `${item.sourceWork} · ${t('Verified Sanad', 'مصدقہ علمی سند', 'سند موثق', 'Verified Sanad')}`,
                     tafseerInsightUrdu: item.scholarlyNotes
                       ? item.scholarlyNotes.slice(0, 260)
                       : undefined,
@@ -103,10 +106,10 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                   alignItems: 'center',
                   gap: 4,
                 }}
-                title="اس کا خوبصورت سوشل میڈیا امیج کارڈ بنائیں"
+                title={t('Generate social media image card', 'اس کا خوبصورت سوشل میڈیا امیج کارڈ بنائیں', 'إنشاء بطاقة لمواقع التواصل', 'Image Card Banayein')}
               >
                 <span>📸</span>
-                <span>امیج کارڈ بنائیں</span>
+                <span>{t('Create Card', 'امیج کارڈ بنائیں', 'إنشاء بطاقة', 'Card Banayein')}</span>
               </button>
             </div>
 
@@ -117,8 +120,8 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                 fontSize: 16,
                 fontWeight: 800,
                 color: '#0F172A',
-                direction: 'rtl',
-                textAlign: 'right',
+                direction: isUrdu || isArabic ? 'rtl' : 'ltr',
+                textAlign: isUrdu || isArabic ? 'right' : 'left',
               }}
             >
               {item.chapterTitleUrdu}
@@ -188,7 +191,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                   lineHeight: 1.5,
                 }}
               >
-                💡 <strong>علمی نکتہ:</strong> {item.scholarlyNotes.slice(0, 180)}...
+                💡 <strong>{t('Scholarly Insight: ', 'علمی نکتہ: ', 'نكتة علمية: ', 'Ilmi Nukta: ')}</strong> {item.scholarlyNotes.slice(0, 180)}...
               </div>
             )}
           </div>
@@ -218,7 +221,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                   secondaryTextEnglish: item.englishSynopsis
                     ? item.englishSynopsis.slice(0, 240)
                     : undefined,
-                  sourceCitation: `${item.sourceWork} · مصدقہ علمی سند`,
+                  sourceCitation: `${item.sourceWork} · ${t('Verified Sanad', 'مصدقہ علمی سند', 'سند موثق', 'Verified Sanad')}`,
                   tafseerInsightUrdu: item.scholarlyNotes
                     ? item.scholarlyNotes.slice(0, 260)
                     : undefined,
@@ -241,7 +244,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
               }}
             >
               <span>📸</span>
-              <span>امیج کارڈ بنائیں</span>
+              <span>{t('Image Card', 'امیج کارڈ بنائیں', 'إنشاء بطاقة', 'Image Card')}</span>
             </button>
 
             <button
@@ -250,8 +253,8 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                 const text = encodeURIComponent(
                   `✨ *${item.chapterTitleUrdu}*\n\n` +
                     `*${item.arabicMatn.split('\n')[0] || ''}*\n\n` +
-                    `*ترجمہ:*\n${item.urduTranslation.split('\n')[0] || ''}\n\n` +
-                    `📖 *ماخذ:* ${item.sourceWork}\n` +
+                    `*${t('Translation:', 'ترجمہ:', 'الترجمة:', 'Tarjuma:')}*\n${item.urduTranslation.split('\n')[0] || ''}\n\n` +
+                    `📖 *${t('Source:', 'ماخذ:', 'المصدر:', 'Maakhaz:')}* ${item.sourceWork}\n` +
                     `_AMAL OS (amal.life)_`
                 );
                 window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
@@ -269,7 +272,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="واٹس ایپ پر شیئر کریں"
+              title={t('Share on WhatsApp', 'واٹس ایپ پر شیئر کریں', 'مشاركة عبر واتساب', 'WhatsApp par share karein')}
             >
               <span>💬</span>
             </button>
@@ -281,9 +284,17 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                   `✨ ${item.chapterTitleUrdu}\n\n` +
                   `${item.arabicMatn.split('\n')[0] || ''}\n\n` +
                   `${item.urduTranslation.split('\n')[0] || ''}\n\n` +
-                  `ماخذ: ${item.sourceWork} — AMAL OS`;
+                  `${t('Source: ', 'ماخذ: ', 'المصدر: ', 'Maakhaz: ')}${item.sourceWork} — AMAL OS`;
                 await navigator.clipboard.writeText(text);
-                showAmalToast('متن و حوالہ کاپی کر لیا گیا!', 'success');
+                showAmalToast(
+                  t(
+                    'Text & reference copied!',
+                    'متن و حوالہ کاپی کر لیا گیا!',
+                    'تم نسخ النص والمرجع بنجاح!',
+                    'Matn o hawala copy kar liya gaya!'
+                  ),
+                  'success'
+                );
               }}
               style={{
                 padding: '8px 12px',
@@ -295,7 +306,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
                 fontWeight: 700,
                 cursor: 'pointer',
               }}
-              title="متن کاپی کریں"
+              title={t('Copy text', 'متن کاپی کریں', 'نسخ النص', 'Matn copy karein')}
             >
               📋
             </button>

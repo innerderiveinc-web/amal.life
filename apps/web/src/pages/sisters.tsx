@@ -144,7 +144,7 @@ export default function SistersSanctuaryPage() {
       primaryTextUrdu: `ترجمہ: ${dua.translationUrdu}\n\nفضیلت: ${dua.spiritualVirtueUrdu}`,
       secondaryTextEnglish: `Translation: ${dua.translationEnglish}\n\nVirtue: ${dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu}`,
       sourceCitation: dua.reference,
-      badgeContext: isUrdu ? 'مسنون دعا' : 'Masnoon Supplication',
+      badgeContext: t('Masnoon Supplication', 'مسنون دعا', 'دعاء مسنون', 'Masnoon Dua'),
     };
     setShareCardPayload(payload);
   };
@@ -160,7 +160,7 @@ export default function SistersSanctuaryPage() {
       primaryTextUrdu: `${item.summaryUrdu}\n\n${item.detailedRulingUrdu}\n\nعملی ہدایات:\n${item.practicalGuidelines.map((g) => `• ${g}`).join('\n')}`,
       secondaryTextEnglish: `${item.summaryEnglish}\n\n${item.detailedRulingEnglish || item.detailedRulingUrdu}\n\nGuidelines:\n${(item.practicalGuidelinesEnglish || item.practicalGuidelines).map((g) => `• ${g}`).join('\n')}`,
       sourceCitation: item.hanafiReference,
-      badgeContext: isUrdu ? 'فقہ حنفی' : 'Hanafi Jurisprudence',
+      badgeContext: t('Hanafi Jurisprudence', 'فقہ حنفی', 'الفقه الحنفي', 'Fiqh Hanafi'),
     };
     setShareCardPayload(payload);
   };

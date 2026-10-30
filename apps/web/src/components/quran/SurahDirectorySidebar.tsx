@@ -23,7 +23,7 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
   selectedSurahNumber,
   onSelectSurah,
 }) => {
-  const { isUrdu } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <div
@@ -37,10 +37,20 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
     >
       <div style={{ marginBottom: 12 }}>
         <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 4 }}>
-          {isUrdu ? 'سورتوں کی فہرست (114 سورتیں)' : 'Surahs Directory (114 Surahs)'}
+          {t(
+            'Surahs Directory (114 Surahs)',
+            'سورتوں کی فہرست (114 سورتیں)',
+            'فهرس السور (١١٤ سورة)',
+            'Surahon ki Fehrist (114 Surahs)'
+          )}
         </div>
         <div style={{ fontSize: 11, color: '#64748B' }}>
-          {isUrdu ? 'کسی بھی سورت کو منتخب کر کے تلاوت و ترجمہ سماعت فرمائیں' : 'Select any Surah to read, recite, and listen'}
+          {t(
+            'Select any Surah to read, recite, and listen',
+            'کسی بھی سورت کو منتخب کر کے تلاوت و ترجمہ سماعت فرمائیں',
+            'اختر أي سورة للقراءة والتلاوة والاستماع',
+            'Kisi bhi Surah ko muntakhab karke tilawat o tarjuma sunein'
+          )}
         </div>
       </div>
 
@@ -49,7 +59,12 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
         type="text"
         value={surahSearchFilter}
         onChange={(e) => setSurahSearchFilter(e.target.value)}
-        placeholder={isUrdu ? 'سورت کا نام یا نمبر تلاش کریں...' : 'Search by Surah name or number...'}
+        placeholder={t(
+          'Search by Surah name or number...',
+          'سورت کا نام یا نمبر تلاش کریں...',
+          'ابحث باسم السورة أو رقمها...',
+          'Surah ka naam ya number talash karein...'
+        )}
         aria-label="Search Surahs by name or number"
         style={{
           width: '100%',
@@ -82,10 +97,10 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
             }}
           >
             {rf === 'ALL'
-              ? (isUrdu ? 'سب سورتیں' : 'All (114)')
+              ? t('All (114)', 'سب سورتیں (114)', 'الكل (١١٤)', 'Sab Surahs (114)')
               : rf === 'MECCAN'
-                ? (isUrdu ? 'مکی (86)' : 'Meccan (86)')
-                : (isUrdu ? 'مدنی (28)' : 'Medinan (28)')}
+                ? t('Meccan (86)', 'مکی (86)', 'مكية (٨٦)', 'Makki (86)')
+                : t('Medinan (28)', 'مدنی (28)', 'مدنية (٢٨)', 'Madani (28)')}
           </button>
         ))}
       </div>
@@ -93,7 +108,12 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
       {/* Beloved Shortcuts Carousel */}
       <div style={{ marginBottom: 12 }}>
         <div style={{ fontSize: 10, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', marginBottom: 6 }}>
-          {isUrdu ? 'بکثرت پڑھی جانے والی سورتیں' : 'Popular Surahs'}
+          {t(
+            'Popular Surahs',
+            'بکثرت پڑھی جانے والی سورتیں',
+            'السور الأكثر قراءة',
+            'Kasrat se padhi jane wali Suratein'
+          )}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
           {belovedShortcuts.map((sc) => (
@@ -160,7 +180,10 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
                     {meta.nameTransliterated}
                   </div>
                   <div style={{ fontSize: 10, color: '#64748B' }}>
-                    {meta.ayahsCount} آیات · {meta.revelationType === 'MECCAN' ? 'مکی' : 'مدنی'}
+                    {meta.ayahsCount} {t('verses', 'آیات', 'آية', 'aayatein')} ·{' '}
+                    {meta.revelationType === 'MECCAN'
+                      ? t('Meccan', 'مکی', 'مكية', 'Makki')
+                      : t('Medinan', 'مدنی', 'مدنية', 'Madani')}
                   </div>
                 </div>
               </div>

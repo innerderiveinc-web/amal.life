@@ -47,7 +47,7 @@ export function SistersDuasTab({
     const title = getDuaTitle(dua);
     const translation = getDuaPrimaryTranslation(dua);
     const virtue = getDuaVirtue(dua);
-    const textToCopy = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\n${isUrdu ? 'ترجمہ: ' : isRomanUrdu ? 'Tarjuma: ' : 'Translation: '}${translation}\n\n${isUrdu ? 'فضیلت: ' : isRomanUrdu ? 'Fazilat: ' : 'Virtue: '}${virtue}\n\n— Amal OS (Amal Nisa)`;
+    const textToCopy = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\n${t('Translation: ', 'ترجمہ: ', 'الترجمة: ', 'Tarjuma: ')}${translation}\n\n${t('Virtue: ', 'فضیلت: ', 'الفضيلة: ', 'Fazilat: ')}${virtue}\n\n— Amal OS (Amal Nisa)`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedDuaId(dua.id);
     setTimeout(() => setCopiedDuaId(null), 3000);
@@ -56,7 +56,7 @@ export function SistersDuasTab({
   const handleShareDuaWhatsApp = (dua: MasnoonFamilyDua) => {
     const title = getDuaTitle(dua);
     const translation = getDuaPrimaryTranslation(dua);
-    const textToShare = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${isUrdu ? 'ترجمہ: ' : isRomanUrdu ? 'Tarjuma: ' : 'Translation: '}${translation}\n\n— Amal Nisa (The Sisters Sanctuary)`;
+    const textToShare = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${t('Translation: ', 'ترجمہ: ', 'الترجمة: ', 'Tarjuma: ')}${translation}\n\n— Amal Nisa (The Sisters Sanctuary)`;
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`;
     window.open(url, '_blank');
   };
@@ -216,7 +216,7 @@ export function SistersDuasTab({
                 lineHeight: 1.6,
               }}
             >
-              <strong>{isUrdu ? 'فضیلت و روحانی برکت:' : isRomanUrdu ? 'Fazilat wa Ruhani Barkat:' : 'Spiritual Virtue:'}</strong>{' '}
+              <strong>{t('Spiritual Virtue:', 'فضیلت و روحانی برکت:', 'الفضيلة والبركة الروحية:', 'Fazilat wa Ruhani Barkat:')}</strong>{' '}
               {getDuaVirtue(dua)}
             </div>
 

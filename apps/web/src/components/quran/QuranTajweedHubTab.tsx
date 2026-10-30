@@ -4,7 +4,7 @@ import { useAudioPlayer } from '../../context/AudioPlayerContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 export function QuranTajweedHubTab() {
-  const { isUrdu } = useLanguage();
+  const { t, isUrdu } = useLanguage();
   const passages = wordByWordTajweedEngine.getAvailablePassages();
   const [activePassageId, setActivePassageId] = useState(passages[0]?.passageId || 'tajweed_fatihah_v1');
   const [speed, setSpeed] = useState<'NORMAL' | 'SLOW_075' | 'DRILL_05'>('SLOW_075');
@@ -98,7 +98,7 @@ export function QuranTajweedHubTab() {
                 marginBottom: 4,
               }}
             >
-              {isUrdu ? 'تجوید و مخارج مشق' : 'TAJWEED & PHONETIC DRILL'}
+              {t('TAJWEED & PHONETIC DRILL', 'تجوید و مخارج مشق', 'تدريب التجويد والمخارج', 'Tajweed o Makharij Mashq')}
             </span>
             <h2 style={{ fontSize: 22, fontWeight: 800, color: '#064E3B', margin: 0 }}>
               {currentPassage.title}
@@ -127,7 +127,7 @@ export function QuranTajweedHubTab() {
               }}
             >
               <span>{isPlaying && currentTrack?.id === currentPassage.passageId ? '⏸' : '▶'}</span>
-              <span>{isUrdu ? 'آڈیو سنیں' : 'Listen Audio'}</span>
+              <span>{isPlaying && currentTrack?.id === currentPassage.passageId ? t('Pause Audio', 'آڈیو روکیں', 'إيقاف الصوت', 'Audio Rokein') : t('Listen Audio', 'آڈیو سنیں', 'استمع للصوت', 'Audio Sunein')}</span>
             </button>
 
             <div
@@ -231,7 +231,7 @@ export function QuranTajweedHubTab() {
                 }}
               >
                 <div style={{ fontWeight: 800, fontSize: 13, marginBottom: 4 }}>
-                  🎙️ {isUrdu ? 'مخرج اور صوتی قاعدہ:' : 'Phonetic Articulation Point (Makhraj):'} &quot;{word.arabicWord}&quot; [{word.transliteration}]
+                  🎙️ {t('Phonetic Articulation Point (Makhraj):', 'مخرج اور صوتی قاعدہ:', 'المخرج والقاعدة الصوتية:', 'Makhraj aur Sawti Qaidah:')} &quot;{word.arabicWord}&quot; [{word.transliteration}]
                 </div>
                 <div style={{ fontSize: 13, lineHeight: 1.6 }}>
                   {word.makhrajHighlight ? (
@@ -239,9 +239,12 @@ export function QuranTajweedHubTab() {
                       <strong>Letter ({word.makhrajHighlight.letter}):</strong> {word.makhrajHighlight.articulationRule}
                     </>
                   ) : (
-                    isUrdu
-                      ? 'مد اور مخارج کے اصولوں کا خیال رکھتے ہوئے حروف کو حلق سے ادا کریں۔'
-                      : 'Articulate smoothly with proper vowel elongation (Madd) and clear throat resonance.'
+                    t(
+                      'Articulate smoothly with proper vowel elongation (Madd) and clear throat resonance.',
+                      'مد اور مخارج کے اصولوں کا خیال رکھتے ہوئے حروف کو حلق سے ادا کریں۔',
+                      'احرص على أداء المد والمخارج بدقة من الحلق.',
+                      'Madd aur makharij ke asoolon ka khayal rakhte hue huroof ada karein.'
+                    )
                   )}
                 </div>
               </div>

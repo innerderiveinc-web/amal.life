@@ -1,6 +1,7 @@
 import React from 'react';
 import { DhikrItem } from '../../lib/adhkar-data';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface AdhkarCardProps {
   item: DhikrItem;
@@ -12,9 +13,9 @@ interface AdhkarCardProps {
   onShare: (payload: UniversalCardPayload) => void;
   showTransliteration: boolean;
   showEnglish: boolean;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   activeTab: 'MORNING' | 'EVENING';
-  t: (en: string, ur: string) => string;
+  t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export const AdhkarCard: React.FC<AdhkarCardProps> = ({
@@ -27,10 +28,9 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
   onShare,
   showTransliteration,
   showEnglish,
-  isUrdu,
   activeTab,
-  t,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const progressRatio = Math.min(1, currentCount / item.targetCount);
 
   return (
@@ -45,18 +45,18 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
           ? '0 4px 14px rgba(16,185,129,0.12)'
           : '0 2px 8px rgba(0,0,0,0.03)',
         cursor: 'pointer',
-        userSelect: 'none',
         transition: 'all 0.2s ease',
+        userSelect: 'none',
         position: 'relative',
       }}
     >
-      {/* Top Badge: Number, Title, Target Count & Tap Ring */}
+      {/* Top Bar: Index + Title + Interactive Circular Counter */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          marginBottom: 18,
+          alignItems: 'center',
+          marginBottom: 16,
           flexWrap: 'wrap',
           gap: 12,
         }}
@@ -64,13 +64,13 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div
             style={{
-              width: 34,
-              height: 34,
+              width: 32,
+              height: 32,
               borderRadius: '50%',
-              backgroundColor: isCompleted ? '#166534' : '#064E3B',
-              color: '#FFFFFF',
+              backgroundColor: isCompleted ? '#166534' : '#E2E8F0',
+              color: isCompleted ? '#FFFFFF' : '#334155',
+              fontSize: 13,
               fontWeight: 800,
-              fontSize: 14,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -81,7 +81,13 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
 
           <div>
             <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#0F172A' }}>
-              {isUrdu ? item.titleUrdu : item.titleEnglish}
+              {isArabic
+                ? item.titleArabic || item.titleUrdu || item.titleEnglish
+                : isUrdu
+                ? item.titleUrdu
+                : isRomanUrdu
+                ? item.titleEnglish || item.titleUrdu
+                : item.titleEnglish}
             </h3>
             <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
               {isUrdu ? item.titleEnglish : item.titleArabic || item.titleUrdu} • {item.sourceHadith}
@@ -101,142 +107,139 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
               justifyContent: 'center',
             }}
           >
-            {/* Circular SVG Ring */}
             <svg width="64" height="64" style={{ transform: 'rotate(-90deg)' }}>
-              <circle cx="32" cy="32" r="26" stroke="#E2E8F0" strokeWidth="5" fill="none" />
               <circle
                 cx="32"
                 cy="32"
-                r="26"
+                r="28"
+                stroke="#E2E8F0"
+                strokeWidth="4"
+                fill="none"
+              />
+              <circle
+                cx="32"
+                cy="32"
+                r="28"
                 stroke={isCompleted ? '#166534' : '#10B981'}
                 strokeWidth="5"
-                strokeDasharray={163.3}
-                strokeDashoffset={163.3 * (1 - progressRatio)}
+                strokeDasharray={176}
+                strokeDashoffset={176 * (1 - progressRatio)}
                 strokeLinecap="round"
                 fill="none"
-                style={{ transition: 'stroke-dashoffset 0.2s ease' }}
+                style={{ transition: 'stroke-dashoffset 0.15s ease' }}
               />
             </svg>
-
-            {/* Center Counter */}
-            <div
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                pointerEvents: 'none',
-              }}
-            >
+            <div style={{ position: 'absolute', textAlign: 'center' }}>
               <div
                 style={{
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: 900,
-                  color: isCompleted ? '#166534' : '#064E3B',
+                  color: isCompleted ? '#166534' : '#0F172A',
                   lineHeight: 1,
                 }}
               >
                 {currentCount}
               </div>
-              <div style={{ fontSize: 10, color: '#64748B', fontWeight: 700 }}>
+              <div style={{ fontSize: 10, color: '#64748B', marginTop: 1 }}>
                 /{item.targetCount}
               </div>
             </div>
           </div>
 
-          {/* Reset Button */}
-          {currentCount > 0 && (
+          {/* Action Buttons: Reset & Share Card */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <button
               type="button"
               onClick={onReset}
-              title="Reset Counter"
+              title={t('Reset Counter', 'کاؤنٹر صفر کریں', 'إعادة ضبط العداد', 'Counter zero karein')}
               style={{
-                padding: '4px 8px',
-                borderRadius: 6,
+                width: 32,
+                height: 32,
+                borderRadius: 8,
                 border: '1px solid #CBD5E1',
                 backgroundColor: '#FFFFFF',
                 color: '#64748B',
-                fontSize: 11,
-                fontWeight: 700,
+                fontSize: 13,
                 cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              {t('Reset', 'صفر ↺')}
+              🔄
             </button>
-          )}
 
-          {/* Share Card Generator Button */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onShare({
-                category: 'DUA',
-                categoryLabelUrdu: activeTab === 'MORNING' ? 'اذکارِ صباح' : 'اذکارِ مساء',
-                categoryLabelEnglish:
-                  activeTab === 'MORNING' ? 'Morning Sunnah Dhikr' : 'Evening Sunnah Dhikr',
-                titleUrdu: item.titleUrdu,
-                titleEnglish: item.titleEnglish,
-                arabicText: item.arabicText,
-                primaryTextUrdu: item.translationUrdu,
-                secondaryTextEnglish: item.translationEnglish,
-                sourceCitation: item.sourceHadith,
-                badgeContext: isUrdu
-                  ? `${item.targetCount} مرتبہ · فضیلت و برکت`
-                  : `${item.targetCount}x · Virtue & Merits`,
-              });
-            }}
-            title={t(
-              'Create shareable visual card for this Dua',
-              'اس دعا کا خوبصورت کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا'
-            )}
-            style={{
-              padding: '4px 10px',
-              borderRadius: 6,
-              border: '1px solid #A7F3D0',
-              backgroundColor: '#ECFDF5',
-              color: '#064E3B',
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <span>📸</span>
-            <span>{t('Card', 'کارڈ')}</span>
-          </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShare({
+                  category: 'DUA',
+                  titleUrdu: isArabic
+                    ? item.titleArabic || item.titleUrdu
+                    : isUrdu
+                    ? item.titleUrdu
+                    : item.titleEnglish,
+                  badgeContext: `${t('Adhkar', 'مسنون ذکر', 'ذكر نبوي', 'Masnoon Dhikr')} • ${item.targetCount} ${t('Times', 'مرتبہ', 'مرات', 'Martaba')}`,
+                  arabicText: item.arabicText,
+                  primaryTextUrdu: item.translationUrdu,
+                  secondaryTextEnglish: item.translationEnglish,
+                  sourceCitation: `${item.sourceHadith} • ${activeTab === 'MORNING' ? t('Morning Adhkar', 'صبح کے اذکار', 'أذكار الصباح', 'Subh ke Adhkar') : t('Evening Adhkar', 'شام کے اذکار', 'أذكار المساء', 'Shaam ke Adhkar')}`,
+                  tafseerInsightUrdu: isUrdu || isArabic ? item.virtueUrdu : (item.virtueEnglish || item.virtueUrdu),
+                });
+              }}
+              title={t('Generate Image Card', 'خوبصورت امیج کارڈ بنائیں', 'إنشاء بطاقة مصورة', 'Image Card Banayein')}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 8,
+                border: '1px solid #10B981',
+                backgroundColor: '#ECFDF5',
+                color: '#065F46',
+                fontSize: 13,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              📸
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* ARABIC TEXT (Centered, Reverent Typography) */}
+      {/* ARABIC TEXT */}
       <div
         dir="rtl"
         style={{
-          fontFamily: 'var(--font-arabic), "Amiri", "Traditional Arabic", serif',
-          fontSize: 26,
+          fontFamily: 'var(--font-arabic), "Amiri", serif',
+          fontSize: 24,
           lineHeight: 2.2,
-          textAlign: 'center',
+          textAlign: 'right',
           color: '#064E3B',
+          marginBottom: 14,
+          backgroundColor: '#F8FAFC',
           padding: '16px 20px',
-          backgroundColor: isCompleted ? '#ECFDF5' : '#F8FAFC',
           borderRadius: 12,
-          marginBottom: 16,
-          border: '1px solid',
-          borderColor: isCompleted ? '#A7F3D0' : '#E2E8F0',
+          border: '1px solid #E2E8F0',
         }}
       >
         {item.arabicText}
       </div>
 
-      {/* Transliteration */}
-      {showTransliteration && (
+      {/* TRANSLITERATION (IF ENABLED) */}
+      {showTransliteration && item.transliteration && (
         <div
           style={{
             fontSize: 13,
             color: '#475569',
             fontStyle: 'italic',
             marginBottom: 12,
-            textAlign: 'center',
+            padding: '8px 12px',
+            backgroundColor: '#FEF9C3',
+            borderRadius: 8,
+            border: '1px solid #FDE047',
             lineHeight: 1.6,
           }}
         >
@@ -269,9 +272,36 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
               marginBottom: 4,
             }}
           >
-            ترجمہ و مفہوم:
+            {t('Translation & Meaning:', 'ترجمہ و مفہوم:', 'الترجمة والمعنى:', 'Tarjuma wa Mafhoom:')}
           </strong>
           {item.translationUrdu}
+        </div>
+      ) : isArabic ? (
+        <div
+          dir="rtl"
+          style={{
+            fontSize: 16,
+            lineHeight: 2.0,
+            textAlign: 'right',
+            color: '#1E293B',
+            marginBottom: 12,
+            backgroundColor: '#FFFBEB',
+            padding: '12px 18px',
+            borderRadius: 10,
+            border: '1px solid #FEF3C7',
+          }}
+        >
+          <strong
+            style={{
+              color: '#92400E',
+              fontSize: 13,
+              display: 'block',
+              marginBottom: 4,
+            }}
+          >
+            {t('Meaning & Context:', 'ترجمہ و مفہوم:', 'المعنى والبيان:', 'Tarjuma wa Mafhoom:')}
+          </strong>
+          {item.translationUrdu || item.translationEnglish}
         </div>
       ) : (
         <div
@@ -294,17 +324,17 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
               marginBottom: 4,
             }}
           >
-            English Meaning:
+            {t('English Meaning:', 'انگریزی ترجمہ:', 'المعنى بالإنجليزية:', 'English Meaning:')}
           </strong>
           {item.translationEnglish}
         </div>
       )}
 
-      {/* SECONDARY TRANSLATION */}
+      {/* SECONDARY TRANSLATION (EXPANDABLE) */}
       {!isUrdu && showEnglish && item.translationUrdu && (
         <details style={{ marginBottom: 12, fontSize: 12, color: '#64748B' }}>
           <summary style={{ cursor: 'pointer', fontWeight: 600, color: '#92400E' }}>
-            Show Urdu Translation (اردو ترجمہ)
+            {t('Show Urdu Translation', 'اردو ترجمہ دکھائیں', 'عرض الترجمة الأردية', 'Urdu Tarjuma Dikhayein')}
           </summary>
           <div
             dir="rtl"
@@ -337,9 +367,9 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
         }}
       >
         <span style={{ fontWeight: 800, color: '#065F46' }}>
-          {t('✨ Spiritual Merit & Virtue: ', '✨ فضیلت و برکت: ')}
+          {t('✨ Spiritual Merit & Virtue: ', '✨ فضیلت و برکت: ', '✨ الفضيلة والبركة: ', '✨ Fazilat o Barkat: ')}
         </span>
-        <span>{isUrdu ? item.virtueUrdu : item.virtueEnglish || item.virtueUrdu}</span>
+        <span>{isUrdu || isArabic ? item.virtueUrdu : (item.virtueEnglish || item.virtueUrdu)}</span>
       </div>
 
       {/* Tap Helper Hint */}
@@ -353,11 +383,18 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
         }}
       >
         {isCompleted
-          ? t('✓ Completed (You may continue tapping)', '✓ یہ دعا مکمل ہو چکی ہے (ٹپ جاری رکھ سکتے ہیں)')
-          : t(
-              `👆 Tap anywhere on card to count (${Math.max(0, item.targetCount - currentCount)} remaining)`,
-              `👆 کاؤنٹر بڑھانے کے لیے کارڈ پر کہیں بھی ٹپ کریں (باقی: ${Math.max(0, item.targetCount - currentCount)})`
-            )}
+          ? t(
+              '✓ Completed (You may continue tapping)',
+              '✓ یہ دعا مکمل ہو چکی ہے (ٹپ جاری رکھ سکتے ہیں)',
+              '✓ اكتمل هذا الذكر المبارك (يمكنك متابعة التكرار)',
+              '✓ Yeh dua mukammal ho chuki hai (tap jari rakh sakte hain)'
+            )
+          : `${t(
+              '👆 Tap anywhere on card to count',
+              '👆 کاؤنٹر بڑھانے کے لیے کارڈ پر کہیں بھی ٹپ کریں',
+              '👆 اضغط في أي مكان على البطاقة للعد',
+              '👆 Counter badhane ke liye tap karein'
+            )} (${Math.max(0, item.targetCount - currentCount)} ${t('remaining', 'باقی', 'متبقي', 'baqi')})`}
       </div>
     </div>
   );

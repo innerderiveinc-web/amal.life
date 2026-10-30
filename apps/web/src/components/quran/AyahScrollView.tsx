@@ -4,6 +4,7 @@ import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { getAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { AudioSegment } from './FloatingQuranAudioPlayer';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface AyahScrollViewProps {
   currentSurah: QuranSurahData;
@@ -45,6 +46,8 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
   fontSize,
   showRomanUrdu,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div style={{ padding: '8px 24px', display: 'flex', flexDirection: 'column' }}>
       {currentSurah.verses.map((verse) => {
@@ -108,7 +111,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                       border: '1px solid #A7F3D0',
                     }}
                   >
-                    🔖 منتخب آیت / نشانی (Current Position)
+                    🔖 {t('Current Position', 'منتخب آیت / نشانی', 'الموضع الحالي', 'Muntakhab Ayah / Nishani')}
                   </span>
                 )}
 
@@ -137,9 +140,9 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                   <span>
                     {isPlayingThis && currentAudioSegment === 'ARABIC'
                       ? isPlayingPaused
-                        ? 'Resume Tilawat'
-                        : '🎙️ Tilawat Playing'
-                      : 'Recitation (تلاوت)'}
+                        ? t('Resume Tilawat', 'تلاوت جاری کریں', 'استئناف التلاوة', 'Resume Tilawat')
+                        : t('🎙️ Reciting', '🎙️ تلاوت جاری', '🎙️ جارية التلاوة', '🎙️ Tilawat Jari')
+                      : t('Recitation', 'تلاوت', 'تلاوة', 'Tilawat')}
                   </span>
                 </button>
 
@@ -164,10 +167,10 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                     alignItems: 'center',
                     gap: 3,
                   }}
-                  title="Listen to Urdu Tarjuma Kanz-ul-Iman"
+                  title={t('Listen to Urdu Tarjuma Kanz-ul-Iman', 'کنز الایمان اردو ترجمہ سنیں', 'استمع لترجمة كنز الإيمان', 'Kanz-ul-Iman Urdu Tarjuma sunein')}
                 >
                   <span>🎧</span>
-                  <span>Urdu Audio</span>
+                  <span>{t('Urdu Audio', 'اردو آڈیو', 'صوت أردي', 'Urdu Audio')}</span>
                 </button>
               </div>
 
@@ -193,7 +196,11 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                 }}
               >
                 <span>📖</span>
-                <span>{hasWisdom ? 'Wisdom Card (حکمت و تفسیر)' : 'Tafseer Notes (تفسیر)'}</span>
+                <span>
+                  {hasWisdom
+                    ? t('Wisdom Card', 'حکمت کارڈ', 'بطاقة الحكمة', 'Hikmat Card')
+                    : t('Tafseer Notes', 'تفسیری حاشیہ', 'حاشية التفسير', 'Tafseer Notes')}
+                </span>
               </button>
 
               {/* Share Image Card Button */}
@@ -225,10 +232,10 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                   alignItems: 'center',
                   gap: 4,
                 }}
-                title="اس آیت کا خوبصورت تصویری کارڈ بنائیں"
+                title={t('Generate beautiful image card for this Ayah', 'اس آیت کا خوبصورت تصویری کارڈ بنائیں', 'إنشاء بطاقة مصورة لهذه الآية', 'Is ayah ka khubsurat image card banayein')}
               >
                 <span>📸</span>
-                <span>کارڈ</span>
+                <span>{t('Card', 'کارڈ', 'بطاقة', 'Card')}</span>
               </button>
             </div>
 
@@ -258,7 +265,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
               return (
                 <div style={{ marginBottom: 10, fontSize: 13, color: '#334155', fontStyle: 'italic', lineHeight: 1.6 }}>
                   <span style={{ fontSize: 11, fontWeight: 700, color: '#64748B', fontStyle: 'normal', marginRight: 6 }}>
-                    Transliteration (تلفظ):
+                    {t('Pronunciation (Transliteration):', 'تلفظ:', 'النطق الصوتي:', 'Talaffuz (Transliteration):')}
                   </span>
                   {translit}
                 </div>
@@ -268,7 +275,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
             {/* Urdu Tarjuma (Kanz-ul-Iman) */}
             <div style={{ marginBottom: 8 }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: '#047857', marginBottom: 2 }}>
-                Kanz-ul-Iman (Urdu):
+                {t('Kanz-ul-Iman (Urdu Translation):', 'ترجمہ: کنز الایمان فی ترجمۃ القرآن', 'الترجمة: كنز الإيمان', 'Tarjuma: Kanz-ul-Iman')}
               </div>
               <div
                 dir="rtl"
@@ -315,7 +322,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                           }}
                         >
                           <span>🔤</span>
-                          <span>Roman Transliteration:</span>
+                          <span>{t('Roman Transliteration:', 'رومن تلفظ:', 'النطق الصوتي اللاتيني:', 'Roman Transliteration:')}</span>
                         </div>
                         <div
                           style={{
@@ -346,7 +353,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                           }}
                         >
                           <span>📖</span>
-                          <span>Roman Urdu Translation:</span>
+                          <span>{t('Roman Urdu Translation:', 'رومن اردو ترجمہ:', 'ترجمة أردية بالحروف اللاتينية:', 'Roman Urdu Translation:')}</span>
                         </div>
                         <div
                           style={{

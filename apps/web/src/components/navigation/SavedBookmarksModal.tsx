@@ -236,7 +236,7 @@ export function SavedBookmarksModal({
                         </div>
 
                         <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A', marginBottom: 2 }}>
-                          {(language === 'ur' || language === 'ar') ? b.titleUrdu : b.titleEnglish}
+                          {language === 'ar' ? (b.titleArabic || b.titleUrdu || b.titleEnglish) : language === 'ur' ? b.titleUrdu : language === 'roman' ? (b.titleEnglish || b.titleUrdu) : b.titleEnglish}
                         </div>
 
                         {b.sourceOrAuthor && (
@@ -338,7 +338,7 @@ export function SavedBookmarksModal({
                     </div>
 
                     <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>
-                      {(language === 'ur' || language === 'ar') ? h.titleUrdu : h.titleEnglish}
+                      {language === 'ar' || language === 'ur' ? h.titleUrdu : h.titleEnglish}
                     </div>
                   </div>
 

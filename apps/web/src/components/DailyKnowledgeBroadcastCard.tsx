@@ -278,7 +278,11 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
             title={isAutoPlayActive ? 'Pause Carousel Auto-Advance' : 'Resume Carousel Auto-Advance'}
           >
             <span>{isAutoPlayActive ? '🔄' : '⏸'}</span>
-            <span>{isAutoPlayActive ? (isUrdu ? 'آٹو ایڈوانس آن' : 'Auto 8s') : (isUrdu ? 'روکا ہوا' : 'Paused')}</span>
+            <span>
+              {isAutoPlayActive
+                ? t('Auto 8s', 'آٹو ایڈوانس آن', 'تقدم تلقائي ٨ث', 'Auto 8s')
+                : t('Paused', 'روکا ہوا', 'متوقف', 'Ruka hua')}
+            </span>
           </button>
 
           <div
@@ -332,16 +336,16 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
       {/* Interactive Prayer Window Filter Selector */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 16, overflowX: 'auto', paddingBottom: 4 }}>
         <span style={{ fontSize: 11, fontWeight: 700, color: '#64748B', whiteSpace: 'nowrap' }}>
-          {isUrdu ? 'وقت کا انتخاب:' : 'Window:'}
+          {t('Window:', 'وقت کا انتخاب:', 'الوقت:', 'Waqt:')}
         </span>
         {[
-          { id: 'AUTO' as const, labelUrdu: 'لائیو وقت', labelEng: 'Live Auto' },
-          { id: 'FAJR' as const, labelUrdu: 'فجر', labelEng: 'Fajr' },
-          { id: 'CHASHT' as const, labelUrdu: 'چاشت', labelEng: 'Chasht' },
-          { id: 'DHUHR' as const, labelUrdu: 'ظہر', labelEng: 'Dhuhr' },
-          { id: 'ASR' as const, labelUrdu: 'عصر', labelEng: 'Asr' },
-          { id: 'MAGHRIB' as const, labelUrdu: 'مغرب', labelEng: 'Maghrib' },
-          { id: 'ISHA_NIGHT' as const, labelUrdu: 'عشاء', labelEng: 'Isha' },
+          { id: 'AUTO' as const, label: t('Live Auto', 'لائیو وقت', 'مباشر تلقائي', 'Live Auto') },
+          { id: 'FAJR' as const, label: t('Fajr', 'فجر', 'الفجر', 'Fajr') },
+          { id: 'CHASHT' as const, label: t('Chasht', 'چاشت', 'الضحى', 'Chasht') },
+          { id: 'DHUHR' as const, label: t('Dhuhr', 'ظہر', 'الظهر', 'Dhuhr') },
+          { id: 'ASR' as const, label: t('Asr', 'عصر', 'العصر', 'Asr') },
+          { id: 'MAGHRIB' as const, label: t('Maghrib', 'مغرب', 'المغرب', 'Maghrib') },
+          { id: 'ISHA_NIGHT' as const, label: t('Isha', 'عشاء', 'العشاء', 'Isha') },
         ].map((w) => {
           const isSelected = selectedSlotOverride === w.id;
           return (
@@ -360,7 +364,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
                 whiteSpace: 'nowrap',
               }}
             >
-              {isUrdu ? w.labelUrdu : w.labelEng}
+              {w.label}
             </button>
           );
         })}

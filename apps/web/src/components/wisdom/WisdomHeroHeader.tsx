@@ -2,29 +2,31 @@ import React from 'react';
 import Link from 'next/link';
 import { AmalTheme } from '@amal/ui';
 import { QURAN_WISDOM_COLLECTION } from '../../lib/quran-wisdom-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface WisdomHeroHeaderProps {
-  isUrdu: boolean;
   continuousIndex: number | null;
   onToggleContinuous: () => void;
+  isUrdu?: boolean;
 }
 
 export const WisdomHeroHeader: React.FC<WisdomHeroHeaderProps> = ({
-  isUrdu,
   continuousIndex,
   onToggleContinuous,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <>
-      {/* Top Breadcrumb & Switcher to Pure Quran */}
+      {/* Top Breadcrumb & Quran Full Reader Quick Link */}
       <div
         style={{
-          padding: '12px 0 16px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          padding: '16px 0 12px',
           flexWrap: 'wrap',
-          gap: 10,
+          gap: 12,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#666' }}>
@@ -36,11 +38,16 @@ export const WisdomHeroHeader: React.FC<WisdomHeroHeaderProps> = ({
               fontWeight: 600,
             }}
           >
-            Home
+            {t('Home', 'صفحۂ اول', 'الرئيسية', 'Ghar / Home')}
           </Link>
           <span>/</span>
           <span style={{ color: '#0F172A', fontWeight: 700 }}>
-            {isUrdu ? 'قرآنی حکمت و تدبر' : 'Quran Wisdom & Classical Cards'}
+            {t(
+              'Quran Wisdom & Classical Cards',
+              'قرآنی حکمت و تدبر',
+              'الحكمة القرآنية والبطاقات الكلاسيكية',
+              'Qurani Hikmat o Tadabbur Cards'
+            )}
           </span>
         </div>
 
@@ -62,7 +69,12 @@ export const WisdomHeroHeader: React.FC<WisdomHeroHeaderProps> = ({
         >
           <span>📖</span>
           <span>
-            {isUrdu ? 'مکمل قرآنِ کریم (114 سورتیں) ➔' : 'Full Quran Reader (114 Surahs) ➔'}
+            {t(
+              'Full Quran Reader (114 Surahs) ➔',
+              'مکمل قرآنِ کریم (114 سورتیں) ➔',
+              'المصحف الكامل (١١٤ سورة) ➔',
+              'Mukammal Quran (114 Surahs) ➔'
+            )}
           </span>
         </Link>
       </div>
@@ -92,12 +104,20 @@ export const WisdomHeroHeader: React.FC<WisdomHeroHeaderProps> = ({
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </div>
             <h1 style={{ fontSize: 28, fontWeight: 900, margin: '4px 0 8px' }}>
-              {isUrdu ? 'قرآنی حکمت، تدبر و عمل' : 'Sacred Knowledge & Wisdom Cards'}
+              {t(
+                'Sacred Knowledge & Wisdom Cards',
+                'قرآنی حکمت، تدبر و عمل',
+                'بطاقات المعرفة الشرعية والحكمة القرآنية',
+                'Qurani Hikmat, Tadabbur o Amal'
+              )}
             </h1>
             <p style={{ fontSize: 14, color: '#E2E8F0', lineHeight: 1.6, margin: 0 }}>
-              {isUrdu
-                ? '۴۲ منتخب قرآنی آیات، مستند احادیث، شمائل اور فقہی معمولات روزمرہ زندگی کے لیے عملی رہنمائی کے ساتھ۔'
-                : 'Curated Quranic verses, authentic Ahadith, and classical Sunni guidance with English and Roman transliteration.'}
+              {t(
+                'Curated Quranic verses, authentic Ahadith, and classical Sunni guidance with English and Roman transliteration.',
+                '۴۲ منتخب قرآنی آیات، مستند احادیث، شمائل اور فقہی معمولات روزمرہ زندگی کے لیے عملی رہنمائی کے ساتھ۔',
+                'آيات قرآنية مختارة، وأحاديث صحيحة، وتوجيهات سنية موثقة مع النطق اللاتيني والترجمة.',
+                '42 muntakhab Qurani aayatein, mustanad ahadeeth, shamail aur fiqhi mamoolat amli rehnumai ke sath.'
+              )}
             </p>
           </div>
 
@@ -123,12 +143,18 @@ export const WisdomHeroHeader: React.FC<WisdomHeroHeaderProps> = ({
             <span>{continuousIndex !== null ? '⏹' : '🎧'}</span>
             <span>
               {continuousIndex !== null
-                ? isUrdu
-                  ? `جاری ہے (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length})`
-                  : `Playing (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length}) — Pause`
-                : isUrdu
-                  ? 'تمام آیات کی تلاوت سنیں'
-                  : 'Play All 42 Verses Consecutively'}
+                ? t(
+                    `Playing (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length}) — Pause`,
+                    `جاری ہے (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length})`,
+                    `جاري التشغيل (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length})`,
+                    `Jari hai (${continuousIndex + 1}/${QURAN_WISDOM_COLLECTION.length})`
+                  )
+                : t(
+                    'Play All 42 Verses Consecutively',
+                    'تمام آیات کی تلاوت سنیں',
+                    'استمع لتلاوة جميع الـ ٤٢ آية بالتتابع',
+                    'Tamam aayaton ki tilawat sunein'
+                  )}
             </span>
           </button>
         </div>

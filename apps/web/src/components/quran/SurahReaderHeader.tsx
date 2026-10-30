@@ -2,6 +2,7 @@ import React from 'react';
 import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { QuranSurahData } from '../../lib/quran-surahs-data';
 import { AudioSyncMode } from './FloatingQuranAudioPlayer';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface SurahReaderHeaderProps {
   currentSurahMeta: QuranSurahMeta;
@@ -66,6 +67,8 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
   handlePlaySurahTafseer,
   handlePlaySurahTilawatOnly,
 }) => {
+  const { t, isUrdu, isArabic } = useLanguage();
+
   return (
     <>
       {/* Surah Header Banner */}
@@ -84,14 +87,21 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
             <span style={{ fontSize: 12, fontWeight: 800, color: '#166534', backgroundColor: '#DCFCE7', padding: '2px 8px', borderRadius: 6 }}>
-              سورۃ {currentSurahMeta.number}
+              {t('Surah', 'سورۃ', 'سورة', 'Surah')} {currentSurahMeta.number}
             </span>
             <span style={{ fontSize: 12, color: '#64748B' }}>
-              {currentSurahMeta.revelationType === 'MECCAN' ? 'مکی سورت' : 'مدنی سورت'} · {currentSurah.ayahsCount} آیات
+              {currentSurahMeta.revelationType === 'MECCAN'
+                ? t('Meccan Surah', 'مکی سورت', 'سورة مكية', 'Makki Surah')
+                : t('Medinan Surah', 'مدنی سورت', 'سورة مدنية', 'Madani Surah')}{' '}
+              · {currentSurah.ayahsCount} {t('Verses', 'آیات', 'آيات', 'Aayatein')}
             </span>
           </div>
           <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0F172A', margin: 0 }}>
-            {currentSurahMeta.nameTransliterated} ({currentSurahMeta.nameUrdu})
+            {isArabic
+              ? `${currentSurahMeta.nameArabic} (${currentSurahMeta.nameTransliterated})`
+              : isUrdu
+              ? `${currentSurahMeta.nameUrdu} (${currentSurahMeta.nameTransliterated})`
+              : `${currentSurahMeta.nameTransliterated} (${currentSurahMeta.nameUrdu})`}
           </h2>
         </div>
 
@@ -117,10 +127,10 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                 alignItems: 'center',
                 gap: 5,
               }}
-              title="تمام آیات ایک ساتھ اسکرول کریں"
+              title={t('Scroll all verses continuously', 'تمام آیات ایک ساتھ اسکرول کریں', 'تمرير جميع الآيات معاً', 'Tamam aayatein ek sath scroll karein')}
             >
               <span>📜</span>
-              <span>سکرول موڈ</span>
+              <span>{t('Scroll Mode', 'سکرول موڈ', 'وضع التمرير', 'Scroll Mode')}</span>
             </button>
             <button
               type="button"
@@ -140,10 +150,10 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                 alignItems: 'center',
                 gap: 5,
               }}
-              title="ایک وقت میں صرف ایک آیت کا پرسکون موڈ (آٹو ایڈوانس)"
+              title={t('Peaceful single verse mode with auto-advance', 'ایک وقت میں صرف ایک آیت کا پرسکون موڈ (آٹو ایڈوانس)', 'وضع الآية الواحدة الهادئ مع التقدم التلقائي', 'Ek waqt mein sirf ek ayah ka pur-sukoon mode (auto-advance)')}
             >
               <span>🎯</span>
-              <span>آیت بہ آیت فوکس</span>
+              <span>{t('Ayah Focus', 'آیت بہ آیت فوکس', 'تركيز آية بآية', 'Ayah Focus')}</span>
             </button>
           </div>
 
@@ -166,10 +176,14 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               gap: 6,
               boxShadow: '0 2px 6px rgba(22, 101, 52, 0.3)',
             }}
-            title="Arabic Tilawat + Authentic Urdu Tarjuma verse-by-verse sync"
+            title={t('Arabic Tilawat + Authentic Urdu Tarjuma verse-by-verse sync', 'تلاوت و ترجمہ کنز الایمان آیت بہ آیت ہم آہنگ', 'تلاوة وترجمة كنز الإيمان بالتزامن', 'Tilawat o Tarjuma Kanz-ul-Iman ayah ba ayah sync')}
           >
             <span>🎧</span>
-            <span>{(audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') && playingAyahNumber !== null ? '⏸ Pause Sync' : 'Tilawat + Urdu Tarjuma (Sync)'}</span>
+            <span>
+              {(audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') && playingAyahNumber !== null
+                ? t('⏸ Pause Sync', '⏸ وقفہ ہم آہنگی', '⏸ إيقاف المزامنة', '⏸ Pause Sync')
+                : t('Tilawat + Urdu Tarjuma (Sync)', 'تلاوت مع ترجمہ کنز الایمان', 'تلاوة مع ترجمة كنز الإيمان', 'Tilawat + Tarjuma (Sync)')}
+            </span>
           </button>
 
           {/* 2. Entire Urdu Tarjuma Continuous in One Go */}
@@ -191,10 +205,14 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               gap: 6,
               boxShadow: '0 2px 4px rgba(2, 132, 199, 0.2)',
             }}
-            title="Listen to full Urdu Tarjuma Kanz-ul-Iman continuously"
+            title={t('Listen to full Urdu Tarjuma Kanz-ul-Iman continuously', 'مکمل ترجمہ کنز الایمان مسلسل سنیں', 'الاستماع لترجمة كنز الإيمان كاملة مستمرة', 'Mukammal Tarjuma Kanz-ul-Iman musalsal sunein')}
           >
             <span>🎙️</span>
-            <span>{audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null ? '⏸ Pause Urdu' : 'Urdu Tarjuma (Continuous)'}</span>
+            <span>
+              {audioSyncMode === 'URDU_ONLY_CONTINUOUS' && playingAyahNumber !== null
+                ? t('⏸ Pause Urdu', '⏸ وقفہ اردو', '⏸ إيقاف الأردية', '⏸ Pause Urdu')
+                : t('Urdu Tarjuma (Continuous)', 'مسلسل اردو ترجمہ', 'ترجمة أردية مستمرة', 'Urdu Tarjuma (Musalsal)')}
+            </span>
           </button>
 
           {/* 3. Full Surah Studio Tafseer Audio (Dawat-e-Islami Sirat-ul-Jinan) */}
@@ -215,10 +233,16 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               alignItems: 'center',
               gap: 6,
             }}
-            title="Listen to full studio Tafseer Sirat-ul-Jinan"
+            title={t('Listen to full studio Tafseer Sirat-ul-Jinan', 'مکمل اسٹوڈیو تفسیر صراط الجنان سنیں', 'استمع لتفسير صراط الجنان الكامل', 'Mukammal studio Tafseer Sirat-ul-Jinan sunein')}
           >
             <span>📖</span>
-            <span>{(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST') ? (isPlayingPaused ? '▶ Resume Tafseer' : '⏸ Pause Tafseer') : 'Full Tafseer (Sirat-ul-Jinan)'}</span>
+            <span>
+              {(surahWideAudioType === 'TAFSEER' || audioSyncMode === 'TAFSEER_BROADCAST')
+                ? (isPlayingPaused
+                    ? t('▶ Resume Tafseer', '▶ تفسیر جاری کریں', '▶ استئناف التفسير', '▶ Resume Tafseer')
+                    : t('⏸ Pause Tafseer', '⏸ وقفہ تفسیر', '⏸ إيقاف التفسير', '⏸ Pause Tafseer'))
+                : t('Full Tafseer (Sirat-ul-Jinan)', 'مکمل تفسیر صراط الجنان', 'تفسير صراط الجنان الكامل', 'Mukammal Tafseer (Sirat-ul-Jinan)')}
+            </span>
           </button>
 
           {/* 4. Continuous Arabic Tilawat Only */}
@@ -239,10 +263,14 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               alignItems: 'center',
               gap: 6,
             }}
-            title="Continuous Arabic Tilawat of the full Surah"
+            title={t('Continuous Arabic Tilawat of the full Surah', 'مکمل سورت کی مسلسل عربی تلاوت سنیں', 'تلاوة عربية مستمرة للسورة كاملة', 'Mukammal Surah ki musalsal Arabic Tilawat sunein')}
           >
             <span>▶</span>
-            <span>{audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null ? '⏸ Pause Tilawat' : 'Arabic Tilawat Only'}</span>
+            <span>
+              {audioSyncMode === 'TILAWAT_ONLY' && playingAyahNumber !== null
+                ? t('⏸ Pause Tilawat', '⏸ وقفہ تلاوت', '⏸ إيقاف التلاوة', '⏸ Pause Tilawat')
+                : t('Arabic Tilawat Only', 'صرف عربی تلاوت', 'تلاوة عربية فقط', 'Sirf Arabic Tilawat')}
+            </span>
           </button>
 
           {/* 5. Clean Settings & Download Drawer Toggle */}
@@ -263,10 +291,14 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               alignItems: 'center',
               gap: 6,
             }}
-            title="قاری، رفتار، آف لائن کیش اور فونٹ ترتیبات"
+            title={t('Qari, speed, offline cache and font settings', 'قاری، رفتار، آف لائن کیش اور فونٹ ترتیبات', 'إعدادات القارئ والسرعة والحفظ دون اتصال والخط', 'Qari, raftaar, offline cache aur font tarteebat')}
           >
             <span>⚙️</span>
-            <span>{isSurahSettingsOpen ? 'اختیارات بند کریں ▲' : 'مزید اختیارات ▼'}</span>
+            <span>
+              {isSurahSettingsOpen
+                ? t('Close Options ▲', 'اختیارات بند کریں ▲', 'إغلاق الخيارات ▲', 'Ikhtiyarat band karein ▲')
+                : t('More Options ▼', 'مزید اختیارات ▼', 'المزيد من الخيارات ▼', 'Mazeed ikhtiyarat ▼')}
+            </span>
           </button>
         </div>
       </div>
@@ -287,7 +319,9 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
         >
           {/* Qari Selector */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>قاری:</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>
+              {t('Reciter:', 'قاری:', 'القارئ:', 'Qari:')}
+            </span>
             <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
               <button
                 onClick={() => setSelectedQari('alafasy')}
@@ -303,7 +337,7 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                   color: selectedQari === 'alafasy' ? '#FFFFFF' : '#334155',
                 }}
               >
-                العفاسی
+                {t('Alafasy', 'العفاسی', 'العفاسي', 'Alafasy')}
               </button>
               <button
                 onClick={() => setSelectedQari('husary')}
@@ -319,7 +353,7 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                   color: selectedQari === 'husary' ? '#FFFFFF' : '#334155',
                 }}
               >
-                الحصری
+                {t('Husary', 'الحصری', 'الحصري', 'Husary')}
               </button>
               <button
                 onClick={() => setSelectedQari('minshawi')}
@@ -335,14 +369,16 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                   color: selectedQari === 'minshawi' ? '#FFFFFF' : '#334155',
                 }}
               >
-                المنشاوی
+                {t('Minshawi', 'المنشاوی', 'المنشاوي', 'Minshawi')}
               </button>
             </div>
           </div>
 
           {/* Playback Speed Selector */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>رفتار:</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>
+              {t('Speed:', 'رفتار:', 'السرعة:', 'Raftaar:')}
+            </span>
             <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 2, borderRadius: 6 }}>
               {[0.75, 1, 1.25, 1.5].map((speed) => (
                 <button
@@ -370,7 +406,9 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
           {/* Continuous Surah Autoplay Toggle */}
           {setContinuousSurahPlayback && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>تسلسل:</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#475569' }}>
+                {t('Autoplay:', 'تسلسل:', 'التشغيل التلقائي:', 'Tasalsul:')}
+              </span>
               <button
                 type="button"
                 onClick={() => setContinuousSurahPlayback(!continuousSurahPlayback)}
@@ -389,10 +427,14 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                   alignItems: 'center',
                   gap: 4,
                 }}
-                title="سورت ختم ہونے پر اگلی سورت کا خودکار آغاز"
+                title={t('Automatically advance to next Surah on completion', 'سورت ختم ہونے پر اگلی سورت کا خودکار آغاز', 'الانتقال التلقائي للسورة التالية عند الانتهاء', 'Surah khatam hone par agli surah ka khud-kaar aaghaz')}
               >
                 <span>{continuousSurahPlayback ? '✓' : '○'}</span>
-                <span>{continuousSurahPlayback ? 'اگلی سورت جاری (آن)' : 'ایک سورت (بند)'}</span>
+                <span>
+                  {continuousSurahPlayback
+                    ? t('Next Surah (ON)', 'اگلی سورت جاری (آن)', 'السورة التالية (مفعل)', 'Agli Surah Jari (ON)')
+                    : t('Single Surah (OFF)', 'ایک سورت (بند)', 'سورة واحدة (معطل)', 'Ek Surah (Band)')}
+                </span>
               </button>
             </div>
           )}
@@ -418,10 +460,16 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="اس سورت کی آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں"
+              title={t('Cache audio in browser for offline playback', 'اس سورت کی آڈیو کو براؤزر میں آف لائن سننے کے لیے محفوظ کریں', 'حفظ صوت السورة في المتصفح للاستماع دون اتصال', 'Is surah ki audio ko offline sunne ke liye browser mein mehfooz karein')}
             >
               <span>{isSurahCachedOffline ? '✓' : '📥'}</span>
-              <span>{isCachingSurah ? 'محفوظ ہو رہا ہے...' : isSurahCachedOffline ? 'آف لائن محفوظ ہے' : 'آف لائن کیش'}</span>
+              <span>
+                {isCachingSurah
+                  ? t('Caching...', 'محفوظ ہو رہا ہے...', 'جاري الحفظ...', 'Mehfooz ho raha hai...')
+                  : isSurahCachedOffline
+                  ? t('Saved Offline', 'آف لائن محفوظ ہے', 'محفوظ دون اتصال', 'Offline Mehfooz hai')
+                  : t('Save Offline', 'آف لائن کیش', 'حفظ دون اتصال', 'Offline Cache')}
+              </span>
             </button>
 
             <button
@@ -441,10 +489,10 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="سورت کی MP3 فائل ڈاؤنلوڈ کریں"
+              title={t('Download MP3 audio file', 'سورت کی MP3 فائل ڈاؤنلوڈ کریں', 'تحميل ملف السورة MP3', 'Surah ki MP3 file download karein')}
             >
               <span>💾</span>
-              <span>MP3 فائل</span>
+              <span>{t('MP3 Audio', 'MP3 فائل', 'ملف MP3', 'MP3 Audio')}</span>
             </button>
           </div>
 
@@ -465,7 +513,7 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {showRomanUrdu ? 'Roman: ON' : 'Roman: OFF'}
+              {showRomanUrdu ? t('Roman: ON', 'رومن: آن', 'الرومانية: مفعل', 'Roman: ON') : t('Roman: OFF', 'رومن: بند', 'الرومانية: معطل', 'Roman: OFF')}
             </button>
 
             <div style={{ display: 'flex', gap: 2, alignItems: 'center', backgroundColor: '#E2E8F0', padding: '2px 6px', borderRadius: 6 }}>

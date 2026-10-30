@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { QuranAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { showAmalToast } from '../Toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 export type AyahWisdomTabKey = 'KHAZAIN' | 'KANZ' | 'ROMAN_URDU' | 'ENGLISH' | 'IBN_KATHIR' | 'REFERENCES' | 'AMAL';
 
@@ -26,6 +27,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
   fallbackUrdu,
   fallbackEnglish,
 }) => {
+  const { t } = useLanguage();
   const [userWisdomNote, setUserWisdomNote] = useState('');
 
   if (!wisdomCard) {
@@ -33,23 +35,38 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ padding: 12, borderRadius: 8, backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#059669', marginBottom: 6 }}>
-            اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن)
+            {t(
+              'Urdu Translation (Kanz-ul-Iman)',
+              'اردو ترجمہ (کنز الایمان فی ترجمۃ القرآن)',
+              'ترجمة كنز الإيمان في ترجمة القرآن',
+              'Urdu Tarjuma (Kanz-ul-Iman)'
+            )}
           </div>
           <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 18, lineHeight: 2.2, textAlign: 'right', color: '#1E293B' }}>
-            {fallbackUrdu || 'ترجمہ دستیاب نہیں ہے۔'}
+            {fallbackUrdu || t('Translation unavailable.', 'ترجمہ دستیاب نہیں ہے۔', 'الترجمة غير متوفرة.', 'Tarjuma dastiyab nahi hai.')}
           </div>
         </div>
 
         {/* Roman Urdu Transliteration & Tarjuma Fallback */}
         <div style={{ padding: 12, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE' }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#1E40AF', marginBottom: 4 }}>
-            🔤 Roman Arabic Transliteration (تلفظ):
+            {t(
+              '🔤 Roman Arabic Transliteration (Pronunciation):',
+              '🔤 تلفظ (رومن عربی):',
+              '🔤 النطق الصوتي اللاتيني:',
+              '🔤 Roman Arabic Transliteration (Talaffuz):'
+            )}
           </div>
           <div style={{ fontSize: 15, fontWeight: 600, color: '#1E3A8A', lineHeight: 1.6, marginBottom: 8 }}>
             {getAyahRomanTransliteration(surahNumber, ayahNumber, fallbackArabic)}
           </div>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#065F46', marginBottom: 4 }}>
-            📖 Roman Urdu Tarjuma (Kanz-ul-Iman):
+            {t(
+              '📖 Roman Urdu Translation (Kanz-ul-Iman):',
+              '📖 رومن اردو ترجمہ (کنز الایمان):',
+              '📖 ترجمة كنز الإيمان بالأردية اللاتينية:',
+              '📖 Roman Urdu Tarjuma (Kanz-ul-Iman):'
+            )}
           </div>
           <div style={{ fontSize: 15, fontWeight: 600, color: '#064E3B', lineHeight: 1.6 }}>
             {getAyahRomanUrduTarjuma(surahNumber, ayahNumber, fallbackUrdu)}
@@ -59,7 +76,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
         {fallbackEnglish && (
           <div style={{ padding: 12, borderRadius: 8, backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#334155', marginBottom: 6 }}>
-              English Translation
+              {t('English Translation', 'انگریزی ترجمہ', 'الترجمة الإنجليزية', 'English Translation')}
             </div>
             <div style={{ fontSize: 15, lineHeight: 1.7, color: '#1E293B' }}>
               {fallbackEnglish}
@@ -68,7 +85,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
         )}
 
         <div style={{ padding: 14, borderRadius: 8, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE', fontSize: 13, color: '#1E40AF', lineHeight: 1.6 }}>
-          📖 <strong>خزائن العرفان تفسیری سند:</strong> اس آیت مبارکہ کے لیے مفصل حاشیہ و کلاسیکی حوالہ جات آئندہ مرحلے میں شامل کیے جا رہے ہیں۔
+          {t(
+            "📖 Khaza'in-ul-Irfan Tafsir: Detailed marginalia and classical citations are being added in the next release.",
+            '📖 خزائن العرفان تفسیری سند: اس آیت مبارکہ کے لیے مفصل حاشیہ و کلاسیکی حوالہ جات آئندہ مرحلے میں شامل کیے جا رہے ہیں۔',
+            '📖 تفسير خزائن العرفان: يجري إضافة الحواشي المفصلة والمراجع الكلاسيكية في الإصدار القادم.',
+            "📖 Khaza'in-ul-Irfan Tafseer Sanad: Is ayah ke liye mufassal hashiya aur hawala jaat aainda marhale mein shamil kiye ja rahe hain."
+          )}
         </div>
       </div>
     );
@@ -80,7 +102,8 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
       {wisdomTab === 'KHAZAIN' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ padding: '8px 12px', borderRadius: 8, backgroundColor: '#FEF3C7', color: '#92400E', fontSize: 12, fontWeight: 700 }}>
-            مستند تفسیری حاشیہ: {wisdomCard.tafseerKhazainUlIrfan.author} · {wisdomCard.tafseerKhazainUlIrfan.citation}
+            {t('Authentic Tafsir Marginalia: ', 'مستند تفسیری حاشیہ: ', 'حاشية التفسير المعتمدة: ', 'Mustanad Tafseeri Hashiya: ')}
+            {wisdomCard.tafseerKhazainUlIrfan.author} · {wisdomCard.tafseerKhazainUlIrfan.citation}
           </div>
           <div
             dir="rtl"
@@ -100,7 +123,8 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           </div>
           {wisdomCard.tafseerKhazainUlIrfan.scholarlyNote && (
             <div style={{ fontSize: 13, color: '#475569', fontStyle: 'italic', paddingLeft: 6 }}>
-              💡 <strong>تحقیقی نکتہ:</strong> {wisdomCard.tafseerKhazainUlIrfan.scholarlyNote}
+              {t('💡 Scholarly Note: ', '💡 تحقیقی نکتہ: ', '💡 نكتة علمية: ', '💡 Tehqeeqi Nukta: ')}
+              {wisdomCard.tafseerKhazainUlIrfan.scholarlyNote}
             </div>
           )}
         </div>
@@ -112,7 +136,8 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           {wisdomCard.tafseerIbnKathir ? (
             <>
               <div style={{ padding: '8px 12px', borderRadius: 8, backgroundColor: '#EFF6FF', color: '#1E40AF', fontSize: 12, fontWeight: 700 }}>
-                ماخذ: {wisdomCard.tafseerIbnKathir.author} · {wisdomCard.tafseerIbnKathir.citation}
+                {t('Source: ', 'ماخذ: ', 'المصدر: ', 'Maakhaz: ')}
+                {wisdomCard.tafseerIbnKathir.author} · {wisdomCard.tafseerIbnKathir.citation}
               </div>
               <div
                 dir="rtl"
@@ -133,7 +158,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
             </>
           ) : (
             <div style={{ padding: 16, textAlign: 'center', color: '#64748B', fontSize: 14 }}>
-              تفسیر ابن کثیر کا اقتباس اس آیت کے لیے آئندہ ریلیز میں شامل کیا جائے گا۔
+              {t(
+                'Tafsir Ibn Kathir excerpt for this Ayah will be included in the next update.',
+                'تفسیر ابن کثیر کا اقتباس اس آیت کے لیے آئندہ ریلیز میں شامل کیا جائے گا۔',
+                'سيتم إدراج مقتطف تفسير ابن كثير لهذه الآية في التحديث القادم.',
+                'Tafseer Ibn Kathir ka iqtibas aainda release mein shamil kiya jayega.'
+              )}
             </div>
           )}
         </div>
@@ -143,7 +173,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
       {wisdomTab === 'KANZ' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ padding: '8px 12px', borderRadius: 8, backgroundColor: '#ECFDF5', color: '#065F46', fontSize: 12, fontWeight: 700 }}>
-            ماخذ: کنز الایمان فی ترجمۃ القرآن
+            {t('Source: Kanz-ul-Iman Translation', 'ماخذ: کنز الایمان فی ترجمۃ القرآن', 'المصدر: كنز الإيمان في ترجمة القرآن', 'Maakhaz: Kanz-ul-Iman')}
           </div>
           <div
             dir="rtl"
@@ -171,7 +201,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: '#1E40AF' }}>
-                🔤 تلفظ و تجوید (Roman Arabic Transliteration)
+                {t(
+                  '🔤 Tajweed & Phonetics (Roman Arabic Transliteration)',
+                  '🔤 تلفظ و تجوید (رومن عربی)',
+                  '🔤 التجويد والنطق الصوتي اللاتيني',
+                  '🔤 Talaffuz o Tajweed (Roman Arabic)'
+                )}
               </span>
               <span style={{ fontSize: 11, backgroundColor: '#DBEAFE', color: '#1E40AF', padding: '2px 8px', borderRadius: 6, fontWeight: 700 }}>
                 Tajweed Phonetics
@@ -189,7 +224,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           <div style={{ padding: 16, borderRadius: 12, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
-                📖 کنز الایمان فی ترجمۃ القرآن (Roman Urdu Translation)
+                {t(
+                  '📖 Kanz-ul-Iman in Roman Urdu',
+                  '📖 کنز الایمان فی ترجمۃ القرآن (رومن اردو)',
+                  '📖 كنز الإيمان بالأردية اللاتينية',
+                  '📖 Kanz-ul-Iman (Roman Urdu)'
+                )}
               </span>
               <span style={{ fontSize: 11, backgroundColor: '#D1FAE5', color: '#065F46', padding: '2px 8px', borderRadius: 6, fontWeight: 700 }}>
                 Ala Hazrat Imam Ahmad Raza
@@ -241,7 +281,8 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
                 </span>
               </div>
               <div style={{ fontSize: 12, color: '#64748B', marginBottom: 10 }}>
-                مصنف: <strong>{wisdomCard.crossReferenceBook.author}</strong> · {wisdomCard.crossReferenceBook.citation}
+                {t('Author: ', 'مصنف: ', 'المؤلف: ', 'Musannif: ')}
+                <strong>{wisdomCard.crossReferenceBook.author}</strong> · {wisdomCard.crossReferenceBook.citation}
               </div>
               <div
                 dir="rtl"
@@ -258,7 +299,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
             </div>
           ) : (
             <div style={{ padding: 16, textAlign: 'center', color: '#64748B', fontSize: 14 }}>
-              دیگر کتب سے تحقیقی شواہد کے اندراج کا عمل جاری ہے۔
+              {t(
+                'Cross-reference scholarly evidence is being curated.',
+                'دیگر کتب سے تحقیقی شواہد کے اندراج کا عمل جاری ہے۔',
+                'يجري تدوين الشواهد العلمية من الكتب المعتمدة.',
+                'Deegar kutub se tehqeeqi shawahid ka amal jari hai.'
+              )}
             </div>
           )}
         </div>
@@ -270,7 +316,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           {/* Tadabbur Question */}
           <div style={{ padding: 16, borderRadius: 10, backgroundColor: '#FEF9C3', border: '1px solid #FDE047' }}>
             <div style={{ fontSize: 12, fontWeight: 800, color: '#854D0E', marginBottom: 6 }}>
-              💭 فکر و تدبر (Reflection Prompt)
+              {t(
+                '💭 Reflection & Contemplation',
+                '💭 فکر و تدبر',
+                '💭 فكر وتدبر',
+                '💭 Fikr o Tadabbur'
+              )}
             </div>
             <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 17, lineHeight: 2.1, textAlign: 'right', color: '#713F12', marginBottom: 8 }}>
               {wisdomCard.tadabburPrompt.questionUrdu}
@@ -284,7 +335,12 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
               <textarea
                 value={userWisdomNote}
                 onChange={(e) => setUserWisdomNote(e.target.value)}
-                placeholder="اپنے ذاتی احساسات یا تاثرات یہاں درج فرمائیں (مکمل نجی و محفوظ)..."
+                placeholder={t(
+                  'Enter your personal reflections here (100% private and encrypted)...',
+                  'اپنے ذاتی احساسات یا تاثرات یہاں درج فرمائیں (مکمل نجی و محفوظ)...',
+                  'اكتب تأملاتك الشخصية هنا (خاصة ومحمية تماماً)...',
+                  'Apne zaati ahsaasaat yahan darj karein (mukammal niji aur mehfooz)...'
+                )}
                 style={{
                   width: '100%',
                   minHeight: 65,
@@ -300,7 +356,14 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
                 <button
                   onClick={() => {
                     if (!userWisdomNote.trim()) return;
-                    showAmalToast('آپ کا تاثر نجی طور پر محفوظ کر لیا گیا ہے۔ جزاك الله خيرا');
+                    showAmalToast(
+                      t(
+                        'Your reflection note was saved privately. Jazakallahu Khayran.',
+                        'آپ کا تاثر نجی طور پر محفوظ کر لیا گیا ہے۔ جزاك الله خيرا',
+                        'تم حفظ خاطرتك بخصوصية تامة. جزاكم الله خيراً',
+                        'Aap ka note niji taur par mehfooz kar liya gaya hai. Jazakallahu Khaira'
+                      )
+                    );
                     setUserWisdomNote('');
                   }}
                   style={{
@@ -314,7 +377,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  محفوظ کریں (Save Note)
+                  {t('Save Note', 'محفوظ کریں (Save Note)', 'حفظ الخاطرة', 'Save Note')}
                 </button>
               </div>
             </div>
@@ -324,10 +387,15 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
           <div style={{ padding: 16, borderRadius: 10, backgroundColor: '#F0FDF4', border: '1px solid #86EFAC' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
               <span style={{ fontSize: 14, fontWeight: 800, color: '#166534' }}>
-                🌱 عملی زندگی سے ربط (Sunnah Practice)
+                {t(
+                  '🌱 Sunnah Practice in Daily Life',
+                  '🌱 عملی زندگی سے ربط (سنت عمل)',
+                  '🌱 التطبيق العملي في الحياة (سنة نبوية)',
+                  '🌱 Amli Zindagi se Rabt (Sunnah Practice)'
+                )}
               </span>
               <span style={{ fontSize: 10, fontWeight: 800, padding: '3px 8px', borderRadius: 6, backgroundColor: '#DCFCE7', color: '#15803D' }}>
-                {wisdomCard.optionalAmal.classification} (مستحب / سنت)
+                {wisdomCard.optionalAmal.classification} ({t('Sunnah / Mustahabb', 'سنت / مستحب', 'سنة / مستحب', 'Sunnah / Mustahabb')})
               </span>
             </div>
 
@@ -335,7 +403,8 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
               {wisdomCard.optionalAmal.titleUrdu} ({wisdomCard.optionalAmal.titleEnglish})
             </div>
             <div style={{ fontSize: 11, color: '#047857', marginBottom: 8 }}>
-              سند / ماخذ: <strong>{wisdomCard.optionalAmal.classicalSource}</strong>
+              {t('Source: ', 'سند / ماخذ: ', 'السند والمصدر: ', 'Sanad / Maakhaz: ')}
+              <strong>{wisdomCard.optionalAmal.classicalSource}</strong>
             </div>
             <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 16, lineHeight: 2.1, textAlign: 'right', color: '#14532D', marginBottom: 12 }}>
               {wisdomCard.optionalAmal.actionDescriptionUrdu}
@@ -353,9 +422,23 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
                     time: new Date().toLocaleTimeString(),
                   });
                   localStorage.setItem(planKey, JSON.stringify(existing));
-                  showAmalToast('یہ مستحب عمل آپ کے آج کے معمولات میں شامل کر دیا گیا ہے۔');
+                  showAmalToast(
+                    t(
+                      'Added to your Daily Amal plan.',
+                      'یہ عمل آپ کے آج کے معمولات میں شامل کر دیا گیا ہے۔',
+                      'تمت إضافة هذا العمل إلى جدول أعمالك اليومية.',
+                      'Yeh amal aap ke aaj ke mamool mein shamil kar diya gaya hai.'
+                    )
+                  );
                 } catch {
-                  showAmalToast('معمولات میں شامل کر دیا گیا۔');
+                  showAmalToast(
+                    t(
+                      'Added to your daily schedule.',
+                      'معمولات میں شامل کر دیا گیا۔',
+                      'تمت الإضافة للأعمال اليومية.',
+                      'Mamool mein shamil kar diya gaya.'
+                    )
+                  );
                 }
               }}
               style={{
@@ -373,7 +456,14 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
               }}
             >
               <span>✓</span>
-              <span>آج کے روزمرہ معمول میں شامل کریں (Add to My Daily Amal)</span>
+              <span>
+                {t(
+                  'Add to My Daily Amal',
+                  'آج کے روزمرہ معمول میں شامل کریں',
+                  'إضافة إلى أورادي اليومية',
+                  'Aaj ke mamool mein shamil karein'
+                )}
+              </span>
             </button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { showAmalToast } from './Toast';
 import { UniversalContentShareModal } from './cards/UniversalContentShareModal';
 import { AyahAudioControlsBar } from './wisdom/AyahAudioControlsBar';
 import { AyahWisdomTabContent, AyahWisdomTabKey } from './wisdom/AyahWisdomTabContent';
+import { useLanguage } from '../context/LanguageContext';
 
 export interface AyahWisdomModalProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   fallbackUrdu,
   fallbackEnglish,
 }) => {
+  const { t } = useLanguage();
   const [wisdomTab, setWisdomTab] = useState<AyahWisdomTabKey>('KHAZAIN');
   const [selectedAudioType, setSelectedAudioType] = useState<'alafasy' | 'husary' | 'minshawi' | 'urdu' | 'tafseer'>('alafasy');
   const [isSpeakingTafseer, setIsSpeakingTafseer] = useState(false);
@@ -87,8 +89,18 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             setIsSpeakingTafseer(true);
             showAmalToast(
               tafseerStudioUrl
-                ? 'مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔'
-                : `آیت ${ayahNumber} کا مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
+                ? t(
+                    'Authentic Tafseer Audio (Sirat-ul-Jinan / Kanz-ul-Iman) playing.',
+                    'مستند تفسیری آڈیو (صراط الجنان / کنز الایمان) جاری ہے۔',
+                    'جاري تشغيل التفسير الصوتي المعتمد (صراط الجنان / كنز الإيمان).',
+                    'Mustanad Tafseeri Audio (Sirat-ul-Jinan / Kanz-ul-Iman) jari hai.'
+                  )
+                : t(
+                    `Ayah ${ayahNumber} authentic Urdu translation (Kanz-ul-Iman) playing.`,
+                    `آیت ${ayahNumber} کا مستند اردو ترجمہ (کنز الایمان) جاری ہے۔`,
+                    `جاري تشغيل الترجمة الأردية المعتمدة للآية ${ayahNumber} (كنز الإيمان).`,
+                    `Ayah ${ayahNumber} ka mustanad Urdu tarjuma (Kanz-ul-Iman) jari hai.`
+                  ),
               'info'
             );
           })
@@ -103,7 +115,15 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                   setIsSpeakingTafseer(true);
                 })
                 .catch(() => {
-                  showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
+                  showAmalToast(
+                    t(
+                      'Audio loading timed out. Please try again.',
+                      'آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔',
+                      'تأخر تحميل الصوت. يرجى المحاولة مرة أخرى.',
+                      'Audio load karne mein takheer hui. Dobara koshish karein.'
+                    ),
+                    'warning'
+                  );
                 });
             }
           });
@@ -114,7 +134,15 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
   const handleCacheAudioOffline = async () => {
     if (!audioSrc) return;
     if (typeof window === 'undefined' || !('caches' in window)) {
-      showAmalToast('آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔', 'warning');
+      showAmalToast(
+        t(
+          'Offline caching is not supported in your browser.',
+          'آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔',
+          'التخزين المؤقت دون اتصال غير مدعوم في متصفحك.',
+          'Aap ke browser mein offline caching dastiyab nahi hai.'
+        ),
+        'warning'
+      );
       return;
     }
     setIsCaching(true);
@@ -122,10 +150,26 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
       const cache = await caches.open('amal-quran-audio-v1');
       await cache.add(audioSrc);
       setIsCachedOffline(true);
-      showAmalToast('✓ آڈیو کامیابی سے آف لائن محفوظ ہو گئی! (Cached offline)', 'success');
+      showAmalToast(
+        t(
+          '✓ Audio successfully saved offline!',
+          '✓ آڈیو کامیابی سے آف لائن محفوظ ہو گئی!',
+          '✓ تم حفظ الصوت بنجاح للاستماع دون اتصال!',
+          '✓ Audio kamyabi se offline mehfooz ho gayi!'
+        ),
+        'success'
+      );
     } catch (e) {
       console.warn('Cache error:', e);
-      showAmalToast('آف لائن محفوظ کرنے میں خرابی پیش آئی۔', 'warning');
+      showAmalToast(
+        t(
+          'Error saving audio offline.',
+          'آف لائن محفوظ کرنے میں خرابی پیش آئی۔',
+          'حدث خطأ أثناء الحفظ دون اتصال.',
+          'Offline mehfooz karne mein kharabi pesh aayi.'
+        ),
+        'warning'
+      );
     } finally {
       setIsCaching(false);
     }
@@ -141,9 +185,25 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      showAmalToast('آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔ (Download started)', 'success');
+      showAmalToast(
+        t(
+          'Audio download started.',
+          'آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔',
+          'بدأ تحميل الملف الصوتي.',
+          'Audio download shuru ho gayi hai.'
+        ),
+        'success'
+      );
     } catch (e) {
-      showAmalToast('ڈاؤنلوڈ میں خرابی پیش آئی۔', 'warning');
+      showAmalToast(
+        t(
+          'Download error encountered.',
+          'ڈاؤنلوڈ میں خرابی پیش آئی۔',
+          'حدث خطأ في التحميل.',
+          'Download mein kharabi pesh aayi.'
+        ),
+        'warning'
+      );
     }
   };
 
@@ -203,7 +263,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                 letterSpacing: '0.04em',
               }}
             >
-              📖 AYAH WISDOM &amp; LISTENING CARD
+              📖 {t('AYAH WISDOM & LISTENING CARD', 'قرآنی حکمت و آڈیو کارڈ', 'بطاقة الحكمة والاستماع', 'AYAH WISDOM & LISTENING CARD')}
             </span>
             <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#0F172A' }}>
               {surahNameTransliterated || `Surah ${surahNumber}`} {surahNameUrdu ? `(${surahNameUrdu})` : ''} · Ayah {ayahNumber}
@@ -227,10 +287,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
                 alignItems: 'center',
                 gap: 5,
               }}
-              title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+              title={t('Generate social media image card', 'خوبصورت سوشل میڈیا کارڈ بنائیں', 'إنشاء بطاقة لمواقع التواصل', 'Khubsurat social media card banayein')}
             >
               <span>📸</span>
-              <span>کارڈ بنائیں</span>
+              <span>{t('Create Card', 'کارڈ بنائیں', 'إنشاء بطاقة', 'Card Banayein')}</span>
             </button>
 
             <button
@@ -301,13 +361,34 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             }}
           >
             {[
-              { key: 'KHAZAIN', label: 'خزائن العرفان (تفسیر)' },
-              { key: 'KANZ', label: 'کنز الایمان (اردو)' },
-              { key: 'ROMAN_URDU', label: 'رومن اردو (تلفظ و ترجمہ)' },
-              { key: 'ENGLISH', label: 'English Rendering' },
-              { key: 'IBN_KATHIR', label: 'تفسیر ابن کثیر' },
-              { key: 'REFERENCES', label: 'معتمد کتب کے حوالے' },
-              { key: 'AMAL', label: 'تدبر و مستحب عمل' },
+              {
+                key: 'KHAZAIN',
+                label: t("Khaza'in-ul-Irfan (Tafsir)", 'خزائن العرفان (تفسیر)', 'خزائن العرفان (تفسير)', "Khaza'in-ul-Irfan (Tafseer)"),
+              },
+              {
+                key: 'KANZ',
+                label: t('Kanz-ul-Iman (Urdu)', 'کنز الایمان (اردو)', 'كنز الإيمان (أردو)', 'Kanz-ul-Iman (Urdu)'),
+              },
+              {
+                key: 'ROMAN_URDU',
+                label: t('Roman Urdu (Transliteration & Tarjuma)', 'رومن اردو (تلفظ و ترجمہ)', 'الرومانية (نطق وترجمة)', 'Roman Urdu (Talaffuz o Tarjuma)'),
+              },
+              {
+                key: 'ENGLISH',
+                label: t('English Rendering', 'انگریزی ترجمہ', 'الترجمة الإنجليزية', 'English Translation'),
+              },
+              {
+                key: 'IBN_KATHIR',
+                label: t('Tafsir Ibn Kathir', 'تفسیر ابن کثیر', 'تفسير ابن كثير', 'Tafseer Ibn Kathir'),
+              },
+              {
+                key: 'REFERENCES',
+                label: t('Scholarly References', 'معتمد کتب کے حوالے', 'مراجع الكتب المعتمدة', 'Kutub ke Hawale'),
+              },
+              {
+                key: 'AMAL',
+                label: t('Reflection & Practice', 'تدبر و مستحب عمل', 'التدبر والعمل المستحب', 'Tadabbur o Amal'),
+              },
             ].map((tab) => {
               const isActive = wisdomTab === tab.key;
               return (
@@ -354,7 +435,7 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
           payload={{
             category: 'QURAN',
             titleUrdu: surahNameUrdu ? `سورۃ ${surahNameUrdu}` : `سورۃ ${surahNumber}`,
-            badgeContext: `آیت مبارکہ ${ayahNumber}`,
+            badgeContext: `${t('Ayah', 'آیت مبارکہ', 'الآية الكريمة', 'Ayah')} ${ayahNumber}`,
             arabicText: wisdomCard?.textArabic || fallbackArabic || '',
             primaryTextUrdu: wisdomCard?.tarjumaKanzulIman || fallbackUrdu || '',
             secondaryTextEnglish: wisdomCard?.tarjumaEnglish || fallbackEnglish,

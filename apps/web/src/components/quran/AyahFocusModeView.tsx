@@ -4,6 +4,7 @@ import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { getAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { AudioSegment } from './FloatingQuranAudioPlayer';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface AyahFocusModeViewProps {
   currentSurah: QuranSurahData;
@@ -45,6 +46,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
   showRomanUrdu,
   onOpenShareModal,
 }) => {
+  const { t } = useLanguage();
   const totalVerses = currentSurah.verses.length || 1;
   const currentAyah =
     currentSurah.verses.find((v) => v.ayahNumber === focusedAyahNumber) ||
@@ -76,12 +78,14 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: '#064E3B', backgroundColor: '#DCFCE7', padding: '3px 12px', borderRadius: 12 }}>
-              آیت مبارکہ {currentAyah.ayahNumber} از {totalVerses}
+              {t('Ayah', 'آیت مبارکہ', 'الآية الكريمة', 'Ayah')} {currentAyah.ayahNumber} {t('of', 'از', 'من', 'az')} {totalVerses}
             </span>
             {isPlayingThis && (
               <span style={{ fontSize: 11, fontWeight: 700, color: '#166534', display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', backgroundColor: '#22C55E' }}></span>
-                {currentAudioSegment === 'ARABIC' ? 'تلاوت جاری ہے...' : 'ترجمہ کنز الایمان جاری ہے...'}
+                {currentAudioSegment === 'ARABIC'
+                  ? t('Recitation playing...', 'تلاوت جاری ہے...', 'تلاوة جارية...', 'Tilawat jari hai...')
+                  : t('Tarjuma playing...', 'ترجمہ کنز الایمان جاری ہے...', 'ترجمة كنز الإيمان جارية...', 'Tarjuma Kanz-ul-Iman jari hai...')}
               </span>
             )}
           </div>
@@ -104,10 +108,10 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
                 alignItems: 'center',
                 gap: 6,
               }}
-              title="پچھلی آیت پر جائیں"
+              title={t('Go to previous Ayah', 'پچھلی آیت پر جائیں', 'الانتقال للآية السابقة', 'Pichhli Ayah par jayein')}
             >
               <span>⬅️</span>
-              <span>پچھلی آیت</span>
+              <span>{t('Previous', 'پچھلی آیت', 'السابقة', 'Pichhli')}</span>
             </button>
 
             <button
@@ -128,9 +132,9 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
                 gap: 6,
                 boxShadow: currentAyah.ayahNumber >= totalVerses ? 'none' : '0 2px 6px rgba(6,78,59,0.3)',
               }}
-              title="اگلی آیت پر جائیں"
+              title={t('Go to next Ayah', 'اگلی آیت پر جائیں', 'الانتقال للآية التالية', 'Agli Ayah par jayein')}
             >
-              <span>اگلی آیت</span>
+              <span>{t('Next', 'اگلی آیت', 'التالية', 'Agli')}</span>
               <span>➔</span>
             </button>
           </div>
@@ -217,7 +221,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
               {translit && (
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#64748B', marginBottom: 4, letterSpacing: 0.5 }}>
-                    Roman Transliteration (Pronunciation):
+                    {t('Roman Transliteration (Pronunciation):', 'تلفظ (رومن):', 'النطق اللاتيني (تجويد):', 'Roman Transliteration (Pronunciation):')}
                   </div>
                   <div style={{ fontSize: 14, color: '#334155', fontStyle: 'italic', lineHeight: 1.6 }}>
                     {translit}
@@ -226,7 +230,9 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
               )}
               {romanTarjuma && (
                 <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #E2E8F0', fontSize: 13, color: '#064E3B', fontWeight: 600 }}>
-                  <span style={{ fontSize: 10, color: '#047857', textTransform: 'uppercase', marginRight: 6 }}>Roman Urdu:</span>
+                  <span style={{ fontSize: 10, color: '#047857', textTransform: 'uppercase', marginRight: 6 }}>
+                    {t('Roman Urdu:', 'رومن اردو:', 'الترجمة اللاتينية:', 'Roman Urdu:')}
+                  </span>
                   {romanTarjuma}
                 </div>
               )}
@@ -237,7 +243,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
         {/* Urdu Translation: Kanz-ul-Iman */}
         <div style={{ marginBottom: 24, textAlign: 'center', backgroundColor: '#FDFBF7', padding: '20px 24px', borderRadius: 12, border: '1px solid #FEF3C7' }}>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#92400E', marginBottom: 8, letterSpacing: 0.5 }}>
-            Kanz-ul-Iman (Urdu Translation):
+            {t('Kanz-ul-Iman (Urdu Translation):', 'ترجمہ: کنز الایمان فی ترجمۃ القرآن', 'الترجمة: كنز الإيمان في ترجمة القرآن', 'Tarjuma: Kanz-ul-Iman')}
           </div>
           <div
             dir="rtl"
@@ -281,7 +287,11 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
             }}
           >
             <span>{isPlayingThis && !isPlayingPaused ? '⏸' : '▶️'}</span>
-            <span>{isPlayingThis && !isPlayingPaused ? 'وقف کریں (Pause)' : 'اس آیت کی تلاوت و ترجمہ سنیں'}</span>
+            <span>
+              {isPlayingThis && !isPlayingPaused
+                ? t('Pause', 'وقف کریں', 'إيقاف مؤقت', 'Pause')
+                : t('Listen to Ayah Tilawat & Tarjuma', 'اس آیت کی تلاوت و ترجمہ سنیں', 'استمع لتلاوة الآية وترجمتها', 'Is Ayah ki tilawat o tarjuma sunein')}
+            </span>
           </button>
 
           <button
@@ -302,7 +312,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
             }}
           >
             <span>🎙️</span>
-            <span>صرف اردو ترجمہ</span>
+            <span>{t('Urdu Tarjuma Only', 'صرف اردو ترجمہ', 'الترجمة الأردية فقط', 'Sirf Urdu Tarjuma')}</span>
           </button>
 
           {hasWisdom && (
@@ -324,7 +334,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
               }}
             >
               <span>✨</span>
-              <span>خزائن العرفان و حکمت</span>
+              <span>{t("Khaza'in-ul-Irfan & Wisdom", 'خزائن العرفان و حکمت', 'خزائن العرفان والحكمة', "Khaza'in-ul-Irfan o Hikmat")}</span>
             </button>
           )}
 
@@ -357,10 +367,10 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
               gap: 6,
               boxShadow: '0 2px 6px rgba(6,78,59,0.2)',
             }}
-            title="اس آیت کا خوبصورت امیج کارڈ بنائیں برائے واٹس ایپ و سوشل میڈیا"
+            title={t('Generate beautiful image card for this Ayah', 'اس آیت کا خوبصورت تصویری کارڈ بنائیں', 'إنشاء بطاقة مصورة لهذه الآية', 'Is ayah ka image card banayein')}
           >
             <span>📸</span>
-            <span>امیج کارڈ بنائیں (Share Card)</span>
+            <span>{t('Generate Image Card', 'امیج کارڈ بنائیں', 'إنشاء بطاقة مصورة', 'Image Card Banayein')}</span>
           </button>
         </div>
       </div>
@@ -389,7 +399,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
           }}
         >
           <span>⬅️</span>
-          <span>پچھلی آیت (Previous)</span>
+          <span>{t('Previous Ayah', 'پچھلی آیت', 'الآية السابقة', 'Pichhli Ayah')}</span>
         </button>
 
         <button
@@ -413,15 +423,19 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
             boxShadow: currentAyah.ayahNumber >= totalVerses ? 'none' : '0 4px 12px rgba(6,78,59,0.3)',
           }}
         >
-          <span>اگلی آیت (Next)</span>
+          <span>{t('Next Ayah', 'اگلی آیت', 'الآية التالية', 'Agli Ayah')}</span>
           <span>➔</span>
         </button>
       </div>
 
       {/* Serene Guidance Note */}
       <div style={{ textAlign: 'center', fontSize: 12, color: '#64748B', lineHeight: 1.6 }}>
-        💡 <strong>آٹو ایڈوانس (Auto-Advance):</strong> آڈیو سننے کے دوران ہر آیت کا ترجمہ مکمل ہونے پر اگلی آیت خود بخود سامنے آ جاتی ہے۔
-        دستی پڑھنے کے لیے کی بورڈ کے دائیں/بائیں تیر (← →) یا اوپر نیچے بٹن استعمال کریں۔
+        {t(
+          '💡 Auto-Advance: When listening, the next Ayah displays automatically upon audio completion. For manual reading, use left/right arrows (← →) or the buttons above.',
+          '💡 آٹو ایڈوانس (Auto-Advance): آڈیو سننے کے دوران ہر آیت کا ترجمہ مکمل ہونے پر اگلی آیت خود بخود سامنے آ جاتی ہے۔ دستی پڑھنے کے لیے کی بورڈ کے دائیں/بائیں تیر (← →) یا اوپر نیچے بٹن استعمال کریں۔',
+          '💡 التقدم التلقائي: أثناء الاستماع، تظهر الآية التالية تلقائياً عند انتهاء الصوت. للقراءة اليدوية، استخدم الأسهم (← →) أو الأزرار أعلاه.',
+          '💡 Auto-Advance: Audio sunte hue har aayat ka tarjuma mukammal hone par agli aayat khud-bakhud samne aa jati hai. Dasti padhne ke liye keyboard ke teer (← →) ya buttons istemal karein.'
+        )}
       </div>
     </div>
   );

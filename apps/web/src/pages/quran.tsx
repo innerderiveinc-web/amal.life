@@ -427,7 +427,7 @@ export default function QuranWisdomPage() {
                 }}
               >
                 <span>📖</span>
-                <span>{isUrdu ? 'تلاوت و سورت' : 'Read Surah'}</span>
+                <span>{t('Read Surah', 'تلاوت و سورت', 'قراءة السورة', 'Tilawat o Surah')}</span>
                 <span
                   style={{
                     fontSize: 10,
@@ -459,7 +459,7 @@ export default function QuranWisdomPage() {
                 }}
               >
                 <span>📋</span>
-                <span>{isUrdu ? 'سورت منتخب کریں' : 'All 114 Surahs'}</span>
+                <span>{t('All 114 Surahs', 'سورت منتخب کریں', 'جميع الـ ١١٤ سورة', 'Sab 114 Surahs')}</span>
               </button>
             </div>
 
@@ -506,7 +506,7 @@ export default function QuranWisdomPage() {
                       marginBottom: 4,
                     }}
                   >
-                    {isUrdu ? 'فوری سورت تبدیل کریں:' : 'Quick Surah Jumper:'}
+                    {t('Quick Surah Jumper:', 'فوری سورت تبدیل کریں:', 'الانتقال السريع للسورة:', 'Fauri Surah tabdeel karein:')}
                   </label>
                   <select
                     value={selectedSurahNumber}

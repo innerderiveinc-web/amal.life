@@ -7,7 +7,7 @@ import { showAmalToast } from '../components/Toast';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function TasbihPage() {
-  const { t, isUrdu } = useLanguage();
+  const { t, isUrdu, isArabic } = useLanguage();
   const presets = MasnoonTasbihEngine.getAllPresets();
   const [selectedPresetId, setSelectedPresetId] = useState<string>(presets[0]?.id || 'subhanallah');
   const [session, setSession] = useState<TasbihSessionState>(
@@ -172,7 +172,7 @@ export default function TasbihPage() {
             </div>
 
             {/* Urdu & English Translations */}
-            {isUrdu ? (
+            {isUrdu || isArabic ? (
               <>
                 <div style={{ fontSize: 16, color: '#1B4332', marginBottom: 4, fontWeight: 700 }} className="font-urdu">
                   {activePreset.urduTranslation}
@@ -291,7 +291,7 @@ export default function TasbihPage() {
                   cursor: 'pointer',
                 }}
               >
-                صفر کریں (Reset)
+                {t('Reset', 'صفر کریں (Reset)', 'إعادة ضبط', 'Reset')}
               </button>
             </div>
 
@@ -303,7 +303,7 @@ export default function TasbihPage() {
                   checked={hapticEnabled}
                   onChange={e => setHapticEnabled(e.target.checked)}
                 />
-                📳 وائبریشن (Haptic on Tap)
+                {t('📳 Haptic on Tap', '📳 وائبریشن (Haptic)', '📳 اهتزاز عند اللمس', '📳 Haptic (Vibration)')}
               </label>
 
               <label style={{ fontSize: 12, color: '#64748B', display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
@@ -312,7 +312,7 @@ export default function TasbihPage() {
                   checked={soundEnabled}
                   onChange={e => setSoundEnabled(e.target.checked)}
                 />
-                🔊 آواز (Audio Click)
+                {t('🔊 Audio Click', '🔊 آواز (Audio)', '🔊 صوت النقر', '🔊 Audio Click')}
               </label>
             </div>
 
@@ -331,7 +331,12 @@ export default function TasbihPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <span style={{ fontSize: 18 }}>✨</span>
                 <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
-                  فضیلت و سنت نبوی ﷺ (Virtue &amp; Hadith Reference)
+                  {t(
+                    'Virtue & Hadith Reference',
+                    'فضیلت و سنت نبوی ﷺ (Hadith Reference)',
+                    'الفضيلة والحديث الشريف',
+                    'Fazilat o Sunnat-e-Nabawi ﷺ'
+                  )}
                 </span>
                 <span
                   style={{

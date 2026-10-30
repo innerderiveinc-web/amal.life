@@ -11,7 +11,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 export default function ReflectionsPage() {
   const router = useRouter();
-  const { t, isUrdu } = useLanguage();
+  const { t, isUrdu, isArabic } = useLanguage();
   const [reflectionText, setReflectionText] = useState('');
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -192,13 +192,13 @@ export default function ReflectionsPage() {
                 <span>💡</span>
                 <span>{t('Daily Tadabbur Reflection Prompt:', 'فکر و تدبر کا نکتہ:')}</span>
               </div>
-              {isUrdu ? (
+              {isUrdu || isArabic ? (
                 <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 14, color: '#78350F', lineHeight: 1.9, textAlign: 'right', marginBottom: 4 }}>
                   {activePromptCard.tadabburPrompt.questionUrdu}
                 </div>
               ) : (
                 <div style={{ fontSize: 13, color: '#78350F', fontWeight: 600, marginBottom: 4 }}>
-                  "{activePromptCard.tadabburPrompt.questionEnglish}"
+                  &ldquo;{activePromptCard.tadabburPrompt.questionEnglish}&rdquo;
                 </div>
               )}
             </div>

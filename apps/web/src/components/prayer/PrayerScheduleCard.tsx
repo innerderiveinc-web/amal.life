@@ -79,7 +79,7 @@ export function PrayerScheduleCard({
                         color: isNext ? '#065F46' : '#111827',
                       }}
                     >
-                      {(language === 'ur' || language === 'ar') ? p.nameUrdu : p.name}
+                      {language === 'ar' ? p.nameArabic : language === 'ur' ? p.nameUrdu : p.name}
                     </span>
                     {isNext && (
                       <span
@@ -94,12 +94,12 @@ export function PrayerScheduleCard({
                           letterSpacing: 0.3,
                         }}
                       >
-                        {t('Next Prayer', 'اگلی نماز', 'الصلاة القادمة', 'Agli Namaz')} · {nextPrayer.formattedCountdownEnglish}
+                        {t('Next Prayer', 'اگلی نماز', 'الصلاة القادمة', 'Agli Namaz')} · {language === 'ur' || language === 'ar' ? (nextPrayer.formattedCountdownUrdu || nextPrayer.formattedCountdownEnglish) : nextPrayer.formattedCountdownEnglish}
                       </span>
                     )}
                   </div>
                   <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
-                    {p.nameArabic} • {(language === 'ur' || language === 'ar') ? p.nameUrdu : p.name}
+                    {p.nameArabic} • {language === 'ur' ? p.name : p.nameUrdu}
                   </div>
                 </div>
               </div>

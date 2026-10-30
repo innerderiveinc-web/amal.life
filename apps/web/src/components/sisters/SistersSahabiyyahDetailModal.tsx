@@ -191,7 +191,7 @@ export function SistersSahabiyyahDetailModal({
               lineHeight: 1.4,
             }}
           >
-            {language === 'ar' ? sah.nameArabic : (language === 'ur' ? sah.nameUrdu : sah.nameEnglish)}
+            {language === 'ar' ? sah.nameArabic : (language === 'ur' ? sah.nameUrdu : (language === 'roman' ? (sah.nameEnglish || sah.nameUrdu) : sah.nameEnglish))}
           </h2>
 
           <div style={{ fontSize: 14, color: '#D1FAE5', fontWeight: 600, direction: 'rtl' }}>

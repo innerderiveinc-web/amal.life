@@ -44,7 +44,7 @@ export const DailyMamoolBar: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [locationVersion, setLocationVersion] = useState(0);
   const { playTrack } = useAudioPlayer();
-  const { t, isUrdu } = useLanguage();
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
@@ -103,8 +103,12 @@ export const DailyMamoolBar: React.FC = () => {
     if (!mamool) return;
     playTrack({
       id: `dua-${mamool.currentSlotNameEnglish}-${mamool.featuredDua.source}`,
-      title: isUrdu ? mamool.featuredDua.titleUrdu : mamool.featuredDua.titleEnglish,
-      subtitle: `${mamool.featuredDua.source} • ${isUrdu ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}`,
+      title: isArabic || isUrdu
+        ? mamool.featuredDua.titleUrdu
+        : isRomanUrdu
+        ? (mamool.featuredDua.titleEnglish || mamool.featuredDua.titleUrdu)
+        : mamool.featuredDua.titleEnglish,
+      subtitle: `${mamool.featuredDua.source} • ${isUrdu || isArabic ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}`,
       audioUrl: mamool.featuredDua.audioUrl,
       reciter: 'Qari Mahmood Khalil Al-Husary',
       arabicSnippet: mamool.featuredDua.arabicText,

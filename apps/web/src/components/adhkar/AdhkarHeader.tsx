@@ -1,8 +1,14 @@
 import React from 'react';
+import Link from 'next/link';
+import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface AdhkarHeaderProps {
   activeTab: 'MORNING' | 'EVENING';
   onTabChange: (tab: 'MORNING' | 'EVENING') => void;
+  completedCount: number;
+  totalCount: number;
+  completionPercentage: number;
   hapticEnabled: boolean;
   onToggleHaptic: () => void;
   soundEnabled: boolean;
@@ -10,16 +16,16 @@ interface AdhkarHeaderProps {
   showTransliteration: boolean;
   onToggleTransliteration: () => void;
   onResetAll: () => void;
-  completedCount: number;
-  totalCount: number;
-  completionPercentage: number;
-  isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  isUrdu?: boolean;
+  t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
   activeTab,
   onTabChange,
+  completedCount,
+  totalCount,
+  completionPercentage,
   hapticEnabled,
   onToggleHaptic,
   soundEnabled,
@@ -27,33 +33,59 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
   showTransliteration,
   onToggleTransliteration,
   onResetAll,
-  completedCount,
-  totalCount,
-  completionPercentage,
-  isUrdu,
-  t,
 }) => {
+  const { t, isUrdu, isArabic } = useLanguage();
+
   return (
     <>
-      {/* Header Banner */}
-      <div style={{ marginBottom: 24, textAlign: 'center' }}>
+      {/* Breadcrumb Navigation */}
+      <div style={{ padding: '16px 0 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <Link
+          href="/"
+          style={{
+            color: AmalTheme.colors.primary,
+            textDecoration: 'none',
+            fontWeight: 700,
+            fontSize: 13,
+          }}
+        >
+          {t('Home', 'صفحۂ اول', 'الرئيسية', 'Ghar / Home')}
+        </Link>
+        <span style={{ color: '#94A3B8' }}>/</span>
+        <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 13 }}>
+          {t('Daily Adhkar', 'مسنون اذکار و وظائف', 'الأذكار اليومية', 'Rozana Masnoon Adhkar')}
+        </span>
+      </div>
+
+      {/* Hero Header */}
+      <div
+        style={{
+          textAlign: 'center',
+          padding: '24px 20px 20px',
+          borderRadius: 20,
+          background: 'linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%)',
+          border: '1px solid #DCFCE7',
+          marginBottom: 20,
+        }}
+      >
         <div
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            backgroundColor: '#ECFDF5',
-            padding: '6px 16px',
+            backgroundColor: '#DCFCE7',
+            padding: '4px 14px',
             borderRadius: 20,
             marginBottom: 12,
-            border: '1px solid #A7F3D0',
           }}
         >
           <span style={{ fontSize: 16 }}>🌿</span>
           <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
             {t(
               'Authentic Sunnah Adhkar for Protection & Blessing (Al-Hisn al-Hasin & Bahar-e-Shariat)',
-              'مستند مسنون معمولات برائے حفظ و برکت (حصنِ حصین و بہارِ شریعت)'
+              'مستند مسنون معمولات برائے حفظ و برکت (حصنِ حصین و بہارِ شریعت)',
+              'أذكار السنة النبوية الصحيحة للحفظ والبركة (الحصن الحصين وبهار شريعت)',
+              'Mustanad Masnoon Adhkar baraye Hifz o Barkat (Al-Hisn al-Hasin o Bahar-e-Shariat)'
             )}
           </span>
         </div>
@@ -67,21 +99,29 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
             letterSpacing: -0.5,
           }}
         >
-          {t('Morning & Evening Sunnah Adhkar', 'صبح و شام کے مسنون اذکار و دعائیں')}
+          {t(
+            'Morning & Evening Sunnah Adhkar',
+            'صبح و شام کے مسنون اذکار و دعائیں',
+            'أذكار الصباح والمساء النبوية المشروعة',
+            'Subh o Shaam ke Masnoon Adhkar'
+          )}
         </h1>
-        {isUrdu ? (
-          <div
-            dir="rtl"
-            className="font-urdu"
-            style={{ fontSize: 22, color: '#92400E', fontWeight: 700, marginBottom: 10 }}
-          >
-            صبح و شام کے مسنون اذکار و دعائیں
-          </div>
-        ) : (
-          <div style={{ fontSize: 14, color: '#065F46', fontWeight: 700, marginBottom: 10 }}>
-            Prophetic Protection & Daily Remembrances
-          </div>
-        )}
+        <div
+          dir={isUrdu || isArabic ? 'rtl' : 'ltr'}
+          style={{
+            fontSize: isUrdu || isArabic ? 18 : 14,
+            color: '#065F46',
+            fontWeight: 700,
+            marginBottom: 10,
+          }}
+        >
+          {t(
+            'Prophetic Protection & Daily Remembrances',
+            'حفاظتِ نبوی اور یومیہ معمولاتِ ذکر',
+            'الحصن النبوي والأذكار اليومية المستجابة',
+            'Hifazat-e-Nabawi aur Rozmarrah ke Masnoon Adhkar'
+          )}
+        </div>
         <p
           style={{
             maxWidth: 640,
@@ -93,7 +133,9 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
         >
           {t(
             'Prophetic invocations prescribed for the start of the morning (after Fajr) and evening (after Asr/Maghrib) for complete spiritual protection, forgiveness, and peace of heart.',
-            'حضور نبی کریم ﷺ کے ارشادات کے مطابق صبح (بعد نمازِ فجر) اور شام (بعد نمازِ عصر/مغرب) کے مسنون اذکار برائے روحانی حفاظت، مغفرت اور قلبی سکون۔'
+            'حضور نبی کریم ﷺ کے ارشادات کے مطابق صبح (بعد نمازِ فجر) اور شام (بعد نمازِ عصر/مغرب) کے مسنون اذکار برائے روحانی حفاظت، مغفرت اور قلبی سکون۔',
+            'أدعية وأذكار مأثورة عن النبي ﷺ للصباح (بعد الفجر) والمساء (بعد العصر والمغرب) للحفظ الشامل وطمأنينة القلب.',
+            'Huzoor Nabi Kareem ﷺ ke irshadaat ke mutabiq subh (baad Fajr) aur shaam (baad Asr/Maghrib) ke masnoon azkaar baraye ruhani hifazat aur qalbi sukoon.'
           )}
         </p>
       </div>
@@ -149,7 +191,7 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
               }}
             >
               <span>🌅</span>
-              <span>{t('Morning Adhkar', 'صبح کے اذکار')}</span>
+              <span>{t('Morning Adhkar', 'صبح کے اذکار', 'أذكار الصباح', 'Subh ke Adhkar')}</span>
             </button>
 
             <button
@@ -172,7 +214,7 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
               }}
             >
               <span>🌙</span>
-              <span>{t('Evening Adhkar', 'شام کے اذکار')}</span>
+              <span>{t('Evening Adhkar', 'شام کے اذکار', 'أذكار المساء', 'Shaam ke Adhkar')}</span>
             </button>
           </div>
 
@@ -193,7 +235,9 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {hapticEnabled ? '📳 Haptic On' : '📳 Haptic Off'}
+              {hapticEnabled
+                ? t('📳 Haptic On', '📳 وائبریشن آن', '📳 الاهتزاز مفعل', '📳 Haptic On')
+                : t('📳 Haptic Off', '📳 وائبریشن آف', '📳 الاهتزاز معطل', '📳 Haptic Off')}
             </button>
 
             <button
@@ -211,7 +255,9 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {soundEnabled ? '🔊 Audio On' : '🔇 Muted'}
+              {soundEnabled
+                ? t('🔊 Sound On', '🔊 آواز آن', '🔊 الصوت مفعل', '🔊 Sound On')
+                : t('🔇 Muted', '🔇 میوٹ', '🔇 كتم الصوت', '🔇 Muted')}
             </button>
 
             <button
@@ -229,7 +275,7 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              🔤 Transliteration
+              🔤 {t('Transliteration', 'تلفظ', 'النطق اللاتيني', 'Transliteration')}
             </button>
 
             <button
@@ -247,7 +293,7 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              🔄 Reset
+              🔄 {t('Reset', 'ری سیٹ', 'إعادة ضبط', 'Reset')}
             </button>
           </div>
         </div>
@@ -267,18 +313,24 @@ export const AdhkarHeader: React.FC<AdhkarHeaderProps> = ({
             <span style={{ color: '#064E3B' }}>
               {t(
                 `Completed (${activeTab === 'MORNING' ? 'Morning' : 'Evening'}): ${completedCount} of ${totalCount} (${completionPercentage}%)`,
-                `آج کے مکمل اذکار (${activeTab === 'MORNING' ? 'صبح' : 'شام'}): ${completedCount} از ${totalCount} (${completionPercentage}%)`
+                `آج کے مکمل اذکار (${activeTab === 'MORNING' ? 'صبح' : 'شام'}): ${completedCount} از ${totalCount} (${completionPercentage}%)`,
+                `الأذكار المكتملة (${activeTab === 'MORNING' ? 'الصباح' : 'المساء'}): ${completedCount} من ${totalCount} (${completionPercentage}%)`,
+                `Mukammal Adhkar (${activeTab === 'MORNING' ? 'Subh' : 'Shaam'}): ${completedCount} az ${totalCount} (${completionPercentage}%)`
               )}
             </span>
             <span style={{ color: completionPercentage === 100 ? '#166534' : '#64748B' }}>
               {completionPercentage === 100
                 ? t(
                     "🎉 Complete! Today's adhkar routine finished",
-                    '🎉 مبارک! آج کا پورا معمول مکمل ہو گیا'
+                    '🎉 مبارک! آج کا پورا معمول مکمل ہو گیا',
+                    '🎉 ما شاء الله! اكتمل ورد اليوم بنجاح',
+                    '🎉 Mubarak! Aaj ka pura mamool mukammal ho gaya'
                   )
                 : t(
                     `${totalCount - completedCount} remaining`,
-                    `${totalCount - completedCount} اذکار باقی ہیں`
+                    `${totalCount - completedCount} اذکار باقی ہیں`,
+                    `بقي ${totalCount - completedCount} أذكار`,
+                    `${totalCount - completedCount} adhkar baqi hain`
                   )}
             </span>
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../context/LanguageContext';
 
 export type QuranHubTab = 'READER' | 'AUDIO' | 'TAJWEED' | 'WISDOM';
 
@@ -18,8 +19,8 @@ interface QuranHeaderBarProps {
   onResumeLastRead: () => void;
   activeHubTab: QuranHubTab;
   onSelectHubTab: (tab: QuranHubTab) => void;
-  isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  isUrdu?: boolean;
+  t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
@@ -27,35 +28,50 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
   onResumeLastRead,
   activeHubTab,
   onSelectHubTab,
-  isUrdu,
-  t,
 }) => {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const tabs = [
     {
       id: 'READER' as QuranHubTab,
       icon: '📖',
-      labelUrdu: 'تلاوت و تفاسیر (۱۱۴ سورتیں)',
-      labelEn: 'Recitation & Tafsir (114 Surahs)',
+      label: t(
+        'Recitation & Tafsir (114 Surahs)',
+        'تلاوت و تفاسیر (۱۱۴ سورتیں)',
+        'التلاوة والتفاسير (١١٤ سورة)',
+        'Tilawat o Tafaseer (114 Surahs)'
+      ),
     },
     {
       id: 'AUDIO' as QuranHubTab,
       icon: '🎧',
-      labelUrdu: 'قراء کرام و آڈیو اسٹریمنگ',
-      labelEn: 'Master Reciters Stream',
+      label: t(
+        'Master Reciters Stream',
+        'قراء کرام و آڈیو اسٹریمنگ',
+        'كبار القراء والبث الصوتي',
+        'Qurra Kiram o Audio Stream'
+      ),
     },
     {
       id: 'TAJWEED' as QuranHubTab,
       icon: '🎙️',
-      labelUrdu: 'تجوید و مخارج مشق',
-      labelEn: 'Tajweed & Makharij Trainer',
+      label: t(
+        'Tajweed & Makharij Trainer',
+        'تجوید و مخارج مشق',
+        'تدريب التجويد والمخارج',
+        'Tajweed o Makharij Mashq'
+      ),
     },
     {
       id: 'WISDOM' as QuranHubTab,
       icon: '✨',
-      labelUrdu: 'قرآنی حکمت کارڈز',
-      labelEn: 'Ayah Wisdom Cards',
+      label: t(
+        'Ayah Wisdom Cards',
+        'قرآنی حکمت کارڈز',
+        'بطاقات الحكمة القرآنية',
+        'Qurani Hikmat Cards'
+      ),
     },
   ];
 
@@ -84,11 +100,11 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               fontSize: 13,
             }}
           >
-            Home
+            {t('Home', 'صفحۂ اول', 'الرئيسية', 'Ghar / Home')}
           </Link>
           <span style={{ color: '#94A3B8' }}>/</span>
           <span style={{ color: '#0F172A', fontWeight: 800, fontSize: 16 }}>
-            {t('The Holy Quran', 'القرآن الکریم')}
+            {t('The Holy Quran', 'القرآن الکریم', 'القرآن الكريم', 'Al-Quran Al-Kareem')}
           </span>
         </div>
 
@@ -111,13 +127,20 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
                 boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
                 transition: 'all 0.15s ease',
               }}
-              title={t('Resume last recitation', 'آخری تلاوت یا سنے گئے مقام پر فوری جائیں')}
+              title={t(
+                'Resume last recitation',
+                'آخری تلاوت یا سنے گئے مقام پر فوری جائیں',
+                'استئناف آخر تلاوة',
+                'Aakhri tilawat ya sune gaye maqam par jayein'
+              )}
             >
               <span>🔖</span>
               <span>
                 {t(
                   `Last Read: ${lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`,
-                  `آخری مقام: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`
+                  `آخری مقام: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`,
+                  `آخر موضع: ${lastReadPosition.surahNameArabic || lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`,
+                  `Aakhri Maqam: ${lastReadPosition.surahNameTransliterated} (${lastReadPosition.ayahNumber})`
                 )}
               </span>
             </button>
@@ -133,7 +156,12 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               border: '1px solid #BBF7D0',
             }}
           >
-            {t('✓ Uthmanic Medina Script', '✓ مصحف مدینہ منورہ')}
+            {t(
+              '✓ Uthmanic Medina Script',
+              '✓ مصحف مدینہ منورہ',
+              '✓ مصحف المدينة المنورة',
+              '✓ Mus-haf Madinah Munawwarah'
+            )}
           </span>
           <span
             style={{
@@ -146,7 +174,12 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               border: '1px solid #FDE68A',
             }}
           >
-            {t('Translation: Kanz-ul-Iman', 'ترجمہ: کنز الایمان فی ترجمۃ القرآن')}
+            {t(
+              'Translation: Kanz-ul-Iman',
+              'ترجمہ: کنز الایمان فی ترجمۃ القرآن',
+              'الترجمة: كنز الإيمان في ترجمة القرآن',
+              'Tarjuma: Kanz-ul-Iman'
+            )}
           </span>
           <span
             style={{
@@ -159,7 +192,12 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               border: '1px solid #BFDBFE',
             }}
           >
-            {t("Tafsir: Khaza'in-ul-Irfan", 'تفسیر: خزائن العرفان')}
+            {t(
+              "Tafsir: Khaza'in-ul-Irfan",
+              'تفسیر: خزائن العرفان',
+              'التفسير: خزائن العرفان',
+              "Tafseer: Khaza'in-ul-Irfan"
+            )}
           </span>
           <Link
             href="/wisdom"
@@ -175,10 +213,22 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               alignItems: 'center',
               gap: 5,
             }}
-            title={t('Open 42 Curated Quranic Wisdom Cards', '۴۲ منتخب قرآنی حکمت کارڈز کھولیں')}
+            title={t(
+              'Open 42 Curated Quranic Wisdom Cards',
+              '۴۲ منتخب قرآنی حکمت کارڈز کھولیں',
+              'فتح ٤٢ بطاقة حكمة قرآنية',
+              '42 Muntakhab Qurani Hikmat Cards kholein'
+            )}
           >
             <span>✨</span>
-            <span>{t('Wisdom Cards', 'حکمت کارڈز')}</span>
+            <span>
+              {t(
+                'Wisdom Cards',
+                'حکمت کارڈز',
+                'بطاقات الحكمة',
+                'Hikmat Cards'
+              )}
+            </span>
           </Link>
         </div>
       </div>
@@ -226,7 +276,7 @@ export const QuranHeaderBar: React.FC<QuranHeaderBarProps> = ({
               }}
             >
               <span>{tab.icon}</span>
-              <span>{isUrdu ? tab.labelUrdu : tab.labelEn}</span>
+              <span>{tab.label}</span>
             </button>
           );
         })}

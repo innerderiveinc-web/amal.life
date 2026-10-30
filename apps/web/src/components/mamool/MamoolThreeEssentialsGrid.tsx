@@ -51,7 +51,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
             {isUrdu ? mamool.masnoonAmal.titleUrdu : isArabic ? (mamool.masnoonAmal.titleUrdu || mamool.masnoonAmal.titleEnglish) : isRomanUrdu ? (mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu) : (mamool.masnoonAmal.titleEnglish || mamool.masnoonAmal.titleUrdu)}
           </div>
           <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6 }}>
-            {isUrdu ? mamool.masnoonAmal.descriptionUrdu : mamool.masnoonAmal.descriptionEnglish || mamool.masnoonAmal.descriptionUrdu}
+            {isUrdu || isArabic ? mamool.masnoonAmal.descriptionUrdu : (mamool.masnoonAmal.descriptionEnglish || mamool.masnoonAmal.descriptionUrdu)}
           </div>
         </div>
         <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
@@ -101,10 +101,10 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
             </button>
           </div>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6, lineHeight: 1.4 }}>
-            {isUrdu ? mamool.microAmalOfTheDay.titleUrdu : mamool.microAmalOfTheDay.titleEnglish || mamool.microAmalOfTheDay.titleUrdu}
+            {isArabic ? (mamool.microAmalOfTheDay.titleUrdu || mamool.microAmalOfTheDay.titleEnglish) : isUrdu ? mamool.microAmalOfTheDay.titleUrdu : isRomanUrdu ? (mamool.microAmalOfTheDay.titleEnglish || mamool.microAmalOfTheDay.titleUrdu) : (mamool.microAmalOfTheDay.titleEnglish || mamool.microAmalOfTheDay.titleUrdu)}
           </div>
           <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.6 }}>
-            {isUrdu ? mamool.microAmalOfTheDay.actionUrdu : mamool.microAmalOfTheDay.actionEnglish || mamool.microAmalOfTheDay.actionUrdu}
+            {isUrdu || isArabic ? mamool.microAmalOfTheDay.actionUrdu : (mamool.microAmalOfTheDay.actionEnglish || mamool.microAmalOfTheDay.actionUrdu)}
           </div>
         </div>
         <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12, paddingTop: 8, borderTop: '1px solid #EDF2F7', fontWeight: 600 }}>
@@ -133,7 +133,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
             </span>
           </div>
           <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
-            {isUrdu ? mamool.featuredDua.titleUrdu : mamool.featuredDua.titleEnglish || mamool.featuredDua.titleUrdu}
+            {isArabic || isUrdu ? mamool.featuredDua.titleUrdu : isRomanUrdu ? (mamool.featuredDua.titleEnglish || mamool.featuredDua.titleUrdu) : mamool.featuredDua.titleEnglish}
           </div>
           <div
             className="font-arabic"
@@ -155,7 +155,7 @@ export const MamoolThreeEssentialsGrid: React.FC<MamoolThreeEssentialsGridProps>
           </div>
 
           <div style={{ fontSize: 12, color: '#475569', marginBottom: 6, lineHeight: 1.5 }}>
-            {isUrdu ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}
+            {isUrdu || isArabic ? mamool.featuredDua.translationUrdu : mamool.featuredDua.translationEnglish}
           </div>
 
           <div style={{ fontSize: 11, color: '#64748B', marginBottom: 12, fontWeight: 600 }}>
