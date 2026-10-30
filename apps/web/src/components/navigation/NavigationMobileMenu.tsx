@@ -5,7 +5,7 @@ import { NavAppItem } from './AppsLauncherPopover';
 export interface NavigationMobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  currentLang: 'en' | 'ur' | 'ar';
+  currentLang: 'en' | 'ur' | 'ar' | 'roman';
   currentPath: string;
   ibadatItems: NavAppItem[];
   ilmItems: NavAppItem[];
@@ -24,6 +24,13 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
   ahkamItems,
 }) => {
   if (!isOpen) return null;
+
+  const getItemTitle = (item: NavAppItem) => {
+    if (currentLang === 'roman') return item.titleRoman || item.titleUrdu || item.title;
+    if (currentLang === 'ur') return item.titleUrdu || item.title;
+    if (currentLang === 'ar') return item.titleArabic || item.titleUrdu || item.title;
+    return item.title;
+  };
 
   return (
     <div
@@ -64,7 +71,15 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           }}
         >
           <span>📲</span>
-          <span>{currentLang === 'ur' ? 'ہوم اسکرین پر انسٹال کریں' : 'Install App (100% Offline)'}</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'ہوم اسکرین پر انسٹال کریں'
+              : currentLang === 'ar'
+              ? 'تثبيت التطبيق على الشاشة الرئيسية'
+              : currentLang === 'roman'
+              ? 'Home Screen par Install karein'
+              : 'Install App (100% Offline)'}
+          </span>
         </button>
 
         {/* Premier Quran Link (Mobile) */}
@@ -88,10 +103,24 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 18 }}>📖</span>
-            <span>{currentLang === 'ur' ? 'قرآنِ کریم و حکمت' : 'Holy Quran & Wisdom'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'قرآنِ کریم و حکمت'
+                : currentLang === 'ar'
+                ? 'القرآن الكريم والحكمة'
+                : currentLang === 'roman'
+                ? 'Quran Kareem wa Hikmat'
+                : 'Holy Quran & Wisdom'}
+            </span>
           </div>
           <span style={{ fontSize: 10, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-            {currentLang === 'ur' ? 'کنز الایمان' : 'Kanz-ul-Iman'}
+            {currentLang === 'ur'
+              ? 'کنز الایمان'
+              : currentLang === 'ar'
+              ? 'كنز الإيمان'
+              : currentLang === 'roman'
+              ? 'Kanz-ul-Iman'
+              : 'Kanz-ul-Iman'}
           </span>
         </Link>
 
@@ -116,10 +145,24 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 18 }}>🌱</span>
-            <span>{currentLang === 'ur' ? 'روحانی اسفار و روزانہ ٹریکر' : 'Spiritual Journeys (8 Roadmaps)'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'روحانی اسفار و روزانہ ٹریکر'
+                : currentLang === 'ar'
+                ? 'الرحلات الإيمانية والمسار اليومي'
+                : currentLang === 'roman'
+                ? 'Ruhani Asfar wa Daily Tracker'
+                : 'Spiritual Journeys (8 Roadmaps)'}
+            </span>
           </div>
           <span style={{ fontSize: 10, backgroundColor: '#059669', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-            {currentLang === 'ur' ? '14 روزہ' : '14-Day'}
+            {currentLang === 'ur'
+              ? '14 روزہ'
+              : currentLang === 'ar'
+              ? '١٤ يوماً'
+              : currentLang === 'roman'
+              ? '14-Rooza'
+              : '14-Day'}
           </span>
         </Link>
 
@@ -144,10 +187,24 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 18 }}>🌸</span>
-            <span>{currentLang === 'ur' ? 'گوشۂ خواتین و صحابیات (عمل نساء)' : 'The Sisters Sanctuary (Amal Nisa)'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'گوشۂ خواتین و صحابیات (عمل نساء)'
+                : currentLang === 'ar'
+                ? 'واحة المرأة المسلمة والصحابيات'
+                : currentLang === 'roman'
+                ? 'Gosha-e-Khawateen wa Sahabiyyat (Amal Nisa)'
+                : 'The Sisters Sanctuary (Amal Nisa)'}
+            </span>
           </div>
           <span style={{ fontSize: 10, backgroundColor: '#9D174D', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
-            {currentLang === 'ur' ? '۲۰ کتب' : '20 Books'}
+            {currentLang === 'ur'
+              ? '۲۰ کتب'
+              : currentLang === 'ar'
+              ? '٢٠ كتاباً'
+              : currentLang === 'roman'
+              ? '20 Kutub'
+              : '20 Books'}
           </span>
         </Link>
 
@@ -171,7 +228,15 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             }}
           >
             <span>🌅</span>
-            <span>{currentLang === 'ur' ? 'آج' : 'Today'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'آج'
+                : currentLang === 'ar'
+                ? 'اليوم'
+                : currentLang === 'roman'
+                ? 'Aaj'
+                : 'Today'}
+            </span>
           </Link>
 
           <Link
@@ -192,14 +257,29 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             }}
           >
             <span>⚙️</span>
-            <span>{currentLang === 'ur' ? 'مرکزی ترتیبات' : 'Settings'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'مرکزی ترتیبات'
+                : currentLang === 'ar'
+                ? 'الإعدادات المركزية'
+                : currentLang === 'roman'
+                ? 'Markazi Tarteebat'
+                : 'Settings'}
+            </span>
           </Link>
         </div>
 
         {/* Hub 1: Ibadat */}
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#059669', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
-            🕋 {currentLang === 'ur' ? 'عبادات و معمولات' : 'Worship & Routine'}
+            🕋{' '}
+            {currentLang === 'ur'
+              ? 'عبادات و معمولات'
+              : currentLang === 'ar'
+              ? 'العبادات والمعاملات'
+              : currentLang === 'roman'
+              ? 'Ibadat wa Ma\'moolat'
+              : 'Worship & Routine'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {ibadatItems.map((item) => (
@@ -223,7 +303,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               >
                 <span>{item.icon}</span>
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {currentLang === 'ur' ? item.titleUrdu : item.title}
+                  {getItemTitle(item)}
                 </span>
               </Link>
             ))}
@@ -233,7 +313,14 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         {/* Hub 2: Ilm & Sirah */}
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#0284C7', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
-            📚 {currentLang === 'ur' ? 'علم، کتب و سیرت' : 'Ilm & Heritage'}
+            📚{' '}
+            {currentLang === 'ur'
+              ? 'علم، کتب و سیرت'
+              : currentLang === 'ar'
+              ? 'العلوم والتراث والسيرة'
+              : currentLang === 'roman'
+              ? 'Ilm, Kutub wa Seerat'
+              : 'Ilm & Heritage'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {ilmItems.map((item) => (
@@ -257,7 +344,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               >
                 <span>{item.icon}</span>
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {currentLang === 'ur' ? item.titleUrdu : item.title}
+                  {getItemTitle(item)}
                 </span>
               </Link>
             ))}
@@ -268,7 +355,14 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         {familySistersItems.length > 0 && (
           <div>
             <div style={{ fontSize: 11, fontWeight: 800, color: '#9D174D', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
-              🌸 {currentLang === 'ur' ? 'خاندان و گوشۂ نسواں' : 'Family & Sisters Sanctuary'}
+              🌸{' '}
+              {currentLang === 'ur'
+                ? 'خاندان و گوشۂ نسواں'
+                : currentLang === 'ar'
+                ? 'الأسرة وواحة المرأة'
+                : currentLang === 'roman'
+                ? 'Khandan wa Gosha-e-Niswan'
+                : 'Family & Sisters Sanctuary'}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
               {familySistersItems.map((item) => (
@@ -292,7 +386,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 >
                   <span>{item.icon}</span>
                   <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {currentLang === 'ur' ? item.titleUrdu : item.title}
+                    {getItemTitle(item)}
                   </span>
                 </Link>
               ))}
@@ -303,7 +397,14 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
         {/* Hub 4: Ahkam & Suluk */}
         <div>
           <div style={{ fontSize: 11, fontWeight: 800, color: '#D97706', textTransform: 'uppercase', marginBottom: 6, letterSpacing: 0.5 }}>
-            ⚖️ {currentLang === 'ur' ? 'احکام، میراث و سلوک' : 'Fiqh, Miras & Suluk'}
+            ⚖️{' '}
+            {currentLang === 'ur'
+              ? 'احکام، میراث و سلوک'
+              : currentLang === 'ar'
+              ? 'الأحكام والمواريث والسلوك'
+              : currentLang === 'roman'
+              ? 'Ahkam, Miras wa Suluk'
+              : 'Fiqh, Miras & Suluk'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {ahkamItems.map((item) => (
@@ -327,7 +428,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               >
                 <span>{item.icon}</span>
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {currentLang === 'ur' ? item.titleUrdu : item.title}
+                  {getItemTitle(item)}
                 </span>
               </Link>
             ))}
@@ -354,7 +455,15 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             }}
           >
             <span>💬</span>
-            <span>{currentLang === 'ur' ? 'سوال پوچھیں' : 'Ask AMAL'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'سوال پوچھیں'
+                : currentLang === 'ar'
+                ? 'اسأل أمل'
+                : currentLang === 'roman'
+                ? 'Sawal Puchein'
+                : 'Ask AMAL'}
+            </span>
           </Link>
 
           <Link
@@ -375,7 +484,15 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
             }}
           >
             <span>🕌</span>
-            <span>{currentLang === 'ur' ? 'تعارف و منہج' : 'About AMAL'}</span>
+            <span>
+              {currentLang === 'ur'
+                ? 'تعارف و منہج'
+                : currentLang === 'ar'
+                ? 'عن المنظومة'
+                : currentLang === 'roman'
+                ? 'Ta\'aruf wa Manhaj'
+                : 'About AMAL'}
+            </span>
           </Link>
         </div>
       </div>

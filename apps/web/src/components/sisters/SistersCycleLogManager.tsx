@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface SavedCycleRecord {
   id: string;
@@ -32,7 +33,7 @@ export interface SistersCycleLogManagerProps {
 }
 
 export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
-  isUrdu,
+  isUrdu: propIsUrdu,
   hasPinConfigured,
   isSettingUpPin,
   newPin,
@@ -53,6 +54,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
   onSaveCycle,
   onDeleteCycle,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       {/* Top Privacy Notice & PIN Setup bar */}
@@ -78,12 +80,20 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
               margin: '0 0 4px 0',
             }}
           >
-            {isUrdu ? 'میرا نجی گوشہ و ماہواری ڈائری' : 'Personal Cycle Log & Private Reflections'}
+            {t(
+              'Personal Cycle Log & Private Reflections',
+              'میرا نجی گوشہ و ماہواری ڈائری',
+              'سجل الدورة الخاصة والمذكرات',
+              'Mera Niji Gosha wa Cycle Diary'
+            )}
           </h2>
           <p style={{ margin: 0, fontSize: 13, color: '#6B7280' }}>
-            {isUrdu
-              ? 'یہ تمام ڈیٹا صرف آپ کے فون پر ۱۰۰٪ محفوظ ہے، انٹرنیٹ پر نہیں بھیجا جاتا۔'
-              : '100% on-device sovereign privacy. Zero data leaves your device.'}
+            {t(
+              '100% on-device sovereign privacy. Zero data leaves your device.',
+              'یہ تمام ڈیٹا صرف آپ کے فون پر ۱۰۰٪ محفوظ ہے، انٹرنیٹ پر نہیں بھیجا جاتا۔',
+              'خصوصية تامة بنسبة ١٠٠٪ على جهازك. لا تغادر أي بيانات.',
+              'Yeh tamam data sirf aapke device par 100% mehfooz hai, internet par nahi bheja jata.'
+            )}
           </p>
         </div>
 
@@ -103,7 +113,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                   cursor: 'pointer',
                 }}
               >
-                🔒 {isUrdu ? 'لاک کریں' : 'Lock Vault'}
+                🔒 {t('Lock Vault', 'لاک کریں', 'قفل الخزانة', 'Lock Karein')}
               </button>
               <button
                 onClick={onRemovePin}
@@ -117,7 +127,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                   cursor: 'pointer',
                 }}
               >
-                {isUrdu ? 'پن ہٹائیں' : 'Remove PIN'}
+                {t('Remove PIN', 'پن ہٹائیں', 'إزالة الرمز', 'PIN Hatayein')}
               </button>
             </>
           ) : (
@@ -134,7 +144,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                 cursor: 'pointer',
               }}
             >
-              🔒 {isUrdu ? '۴ ہندسوں کا پن سیٹ کریں' : 'Set 4-Digit PIN'}
+              🔒 {t('Set 4-Digit PIN', '۴ ہندسوں کا پن سیٹ کریں', 'تعيين رمز ٤ أرقام', '4-Digit PIN Set Karein')}
             </button>
           )}
         </div>
@@ -223,7 +233,12 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
             margin: '0 0 14px 0',
           }}
         >
-          {isUrdu ? 'نیا اندراج (خون شروع اور بند ہونے کی تاریخ):' : 'Add New Cycle Entry:'}
+          {t(
+            'Add New Cycle Entry:',
+            'نیا اندراج (خون شروع اور بند ہونے کی تاریخ):',
+            'إضافة سجل جديد للدورة:',
+            'Naya Indraj (Start aur End Date):'
+          )}
         </h3>
         <form
           onSubmit={onSaveCycle}
@@ -236,7 +251,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
         >
           <div>
             <label style={{ display: 'block', fontSize: 12, color: '#4B5563', marginBottom: 4 }}>
-              {isUrdu ? 'شروع ہونے کی تاریخ:' : 'Start Date:'}
+              {t('Start Date:', 'شروع ہونے کی تاریخ:', 'تاريخ البداية:', 'Shuru Hone ki Tareekh:')}
             </label>
             <input
               type="date"
@@ -255,7 +270,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
 
           <div>
             <label style={{ display: 'block', fontSize: 12, color: '#4B5563', marginBottom: 4 }}>
-              {isUrdu ? 'بند ہونے کی تاریخ (اختیاری):' : 'End Date (Optional):'}
+              {t('End Date (Optional):', 'بند ہونے کی تاریخ (اختیاری):', 'تاريخ الانتهاء (اختياري):', 'Band Hone ki Tareekh (Ikhtiyari):')}
             </label>
             <input
               type="date"
@@ -273,11 +288,11 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
 
           <div>
             <label style={{ display: 'block', fontSize: 12, color: '#4B5563', marginBottom: 4 }}>
-              {isUrdu ? 'نوٹس یا علامات:' : 'Notes / Symptoms:'}
+              {t('Notes / Symptoms:', 'نوٹس یا علامات:', 'ملاحظات / أعراض:', 'Notes / Alamaat:')}
             </label>
             <input
               type="text"
-              placeholder={isUrdu ? 'عادت کے دن، استحاضہ وغیرہ' : 'Normal cycle, pain, etc.'}
+              placeholder={t('Normal cycle, pain, etc.', 'عادت کے دن، استحاضہ وغیرہ', 'الدورة المعتادة، ألم، إلخ', 'Aadat ke din, istehadha waghaira')}
               value={cycleNotes}
               onChange={(e) => setCycleNotes(e.target.value)}
               style={{
@@ -304,7 +319,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
               height: 38,
             }}
           >
-            {isUrdu ? 'اندراج محفوظ کریں' : 'Save Entry'}
+            {t('Save Entry', 'اندراج محفوظ کریں', 'حفظ السجل', 'Indraj Mehfooz Karein')}
           </button>
         </form>
       </div>
@@ -326,14 +341,17 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
             margin: '0 0 14px 0',
           }}
         >
-          {isUrdu ? 'ماضی کے محفوظ ریکارڈز:' : 'Saved Cycle History:'}
+          {t('Saved Cycle History:', 'ماضی کے محفوظ ریکارڈز:', 'سجل الدورات السابقة:', 'Mazi ke Mehfooz Records:')}
         </h3>
 
         {savedCycles.length === 0 ? (
           <div style={{ textAlign: 'center', padding: 24, color: '#9CA3AF', fontSize: 13 }}>
-            {isUrdu
-              ? 'ابھی تک کوئی اندراج محفوظ نہیں ہوا۔ اوپر دیئے گئے فارم سے تاریخ درج کریں۔'
-              : 'No cycle records saved yet. Add an entry using the form above.'}
+            {t(
+              'No cycle records saved yet. Add an entry using the form above.',
+              'ابھی تک کوئی اندراج محفوظ نہیں ہوا۔ اوپر دیئے گئے فارم سے تاریخ درج کریں۔',
+              'لا توجد سجلات محفوظة بعد. يرجى إضافة سجل باستخدام النموذج أعلاه.',
+              'Abhi tak koi indraj mehfooz nahi hua. Upar diye gaye form se tareekh darj karein.'
+            )}
           </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
@@ -346,23 +364,23 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
             >
               <thead>
                 <tr style={{ backgroundColor: '#F9FAFB', borderBottom: '1px solid #E5E7EB' }}>
-                  <th style={{ padding: '8px 12px', textAlign: isUrdu ? 'right' : 'left' }}>
-                    {isUrdu ? 'شروع' : 'Start'}
+                  <th style={{ padding: '8px 12px', textAlign: (isUrdu || isArabic) ? 'right' : 'left' }}>
+                    {t('Start', 'شروع', 'البداية', 'Shuru')}
                   </th>
-                  <th style={{ padding: '8px 12px', textAlign: isUrdu ? 'right' : 'left' }}>
-                    {isUrdu ? 'اختتام' : 'End'}
-                  </th>
-                  <th style={{ padding: '8px 12px', textAlign: 'center' }}>
-                    {isUrdu ? 'کل دن' : 'Duration'}
-                  </th>
-                  <th style={{ padding: '8px 12px', textAlign: isUrdu ? 'right' : 'left' }}>
-                    {isUrdu ? 'فقہی جائزہ' : 'Fiqh Status'}
-                  </th>
-                  <th style={{ padding: '8px 12px', textAlign: isUrdu ? 'right' : 'left' }}>
-                    {isUrdu ? 'نوٹس' : 'Notes'}
+                  <th style={{ padding: '8px 12px', textAlign: (isUrdu || isArabic) ? 'right' : 'left' }}>
+                    {t('End', 'اختتام', 'النهاية', 'Ikhtitam')}
                   </th>
                   <th style={{ padding: '8px 12px', textAlign: 'center' }}>
-                    {isUrdu ? 'حذف' : 'Action'}
+                    {t('Duration', 'کل دن', 'المدة', 'Kul Din')}
+                  </th>
+                  <th style={{ padding: '8px 12px', textAlign: (isUrdu || isArabic) ? 'right' : 'left' }}>
+                    {t('Fiqh Status', 'فقہی جائزہ', 'الحكم الفقهي', 'Fiqhi Jaiza')}
+                  </th>
+                  <th style={{ padding: '8px 12px', textAlign: (isUrdu || isArabic) ? 'right' : 'left' }}>
+                    {t('Notes', 'نوٹس', 'ملاحظات', 'Notes')}
+                  </th>
+                  <th style={{ padding: '8px 12px', textAlign: 'center' }}>
+                    {t('Action', 'حذف', 'إجراء', 'Action')}
                   </th>
                 </tr>
               </thead>
@@ -374,7 +392,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                       <td style={{ padding: '10px 12px' }}>{c.start}</td>
                       <td style={{ padding: '10px 12px' }}>{c.end}</td>
                       <td style={{ padding: '10px 12px', textAlign: 'center', fontWeight: 700 }}>
-                        {c.durationDays ? `${c.durationDays} ${isUrdu ? 'دن' : 'days'}` : '—'}
+                        {c.durationDays ? `${c.durationDays} ${t('days', 'دن', 'أيام', 'din')}` : '—'}
                       </td>
                       <td style={{ padding: '10px 12px' }}>
                         {c.durationDays ? (
@@ -389,7 +407,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                                 fontWeight: 600,
                               }}
                             >
-                              {isUrdu ? 'حیض (۳ تا ۱۰ دن)' : 'Valid Haidh'}
+                              {t('Valid Haidh (3-10 days)', 'حیض (۳ تا ۱۰ دن)', 'حيض صحيح (٣-١٠ أيام)', 'Haidh (3 se 10 din)')}
                             </span>
                           ) : (
                             <span
@@ -402,7 +420,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
                                 fontWeight: 600,
                               }}
                             >
-                              {isUrdu ? 'استحاضہ کی تفتیش کریں' : 'Investigate Istihadha'}
+                              {t('Investigate Istihadha', 'استحاضہ کی تفتیش کریں', 'تحقق من الاستحاضة', 'Istehadha ki taftish karein')}
                             </span>
                           )
                         ) : (

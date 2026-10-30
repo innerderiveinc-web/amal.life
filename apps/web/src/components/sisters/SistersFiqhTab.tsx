@@ -5,18 +5,19 @@ import {
   calculateHanafiCycleStatus,
   HanafiCycleCalculationResult,
 } from '../../lib/women-sanctuary-data';
+import { useLanguage } from '../../context/LanguageContext';
 import { HanafiCycleCalculatorCard } from './HanafiCycleCalculatorCard';
 import { FiqhRulingCardList } from './FiqhRulingCardList';
 
 export interface SistersFiqhTabProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   onGenerateFiqhCard: (ruling: FiqhRulingItem) => void;
 }
 
 export function SistersFiqhTab({
-  isUrdu,
   onGenerateFiqhCard,
 }: SistersFiqhTabProps) {
+  const { isUrdu, isRomanUrdu, t } = useLanguage();
   const [selectedFiqhCategory, setSelectedFiqhCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [calcTotalDays, setCalcTotalDays] = useState<number>(6);
@@ -36,11 +37,13 @@ export function SistersFiqhTab({
       const normQ = q.replace(/[\u064B-\u065F\u0670]/g, '').trim();
       const inTitleUrdu = (item.titleUrdu || '').includes(normQ) || (item.titleUrdu || '').includes(q);
       const inTitleEn = (item.titleEnglish || '').toLowerCase().includes(q);
+      const inTitleRoman = (item.titleRomanUrdu || '').toLowerCase().includes(q);
       const inRulingUrdu = (item.detailedRulingUrdu || item.summaryUrdu || '').includes(normQ) || (item.detailedRulingUrdu || item.summaryUrdu || '').includes(q);
       const inRulingEn = (item.detailedRulingEnglish || item.summaryEnglish || '').toLowerCase().includes(q);
+      const inRulingRoman = (item.detailedRulingRomanUrdu || item.summaryRomanUrdu || '').toLowerCase().includes(q);
       const inSource = (item.hanafiReference || '').includes(normQ) || (item.hanafiReference || '').toLowerCase().includes(q);
 
-      return inTitleUrdu || inTitleEn || inRulingUrdu || inRulingEn || inSource;
+      return inTitleUrdu || inTitleEn || inTitleRoman || inRulingUrdu || inRulingEn || inRulingRoman || inSource;
     });
   }, [selectedFiqhCategory, searchQuery]);
 
@@ -63,12 +66,20 @@ export function SistersFiqhTab({
             margin: '0 0 6px 0',
           }}
         >
-          {isUrdu ? 'احکامِ نسواں و طہارت (فقہ حنفی و بہارِ شریعت)' : 'Purity & Fiqh Guide for Women'}
+          {t(
+            'Purity & Fiqh Guide for Women (Bahar-e-Shari\'at)',
+            'احکامِ نسواں و طہارت (فقہ حنفی و بہارِ شریعت)',
+            'أحكام الطهارة وفقه المرأة (الفقه الحنفي)',
+            'Ahkam-e-Niswan wa Taharah (Bahar-e-Shari\'at)'
+          )}
         </h2>
         <p style={{ margin: 0, fontSize: 14, color: '#4B5563' }}>
-          {isUrdu
-            ? 'حیض، نفاس، استحاضہ، غسل، اور نماز کی ہیئت کے تفصیلی اور باحیا احکام، جو صدر الشریعہ مفتی امجد علی اعظمی کی "بہارِ شریعت" اور علامہ عبد المصطفیٰ اعظمی کی "جنتی زیور" سے ماخوذ ہیں۔'
-            : 'Authentic Hanafi legal rulings on menstruation, postnatal bleeding, irregular bleeding, and modest prayer posture.'}
+          {t(
+            'Authentic Hanafi legal rulings on menstruation, postnatal bleeding, irregular bleeding, and modest prayer posture derived from Bahar-e-Shari\'at and Jannati Zewar.',
+            'حیض، نفاس، استحاضہ، غسل، اور نماز کی ہیئت کے تفصیلی اور باحیا احکام، جو صدر الشریعہ مفتی امجد علی اعظمی کی "بہارِ شریعت" اور علامہ عبد المصطفیٰ اعظمی کی "جنتی زیور" سے ماخوذ ہیں۔',
+            'أحكام فقهية معتمدة على المذهب الحنفي في الحيض والنفاس والاستحاضة وهيئة صلاة المرأة مستمدة من بهار شريعت وجنة الزيور.',
+            'Haidh, nifas, istihadha, ghusl, aur namaz ki haiyat ke tafseeli aur ba-haya ahkam, jo Bahar-e-Shari\'at aur Jannati Zewar se makhooz hain.'
+          )}
         </p>
 
         {/* Instant Search Bar for Urgent Fiqh Dilemmas */}
@@ -81,7 +92,12 @@ export function SistersFiqhTab({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isUrdu ? 'فوری مسئلہ تلاش فرمائیں: مثلاً اسقاطِ حمل، زرد رطوبت، ناخن پالش، چوٹی کا غسل، قضا نماز...' : 'Instant Search: e.g. miscarriage, yellow discharge, nail polish, braids ghusl, missed prayers...'}
+              placeholder={t(
+                'Instant Search: e.g. miscarriage, yellow discharge, nail polish, braids ghusl, missed prayers...',
+                'فوری مسئلہ تلاش فرمائیں: مثلاً اسقاطِ حمل، زرد رطوبت، ناخن پالش، چوٹی کا غسل، قضا نماز...',
+                'بحث فوري في المسائل: مثل الإسقاط، الصفرة، طلاء الأظافر، الضفائر، القضاء...',
+                'Fauri Masla Talash Karein: maslan isqat-e-hamal, zard ratoobat, nail polish, ghusl, qadha namaz...'
+              )}
               style={{
                 width: '100%',
                 padding: isUrdu ? '10px 38px 10px 14px' : '10px 14px 10px 38px',
@@ -121,15 +137,15 @@ export function SistersFiqhTab({
         {/* 1-Tap Urgent Question Quick Chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: '#64748B' }}>
-            {isUrdu ? 'فوری مسائل:' : 'Urgent Topics:'}
+            {t('Urgent Topics:', 'فوری مسائل:', 'مسائل عاجلة:', 'Fauri Masail:')}
           </span>
           {[
-            { labelUrdu: '🩸 ۱۰ دن کی حد', labelEn: '🩸 10-Day Limit', q: 'دس دن' },
-            { labelUrdu: '🤍 زرد و گدلا پانی', labelEn: '🤍 Yellow Discharge', q: 'زرد' },
-            { labelUrdu: '🚿 چوٹی اور غسل', labelEn: '🚿 Braids & Ghusl', q: 'چوٹی' },
-            { labelUrdu: '💅 ناخن پالش', labelEn: '💅 Nail Polish / Wudu', q: 'ناخن پالش' },
-            { labelUrdu: '🕊️ اسقاطِ حمل', labelEn: '🕊️ Miscarriage', q: 'اسقاط' },
-            { labelUrdu: '🍼 دودھ پلانا و روزہ', labelEn: '🍼 Nursing & Fasting', q: 'دودھ' },
+            { label: t('🩸 10-Day Limit', '🩸 ۱۰ دن کی حد', '🩸 حد الـ ١٠ أيام', '🩸 10 Din ki Hadd'), q: 'دس دن' },
+            { label: t('🤍 Yellow Discharge', '🤍 زرد و گدلا پانی', '🤍 الصفرة والكدرة', '🤍 Zard Ratoobat'), q: 'زرد' },
+            { label: t('🚿 Braids & Ghusl', '🚿 چوٹی اور غسل', '🚿 الضفائر والغسل', '🚿 Choti aur Ghusl'), q: 'چوٹی' },
+            { label: t('💅 Nail Polish / Wudu', '💅 ناخن پالش', '💅 طلاء الأظافر والوضوء', '💅 Nail Polish / Wuzu'), q: 'ناخن پالش' },
+            { label: t('🕊️ Miscarriage', '🕊️ اسقاطِ حمل', '🕊️ إسقاط الحمل والنفاس', '🕊️ Isqat-e-Hamal'), q: 'اسقاط' },
+            { label: t('🍼 Nursing & Fasting', '🍼 دودھ پلانا و روزہ', '🍼 الرضاع والصيام', '🍼 Doodh Pilana wa Roza'), q: 'دودھ' },
           ].map((chip) => (
             <button
               key={chip.q}
@@ -148,7 +164,7 @@ export function SistersFiqhTab({
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? chip.labelUrdu : chip.labelEn}
+              {chip.label}
             </button>
           ))}
           {searchQuery && (
@@ -164,7 +180,7 @@ export function SistersFiqhTab({
                 padding: '2px 6px',
               }}
             >
-              {isUrdu ? 'فلٹر ختم کریں ✕' : 'Clear Filter ✕'}
+              {t('Clear Filter ✕', 'فلٹر ختم کریں ✕', 'مسح التصفية ✕', 'Filter Khatam Karein ✕')}
             </button>
           )}
         </div>
@@ -172,12 +188,12 @@ export function SistersFiqhTab({
         {/* Filter Pills */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 14 }}>
           {[
-            { id: 'all', labelUrdu: 'تمام احکام', labelEn: 'All Rulings' },
-            { id: 'haidh', labelUrdu: 'حیض کے احکام', labelEn: 'Menses (Haidh)' },
-            { id: 'nifas', labelUrdu: 'نفاس (ولادت کے بعد)', labelEn: 'Postnatal (Nifas)' },
-            { id: 'istihadha', labelUrdu: 'استحاضہ (بیماری کا خون)', labelEn: 'Istihadha (Illness)' },
-            { id: 'namaz_posture', labelUrdu: 'نماز میں حیا و طریقہ', labelEn: 'Prayer Modesty' },
-            { id: 'spiritual_rhythm', labelUrdu: 'مخصوص ایام میں عبادات', labelEn: 'Spiritual Routine' },
+            { id: 'all', label: t('All Rulings', 'تمام احکام', 'جميع الأحكام', 'Tamam Ahkam') },
+            { id: 'haidh', label: t('Menses (Haidh)', 'حیض کے احکام', 'أحكام الحيض', 'Haidh ke Ahkam') },
+            { id: 'nifas', label: t('Postnatal (Nifas)', 'نفاس (ولادت کے بعد)', 'أحكام النفاس', 'Nifas ke Ahkam') },
+            { id: 'istihadha', label: t('Istihadha (Illness)', 'استحاضہ (بیماری کا خون)', 'أحكام الاستحاضة', 'Istihadha ke Ahkam') },
+            { id: 'namaz_posture', label: t('Prayer Modesty', 'نماز میں حیا و طریقہ', 'هيئة صلاة المرأة', 'Namaz mein Haya wa Tareeqah') },
+            { id: 'spiritual_rhythm', label: t('Spiritual Routine', 'مخصوص ایام میں عبادات', 'الأوراد في العذر', 'Makhsoos Ayyam mein Ibadat') },
           ].map((fCat) => (
             <button
               key={fCat.id}
@@ -197,7 +213,7 @@ export function SistersFiqhTab({
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? fCat.labelUrdu : fCat.labelEn}
+              {fCat.label}
             </button>
           ))}
         </div>
@@ -205,7 +221,6 @@ export function SistersFiqhTab({
 
       {/* Interactive Hanafi Fiqh Cycle Calculator & Decision Assistant */}
       <HanafiCycleCalculatorCard
-        isUrdu={isUrdu}
         calcTotalDays={calcTotalDays}
         calcHabitDays={calcHabitDays}
         calcResult={calcResult}
@@ -215,7 +230,6 @@ export function SistersFiqhTab({
 
       {/* Fiqh Ruling Cards List */}
       <FiqhRulingCardList
-        isUrdu={isUrdu}
         filteredFiqh={filteredFiqh}
         onGenerateFiqhCard={onGenerateFiqhCard}
       />

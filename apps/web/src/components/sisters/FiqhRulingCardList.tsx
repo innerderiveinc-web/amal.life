@@ -1,17 +1,48 @@
 import React from 'react';
 import { FiqhRulingItem } from '../../lib/women-sanctuary-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface FiqhRulingCardListProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   filteredFiqh: FiqhRulingItem[];
   onGenerateFiqhCard: (ruling: FiqhRulingItem) => void;
 }
 
 export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
-  isUrdu,
   filteredFiqh,
   onGenerateFiqhCard,
 }) => {
+  const { isUrdu, isRomanUrdu, t } = useLanguage();
+
+  const getTitle = (item: FiqhRulingItem) => {
+    if (isRomanUrdu) return item.titleRomanUrdu || item.titleUrdu;
+    if (isUrdu) return item.titleUrdu;
+    return item.titleEnglish;
+  };
+
+  const getSubtitle = (item: FiqhRulingItem) => {
+    if (isRomanUrdu || isUrdu) return item.titleEnglish;
+    return item.titleUrdu;
+  };
+
+  const getSummary = (item: FiqhRulingItem) => {
+    if (isRomanUrdu) return item.summaryRomanUrdu || item.summaryUrdu;
+    if (isUrdu) return item.summaryUrdu;
+    return item.summaryEnglish;
+  };
+
+  const getDetailed = (item: FiqhRulingItem) => {
+    if (isRomanUrdu) return item.detailedRulingRomanUrdu || item.detailedRulingUrdu;
+    if (isUrdu) return item.detailedRulingUrdu;
+    return item.detailedRulingEnglish || item.detailedRulingUrdu;
+  };
+
+  const getGuidelines = (item: FiqhRulingItem) => {
+    if (isRomanUrdu && item.practicalGuidelinesRomanUrdu) return item.practicalGuidelinesRomanUrdu;
+    if (isUrdu) return item.practicalGuidelines;
+    return item.practicalGuidelinesEnglish || item.practicalGuidelines;
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {filteredFiqh.map((item) => (
@@ -41,7 +72,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
                 color: '#064E3B',
               }}
             >
-              {isUrdu ? item.titleUrdu : item.titleEnglish}
+              {getTitle(item)}
             </h3>
             <span
               style={{
@@ -64,7 +95,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
               marginBottom: 6,
             }}
           >
-            {isUrdu ? item.titleEnglish : item.titleUrdu}
+            {getSubtitle(item)}
           </div>
 
           <p
@@ -76,7 +107,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
               marginBottom: 10,
             }}
           >
-            {isUrdu ? item.summaryUrdu : item.summaryEnglish}
+            {getSummary(item)}
           </p>
 
           <p
@@ -87,7 +118,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
               marginBottom: 14,
             }}
           >
-            {isUrdu ? item.detailedRulingUrdu : item.detailedRulingEnglish || item.detailedRulingUrdu}
+            {getDetailed(item)}
           </p>
 
           <div
@@ -106,7 +137,12 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
                 marginBottom: 4,
               }}
             >
-              {isUrdu ? 'عملی ہدایات و فقہی احتیاطیں:' : 'Practical Guidelines:'}
+              {t(
+                'Practical Guidelines:',
+                'عملی ہدایات و فقہی احتیاطیں:',
+                'الإرشادات والاحتياطات الفقهية:',
+                'Amali Hidayat wa Fiqhi Ehtiyat:'
+              )}
             </div>
             <ul
               style={{
@@ -117,10 +153,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
                 lineHeight: 1.6,
               }}
             >
-              {((isUrdu || !item.practicalGuidelinesEnglish)
-                ? item.practicalGuidelines
-                : item.practicalGuidelinesEnglish
-              ).map((g, idx) => (
+              {getGuidelines(item).map((g, idx) => (
                 <li key={idx}>{g}</li>
               ))}
             </ul>
@@ -152,7 +185,9 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
               }}
             >
               <span>🎨</span>
-              <span>{isUrdu ? 'فقہی کارڈ بنائیں' : 'Generate Fiqh Card'}</span>
+              <span>
+                {t('Generate Fiqh Card', 'فقہی کارڈ بنائیں', 'إنشاء بطاقة فقهية', 'Fiqh Card Banayein')}
+              </span>
             </button>
           </div>
         </div>

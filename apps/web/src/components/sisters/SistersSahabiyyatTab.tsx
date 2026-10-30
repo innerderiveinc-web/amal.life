@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { SAHABIYYAT_PROFILES, SahabiyyatProfile } from '../../lib/women-sanctuary-data';
 import { SistersSahabiyyahDetailModal } from './SistersSahabiyyahDetailModal';
 
@@ -17,10 +18,11 @@ interface SistersSahabiyyatTabProps {
 }
 
 export function SistersSahabiyyatTab({
-  isUrdu,
+  isUrdu: propIsUrdu,
   onOpenSanad,
   onGenerateSahabiyyahCard,
 }: SistersSahabiyyatTabProps) {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const [selectedSahabiyyahForDetail, setSelectedSahabiyyahForDetail] = useState<SahabiyyatProfile | null>(null);
 
   return (
@@ -41,12 +43,20 @@ export function SistersSahabiyyatTab({
             margin: '0 0 6px 0',
           }}
         >
-          {isUrdu ? 'اسوۂ صحابیات و امہات المؤمنین رضی اللہ عنہن' : 'Noble Role Models: The Sahabiyyat'}
+          {t(
+            'Noble Role Models: The Sahabiyyat',
+            'اسوۂ صحابیات و امہات المؤمنین رضی اللہ عنہن',
+            'قدوة النساء: الصحابيات وأمهات المؤمنين',
+            'Uswah-e-Sahabiyyat wa Ummahat-ul-Momineen'
+          )}
         </h2>
         <p style={{ margin: 0, fontSize: 14, color: '#4B5563' }}>
-          {isUrdu
-            ? 'تاریخِ اسلام کی ۱۵ درخشندہ و برگزیدہ خواتین (امہات المؤمنین، بناتِ اربعہ، صحابیات و قرآنی نمونے) جنہوں نے ایمان، علم، شجاعت اور خدمتِ خلق میں وہ نقوش چھوڑے جو رہتی دنیا تک ہر مسلمان عورت کے لیے مشعلِ راہ ہیں۔'
-            : '15 towering female role models (Mothers of the Believers, all 4 Daughters of the Prophet ﷺ, noble Sahabiyyat, and Quranic paragons) who exemplified faith, juristic intellect, bravery, and humanitarian service.'}
+          {t(
+            '15 towering female role models (Mothers of the Believers, all 4 Daughters of the Prophet ﷺ, noble Sahabiyyat, and Quranic paragons) who exemplified faith, juristic intellect, bravery, and humanitarian service.',
+            'تاریخِ اسلام کی ۱۵ درخشندہ و برگزیدہ خواتین (امہات المؤمنین، بناتِ اربعہ، صحابیات و قرآنی نمونے) جنہوں نے ایمان، علم، شجاعت اور خدمتِ خلق میں وہ نقوش چھوڑے جو رہتی دنیا تک ہر مسلمان عورت کے لیے مشعلِ راہ ہیں۔',
+            '١٥ نموذجاً نسائياً رائداً في تاريخ الإسلام من أمهات المؤمنين وبنات النبي ﷺ والصحابيات الجليلات.',
+            'Tareekh-e-Islam ki 15 darakhshandah khawateen (Ummahat-ul-Momineen, Banat-e-Arba\'ah, Sahabiyyat) jinhon ne imaan, ilm aur khidmat-e-khalq mein mash\'al-e-rah qaim ki.'
+          )}
         </p>
       </div>
 
@@ -155,7 +165,12 @@ export function SistersSahabiyyatTab({
                     marginBottom: 6,
                   }}
                 >
-                  {isUrdu ? 'روزمرہ زندگی کے لیے ۳ سنہری اسباق:' : '3 Daily Life Sunnah Lessons:'}
+                  {t(
+                    '3 Daily Life Sunnah Lessons:',
+                    'روزمرہ زندگی کے لیے ۳ سنہری اسباق:',
+                    '٣ دروس سنية للحياة اليومية:',
+                    'Rozmarrah Zindagi ke liye 3 Sunheri Asbaaq:'
+                  )}
                 </div>
                 <ul
                   style={{
@@ -197,7 +212,14 @@ export function SistersSahabiyyatTab({
                 }}
               >
                 <span>📖</span>
-                <span>{isUrdu ? 'مفصل سوانح و فضائل پڑھیں' : 'Read Exhaustive Scholarly Biography'}</span>
+                <span>
+                  {t(
+                    'Read Exhaustive Scholarly Biography',
+                    'مفصل سوانح و فضائل پڑھیں',
+                    'قراءة السيرة المفصلة',
+                    'Mufassal Sawanih wa Fazail Padhein'
+                  )}
+                </span>
               </button>
             </div>
 
@@ -231,7 +253,7 @@ export function SistersSahabiyyatTab({
                   }}
                 >
                   <span>🎨</span>
-                  <span>{isUrdu ? 'حکمت کارڈ' : 'Wisdom Card'}</span>
+                  <span>{t('Wisdom Card', 'حکمت کارڈ', 'بطاقة الحكمة', 'Hikmat Card')}</span>
                 </button>
 
                 <button
@@ -255,9 +277,13 @@ export function SistersSahabiyyatTab({
                     fontSize: 11,
                     fontWeight: 700,
                     cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
                   }}
                 >
-                  ✓ {isUrdu ? 'مستند سند' : 'Sanad'}
+                  <span>📜</span>
+                  <span>{t('Sanad Certificate', 'سندِ تصدیق', 'شهادة السند', 'Sanad-e-Tasdeeq')}</span>
                 </button>
               </div>
             </div>

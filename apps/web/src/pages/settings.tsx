@@ -19,7 +19,7 @@ import {
 import { biometricVaultGuardEngine, VaultSecurityMode } from '@amal/amal-engine';
 import { AmalApiClient } from '../lib/api';
 import { recordSuccessfulBackup } from '../lib/storage-guard';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage, AppLanguage } from '../context/LanguageContext';
 
 // Modularized Settings Subcomponents
 import { SettingsTabsSidebar, SettingsTab } from '../components/settings/SettingsTabsSidebar';
@@ -36,7 +36,7 @@ export default function SettingsPage() {
   const [mounted, setMounted] = useState(false);
 
   // --- GENERAL TAB STATE ---
-  const [appLanguage, setAppLanguage] = useState<'en' | 'ur' | 'ar'>(language);
+  const [appLanguage, setAppLanguage] = useState<AppLanguage>(language);
   const [tahajjudMode, setTahajjudMode] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string>('Delhi / New Delhi');
@@ -202,8 +202,8 @@ export default function SettingsPage() {
     } else {
       document.body.classList.remove('theme-tahajjud');
     }
-    document.documentElement.dir = appLanguage === 'en' ? 'ltr' : 'rtl';
-    document.documentElement.lang = appLanguage;
+    document.documentElement.dir = (appLanguage === 'ur' || appLanguage === 'ar') ? 'rtl' : 'ltr';
+    document.documentElement.lang = appLanguage === 'roman' ? 'ur-Latn' : appLanguage;
 
     const found = GLOBAL_CITIES.find((c) => c.name === selectedCity);
     if (found) {

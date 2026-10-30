@@ -17,6 +17,13 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
   activeDropdown,
   setActiveDropdown,
 }) => {
+  const getItemTitle = (item: { title: string; titleUrdu: string; titleArabic?: string; titleRoman?: string }) => {
+    if (currentLang === 'roman') return item.titleRoman || item.titleUrdu || item.title;
+    if (currentLang === 'ur') return item.titleUrdu;
+    if (currentLang === 'ar') return item.titleArabic || item.titleUrdu || item.title;
+    return item.title;
+  };
+
   return (
     <div className="desktop-only" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
       <Link
@@ -32,7 +39,13 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           transition: 'all 0.15s ease',
         }}
       >
-        {currentLang === 'ur' ? '🌅 آج' : '🌅 Today'}
+        {currentLang === 'ur'
+          ? '🌅 آج'
+          : currentLang === 'ar'
+          ? '🌅 اليوم'
+          : currentLang === 'roman'
+          ? '🌅 Aaj'
+          : '🌅 Today'}
       </Link>
 
       {/* Pillar 1: Ibadah & Daily Rhythm */}
@@ -55,7 +68,15 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           }}
         >
           <span>🕋</span>
-          <span>{currentLang === 'ur' ? 'عبادات و معمولات' : 'Ibadah & Rhythm'}</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'عبادات و معمولات'
+              : currentLang === 'ar'
+              ? 'العبادات والأوراد'
+              : currentLang === 'roman'
+              ? 'Ibadat wa Ma\'moolat'
+              : 'Ibadah & Rhythm'}
+          </span>
           <span style={{ fontSize: 9 }}>▼</span>
         </button>
 
@@ -93,7 +114,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
                 }}
               >
                 <span>{item.icon}</span>
-                <span>{currentLang === 'ur' ? item.titleUrdu : item.title}</span>
+                <span>{getItemTitle(item)}</span>
               </Link>
             ))}
           </div>
@@ -120,7 +141,15 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           }}
         >
           <span>📖</span>
-          <span>{currentLang === 'ur' ? 'قرآن و علوم' : 'Quran & Ilm'}</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'قرآن و علوم'
+              : currentLang === 'ar'
+              ? 'القرآن وعلومه'
+              : currentLang === 'roman'
+              ? 'Quran wa Uloom'
+              : 'Quran & Ilm'}
+          </span>
           <span style={{ fontSize: 9 }}>▼</span>
         </button>
 
@@ -158,7 +187,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
                 }}
               >
                 <span>{item.icon}</span>
-                <span>{currentLang === 'ur' ? item.titleUrdu : item.title}</span>
+                <span>{getItemTitle(item)}</span>
               </Link>
             ))}
           </div>
@@ -186,7 +215,15 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           }}
         >
           <span>🌸</span>
-          <span>{currentLang === 'ur' ? 'خاندان و نسواں' : 'Family & Sisters'}</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'خاندان و نسواں'
+              : currentLang === 'ar'
+              ? 'الأسرة والمرأة'
+              : currentLang === 'roman'
+              ? 'Khandan wa Niswan'
+              : 'Family & Sisters'}
+          </span>
           <span style={{ fontSize: 9 }}>▼</span>
         </button>
 
@@ -224,7 +261,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
                 }}
               >
                 <span>{item.icon}</span>
-                <span>{currentLang === 'ur' ? item.titleUrdu : item.title}</span>
+                <span>{getItemTitle(item)}</span>
               </Link>
             ))}
           </div>
@@ -252,7 +289,15 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           }}
         >
           <span>⚖️</span>
-          <span>{currentLang === 'ur' ? 'احکام و سلوک' : 'Fiqh & Suluk'}</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'احکام و سلوک'
+              : currentLang === 'ar'
+              ? 'الفقه والسلوك'
+              : currentLang === 'roman'
+              ? 'Ahkam wa Suluk'
+              : 'Fiqh & Suluk'}
+          </span>
           <span style={{ fontSize: 9 }}>▼</span>
         </button>
 
@@ -290,7 +335,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
                 }}
               >
                 <span>{item.icon}</span>
-                <span>{currentLang === 'ur' ? item.titleUrdu : item.title}</span>
+                <span>{getItemTitle(item)}</span>
               </Link>
             ))}
           </div>
@@ -311,7 +356,13 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           whiteSpace: 'nowrap',
         }}
       >
-        {currentLang === 'ur' ? '💬 سوال' : '💬 Ask'}
+        {currentLang === 'ur'
+          ? '💬 سوال'
+          : currentLang === 'ar'
+          ? '💬 سؤال'
+          : currentLang === 'roman'
+          ? '💬 Sawal'
+          : '💬 Ask'}
       </Link>
 
       {/* Direct Link: About & Methodology */}
@@ -328,7 +379,13 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           whiteSpace: 'nowrap',
         }}
       >
-        {currentLang === 'ur' ? '🕌 منہج' : '🕌 About'}
+        {currentLang === 'ur'
+          ? '🕌 منہج'
+          : currentLang === 'ar'
+          ? '🕌 المنهج'
+          : currentLang === 'roman'
+          ? '🕌 Manhaj'
+          : '🕌 About'}
       </Link>
     </div>
   );

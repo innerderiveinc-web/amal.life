@@ -3,9 +3,9 @@ import { AmalTheme } from '@amal/ui';
 import { GLOBAL_CITIES } from '../../lib/global-locations';
 
 interface SettingsGeneralTabProps {
-  appLanguage: 'en' | 'ur' | 'ar';
-  setAppLanguage: (lang: 'en' | 'ur' | 'ar') => void;
-  setLanguage: (lang: 'en' | 'ur' | 'ar') => void;
+  appLanguage: 'en' | 'ur' | 'ar' | 'roman';
+  setAppLanguage: (lang: 'en' | 'ur' | 'ar' | 'roman') => void;
+  setLanguage: (lang: 'en' | 'ur' | 'ar' | 'roman') => void;
   selectedCity: string;
   setSelectedCity: (city: string) => void;
   tahajjudMode: boolean;
@@ -47,7 +47,7 @@ export function SettingsGeneralTab({
           <select
             value={appLanguage}
             onChange={(e) => {
-              const val = e.target.value as ('en' | 'ur' | 'ar');
+              const val = e.target.value as ('en' | 'ur' | 'ar' | 'roman');
               setAppLanguage(val);
               setLanguage(val);
             }}
@@ -64,6 +64,7 @@ export function SettingsGeneralTab({
             <option value="en">English (Global Default)</option>
             <option value="ur">اردو (Urdu)</option>
             <option value="ar">العربية (Arabic)</option>
+            <option value="roman">Roman Urdu (رومن اردو)</option>
           </select>
         </div>
 

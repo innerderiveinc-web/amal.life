@@ -6,9 +6,17 @@ export interface CloudSyncBadgeProps {
 }
 
 export const CloudSyncBadge: React.FC<CloudSyncBadgeProps> = ({ currentLang }) => {
-  const [syncState, setSyncState] = useState<SyncState>(cloudSyncService.getStatus());
+  const [mounted, setMounted] = useState(false);
+  const [syncState, setSyncState] = useState<SyncState>({
+    status: 'LOCAL_ONLY',
+    pendingChanges: false,
+    lastSyncedAt: null,
+    version: 0,
+  });
 
   useEffect(() => {
+    setMounted(true);
+    setSyncState(cloudSyncService.getStatus());
     const unsubscribe = cloudSyncService.subscribe((state) => {
       setSyncState(state);
     });
@@ -19,8 +27,8 @@ export const CloudSyncBadge: React.FC<CloudSyncBadgeProps> = ({ currentLang }) =
     cloudSyncService.pushSync();
   };
 
-  // When not authenticated (LOCAL_ONLY), hide the badge so the ribbon displays a single clean "Sign In" button
-  if (syncState.status === 'LOCAL_ONLY') {
+  // Prevent SSR / Client hydration mismatch by ensuring mounted state
+  if (!mounted || syncState.status === 'LOCAL_ONLY') {
     return null;
   }
 

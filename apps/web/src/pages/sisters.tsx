@@ -22,7 +22,7 @@ import { SistersDuasTab } from '../components/sisters/SistersDuasTab';
 import { SistersVaultTab } from '../components/sisters/SistersVaultTab';
 
 export default function SistersSanctuaryPage() {
-  const { isUrdu } = useLanguage();
+  const { language, isUrdu, isArabic, isRomanUrdu, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<SanctuaryTab>('library');
 
   // Share Card Generator Modal State
@@ -70,9 +70,12 @@ export default function SistersSanctuaryPage() {
       setDeferredPrompt(null);
     } else {
       alert(
-        isUrdu
-          ? 'اپنے موبائل براؤزر کے مینیو (تین نقطوں یا شیئر بٹن) پر کلک کر کے "Add to Home Screen" یا "Install App" منتخب کریں۔'
-          : 'Tap your browser share/menu icon and select "Add to Home Screen" to install Amal Nisa as a standalone app.'
+        t(
+          'Tap your browser share/menu icon and select "Add to Home Screen" to install Amal Nisa as a standalone app.',
+          'اپنے موبائل براؤزر کے مینیو (تین نقطوں یا شیئر بٹن) پر کلک کر کے "Add to Home Screen" یا "Install App" منتخب کریں۔',
+          'انقر على أيقونة المشاركة أو القائمة في متصفحك واختر "إضافة إلى الشاشة الرئيسية".',
+          'Apne mobile browser menu par click karke "Add to Home Screen" ya "Install App" select karein.'
+        )
       );
     }
   };
@@ -182,9 +185,12 @@ export default function SistersSanctuaryPage() {
     <>
       <Head>
         <title>
-          {isUrdu
-            ? 'گوشۂ خواتین و صحابیات — امل آپریٹنگ سسٹم'
-            : 'The Sacred Sisters Sanctuary — Amal OS'}
+          {t(
+            'The Sacred Sisters Sanctuary — Amal OS',
+            'گوشۂ خواتین و صحابیات — امل آپریٹنگ سسٹم',
+            'روضة النساء والصحابيات — نظام أمل',
+            'Goshah-e-Khawateen wa Sahabiyyat — Amal OS'
+          )}
         </title>
         <meta
           name="description"
@@ -197,10 +203,10 @@ export default function SistersSanctuaryPage() {
           minHeight: '100vh',
           backgroundColor: '#FCFAF7',
           color: '#1F2937',
-          fontFamily: isUrdu
-            ? "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif"
+          fontFamily: (isUrdu || isArabic)
+            ? (isArabic ? "'Amiri', 'Traditional Arabic', serif" : "'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif")
             : 'system-ui, -apple-system, sans-serif',
-          direction: isUrdu ? 'rtl' : 'ltr',
+          direction: (isUrdu || isArabic) ? 'rtl' : 'ltr',
           paddingBottom: 90,
         }}
       >

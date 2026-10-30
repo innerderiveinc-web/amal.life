@@ -4,6 +4,8 @@ import Link from 'next/link';
 export interface NavAppItem {
   title: string;
   titleUrdu: string;
+  titleArabic?: string;
+  titleRoman?: string;
   href: string;
   icon: string;
 }
@@ -13,7 +15,7 @@ export interface AppsLauncherPopoverProps {
   onToggle: () => void;
   onClose: () => void;
   allApps: NavAppItem[];
-  currentLang: 'en' | 'ur' | 'ar';
+  currentLang: 'en' | 'ur' | 'ar' | 'roman';
   currentPath: string;
 }
 
@@ -48,7 +50,15 @@ export const AppsLauncherPopover: React.FC<AppsLauncherPopoverProps> = ({
         title="All 15 AMAL OS Applications"
       >
         <span style={{ fontSize: 13 }}>⠿</span>
-        <span>{currentLang === 'ur' ? 'تمام ایپس' : 'All Apps'}</span>
+        <span>
+          {currentLang === 'ur'
+            ? 'تمام ایپس'
+            : currentLang === 'ar'
+            ? 'جميع التطبيقات'
+            : currentLang === 'roman'
+            ? 'Tamam Apps'
+            : 'All Apps'}
+        </span>
       </button>
 
       {/* 9-Dots Popover Grid */}
@@ -109,7 +119,13 @@ export const AppsLauncherPopover: React.FC<AppsLauncherPopoverProps> = ({
               >
                 <span style={{ fontSize: 22, marginBottom: 4 }}>{app.icon}</span>
                 <span style={{ fontSize: 11, fontWeight: 700, color: '#1F2937', lineHeight: 1.2 }}>
-                  {currentLang === 'ur' ? app.titleUrdu : app.title}
+                  {currentLang === 'roman'
+                    ? app.titleRoman || app.titleUrdu || app.title
+                    : currentLang === 'ur'
+                    ? app.titleUrdu
+                    : currentLang === 'ar'
+                    ? app.titleArabic || app.titleUrdu || app.title
+                    : app.title}
                 </span>
               </Link>
             ))}

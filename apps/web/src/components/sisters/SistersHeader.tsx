@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export type SanctuaryTab = 'library' | 'sahabiyyat' | 'fiqh' | 'duas' | 'vault';
 
@@ -8,7 +9,7 @@ interface SistersHeaderProps {
   hasPinConfigured: boolean;
   onInstallPWA: () => void;
   onOpenVault: () => void;
-  isUrdu: boolean;
+  isUrdu?: boolean;
   installSuccessMessage: boolean;
 }
 
@@ -18,9 +19,10 @@ export function SistersHeader({
   hasPinConfigured,
   onInstallPWA,
   onOpenVault,
-  isUrdu,
   installSuccessMessage,
 }: SistersHeaderProps) {
+  const { isUrdu, t } = useLanguage();
+
   return (
     <>
       {/* Top Sacred Banner */}
@@ -73,7 +75,12 @@ export function SistersHeader({
                     marginBottom: 4,
                   }}
                 >
-                  {isUrdu ? 'اہل سنت و جماعت کی مستند کتب و اسوہ' : 'Ahl al-Sunnah Classical Canon'}
+                  {t(
+                    'Ahl al-Sunnah Classical Canon',
+                    'اہل سنت و جماعت کی مستند کتب و اسوہ',
+                    'المكتبة التراثية المعتمدة لأهل السنة',
+                    'Ahl al-Sunnah ki Mustanad Kutub wa Uswah'
+                  )}
                 </span>
                 <h1
                   style={{
@@ -84,7 +91,12 @@ export function SistersHeader({
                     color: '#FFFFFF',
                   }}
                 >
-                  {isUrdu ? 'گوشۂ خواتین و صحابیات (عمل نساء)' : 'Amal Nisa — The Sisters Sanctuary'}
+                  {t(
+                    'Amal Nisa — The Sisters Sanctuary',
+                    'گوشۂ خواتین و صحابیات (عمل نساء)',
+                    'واحة المرأة المسلمة والصحابيات (عمل نساء)',
+                    'Gosha-e-Khawateen wa Sahabiyyat (Amal Nisa)'
+                  )}
                 </h1>
               </div>
             </div>
@@ -110,7 +122,14 @@ export function SistersHeader({
                 }}
               >
                 <span>📲</span>
-                <span>{isUrdu ? 'موبائل ایپ انسٹال کریں' : 'Install Standalone App'}</span>
+                <span>
+                  {t(
+                    'Install Standalone App',
+                    'موبائل ایپ انسٹال کریں',
+                    'تثبيت التطبيق المستقل',
+                    'Mobile App Install Karein'
+                  )}
+                </span>
               </button>
 
               <button
@@ -132,12 +151,8 @@ export function SistersHeader({
                 <span>{hasPinConfigured ? '🔒' : '🔓'}</span>
                 <span>
                   {hasPinConfigured
-                    ? isUrdu
-                      ? 'نجی پن فعال ہے'
-                      : 'PIN Protected'
-                    : isUrdu
-                    ? 'پن لاک لگائیں'
-                    : 'Setup PIN Lock'}
+                    ? t('PIN Protected', 'نجی پن فعال ہے', 'محمي برمز المرور', 'PIN Protected (Fa\'al Hai)')
+                    : t('Setup PIN Lock', 'پن لاک لگائیں', 'إعداد رمز المرور', 'PIN Lock Lagayein')}
                 </span>
               </button>
             </div>
@@ -152,9 +167,12 @@ export function SistersHeader({
               lineHeight: 1.6,
             }}
           >
-            {isUrdu
-              ? 'خواتینِ اسلام کے لیے ۲۰ مستند کتب، ۱۰ جلیل القدر صحابیات کے نقوشِ حیات، فقہ حنفی اور بہارِ شریعت کے مطابق احکامِ طہارت، اور روزمرہ مسنون دعاؤں کا مکمل آف لائن دائرۃ المعارف۔'
-              : 'A comprehensive, sovereign digital sanctuary for Muslim women featuring 20 Classical Sunni Masterworks, biographies of the Sahabiyyat, Hanafi Purity & Fiqh guide, and family prayers.'}
+            {t(
+              'A comprehensive, sovereign digital sanctuary for Muslim women featuring 20 Classical Sunni Masterworks, biographies of the Sahabiyyat, Hanafi Purity & Fiqh guide, and family prayers.',
+              'خواتینِ اسلام کے لیے ۲۰ مستند کتب، ۱۰ جلیل القدر صحابیات کے نقوشِ حیات، فقہ حنفی اور بہارِ شریعت کے مطابق احکامِ طہارت، اور روزمرہ مسنون دعاؤں کا مکمل آف لائن دائرۃ المعارف۔',
+              'موسوعة إسلامية شاملة وموثقة للمرأة المسلمة: ٢٠ كتاباً من أمهات الكتب، وسير الصحابيات، وأحكام الطهارة، والأدعية الأسرية.',
+              'Khawateen-e-Islam ke liye 20 mustanad kutub, 10 jaleel-ul-qadr Sahabiyyat ke nuqoosh-e-hayat, Fiqh Hanafi aur Bahar-e-Shari\'at ke mutabiq ahkam-e-taharah, aur rozmarrah masnoon duaon ka mukammal offline encyclopedia.'
+            )}
           </p>
 
           {/* Offline & Authenticity Guarantee Banner */}
@@ -173,9 +191,12 @@ export function SistersHeader({
           >
             <span style={{ color: '#10B981' }}>●</span>
             <span>
-              {isUrdu
-                ? '۱۰۰٪ آف لائن اور بلا تحریف — جنتی زیور، بہارِ شریعت اور مدارج النبوۃ کی مستند اسناد پر مبنی'
-                : '100% Offline & Authenticated — Derived from Jannati Zewar, Bahar-e-Shari\'at, and Madarij-un-Nubuwwah'}
+              {t(
+                '100% Offline & Authenticated — Derived from Jannati Zewar, Bahar-e-Shari\'at, and Madarij-un-Nubuwwah',
+                '۱۰۰٪ آف لائن اور بلا تحریف — جنتی زیور، بہارِ شریعت اور مدارج النبوۃ کی مستند اسناد پر مبنی',
+                '١٠٠٪ دون اتصال وموثق — مستمد من جنة الزيور وبهار شريعت ومدارج النبوة',
+                '100% Offline wa Mustanad — Jannati Zewar, Bahar-e-Shari\'at aur Madarij-un-Nubuwwah se makhooz'
+              )}
             </span>
           </div>
 
@@ -191,7 +212,7 @@ export function SistersHeader({
                 color: '#D1FAE5',
               }}
             >
-              ✓ {isUrdu ? 'ایپ کامیابی سے انسٹال ہو گئی!' : 'App installed successfully!'}
+              ✓ {t('App installed successfully!', 'ایپ کامیابی سے انسٹال ہو گئی!', 'تم تثبيت التطبيق بنجاح!', 'App kamyabi se install ho gayi!')}
             </div>
           )}
         </div>
@@ -219,11 +240,31 @@ export function SistersHeader({
           }}
         >
           {[
-            { id: 'library', icon: '📖', labelUrdu: 'کتب خانہ (۲۰ کتب)', labelEn: 'Classical Library (20 Books)' },
-            { id: 'sahabiyyat', icon: '🌸', labelUrdu: 'اسوۂ صحابیات (۱۰ ہستیاں)', labelEn: 'Noble Sahabiyyat (10 Figures)' },
-            { id: 'fiqh', icon: '⚖️', labelUrdu: 'احکامِ نسواں و طہارت', labelEn: 'Fiqh & Purity Guide' },
-            { id: 'duas', icon: '🤲', labelUrdu: 'مائیں، حمل اور دعائیں', labelEn: 'Motherhood & Family Duas' },
-            { id: 'vault', icon: '🔒', labelUrdu: 'میرا نجی گوشہ (ڈائری)', labelEn: 'Private Cycle Vault' },
+            {
+              id: 'library',
+              icon: '📖',
+              label: t('Classical Library (20 Books)', 'کتب خانہ (۲۰ کتب)', 'المكتبة المعتمدة (٢٠ كتاباً)', 'Kutub Khana (20 Kutub)'),
+            },
+            {
+              id: 'sahabiyyat',
+              icon: '🌸',
+              label: t('Noble Sahabiyyat (10 Figures)', 'اسوۂ صحابیات (۱۰ ہستیاں)', 'أسوة الصحابيات (١٠ شخصيات)', 'Uswah-e-Sahabiyyat (10 Hastiyan)'),
+            },
+            {
+              id: 'fiqh',
+              icon: '⚖️',
+              label: t('Fiqh & Purity Guide', 'احکامِ نسواں و طہارت', 'أحكام الفقه والطهارة', 'Ahkam-e-Niswan wa Taharah'),
+            },
+            {
+              id: 'duas',
+              icon: '🤲',
+              label: t('Motherhood & Family Duas', 'مائیں، حمل اور دعائیں', 'أدعية الأمهات والأسرة', 'Maaen, Hamal aur Duayein'),
+            },
+            {
+              id: 'vault',
+              icon: '🔒',
+              label: t('Private Cycle Vault', 'میرا نجی گوشہ (ڈائری)', 'الخزانة الخاصة بي', 'Mera Niji Gosha (Vault)'),
+            },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -247,7 +288,7 @@ export function SistersHeader({
                 }}
               >
                 <span style={{ fontSize: 16 }}>{tab.icon}</span>
-                <span>{isUrdu ? tab.labelUrdu : tab.labelEn}</span>
+                <span>{tab.label}</span>
               </button>
             );
           })}

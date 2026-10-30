@@ -1,30 +1,62 @@
 import React, { useState } from 'react';
 import { MOTHERHOOD_FAMILY_DUAS, MasnoonFamilyDua } from '../../lib/women-sanctuary-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface SistersDuasTabProps {
-  isUrdu: boolean;
+  isUrdu?: boolean;
   onGenerateDuaCard: (dua: MasnoonFamilyDua) => void;
 }
 
 export function SistersDuasTab({
-  isUrdu,
   onGenerateDuaCard,
 }: SistersDuasTabProps) {
+  const { isUrdu, isRomanUrdu, t } = useLanguage();
   const [copiedDuaId, setCopiedDuaId] = useState<string | null>(null);
 
+  const getDuaTitle = (dua: MasnoonFamilyDua) => {
+    if (isRomanUrdu) return dua.titleRomanUrdu || dua.titleUrdu;
+    if (isUrdu) return dua.titleUrdu;
+    return dua.titleEnglish;
+  };
+
+  const getDuaSubtitle = (dua: MasnoonFamilyDua) => {
+    if (isRomanUrdu) return dua.titleEnglish;
+    if (isUrdu) return dua.titleEnglish;
+    return dua.titleUrdu;
+  };
+
+  const getDuaPrimaryTranslation = (dua: MasnoonFamilyDua) => {
+    if (isRomanUrdu) return dua.translationRomanUrdu || dua.translationUrdu;
+    if (isUrdu) return dua.translationUrdu;
+    return dua.translationEnglish;
+  };
+
+  const getDuaSecondaryTranslation = (dua: MasnoonFamilyDua) => {
+    if (isRomanUrdu) return dua.translationEnglish;
+    if (isUrdu) return dua.translationEnglish;
+    return dua.translationUrdu;
+  };
+
+  const getDuaVirtue = (dua: MasnoonFamilyDua) => {
+    if (isRomanUrdu) return dua.spiritualVirtueRomanUrdu || dua.spiritualVirtueUrdu;
+    if (isUrdu) return dua.spiritualVirtueUrdu;
+    return dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu;
+  };
+
   const handleCopyDua = (dua: MasnoonFamilyDua) => {
-    const textToCopy = isUrdu
-      ? `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\nترجمہ: ${dua.translationUrdu}\n\nفضیلت: ${dua.spiritualVirtueUrdu}\n\n— امل او ایس (گوشۂ خواتین)`
-      : `${dua.titleEnglish} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\nTranslation: ${dua.translationEnglish}\n\nVirtue: ${dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu}\n\n— Amal OS (The Sisters Sanctuary)`;
+    const title = getDuaTitle(dua);
+    const translation = getDuaPrimaryTranslation(dua);
+    const virtue = getDuaVirtue(dua);
+    const textToCopy = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${dua.transliteration}\n\n${isUrdu ? 'ترجمہ: ' : isRomanUrdu ? 'Tarjuma: ' : 'Translation: '}${translation}\n\n${isUrdu ? 'فضیلت: ' : isRomanUrdu ? 'Fazilat: ' : 'Virtue: '}${virtue}\n\n— Amal OS (Amal Nisa)`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedDuaId(dua.id);
     setTimeout(() => setCopiedDuaId(null), 3000);
   };
 
   const handleShareDuaWhatsApp = (dua: MasnoonFamilyDua) => {
-    const textToShare = isUrdu
-      ? `${dua.titleUrdu} (${dua.reference})\n\n${dua.arabicText}\n\nترجمہ: ${dua.translationUrdu}\n\n— امل نساء (Amal Nisa Sanctuary)`
-      : `${dua.titleEnglish} (${dua.reference})\n\n${dua.arabicText}\n\nTranslation: ${dua.translationEnglish}\n\n— Amal Nisa (The Sisters Sanctuary)`;
+    const title = getDuaTitle(dua);
+    const translation = getDuaPrimaryTranslation(dua);
+    const textToShare = `${title} (${dua.reference})\n\n${dua.arabicText}\n\n${isUrdu ? 'ترجمہ: ' : isRomanUrdu ? 'Tarjuma: ' : 'Translation: '}${translation}\n\n— Amal Nisa (The Sisters Sanctuary)`;
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`;
     window.open(url, '_blank');
   };
@@ -47,12 +79,20 @@ export function SistersDuasTab({
             margin: '0 0 6px 0',
           }}
         >
-          {isUrdu ? 'مائیں، حمل، نوزائیدہ اور گھریلو مسنون دعائیں' : 'Motherhood & Family Masnoon Supplications'}
+          {t(
+            'Motherhood & Family Masnoon Supplications',
+            'مائیں، حمل، نوزائیدہ اور گھریلو مسنون دعائیں',
+            'أدعية الأمهات والذرية والأسرة المسنونة',
+            'Maaen, Hamal, Nau-zaida aur Gharailu Masnoon Duayein'
+          )}
         </h2>
         <p style={{ margin: 0, fontSize: 14, color: '#4B5563' }}>
-          {isUrdu
-            ? 'قرآن پاک اور احادیثِ مبارکہ سے ثابت شدہ دعائیں برائے نیک اولاد، ولادت میں آسانی، بچوں کی نظرِ بد سے حفاظت اور گھر میں باہمی سکون۔'
-            : 'Authentic Quranic and Prophetic supplications for righteous children, ease in childbirth, protection from evil eye, and marital love.'}
+          {t(
+            'Authentic Quranic and Prophetic supplications for righteous children, ease in childbirth, protection from evil eye, and marital love.',
+            'قرآن پاک اور احادیثِ مبارکہ سے ثابت شدہ دعائیں برائے نیک اولاد، ولادت میں آسانی، بچوں کی نظرِ بد سے حفاظت اور گھر میں باہمی سکون۔',
+            'أدعية قرآنية ونبوية معتمدة للذرية الصالحة وتيسير الولادة والتحصين من العين والمحبة الزوجية.',
+            'Quran Paak aur ahadith-e-mubarakah se sabit shuda duayein baraye nek aulaad, wiladat mein aasani, bachon ki nazar-e-bad se hifazat aur ghar mein baahimi sukoon.'
+          )}
         </p>
       </div>
 
@@ -84,7 +124,7 @@ export function SistersDuasTab({
                   color: '#064E3B',
                 }}
               >
-                {isUrdu ? dua.titleUrdu : dua.titleEnglish}
+                {getDuaTitle(dua)}
               </h3>
               <span
                 style={{
@@ -108,7 +148,7 @@ export function SistersDuasTab({
                 marginBottom: 10,
               }}
             >
-              {isUrdu ? dua.titleEnglish : dua.titleUrdu}
+              {getDuaSubtitle(dua)}
             </div>
 
             {/* Arabic Text */}
@@ -142,7 +182,7 @@ export function SistersDuasTab({
               {dua.transliteration}
             </div>
 
-            {/* Translation */}
+            {/* Primary Translation */}
             <div
               style={{
                 fontSize: 15,
@@ -152,7 +192,7 @@ export function SistersDuasTab({
                 marginBottom: 4,
               }}
             >
-              {isUrdu ? dua.translationUrdu : dua.translationEnglish}
+              {getDuaPrimaryTranslation(dua)}
             </div>
             <div
               style={{
@@ -162,7 +202,7 @@ export function SistersDuasTab({
                 marginBottom: 10,
               }}
             >
-              {isUrdu ? dua.translationEnglish : dua.translationUrdu}
+              {getDuaSecondaryTranslation(dua)}
             </div>
 
             {/* Spiritual Benefit / Context */}
@@ -176,8 +216,8 @@ export function SistersDuasTab({
                 lineHeight: 1.6,
               }}
             >
-              <strong>{isUrdu ? 'فضیلت و روحانی برکت:' : 'Spiritual Virtue:'}</strong>{' '}
-              {isUrdu ? dua.spiritualVirtueUrdu : (dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu)}
+              <strong>{isUrdu ? 'فضیلت و روحانی برکت:' : isRomanUrdu ? 'Fazilat wa Ruhani Barkat:' : 'Spiritual Virtue:'}</strong>{' '}
+              {getDuaVirtue(dua)}
             </div>
 
             {/* Action Bar: Copy & WhatsApp Share */}
@@ -208,7 +248,9 @@ export function SistersDuasTab({
                 }}
               >
                 <span>🎨</span>
-                <span>{isUrdu ? 'دعائیہ کارڈ بنائیں' : 'Generate Dua Card'}</span>
+                <span>
+                  {t('Generate Dua Card', 'دعائیہ کارڈ بنائیں', 'إنشاء بطاقة دعاء', 'Dua Card Banayein')}
+                </span>
               </button>
 
               <button
@@ -230,8 +272,8 @@ export function SistersDuasTab({
                 <span>{copiedDuaId === dua.id ? '✓' : '📋'}</span>
                 <span>
                   {copiedDuaId === dua.id
-                    ? isUrdu ? 'کاپی ہو گئی!' : 'Copied!'
-                    : isUrdu ? 'دعا کاپی کریں' : 'Copy Dua'}
+                    ? t('Copied!', 'کاپی ہو گئی!', 'تم النسخ!', 'Copy ho gayi!')
+                    : t('Copy Dua', 'دعا کاپی کریں', 'نسخ الدعاء', 'Dua Copy Karein')}
                 </span>
               </button>
 
@@ -252,7 +294,9 @@ export function SistersDuasTab({
                 }}
               >
                 <span>💬</span>
-                <span>{isUrdu ? 'واٹس ایپ پر شیئر کریں' : 'Share WhatsApp'}</span>
+                <span>
+                  {t('Share WhatsApp', 'واٹس ایپ پر شیئر کریں', 'مشاركة عبر واتساب', 'WhatsApp Par Share Karein')}
+                </span>
               </button>
             </div>
           </div>

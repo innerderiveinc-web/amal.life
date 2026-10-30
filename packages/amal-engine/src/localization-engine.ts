@@ -10,7 +10,7 @@
  * and pluralization/number formatting.
  */
 
-export type SupportedLanguage = 'en' | 'ur' | 'ar';
+export type SupportedLanguage = 'en' | 'ur' | 'ar' | 'roman';
 export type TextDirection = 'ltr' | 'rtl';
 
 export interface LanguageMeta {
@@ -42,6 +42,13 @@ export const SUPPORTED_LANGUAGES: Record<SupportedLanguage, LanguageMeta> = {
     nativeName: 'العربية',
     direction: 'rtl',
     fontFamily: '"Amiri", "Traditional Arabic", "Noto Naskh Arabic", serif',
+  },
+  roman: {
+    code: 'roman',
+    name: 'Roman Urdu',
+    nativeName: 'Roman Urdu',
+    direction: 'ltr',
+    fontFamily: 'Inter, system-ui, sans-serif',
   },
 };
 
@@ -213,6 +220,62 @@ export const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> 
     'sirah.title': 'الرسم البياني للسيرة العطرة والشمائل',
     'sirah.timeline': 'الخط الزمني للسيرة النبوية',
     'sirah.traits': 'الشمائل والأخلاق المحمدية',
+  },
+  roman: {
+    // Navigation & Common
+    'nav.home': 'Dashboard',
+    'nav.ask': 'AMAL Se Poochhein (Ilmi Rahnumai)',
+    'nav.library': 'Kutub Khana (Library)',
+    'nav.sirah': 'Sirat-un-Nabi & Shamail Graph',
+    'nav.prayer': 'Auqat-e-Namaz wa Qiblah',
+    'nav.calculator': 'Zakat wa Wirasat Calculator',
+    'nav.audio': 'Tilawat wa Audio Books',
+    'nav.calendar': 'Hijri Calendar wa Masnoon Rozey',
+    'nav.journeys': 'Rozmarrah Amaal',
+    'nav.goals': 'Ruhani Ahdaf',
+    'nav.privacy': 'Niji Privacy Vault',
+
+    // App Header & Taglines
+    'app.title': 'AMAL OS',
+    'app.subtitle': 'Niyyah Se Amal Tak — Mustanad Islamic Life OS',
+    'app.sawad_azam_badge': '100% Sawad-e-Azam Ahl al-Sunnah',
+    'app.dual_jurist_badge': 'Do Muftiyan-e-Kiram ki Nigrani (INV_07)',
+
+    // Prayers
+    'prayer.fajr': 'Fajr',
+    'prayer.sunrise': 'Tulu-e-Aftab',
+    'prayer.dhuhr': 'Zuhar',
+    'prayer.asr': 'Asar',
+    'prayer.maghrib': 'Maghrib',
+    'prayer.isha': 'Isha',
+    'prayer.qiyam': 'Tahajjud (Qiyam-ul-Lail)',
+    'prayer.qibla_bearing': 'Simt-e-Qiblah',
+    'prayer.next_prayer': 'Agli Namaz',
+    'prayer.time_remaining': 'Baqi Waqt',
+
+    // Zakat & Miras
+    'zakat.title': 'Zakat Calculator',
+    'zakat.calculate': 'Zakat ka Hisab Lagayein',
+    'zakat.nisab': 'Nisab ki Maliyat',
+    'zakat.due': 'Wajib-ul-Ada Zakat (2.5%)',
+    'miras.title': 'Miras wa Shar\'i Taqseem-e-Tarka',
+    'miras.estate_value': 'Kul Tarka / Jayedad',
+    'miras.calculate': 'Shar\'i Hisse Taqseem Karein',
+
+    // Audio
+    'audio.title': 'Tilawat-e-Quran wa Audio Books',
+    'audio.play': 'Chalayen',
+    'audio.pause': 'Rokein',
+    'audio.quran': 'Quran Majeed ki Tajweed ke Sath Tilawat',
+    'audio.shamail': 'Shamail-e-Muhammadiyyah Audio Abwab',
+
+    // Library & Sirah
+    'library.title': '76 Mustanad Aslaf ki Kutub ka Kutub Khana',
+    'library.filter_discipline': 'Sho\'ba-e-Ilm ke Lihaz se Filter Karein',
+    'library.search_placeholder': 'Kitab, Musannif ya Mauzu talash karein...',
+    'sirah.title': 'Sirat-un-Nabi ﷺ wa Shamail-e-Mubarakah',
+    'sirah.timeline': 'Tareekhi wa Zamani Sirat Timeline',
+    'sirah.traits': 'Huzoor ﷺ ki Sifat wa Akhlaq-e-Hasanah',
   },
 };
 

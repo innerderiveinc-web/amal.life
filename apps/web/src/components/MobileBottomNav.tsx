@@ -5,15 +5,15 @@ import { useLanguage } from '../context/LanguageContext';
 
 export const MobileBottomNav: React.FC = () => {
   const router = useRouter();
-  const { isUrdu } = useLanguage();
+  const { t, language } = useLanguage();
 
   const navItems = [
-    { label: 'Today', labelUrdu: 'آج', href: '/', icon: '🌅' },
-    { label: 'Journeys', labelUrdu: 'اسفار', href: '/journeys', icon: '🌱' },
-    { label: 'Quran', labelUrdu: 'قرآن', href: '/quran', icon: '📖' },
-    { label: 'Prayer', labelUrdu: 'نماز', href: '/prayer', icon: '🕋' },
-    { label: 'Wisdom', labelUrdu: 'حکمت', href: '/wisdom', icon: '✨' },
-    { label: 'Tasbih', labelUrdu: 'تسبیح', href: '/tasbih', icon: '📿' },
+    { label: 'Today', labelUrdu: 'آج', labelArabic: 'اليوم', labelRoman: 'Aaj', href: '/', icon: '🌅' },
+    { label: 'Journeys', labelUrdu: 'اسفار', labelArabic: 'الرحلات', labelRoman: 'Asfar', href: '/journeys', icon: '🌱' },
+    { label: 'Quran', labelUrdu: 'قرآن', labelArabic: 'القرآن', labelRoman: 'Quran', href: '/quran', icon: '📖' },
+    { label: 'Prayer', labelUrdu: 'نماز', labelArabic: 'الصلاة', labelRoman: 'Namaz', href: '/prayer', icon: '🕋' },
+    { label: 'Wisdom', labelUrdu: 'حکمت', labelArabic: 'الحكمة', labelRoman: 'Hikmat', href: '/wisdom', icon: '✨' },
+    { label: 'Tasbih', labelUrdu: 'تسبیح', labelArabic: 'التسبيح', labelRoman: 'Tasbih', href: '/tasbih', icon: '📿' },
   ];
 
   return (
@@ -56,7 +56,7 @@ export const MobileBottomNav: React.FC = () => {
             }}
           >
             <span style={{ fontSize: 20 }}>{item.icon}</span>
-            <span>{isUrdu ? item.labelUrdu : item.label}</span>
+            <span>{t(item.label, item.labelUrdu, item.labelArabic, item.labelRoman)}</span>
           </Link>
         );
       })}
@@ -83,7 +83,7 @@ export const MobileBottomNav: React.FC = () => {
         }}
       >
         <span style={{ fontSize: 20 }}>🔍</span>
-        <span>{isUrdu ? 'تلاش' : 'Search'}</span>
+        <span>{t('Search', 'تلاش', 'البحث', 'Talash')}</span>
       </button>
     </nav>
   );

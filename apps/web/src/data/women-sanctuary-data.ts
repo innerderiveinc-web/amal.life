@@ -102,28 +102,35 @@ export interface FiqhRulingItem {
   id: string;
   titleUrdu: string;
   titleEnglish: string;
+  titleRomanUrdu?: string;
   category: 'haidh' | 'nifas' | 'istihadha' | 'namaz_posture' | 'spiritual_rhythm';
   summaryUrdu: string;
   summaryEnglish: string;
+  summaryRomanUrdu?: string;
   detailedRulingUrdu: string;
   detailedRulingEnglish?: string;
+  detailedRulingRomanUrdu?: string;
   hanafiReference: string;
   practicalGuidelines: string[];
   practicalGuidelinesEnglish?: string[];
+  practicalGuidelinesRomanUrdu?: string[];
 }
 
 export interface MasnoonFamilyDua {
   id: string;
   titleUrdu: string;
   titleEnglish: string;
+  titleRomanUrdu?: string;
   category: 'pregnancy_labor' | 'newborn_sunnah' | 'children_protection' | 'marital_peace';
   arabicText: string;
   transliteration: string;
   translationUrdu: string;
   translationEnglish: string;
+  translationRomanUrdu?: string;
   reference: string;
   spiritualVirtueUrdu: string;
   spiritualVirtueEnglish?: string;
+  spiritualVirtueRomanUrdu?: string;
 }
 
 // ==========================================
@@ -1170,11 +1177,14 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     id: 'f-01',
     titleUrdu: 'حیض کی کم سے کم اور زیادہ سے زیادہ مدت',
     titleEnglish: 'Minimum and Maximum Durations of Haidh (Menstruation)',
+    titleRomanUrdu: 'Haidh ki Kam se Kam aur Zyada se Zyada Muddat',
     category: 'haidh',
     summaryUrdu: 'فقہ حنفی میں حیض کی کم سے کم مدت ۳ دن اور ۳ راتیں (۷۲ گھنٹے) اور زیادہ سے زیادہ ۱۰ دن اور ۱۰ راتیں (۲۴۰ گھنٹے) ہیں۔',
     summaryEnglish: 'In Hanafi Fiqh, the minimum duration of menses is 3 days and 3 nights (72 hours), while the maximum is 10 days and 10 nights (240 hours).',
+    summaryRomanUrdu: 'Fiqh Hanafi mein haidh ki kam se kam muddat 3 din aur 3 raatein (72 ghante) aur zyada se zyada 10 din aur 10 raatein (240 ghante) hain.',
     detailedRulingUrdu: 'اگر خون ۳ دن اور ۳ راتوں سے کم آ کر بند ہو جائے، یا ۱۰ دن ۱۰ راتوں سے تجاوز کر جائے، تو وہ حیض نہیں بلکہ "استحاضہ" (بیماری کا خون) کہلائے گا۔ دو حیض کے درمیانی وقفے (طہر) کی کم سے کم مدت ۱۵ دن ہے، زیادہ کی کوئی حد نہیں۔',
     detailedRulingEnglish: 'If bleeding stops in less than 72 hours, or exceeds 240 hours (10 days/nights), it is not Haidh but Istihadha (irregular bleeding due to illness). The minimum period of purity (Tuhr) between two menstrual cycles is 15 days; there is no maximum limit.',
+    detailedRulingRomanUrdu: 'Agar khoon 3 din aur 3 raaton se kam aa kar band ho jaye, ya 10 din 10 raaton se tajawuz kar jaye, to woh haidh nahi balkey "istihadha" (beemari ka khoon) kehlayega. Do haidh ke darmiyani waqfe (tuhr) ki kam se kam muddat 15 din hai, zyada ki koi hadd nahi.',
     hanafiReference: 'بہارِ شریعت، حصہ ۲ / درِ مختار و رد المحتار، کتاب الطہارۃ',
     practicalGuidelines: [
       'اپنے مخصوص ایام کے شروع اور ختم ہونے کے اوقات کا کیلنڈر یا ڈائری میں باقاعدہ اندراج رکھیں۔',
@@ -1185,17 +1195,25 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
       'Maintain an exact record of the start and end dates/times of your bleeding in your journal.',
       'Pay close attention to your established habit (Aadat), as most women have a fixed number of days.',
       'Once 10 full days are completed, take Ghusl immediately and resume Salah, even if light spotting continues.'
+    ],
+    practicalGuidelinesRomanUrdu: [
+      'Apne makhsoos ayyam ke shuru aur khatam hone ke auqat ka calendar ya diary mein baqaeda indiraaj rakhein.',
+      'Aadat ke dinon ka khaas khayal rakhein, kyunke aksar aurton ke din muqarrar hote hain.',
+      '10 din poore hone par fauran ghusl kar ke namaz shuru kar dein chahe halka daagh hi kyun na ho.'
     ]
   },
   {
     id: 'f-02',
     titleUrdu: 'مخصوص ایام میں نماز، روزہ اور تلاوت کے احکام',
     titleEnglish: 'Rules Regarding Prayer, Fasting, and Quran Recitation',
+    titleRomanUrdu: 'Makhsoos Ayyam mein Namaz, Roza aur Tilawat ke Ahkam',
     category: 'haidh',
     summaryUrdu: 'حیض کے ایام میں نماز بالکل معاف ہے (قضا بھی نہیں)، روزہ چھوڑنا واجب ہے (بعد میں قضا رکھنا فرض ہے)، اور مصحف کو چھونا و زبانی تلاوت کرنا منع ہے۔',
     summaryEnglish: 'During menses, prayer is completely waived (no Qadha required), fasting is suspended (deferred Qadha is obligatory), and touching/reciting the Quran directly is prohibited.',
+    summaryRomanUrdu: 'Haidh ke ayyam mein namaz bilkul maaf hai (qadha bhi nahi), roza chhorna wajib hai (baad mein qadha rakhna farz hai), aur Mushaf ko chhoona wa zabani tilawat karna mana hai.',
     detailedRulingUrdu: 'رسول اللہ ﷺ نے فرمایا کہ عورت کے لیے نماز اور روزہ چھوڑنا شریعت کی آسانی ہے۔ پاک ہونے کے بعد چھوٹے ہوئے روزوں کی قضا سردیوں یا آسانی کے دنوں میں ایک ایک کر کے رکھنا فرض ہے۔ قرآن پاک کی تلاوت کی نیت کے بغیر اگر کوئی دعا یا وظیفہ قرآن کی آیات میں سے پڑھا جائے (جیسے بسم اللہ، الحمد للہ، انا للہ) تو جائز ہے۔',
     detailedRulingEnglish: 'The Prophet ﷺ confirmed that the waiver of prayer and postponement of fasting is a divine concession. Deferred Ramadan fasts must be made up individually when purified. While reciting the Quran with the intention of Tilawah is prohibited, reciting Quranic verses with the intention of Du\'a, Dhikr, or remembrance (such as Bismillah, Alhamdulillah, or Inna Lillahi) is permissible.',
+    detailedRulingRomanUrdu: 'Rasoolullah ﷺ ne farmaya ke aurat ke liye namaz aur roza chhorna shariat ki aasani hai. Paak hone ke baad chhoote hue rozon ki qadha sardiyon ya aasani ke dinon mein ek ek kar ke rakhna farz hai. Quran Paak ki tilawat ki niyat ke baghair agar koi dua ya wazeefa Quran ki aayat mein se parha jaye (jaise Bismillah, Alhamdulillah, Inna Lillahi) to jaiz hai.',
     hanafiReference: 'صحیح البخاری، حدیث ۳۰۴ / فتاویٰ عالمگیری، ج ۱',
     practicalGuidelines: [
       'رمضان کے روزوں کی قضا اگلے رمضان سے پہلے کسی بھی وقت رکھی جا سکتی ہے۔',
@@ -1206,17 +1224,25 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
       'Deferred Ramadan fasts can be completed anytime before the arrival of the next Ramadan.',
       'The Quran may be held using an unattached cloth, pouch, or case, but direct skin contact with the script is unlawful.',
       'Reading Islamic books like Jannati Zewar or books of Tafsir where translation and commentary exceed Arabic script is permissible.'
+    ],
+    practicalGuidelinesRomanUrdu: [
+      'Ramadan ke rozon ki qadha agle Ramadan se pehle kisi bhi waqt rakhi ja sakti hai.',
+      'Quran Paak ko kisi kapray ya ghilaf se pakra ja sakta hai lekin choona jaiz nahi.',
+      'Deeni kitabein jaise Jannati Zewar ya Tafseer ke woh hisse jin mein tarjuma o tashreeh zyada ho, parhna jaiz hai.'
     ]
   },
   {
     id: 'f-03',
     titleUrdu: 'نفاس (بچے کی ولادت کے بعد کا خون) کے احکام',
     titleEnglish: 'Rulings on Nifas (Postnatal Bleeding)',
+    titleRomanUrdu: 'Nifas (Bachhe ki Wiladat ke Baad ka Khoon) ke Ahkam',
     category: 'nifas',
     summaryUrdu: 'ولادت کے بعد آنے والے خون کو نفاس کہتے ہیں۔ اس کی زیادہ سے زیادہ مدت ۴۰ دن اور ۴۰ راتیں ہیں۔ کم سے کم کی کوئی قید نہیں، اگر ایک گھنٹے میں بھی بند ہو جائے تو غسل کر کے نماز فرض ہے۔',
     summaryEnglish: 'Nifas is postnatal bleeding. The maximum limit is 40 days and nights. There is no minimum; if bleeding ceases after a few days or hours, Ghusl is obligatory immediately and prayers resume.',
+    summaryRomanUrdu: 'Wiladat ke baad aane wale khoon ko nifas kehte hain. Iski zyada se zyada muddat 40 din aur 40 raatein hain. Kam se kam ki koi qaid nahi, agar ek ghante mein bhi band ho jaye to ghusl kar ke namaz farz hai.',
     detailedRulingUrdu: 'اگر خون چالیس دن سے پہلے ہی بند ہو گیا، مثلاً ۲۰ یا ۲۵ دن پر، تو چالیس دن کا انتظار کرنا سخت گناہ ہے! جیسے ہی خون بند ہو، فورا غسل کریں اور اپنی نمازیں شروع کریں۔ چالیس دن کے بعد آنے والا خون استحاضہ (بیماری) شمار ہوگا، اس میں نماز نہیں چھوڑی جائے گی۔',
     detailedRulingEnglish: 'If bleeding stops before 40 days (e.g. on day 20 or 25), waiting for 40 days is prohibited. As soon as bleeding ceases and purity appears, Ghusl is immediately obligatory and Salah must resume. Any bleeding extending beyond 40 days is treated as Istihadha (illness), during which prayers cannot be abandoned.',
+    detailedRulingRomanUrdu: 'Agar khoon 40 din se pehle hi band ho gaya, maslan 20 ya 25 din par, to 40 din ka intezar karna sakht gunah hai! Jaise hi khoon band ho, fauran ghusl karein aur apni namazein shuru karein. 40 din ke baad aane wala khoon istihadha (beemari) shumar hoga, is mein namaz nahi chhori jayegi.',
     hanafiReference: 'سنن ابی داؤد، حدیث ۳۱۱ / بہارِ شریعت، حصہ ۲',
     practicalGuidelines: [
       'چالیس دن پورا ہونے کا بلاوجہ انتظار نہ کریں، سفیدی ظاہر ہوتے ہی غسل کریں۔',
@@ -1225,17 +1251,24 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     practicalGuidelinesEnglish: [
       'Do not wait unnecessarily for 40 days to elapse; take Ghusl as soon as clear discharge appears.',
       'Just like Haidh, prayers during Nifas are completely waived without Qadha, while fasts must be made up later.'
+    ],
+    practicalGuidelinesRomanUrdu: [
+      '40 din poora hone ka bila-wajah intezar na karein, safedi zahir hote hi ghusl karein.',
+      'Nifas mein bhi haidh ki tarah namaz bilkul maaf hai aur rozon ki qadha baad mein lazim hai.'
     ]
   },
   {
     id: 'f-04',
     titleUrdu: 'استحاضہ (بیماری کا خون) میں طہارت اور نماز کا طریقہ',
     titleEnglish: 'Taharah and Salah Guidelines during Istihadha (Irregular Bleeding)',
+    titleRomanUrdu: 'Istihadha (Beemari ka Khoon) mein Taharah aur Namaz ka Tareeqah',
     category: 'istihadha',
     summaryUrdu: 'استحاضہ بیماری ہے، اس میں نماز اور روزہ کسی صورت معاف نہیں۔ ایسی بہن "معذورِ شرعی" کا حکم رکھتی ہے اور ہر فرض نماز کے وقت نیا وضو کر کے نماز پڑھے گی۔',
     summaryEnglish: 'Istihadha is due to illness; prayer and fasting are NEVER exempt. A sister experiencing Istihadha performs a fresh Wudu for each obligatory prayer time and prays normally.',
+    summaryRomanUrdu: 'Istihadha beemari hai, is mein namaz aur roza kisi soorat maaf nahi. Aisi behen "ma\'zoor-e-shar\'i" ka hukm rakhti hai aur har farz namaz ke waqt naya wuzu kar ke namaz parhegi.',
     detailedRulingUrdu: 'جب تک وہ نماز کا وقت باقی رہے گا، اس کا وضو قائم رہے گا، خون کے بہنے سے وضو نہیں ٹوٹے گا۔ اس دوران وہ جتنے چاہے نفل، قضا نمازیں اور تلاوتِ قرآن کر سکتی ہے۔ جب اگلی نماز کا وقت داخل ہوگا تو نیا وضو کرنا ہوگا۔',
     detailedRulingEnglish: 'The Prophet ﷺ instructed that Istihadha is bleeding from a vessel, not the womb. A sister with Istihadha is considered excused (Ma\'dhur): she performs Wudu once after the prayer time enters, and her Wudu remains valid for all obligatory and voluntary prayers throughout that entire prayer window regardless of continuous bleeding. When the next prayer time enters, a new Wudu is performed.',
+    detailedRulingRomanUrdu: 'Jab tak woh namaz ka waqt baqi rahega, uska wuzu qayam rahega, khoon ke behne se wuzu nahi tootega. Is dauran woh jitne chahe nafl, qadha namazein aur tilawat-e-Quran kar sakti hai. Jab agli namaz ka waqt dakhil hoga to naya wuzu karna hoga.',
     hanafiReference: 'صحیح البخاری، حدیث ۲۲۸ / درِ مختار، باب الحیض',
     practicalGuidelines: [
       'ہر نماز کی اذان کے بعد نیا تازہ وضو کریں۔',
@@ -1246,6 +1279,11 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
       'Perform a fresh, valid Wudu after the Adhan / entry of each prayer time.',
       'Use fresh hygiene pads before prayer to minimize external impurity as much as practically possible.',
       'Fasting during Istihadha is completely valid and obligatory in Ramadan.'
+    ],
+    practicalGuidelinesRomanUrdu: [
+      'Har namaz ki azaan ke baad naya taaza wuzu karein.',
+      'Namaz se pehle saaf pad ya kapra tabdeel kar lein taake nijasat kam se kam rahe.',
+      'Istihadha mein roza rakhna bilkul durust aur farz hai.'
     ]
   },
   {
@@ -1426,131 +1464,161 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     id: 'dua-01',
     titleUrdu: 'نیک اور صالح اولاد کے لیے قرآنی دعا',
     titleEnglish: 'Dua for Righteous Offspring (Prophet Zakariyya\'s Supplication)',
+    titleRomanUrdu: 'Nek aur Saleh Aulaad ke liye Qurani Dua',
     category: 'pregnancy_labor',
     arabicText: 'رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ',
     transliteration: 'Rabbi hab li min ladunka dhurriyyatan tayyibatan innaka samee\'ud-du\'a',
     translationUrdu: 'اے میرے پروردگار! مجھے اپنی جناب سے پاکیزہ اولاد عطا فرما، بیشک تو ہی دعا سننے والا ہے۔',
     translationEnglish: 'My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication.',
+    translationRomanUrdu: 'Ae mere Parwardigar! Mujhe Apni janab se pakeezah aulaad ata farma, beshak Tu hi dua sunne wala hai.',
     reference: 'سورۃ آل عمران، آیت ۳۸',
     spiritualVirtueUrdu: 'حضرت زکریا علیہ السلام نے بڑھاپے میں یہ دعا مانگی تو اللہ تعالیٰ نے حضرت یحییٰ علیہ السلام کی بشارت عطا فرمائی۔ حمل کے دوران روزانہ کثرت سے پڑھیں۔',
-    spiritualVirtueEnglish: 'Supplicated by Prophet Zakariyya in old age, through which Allah blessed him with Prophet Yahya. Recommended to recite abundantly during pregnancy.'
+    spiritualVirtueEnglish: 'Supplicated by Prophet Zakariyya in old age, through which Allah blessed him with Prophet Yahya. Recommended to recite abundantly during pregnancy.',
+    spiritualVirtueRomanUrdu: 'Hazrat Zakariyya (A.S.) ne burhape mein yeh dua mangi to Allah Ta\'ala ne Hazrat Yahya (A.S.) ki basharat ata farmayi. Hamal ke dauran rozana kasrat se parhein.'
   },
   {
     id: 'dua-02',
     titleUrdu: 'آنکھوں کی ٹھنڈک اور صالح گھرانے کی دعا',
     titleEnglish: 'Dua for Family Peace & Consolation of the Eyes',
+    titleRomanUrdu: 'Aankhon ki Thandak aur Saleh Gharaney ki Dua',
     category: 'marital_peace',
     arabicText: 'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا',
     transliteration: 'Rabbana hab lana min azwajina wa dhurriyyatina qurrata a\'yunin waj\'alna lil-muttaqeena imama',
     translationUrdu: 'اے ہمارے رب! ہمیں ہماری بیویوں اور ہماری اولاد کی طرف سے آنکھوں کی ٹھنڈک عطا فرما اور ہمیں پرہیزگاروں کا پیشوا بنا۔',
     translationEnglish: 'Our Lord, grant us from among our spouses and offspring comfort to our eyes and make us an example for the righteous.',
+    translationRomanUrdu: 'Ae hamare Rab! Humein hamari biwiyon aur hamari aulaad ki taraf se aankhon ki thandak ata farma aur humein parhezgaron ka peshwa bana.',
     reference: 'سورۃ الفرقان، آیت ۷۴',
     spiritualVirtueUrdu: 'ہر نماز کے بعد اس دعا کو پڑھنے سے شوہر اور بیوی کے درمیان محبت اور بچوں میں اطاعت پیدا ہوتی ہے۔',
-    spiritualVirtueEnglish: 'Reciting after each prayer nurtures mutual marital compassion and instills righteousness and respect in children.'
+    spiritualVirtueEnglish: 'Reciting after each prayer nurtures mutual marital compassion and instills righteousness and respect in children.',
+    spiritualVirtueRomanUrdu: 'Har namaz ke baad is dua ko parhne se shauhar aur biwi ke darmiyan mohabbat aur bachon mein itaat paida hoti hai.'
   },
   {
     id: 'dua-03',
     titleUrdu: 'بچوں کو نظرِ بد اور شیطان سے حفاظت کی نبوی پناہ',
     titleEnglish: 'Prophetic Protection for Children from the Evil Eye (Ayn) and Harm',
+    titleRomanUrdu: 'Bachon ko Nazar-e-Bad aur Shaitan se Hifazat ki Nabawi Panah',
     category: 'children_protection',
     arabicText: 'أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ، مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ',
     transliteration: 'U\'eedhukuma bi-kalimatillahi at-tammah, min kulli shaytanin wa hammah, wa min kulli \'aynin lammah',
     translationUrdu: 'میں تم دونوں کو اللہ کے تمام و کمال کلمات کی پناہ میں دیتا ہوں، ہر شیطان اور زہریلے جانور سے، اور ہر نظر لگ جانے والی بری آنکھ سے۔',
     translationEnglish: 'I seek protection for you both in the perfect words of Allah, from every devil and poisonous reptile, and from every evil, envious eye.',
+    translationRomanUrdu: 'Main tum dono ko Allah ke tamam o kamal kalimaat ki panah mein deta hoon, har shaitan aur zahreeley janwar se, aur har nazar lag jane wali buri aankh se.',
     reference: 'صحیح البخاری، حدیث رقم ۳۳۷۱',
     spiritualVirtueUrdu: 'رسول اللہ ﷺ حضرت حسن اور حضرت حسین رضی اللہ عنہما کو یہ دعا پڑھ کر دم فرمایا کرتے تھے۔ ماؤں کو چاہیے کہ روزانہ اپنے بچوں پر پڑھ کر دم کریں۔',
-    spiritualVirtueEnglish: 'The Prophet ﷺ recited this to shield Hasan and Husayn. Mothers are encouraged to recite this daily upon their children.'
+    spiritualVirtueEnglish: 'The Prophet ﷺ recited this to shield Hasan and Husayn. Mothers are encouraged to recite this daily upon their children.',
+    spiritualVirtueRomanUrdu: 'Rasoolullah ﷺ Hazrat Hasan aur Hazrat Husain (R.A.) ko yeh dua parh kar dam farmaya karte the. Maaon ko chahiye ke rozana apne bachon par parh kar dam karein.'
   },
   {
     id: 'dua-04',
     titleUrdu: 'حمل کی حفاظت اور ولادت میں آسانی کی دعا',
     titleEnglish: 'Dua for Ease in Childbirth & Removing Hardship',
+    titleRomanUrdu: 'Hamal ki Hifazat aur Wiladat mein Asani ki Dua',
     category: 'pregnancy_labor',
     arabicText: 'يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، رَبِّ يَسِّرْ وَلَا تُعَسِّرْ وَتَمِّمْ بِالْخَيْرِ',
     transliteration: 'Ya Hayyu Ya Qayyumu bi-rahmatika astagheeth, Rabbi yassir wa la tu\'assir wa tammim bil-khayr',
     translationUrdu: 'اے زندہ و جاوید اور سب کو قائم رکھنے والے پروردگار! میں تیری ہی رحمت سے فریاد کرتی ہوں، اے میرے رب! آسانی فرما اور تنگی نہ کر اور بھلائی کے ساتھ مکمل فرما۔',
     translationEnglish: 'O Ever-Living, O Self-Sustaining, by Your mercy I seek assistance. My Lord, make this easy and do not make it difficult, and complete it in goodness.',
+    translationRomanUrdu: 'Ae Zinda o Javed aur sab ko qayam rakhne wale Parwardigar! Main Teri hi rahmat se faryad karti hoon, ae mere Rab! Asani farma aur tangi na kar aur bhalai ke sath mukammal farma.',
     reference: 'جامع الترمذی، حدیث ۳۵۲۴ / حصنِ حصین',
     spiritualVirtueUrdu: 'دردِ زہ کے وقت اور حمل کے آخری مہینوں میں پڑھنے سے ولادت میں حیرت انگیز آسانی نصیب ہوتی ہے۔',
-    spiritualVirtueEnglish: 'Reciting during labor contractions and the final trimester brings peace and divine ease during delivery.'
+    spiritualVirtueEnglish: 'Reciting during labor contractions and the final trimester brings peace and divine ease during delivery.',
+    spiritualVirtueRomanUrdu: 'Dard-e-zeh ke waqt aur hamal ke aakhri mahinon mein parhne se wiladat mein hairat-angez asani naseeb hoti hai.'
   },
   {
     id: 'dua-05',
     titleUrdu: 'نوزائیدہ بچے کی سنتیں اور مسنون آداب',
     titleEnglish: 'Sunnah Protocols and Rituals for the Newborn Infant',
+    titleRomanUrdu: 'Nau-zaida Bachhe ki Sunnatein aur Masnoon Adaab',
     category: 'newborn_sunnah',
     arabicText: 'بَارَكَ اللَّهُ لَكَ فِي الْمَوْهُوبِ لَكَ، وَشَكَرْتَ الْوَاهِبَ، وَبَلَغَ أَشُدَّهُ، وَرُزِقْتَ بِرَّهُ',
     transliteration: 'Barakallahu laka fil-mawhoobi laka, wa shakarta al-wahiba, wa balagha ashuddahu, wa ruziqta birrah',
     translationUrdu: 'اللہ تعالیٰ تمہیں اس دی ہوئی نعمت میں برکت دے، اور تم دینے والے کا شکر ادا کرو، اور بچہ اپنی جوانی کو پہنچے اور تمہیں اس کی نیکی اور خدمت نصیب ہو۔',
     translationEnglish: 'May Allah bless you in what was granted to you, and may you be grateful to the Giver, and may the child reach maturity and you be blessed with their righteousness.',
+    translationRomanUrdu: 'Allah Ta\'ala tumhein is di hui na\'mat mein barkat de, aur tum dene wale ka shukr ada karo, aur bachha apni jawani ko pahunche aur tumhein uski neki aur khidmat naseeb ho.',
     reference: 'الاذکار للامام النووی / تحفۃ المودود لابن القیم',
     spiritualVirtueUrdu: 'ولادت کے مبارک سنت آداب: دائیں کان میں اذان اور بائیں میں اقامت، میٹھی کھجور چبا کر تالو سے لگانا (تحنیک)، ساتویں دن اچھا نام رکھنا، سر کے بال منڈوا کر بالوں کے وزن کے برابر چاندی صدقہ کرنا، اور عقیقہ کرنا۔',
-    spiritualVirtueEnglish: 'Blessed newborn Sunnah rites: Adhan in right ear, Iqamah in left ear, Tahneek with softened date, naming on 7th day, shaving head and giving equivalent silver in charity, and performing Aqeeqah.'
+    spiritualVirtueEnglish: 'Blessed newborn Sunnah rites: Adhan in right ear, Iqamah in left ear, Tahneek with softened date, naming on 7th day, shaving head and giving equivalent silver in charity, and performing Aqeeqah.',
+    spiritualVirtueRomanUrdu: 'Wiladat ke mubarak Sunnah adaab: dayen kaan mein Azaan aur bayen mein Iqamat, meethi khajoor chaba kar talu se lagana (Tahneek), saatwen din achha naam rakhna, sar ke baal mundwa kar chandi sadqah karna, aur Aqeeqah karna.'
   },
   {
     id: 'dua-06',
     titleUrdu: 'میاں بیوی میں محبت، الفت اور ناچاقی دور کرنے کی قرآنی دعا',
     titleEnglish: 'Dua for Mutual Marital Love, Softening Hearts & Harmony',
+    titleRomanUrdu: 'Miyan Biwi mein Mohabbat, Ulfat aur Nachaqi Door Karne ki Qurani Dua',
     category: 'marital_peace',
     arabicText: 'وَأَلَّفَ بَيْنَ قُلُوبِهِمْ ۚ لَوْ أَنفَقْتَ مَا فِي الْأَرْضِ جَمِيعًا مَّا أَلَّفْتَ بَيْنَ قُلُوبِهِمْ وَلَٰكِنَّ اللَّهَ أَلَّفَ بَيْنَهُمْ ۚ إِنَّهُ عَزِيزٌ حَكِيمٌ',
     transliteration: 'Wa allafa bayna quloobihim, law anfaqta ma fil-ardi jamee\'an ma allafta bayna quloobihim wa lakinnallaha allafa baynahum, innahu \'Azeezun Hakeem.',
     translationUrdu: 'اور ان کے دلوں میں الفت پیدا کر دی۔ اگر آپ زمین میں جو کچھ ہے سب خرچ کر دیتے تب بھی ان کے دلوں میں الفت نہ ڈال سکتے، لیکن اللہ نے ان کے درمیان الفت پیدا کر دی، بیشک وہ غالب، حکمت والا ہے۔',
     translationEnglish: 'And He brought together their hearts. If you had spent all that is in the earth, you could not have brought their hearts together; but Allah brought them together. Indeed, He is Exalted in Might and Wise.',
+    translationRomanUrdu: 'Aur un ke dilon mein ulfat paida kar di. Agar aap zameen mein jo kuch hai sab kharch kar dete tab bhi unke dilon mein ulfat na daal sakte, lekin Allah ne unke darmiyan ulfat paida kar di, beshak Woh Ghalib, Hikmat wala hai.',
     reference: 'سورۃ الانفال، آیت ۶۳',
     spiritualVirtueUrdu: 'میاں بیوی میں رنجش یا دوری پیدا ہو تو اس قرآنی آیت کو روزانہ ۱۱ مرتبہ پڑھ کر دعا کرنا دلوں کی سختی دور کرنے اور باہمی الفت کے لیے مجرب ہے۔',
-    spiritualVirtueEnglish: 'Recited 11 times daily to soften hearts, resolve spousal discord, and rekindle compassionate warmth in marriage.'
+    spiritualVirtueEnglish: 'Recited 11 times daily to soften hearts, resolve spousal discord, and rekindle compassionate warmth in marriage.',
+    spiritualVirtueRomanUrdu: 'Miyan biwi mein ranjish ya doori paida ho to is Qurani aayat ko rozana 11 martaba parh kar dua karna dilon ki sakhti door karne aur bahami ulfat ke liye mujarrab hai.'
   },
   {
     id: 'dua-07',
     titleUrdu: 'بچے کو دودھ پلاتے وقت برکت اور نیکی کی دعا',
     titleEnglish: 'Supplication for Nursing Mothers: Barakah in Maternal Milk & Infant Nurture',
+    titleRomanUrdu: 'Bachhe ko Doodh Pilate Waqt Barkat aur Neki ki Dua',
     category: 'newborn_sunnah',
     arabicText: 'اللَّهُمَّ بَارِكْ لَنَا فِيهِ وَزِدْنَا مِنْهُ، وَاجْعَلْهُ رِزْقًا طَيِّبًا وَشِفَاءً مُبَارَكًا',
     transliteration: 'Allahumma barik lana feehi wa zidna minhu, waj\'alhu rizqan tayyiban wa shifa\'an mubaraka.',
     translationUrdu: 'اے اللہ! ہمارے لیے اس دودھ میں برکت عطا فرما اور ہمیں اس میں زیادتی بخش، اور اسے پاکیزہ رزق اور بابرکت شفا بنا۔',
     translationEnglish: 'O Allah, bless us in this milk and increase it for us, and make it wholesome sustenance and blessed healing.',
+    translationRomanUrdu: 'Ae Allah! Hamare liye is doodh mein barkat ata farma aur humein is mein zyadati bakhsh, aur ise pakeezah rizq aur ba-barkat shifa bana.',
     reference: 'سنن ابی داؤد، حدیث ۳۷۳۰ / جامع الترمذی، حدیث ۳۴۵۵',
     spiritualVirtueUrdu: 'رسول اللہ ﷺ نے فرمایا کہ دودھ کے علاوہ کوئی چیز ایسی نہیں جو کھانے اور پینے دونوں کی جگہ کافی ہو جائے۔ مائیں دودھ پلاتے وقت بسم اللہ کے بعد یہ دعا پڑھیں تو بچے میں برکت اور صالحیت پیدا ہوتی ہے۔',
-    spiritualVirtueEnglish: 'Prophetic prayer upon drinking milk. When recited by nursing mothers, it invites divine Barakah into the child\'s growth, nutrition, and righteous disposition.'
+    spiritualVirtueEnglish: 'Prophetic prayer upon drinking milk. When recited by nursing mothers, it invites divine Barakah into the child\'s growth, nutrition, and righteous disposition.',
+    spiritualVirtueRomanUrdu: 'Rasoolullah ﷺ ne farmaya ke doodh ke ilawa koi cheez aisi nahi jo khane aur peene dono ki jagah kafi ho jaye. Maaen doodh pilate waqt Bismillah ke baad yeh dua parhein to bachhe mein barkat aur salihiyat paida hoti hai.'
   },
   {
     id: 'dua-08',
     titleUrdu: 'بعد از ولادت ذہنی دباؤ، اداسی اور خوف سے پناہ کی نبوی دعا',
     titleEnglish: 'Prophetic Solace for Postpartum Anxiety, Depression & Mental Anguish',
+    titleRomanUrdu: 'Ba\'ad az Wiladat Zehni Dabao, Udasi aur Khauf se Panah ki Nabawi Dua',
     category: 'pregnancy_labor',
     arabicText: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ',
     transliteration: 'Allahumma inni a\'udhu bika minal-hammi wal-hazani, wal-\'ajzi wal-kasali, wal-bukhli wal-jubni, wa dala\'id-dayni wa ghalabatir-rijal.',
     translationUrdu: 'اے اللہ! میں تیری پناہ مانگتی ہوں فکر و پریشانی اور غم سے، اور عاجزی و کمزوری اور سستی سے، اور بخل اور بزدلی سے، اور قرض کے بوجھ اور لوگوں کے دباؤ سے۔',
     translationEnglish: 'O Allah, I seek refuge in You from anxiety and grief, from incapacity and laziness, from stinginess and cowardice, from the burden of debt, and from the overpowering of people.',
+    translationRomanUrdu: 'Ae Allah! Main Teri panah mangti hoon fikr o pareshani aur gham se, aur ajizi o kamzori aur susti se, aur bukhl aur buzdili se, aur qarz ke bojh aur logon ke dabao se.',
     reference: 'صحیح البخاری، حدیث ۲۸۹۳',
     spiritualVirtueUrdu: 'زچگی کے بعد ہارمونز کے عدم توازن سے پیدا ہونے والے ڈپریشن (Postpartum Depression)، بے سبب رونے اور اداسی کے وقت اس دعا کا ورد دل کو گہری تسکین اور روحانی ڈھارس دیتا ہے۔',
-    spiritualVirtueEnglish: 'The premier Prophetic shield against clinical grief, postpartum anxiety, emotional depletion, and irrational fear after childbirth.'
+    spiritualVirtueEnglish: 'The premier Prophetic shield against clinical grief, postpartum anxiety, emotional depletion, and irrational fear after childbirth.',
+    spiritualVirtueRomanUrdu: 'Zachgi ke baad hormones ke adam tawazun se paida hone wale depression (Postpartum Depression), be-sabab rone aur udasi ke waqt is dua ka wird dil ko gehri taskeen aur ruhani dharas deta hai.'
   },
   {
     id: 'dua-09',
     titleUrdu: 'والدین کے حق میں رحمت اور حسنِ سلوک کی قرآنی دعا',
     titleEnglish: 'Supplication for Aging Parents: Filial Compassion and Mercy',
+    titleRomanUrdu: 'Walidain ke Haq mein Rahmat aur Husn-e-Suluk ki Qurani Dua',
     category: 'marital_peace',
     arabicText: 'رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
     transliteration: 'Rabbi irhamhuma kama rabbayani sagheera.',
     translationUrdu: 'اے میرے رب! تو ان دونوں (والدین) پر رحم فرما جیسا کہ انہوں نے مجھے بچپن میں پالا اور میری پرورش کی۔',
     translationEnglish: 'My Lord, have mercy upon them both as they raised me when I was small.',
+    translationRomanUrdu: 'Ae mere Rab! Tu un dono (walidain) par raham farma jaisa ke unhon ne mujhe bachpan mein pala aur meri parwarish ki.',
     reference: 'سورۃ الاسراء، آیت ۲۴',
     spiritualVirtueUrdu: 'والدین کی حیات میں ان کی خوشنودی اور وفات کے بعد ان کی مغفرت اور درجات کی بلندی کے لیے ہر فرض نماز کے بعد یہ دعا مانگنا اولاد کی اولین ذمہ داری ہے۔',
-    spiritualVirtueEnglish: 'The direct Quranic command for honoring parents. Recited after obligatory prayers to seek divine mercy upon one\'s mother and father in this world and the Barzakh.'
+    spiritualVirtueEnglish: 'The direct Quranic command for honoring parents. Recited after obligatory prayers to seek divine mercy upon one\'s mother and father in this world and the Barzakh.',
+    spiritualVirtueRomanUrdu: 'Walidain ki hayat mein unki khushnoodi aur wafaat ke baad unki maghfirat aur darjaat ki bulandi ke liye har farz namaz ke baad yeh dua mangna aulaad ki awwileen zimmedari hai.'
   },
   {
     id: 'dua-10',
     titleUrdu: 'بیمار بچے کے بخار اور تکلیف کے وقت کی نبوی دم و شفا',
     titleEnglish: 'Prophetic Ruqyah for Sick Children, Fever & Relieving Pain',
+    titleRomanUrdu: 'Beemar Bachhe ke Bukhar aur Takleef ke Waqt ki Nabawi Dam o Shifa',
     category: 'children_protection',
     arabicText: 'بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ',
     transliteration: 'Bismillahi arqeeka, min kulli shay\'in yu\'dheeka, min sharri kulli nafsin aw \'ayni hasidin, Allahu yashfeeka, Bismillahi arqeeka.',
     translationUrdu: 'اللہ کے نام سے میں تجھے دم کرتی ہوں، ہر اس چیز سے جو تجھے تکلیف پہنچائے، ہر جان کے شر سے یا حسد کرنے والی آنکھ سے، اللہ تجھے شفا عطا فرمائے، اللہ کے نام سے میں تجھے دم کرتی ہوں۔',
     translationEnglish: 'In the Name of Allah I perform Ruqyah for you, from everything that harms you, from the evil of every soul or envious eye, may Allah heal you, in the Name of Allah I perform Ruqyah for you.',
+    translationRomanUrdu: 'Allah ke naam se main tujhe dam karti hoon, har us cheez se jo tujhe takleef pahunchaye, har jaan ke shar se ya hasad karne wali aankh se, Allah tujhe shifa ata farmaye, Allah ke naam se main tujhe dam karti hoon.',
     reference: 'صحیح مسلم، حدیث رقم ۲۱۸۶ (عن ابی سعید الخدری)',
     spiritualVirtueUrdu: 'جب بچے کو بخار ہو، دانت نکلنے کی تکلیف ہو یا بیمار ہو، تو ماں اپنا دایاں ہاتھ بچے کے سر پر رکھ کر ۳ بار یہ دعا پڑھے۔ حضرت جبرائیل علیہ السلام نے حضور ﷺ کی عیادت کے وقت یہی مسنون دم فرمایا تھا۔',
-    spiritualVirtueEnglish: 'The authentic Ruqyah performed by Archangel Jibril upon the Prophet ﷺ. Mothers should place their right hand upon a feverish or distressed child\'s forehead and recite thrice.'
+    spiritualVirtueEnglish: 'The authentic Ruqyah performed by Archangel Jibril upon the Prophet ﷺ. Mothers should place their right hand upon a feverish or distressed child\'s forehead and recite thrice.',
+    spiritualVirtueRomanUrdu: 'Jab bachhe ko bukhar ho, daant nikalne ki takleef ho ya beemar ho, to maa apna dayen haath bachhe ke sar par rakh kar 3 baar yeh dua parhe. Hazrat Jibril (A.S.) ne Huzoor ﷺ ki iyadat ke waqt yahi masnoon dam farmaya tha.'
   }
 ];
 
@@ -1561,18 +1629,23 @@ export interface HanafiCycleCalculationResult {
   status: 'VALID_HAIDH' | 'EXCESS_ISTIHADHA' | 'DEFICIENT_ISTIHADHA';
   statusUrdu: string;
   statusEnglish: string;
+  statusRomanUrdu?: string;
   haidhDays: number;
   istihadhaDays: number;
   qadhaSalahRequired: boolean;
   qadhaDaysCount: number;
   ghuslObligationUrdu: string;
   ghuslObligationEnglish: string;
+  ghuslObligationRomanUrdu?: string;
   prayerRulingsUrdu: string;
   prayerRulingsEnglish: string;
+  prayerRulingsRomanUrdu?: string;
   fastingRulingsUrdu: string;
   fastingRulingsEnglish: string;
+  fastingRulingsRomanUrdu?: string;
   spiritualPrescriptionUrdu: string[];
   spiritualPrescriptionEnglish?: string[];
+  spiritualPrescriptionRomanUrdu?: string[];
   referenceText: string;
 }
 
@@ -1586,16 +1659,20 @@ export function calculateHanafiCycleStatus(
       status: 'DEFICIENT_ISTIHADHA',
       statusUrdu: 'خون ۳ دن سے کم رہا — یہ حیض نہیں بلکہ استحاضہ (بیماری) ہے',
       statusEnglish: 'Bleeding less than 3 days — Classified as Istihadha, not Haidh',
+      statusRomanUrdu: 'Khoon 3 din se kam raha — Yeh haidh nahi balkey istihadha (beemari) hai',
       haidhDays: 0,
       istihadhaDays: totalDays,
       qadhaSalahRequired: true,
       qadhaDaysCount: totalDays,
       ghuslObligationUrdu: 'غسلِ حیض فرض نہیں ہے، صرف وضو اور نجاست دھونا کافی ہے۔',
       ghuslObligationEnglish: 'Menstrual Ghusl is not obligatory; standard Wudu and cleansing suffice.',
+      ghuslObligationRomanUrdu: 'Ghusl-e-Haidh farz nahi hai, sirf wuzu aur nijasat dhona kafi hai.',
       prayerRulingsUrdu: `چونکہ خون ۳ دن سے کم رہا اس لیے یہ حیض نہیں تھا، لہٰذا ان ${totalDays} دنوں میں جو نمازیں چھوٹی ہیں، ان کی فورا قضا پڑھنا فرض ہے۔`,
       prayerRulingsEnglish: `Because bleeding lasted under 72 hours, it is not Haidh. Prayers missed during these ${totalDays} days must be performed as Qadha immediately.`,
+      prayerRulingsRomanUrdu: `Chunke khoon 3 din se kam raha is liye yeh haidh nahi tha, lihaza in ${totalDays} dinon mein jo namazein chhooti hain, unki fauran qadha parhna farz hai.`,
       fastingRulingsUrdu: 'اگر ان دنوں میں روزہ چھوڑا تھا تو اس کی قضا رکھنا لازم ہے۔',
       fastingRulingsEnglish: 'If any fasts were deferred during this time, they must be made up.',
+      fastingRulingsRomanUrdu: 'Agar in dinon mein roza chhora tha to uski qadha rakhna lazim hai.',
       spiritualPrescriptionUrdu: [
         'چھوٹی ہوئی نمازوں کی قضا جلد از جلد ادا کریں۔',
         'ہر نماز کے وقت نیا وضو کر کے نماز ادا کریں۔',
@@ -1605,6 +1682,11 @@ export function calculateHanafiCycleStatus(
         'Perform Qadha for all prayers missed during these days as soon as possible.',
         'Perform a fresh Wudu at the start of each obligatory prayer time.',
         'Wash away impurity with clean water and wear fresh garments for Salah.'
+      ],
+      spiritualPrescriptionRomanUrdu: [
+        'Chhooti hui namazon ki qadha jald az jald ada karein.',
+        'Har namaz ke waqt naya wuzu kar ke namaz ada karein.',
+        'Khoon ke daagh ko saaf pani se dho kar paak kapre pehnein.'
       ],
       referenceText: 'بہارِ شریعت، حصہ ۲، حیض کا بیان / درِ مختار'
     };
@@ -1616,16 +1698,20 @@ export function calculateHanafiCycleStatus(
       status: 'VALID_HAIDH',
       statusUrdu: `مکمل ${totalDays} دن حیض قرار پائے (شرعی مدت کے اندر)`,
       statusEnglish: `Full ${totalDays} days confirmed as valid Haidh (Within canonical 3–10 day window)`,
+      statusRomanUrdu: `Mukammal ${totalDays} din haidh qarar paye (Shar'i muddat ke andar)`,
       haidhDays: totalDays,
       istihadhaDays: 0,
       qadhaSalahRequired: false,
       qadhaDaysCount: 0,
       ghuslObligationUrdu: 'خون رکتے ہی طہارت کا غسل فرض ہو چکا ہے، غسل کے بعد فورا نماز شروع کریں۔',
       ghuslObligationEnglish: 'Purification Ghusl is strictly obligatory upon cessation of bleeding. Pray immediately after.',
+      ghuslObligationRomanUrdu: 'Khoon rukte hi taharah ka ghusl farz ho chuka hai, ghusl ke baad fauran namaz shuru karein.',
       prayerRulingsUrdu: `ان تمام ${totalDays} دنوں کی نمازیں شریعت کی طرف سے بالکل معاف ہیں، ان کی قضا پڑھنا لازم نہیں ہے۔`,
       prayerRulingsEnglish: `Prayers during these ${totalDays} days are entirely exempt; no Qadha is ever required.`,
+      prayerRulingsRomanUrdu: `In tamam ${totalDays} dinon ki namazein shariat ki taraf se bilkul maaf hain, inki qadha parhna lazim nahi hai.`,
       fastingRulingsUrdu: 'رمضان کے روزے اگر چھوٹے ہیں تو ان کی بعد میں ایک ایک کر کے قضا رکھنا فرض ہے۔',
       fastingRulingsEnglish: 'Deferred Ramadan fasts must be made up individually prior to next Ramadan.',
+      fastingRulingsRomanUrdu: 'Ramadan ke rozay agar chhoote hain to unki baad mein ek ek kar ke qadha rakhna farz hai.',
       spiritualPrescriptionUrdu: [
         'غسل میں کلی کرنا اور ناک میں نرم ہڈی تک پانی پہنچانا یاد رکھیں۔',
         'پاک ہوتے ہی مصلے پر شکرانے کے ساتھ حاضر ہوں۔',
@@ -1636,12 +1722,16 @@ export function calculateHanafiCycleStatus(
         'Return to your prayer rug with gratitude as soon as pure.',
         'Sitting on your prayer mat during prayer times for Salawat preserves spiritual light and intimacy.'
       ],
+      spiritualPrescriptionRomanUrdu: [
+        'Ghusl mein kulli karna aur naak mein narm haddi tak pani pahunchana yaad rakhein.',
+        'Paak hote hi musallay par shukranay ke sath hazir hon.',
+        'Makhsoos ayyam ke dauran rozana musallay par baith kar Durood Sharif parhte rehne se ruhani noor qayam rehta hai.'
+      ],
       referenceText: 'بہارِ شریعت، حصہ ۲ / جنتی زیور، ص ۷۸'
     };
   }
 
   // Case 3: Excess beyond 10 days (> 10 days)
-  // In Hanafi Fiqh: If she has a known habit, her habit days are Haidh, and excess days are Istihadha.
   const validHabit = habitDays >= 3 && habitDays <= 10 ? habitDays : 6;
   const excessIstihadhaDays = totalDays - validHabit;
   const qadhaOwedDays = totalDays > 10 ? totalDays - validHabit : 0;
@@ -1650,26 +1740,35 @@ export function calculateHanafiCycleStatus(
     status: 'EXCESS_ISTIHADHA',
     statusUrdu: `خون ۱۰ دن سے متجاوز ہو گیا — ابتدائی ${validHabit} دن حیض اور بقیہ ${excessIstihadhaDays} دن استحاضہ ہیں`,
     statusEnglish: `Bleeding exceeded 10 days — Initial ${validHabit} days (habit) are Haidh; remaining ${excessIstihadhaDays} days are Istihadha`,
+    statusRomanUrdu: `Khoon 10 din se mutajawiz ho gaya — Ibtidai ${validHabit} din haidh aur baqiya ${excessIstihadhaDays} din istihadha hain`,
     haidhDays: validHabit,
     istihadhaDays: excessIstihadhaDays,
     qadhaSalahRequired: true,
     qadhaDaysCount: qadhaOwedDays,
     ghuslObligationUrdu: `ابتدائی ${validHabit} دن (عادت) کے مکمل ہوتے ہی غسل فرض ہو چکا تھا، اگر غسل نہیں کیا تھا تو ابھی فورا غسل کریں۔`,
     ghuslObligationEnglish: `Ghusl was due at the end of Day ${validHabit} (your normal habit). If not performed, take Ghusl immediately.`,
+    ghuslObligationRomanUrdu: `Ibtidai ${validHabit} din (aadat) ke mukammal hote hi ghusl farz ho chuka tha, agar ghusl nahi kiya tha to abhi fauran ghusl karein.`,
     prayerRulingsUrdu: `چونکہ عادت سے زائد دن (${validHabit + 1} سے ${totalDays} تک) استحاضہ تھے، اس لیے ان ${qadhaOwedDays} دنوں میں جو نمازیں نہیں پڑھی گئیں ان کی قضا پڑھنا فرض ہے۔`,
     prayerRulingsEnglish: `Because days beyond your habit (Days ${validHabit + 1} to ${totalDays}) were Istihadha, any prayers missed during these ${qadhaOwedDays} days must be performed as Qadha.`,
+    prayerRulingsRomanUrdu: `Chunke aadat se zaid din (${validHabit + 1} se ${totalDays} tak) istihadha the, is liye in ${qadhaOwedDays} dinon mein jo namazein nahi parhi gayin unki qadha parhna farz hai.`,
     fastingRulingsUrdu: `عادت کے ${validHabit} دن کے بعد والے دنوں میں روزہ رکھنا درست تھا، اگر چھوڑا تھا تو قضا رکھیں۔`,
     fastingRulingsEnglish: `Fasting was valid after Day ${validHabit}. If fasts were deferred during Istihadha days, perform them as Qadha.`,
+    fastingRulingsRomanUrdu: `Aadat ke ${validHabit} din ke baad wale dinon mein roza rakhna durust tha, agar chhora tha to qadha rakhein.`,
     spiritualPrescriptionUrdu: [
       'آئندہ کے لیے اپنی عادت کے دنوں (مثلاً ۶ یا ۷ دن) کو سختی سے یاد رکھیں۔',
       '۱۰ دن سے زیادہ خون آنے پر عادت کے دن پورے ہوتے ہی غسل کر کے نمازیں جاری رکھیں۔',
       'استحاضہ کے دوران ہر فرض نماز کے وقت نیا وضو کرنا معذور کے لیے ضروری ہے۔'
     ],
     spiritualPrescriptionEnglish: [
-      'Note and remember your established habit duration (e.g. 6 or 7 days) strictly in your journal.',
-      'When bleeding exceeds 10 days, take Ghusl right after your habit days conclude and resume Salah.',
-      'During Istihadha, perform fresh Wudu for each obligatory prayer time under the ruling of an excused person.'
+      'For future reference, strictly memorize and track your habitual days (e.g., 6 or 7 days).',
+      'If bleeding exceeds 10 days, take Ghusl as soon as habit days finish and continue praying.',
+      'During Istihadha, performing a fresh Wudu at each prayer time is mandatory for an excused sister.'
     ],
-    referenceText: 'رد المحتار علی الدر المختار، باب الحیض / بہارِ شریعت، حصہ ۲'
+    spiritualPrescriptionRomanUrdu: [
+      'Ainda ke liye apni aadat ke dinon (maslan 6 ya 7 din) ko sakhti se yaad rakhein.',
+      '10 din se zyada khoon aane par aadat ke din poore hote hi ghusl kar ke namazein jari rakhein.',
+      'Istihadha ke dauran har farz namaz ke waqt naya wuzu karna ma\'zoor ke liye zaroori hai.'
+    ],
+    referenceText: 'بہارِ شریعت، حصہ ۲ / درِ مختار و رد المحتار'
   };
 }

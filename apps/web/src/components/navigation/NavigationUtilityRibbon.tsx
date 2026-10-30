@@ -10,7 +10,7 @@ export interface NavigationUtilityRibbonProps {
   currentLang: string;
   user: any;
   currentPath: string;
-  switchLanguage: (lang: 'en' | 'ur' | 'ar') => void;
+  switchLanguage: (lang: 'en' | 'ur' | 'ar' | 'roman') => void;
 }
 
 export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = ({
@@ -105,7 +105,13 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                 {isMounted && nextPrayer ? (
                   <>
                     <span style={{ color: '#9CA3AF' }}>
-                      {currentLang === 'ur' ? `اگلی نماز: ${nextPrayer.nameUrdu}` : `Next Salah: ${nextPrayer.nameEnglish}`}
+                      {currentLang === 'ur'
+                        ? `اگلی نماز: ${nextPrayer.nameUrdu}`
+                        : currentLang === 'ar'
+                        ? `الصلاة القادمة: ${nextPrayer.nameUrdu}`
+                        : currentLang === 'roman'
+                        ? `Agli Namaz: ${nextPrayer.nameUrdu}`
+                        : `Next Salah: ${nextPrayer.nameEnglish}`}
                     </span>{' '}
                     <strong suppressHydrationWarning style={{ color: '#FFFFFF' }}>
                       {nextPrayer.time}
@@ -114,11 +120,23 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                       suppressHydrationWarning
                       style={{ fontSize: 10, fontWeight: 700, color: '#34D399' }}
                     >
-                      ({currentLang === 'ur' ? nextPrayer.formattedCountdownUrdu : nextPrayer.formattedCountdownEnglish})
+                      ({currentLang === 'ur'
+                        ? nextPrayer.formattedCountdownUrdu
+                        : currentLang === 'roman'
+                        ? nextPrayer.formattedCountdownUrdu
+                        : nextPrayer.formattedCountdownEnglish})
                     </span>
                   </>
                 ) : (
-                  <span>{currentLang === 'ur' ? 'اوقاتِ نماز' : 'Prayer Times'}</span>
+                  <span>
+                    {currentLang === 'ur'
+                      ? 'اوقاتِ نماز'
+                      : currentLang === 'ar'
+                      ? 'مواقيت الصلاة'
+                      : currentLang === 'roman'
+                      ? 'Auqat-e-Namaz'
+                      : 'Prayer Times'}
+                  </span>
                 )}
               </span>
             </Link>
@@ -163,7 +181,15 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
               title="Toggle Tahajjud & Night Serenity OLED Dark Mode"
             >
               <span>🌙</span>
-              <span>{currentLang === 'ur' ? 'تہجد موڈ' : 'Tahajjud'}</span>
+              <span>
+                {currentLang === 'ur'
+                  ? 'تہجد موڈ'
+                  : currentLang === 'ar'
+                  ? 'التهجد'
+                  : currentLang === 'roman'
+                  ? 'Tahajjud'
+                  : 'Tahajjud'}
+              </span>
             </button>
 
             {/* Cloud Sync Status Badge */}
@@ -174,29 +200,33 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
               onClick={() => {
                 if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-auth'));
               }}
-              aria-label={user && !user.isGuest ? `Signed in as ${user.name}` : 'Sign In or Create Sovereign Account'}
+              aria-label={isMounted && user && !user.isGuest ? `Signed in as ${user.name}` : 'Sign In or Create Sovereign Account'}
               style={{
-                border: user && !user.isGuest ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
+                border: isMounted && user && !user.isGuest ? '1px solid #34D399' : '1px solid rgba(255, 255, 255, 0.12)',
                 borderRadius: 14,
                 padding: '3px 10px',
                 fontSize: 11,
                 fontWeight: 600,
-                backgroundColor: user && !user.isGuest ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.06)',
-                color: user && !user.isGuest ? '#A7F3D0' : '#E5E7EB',
+                backgroundColor: isMounted && user && !user.isGuest ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.06)',
+                color: isMounted && user && !user.isGuest ? '#A7F3D0' : '#E5E7EB',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 4,
                 transition: 'all 0.15s ease',
               }}
-              title={user && !user.isGuest ? `Signed in as ${user.name} (${user.madhhab})` : 'Sign In or Create Sovereign Account'}
+              title={isMounted && user && !user.isGuest ? `Signed in as ${user.name} (${user.madhhab})` : 'Sign In or Create Sovereign Account'}
             >
               <span>👤</span>
-              <span>
-                {user && !user.isGuest
+              <span suppressHydrationWarning>
+                {isMounted && user && !user.isGuest
                   ? `${user.name}`
                   : currentLang === 'ur'
                   ? 'اکاؤنٹ'
+                  : currentLang === 'ar'
+                  ? 'الحساب'
+                  : currentLang === 'roman'
+                  ? 'Account'
                   : 'Sign In'}
               </span>
             </button>
@@ -222,10 +252,18 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
               title="AMAL OS System Settings & Control Center"
             >
               <span>⚙️</span>
-              <span>{currentLang === 'ur' ? 'ترتیبات' : 'Settings'}</span>
+              <span>
+                {currentLang === 'ur'
+                  ? 'ترتیبات'
+                  : currentLang === 'ar'
+                  ? 'الإعدادات'
+                  : currentLang === 'roman'
+                  ? 'Settings'
+                  : 'Settings'}
+              </span>
             </Link>
 
-            {/* Language Switcher */}
+            {/* 4-Language Switcher (EN, اردو, العربية, Roman) */}
             <div
               style={{
                 display: 'flex',
@@ -237,11 +275,13 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                 marginLeft: 4,
               }}
             >
-              {(['en', 'ur', 'ar'] as const).map((l) => (
+              {(['en', 'ur', 'ar', 'roman'] as const).map((l) => (
                 <button
                   key={l}
                   onClick={() => switchLanguage(l)}
-                  aria-label={`Switch interface language to ${l === 'en' ? 'English' : l === 'ur' ? 'Urdu' : 'Arabic'}`}
+                  aria-label={`Switch interface language to ${
+                    l === 'en' ? 'English' : l === 'ur' ? 'Urdu' : l === 'ar' ? 'Arabic' : 'Roman Urdu'
+                  }`}
                   style={{
                     border: 'none',
                     borderRadius: 4,
@@ -254,7 +294,7 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                     transition: 'background-color 0.15s ease',
                   }}
                 >
-                  {l === 'en' ? 'EN' : l === 'ur' ? 'اردو' : 'العربية'}
+                  {l === 'en' ? 'EN' : l === 'ur' ? 'اردو' : l === 'ar' ? 'العربية' : 'Roman'}
                 </button>
               ))}
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { SanctuaryBook } from '../../lib/women-sanctuary-data';
 
 export interface SistersBookCardGridProps {
@@ -21,7 +22,7 @@ export interface SistersBookCardGridProps {
 }
 
 export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
-  isUrdu,
+  isUrdu: propIsUrdu,
   filteredBooks,
   selectedBookCategory,
   searchQuery,
@@ -30,6 +31,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
   onSelectBook,
   onOpenSanad,
 }) => {
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   return (
     <div>
       {/* Search & Category Filter */}
@@ -50,11 +52,26 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
         {/* Category Filter Pills */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {[
-            { id: 'all', labelUrdu: 'تمام کتب (۲۱)', labelEn: 'All 21 Books' },
-            { id: 'fiqh_taharah', labelUrdu: 'احکام و فقہِ نسواں (۵)', labelEn: 'Fiqh & Purity (5)' },
-            { id: 'ummahat_banat', labelUrdu: 'امہات و بناتِ رسول (۸)', labelEn: 'Mothers & Daughters (8)' },
-            { id: 'sahabiyyat_muhaddithat', labelUrdu: 'اسوۂ صحابیات (۵)', labelEn: 'Sahabiyyat & Scholars (5)' },
-            { id: 'salihat_tarbiyat', labelUrdu: 'صالحات و تربیت (۳)', labelEn: 'Ascetics & Motherhood (3)' },
+            {
+              id: 'all',
+              label: t('All 21 Books', 'تمام کتب (۲۱)', 'جميع الكتب (٢١)', 'Tamam Kutub (21)'),
+            },
+            {
+              id: 'fiqh_taharah',
+              label: t('Fiqh & Purity (5)', 'احکام و فقہِ نسواں (۵)', 'الفقه والطهارة (٥)', 'Ahkam wa Fiqh-e-Niswan (5)'),
+            },
+            {
+              id: 'ummahat_banat',
+              label: t('Mothers & Daughters (8)', 'امہات و بناتِ رسول (۸)', 'أمهات وبنات الرسول (٨)', 'Ummahat wa Banat-e-Rasool (8)'),
+            },
+            {
+              id: 'sahabiyyat_muhaddithat',
+              label: t('Sahabiyyat & Scholars (5)', 'اسوۂ صحابیات (۵)', 'الصحابيات والمحدثات (٥)', 'Uswah-e-Sahabiyyat (5)'),
+            },
+            {
+              id: 'salihat_tarbiyat',
+              label: t('Ascetics & Motherhood (3)', 'صالحات و تربیت (۳)', 'الصالحات والتربية (٣)', 'Salihat wa Tarbiyat (3)'),
+            },
           ].map((cat) => (
             <button
               key={cat.id}
@@ -74,7 +91,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                 cursor: 'pointer',
               }}
             >
-              {isUrdu ? cat.labelUrdu : cat.labelEn}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -82,7 +99,12 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
         {/* Search Input */}
         <input
           type="text"
-          placeholder={isUrdu ? 'کتاب یا مصنف کا نام تلاش کریں...' : 'Search books or authors...'}
+          placeholder={t(
+            'Search books or authors...',
+            'کتاب یا مصنف کا نام تلاش کریں...',
+            'ابحث عن الكتب أو المؤلفين...',
+            'Kitab ya musannif ka naam talash karein...'
+          )}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{
@@ -234,7 +256,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                 }}
               >
                 <span>✓</span>
-                <span>{isUrdu ? 'مستند سند' : 'Sanad'}</span>
+                <span>{t('Sanad', 'مستند سند', 'السند المعتمد', 'Mustanad Sanad')}</span>
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -257,7 +279,12 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                       alignItems: 'center',
                       gap: 4,
                     }}
-                    title={isUrdu ? 'مکمل پی ڈی ایف ڈاؤن لوڈ کریں' : 'Download Complete PDF'}
+                    title={t(
+                      'Download Complete PDF',
+                      'مکمل پی ڈی ایف ڈاؤن لوڈ کریں',
+                      'تحميل الكتاب بصيغة PDF',
+                      'Mukammal PDF Download Karein'
+                    )}
                   >
                     <span>📥</span>
                     <span>PDF</span>
@@ -277,7 +304,7 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  {isUrdu ? 'مطالعہ کریں' : 'Read Book'}
+                  {t('Read Book', 'مطالعہ کریں', 'قراءة الكتاب', 'Mutala\'ah Karein')}
                 </button>
               </div>
             </div>

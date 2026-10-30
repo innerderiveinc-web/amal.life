@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface SistersPinLockViewProps {
   isUrdu: boolean;
@@ -10,13 +11,14 @@ export interface SistersPinLockViewProps {
 }
 
 export const SistersPinLockView: React.FC<SistersPinLockViewProps> = ({
-  isUrdu,
+  isUrdu: propIsUrdu,
   enteredPin,
   pinError,
   setEnteredPin,
   onUnlockPin,
   onRemovePin,
 }) => {
+  const { t } = useLanguage();
   return (
     <div
       style={{
@@ -32,12 +34,20 @@ export const SistersPinLockView: React.FC<SistersPinLockViewProps> = ({
     >
       <div style={{ fontSize: 48, marginBottom: 12 }}>🔒</div>
       <h2 style={{ fontSize: 20, fontWeight: 800, color: '#064E3B', margin: '0 0 6px 0' }}>
-        {isUrdu ? 'نجی گوشہ لاک ہے' : 'Private Sanctuary Locked'}
+        {t(
+          'Private Sanctuary Locked',
+          'نجی گوشہ لاک ہے',
+          'الخزانة الخاصة مقفلة',
+          'Niji Gosha Locked Hai'
+        )}
       </h2>
       <p style={{ fontSize: 13, color: '#6B7280', marginBottom: 20 }}>
-        {isUrdu
-          ? 'اپنے مخصوص ایام کے اندراجات اور نجی ڈائری دیکھنے کے لیے ۴ ہندسوں کا پن کوڈ درج کریں۔'
-          : 'Enter your 4-digit PIN to access your personal cycle logs and reflections.'}
+        {t(
+          'Enter your 4-digit PIN to access your personal cycle logs and reflections.',
+          'اپنے مخصوص ایام کے اندراجات اور نجی ڈائری دیکھنے کے لیے ۴ ہندسوں کا پن کوڈ درج کریں۔',
+          'أدخل رمز الدخول المكون من ٤ أرقام للوصول إلى سجلاتك الخاصة.',
+          'Apne makhsoos ayaam ke indrajat dekhne ke liye 4 hindson ka PIN code darj karein.'
+        )}
       </p>
 
       <input
@@ -78,7 +88,7 @@ export const SistersPinLockView: React.FC<SistersPinLockViewProps> = ({
             cursor: 'pointer',
           }}
         >
-          {isUrdu ? 'ان لاک کریں' : 'Unlock'}
+          {t('Unlock', 'ان لاک کریں', 'فتح القفل', 'Unlock Karein')}
         </button>
         <button
           onClick={onRemovePin}
@@ -90,7 +100,7 @@ export const SistersPinLockView: React.FC<SistersPinLockViewProps> = ({
             cursor: 'pointer',
           }}
         >
-          {isUrdu ? 'پن بھول گئے؟' : 'Forgot PIN?'}
+          {t('Forgot PIN?', 'پن بھول گئے؟', 'نسيت الرمز؟', 'PIN Bhool Gaye?')}
         </button>
       </div>
     </div>
