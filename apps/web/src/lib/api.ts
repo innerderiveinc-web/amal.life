@@ -3,6 +3,8 @@
  * Connects to configured AMAL Backend API with explicit local device storage mode.
  * ZERO FABRICATION: Never sends default mock identity and never fakes remote sync.
  */
+import { purgeAllAmalData, storageGet } from './storage-adapter';
+import { findClassicalAuthorities } from './classical-rag-engine';
 
 const API_BASE_URL = typeof window !== 'undefined'
   ? (process.env.NEXT_PUBLIC_API_URL || '')
@@ -135,14 +137,12 @@ export class AmalApiClient {
 
     // 1. Goals (Local Device Only)
     if (path === '/goals' && method === 'GET') {
-      const stored = localStorage.getItem('amal_goals');
-      const list = stored ? JSON.parse(stored) : [];
+      const list = storageGet<unknown[]>('amal_goals') ?? [];
       return { success: true, isLocalOnly: true, data: list as T };
     }
 
     if (path === '/goals' && method === 'POST') {
-      const stored = localStorage.getItem('amal_goals');
-      const existing = stored ? JSON.parse(stored) : [];
+      const existing = storageGet<unknown[]>('amal_goals') ?? [];
       const newGoal = {
         id: `goal_local_${Date.now()}`,
         category: body?.category || 'GENERAL',
@@ -158,32 +158,28 @@ export class AmalApiClient {
 
     if (path.startsWith('/goals/') && method === 'DELETE') {
       const id = path.split('/')[2];
-      const stored = localStorage.getItem('amal_goals');
-      const existing = stored ? JSON.parse(stored) : [];
-      const updated = existing.filter((g: any) => (g.id || g.goalId) !== id);
+      const existing = storageGet<Record<string, unknown>[]>('amal_goals') ?? [];
+      const updated = existing.filter((g) => (g['id'] || g['goalId']) !== id);
       localStorage.setItem('amal_goals', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
 
     if (path.startsWith('/goals/') && method === 'PATCH') {
       const id = path.split('/')[2];
-      const stored = localStorage.getItem('amal_goals');
-      const existing = stored ? JSON.parse(stored) : [];
-      const updated = existing.map((g: any) => (g.id || g.goalId) === id ? { ...g, ...body } : g);
+      const existing = storageGet<Record<string, unknown>[]>('amal_goals') ?? [];
+      const updated = existing.map((g) => (g['id'] || g['goalId']) === id ? { ...g, ...body } : g);
       localStorage.setItem('amal_goals', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { updated: true } as T };
     }
 
     // 2. Journeys (Local Device Only)
     if (path === '/journeys' && method === 'GET') {
-      const stored = localStorage.getItem('amal_journeys');
-      const list = stored ? JSON.parse(stored) : [];
+      const list = storageGet<unknown[]>('amal_journeys') ?? [];
       return { success: true, isLocalOnly: true, data: list as T };
     }
 
     if (path === '/journeys' && method === 'POST') {
-      const stored = localStorage.getItem('amal_journeys');
-      const existing = stored ? JSON.parse(stored) : [];
+      const existing = storageGet<unknown[]>('amal_journeys') ?? [];
       const templateDaysMap: Record<string, number> = {
         'tmpl-fajr-14d': 14,
         'tmpl-salah-consistency': 21,
@@ -216,32 +212,28 @@ export class AmalApiClient {
 
     if (path.startsWith('/journeys/') && method === 'PATCH') {
       const id = path.split('/')[2];
-      const stored = localStorage.getItem('amal_journeys');
-      const existing = stored ? JSON.parse(stored) : [];
-      const updated = existing.map((j: any) => (j.id || j.journeyId) === id ? { ...j, ...body } : j);
+      const existing = storageGet<Record<string, unknown>[]>('amal_journeys') ?? [];
+      const updated = existing.map((j) => (j['id'] || j['journeyId']) === id ? { ...j, ...body } : j);
       localStorage.setItem('amal_journeys', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { updated: true } as T };
     }
 
     if (path.startsWith('/journeys/') && method === 'DELETE') {
       const id = path.split('/')[2];
-      const stored = localStorage.getItem('amal_journeys');
-      const existing = stored ? JSON.parse(stored) : [];
-      const updated = existing.filter((j: any) => (j.id || j.journeyId) !== id);
+      const existing = storageGet<Record<string, unknown>[]>('amal_journeys') ?? [];
+      const updated = existing.filter((j) => (j['id'] || j['journeyId']) !== id);
       localStorage.setItem('amal_journeys', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
 
     // 3. Reflections (Local Device Only — No Fake Pre-existing History)
     if (path === '/reflections' && method === 'GET') {
-      const stored = localStorage.getItem('amal_reflections');
-      const existing = stored ? JSON.parse(stored) : [];
+      const existing = storageGet<unknown[]>('amal_reflections') ?? [];
       return { success: true, isLocalOnly: true, data: existing as T };
     }
 
     if (path === '/reflections' && method === 'POST') {
-      const stored = localStorage.getItem('amal_reflections');
-      const existing = stored ? JSON.parse(stored) : [];
+      const existing = storageGet<unknown[]>('amal_reflections') ?? [];
       const newReflection = {
         id: `refl_local_${Date.now()}`,
         content: body?.content || '',
@@ -254,9 +246,8 @@ export class AmalApiClient {
 
     if (path.startsWith('/reflections/') && method === 'DELETE') {
       const id = path.split('/')[2];
-      const stored = localStorage.getItem('amal_reflections');
-      const existing = stored ? JSON.parse(stored) : [];
-      const updated = existing.filter((r: any) => r.id !== id);
+      const existing = storageGet<Record<string, unknown>[]>('amal_reflections') ?? [];
+      const updated = existing.filter((r) => r['id'] !== id);
       localStorage.setItem('amal_reflections', JSON.stringify(updated));
       return { success: true, isLocalOnly: true, data: { deleted: true } as T };
     }
@@ -267,28 +258,45 @@ export class AmalApiClient {
         version: '1.0.0',
         exportedAt: new Date().toISOString(),
         mode: 'LOCAL_BROWSER_SOVEREIGN_STORAGE',
-        goals: JSON.parse(localStorage.getItem('amal_goals') || '[]'),
-        journeys: JSON.parse(localStorage.getItem('amal_journeys') || '[]'),
-        reflections: JSON.parse(localStorage.getItem('amal_reflections') || '[]'),
-        bookmarks: JSON.parse(localStorage.getItem('amal_saved_bookmarks') || '[]'),
-        quranWisdomBookmarks: JSON.parse(localStorage.getItem('amal_quran_wisdom_bookmarks') || '[]'),
-        location: JSON.parse(localStorage.getItem('amal_user_location') || '{}'),
-        madhhab: localStorage.getItem('amal_user_madhhab') || 'HANAFI',
-        method: localStorage.getItem('amal_user_method') || 'KARACHI',
-        prayerOffsets: JSON.parse(localStorage.getItem('amal_user_prayer_offsets') || '{}'),
-        hijriOffset: Number(localStorage.getItem('amal_user_hijri_offset') || '0'),
-        azaanSettings: JSON.parse(localStorage.getItem('amal_azaan_settings') || '{}'),
-        focusMode: localStorage.getItem('amal_focus_mode') !== 'false',
-        appLanguage: localStorage.getItem('amal_app_language') || 'en',
+        goals:                  storageGet<unknown[]>('amal_goals') ?? [],
+        journeys:               storageGet<unknown[]>('amal_journeys') ?? [],
+        reflections:            storageGet<unknown[]>('amal_reflections') ?? [],
+        bookmarks:              storageGet<unknown[]>('amal_saved_bookmarks') ?? [],
+        quranWisdomBookmarks:   storageGet<unknown[]>('amal_quran_wisdom_bookmarks') ?? [],
+        location:               storageGet<Record<string, unknown>>('amal_user_location') ?? {},
+        madhhab:                localStorage.getItem('amal_user_madhhab') || 'HANAFI',
+        method:                 localStorage.getItem('amal_user_method') || 'KARACHI',
+        prayerOffsets:          storageGet<Record<string, unknown>>('amal_user_prayer_offsets') ?? {},
+        hijriOffset:            Number(localStorage.getItem('amal_user_hijri_offset') || '0'),
+        azaanSettings:          storageGet<Record<string, unknown>>('amal_azaan_settings') ?? {},
+        focusMode:              localStorage.getItem('amal_focus_mode') !== 'false',
+        appLanguage:            localStorage.getItem('amal_app_language') || 'en',
       };
       return { success: true, isLocalOnly: true, data: exportBlob as T };
     }
 
-    // 5. Account/Data Purge
+    // 5. Account/Data Purge — delegates to StorageAdapter for complete wipe
     if (path === '/privacy/delete-account' && method === 'POST') {
-      const keysToClear = ['amal_goals', 'amal_journeys', 'amal_reflections', 'amal_user_profile', 'amal_token'];
-      keysToClear.forEach(k => localStorage.removeItem(k));
+      purgeAllAmalData();
       return { success: true, isLocalOnly: true, data: { purged: true, message: 'All local device records cleared.' } as T };
+    }
+
+    // 6. Classical Scholarly Evidence Search (100% Offline Local RAG)
+    if (path === '/evidence/search' && method === 'POST') {
+      const q = (body?.query || '').trim();
+      if (!q) {
+        return { success: true, isLocalOnly: true, data: [] as T };
+      }
+      const matches = findClassicalAuthorities(q, 4);
+      const results = matches.map((m) => ({
+        sourceType: m.discipline.replace(/_/g, ' '),
+        reference: `${m.bookTitleTransliterated} (${m.authorName}, d. ${m.authorDeathHijri} AH) — ${m.chapter.chapterTitleEnglish}`,
+        arabicText: m.chapter.arabicMatn,
+        translatedText: m.chapter.urduTranslation || m.chapter.englishSynopsis,
+        synopsis: m.chapter.englishSynopsis,
+        takeaway: m.chapter.practicalTakeaway,
+      }));
+      return { success: true, isLocalOnly: true, data: results as T };
     }
 
     return {

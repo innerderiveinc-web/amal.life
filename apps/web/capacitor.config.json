@@ -1,0 +1,17 @@
+{
+  "appId": "life.amal.os",
+  "appName": "AMAL OS",
+  "webDir": "out",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Haptics": {},
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#064E3B",
+      "sound": "azaan.wav"
+    }
+  }
+}

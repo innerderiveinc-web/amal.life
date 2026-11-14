@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { DailyKnowledgeBroadcast } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface BroadcastHadithTabProps {
   hadith: DailyKnowledgeBroadcast['hadith'];
@@ -15,6 +16,7 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
   onCopy,
   onMakeCard,
 }) => {
+  const { t } = useLanguage();
   return (
     <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
       <div
@@ -35,7 +37,7 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
             borderRadius: 6,
           }}
         >
-          {hadith.sourceBook} • راوی: {hadith.narrator}
+          {hadith.sourceBook} • {t('Narrator: ', 'راوی: ', 'الراوي: ', 'Rawi: ')}{hadith.narrator}
         </span>
 
         <button
@@ -50,7 +52,9 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
             color: '#475569',
           }}
         >
-          {copied ? '✅ کاپی ہو گیا' : '📋 متن کاپی کریں'}
+          {copied
+            ? t('✅ Copied', '✅ کاپی ہو گیا', '✅ تم النسخ', '✅ Copy ho gaya')
+            : t('📋 Copy Text', '📋 متن کاپی کریں', '📋 نسخ النص', '📋 Matn Copy Karein')}
         </button>
       </div>
 
@@ -87,9 +91,19 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
           marginBottom: 12,
         }}
       >
-        <span style={{ fontWeight: 800, color: '#1E40AF' }}>اردو مفہوم: </span>
+        <span style={{ fontWeight: 800, color: '#1E40AF' }}>
+          اردو مفہوم:{' '}
+        </span>
         {hadith.urduTranslation}
       </div>
+
+      {/* English Translation */}
+      {hadith.englishTranslation && (
+        <div style={{ fontSize: 13.5, color: '#374151', marginBottom: 14, lineHeight: 1.6, padding: '10px 14px', backgroundColor: '#F8FAFC', borderRadius: 8, border: '1px solid #E2E8F0' }}>
+          <strong style={{ color: '#1E40AF' }}>{t('English Meaning: ', 'انگریزی مفہوم: ', 'المعنى بالإنجليزية: ', 'English Meaning: ')}</strong>
+          &ldquo;{hadith.englishTranslation}&rdquo;
+        </div>
+      )}
 
       {/* Practical Sunnah Action */}
       <div
@@ -103,7 +117,7 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
           marginBottom: 16,
         }}
       >
-        <strong>🎯 روزمرہ سنت پر عمل: </strong> {hadith.sunnahApplication}
+        <strong>🎯 {t('Sunnah in Daily Life: ', 'روزمرہ سنت پر عمل: ', 'السنة النبوية في الحياة: ', 'Rozmarrah Sunnah par Amal: ')}</strong> {hadith.sunnahApplication}
       </div>
 
       {/* Action Footer */}
@@ -126,7 +140,7 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
               boxShadow: '0 2px 4px rgba(30, 64, 175, 0.2)',
             }}
           >
-            <span>📸 حدیث کارڈ بنائیں</span>
+            <span>📸 {t('Create Hadith Card', 'حدیث کارڈ بنائیں', 'إنشاء بطاقة الحديث', 'Hadith Card Banayein')}</span>
           </button>
         )}
 
@@ -145,7 +159,7 @@ export const BroadcastHadithTab: React.FC<BroadcastHadithTabProps> = ({
             gap: 6,
           }}
         >
-          <span>📜 اربعین نووی کے تمام ۴۲ اسباق لائبریری میں پڑھیں →</span>
+          <span>📜 {t('Read 42 Hadiths of Arba\'in in Library →', 'اربعین نووی کے تمام ۴۲ اسباق لائبریری میں پڑھیں →', 'قراءة الأربعين النووية في المكتبة ←', 'Arba\'in Nawawi ke 42 Asbaaq Library me Padhein →')}</span>
         </Link>
       </div>
     </div>

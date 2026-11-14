@@ -13,7 +13,7 @@ interface SettingsReaderTabProps {
   showWordByWord: boolean;
   setShowWordByWord: (val: boolean) => void;
   handleSaveReader: () => void;
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function SettingsReaderTab({
@@ -33,16 +33,16 @@ export function SettingsReaderTab({
   return (
     <div>
       <h2 style={{ margin: '0 0 16px', fontSize: 20, fontWeight: 800, color: '#111827' }}>
-        Quran & Hadith Reader Codex
+        {t('Quran & Hadith Reader Codex', 'قرآن و حدیث کوڈیکس ترتیبات', 'إعدادات قراءة المصحف والحديث', 'Quran & Hadith Reader Settings')}
       </h2>
       <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280' }}>
-        Customize the Arabic typography script, font scale, and canonical translations.
+        {t('Customize the Arabic typography script, font scale, and canonical translations.', 'عربی رسم الخط، فونٹ سائز اور مستند ترجمہ کا انتخاب کریں۔', 'تخصيص الرسم العثماني وحجم الخط والترجمات المعتمدة.', 'Arabic script, font size aur pasandeeda tarjuma chunein.')}
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Arabic Calligraphy Script (رسم الخط)
+            {t('Arabic Calligraphy Script', 'رسم الخط (عربی فونٹ اسٹائل)', 'رسم الخط العربي', 'Arabic Calligraphy Script')}
           </label>
           <select
             value={arabicScript}
@@ -57,14 +57,14 @@ export function SettingsReaderTab({
               backgroundColor: '#F9FAFB',
             }}
           >
-            <option value="indopak">{t('Indo-Pak / Subcontinent Script (Nastaliq / Naskh)', 'رسم الخط برصغیر (نستعلیق / نسخ)')}</option>
-            <option value="uthmani">{t('Madani Uthmani Script', 'المصحف المدني (رسم عثماني)')}</option>
+            <option value="indopak">{t('Indo-Pak / Subcontinent Script (Nastaliq / Naskh)', 'رسم الخط برصغیر (نستعلیق / نسخ)', 'الرسم الهندي الباكستاني', 'Indo-Pak / Subcontinent Script')}</option>
+            <option value="uthmani">{t('Madani Uthmani Script', 'المصحف المدني (رسم عثماني)', 'المصحف المدني (رسم عثماني)', 'Madani Uthmani Script')}</option>
           </select>
         </div>
 
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Arabic Typography Scale ({fontSize}px)
+            {t(`Arabic Typography Scale (${fontSize}px)`, `عربی فونٹ سائز (${fontSize}px)`, `حجم الخط العربي (${fontSize}px)`, `Arabic Font Size (${fontSize}px)`)}
           </label>
           <input
             type="range"
@@ -93,7 +93,7 @@ export function SettingsReaderTab({
 
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Default Urdu Translation (اردو ترجمہ)
+            {t('Default Urdu Translation', 'طے شدہ اردو ترجمہ', 'الترجمة الأردية المعتمدة', 'Default Urdu Tarjuma')}
           </label>
           <select
             value={urduTranslation}
@@ -116,7 +116,7 @@ export function SettingsReaderTab({
 
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Default English Translation
+            {t('Default English Translation', 'طے شدہ انگریزی ترجمہ', 'الترجمة الإنجليزية', 'Default English Translation')}
           </label>
           <select
             value={englishTranslation}
@@ -150,10 +150,10 @@ export function SettingsReaderTab({
         >
           <div>
             <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>
-              🔤 Word-by-Word Interlinear Analysis
+              {t('🔤 Word-by-Word Interlinear Analysis', '🔤 لفظی ترجمہ و نحوی تجزیہ', '🔤 التحليل الصرفي كلمة بكلمة', '🔤 Word-by-Word Analysis')}
             </div>
             <div style={{ fontSize: 12, color: '#6B7280' }}>
-              Show morphological root analysis and direct word-level translation in reader
+              {t('Show morphological root analysis and direct word-level translation in reader', 'ریڈر میں ہر لفظ کا لغوی ترجمہ اور کلمے کی اصل جڑ دکھائیں', 'عرض المعنى والتحليل الإعرابي والجذر لكل كلمة', 'Reader me har lafz ka seedha tarjuma aur asli madda dikhayein')}
             </div>
           </div>
           <input
@@ -178,7 +178,7 @@ export function SettingsReaderTab({
             cursor: 'pointer',
           }}
         >
-          Save Reader Codex
+          {t('Save Reader Codex', 'مطالعہ کوڈیکس محفوظ کریں', 'حفظ إعدادات القراءة', 'Save Reader Settings')}
         </button>
       </div>
     </div>

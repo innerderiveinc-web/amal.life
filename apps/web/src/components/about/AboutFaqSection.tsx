@@ -88,8 +88,8 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = () => {
       >
         {AMAL_FAQS.map((faq, idx) => {
           const isOpen = activeFaq === idx;
-          const questionText = isUrdu || isArabic ? faq.qUrdu : faq.q;
-          const answerText = (isUrdu || isArabic ? (faq.aUrdu || faq.a) : faq.a);
+          const questionText = isUrdu ? faq.qUrdu : faq.q;
+          const answerText = isUrdu ? (faq.aUrdu || faq.a) : faq.a;
           return (
             <div
               key={idx}
@@ -120,7 +120,7 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = () => {
                 }}
               >
                 <span>{questionText}</span>
-                <span style={{ fontSize: 18, color: '#9CA3AF', marginLeft: 12 }}>
+                <span style={{ fontSize: 18, color: '#64748B', marginLeft: 12 }}>
                   {isOpen ? '▲' : '▼'}
                 </span>
               </button>

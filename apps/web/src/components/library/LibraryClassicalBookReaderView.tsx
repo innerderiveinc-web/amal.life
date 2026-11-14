@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { CanonicalEditionRecord } from '@amal/evidence';
 import {
   ClassicalBookWithChapters,
@@ -7,6 +7,7 @@ import {
 } from '../../lib/classical-chapters-data';
 import { getCanonicalBookProfile } from '../../data/canonical-book-introductions';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface LibraryClassicalBookReaderViewProps {
   selectedWork: CanonicalEditionRecord;
@@ -20,7 +21,7 @@ export interface LibraryClassicalBookReaderViewProps {
   onSharePayload: (payload: UniversalCardPayload) => void;
 }
 
-export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReaderViewProps> = ({
+const LibraryClassicalBookReaderViewInner: React.FC<LibraryClassicalBookReaderViewProps> = ({
   selectedWork,
   bookChaptersData,
   currentChapter,
@@ -31,6 +32,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
   verifiedSource,
   onSharePayload,
 }) => {
+  const { language, t } = useLanguage();
   const localPdf = getLocalPdfForWork(selectedWork.work_id);
   const bookProfile = getCanonicalBookProfile(selectedWork.work_id);
   // Default to FULL_PDF if chapters are not available, otherwise default to CURATED
@@ -72,7 +74,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
             gap: 10,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 260 }}>
             <span style={{ fontSize: 22 }}>⚖️</span>
             <div>
               <div
@@ -88,7 +90,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
               >
                 <span>«مُنتَخَبَات دِرَاسِيَّة تَعْلِيمِيَّة»</span>
                 <span style={{ fontSize: 12.5, fontWeight: 700, opacity: 0.9 }}>
-                  • Selected Pedagogical Chapters (منتخب کلیدی اسباق)
+                  • {t('Selected Pedagogical Chapters', 'منتخب کلیدی اسباق و خلاصہ', 'منتخبات دراسية تعليمية', 'Muntakhab Asbaaq o Khulasa (Curated)')}
                 </span>
               </div>
               <div
@@ -99,7 +101,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   lineHeight: 1.5,
                 }}
               >
-                یہ ابواب اس ضخیم کتاب کے بنیادی تعلیمی و تدریسی خلاصے پر مشتمل ہیں۔ مکمل غیر محذوف اصل کتاب مع حواشی و مراجع کے مطالعے کے لیے دائیں جانب &quot;Full Book Edition&quot; پر کلک فرمائیں۔
+                {t(
+                  'These chapters contain curated pedagogical excerpts from this classical volume. For the unabridged edition with complete apparatus, click "Full Complete Edition" on the right.',
+                  'یہ ابواب اس ضخیم کتاب کے بنیادی تعلیمی و تدریسی خلاصے پر مشتمل ہیں۔ مکمل غیر محذوف اصل کتاب مع حواشی و مراجع کے مطالعے کے لیے دائیں جانب "مکمل اصل کتاب" پر کلک فرمائیں۔',
+                  'هذه الفصول تشتمل على خلاصات دراسية منتخبة من هذا السفر الجليل. ولمطالعة النسخة الكاملة مع الحواشي، انقر على "النسخة الكاملة".',
+                  'Yeh abwaab is kitab ke bunyadi taleemi o tadreesi khulasa par mushtamil hain. Mukammal kitab ke mutala ke liye "Full Complete Edition" par click karein.'
+                )}
               </div>
               <div
                 style={{
@@ -113,8 +120,13 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   lineHeight: 1.4,
                 }}
               >
-                <strong>«تَنْبِيهٌ شَرْعِيٌّ وَأَدَبُ الطَّالِب»</strong>: 
-                مطالعۂ کتب برائے معلومات و بنیادی فہم ہے؛ یہ جید علماء و مفتیانِ کرام سے باضابطہ کسبِ فیض کا متبادل نہیں ہے۔ پیچیدہ مسائل میں ہمیشہ مستند دار الافتاء سے رجوع فرمائیں۔
+                <strong>«{t('Scholarly Adab Note', 'تَنبِيهٌ شَرعِيٌّ وَأَدَبُ الطَّالِب', 'تنبيه شرعي وأدب الطالب', 'Shar\'i Tanbeeh o Adab')}»</strong>:{' '}
+                {t(
+                  'Reading classical texts builds foundational understanding; it does not replace formalized study under qualified scholars and certified Muftis. For complex queries, refer to an authentic Dar-ul-Ifta.',
+                  'مطالعۂ کتب برائے معلومات و بنیادی فہم ہے؛ یہ جید علماء و مفتیانِ کرام سے باضابطہ کسبِ فیض کا متبادل نہیں ہے۔ پیچیدہ مسائل میں ہمیشہ مستند دار الافتاء سے رجوع فرمائیں۔',
+                  'مطالعة الكتب لبناء الفهم ولا تغني عن التلقي من العلماء المعتمدين والمفتين العدول.',
+                  'Kitabon ka mutala bunyadi feham ke liye hai; yeh mustanad ulema o muftiyan se dars lene ka mutabadil nahi hai. Pechida masail mein certified Dar-ul-Ifta se rujoo karein.'
+                )}
               </div>
             </div>
           </div>
@@ -151,7 +163,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                 transition: 'all 0.15s ease',
               }}
             >
-              📜 منتخب اسباق و خلاصہ (Curated)
+              📜 {t('Curated Lessons (Summary)', 'منتخب اسباق و خلاصہ', 'منتخبات دراسية', 'Curated Lessons (Khulasa)')}
             </button>
 
             <button
@@ -176,7 +188,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                 transition: 'all 0.15s ease',
               }}
             >
-              📑 مکمل اصل کتاب (Full Complete Edition)
+              📑 {t('Full Complete Edition', 'مکمل اصل کتاب', 'النسخة الكاملة المعتمدة', 'Mukammal Asal Kitab (Full Edition)')}
             </button>
           </div>
         </div>
@@ -255,11 +267,13 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                       fontWeight: 800,
                       fontSize: 17,
                       color: readerTheme === 'DARK' ? '#34D399' : '#065F46',
-                      direction: 'rtl',
-                      textAlign: 'right',
+                      direction: language === 'ur' || language === 'ar' ? 'rtl' : 'ltr',
+                      textAlign: language === 'ur' || language === 'ar' ? 'right' : 'left',
                     }}
                   >
-                    {currentChapter.chapterTitleUrdu}
+                    {language === 'roman'
+                      ? (currentChapter.chapterTitleEnglish || currentChapter.chapterTitleUrdu)
+                      : (language === 'ur' ? currentChapter.chapterTitleUrdu : (currentChapter.chapterTitleEnglish || currentChapter.chapterTitleUrdu))}
                   </div>
                   <div
                     style={{
@@ -287,7 +301,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                         cursor: 'pointer',
                       }}
                     >
-                      📑 مکمل پی ڈی ایف کھولیں
+                      📑 {t('Open Full PDF', 'مکمل پی ڈی ایف کھولیں', 'فتح النسخة المصورة الكاملة', 'Mukammal PDF Kholein')}
                     </button>
                   )}
 
@@ -319,7 +333,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                       cursor: 'pointer',
                     }}
                   >
-                    📸 کارڈ بنائیں
+                    📸 {t('Create Card', 'کارڈ بنائیں', 'إنشاء بطاقة', 'Card Banayein')}
                   </button>
                 </div>
               </div>
@@ -402,12 +416,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                 >
                   {currentChapter.englishSynopsis && (
                     <div style={{ marginBottom: currentChapter.scholarlyNotes ? 6 : 0 }}>
-                      <strong>Synopsis:</strong> {currentChapter.englishSynopsis}
+                      <strong>{t('Synopsis:', 'خلاصہ:', 'الخلاصة:', 'Khulasa:')}</strong> {currentChapter.englishSynopsis}
                     </div>
                   )}
                   {currentChapter.scholarlyNotes && (
                     <div style={{ fontStyle: 'italic' }}>
-                      <strong>Scholarly Note:</strong> {currentChapter.scholarlyNotes}
+                      <strong>{t('Scholarly Note:', 'علمی حاشیہ:', 'حاشية علمية:', 'Ilmi Hashiya:')}</strong> {currentChapter.scholarlyNotes}
                     </div>
                   )}
                 </div>
@@ -428,7 +442,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                   <span style={{ fontSize: 18 }}>🏛️</span>
                   <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
-                    مقدمہ و علمی اہمیت · Scholarly Introduction
+                    {t(
+                      'Scholarly Introduction & Significance',
+                      'مقدمہ و علمی اہمیت',
+                      'مقدمة وأهمية الكتاب العلمية',
+                      'Muqaddamah o Ilmi Ahmiyat'
+                    )}
                   </span>
                 </div>
 
@@ -460,7 +479,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                       marginBottom: 12,
                     }}
                   >
-                    <strong>مصنف کا تعارف: </strong> {bookProfile.authorBioUrdu}
+                    <strong>{t('Author Biography:', 'مصنف کا تعارف:', 'ترجمة المؤلف:', 'Musannif ka Ta\'aruf:')} </strong> {bookProfile.authorBioUrdu}
                   </div>
                 )}
 
@@ -476,12 +495,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                       border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#A7F3D0'}`,
                     }}
                   >
-                    <strong>طریقۂ مطالعہ و منہج: </strong> {bookProfile.studyMethodologyUrdu}
+                    <strong>{t('Study Methodology:', 'طریقۂ مطالعہ و منہج:', 'منهجية الدراسة والمطالعة:', 'Tareeqa-e-Mutala o Manhaj:')} </strong> {bookProfile.studyMethodologyUrdu}
                   </div>
                 )}
               </div>
 
-              {/* Topical Index / فهرستِ ابواب */}
+              {/* Topical Index */}
               {bookProfile?.topicalIndex && bookProfile.topicalIndex.length > 0 && (
                 <div
                   style={{
@@ -492,7 +511,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   }}
                 >
                   <h4 style={{ fontSize: 15, fontWeight: 800, margin: '0 0 12px', color: '#065F46' }}>
-                    فہرستِ ابواب و موضوعات (Topical Chapter Index)
+                    {t(
+                      'Topical Chapter Index',
+                      'فہرستِ ابواب و موضوعات',
+                      'فهرس الأبواب والموضوعات',
+                      'Fehrist-e-Abwaab o Mauzoo\'aat'
+                    )}
                   </h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10 }}>
                     {bookProfile.topicalIndex.map((sec) => (
@@ -507,14 +531,14 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                       >
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                           <span style={{ fontSize: 11, fontWeight: 800, color: '#065F46' }}>
-                            باب {sec.sectionNumber}
+                            {t(`Section ${sec.sectionNumber}`, `باب ${sec.sectionNumber}`, `الباب ${sec.sectionNumber}`, `Baab ${sec.sectionNumber}`)}
                           </span>
                           <span style={{ fontSize: 12, fontFamily: 'var(--font-arabic)', direction: 'rtl', fontWeight: 700 }}>
                             {sec.titleArabic}
                           </span>
                         </div>
                         <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', marginBottom: 2 }}>
-                          {sec.titleUrdu}
+                          {(language === 'ur' || language === 'ar') ? sec.titleUrdu : sec.titleEnglish}
                         </div>
                         <div style={{ fontSize: 11, color: '#64748B' }}>
                           {sec.coreThemes}
@@ -536,7 +560,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                 }}
               >
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#92400E', marginBottom: 8 }}>
-                  اس کتاب کا مکمل اصل متن ({selectedWork.volume_count} جلدیں) مع اسانید و تفاسیر دستیاب ہے
+                  {t(
+                    `Complete text of this book (${selectedWork.volume_count} volumes) with Sanad and commentaries is available.`,
+                    `اس کتاب کا مکمل اصل متن (${selectedWork.volume_count} جلدیں) مع اسانید و تفاسیر دستیاب ہے`,
+                    `النص الكامل المعتمد لهذا الكتاب (${selectedWork.volume_count} مجلدات) متاح بالأسانيد والحواشي.`,
+                    `Is kitab ka mukammal asal matn (${selectedWork.volume_count} jildain) dastyab hai.`
+                  )}
                 </div>
                 <button
                   onClick={() => setReaderMode('FULL_PDF')}
@@ -552,7 +581,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                     boxShadow: '0 2px 6px rgba(6, 95, 70, 0.25)',
                   }}
                 >
-                  📑 مکمل اصل کتاب کا مطالعہ شروع کریں (Read Full Manuscript)
+                  📑 {t(
+                    'Read Full Manuscript Edition',
+                    'مکمل اصل کتاب کا مطالعہ شروع کریں',
+                    'بدء مطالعة المخطوط والمطبوع الكامل',
+                    'Mukammal Asal Kitab ka Mutala Karein'
+                  )}
                 </button>
               </div>
             </div>
@@ -586,7 +620,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                     {localPdf.pdfTitle}
                   </div>
                   <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-                    زبان: <strong>{localPdf.language}</strong> • سائز: <strong>{localPdf.fileSizeBytes}</strong> • مکمل غیر محذوف نسخہ
+                    {t('Language:', 'زبان:', 'اللغة:', 'Zuban:')} <strong>{localPdf.language}</strong> • {t('Size:', 'سائز:', 'الحجم:', 'Size:')} <strong>{localPdf.fileSizeBytes}</strong> • {t('Unabridged Edition', 'مکمل غیر محذوف نسخہ', 'نسخة كاملة غير محذوفة', 'Mukammal Ghair Mahzoof Nuskha')}
                   </div>
                 </div>
 
@@ -610,7 +644,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                     }}
                   >
                     <span>↗</span>
-                    <span>فل اسکرین نئی ونڈو</span>
+                    <span>{t('Fullscreen Window', 'فل اسکرین نئی ونڈو', 'ملء الشاشة في نافذة جديدة', 'Fullscreen Nayi Window')}</span>
                   </a>
                   <a
                     href={localPdf.pdfUrl}
@@ -629,7 +663,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                     }}
                   >
                     <span>📥</span>
-                    <span>ڈاؤن لوڈ PDF</span>
+                    <span>{t('Download PDF', 'ڈاؤن لوڈ PDF', 'تحميل PDF', 'Download PDF')}</span>
                   </a>
                 </div>
               </div>
@@ -665,7 +699,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   textAlign: 'center',
                 }}
               >
-                💡 آپ اس موڈل کے اندر ماؤس، کی بورڈ، یا اسکرول بار سے تمام صفحات دیکھ سکتے ہیں، زوم کر سکتے ہیں اور تلاش کر سکتے ہیں۔
+                💡 {t(
+                  'You can view all pages, zoom, and search inside this viewer using your mouse, keyboard, or scrollbar.',
+                  'آپ اس موڈل کے اندر ماؤس، کی بورڈ، یا اسکرول بار سے تمام صفحات دیکھ سکتے ہیں، زوم کر سکتے ہیں اور تلاش کر سکتے ہیں۔',
+                  'يمكنكم تصفح جميع الصفحات والتكبير والبحث داخل هذا العارض باستخدام الفأرة أو لوحة المفاتيح.',
+                  'Aap is modal ke andar mouse, keyboard, ya scroll se tamam safhaat dekh sakte hain, zoom aur search kar sakte hain.'
+                )}
               </div>
             </div>
           ) : (
@@ -681,7 +720,7 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
             >
               <div style={{ fontSize: 44, marginBottom: 12 }}>🏛️</div>
               <h3 style={{ fontSize: 19, fontWeight: 800, margin: '0 0 6px', color: '#0F172A' }}>
-                مستند اوقافی کتب خانہ — {selectedWork.title_transliterated} ({selectedWork.title_arabic})
+                {t('Authentic Waqf Repository', 'مستند اوقافی کتب خانہ', 'المكتبة الوقفية المعتمدة', 'Mustanad Awqaf Library')} — {selectedWork.title_transliterated} ({selectedWork.title_arabic})
               </h3>
               <p
                 style={{
@@ -692,7 +731,12 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   lineHeight: 1.7,
                 }}
               >
-                یہ کلاسیکی کتاب ({selectedWork.volume_count} جلدیں) تمام صفحات، اسانید اور متون سمیت اوقافی اسلامی ذخیرے میں مکمل طور پر محفوظ ہے۔ آپ براہِ راست تصدیق شدہ آرکائیو سے اصل نسخہ ورق بہ ورق ملاحظہ فرما سکتے ہیں۔
+                {t(
+                  `This classical work (${selectedWork.volume_count} volumes) is preserved in verified Islamic endowments. You can examine the authenticated manuscript page by page directly from the archive.`,
+                  `یہ کلاسیکی کتاب (${selectedWork.volume_count} جلدیں) تمام صفحات، اسانید اور متون سمیت اوقافی اسلامی ذخیرے میں مکمل طور پر محفوظ ہے۔ آپ براہِ راست تصدیق شدہ آرکائیو سے اصل نسخہ ورق بہ ورق ملاحظہ فرما سکتے ہیں۔`,
+                  `هذا السفر الجليل (${selectedWork.volume_count} مجلدات) محفوظ في المستودعات الوقفية بجميع أسانيده ومتونه. يمكنكم مطالعته صفحة بصفحة من الأرشيف المعتمد.`,
+                  `Yeh classical kitab (${selectedWork.volume_count} jildain) awqafi zakheerey mein mehfooz hai. Aap tasdeeq shuda archive se asal nuskha dekh sakte hain.`
+                )}
               </p>
 
               <div
@@ -722,13 +766,13 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
                   }}
                 >
                   <span>🏛️</span>
-                  <span>اصل مطبوعہ نسخہ کھولیں ({verifiedSource.name}) ↗</span>
+                  <span>{t('Open Original Manuscript Edition', 'اصل مطبوعہ نسخہ کھولیں', 'فتح النسخة المطبوعة الأصلية', 'Asal Matboo\'a Nuskha Kholein')} ({verifiedSource.name}) ↗</span>
                 </a>
 
                 <div
                   style={{
                     fontSize: 11,
-                    color: '#64748B',
+                    color: '#475569',
                     fontFamily: 'monospace',
                     backgroundColor: '#F1F5F9',
                     padding: '4px 10px',
@@ -745,3 +789,5 @@ export const LibraryClassicalBookReaderView: React.FC<LibraryClassicalBookReader
     </div>
   );
 };
+
+export const LibraryClassicalBookReaderView = memo(LibraryClassicalBookReaderViewInner);

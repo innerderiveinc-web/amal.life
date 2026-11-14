@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { QuranSurahData } from '../../lib/quran-surahs-data';
 import { AudioSyncMode } from './FloatingQuranAudioPlayer';
 import { useLanguage } from '../../context/LanguageContext';
+import { IslamicBismillahCartouche, IslamicSurahTitleCartouche } from '../ui/IslamicArabesqueFrame';
 
 export interface SurahReaderHeaderProps {
   currentSurahMeta: QuranSurahMeta;
@@ -14,8 +15,10 @@ export interface SurahReaderHeaderProps {
   isPlayingPaused: boolean;
   isSurahSettingsOpen: boolean;
   setIsSurahSettingsOpen: (open: boolean) => void;
-  viewMode: 'SCROLL' | 'FOCUS';
-  setViewMode?: (mode: 'SCROLL' | 'FOCUS') => void;
+  viewMode: 'SCROLL' | 'FOCUS' | 'MUSHAF';
+  setViewMode?: (mode: 'SCROLL' | 'FOCUS' | 'MUSHAF') => void;
+  isHifzBlurActive?: boolean;
+  setIsHifzBlurActive?: (val: boolean) => void;
   selectedQari: 'alafasy' | 'husary' | 'minshawi';
   setSelectedQari: (qari: 'alafasy' | 'husary' | 'minshawi') => void;
   playbackSpeed: number;
@@ -36,7 +39,7 @@ export interface SurahReaderHeaderProps {
   handlePlaySurahTilawatOnly: () => void;
 }
 
-export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
+const SurahReaderHeaderInner: React.FC<SurahReaderHeaderProps> = ({
   currentSurahMeta,
   currentSurah,
   selectedSurahNumber,
@@ -48,6 +51,8 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
   setIsSurahSettingsOpen,
   viewMode,
   setViewMode,
+  isHifzBlurActive,
+  setIsHifzBlurActive,
   selectedQari,
   setSelectedQari,
   playbackSpeed,
@@ -107,8 +112,31 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
 
         {/* Audio & Display Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          {/* View Mode Toggle: Scroll vs Single Ayah Focus */}
+          {/* View Mode Toggle: Mushaf (Ayah App Style) vs Scroll vs Single Ayah Focus */}
           <div style={{ display: 'flex', gap: 2, backgroundColor: '#E2E8F0', padding: 3, borderRadius: 8, border: '1px solid #CBD5E1' }}>
+            <button
+              type="button"
+              onClick={() => setViewMode && setViewMode('MUSHAF')}
+              aria-label="604-Page Madani Mushaf Mode"
+              style={{
+                padding: '6px 12px',
+                borderRadius: 6,
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: 12,
+                fontWeight: 700,
+                backgroundColor: viewMode === 'MUSHAF' ? '#064E3B' : 'transparent',
+                color: viewMode === 'MUSHAF' ? '#FFFFFF' : '#64748B',
+                boxShadow: viewMode === 'MUSHAF' ? '0 1px 3px rgba(0,0,0,0.2)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+              }}
+              title={t('604-Page Physical Madani Mushaf View (Ayah App Style)', '۶۰۴ صفحات کا اصلی مدنی مصحف (آیت ایپ اسٹائل)', 'مصحف المدينة المنورة ٦٠٤ صفحة', '604-Safhat ka Asli Madani Mushaf (Ayah App Style)')}
+            >
+              <span>📖</span>
+              <span>{t('Mushaf Page', 'مصحف موڈ', 'المصحف', 'Mushaf Mode')}</span>
+            </button>
             <button
               type="button"
               onClick={() => setViewMode && setViewMode('SCROLL')}
@@ -153,8 +181,33 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
               title={t('Peaceful single verse mode with auto-advance', 'ایک وقت میں صرف ایک آیت کا پرسکون موڈ (آٹو ایڈوانس)', 'وضع الآية الواحدة الهادئ مع التقدم التلقائي', 'Ek waqt mein sirf ek ayah ka pur-sukoon mode (auto-advance)')}
             >
               <span>🎯</span>
-              <span>{t('Ayah Focus', 'آیت بہ آیت فوکس', 'تركيز آية بآية', 'Ayah Focus')}</span>
+              <span>{t('Ayah Focus', 'آیت فوکس', 'تركيز آية', 'Ayah Focus')}</span>
             </button>
+            {setIsHifzBlurActive && (
+              <button
+                type="button"
+                onClick={() => setIsHifzBlurActive(!isHifzBlurActive)}
+                aria-label="Toggle Hifz Memorization Blur Mode"
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: 6,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  backgroundColor: isHifzBlurActive ? '#D1FAE5' : 'transparent',
+                  color: isHifzBlurActive ? '#065F46' : '#64748B',
+                  boxShadow: isHifzBlurActive ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                }}
+                title={t('Hide text to test memory (tap ayah to reveal)', 'حفظ کے امتحان کے لیے متن چھپائیں (دیکھنے کے لیے کلک کریں)', 'إخفاء النص لاختبار الحفظ', 'Hifz ke imtehan ke liye text hide karein')}
+              >
+                <span>{isHifzBlurActive ? '👁️' : '🙈'}</span>
+                <span>{t('Hifz Test', 'حفظ ٹیسٹ', 'اختبار الحفظ', 'Hifz Test')}</span>
+              </button>
+            )}
           </div>
 
           {/* 1. Full Surah Tilawat + Tarjuma Kanz-ul-Iman Sync */}
@@ -537,23 +590,31 @@ export const SurahReaderHeader: React.FC<SurahReaderHeaderProps> = ({
         </div>
       )}
 
-      {/* Bismillah Opening Header (Not shown for Surah 1 where Bismillah is Ayah 1, nor for Surah 9 At-Tawbah) */}
+      {/* Illuminated Quran Manuscript Surah Header Cartouche */}
+      <div style={{ padding: '4px 20px 0', backgroundColor: '#FAF8F5' }}>
+        <IslamicSurahTitleCartouche
+          surahNumber={currentSurahMeta.number}
+          nameArabic={currentSurahMeta.nameArabic}
+          nameEnglish={currentSurahMeta.nameTransliterated}
+          nameUrdu={currentSurahMeta.nameUrdu}
+          versesCount={currentSurah.ayahsCount}
+          revelationType={currentSurahMeta.revelationType}
+          isUrdu={isUrdu}
+        />
+      </div>
+
+      {/* Bismillah Opening Header: Gilded Islamic Manuscript Cartouche (Not shown for Surah 1 where Bismillah is Ayah 1, nor for Surah 9 At-Tawbah) */}
       {selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && (
-        <div
-          dir="rtl"
-          style={{
-            padding: '24px 20px',
-            textAlign: 'center',
-            backgroundColor: '#FAFAF9',
-            borderBottom: '1px solid #F1F5F9',
-            fontFamily: 'var(--font-arabic), "Amiri", serif',
-            fontSize: fontSize + 2,
-            color: '#166534',
-          }}
-        >
-          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div style={{ padding: '8px 20px', backgroundColor: '#FAFAF9', borderBottom: '1px solid #F1F5F9' }}>
+          <IslamicBismillahCartouche
+            bismillahText="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
+            fontSize={Math.max(22, fontSize + 2)}
+            variant="gold"
+          />
         </div>
       )}
     </>
   );
 };
+
+export const SurahReaderHeader = memo(SurahReaderHeaderInner);

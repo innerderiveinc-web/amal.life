@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShamailReportRecord } from '@amal/types';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../../context/LanguageContext';
 
 interface ShamailCardProps {
   report: ShamailReportRecord;
@@ -8,6 +9,7 @@ interface ShamailCardProps {
 }
 
 export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard }) => {
+  const { t } = useLanguage();
   return (
     <div style={{
       backgroundColor: '#FFFFFF',
@@ -29,11 +31,11 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
           borderRadius: 12,
           letterSpacing: 0.5,
         }}>
-          شمائلِ مصطفیٰ ﷺ · {report.category.replace(/_/g, ' ')}
+          {t('Shamail-e-Mustafa ﷺ', 'شمائلِ مصطفیٰ ﷺ', 'شمائل المصطفى ﷺ', 'Shamail-e-Mustafa ﷺ')} · {report.category.replace(/_/g, ' ')}
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 12, color: '#64748B' }}>
-            راوی: {report.primary_narrator}
+            {t('Narrator: ', 'راوی: ', 'الراوي: ', 'Rawi: ')}{report.primary_narrator}
           </span>
           {onShareCard && (
             <button
@@ -43,7 +45,7 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
                 padding: '4px 10px',
                 borderRadius: 6,
                 border: '1px solid #10B981',
-                backgroundColor: '#065F46',
+                backgroundColor: '#064E3B',
                 color: '#FFFFFF',
                 fontSize: 11,
                 fontWeight: 700,
@@ -52,10 +54,10 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
                 alignItems: 'center',
                 gap: 4,
               }}
-              title="خوبصورت سوشل میڈیا کارڈ بنائیں"
+              title={t('Create Social Card', 'خوبصورت سوشل میڈیا کارڈ بنائیں', 'إنشاء بطاقة', 'Social Media Card Banayein')}
             >
               <span>📸</span>
-              <span>شمائل کارڈ</span>
+              <span>{t('Shamail Card', 'شمائل کارڈ', 'بطاقة الشمائل', 'Shamail Card')}</span>
             </button>
           )}
         </div>
@@ -90,7 +92,7 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
           }}
         >
           <strong style={{ color: '#92400E', display: 'block', fontSize: 11, marginBottom: 2 }}>
-            اردو مفہوم:
+            {t('Scholarly Translation: ', 'اردو مفہوم: ', 'المعنى: ', 'Tarjuma o Mafhoom: ')}
           </strong>
           {report.urdu_translation}
         </div>
@@ -109,8 +111,8 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
         fontSize: 12,
         color: '#666',
       }}>
-        <span><strong>مصدر و حوالہ:</strong> {report.source_hadith_ref || report.primary_source_work}</span>
-        <span style={{ color: '#065F46', fontWeight: 700 }}>درجہ: {report.hadith_grading}</span>
+        <span><strong>{t('Source & Reference:', 'مصدر و حوالہ:', 'المصدر والمرجع:', 'Sanad o Hawala:')}</strong> {report.source_hadith_ref || report.primary_source_work}</span>
+        <span style={{ color: '#065F46', fontWeight: 700 }}>{t('Grading: ', 'درجہ: ', 'الدرجة: ', 'Darja: ')}{report.hadith_grading}</span>
       </div>
 
       <div style={{
@@ -121,7 +123,7 @@ export const ShamailCard: React.FC<ShamailCardProps> = ({ report, onShareCard })
         color: '#166534',
         lineHeight: 1.5,
       }}>
-        <strong>✨ سیرت و اداب کا سبق:</strong> {report.practical_adab_lesson}
+        <strong>✨ {t('Sirah & Adab Lesson: ', 'سیرت و اداب کا سبق: ', 'درس السيرة والآداب: ', 'Seerat o Adab ka Sabaq: ')}</strong> {report.practical_adab_lesson}
       </div>
     </div>
   );

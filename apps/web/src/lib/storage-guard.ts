@@ -60,11 +60,13 @@ export async function checkStorageHealth(): Promise<StorageHealthInfo> {
 
   if (typeof window !== 'undefined' && window.localStorage) {
     const lastBackupStr = localStorage.getItem('amal_last_backup_export_time');
+    // Check actual keys used by api.ts / sovereign-backup.ts
     const hasUserData = Boolean(
-      localStorage.getItem('amal_notes') ||
-      localStorage.getItem('amal_user_goals') ||
-      localStorage.getItem('amal_bookmarks') ||
-      localStorage.getItem('amal_reflections_history')
+      localStorage.getItem('amal_reflections') ||
+      localStorage.getItem('amal_goals') ||
+      localStorage.getItem('amal_saved_bookmarks') ||
+      localStorage.getItem('amal_journeys') ||
+      localStorage.getItem('amal_muhasabah_' + new Date().toISOString().split('T')[0])
     );
 
     if (hasUserData) {

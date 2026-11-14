@@ -20,30 +20,30 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = () => {
         flexWrap: 'wrap',
         gap: 16,
         fontSize: 12,
-        color: '#9CA3AF',
+        color: '#CBD5E1',
       }}
     >
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 800, color: '#FFFFFF' }}>© 2026 AMAL OS by Qsura India Pvt Ltd.</span>
-          <span style={{ color: '#6B7280' }}>
+          <span style={{ color: '#94A3B8' }}>
             {t(
               'All Rights Reserved.',
               'تمام حقوق شرعی اغراض کے لیے محفوظ ہیں۔',
               'جميع الحقوق محفوظة للأغراض الشرعية.',
-              'Tamam huqooq shar\'i aghraz ke liye mehfooz hain.'
+              'All rights reserved for sacred educational purposes.'
             )}
           </span>
-          <span style={{ color: '#10B981', fontWeight: 700 }}>
+          <span style={{ color: '#34D399', fontWeight: 700 }}>
             · {t(
               'Waqf Lil-Ummah',
               'وقف برائے خدمتِ امتِ محمدیہ ﷺ',
               'وقف لخدمة الأمة المحمدية ﷺ',
-              'Waqf baraye khidmat-e-Ummat-e-Muhammadiyyah ﷺ'
+              'Khidmat-e-Ummat ke liye Waqf'
             )}
           </span>
         </div>
-        <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>
+        <div style={{ fontSize: 11, color: '#CBD5E1', marginTop: 2 }}>
           Crafted &amp; Stewarded by Qsura India Pvt Ltd · Founder &amp; Chief Architect: Dr. Irfan Ashraf · Sadaqah Jariyah Lil-Ummah · 100% Ad-Free Sovereign Deen OS
         </div>
       </div>
@@ -72,7 +72,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = () => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {t('Terms & Conditions', 'شرائط و ضوابط', 'الشروط والأحكام', 'Sharait wa Zawabit')}
+          {t('Terms & Conditions', 'شرائط و ضوابط', 'الشروط والأحكام', 'Terms & Conditions')}
         </Link>
 
         <Link
@@ -122,7 +122,7 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = () => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {t('Copyright & Waqf', 'کاپی رائٹ و وقف', 'حقوق النشر والوقف', 'Copyright wa Waqf')}
+          {t('Copyright & Waqf', 'کاپی رائٹ و وقف', 'حقوق النشر والوقف', 'Copyright & Waqf')}
         </Link>
 
         <Link
@@ -147,8 +147,52 @@ export const FooterBottomBar: React.FC<FooterBottomBarProps> = () => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          {t('Contact & Support', 'رابطہ و تعاون', 'التواصل والدعم', 'Rabtah wa Ta\'awun')}
+          {t('Contact & Support', 'رابطہ و تعاون', 'التواصل والدعم', 'Contact & Help')}
         </Link>
+
+        <button
+          type="button"
+          onClick={async () => {
+            const text =
+              `✨ *AMAL OS — نیت سے عمل تک (Sovereign Islamic Life OS)*\n\n` +
+              `100% اشتہارات اور ٹریکنگ سے پاک، خود مختار دینی نظام:\n` +
+              `📖 قرآن مجید مع تلاوت، کنز الایمان و تفسیری بصیرت\n` +
+              `🕌 فلکیاتی اوقاتِ نماز مع سحری و افطار کیلنڈر\n` +
+              `🧭 لائیو قبلہ کمپاس و سولر آرک سینسرز\n` +
+              `✨ مستند لائبریری و ڈیجیٹل مسنون تسبیح\n\n` +
+              `ملاحظہ فرمائیں: https://amal.life`;
+            if (typeof navigator !== 'undefined' && navigator.share) {
+              try {
+                await navigator.share({
+                  title: 'AMAL OS — Sovereign Islamic Life Operating System',
+                  text,
+                });
+                return;
+              } catch (e: any) {
+                if (e?.name === 'AbortError') return;
+              }
+            }
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+          }}
+          style={{
+            color: '#FDE68A',
+            backgroundColor: 'rgba(217, 119, 6, 0.2)',
+            border: '1px solid rgba(245, 158, 11, 0.4)',
+            padding: '6px 14px',
+            borderRadius: 20,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            transition: 'all 0.15s ease',
+          }}
+          title={t('Share AMAL OS with friends and family (Sadaqah Jariyah)', 'اپنے دوستوں اور اہلِ خانہ کے ساتھ شیئر فرمائیں (صدقہ جاریہ)', 'مشاركة نظام أمل مع الأهل والأصدقاء', 'Share AMAL OS with family')}
+        >
+          <span>📲</span>
+          <span>{t('Share AMAL OS', 'شیئر کریں (صدقہ جاریہ)', 'مشاركة أمل', 'Share AMAL')}</span>
+        </button>
       </div>
     </div>
   );

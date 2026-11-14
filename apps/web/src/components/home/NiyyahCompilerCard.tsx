@@ -1,9 +1,11 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import {
   CompiledAmalPlan,
   WhyRecommendationExplanation,
   AmalTrustLayer,
 } from '@amal/amal-engine';
+import { SacredAiDisclaimer } from '../common/SacredAiDisclaimer';
 
 export interface NiyyahCompilerCardProps {
   niyyahInput: string;
@@ -28,6 +30,7 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
   onCompileNiyyah,
   onOpenPassport,
 }) => {
+  const { t } = useLanguage();
   return (
     <div
       className="amal-card-hover"
@@ -185,7 +188,7 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
                 cursor: 'pointer',
               }}
             >
-              📜 شرعی دلائل و مراجع (View Proofs)
+              {t('📜 View Scholarly Proofs', '📜 شرعی دلائل و مراجع', '📜 الأدلة والمراجع الشرعية', '📜 Shar\'i Dalail o Maraji')}
             </button>
           </div>
 
@@ -193,7 +196,7 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
           <div style={{ backgroundColor: '#FFFFFF', padding: 16, borderRadius: 8, border: '1px solid #86EFAC', marginBottom: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: 11, fontWeight: 800, color: '#166534', letterSpacing: 0.5 }}>
-                آسان اور مستند روزمرہ عمل (RECOMMENDED DAILY AMAL)
+                {t('RECOMMENDED DAILY AMAL', 'آسان اور مستند روزمرہ عمل', 'العمل اليومي الموصى به', 'Recommended Rozmarrah Amal')}
               </span>
               <button
                 onClick={() => setShowWhyRec(!showWhyRec)}
@@ -224,29 +227,31 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
           {showWhyRec && recExplanation && (
             <div style={{ backgroundColor: '#F0FDF4', padding: 16, borderRadius: 8, border: '1px solid #A7F3D0', marginBottom: 14 }}>
               <div style={{ fontSize: 12, fontWeight: 800, color: '#064E3B', marginBottom: 8, textTransform: 'uppercase' }}>
-                💡 Why am I seeing this specific Amal?
+                💡 {t('Why am I seeing this specific Amal?', 'مجھے یہ مخصوص عمل کیوں تجویز کیا گیا؟', 'لماذا أرى هذا العمل تحديداً؟', 'Mujhe yeh khas Amal kyu tajweez kiya gaya?')}
               </div>
               <div style={{ fontSize: 12, color: '#166534', lineHeight: 1.6 }}>
-                <div>✓ <strong>Matches Goal:</strong> {recExplanation.whyIncluded.goalAlignmentRationale}</div>
-                <div>✓ <strong>Canonical Support:</strong> {recExplanation.whyIncluded.sourceCanonicalSummary}</div>
-                <div>✓ <strong>Fits Available Time:</strong> {recExplanation.whyIncluded.timeFeasibility}</div>
-                <div>✓ <strong>Current Context:</strong> {recExplanation.whyIncluded.journeyAlignment}</div>
-                <div>✓ <strong>Low Friction:</strong> {recExplanation.whyIncluded.complexityRationale}</div>
+                <div>✓ <strong>{t('Matches Goal:', 'ہدف سے مطابقت:', 'يطابق الهدف:', 'Hadaf se mutabiqat:')}</strong> {recExplanation.whyIncluded.goalAlignmentRationale}</div>
+                <div>✓ <strong>{t('Canonical Support:', 'مستند شرعی تائید:', 'تأييد أصيل:', 'Mustanad shar\'i tayeed:')}</strong> {recExplanation.whyIncluded.sourceCanonicalSummary}</div>
+                <div>✓ <strong>{t('Fits Available Time:', 'دستیاب وقت کے مطابق:', 'يناسب الوقت المتاح:', 'Dastyab waqt ke mutabiq:')}</strong> {recExplanation.whyIncluded.timeFeasibility}</div>
+                <div>✓ <strong>{t('Current Context:', 'حالیہ سیاق و سباق:', 'السياق الحالي:', 'Mawjooda Context:')}</strong> {recExplanation.whyIncluded.journeyAlignment}</div>
+                <div>✓ <strong>{t('Low Friction:', 'کم ترین رکاوٹ:', 'سهل التنفيذ:', 'Aasan o kam mushaqqat:')}</strong> {recExplanation.whyIncluded.complexityRationale}</div>
               </div>
               <div style={{ marginTop: 10, paddingTop: 8, borderTop: '1px dashed #A7F3D0', fontSize: 11, color: '#92400E' }}>
-                <strong>Why NOT &ldquo;{recExplanation.whyNotAlternative.rejectedCandidate}&rdquo;?</strong> {recExplanation.whyNotAlternative.rejectionReason}
+                <strong>{t('Why NOT', 'کیوں نہیں', 'لماذا ليس', 'Kyu nahi')} &ldquo;{recExplanation.whyNotAlternative.rejectedCandidate}&rdquo;?</strong> {recExplanation.whyNotAlternative.rejectionReason}
               </div>
             </div>
           )}
 
           {/* Classical Evidence Base */}
           <div style={{ marginBottom: 14, fontSize: 13, color: '#374151' }}>
-            <div style={{ fontWeight: 700, color: '#111827', marginBottom: 2 }}>Evidence Grounding:</div>
+            <div style={{ fontWeight: 700, color: '#111827', marginBottom: 2 }}>
+              {t('Evidence Grounding:', 'شرعی دلائل:', 'الأدلة الشرعية المؤصلة:', 'Shar\'i Dalail:')}
+            </div>
             <p style={{ margin: '2px 0', fontStyle: 'italic' }}>
               &ldquo;{compiledPlan.evidenceGrounding.quranTranslation}&rdquo; ({compiledPlan.evidenceGrounding.quranVerse})
             </p>
             <p style={{ margin: '2px 0', color: '#047857', fontWeight: 600 }}>
-              Hadith: {compiledPlan.evidenceGrounding.hadithMatn} [{compiledPlan.evidenceGrounding.hadithCitation}]
+              {t('Hadith: ', 'حدیث: ', 'الحديث: ', 'Hadith: ')}{compiledPlan.evidenceGrounding.hadithMatn} [{compiledPlan.evidenceGrounding.hadithCitation}]
             </p>
           </div>
 
@@ -283,6 +288,9 @@ export const NiyyahCompilerCard: React.FC<NiyyahCompilerCardProps> = ({
               </div>
             </div>
           )}
+
+          {/* AI Synthesis Epistemic Footnote */}
+          <SacredAiDisclaimer variant="footnote" />
         </div>
       )}
     </div>

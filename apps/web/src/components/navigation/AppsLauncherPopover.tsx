@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface NavAppItem {
   title: string;
@@ -27,6 +28,7 @@ export const AppsLauncherPopover: React.FC<AppsLauncherPopoverProps> = ({
   currentLang,
   currentPath,
 }) => {
+  const { t } = useLanguage();
   return (
     <div style={{ position: 'relative' }}>
       <button
@@ -88,9 +90,11 @@ export const AppsLauncherPopover: React.FC<AppsLauncherPopoverProps> = ({
             }}
           >
             <span style={{ fontSize: 13, fontWeight: 800, color: '#111827' }}>
-              AMAL OS SUITE (15 MODULES)
+              {t('AMAL OS SUITE (15 MODULES)', 'عمل او ایس مکمل سویٹ (۱۵ شعبہ جات)', 'حزمة AMAL OS (١٥ قسماً)', 'AMAL OS SUITE (15 MODULES)')}
             </span>
-            <span style={{ fontSize: 11, color: '#047857', fontWeight: 600 }}>Local Offline Engines</span>
+            <span style={{ fontSize: 11, color: '#047857', fontWeight: 600 }}>
+              {t('Local Offline Engines', 'مقامی آف لائن انجن', 'محركات محلية بدون إنترنت', 'Local Offline Engines')}
+            </span>
           </div>
 
           <div

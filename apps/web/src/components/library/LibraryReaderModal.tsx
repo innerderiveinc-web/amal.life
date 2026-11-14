@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CanonicalEditionRecord } from '@amal/evidence';
-import { getBookChapters, getVerifiedSourceUrl } from '../../lib/classical-chapters-data';
+import { getBookChapters, fetchBookChapters, getVerifiedSourceUrl, ClassicalBookWithChapters } from '../../lib/classical-chapters-data';
 import { QuranSurahMeta } from '../../lib/quran-114-directory';
 import { QuranSurahData } from '../../lib/quran-surahs-data';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
 import { saveBookmark, isBookmarked, recordReadingHistory } from '../../lib/bookmarks-store';
 import { showAmalToast } from '../Toast';
+import { triggerHaptic } from '../../lib/haptics';
 import { LibraryQuranReaderView } from './LibraryQuranReaderView';
 import { LibraryClassicalBookReaderView } from './LibraryClassicalBookReaderView';
+import { useLanguage } from '../../context/LanguageContext';
+import { useWakeLock } from '../../hooks/useWakeLock';
 
 export interface LibraryReaderModalProps {
   isOpen: boolean;
@@ -50,16 +53,35 @@ export function LibraryReaderModal({
   onSharePayload,
   onOpenWisdomModal,
 }: LibraryReaderModalProps) {
-  if (!isOpen || !selectedWork) return null;
+  const { t } = useLanguage();
+  useWakeLock(isOpen); // Keeps screen awake while scholar/reader studies the text
 
-  const isQuran =
-    selectedWork.discipline === 'QURAN' || selectedWork.work_id === 'CANON-QUR-001';
-  const bookChaptersData = getBookChapters(selectedWork.work_id);
-  const verifiedSource = getVerifiedSourceUrl(selectedWork.work_id);
-  const currentChapter =
-    bookChaptersData?.chapters[selectedChapterIndex] || bookChaptersData?.chapters[0];
-
+  const [asyncBookChapters, setAsyncBookChapters] = React.useState<ClassicalBookWithChapters | null>(null);
   const [bookmarked, setBookmarked] = React.useState(false);
+  const [touchStartY, setTouchStartY] = React.useState<number | null>(null);
+  const [dragOffsetY, setDragOffsetY] = React.useState<number>(0);
+  const [isDragging, setIsDragging] = React.useState<boolean>(false);
+
+  const isQuran = Boolean(
+    selectedWork && (selectedWork.discipline === 'QURAN' || selectedWork.work_id === 'CANON-QUR-001')
+  );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  React.useEffect(() => {
+    if (!isOpen || !selectedWork || isQuran) return;
+    setAsyncBookChapters(null);
+    fetchBookChapters(selectedWork.work_id).then((data) => {
+      if (data) setAsyncBookChapters(data);
+    });
+  }, [isOpen, selectedWork?.work_id, isQuran]);
 
   React.useEffect(() => {
     if (isOpen && selectedWork) {
@@ -77,6 +99,43 @@ export function LibraryReaderModal({
       });
     }
   }, [isOpen, selectedWork, selectedChapterIndex, selectedSurahNumber, isQuran]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      setTouchStartY(touch.clientY);
+      setIsDragging(true);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY === null || !isDragging) return;
+    const touch = e.touches[0];
+    if (touch) {
+      const deltaY = touch.clientY - touchStartY;
+      if (deltaY > 0) {
+        // Dragging downwards
+        setDragOffsetY(deltaY);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragOffsetY > 85) {
+      triggerHaptic('medium');
+      onClose();
+    }
+    setTouchStartY(null);
+    setDragOffsetY(0);
+    setIsDragging(false);
+  };
+
+  if (!isOpen || !selectedWork) return null;
+
+  const bookChaptersData = asyncBookChapters || getBookChapters(selectedWork.work_id);
+  const verifiedSource = getVerifiedSourceUrl(selectedWork.work_id);
+  const currentChapter =
+    bookChaptersData?.chapters[selectedChapterIndex] || bookChaptersData?.chapters[0];
 
   const handleToggleBookmark = () => {
     if (!selectedWork) return;
@@ -101,10 +160,11 @@ export function LibraryReaderModal({
     });
 
     setBookmarked(nowSaved);
+    triggerHaptic(nowSaved ? 'success' : 'light');
     showAmalToast(
       nowSaved
-        ? '🔖 سبق کو محفوظ کر لیا گیا (Bookmarked for later)'
-        : 'نشان ہٹا دیا گیا (Bookmark removed)',
+        ? t('Lesson saved to bookmarks', 'سبق کو محفوظ کر لیا گیا', 'تم حفظ الدرس في المفضلات', 'Sabaq mehfooz kar liya gaya')
+        : t('Bookmark removed', 'بک مارک ہٹا دیا گیا', 'تمت إزالة الإشارة المرجعية', 'Bookmark hata diya gaya'),
       nowSaved ? 'success' : 'info'
     );
   };
@@ -139,17 +199,45 @@ export function LibraryReaderModal({
           color: readerTheme === 'DARK' ? '#F8FAFC' : '#1E293B',
           borderRadius: 20,
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
-          padding: '24px 28px',
+          padding: '16px 28px 24px',
           border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E2E8F0'}`,
           maxHeight: '94vh',
           overflowY: 'auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: 16,
-          transition: 'background-color 0.2s ease',
+          gap: 12,
+          transform: `translateY(${dragOffsetY}px)`,
+          transition: isDragging
+            ? 'none'
+            : 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease',
         }}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Swipe-Down Drag Handle Bar */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '2px 0 10px',
+            cursor: 'grab',
+            touchAction: 'none',
+            userSelect: 'none',
+          }}
+        >
+          <div
+            style={{
+              width: 44,
+              height: 5,
+              borderRadius: 9999,
+              backgroundColor: readerTheme === 'DARK' ? '#475569' : '#CBD5E1',
+              transition: 'background-color 0.2s ease',
+            }}
+          />
+        </div>
+
         {/* Reader Header */}
         <div
           style={{
@@ -169,7 +257,7 @@ export function LibraryReaderModal({
               style={{
                 fontSize: 11,
                 fontWeight: 700,
-                color: '#10B981',
+                color: readerTheme === 'DARK' ? '#34D399' : '#047857',
                 letterSpacing: 1,
                 textTransform: 'uppercase',
               }}
@@ -205,7 +293,10 @@ export function LibraryReaderModal({
               {(['CLEAN', 'SEPIA', 'DARK'] as const).map((theme) => (
                 <button
                   key={theme}
-                  onClick={() => setReaderTheme(theme)}
+                  onClick={() => {
+                    triggerHaptic('selection');
+                    setReaderTheme(theme);
+                  }}
                   style={{
                     border: 'none',
                     background:
@@ -242,7 +333,10 @@ export function LibraryReaderModal({
               }}
             >
               <button
-                onClick={() => setFontSize((s) => Math.max(14, s - 2))}
+                onClick={() => {
+                  triggerHaptic('selection');
+                  setFontSize((s) => Math.max(14, s - 2));
+                }}
                 style={{
                   border: 'none',
                   background: 'none',
@@ -256,7 +350,10 @@ export function LibraryReaderModal({
               </button>
               <span style={{ fontSize: 11, color: '#888' }}>{fontSize}px</span>
               <button
-                onClick={() => setFontSize((s) => Math.min(32, s + 2))}
+                onClick={() => {
+                  triggerHaptic('selection');
+                  setFontSize((s) => Math.min(32, s + 2));
+                }}
                 style={{
                   border: 'none',
                   background: 'none',
@@ -298,7 +395,9 @@ export function LibraryReaderModal({
             </button>
 
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Close"
               style={{
                 border: 'none',
                 background: readerTheme === 'DARK' ? '#334155' : '#E2E8F0',

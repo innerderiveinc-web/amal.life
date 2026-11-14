@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MirasPdfCertificatePayload } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
+import { ProBadge } from '../common/ProBadge';
 
 interface MirasCertificateModalProps {
   mirasCert: MirasPdfCertificatePayload | null;
@@ -7,14 +9,27 @@ interface MirasCertificateModalProps {
 }
 
 export function MirasCertificateModal({ mirasCert, onClose }: MirasCertificateModalProps) {
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   if (!mirasCert) return null;
 
   return (
     <div
+      onClick={onClose}
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        backgroundColor: 'rgba(0,0,0,0.65)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,9 +38,11 @@ export function MirasCertificateModal({ mirasCert, onClose }: MirasCertificateMo
       }}
     >
       <div
+        className="printable-certificate"
+        onClick={(e) => e.stopPropagation()}
         style={{
           backgroundColor: '#FFFFFF',
-          borderRadius: 12,
+          borderRadius: 14,
           maxWidth: 720,
           width: '100%',
           maxHeight: '90vh',
@@ -33,6 +50,7 @@ export function MirasCertificateModal({ mirasCert, onClose }: MirasCertificateMo
           padding: 32,
           border: '2px solid #1B4332',
           position: 'relative',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
         }}
       >
         <div
@@ -45,34 +63,72 @@ export function MirasCertificateModal({ mirasCert, onClose }: MirasCertificateMo
           }}
         >
           <div>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', letterSpacing: 1 }}>OFFICIAL SHAR'I RECORD</span>
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', letterSpacing: 1 }}>
+              {t('OFFICIAL SHAR\'I RECORD', 'سرکاری شرعی دستاویز', 'الوثيقة الشرعية الرسمية', 'OFFICIAL SHAR\'I RECORD')}
+            </span>
             <h2 style={{ fontSize: 20, fontWeight: 900, color: '#1B4332', margin: '4px 0 0' }}>
-              CERTIFICATE OF ISLAMIC INHERITANCE (فَرَائِض)
+              {t(
+                'CERTIFICATE OF ISLAMIC INHERITANCE (فَرَائِض)',
+                'شرعی وثیقۂ میراث و فرائض (تقسیمِ ترکہ)',
+                'وثيقة حصر الإرث وقسمة الفرائض الشرعية',
+                'Certificate of Islamic Inheritance (Fara\'iz)'
+              )}
             </h2>
             <div style={{ fontSize: 11, color: '#6B7280' }}>
-              Cert ID: {mirasCert.certificateId} • Date: {mirasCert.dateOfDeath}
+              Cert ID: {mirasCert.certificateId} • {t('Date:', 'تاریخ:', 'التاريخ:', 'Date:')} {mirasCert.dateOfDeath}
             </div>
           </div>
           <button
             onClick={onClose}
-            style={{ border: 'none', background: 'none', fontSize: 20, cursor: 'pointer', color: '#6B7280' }}
+            aria-label="Close"
+            style={{
+              border: 'none',
+              background: '#F1F5F9',
+              borderRadius: '50%',
+              width: 32,
+              height: 32,
+              fontSize: 16,
+              cursor: 'pointer',
+              color: '#475569',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
             ✕
           </button>
         </div>
 
-        <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, marginBottom: 18, fontSize: 13 }}>
-          <div><strong>Gross Estate:</strong> {mirasCert.currency} {mirasCert.estateValueGross.toLocaleString()}</div>
-          <div><strong>Net Distributable Estate:</strong> {mirasCert.currency} {mirasCert.netDistributableEstate.toLocaleString()}</div>
+        <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, marginBottom: 18, fontSize: 13, color: '#1E293B' }}>
+          <div>
+            <strong style={{ color: '#475569' }}>
+              {t('Gross Estate:', 'کل مالیتِ ترکہ:', 'إجمالي التركة:', 'Kul Tarkah:')}{' '}
+            </strong>
+            {mirasCert.currency} {mirasCert.estateValueGross.toLocaleString()}
+          </div>
+          <div>
+            <strong style={{ color: '#475569' }}>
+              {t('Net Distributable Estate:', 'خالص قابلِ تقسیم ترکہ:', 'صافي التركة القابلة للتوزيع:', 'Net Distributable Estate:')}{' '}
+            </strong>
+            {mirasCert.currency} {mirasCert.netDistributableEstate.toLocaleString()}
+          </div>
         </div>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, marginBottom: 20 }}>
           <thead>
             <tr style={{ backgroundColor: '#E5E7EB', textAlign: 'left' }}>
-              <th style={{ padding: 8 }}>Heir Relation</th>
-              <th style={{ padding: 8 }}>Quranic Share</th>
-              <th style={{ padding: 8 }}>Percentage</th>
-              <th style={{ padding: 8 }}>Total Entitlement</th>
+              <th style={{ padding: 8 }}>
+                {t('Heir Relation', 'شرعی رشتہ / وارث', 'صفة الوارث', 'Waris')}
+              </th>
+              <th style={{ padding: 8 }}>
+                {t('Quranic Share', 'قرآنی حصہ', 'الفرض الشرعي', 'Qurani Hissa')}
+              </th>
+              <th style={{ padding: 8 }}>
+                {t('Percentage', 'فیصد', 'النسبة المئوية', 'Percentage')}
+              </th>
+              <th style={{ padding: 8 }}>
+                {t('Total Entitlement', 'کل حق / رقم', 'إجمالي الاستحقاق', 'Kul Raqam')}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -110,27 +166,38 @@ export function MirasCertificateModal({ mirasCert, onClose }: MirasCertificateMo
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 12,
           }}
         >
           <div style={{ fontSize: 11, color: '#4B5563' }}>
-            <strong>Attestation:</strong> {mirasCert.muftiSignOffBlock.issuingInstitution}<br />
-            Verified School: {mirasCert.muftiSignOffBlock.verifiedMadhhab}
+            <strong>{t('Attestation:', 'تصدیق:', 'التوثيق:', 'Tasdeeq:')}</strong> {mirasCert.muftiSignOffBlock.issuingInstitution}<br />
+            {t('Verified School:', 'مستند فقہ:', 'المذهب المعتمد:', 'Verified Madhhab:')} {mirasCert.muftiSignOffBlock.verifiedMadhhab}
           </div>
-          <button
-            onClick={() => window.print()}
-            style={{
-              padding: '8px 18px',
-              backgroundColor: '#1B4332',
-              color: '#FFFFFF',
-              border: 'none',
-              borderRadius: 6,
-              fontWeight: 700,
-              fontSize: 12,
-              cursor: 'pointer',
-            }}
-          >
-            🖨️ Print / Save PDF
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <ProBadge featureName="Official Shariah Inheritance PDF Certificate" />
+            <button
+              onClick={() => window.print()}
+              style={{
+                padding: '9px 18px',
+                backgroundColor: '#1B4332',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: 12,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span>🖨️</span>
+              <span>
+                {t('Print / Save PDF', 'پرنٹ یا PDF محفوظ کریں', 'طباعة أو حفظ كـ PDF', 'Print / PDF Save Karein')}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

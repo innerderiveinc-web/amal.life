@@ -313,7 +313,7 @@ export const SpiritualCoachHub: React.FC = () => {
                   width: '100%',
                   padding: '12px',
                   borderRadius: 10,
-                  backgroundColor: '#10B981',
+                  backgroundColor: '#047857',
                   color: '#FFFFFF',
                   fontWeight: 800,
                   fontSize: 14,

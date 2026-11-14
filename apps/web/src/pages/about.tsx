@@ -31,18 +31,18 @@ export default function AboutPage() {
       <Navigation />
 
       {/* Hero Banner */}
-      <AboutHeroBanner t={t} />
+      <AboutHeroBanner />
 
       {/* Main Content Area */}
       <main style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px 60px', width: '100%' }}>
         {/* Core Pillars & Digital Clerk Model */}
-        <AboutSovereignPillars t={t} />
+        <AboutSovereignPillars />
 
         {/* FAQ Section */}
         <AboutFaqSection isUrdu={isUrdu} />
 
         {/* Engineering Stewardship & Scholarly Desk */}
-        <AboutStewardshipSection t={t} />
+        <AboutStewardshipSection />
       </main>
     </div>
   );

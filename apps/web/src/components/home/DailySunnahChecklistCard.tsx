@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, memo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { showAmalToast } from '../Toast';
 import { CelebrationRipple } from '../ui/CelebrationRipple';
@@ -196,7 +196,7 @@ const SUNNAH_DAILY_TASKS: SunnahTask[] = [
   },
 ];
 
-export const DailySunnahChecklistCard: React.FC = () => {
+const DailySunnahChecklistCardInner: React.FC = () => {
   const { language, t } = useLanguage();
   const isRtl = language === 'ur' || language === 'ar';
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
@@ -482,11 +482,11 @@ export const DailySunnahChecklistCard: React.FC = () => {
                   outline: 'none',
                 }}
               >
-                <option value="ALL">{t('All 12 Sunnahs', 'تمام ۱۲ معمولات (All 12)', 'جميع الـ ١٢ سنّة', 'Tamam 12 Mamoolat')}</option>
-                <option value="MORNING">{t('Dawn / Morning (4)', 'صبح و فجر (Dawn / Morning - 4)', 'الفجر والصباح (٤)', 'Subah o Fajr (4)')}</option>
-                <option value="DAY">{t('Day / Midday (3)', 'دوپہر و عصر (Day / Midday - 3)', 'الظهر والعصر (٣)', 'Dopahar o Asr (3)')}</option>
-                <option value="EVENING">{t('Evening (2)', 'مغرب و شام (Evening - 2)', 'المغرب والمساء (٢)', 'Maghrib o Shaam (2)')}</option>
-                <option value="NIGHT">{t('Night / Sleep (3)', 'عشاء و رات (Night / Sleep - 3)', 'العشاء والليل (٣)', 'Isha o Raat (3)')}</option>
+                <option value="ALL">{t('All 12 Sunnahs', 'تمام ۱۲ معمولات', 'جميع الـ ١٢ سنّة', 'Tamam 12 Mamoolat')}</option>
+                <option value="MORNING">{t('Dawn / Morning (4)', 'صبح و فجر (۴)', 'الفجر والصباح (٤)', 'Subah o Fajr (4)')}</option>
+                <option value="DAY">{t('Day / Midday (3)', 'دوپہر و عصر (۳)', 'الظهر والعصر (٣)', 'Dopahar o Asr (3)')}</option>
+                <option value="EVENING">{t('Evening (2)', 'مغرب و شام (۲)', 'المغرب والمساء (٢)', 'Maghrib o Shaam (2)')}</option>
+                <option value="NIGHT">{t('Night / Sleep (3)', 'عشاء و رات (۳)', 'العشاء والليل (٣)', 'Isha o Raat (3)')}</option>
               </select>
             </div>
 
@@ -579,7 +579,7 @@ export const DailySunnahChecklistCard: React.FC = () => {
                       >
                         {task.icon} {taskTitle}
                       </span>
-                      <span style={{ fontSize: 10, color: '#9CA3AF' }}>{task.hadithRef}</span>
+                      <span style={{ fontSize: 10, color: '#64748B', fontWeight: 600 }}>{task.hadithRef}</span>
                     </div>
                     <div
                       style={{
@@ -601,3 +601,7 @@ export const DailySunnahChecklistCard: React.FC = () => {
     </div>
   );
 };
+
+/** Memoized — checklist state is day-local; parent re-renders don't affect it */
+export const DailySunnahChecklistCard = memo(DailySunnahChecklistCardInner);
+DailySunnahChecklistCard.displayName = 'DailySunnahChecklistCard';

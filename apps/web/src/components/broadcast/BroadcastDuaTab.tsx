@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { DailyKnowledgeBroadcast } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface BroadcastDuaTabProps {
   dua: DailyKnowledgeBroadcast['dua'];
@@ -17,6 +18,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
   onPlayDua,
   onMakeCard,
 }) => {
+  const { t, isUrdu, isArabic } = useLanguage();
   return (
     <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
       <div
@@ -37,7 +39,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
             borderRadius: 6,
           }}
         >
-          {dua.sourceBook} • {dua.titleUrdu}
+          {dua.sourceBook} • {(isUrdu || isArabic) ? dua.titleUrdu : (dua.titleEnglish || dua.titleUrdu)}
         </span>
 
         <button
@@ -52,7 +54,9 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
             color: '#475569',
           }}
         >
-          {copied ? '✅ کاپی ہو گیا' : '📋 دعا کاپی کریں'}
+          {copied
+            ? t('✅ Copied', '✅ کاپی ہو گیا', '✅ تم النسخ', '✅ Copy ho gaya')
+            : t('📋 Copy Dua', '📋 دعا کاپی کریں', '📋 نسخ الدعاء', '📋 Dua Copy Karein')}
         </button>
       </div>
 
@@ -90,9 +94,19 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
           marginBottom: 12,
         }}
       >
-        <span style={{ fontWeight: 800, color: '#C2410C' }}>اردو ترجمہ: </span>
+        <span style={{ fontWeight: 800, color: '#C2410C' }}>
+          اردو ترجمہ:{' '}
+        </span>
         {dua.urduTranslation}
       </div>
+
+      {/* English Translation */}
+      {dua.englishTranslation && (
+        <div style={{ fontSize: 13.5, color: '#374151', marginBottom: 14, lineHeight: 1.6, padding: '10px 14px', backgroundColor: '#F8FAFC', borderRadius: 8, border: '1px solid #E2E8F0' }}>
+          <strong style={{ color: '#C2410C' }}>{t('English Meaning: ', 'انگریزی ترجمہ: ', 'المعنى بالإنجليزية: ', 'English Meaning: ')}</strong>
+          &ldquo;{dua.englishTranslation}&rdquo;
+        </div>
+      )}
 
       {/* Virtue */}
       <div
@@ -106,7 +120,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
           marginBottom: 16,
         }}
       >
-        <strong>✨ فضیلت و برکت: </strong> {dua.virtue}
+        <strong>✨ {t('Virtue & Blessing: ', 'فضیلت و برکت: ', 'الفضل والبركة: ', 'Fazilat aur Barkat: ')}</strong> {dua.virtue}
       </div>
 
       {/* Action Footer */}
@@ -127,7 +141,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
             cursor: 'pointer',
           }}
         >
-          <span>🎧 مسنون دعا سنیں (Listen to Dua)</span>
+          <span>🎧 {t('Listen to Masnoon Dua', 'مسنون دعا سنیں', 'استمع للدعاء المأثور', 'Masnoon Dua Sunein')}</span>
         </button>
 
         {onMakeCard && (
@@ -148,7 +162,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
               boxShadow: '0 2px 4px rgba(124, 45, 18, 0.2)',
             }}
           >
-            <span>📸 دعا کارڈ بنائیں</span>
+            <span>📸 {t('Create Dua Card', 'دعا کارڈ بنائیں', 'إنشاء بطاقة الدعاء', 'Dua Card Banayein')}</span>
           </button>
         )}
 
@@ -168,7 +182,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
             gap: 6,
           }}
         >
-          <span>📿 مسنون تسبیح کاؤنٹر شروع کریں (33 / 100) →</span>
+          <span>📿 {t('Start Masnoon Tasbih Counter (33 / 100) →', 'مسنون تسبیح کاؤنٹر شروع کریں (۳۳ / ۱۰۰) ←', 'بدء عداد التسبيح المسنون (٣٣ / ١٠٠) ←', 'Masnoon Tasbih Counter Shuru Karein (33 / 100) →')}</span>
         </Link>
         <Link
           href="/library?work=CANON-DUA-001"
@@ -183,7 +197,7 @@ export const BroadcastDuaTab: React.FC<BroadcastDuaTabProps> = ({
             border: '1px solid #CBD5E1',
           }}
         >
-          تمام ۴۰ ربّنا دعائیں دیکھیں
+          {t('View All 40 Rabbana Duas', 'تمام ۴۰ ربّنا دعائیں دیکھیں', 'عرض جميع أدعية ربنا الأربعين', 'Tamam 40 Rabbana Duas Dekhein')}
         </Link>
       </div>
     </div>

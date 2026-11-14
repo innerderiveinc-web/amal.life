@@ -1,5 +1,5 @@
 // AMAL OS — Service Worker (Offline Resilience, Sacred Corpus Caching & PWA)
-const CACHE_NAME = 'amal-os-cache-v4';
+const CACHE_NAME = 'amal-os-cache-v8';
 const AUDIO_CACHE_NAME = 'amal-os-audio-v1';
 
 const PRECACHE_ASSETS = [
@@ -26,7 +26,13 @@ const PRECACHE_ASSETS = [
   '/calendar',
   '/settings',
   '/about',
+  '/auth',
+  '/contact',
+  '/copyright',
+  '/terms',
   '/privacy',
+  '/replay',
+  '/404',
   '/manifest.json',
   '/favicon.ico',
   '/icon-192.png',
@@ -95,6 +101,48 @@ self.addEventListener('message', (event) => {
       })
     );
   }
+});
+
+// 5. Adhan & Prayer Notification Click Handler
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(event.notification.data?.url || '/prayer');
+      }
+    })
+  );
+});
+
+// 6. Push Notification Event (for Background Adhan Dispatch)
+self.addEventListener('push', (event) => {
+  let data = {};
+  if (event.data) {
+    try {
+      data = event.data.json();
+    } catch (_) {
+      data = { title: 'AMAL OS', body: event.data.text() };
+    }
+  }
+  const title = data.title || '🕋 وقتِ نماز (Prayer Time)';
+  const options = {
+    body: data.body || 'It is time for prayer. Prepare for Salah.',
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
+    tag: data.tag || 'prayer-alert',
+    vibrate: [200, 100, 200, 100, 400],
+    requireInteraction: true,
+    data: {
+      url: data.url || '/prayer',
+    },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener('fetch', (event) => {

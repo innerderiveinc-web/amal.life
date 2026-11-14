@@ -5,7 +5,8 @@ export default function Document() {
     <Html lang="en" dir="ltr">
       <Head>
         {/* Favicon & PWA Manifest */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+        <link rel="alternate icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1B4332" />
         <link rel="apple-touch-icon" href="/icon-192.png" />

@@ -47,7 +47,7 @@ export function useNavigationLiveStatus() {
       const offset = getSavedHijriOffset();
       return hijriFastingEngine.toHijri(now, offset);
     } catch {
-      return { day: 26, monthNameEnglish: 'Jumada al-Ula', monthNameUrdu: 'جمادی الاولیٰ', year: 1448 };
+      return { day: 26, monthNameEnglish: 'Jumada al-Ula', monthNameUrdu: 'جمادی الاولیٰ', monthNameArabic: 'جمادى الأولى', year: 1448 };
     }
   }, [now, prayerConfigKey]);
 

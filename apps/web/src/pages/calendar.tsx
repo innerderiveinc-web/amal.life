@@ -4,13 +4,26 @@ import { Navigation } from '../components/Navigation';
 import { hijriFastingEngine, HijriFastingEngine, HijriDate, FastingDayEvaluation } from '@amal/amal-engine';
 import { getSavedHijriOffset, setSavedHijriOffset } from '../lib/prayer-utils';
 import { showAmalToast } from '../components/Toast';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function CalendarPage() {
+  const { t, language } = useLanguage();
   const [moonAdjustment, setMoonAdjustment] = useState<number>(0);
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]!);
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  });
 
   useEffect(() => {
     setMoonAdjustment(getSavedHijriOffset());
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    setSelectedDate(`${year}-${month}-${day}`);
   }, []);
 
   const handleMoonAdjustmentChange = (val: number) => {
@@ -33,6 +46,7 @@ export default function CalendarPage() {
     <div style={{ minHeight: '100vh', backgroundColor: '#F8F9FA' }}>
       <Head>
         <title>Islamic Hijri Calendar & Fasting Schedule | AMAL OS</title>
+        <meta name="description" content="Islamic Hijri Calendar, Sunnah Fasting Days, Urs-e-Awliya, and Sacred Months Astronomical Calculations." />
       </Head>
       <Navigation />
 
@@ -40,10 +54,10 @@ export default function CalendarPage() {
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1B4332', marginBottom: 6 }}>
-            🌙 Islamic Hijri Calendar & Sunnah Fasting
+            {t('🌙 Islamic Hijri Calendar & Sunnah Fasting', '🌙 اسلامی ہجری کیلنڈر و مسنون روزے', '🌙 التقويم الهجري الإسلامي وصيام السنة', '🌙 Islamic Hijri Calendar & Sunnah Rozey')}
           </h1>
           <p style={{ color: '#4B5563', margin: 0, fontSize: 14 }}>
-            Astronomical lunar calendar synchronization with sacred months (Ashhur al-Hurum), Ayyam al-Bid, and Sunnah fasting scheduler.
+            {t('Astronomical lunar calendar synchronization with sacred months (Ashhur al-Hurum), Ayyam al-Bid, and Sunnah fasting scheduler.', 'قمری تقویم، اشہرِ حرم، ایامِ بیض اور مسنون و نفلی روزوں کا مستند شیڈول۔', 'تقويم قمري فلكي يوضح الأشهر الحرم وأيام البيض وجدول صيام السنة.', 'Qamri calendar, Ashhur-al-Hurum, Ayyam-e-Beez aur Sunnah rozon ka schedule.')}
           </p>
         </div>
 
@@ -61,7 +75,7 @@ export default function CalendarPage() {
           marginBottom: 24,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>Date:</label>
+            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>{t('Date:', 'تاریخ:', 'التاريخ:', 'Tareekh:')}</label>
             <button
               onClick={() => {
                 const d = new Date(selectedDate);
@@ -70,7 +84,7 @@ export default function CalendarPage() {
               }}
               style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #D1D5DB', backgroundColor: '#F3F4F6', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
             >
-              ◀ Prev
+              {t('◀ Prev', '◀ پچھلا دن', '◀ السابق', '◀ Pichla Din')}
             </button>
             <input
               type="date"
@@ -86,18 +100,18 @@ export default function CalendarPage() {
               }}
               style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #D1D5DB', backgroundColor: '#F3F4F6', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
             >
-              Next ▶
+              {t('Next ▶', 'اگلا دن ▶', 'التالي ▶', 'Agla Din ▶')}
             </button>
             <button
               onClick={() => setSelectedDate(new Date().toISOString().split('T')[0]!)}
               style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #1B4332', backgroundColor: '#1B4332', color: '#FFF', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
             >
-              Today
+              {t('Today', 'آج', 'اليوم', 'Aaj')}
             </button>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>🌙 Ru'yat-e-Hilal Sighting Offset:</label>
+            <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>{t('🌙 Ru\'yat-e-Hilal Sighting Offset:', '🌙 رویت ہلال ایڈجسٹمنٹ:', '🌙 تعديل رؤية الهلال:', '🌙 Chand Dekhne ka Offset:')}</label>
             <select
               value={moonAdjustment}
               onChange={(e) => handleMoonAdjustmentChange(Number(e.target.value))}
@@ -146,12 +160,12 @@ export default function CalendarPage() {
               {hijriDate.isSacredMonth ? '✨' : '🌙'}
             </div>
             <div style={{ fontWeight: 800, fontSize: 16 }}>
-              {hijriDate.isSacredMonth ? 'SACRED MONTH (شهر حرام)' : 'REGULAR HIJRI MONTH'}
+              {hijriDate.isSacredMonth ? t('SACRED MONTH', 'حرمت والا مہینہ (شہرِ حرام)', 'شهر حرام', 'Hurmat wala Mahina') : t('REGULAR HIJRI MONTH', 'عام ہجری مہینہ', 'شهر هجري معتاد', 'Aam Hijri Mahina')}
             </div>
             <div style={{ fontSize: 12, color: '#D1D5DB', marginTop: 4 }}>
               {hijriDate.isSacredMonth 
-                ? 'One of the four sacred months ordained in Surah at-Tawbah (9:36). Good deeds carry multiplied rewards.'
-                : 'Part of the continuous lunar rhythm of worship and remembrance.'}
+                ? t('One of the four sacred months ordained in Surah at-Tawbah (9:36). Good deeds carry multiplied rewards.', 'قرآنِ پاک (سورۃ التوبہ: ۳۶) میں بیان کردہ چار حرمت والے مہینوں میں سے ایک۔ نیک اعمال کا اجر کئی گنا ہے۔', 'أحد الأشهر الحرم الأربعة المذكورة في سورة التوبة (٩:٣٦). الحسنات فيها مضاعفة.', 'Surah at-Tawbah (9:36) me bayan karda chaar hurmat wale mahino me se ek. Neki ka ajar badha diya jata hai.')
+                : t('Part of the continuous lunar rhythm of worship and remembrance.', 'عبادت اور ذکر کے مسلسل اسلامی قمری نظام کا حصہ۔', 'جزء من التقويم القمري للعبادة والذكر.', 'Ibadat aur zikr ke musalsal qamri nizam ka hissa.')}
             </div>
           </div>
         </div>
@@ -165,7 +179,7 @@ export default function CalendarPage() {
           marginBottom: 24,
         }}>
           <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
-            Fasting Status & Masnoon Evaluation
+            {t('Fasting Status & Masnoon Evaluation', 'آج کے روزے کی شرعی و مسنون حیثیت', 'حكم الصيام وتقييم السنة لهذا اليوم', 'Aaj ke Rozey ki Shari Haisiyat')}
           </h2>
 
           {fastingEval.isProhibited ? (
@@ -189,7 +203,7 @@ export default function CalendarPage() {
           ) : (
             <div style={{ padding: 16, borderRadius: 8, backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB' }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: '#4B5563' }}>
-                No specific prescribed Sunnah fast assigned for this day. Voluntary (Nafl) fasting remains always permissible outside prohibited days.
+                {t('No specific prescribed Sunnah fast assigned for this day. Voluntary (Nafl) fasting remains always permissible outside prohibited days.', 'آج کے دن کوئی مخصوص مسنون روزہ متعین نہیں ہے۔ ممنوعہ ایام کے علاوہ نفلی روزہ ہمیشہ جائز و مستحب ہے۔', 'لا يوجد صيام سنة محدد لهذا اليوم. صيام التطوع مباح دائماً في غير الأيام المنهي عنها.', 'Aaj ke din koi makhsoos masnoon roza nahi hai. Mamnooa dino ke ilawa nafl roza hamesha mustahab hai.')}
               </div>
             </div>
           )}
@@ -198,7 +212,7 @@ export default function CalendarPage() {
         {/* 12 Months Summary Table */}
         <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
           <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', marginBottom: 16 }}>
-            The 12 Canonical Hijri Months
+            {t('The 12 Canonical Hijri Months', 'اسلامی سال کے ۱۲ ہجری مہینے', 'الأشهر الهجرية الاثنا عشر', '12 Canonical Hijri Months')}
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
             {hijriFastingEngine.constructor && (HijriFastingEngine.HIJRI_MONTHS.map(m => (
@@ -213,7 +227,7 @@ export default function CalendarPage() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: 12, fontWeight: 700, color: '#1B4332' }}>{m.number}. {m.english}</span>
-                  {m.sacred && <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 4, backgroundColor: '#1B4332', color: '#FFF' }}>Sacred</span>}
+                  {m.sacred && <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 4, backgroundColor: '#1B4332', color: '#FFF' }}>{t('Sacred', 'حرمت والا', 'حرام', 'Hurmat wala')}</span>}
                 </div>
                 <div style={{ fontSize: 13, color: '#047857', direction: 'rtl', marginTop: 2 }}>{m.arabic}</div>
                 <div style={{ fontSize: 11, color: '#6B7280' }}>{m.urdu}</div>

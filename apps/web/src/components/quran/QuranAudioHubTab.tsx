@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { audioStreamingEngine } from '@amal/amal-engine';
 import { useAudioPlayer } from '../../context/AudioPlayerContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { ProBadge } from '../common/ProBadge';
 
 export function QuranAudioHubTab() {
   const { t, isUrdu } = useLanguage();
@@ -95,18 +96,34 @@ export function QuranAudioHubTab() {
               border: '1px solid #E5E7EB',
             }}
           >
-            <label
+            <div
               style={{
-                fontSize: 12,
-                fontWeight: 800,
-                color: '#065F46',
-                display: 'block',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
                 marginBottom: 12,
-                letterSpacing: 0.5,
+                flexWrap: 'wrap',
+                gap: 8,
               }}
             >
-              {t('SELECT CERTIFIED MASTER RECITER:', 'قاری صاحب کا انتخاب کریں:', 'اختر القارئ المعتمد:', 'Certified Qari Sahab ka intikhab karein:')}
-            </label>
+              <label
+                style={{
+                  fontSize: 12,
+                  fontWeight: 800,
+                  color: '#065F46',
+                  letterSpacing: 0.5,
+                  margin: 0,
+                }}
+              >
+                {t('SELECT CERTIFIED MASTER RECITER:', 'قاری صاحب کا انتخاب کریں:', 'اختر القارئ المعتمد:', 'Certified Qari Sahab ka intikhab karein:')}
+              </label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: 11, color: '#64748B', fontWeight: 600 }}>
+                  {t('Lossless Audio Vault', 'اعلیٰ معیار آڈیو', 'تسجيلات استوديو نقية', 'Studio Master Quality')}
+                </span>
+                <ProBadge featureName="Studio Master Reciters" />
+              </div>
+            </div>
             <div
               style={{
                 display: 'grid',
@@ -267,40 +284,85 @@ export function QuranAudioHubTab() {
                 >
                   ▶ Arabic Matn ({Math.round(ch.durationSeconds / 60)} min)
                 </button>
-                <button
-                  onClick={() =>
-                    handlePlay(`${ch.titleEnglish} (Urdu Sharh)`, ch.audioUrlUrduSharh)
-                  }
-                  style={{
-                    padding: '7px 14px',
-                    borderRadius: 8,
-                    backgroundColor: '#047857',
-                    color: '#FFF',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
-                >
-                  ▶ اردو شرح (Urdu Sharh)
-                </button>
-                <button
-                  onClick={() =>
-                    handlePlay(`${ch.titleEnglish} (English Commentary)`, ch.audioUrlEnglishCommentary)
-                  }
-                  style={{
-                    padding: '7px 14px',
-                    borderRadius: 8,
-                    backgroundColor: '#374151',
-                    color: '#FFF',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
-                >
-                  ▶ English Commentary
-                </button>
+                {ch.audioUrlUrduSharh.includes('youtube.com') ? (
+                  <a
+                    href={ch.audioUrlUrduSharh}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: '7px 14px',
+                      borderRadius: 8,
+                      backgroundColor: '#047857',
+                      color: '#FFF',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <span>📺 {t('Urdu Sharh (YouTube) ↗', 'اردو شرح (یوٹیوب) ↗', 'شرح أردو (يوتيوب) ↗', 'Urdu Sharh (YouTube) ↗')}</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() =>
+                      handlePlay(`${ch.titleEnglish} (Urdu Sharh)`, ch.audioUrlUrduSharh)
+                    }
+                    style={{
+                      padding: '7px 14px',
+                      borderRadius: 8,
+                      backgroundColor: '#047857',
+                      color: '#FFF',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {t('▶ Listen Urdu Sharh', '▶ سنیں اردو شرح', '▶ استمع للشرح الأردي', '▶ Sunein Urdu Sharh')}
+                  </button>
+                )}
+
+                {ch.audioUrlEnglishCommentary.includes('youtube.com') ? (
+                  <a
+                    href={ch.audioUrlEnglishCommentary}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: '7px 14px',
+                      borderRadius: 8,
+                      backgroundColor: '#374151',
+                      color: '#FFF',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <span>📺 {t('English Commentary (YouTube) ↗', 'انگریزی تشریح (یوٹیوب) ↗', 'الشرح الإنجليزي (يوتيوب) ↗', 'English Commentary (YouTube) ↗')}</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() =>
+                      handlePlay(`${ch.titleEnglish} (English Commentary)`, ch.audioUrlEnglishCommentary)
+                    }
+                    style={{
+                      padding: '7px 14px',
+                      borderRadius: 8,
+                      backgroundColor: '#374151',
+                      color: '#FFF',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {t('▶ English Commentary', '▶ انگریزی تشریح سنیں', '▶ الشرح الإنجليزي', '▶ English Commentary')}
+                  </button>
+                )}
               </div>
             </div>
           ))}

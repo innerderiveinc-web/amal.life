@@ -5,9 +5,12 @@ import { MasnoonTasbihEngine, TasbihPreset, TasbihSessionState } from '@amal/ama
 import { AmalTheme } from '@amal/ui';
 import { showAmalToast } from '../components/Toast';
 import { useLanguage } from '../context/LanguageContext';
+import { triggerHaptic } from '../lib/haptics';
+import { useWakeLock } from '../hooks/useWakeLock';
 
 export default function TasbihPage() {
   const { t, isUrdu, isArabic } = useLanguage();
+  useWakeLock(true); // Keeps device display active during sacred Tasbih counter sessions
   const presets = MasnoonTasbihEngine.getAllPresets();
   const [selectedPresetId, setSelectedPresetId] = useState<string>(presets[0]?.id || 'subhanallah');
   const [session, setSession] = useState<TasbihSessionState>(
@@ -19,14 +22,14 @@ export default function TasbihPage() {
   const activePreset: TasbihPreset | undefined = presets.find(p => p.id === selectedPresetId);
 
   const triggerFeedback = (type: 'TICK' | 'THRESHOLD_REACHED' | 'CYCLE_COMPLETE') => {
-    // 1. Haptic Vibration
-    if (hapticEnabled && typeof window !== 'undefined' && 'vibrate' in navigator) {
+    // 1. Tactile Web Haptics Engine
+    if (hapticEnabled) {
       if (type === 'CYCLE_COMPLETE') {
-        navigator.vibrate([80, 50, 80, 50, 100]);
+        triggerHaptic('success');
       } else if (type === 'THRESHOLD_REACHED') {
-        navigator.vibrate([60, 40, 60]);
+        triggerHaptic('medium');
       } else {
-        navigator.vibrate(30);
+        triggerHaptic('light');
       }
     }
 
@@ -62,30 +65,59 @@ export default function TasbihPage() {
     setSession(nextState);
     triggerFeedback(hapticType === 'NONE' ? 'TICK' : hapticType);
     if (hapticType === 'CYCLE_COMPLETE') {
-      showAmalToast(`Masha'Allah! Cycle completed: ${activePreset?.arabicText || 'ختم ہوا'} (${nextState.roundsCompleted} rounds)`, 'success');
+      showAmalToast(
+        t(
+          `Masha'Allah! Cycle completed: ${activePreset?.arabicText || 'Done'} (${nextState.roundsCompleted} rounds)`,
+          `ماشاء اللہ! ایک دور مکمل ہوا: ${activePreset?.arabicText || 'مکمل'} (${nextState.roundsCompleted} چکر)`,
+          `ما شاء الله! اكتملت الدورة: ${activePreset?.arabicText || 'تمت'} (${nextState.roundsCompleted} دورات)`,
+          `Masha'Allah! Ek round mukammal hua: ${activePreset?.transliteration || 'Complete'} (${nextState.roundsCompleted} rounds)`
+        ),
+        'success'
+      );
     }
   };
 
   const handleSelectPreset = (id: string) => {
+    triggerHaptic('selection');
     setSelectedPresetId(id);
     setSession(MasnoonTasbihEngine.reset(id));
   };
 
   const handleReset = () => {
+    triggerHaptic('heavy');
     setSession(MasnoonTasbihEngine.reset(selectedPresetId));
-    showAmalToast('Tasbih counter reset', 'info');
-    if (hapticEnabled && typeof window !== 'undefined' && 'vibrate' in navigator) {
-      navigator.vibrate(50);
-    }
+    showAmalToast(
+      t('Tasbih counter reset', 'تسبیح کاؤنٹر صفر کر دیا گیا', 'تمت إعادة ضبط المسبحة', 'Tasbih counter reset ho gaya'),
+      'info'
+    );
   };
+
+  // Keyboard accessibility: Space or Enter to increment, R to reset
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+      if (e.code === 'Space' || e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        handleTap();
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        handleReset();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [session, selectedPresetId, hapticEnabled, soundEnabled]);
 
   const target = activePreset ? activePreset.targetCount : 33;
   const progressPercent = Math.min(100, (session.currentCount / target) * 100);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#F8FAFC', paddingBottom: 100 }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#FDFBF7', paddingBottom: 100 }}>
       <Head>
-        <title>{t('Digital Masnoon Tasbih | AMAL OS', 'مسنون تسبیح و ذکر | امل او ایس')}</title>
+        <title>{t('Digital Masnoon Tasbih | AMAL OS', 'مسنون تسبیح و ذکر کاؤنٹر | امل او ایس', 'المسبحة الإلكترونية المسنونة | أمل', 'Digital Masnoon Tasbih | AMAL OS')}</title>
+        <meta name="description" content="Tactile Digital Tasbih Counter, Daily Masnoon Adhkar, and Sunnah Liturgies." />
       </Head>
 
       <Navigation />
@@ -95,10 +127,20 @@ export default function TasbihPage() {
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <span style={{ fontSize: 32 }}>📿</span>
           <h1 style={{ fontSize: 26, fontWeight: 800, color: '#1E293B', margin: '8px 0 4px 0' }}>
-            {t('Digital Masnoon Tasbih', 'مسنون تسبیح و ذکر کاؤنٹر')}
+            {t(
+              'Digital Masnoon Tasbih',
+              'مسنون تسبیح و ذکر کاؤنٹر',
+              'المسبحة الإلكترونية النبوية',
+              'Masnoon Tasbih o Zikr Counter'
+            )}
           </h1>
           <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>
-            {t('Digital Masnoon Tasbih with Gentle Haptic Feedback & Authentic Sunnah Adhkar', 'مسنون تسبیحات و اذکار مع لائیو فیڈبیک اور سنت کے مطابق شمار')}
+            {t(
+              'Digital Masnoon Tasbih with Gentle Haptic Feedback & Authentic Sunnah Adhkar',
+              'مسنون تسبیحات و اذکار مع لائیو فیڈبیک اور سنت کے مطابق شمار',
+              'تسبيح مسنون مع ردود فعل لمسية لطيفة وأذكار سنية معتمدة',
+              'Masnoon Tasbihat o Azkar gentle haptic feedback ke sath'
+            )}
           </p>
         </div>
 
@@ -182,19 +224,23 @@ export default function TasbihPage() {
                 </div>
               </>
             ) : (
-              <>
-                <div style={{ fontSize: 15, color: '#1E293B', marginBottom: 4, fontWeight: 600 }}>
-                  {activePreset.englishTranslation}
-                </div>
-                <div style={{ fontSize: 13, color: '#64748B', maxWidth: 500, marginBottom: 28 }} className="font-urdu">
-                  {activePreset.urduTranslation}
-                </div>
-              </>
+              <div style={{ fontSize: 15, color: '#1E293B', marginBottom: 28, fontWeight: 600 }}>
+                {activePreset.englishTranslation}
+              </div>
             )}
 
             {/* BIG TAP CIRCLE */}
             <div
+              role="button"
+              tabIndex={0}
+              aria-label={t('Increment Tasbih Count', 'تسبیح شمار کریں', 'زيادة التسبيح', 'Count Tasbih')}
               onClick={handleTap}
+              onKeyDown={(e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault();
+                  handleTap();
+                }
+              }}
               style={{
                 width: 220,
                 height: 220,
@@ -210,6 +256,7 @@ export default function TasbihPage() {
                 boxShadow: '0 20px 25px -5px rgba(27, 67, 50, 0.3), 0 8px 10px -6px rgba(27, 67, 50, 0.2)',
                 position: 'relative',
                 transition: 'transform 0.08s ease',
+                outline: 'none',
               }}
               onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.96)')}
               onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
@@ -220,10 +267,15 @@ export default function TasbihPage() {
                 {session.currentCount}
               </div>
               <div style={{ fontSize: 14, color: '#D8F3DC', marginTop: 4, fontWeight: 600 }}>
-                {t(`Target: ${target}`, `ہدف: ${target}`)}
+                {t(`Target: ${target}`, `ہدف: ${target}`, `الهدف: ${target}`, `Hadaf: ${target}`)}
               </div>
               <div style={{ fontSize: 11, color: '#95D5B2', marginTop: 8 }}>
-                {t('Tap anywhere to count', 'کلک کریں یا اسکرین چھوئیں')}
+                {t(
+                  'Tap or Press Space to count',
+                  'شمار کے لیے چھوئیں یا اسپیس دبائیں',
+                  'المس أو اضغط مسافة للعد',
+                  'Tap karein ya Space dabayein'
+                )}
               </div>
             </div>
 
@@ -265,14 +317,18 @@ export default function TasbihPage() {
               }}
             >
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>{t('Rounds Completed:', 'مکمل چکر (دور):')}</div>
+                <div style={{ fontSize: 11, color: '#64748B' }}>
+                  {t('Rounds Completed:', 'مکمل چکر (دور):', 'الدورات المكتملة:', 'Mukammal Rounds:')}
+                </div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: '#1E293B' }}>
                   {session.roundsCompleted}
                 </div>
               </div>
 
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>{t('Session Total:', 'اس نشست کی کل گنتی:')}</div>
+                <div style={{ fontSize: 11, color: '#64748B' }}>
+                  {t('Session Total:', 'اس نشست کی کل گنتی:', 'إجمالي الجلسة:', 'Is Baithak ki Ginti:')}
+                </div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: AmalTheme.colors.primary }}>
                   {session.totalCountsInSession}
                 </div>
@@ -291,7 +347,7 @@ export default function TasbihPage() {
                   cursor: 'pointer',
                 }}
               >
-                {t('Reset', 'صفر کریں (Reset)', 'إعادة ضبط', 'Reset')}
+                {t('Reset', 'صفر کریں', 'إعادة ضبط', 'Reset')}
               </button>
             </div>
 
@@ -303,7 +359,7 @@ export default function TasbihPage() {
                   checked={hapticEnabled}
                   onChange={e => setHapticEnabled(e.target.checked)}
                 />
-                {t('📳 Haptic on Tap', '📳 وائبریشن (Haptic)', '📳 اهتزاز عند اللمس', '📳 Haptic (Vibration)')}
+                {t('📳 Haptic on Tap', '📳 لمسی ارتعاش (وائبریشن)', '📳 اهتزاز عند اللمس', '📳 Haptic / Vibration')}
               </label>
 
               <label style={{ fontSize: 12, color: '#64748B', display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
@@ -312,7 +368,7 @@ export default function TasbihPage() {
                   checked={soundEnabled}
                   onChange={e => setSoundEnabled(e.target.checked)}
                 />
-                {t('🔊 Audio Click', '🔊 آواز (Audio)', '🔊 صوت النقر', '🔊 Audio Click')}
+                {t('🔊 Audio Click', '🔊 صوتی اثر (آواز)', '🔊 صوت النقر', '🔊 Audio Click')}
               </label>
             </div>
 
@@ -333,7 +389,7 @@ export default function TasbihPage() {
                 <span style={{ fontSize: 13, fontWeight: 800, color: '#065F46' }}>
                   {t(
                     'Virtue & Hadith Reference',
-                    'فضیلت و سنت نبوی ﷺ (Hadith Reference)',
+                    'فضیلت و سنتِ نبوی ﷺ',
                     'الفضيلة والحديث الشريف',
                     'Fazilat o Sunnat-e-Nabawi ﷺ'
                   )}

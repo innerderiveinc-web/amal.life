@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { SahabiyyatProfile } from '../../lib/women-sanctuary-data';
 import { saveBookmark, isBookmarked, recordReadingHistory } from '../../lib/bookmarks-store';
 import { showAmalToast } from '../Toast';
@@ -20,7 +20,7 @@ interface SistersSahabiyyahDetailModalProps {
   onGenerateCard: (sah: SahabiyyatProfile) => void;
 }
 
-export function SistersSahabiyyahDetailModal({
+function SistersSahabiyyahDetailModalInner({
   sah,
   onClose,
   onOpenSanad,
@@ -30,6 +30,14 @@ export function SistersSahabiyyahDetailModal({
   const isRtl = language === 'ur' || language === 'ar';
   const [activeSection, setActiveSection] = useState<'bio' | 'hadith' | 'milestones' | 'scholars' | 'lessons'>('bio');
   const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   useEffect(() => {
     if (sah) {
@@ -194,12 +202,14 @@ export function SistersSahabiyyahDetailModal({
             {language === 'ar' ? sah.nameArabic : (language === 'ur' ? sah.nameUrdu : (language === 'roman' ? (sah.nameEnglish || sah.nameUrdu) : sah.nameEnglish))}
           </h2>
 
-          <div style={{ fontSize: 14, color: '#D1FAE5', fontWeight: 600, direction: 'rtl' }}>
-            {sah.nameArabic}
-          </div>
+          {language !== 'ar' && (
+            <div style={{ fontSize: 14, color: '#D1FAE5', fontWeight: 600, direction: 'rtl' }}>
+              {sah.nameArabic}
+            </div>
+          )}
 
           <div style={{ fontSize: 13, color: '#A7F3D0', marginTop: 6 }}>
-            {sah.kinshipToProphet}
+            {isRtl ? sah.kinshipToProphet : (sah.kinshipToProphetEnglish || sah.kinshipToProphet)}
           </div>
         </div>
 
@@ -358,6 +368,79 @@ export function SistersSahabiyyahDetailModal({
                 </div>
               )}
 
+              {/* Grand Prophetic Praise Hadith Banner in Bio */}
+              {sah.propheticPraiseHadithArabic && (
+                <div
+                  style={{
+                    backgroundColor: '#FFFBEB',
+                    border: '1.5px solid #FDE68A',
+                    borderRadius: 14,
+                    padding: '20px 22px',
+                    boxShadow: '0 4px 12px rgba(217, 119, 6, 0.08)',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 12.5,
+                      fontWeight: 800,
+                      color: '#B45309',
+                      marginBottom: 10,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 6,
+                    }}
+                  >
+                    <span>👑</span>
+                    <span>{t('Prophetic Hadith in Her Praise (Fazail):', 'فرمانِ رسول اللہ ﷺ میں شان، فضیلت و منقبت:', 'الأحاديث النبوية في الفضائل والمناقب:', 'Farman-e-Rasool ﷺ Mein Fazilat o Manqabat:')}</span>
+                  </div>
+
+                  <div
+                    dir="rtl"
+                    style={{
+                      fontSize: 19,
+                      lineHeight: 2,
+                      color: '#1E293B',
+                      fontFamily: "'Amiri', 'Traditional Arabic', serif",
+                      textAlign: 'center',
+                      padding: '14px 18px',
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: 10,
+                      border: '1px dashed #FCD34D',
+                      marginBottom: 12,
+                    }}
+                  >
+                    {sah.propheticPraiseHadithArabic}
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 14.5,
+                      lineHeight: 1.8,
+                      color: '#374151',
+                      direction: isRtl ? 'rtl' : 'ltr',
+                      textAlign: isRtl ? 'right' : 'left',
+                    }}
+                  >
+                    <strong>{t('Translation:', 'اردو ترجمہ:', 'المعنى:', 'Tarjuma:')} </strong>
+                    {(language === 'ur' || language === 'ar') ? sah.propheticPraiseHadithUrdu : sah.propheticPraiseHadithEnglish}
+                  </div>
+
+                  {sah.propheticPraiseSource && (
+                    <div
+                      style={{
+                        marginTop: 8,
+                        fontSize: 11.5,
+                        color: '#92400E',
+                        fontWeight: 700,
+                        textAlign: isRtl ? 'left' : 'right',
+                      }}
+                    >
+                      {sah.propheticPraiseSource}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div>
                 <h4
                   style={{
@@ -472,10 +555,10 @@ export function SistersSahabiyyahDetailModal({
                   }}
                 >
                   <strong>{t('Translation:', 'اردو ترجمہ:', 'الترجمة والمعنى:', 'Tarjuma:')} </strong>
-                  {sah.propheticPraiseHadithUrdu}
+                  {(language === 'ur' || language === 'ar') ? sah.propheticPraiseHadithUrdu : (sah.propheticPraiseHadithEnglish || sah.propheticPraiseHadithUrdu)}
                 </div>
 
-                {sah.propheticPraiseHadithEnglish && (
+                {isRtl && sah.propheticPraiseHadithEnglish && (
                   <div
                     style={{
                       fontSize: 14,
@@ -485,7 +568,7 @@ export function SistersSahabiyyahDetailModal({
                       paddingTop: 10,
                     }}
                   >
-                    <strong>English Translation: </strong>
+                    <strong>{t('English Translation: ', 'انگریزی ترجمہ: ', 'الترجمة الإنجليزية: ', 'English Tarjuma: ')}</strong>
                     {sah.propheticPraiseHadithEnglish}
                   </div>
                 )}
@@ -802,3 +885,5 @@ export function SistersSahabiyyahDetailModal({
     </div>
   );
 }
+
+export const SistersSahabiyyahDetailModal = memo(SistersSahabiyyahDetailModalInner);

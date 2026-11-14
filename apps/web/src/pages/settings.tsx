@@ -89,23 +89,47 @@ export default function SettingsPage() {
         });
       } else if (event.data?.type === 'CACHE_COMPLETE') {
         setCachingProgress(null);
-        showAmalToast('تمام 114 سورتیں آف لائن استعمال کے لیے کامیابی سے کیش کر دی گئی ہیں!', 'success');
+        showAmalToast(
+          t(
+            'All 114 Surahs successfully cached for offline use!',
+            'تمام 114 سورتیں آف لائن استعمال کے لیے کامیابی سے کیش کر دی گئی ہیں!',
+            'تم حفظ جميع سور القرآن الـ ١١٤ للاستخدام دون اتصال بنجاح!',
+            'Tamam 114 Suratein offline istemal ke liye kamyabi se cache ho gayi hain!'
+          ),
+          'success'
+        );
       }
     };
     navigator.serviceWorker?.addEventListener('message', handleSwMessage);
     return () => {
       navigator.serviceWorker?.removeEventListener('message', handleSwMessage);
     };
-  }, []);
+  }, [t]);
 
   const handlePrecacheAllQuran = () => {
     if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) {
-      showAmalToast('سروس ورکر فعال نہیں ہے، برائے مہربانی صفحہ دوبارہ لوڈ کریں۔', 'info');
+      showAmalToast(
+        t(
+          'Service Worker is not active, please reload page.',
+          'سروس ورکر فعال نہیں ہے، برائے مہربانی صفحہ دوبارہ لوڈ کریں۔',
+          'مشغل الخدمة غير نشط، يرجى إعادة تحميل الصفحة.',
+          'Service Worker active nahi hai, page reload karein.'
+        ),
+        'info'
+      );
       return;
     }
     setCachingProgress({ active: true, current: 0, total: 114 });
     navigator.serviceWorker.controller.postMessage({ type: 'PRECACHE_QURAN' });
-    showAmalToast('قرآنِ پاک کی تمام سورتوں کو آف لائن کیش کیا جا رہا ہے...', 'info');
+    showAmalToast(
+      t(
+        'Caching all Surahs of the Noble Quran for offline access...',
+        'قرآنِ پاک کی تمام سورتوں کو آف لائن کیش کیا جا رہا ہے...',
+        'جارٍ تحميل سور القرآن الكريم للاستخدام دون إنترنت...',
+        'Quran-e-Pak ki tamam suraton ko offline cache kiya ja raha hai...'
+      ),
+      'info'
+    );
   };
 
   const handleClearCache = async () => {
@@ -114,7 +138,15 @@ export default function SettingsPage() {
     for (const k of keys) {
       await caches.delete(k);
     }
-    showAmalToast('تمام سروس ورکر کیشز کامیابی سے حذف کر دیے گئے ہیں۔', 'info');
+    showAmalToast(
+      t(
+        'All service worker caches successfully cleared.',
+        'تمام سروس ورکر کیشز کامیابی سے حذف کر دیے گئے ہیں۔',
+        'تم حذف جميع ملفات الذاكرة المؤقتة بنجاح.',
+        'Tamam caches kamyabi se saaf kar diye gaye hain.'
+      ),
+      'info'
+    );
   };
 
   // Hydrate from localStorage
@@ -131,6 +163,9 @@ export default function SettingsPage() {
 
     const savedContrast = localStorage.getItem('amal_high_contrast') === 'true';
     setHighContrast(savedContrast);
+    if (savedContrast) {
+      document.body.classList.add('high-contrast');
+    }
 
     const loc = getSavedLocation();
     if (loc?.name) {
@@ -197,6 +232,11 @@ export default function SettingsPage() {
     localStorage.setItem('amal_app_language', appLanguage);
     localStorage.setItem('amal_tahajjud_mode', String(tahajjudMode));
     localStorage.setItem('amal_high_contrast', String(highContrast));
+    if (highContrast) {
+      document.body.classList.add('high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+    }
     if (tahajjudMode) {
       document.body.classList.add('theme-tahajjud');
     } else {
@@ -210,7 +250,15 @@ export default function SettingsPage() {
       saveUserLocation({ city: found.name, country: found.country, lat: found.lat, lon: found.lon });
     }
 
-    showAmalToast('General settings saved successfully!', 'success');
+    showAmalToast(
+      t(
+        'General settings saved successfully!',
+        'عمومی ترجیحات کامیابی سے محفوظ ہو گئیں!',
+        'تم حفظ الإعدادات العامة بنجاح!',
+        'General settings kamyabi se save ho gayi hain!'
+      ),
+      'success'
+    );
   };
 
   // Save Fiqh
@@ -221,7 +269,15 @@ export default function SettingsPage() {
     saveUserOffsets(offsets);
     localStorage.setItem('amal_azaan_settings', athanSound);
 
-    showAmalToast('Fiqh & Prayer settings updated! Recalculating auqat...', 'success');
+    showAmalToast(
+      t(
+        'Fiqh & Prayer settings updated! Recalculating auqat...',
+        'فقہی ترجیحات و اوقاتِ نماز اپ ڈیٹ ہو گئے!',
+        'تم تحديث إعدادات الفقه ومواقيت الصلاة!',
+        'Fiqh o Auqat-e-Namaz update ho gaye!'
+      ),
+      'success'
+    );
   };
 
   // Save Scholarly Strictness Settings
@@ -231,26 +287,58 @@ export default function SettingsPage() {
     localStorage.setItem('amal_ai_provider', aiProvider);
     localStorage.setItem('amal_ephemeral_memory', String(ephemeralMemory));
 
-    showAmalToast('علمی استناد و احتیاط کے اصول محفوظ ہو گئے! · Scholarly strictness parameters updated!', 'success');
+    showAmalToast(
+      t(
+        'Scholarly strictness parameters updated!',
+        'علمی استناد و احتیاط کے اصول محفوظ ہو گئے!',
+        'تم تحديث معايير التوثيق العلمي بنجاح!',
+        'Ilmi Sanad o Ehtiyat ke usool save ho gaye!'
+      ),
+      'success'
+    );
   };
 
   // Clear Search & Inquiry History
   const handlePurgeSearchCache = () => {
     localStorage.removeItem('amal_notes');
     localStorage.removeItem('amal_pending_situation');
-    showAmalToast('تحقیقی تلاش اور نوٹس کی کیش مکمل صاف کر دی گئی! · Inquiry history completely cleared!', 'info');
+    showAmalToast(
+      t(
+        'Inquiry history and search cache cleared!',
+        'تحقیقی تلاش اور نوٹس کی کیش مکمل صاف کر دی گئی!',
+        'تم مسح سجل البحث والاستفسارات بنجاح!',
+        'Inquiry history aur search cache saaf ho gayi!'
+      ),
+      'info'
+    );
   };
 
   // Save Privacy
-  const handleSavePrivacy = () => {
-    biometricVaultGuardEngine.setSecurityMode('usr_default', securityMode, pin);
+  const handleSavePrivacy = async () => {
+    await biometricVaultGuardEngine.setSecurityMode('usr_default', securityMode, pin);
     localStorage.setItem('amal_zk_sync', String(zeroKnowledgeSync));
-    showAmalToast('Vault security parameters locked!', 'success');
+    showAmalToast(
+      t(
+        'Vault security parameters locked!',
+        'والٹ سیکیورٹی ترجیحات لاک کر دی گئیں!',
+        'تم قفل إعدادات الخزينة بأمان!',
+        'Vault security parameters lock ho gaye!'
+      ),
+      'success'
+    );
   };
 
   // Export Data Archive
   const handleExportData = async () => {
-    showAmalToast('Generating sovereign JSON archive...', 'info');
+    showAmalToast(
+      t(
+        'Generating sovereign JSON archive...',
+        'محفوظ بیک اپ فائل تیار ہو رہی ہے...',
+        'جارٍ إنشاء ملف النسخة الاحتياطية...',
+        'Sovereign backup archive tayyar ho raha hai...'
+      ),
+      'info'
+    );
     const res = await AmalApiClient.exportData();
     const data = res.success && res.data ? res.data : { ...localStorage };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -261,7 +349,15 @@ export default function SettingsPage() {
     a.click();
     URL.revokeObjectURL(url);
     recordSuccessfulBackup();
-    showAmalToast('Archive downloaded to device! (Backup recorded)', 'success');
+    showAmalToast(
+      t(
+        'Archive downloaded to device! (Backup recorded)',
+        'بیک اپ فائل ڈیوائس پر ڈاؤن لوڈ ہو گئی!',
+        'تم تنزيل النسخة الاحتياطية على جهازك!',
+        'Backup archive device par download ho gaya!'
+      ),
+      'success'
+    );
   };
 
   // Restore Data Archive
@@ -272,12 +368,28 @@ export default function SettingsPage() {
     if (!file) return;
 
     try {
-      showAmalToast('Reading sovereign backup file...', 'info');
+      showAmalToast(
+        t(
+          'Reading sovereign backup file...',
+          'بیک اپ فائل کا مطالعہ جاری ہے...',
+          'جارٍ قراءة ملف النسخة الاحتياطية...',
+          'Backup file read ho rahi hai...'
+        ),
+        'info'
+      );
       const text = await file.text();
       const backupData = JSON.parse(text);
       const res = await AmalApiClient.restoreData(backupData);
       if (res.success) {
-        showAmalToast(`Successfully restored ${res.data?.restoredCount ?? 0} items! Reloading...`, 'success');
+        showAmalToast(
+          t(
+            `Successfully restored ${res.data?.restoredCount ?? 0} items! Reloading...`,
+            `کامیابی سے ${res.data?.restoredCount ?? 0} اشیاء بحال ہو گئیں۔ صفحہ ری لوڈ ہو رہا ہے...`,
+            `تمت استعادة ${res.data?.restoredCount ?? 0} عنصر بنجاح! جارٍ التحديث...`,
+            `${res.data?.restoredCount ?? 0} items kamyabi se restore ho gaye! Reload ho raha hai...`
+          ),
+          'success'
+        );
         setTimeout(() => window.location.reload(), 1200);
       } else {
         showAmalToast(res.error?.message || 'Restore failed', 'warning');
@@ -289,9 +401,9 @@ export default function SettingsPage() {
 
   // Reset All Local Data
   const handleResetAllData = () => {
-    if (confirm('CAUTION: Are you sure you want to reset all local preferences and offline cache? This cannot be undone.')) {
+    if (confirm(t('CAUTION: Are you sure you want to reset all local preferences and offline cache? This cannot be undone.', 'تنبیہ: کیا آپ واقعی تمام مقامی ڈیٹا اور آف لائن کیش حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکے گا۔', 'تحذير: هل أنت متأكد من رغبتك في حذف جميع الإعدادات المحلية والذاكرة المؤقتة؟ لا يمكن التراجع عن هذا الإجراء.', 'Khabardaar: Kya aap waqayi tamam local preferences aur cache reset karna chahte hain? Yeh wapas nahi hoga.'))) {
       localStorage.clear();
-      showAmalToast('System data wiped. Reloading...', 'info');
+      showAmalToast(t('System data wiped. Reloading...', 'تمام ڈیٹا صاف ہو گیا۔ دوبارہ لوڈ ہو رہا ہے...', 'تم مسح البيانات بنجاح. جارٍ إعادة التحميل...', 'System data saaf ho gaya. Reload ho raha hai...'), 'info');
       setTimeout(() => window.location.reload(), 1500);
     }
   };
@@ -306,7 +418,15 @@ export default function SettingsPage() {
       wordByWord: showWordByWord,
     };
     localStorage.setItem('amal_reader_prefs', JSON.stringify(prefs));
-    showAmalToast('Quran Reader preferences saved!', 'success');
+    showAmalToast(
+      t(
+        'Quran Reader preferences saved!',
+        'قرآن ریڈر کی ترجیحات محفوظ ہو گئیں!',
+        'تم حفظ تفضيلات قارئ القرآن!',
+        'Quran Reader preferences save ho gayi hain!'
+      ),
+      'success'
+    );
   };
 
   if (!mounted) return null;

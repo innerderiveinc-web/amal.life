@@ -66,8 +66,47 @@ export class HijriFastingEngine {
    */
   public toHijri(gregorianDate: Date = new Date(), adjustmentDays: number = 0): HijriDate {
     const adjustedTime = new Date(gregorianDate.getTime() + adjustmentDays * 86400000);
-    
-    // Astronomical Kuwaiti Algorithm approximation
+    const weekdayIndex = adjustedTime.getDay();
+    const weekdayInfo = HijriFastingEngine.WEEKDAYS[weekdayIndex] ?? HijriFastingEngine.WEEKDAYS[0]!;
+
+    // 1. Modern Umm al-Qura calendar standard via Intl (standard across contemporary Islamic world)
+    try {
+      if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+        const formatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric',
+        });
+        const parts = formatter.formatToParts(adjustedTime);
+        let day = 0;
+        let month = 0;
+        let year = 0;
+        for (const p of parts) {
+          if (p.type === 'day') day = parseInt(p.value, 10);
+          if (p.type === 'month') month = parseInt(p.value, 10);
+          if (p.type === 'year') year = parseInt(p.value, 10);
+        }
+        if (day >= 1 && day <= 30 && month >= 1 && month <= 12 && year > 1000) {
+          const monthInfo = HijriFastingEngine.HIJRI_MONTHS[month - 1] ?? HijriFastingEngine.HIJRI_MONTHS[0]!;
+          return {
+            day,
+            month,
+            year,
+            monthNameArabic: monthInfo.arabic,
+            monthNameEnglish: monthInfo.english,
+            monthNameUrdu: monthInfo.urdu,
+            dayOfWeekArabic: weekdayInfo.arabic,
+            dayOfWeekEnglish: weekdayInfo.english,
+            dayOfWeekUrdu: weekdayInfo.urdu,
+            isSacredMonth: monthInfo.sacred,
+          };
+        }
+      }
+    } catch (_) {
+      // Fallback to mathematical algorithm below
+    }
+
+    // 2. Astronomical Kuwaiti Algorithm approximation (offline mathematical fallback)
     let day = adjustedTime.getDate();
     let month = adjustedTime.getMonth();
     let year = adjustedTime.getFullYear();
@@ -121,15 +160,11 @@ export class HijriFastingEngine {
     let hijriDay = epoch - Math.floor((709 * hijriMonth) / 24);
     let hijriYear = 30 * n + j - 30;
 
-    hijriMonth += 1; // 1-indexed
-
-    if (hijriMonth > 12) {
-      hijriMonth = 12;
-    }
+    // Note: In Kuwaiti algorithm, hijriMonth is already 1-indexed (1 to 12)
+    if (hijriMonth < 1) hijriMonth = 1;
+    if (hijriMonth > 12) hijriMonth = 12;
 
     const monthInfo = HijriFastingEngine.HIJRI_MONTHS[hijriMonth - 1] ?? HijriFastingEngine.HIJRI_MONTHS[0]!;
-    const weekdayIndex = adjustedTime.getDay();
-    const weekdayInfo = HijriFastingEngine.WEEKDAYS[weekdayIndex] ?? HijriFastingEngine.WEEKDAYS[0]!;
 
     return {
       day: hijriDay,

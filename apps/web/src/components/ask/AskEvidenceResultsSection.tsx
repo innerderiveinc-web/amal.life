@@ -1,5 +1,6 @@
 import React from 'react';
 import { AmalTheme } from '@amal/ui';
+import { SacredAiDisclaimer } from '../common/SacredAiDisclaimer';
 
 interface AskEvidenceResultsSectionProps {
   results: any[] | null;
@@ -102,13 +103,16 @@ export const AskEvidenceResultsSection: React.FC<AskEvidenceResultsSectionProps>
             padding: 24,
             borderRadius: 12,
             textAlign: 'center',
-            color: '#777',
+            color: '#4B5563',
           }}
         >
           No direct canonical evidence found for this query in the verified corpus. AMAL prefers
           honest uncertainty over fabricated answers.
         </div>
       )}
+
+      {/* AI Epistemic Footnote */}
+      <SacredAiDisclaimer variant="footnote" />
     </section>
   );
 };

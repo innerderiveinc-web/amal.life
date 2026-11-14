@@ -86,22 +86,22 @@ export const FloatingPlayerTrackMeta: React.FC<FloatingPlayerTrackMetaProps> = (
             }}
           >
             {surahWideAudioType === 'KANZUL_IMAN'
-              ? t('Full Surah + Translation', 'مکمل سورت + ترجمہ کنز الایمان')
+              ? t('Full Surah + Translation', 'مکمل سورت + ترجمہ کنز الایمان', 'السورة الكاملة مع الترجمة', 'Full Surah + Kanzul Iman Tarjuma')
               : surahWideAudioType === 'TAFSEER'
-                ? t('Full Tafsir Audio', 'مکمل اردو تفسیر آڈیو')
+                ? t('Full Tafsir Audio', 'مکمل اردو تفسیر آڈیو', 'التفسير الصوتي الكامل', 'Full Tafsir Audio')
                 : activeTafseerCardKey !== null
-                  ? t("Khaza'in-ul-Irfan Tafsir", 'خزائن العرفان (تفسیری حکمت)')
+                  ? t("Khaza'in-ul-Irfan Tafsir", 'خزائن العرفان (تفسیری حکمت)', 'تفسير خزائن العرفان', "Khaza'in-ul-Irfan Tafsir")
                   : currentAudioSegment === 'URDU'
-                    ? t('Translation (Kanz-ul-Iman)', 'اردو ترجمہ (کنز الایمان)')
-                    : t('Arabic Recitation', 'عربی تلاوت')}
+                    ? t('Translation (Kanz-ul-Iman)', 'اردو ترجمہ (کنز الایمان)', 'ترجمة كنز الإيمان', 'Tarjuma (Kanz-ul-Iman)')
+                    : t('Arabic Recitation', 'عربی تلاوت', 'التلاوة العربية', 'Arabic Recitation')}
           </span>
           <span style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
             {surahWideAudioType === 'KANZUL_IMAN'
-              ? t('100% Real Human Voice', '100% Real Human Voice (مولانا عبد الحبیب عطاری)')
+              ? t('100% Real Human Voice', '100% Real Human Voice (مولانا عبد الحبیب عطاری)', 'صوت بشري حقيقي', '100% Real Human Voice')
               : surahWideAudioType === 'TAFSEER'
-                ? t('Studio Tafsir Audio', 'مستند سٹوڈیو تفسیر')
+                ? t('Studio Tafsir Audio', 'مستند سٹوڈیو تفسیر', 'تسجيل استوديو', 'Studio Tafsir Audio')
                 : activeTafseerCardKey !== null
-                  ? t('Allama Muradabadi', 'صدر الافاضل مولانا نعیم الدین مراد آبادی')
+                  ? t('Allama Muradabadi', 'صدر الافاضل مولانا نعیم الدین مراد آبادی', 'العلامة مراد آبادي', 'Allama Muradabadi')
                   : currentAudioSegment === 'URDU'
                     ? '100% Real Human Voice'
                     : selectedQari === 'alafasy'

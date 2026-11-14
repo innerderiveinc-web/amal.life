@@ -1,0 +1,17 @@
+{
+  "workId": "CANON-HAD-004",
+  "verifiedExternalUrl": "https://sunnah.com/tirmidhi",
+  "verifiedExternalName": "Sunnah.com (Jami al-Tirmidhi Collection)",
+  "chapters": [
+    {
+      "chapterId": "tirmidhi_taharah_1",
+      "chapterTitleArabic": "أَبْوَابُ الطَّهَارَةِ — بَابُ مَا جَاءَ: لَا تُقْبَلُ صَلَاةٌ بِغَيْرِ طُهُورٍ",
+      "chapterTitleUrdu": "پہلا باب: ابواب الطہارۃ — پاکیزگی کے بغیر کوئی نماز قبول نہیں ہوتی",
+      "chapterTitleEnglish": "Chapter 1: Doors of Purification — No Prayer is Accepted Without Purity",
+      "arabicMatn": "حَدَّثَنَا قُتَيْبَةُ، حَدَّثَنَا أَبُو عَوَانَةَ، عَنْ سِمَاكِ بْنِ حَرْبٍ، عَنْ مُصْعَبِ بْنِ سَعْدٍ، عَنِ ابْنِ عُمَرَ أَنَّهُ قَالَ:\nإِنِّي سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «لَا تُقْبَلُ صَلَاةٌ بِغَيْرِ طُهُورٍ، وَلَا صَدَقَةٌ مِنْ غُلُولٍ».\nقَالَ أَبُو عِيسَى التِّرْمِذِيُّ: «هَذَا الْحَدِيثُ أَصَحُّ شَيْءٍ فِي هَذَا الْبَابِ وَأَحْسَنُهُ، وَفِي الْبَابِ عَنْ أَبِي بَكْرَةَ، وَأَبِي هُرَيْرَةَ، وَعَائِشَةَ، وَأَنَسٍ رَضِيَ اللَّهُ عَنْهُمْ».",
+      "urduTranslation": "امام ابو عیسیٰ محمد بن عیسیٰ ترمذی رحمۃ اللہ علیہ روایت کرتے ہیں:\nحضرت عبد اللہ بن عمر رضی اللہ عنہما نے فرمایا:\nمیں نے رسول اللہ ﷺ کو یہ فرماتے ہوئے سنا: \"طہارت (پاکیزگی) کے بغیر کوئی نماز قبول نہیں کی جاتی، اور نہ ہی خیانت و حرام کے مال سے کوئی صدقہ قبول ہوتا ہے\"۔\nامام ابو عیسیٰ ترمذی فرماتے ہیں: \"یہ حدیث اس باب میں سب سے صحیح اور عمدہ ہے، اور اس باب میں حضرت ابو بکرہ، ابو ہریرہ، عائشہ اور انس رضی اللہ عنہم سے بھی روایات موجود ہیں\"۔",
+      "englishSynopsis": "Imam al-Tirmidhi establishes the definitive prerequisite of ritual purity for Salah and lawful sustenance for accepted charity.",
+      "scholarlyNotes": "Celebrated for its unique critical grading methodology, identifying Sahih, Hasan, and Gharib narrations alongside the opinions of the jurists of the Sahabah and Tabieen."
+    }
+  ]
+}

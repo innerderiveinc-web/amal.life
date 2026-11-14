@@ -340,62 +340,298 @@ export class SignatureCapabilitiesEngine {
   }
 
   /**
-   * 3. Deen Decision Room: Evaluates a situation and prepares a clean Scholar Handoff Packet
+   * 3. Deen Decision Room: Dynamic Evaluator and Jurist Dossier Compiler
+   * Deconstructs real-world dilemmas into 4 classical jurisprudential pillars
+   * tailored to the specific case domain (Commercial, Family/Marriage, Inheritance, Neighbor/Social, Workplace).
    */
   public evaluateDecisionRoom(situationDescription: string): DecisionRoomEvaluation {
     const caseId = `case_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
     const lower = situationDescription.toLowerCase();
 
-    const isComplex = lower.includes('contract') || lower.includes('divorce') || lower.includes('talaq') || lower.includes('inheritance') || lower.includes('business dispute');
+    // Domain detection flags
+    const isFamily =
+      lower.includes('divorce') ||
+      lower.includes('talaq') ||
+      lower.includes('khula') ||
+      lower.includes('spouse') ||
+      lower.includes('husband') ||
+      lower.includes('wife') ||
+      lower.includes('marriage') ||
+      lower.includes('in-law') ||
+      lower.includes('susral') ||
+      lower.includes('shohar') ||
+      lower.includes('biwi') ||
+      lower.includes('khandan') ||
+      lower.includes('living arrangement') ||
+      lower.includes('nafaqa') ||
+      lower.includes('custody');
 
-    const clearPrinciples = [
-      'Al-Aslu fi al-Amwal al-Hurmah (Wealth and contracts are protected by default; injustice/Ghasb is strictly forbidden).',
-      'Al-Muslimuna ala Shurutihim (Muslims are bound by their honorable mutual agreements).',
-      'La Darara wa La Dirar (No harm shall be inflicted or reciprocated).',
-    ];
+    const isCommercial =
+      lower.includes('business') ||
+      lower.includes('partner') ||
+      lower.includes('contract') ||
+      lower.includes('investment') ||
+      lower.includes('profit') ||
+      lower.includes('loss') ||
+      lower.includes('revenue') ||
+      lower.includes('trade') ||
+      lower.includes('tijarat') ||
+      lower.includes('karobar') ||
+      lower.includes('mudarabah') ||
+      lower.includes('musharakah') ||
+      lower.includes('shares') ||
+      lower.includes('payout');
 
-    const differsAcrossSchools = [
-      'Specific contractual stipulations (Shurut Ja\'izah vs Fasidah) differ between Hanafi and Hanbali contract law.',
-      'Burden of proof in verbal repudiations and unilateral conditions.',
-    ];
+    const isInheritance =
+      lower.includes('inheritance') ||
+      lower.includes('mirath') ||
+      lower.includes('estate') ||
+      lower.includes('wasiyyah') ||
+      lower.includes('will') ||
+      lower.includes('waris') ||
+      lower.includes('virasat') ||
+      lower.includes('tarkah') ||
+      lower.includes('jayedad') ||
+      lower.includes('heir');
 
-    const dependsOnPersonalFacts = [
-      'Exact wording used during the verbal altercation or agreement.',
-      'Financial records, debts, and explicit conditions agreed upon at inception.',
-    ];
+    const isNeighbor =
+      lower.includes('neighbor') ||
+      lower.includes('neighbour') ||
+      lower.includes('humsaya') ||
+      lower.includes('parosi') ||
+      lower.includes('boundary') ||
+      lower.includes('flat') ||
+      lower.includes('building') ||
+      lower.includes('nuisance');
 
-    const safeImmediateSynthesis = 
-      'Hold the status quo; do not execute unilateral financial transfers or emotional ultimatums. Maintain polite distance while preserving legal records until qualified juristic counsel is obtained.';
+    const isDebt =
+      lower.includes('debt') ||
+      lower.includes('loan') ||
+      lower.includes('borrow') ||
+      lower.includes('lend') ||
+      lower.includes('qard') ||
+      lower.includes('udhar') ||
+      lower.includes('riba') ||
+      lower.includes('interest');
 
-    let handoffDraft: ScholarHandoffPacket | undefined;
-    if (isComplex) {
-      handoffDraft = {
-        packetId: `pkt_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-        timestamp: new Date().toISOString(),
-        privacySetting: 'SELECTIVE_CONTEXT',
-        summaryForScholar: `Seeker presents a contested contractual/domestic dilemma requiring human fatwa and pastoral adjudication.`,
-        factualBackground: situationDescription,
-        jurisprudentialQuestions: [
-          'Does the described incident constitute a binding cancellation of contract?',
-          'What are the restitution rights of both parties under the applicable Madhhab?',
-        ],
-        detectedEvidenceChain: ['Surah An-Nisa 4:29', 'Majallat al-Ahkam al-Adliyyah #85'],
-        userSpecificQuestions: [
-          'What is the immediate halal course of action regarding the held funds?',
-        ],
-        assignedScholarTrack: lower.includes('business') ? 'COMMERCIAL_FINANCE' : 'FAMILY_MEDIATION',
-        auditHash: `sha256_${Date.now()}_audit_dual_jurist_verified`,
-      };
+    let clearPrinciples: string[] = [];
+    let whatIsClearAndAgreed: string[] = [];
+    let differsAcrossSchools: string[] = [];
+    let dependsOnPersonalFacts: string[] = [];
+    let safeImmediateSynthesis = '';
+    let assignedTrack: 'FATWA_COUNCIL' | 'FAMILY_MEDIATION' | 'COMMERCIAL_FINANCE' = 'FATWA_COUNCIL';
+    let summaryForScholar = '';
+    let jurisprudentialQuestions: string[] = [];
+    let detectedEvidenceChain: string[] = [];
+    let userSpecificQuestions: string[] = [];
+
+    if (isFamily) {
+      assignedTrack = 'FAMILY_MEDIATION';
+      clearPrinciples = [
+        'Fa-Imsakun bi-Ma\'ruf aw Tasrihun bi-Ihsan: Retain each other with honor and benevolence, or part ways with dignity and gentleness (Surah Al-Baqarah 2:229).',
+        'Mu\'asharat bi al-Ma\'ruf: Treat spouses with mutual equity, kindness, and emotional safety (Surah An-Nisa 4:19).',
+        'Tahrim al-Darar: Strict prohibition of verbal intimidation, physical oppression, or financial strangulation.',
+        'Haqq al-Sukan: The wife possesses an independent legal right to private, unshared accommodation suitable to the husband\'s financial means.'
+      ];
+      whatIsClearAndAgreed = [
+        'Obligation of maintenance (Nafaqa: food, secure shelter, clothing) rests squarely upon the husband.',
+        'Neither party is permitted to sever kinship ties (Silat al-Rahim) or weaponize family visitation rights.',
+        'Unilateral aggressive verbal ultimatums during anger do not alter moral accountability.'
+      ];
+      differsAcrossSchools = [
+        'Three simultaneous verbal pronouncements of divorce: The consensus of the 4 Sunni Madhhabs holds that all three take legal effect (Waqi\'), resulting in irrevocable separation (Baynunah Kubra), despite the profound sinfulness of uttering three at once.',
+        'Khula\' without the husband\'s consent: Hanafi school requires mutual consent or formal judicial annulment (Faskh) by a recognized Qadi / Darul Ifta, whereas select Maliki jurists permit judicial dissolution if persistent harm (Darar) is judicially proven.'
+      ];
+      dependsOnPersonalFacts = [
+        'Exact spoken words, whether explicit (Sarih, e.g. "Talaq") or metaphorical (Kinayah, e.g. "Go to your father\'s house"), and the husband\'s specific intention at that moment.',
+        'Physical layout of the home (separate bathroom/kitchen vs fully joint quarters) and verifiable emotional friction.'
+      ];
+      safeImmediateSynthesis =
+        'Maintain calm restraint and avoid exchanging reactive messages or ultimatums. Do not pronounce words of divorce or separation under anger. Appoint two wise family arbiters—one from each side (Surah An-Nisa 4:35)—to mediate confidentially before seeking formal decree from a recognized Darul Ifta.';
+      summaryForScholar =
+        'Seeker presents a sensitive domestic/marital dispute involving spousal rights, living arrangements, or potential marital dissolution requiring confidential pastoral arbitration.';
+      jurisprudentialQuestions = [
+        'Do the verbal statements or circumstances described effectuate any legal change in marital status under the applicable Madhhab?',
+        'What are the husband\'s concrete financial and independent housing obligations under the present domestic facts?',
+        'What is the recommended pastoral arbitration procedure before proceeding to civil court?'
+      ];
+      detectedEvidenceChain = [
+        'Surah An-Nisa (4:19, 4:35)',
+        'Surah Al-Baqarah (2:229)',
+        'Sahih al-Bukhari #5185 (Khula\' of Jamila bint Salul)',
+        'Radd al-Muhtar ala al-Durr al-Mukhtar (Bab al-Nafaqah & Bab al-Kifayah)'
+      ];
+      userSpecificQuestions = [
+        'Is the wife entitled to immediate independent accommodation under current financial means?',
+        'How should communication be conducted while mediation is actively underway?'
+      ];
+    } else if (isInheritance) {
+      assignedTrack = 'FATWA_COUNCIL';
+      clearPrinciples = [
+        'Hudud Allah: Inheritance quotas fixed in the Quran (Surah An-Nisa 4:11-14) are divine sacred boundaries that cannot be bypassed or altered by human whim.',
+        'La Wasiyyata li-Warith: There can be no private testamentary will or unequal bequest made in favor of a designated legal Quranic heir (Sunan Abu Dawud #2870).',
+        'Al-Wasiyyatu bi al-Thuluth: Bequests to non-heirs or charities are strictly capped at a maximum of one-third (1/3) of the net estate after debt settlement.'
+      ];
+      whatIsClearAndAgreed = [
+        'Universal 4-step estate settlement order: 1) Funeral & burial expenses, 2) Complete debt settlement, 3) Valid bequests (up to 1/3 to non-heirs), 4) Distribution of net remainder to canonical Quranic heirs.',
+        'Depriving female heirs (daughters, mothers, sisters, widows) of their Quranic inheritance is among the gravest of major sins (Kaba\'ir).',
+        'All assets owned by the deceased at the moment of death comprise the estate (Tarkah).'
+      ];
+      differsAcrossSchools = [
+        'Inheritance of grandfather alongside siblings: Imam Abu Hanifa grants the grandfather total priority, excluding siblings, whereas Jumhur (Imam Malik, Shafi\'i, Ahmad, and Sahibayn) divide the share proportionally.',
+        'Reversion of surplus estate (Radd): Hanafi and Hanbali return surplus to non-spousal heirs; classical Shafi\'i and Maliki directed surplus to the public treasury (Bayt al-Mal).'
+      ];
+      dependsOnPersonalFacts = [
+        'Exact surviving family tree at the exact moment of death (living parents, spouse, sons, daughters, brothers, sisters).',
+        'Existence of outstanding debts, unpaid deferred dowry (Mahr Mu\'ajjal), or documented commercial claims.'
+      ];
+      safeImmediateSynthesis =
+        'Do not execute any informal cash or property distribution. Freeze the estate assets and compile a verified inventory of all real property, bank balances, and documented liabilities. Request an official Shari\'ah Inheritance Certificate (Wirasat Nama) from a verified Darul Ifta.';
+      summaryForScholar =
+        'Seeker requests authoritative calculation and Shari\'ah estate division for a deceased relative, requiring canonical fara\'id table mapping.';
+      jurisprudentialQuestions = [
+        'What are the exact fractional Quranic shares (Ashab al-Fara\'id and Asabat) for each living relative?',
+        'How are pre-existing debts and deferred dowry prioritized prior to distribution?'
+      ];
+      detectedEvidenceChain = [
+        'Surah An-Nisa (4:11, 4:12, 4:176)',
+        'Sunan al-Tirmidhi #2092',
+        'Al-Sirajiyyah fi al-Fara\'id by Imam Siraj al-Din al-Sajawandi'
+      ];
+      userSpecificQuestions = [
+        'How should inherited immovable property be valued or partitioned among heirs fairly?'
+      ];
+    } else if (isDebt) {
+      assignedTrack = 'COMMERCIAL_FINANCE';
+      clearPrinciples = [
+        'Al-Aslu fi al-Duyun al-Wafa\': Honoring loans promptly is an unshakeable moral and legal imperative (Surah Al-Isra 17:34).',
+        'Kullu Qardin Jarra Manfa\'atan fahuwa Riba: Any loan that contractually stipulates excess financial benefit or interest to the lender is strictly usurious (Riba).',
+        'Inzar al-Mu\'sir: Granting respite to an insolvent debtor is a major sunnah; forgiving part or all is greater in reward (Surah Al-Baqarah 2:280).'
+      ];
+      whatIsClearAndAgreed = [
+        'Prohibition of compound interest, late payment penalty fees pocketed by the lender, and coercive extortion.',
+        'Deliberate procrastination of debt repayment by a wealthy person is an act of oppression (Matlu al-ghaniyyi dhulm - Sahih al-Bukhari #2287).',
+        'Writing down debts with witnesses is strongly enjoined in the Quran (Ayat al-Mudayanah, 2:282).'
+      ];
+      differsAcrossSchools = [
+        'Permissibility of requiring a default charity penalty (where late fees are transferred strictly to audited charity without enriching the creditor, as adopted in contemporary Islamic banking standards) vs classical strict prohibition.',
+        'Transfer of debt (Hawalah) rules and whether creditor approval alone suffices without debtor pre-consent.'
+      ];
+      dependsOnPersonalFacts = [
+        'Verifiable financial insolvency vs intentional bad-faith evasion.',
+        'Original loan agreement terms, currencies, and collateral (Rahn) pledged.'
+      ];
+      safeImmediateSynthesis =
+        'Document the exact remaining principal owed. If the borrower is genuinely in hardship, grant documented extension without interest. If the borrower is evading despite solvent funds, engage a mutually respected mediator or seek formal enforcement.';
+      summaryForScholar =
+        'Seeker presents an unresolved debt/lending conflict with delayed repayment or questions regarding lawful restructuring without falling into Riba.';
+      jurisprudentialQuestions = [
+        'What lawful remedies are available to recover defaulted principal without violating usury prohibitions?',
+        'Under what conditions is debt forgiveness or structured deferral legally recommended?'
+      ];
+      detectedEvidenceChain = [
+        'Surah Al-Baqarah (2:280, 2:282)',
+        'Sahih al-Bukhari #2287',
+        'Majallat al-Ahkam al-Adliyyah (Articles on Qard & Rahn)'
+      ];
+      userSpecificQuestions = [
+        'Can currency inflation adjustment be applied to long-standing unpaid loans?'
+      ];
+    } else if (isNeighbor) {
+      assignedTrack = 'FAMILY_MEDIATION';
+      clearPrinciples = [
+        'Wasiyyat Jibril bi al-Jar: Angel Gabriel emphasized rights of the neighbor so consistently that the Prophet ﷺ thought neighbors would inherit (Sahih al-Bukhari #6014).',
+        'Man kana yu\'minu billahi wal-yawmil-akhiri fala yu\'dhi jarahu: Faith in Allah requires absolute abstention from harming neighbors (Sahih Muslim #47).',
+        'La Darara wa La Dirar: Elimination of active nuisance, structural water leakage, and encroachment.'
+      ];
+      whatIsClearAndAgreed = [
+        'Rights of neighbors apply equally to Muslim and non-Muslim neighbors.',
+        'Direct damage to adjacent walls, blocking shared light/drainage, or persistent noise pollution is religiously impermissible.',
+        'Patience and graceful forbearance with an irritating neighbor carries immense spiritual station.'
+      ];
+      differsAcrossSchools = [
+        'Pre-emptive purchase right (Haqq al-Shuf\'ah): Hanafi school recognizes Shuf\'ah for the contiguous neighbor (Jar al-Mulaqis), whereas Shafi\'i and Maliki limit Shuf\'ah strictly to co-owners in undivided property (Sharikat al-Shuyu\').'
+      ];
+      dependsOnPersonalFacts = [
+        'Whether the disturbance is accidental/transitory (e.g. daytime home renovation) vs malicious and deliberate.',
+        'Municipal building codes, structural surveyor reports, and boundary markers.'
+      ];
+      safeImmediateSynthesis =
+        'Initiate courteous communication with a small gift. Present concerns gently and focus on objective solutions rather than personal attacks. Avoid reciprocal noise or retaliation.';
+      summaryForScholar =
+        'Seeker presents a neighbor dispute involving nuisance, property boundary, or community friction requiring ethical and civil resolution.';
+      jurisprudentialQuestions = [
+        'What constitutes legally actionable harm (Darar Fahish) under classical Fiqh in shared residences?',
+        'Does the claimant hold pre-emptive purchase rights (Shuf\'ah) under local circumstances?'
+      ];
+      detectedEvidenceChain = [
+        'Sahih al-Bukhari #6014',
+        'Sahih Muslim #47',
+        'Majallat al-Ahkam al-Adliyyah (Kitab al-Hitan wa al-Jiwar)'
+      ];
+      userSpecificQuestions = [
+        'How should shared maintenance costs of joint walls and passages be divided?'
+      ];
+    } else {
+      // Commercial / Business / Contract (Default & Specialized)
+      assignedTrack = 'COMMERCIAL_FINANCE';
+      clearPrinciples = [
+        'Al-Aslu fi al-Amwal al-Hurmah: Wealth and contracts are protected by default; unjust consumption of property (Akl al-Amwal bil-Batil) is strictly forbidden (Surah An-Nisa 4:29).',
+        'Al-Muslimuna \'ala Shurutihim: Muslims are bound by their honorable contractual stipulations, except conditions that legalize the prohibited (Jami\' al-Tirmidhi #1352).',
+        'La Darara wa La Dirar: Harm shall neither be inflicted nor reciprocated in commercial partnerships.',
+        'Bay\' an Taradin: Commercial transactions require authentic mutual consent without coercion or deceptive ambiguity (Gharar).'
+      ];
+      whatIsClearAndAgreed = [
+        'Unilateral alteration of agreed profit ratios without the explicit mutual consent of both partners is void (Fasid/Batil).',
+        'Guaranteed fixed return on capital in a partnership (Musharakah/Mudarabah) invalidates the contract and resembles Riba.',
+        'Full financial disclosure and access to transaction ledgers is a mandatory religious duty for managing partners.'
+      ];
+      differsAcrossSchools = [
+        'Specific contractual stipulations (Shurut Ja\'izah vs Fasidah) differ between Hanafi and Hanbali contract law.',
+        'Burden of proof in verbal repudiations and unilateral operational decisions.'
+      ];
+      dependsOnPersonalFacts = [
+        'Exact signed baseline contract, partnership deed, or written communications exchanged at inception.',
+        'Accounting records, actual revenue vs working capital, and agreed dispute resolution clauses.'
+      ];
+      safeImmediateSynthesis =
+        'Preserve the status quo; do not execute unilateral financial transfers or emotional ultimatums. Maintain professional communication while securing complete ledger records. Propose an independent financial audit before seeking formal arbitration or legal recourse.';
+      summaryForScholar =
+        'Seeker presents a contested commercial partnership/contractual dilemma involving unilateral alterations or withheld profits requiring Mufti consultation.';
+      jurisprudentialQuestions = [
+        'Does the unilateral alteration constitute a breach invalidating the partnership structure?',
+        'What are the lawful restitution rights of the aggrieved party regarding withheld capital and accrued profits under Islamic contract law?'
+      ];
+      detectedEvidenceChain = [
+        'Surah An-Nisa (4:29)',
+        'Jami\' al-Tirmidhi #1352',
+        'Majallat al-Ahkam al-Adliyyah #85 & #1333',
+        'Bada\'i al-Sana\'i fi Tartib al-Shara\'i by Imam al-Kasani (Kitab al-Sharikah)'
+      ];
+      userSpecificQuestions = [
+        'What is the immediate halal course of action regarding disputed withheld funds?'
+      ];
     }
+
+    const isComplex = true;
+    const handoffDraft: ScholarHandoffPacket = {
+      packetId: `pkt_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      privacySetting: 'SELECTIVE_CONTEXT',
+      summaryForScholar,
+      factualBackground: situationDescription,
+      jurisprudentialQuestions,
+      detectedEvidenceChain,
+      userSpecificQuestions,
+      assignedScholarTrack: assignedTrack,
+      auditHash: `sha256_${Date.now()}_audit_dual_jurist_verified`,
+    };
 
     return {
       caseId,
       userSituation: situationDescription,
       coreEthicalPrinciples: clearPrinciples,
-      whatIsClearAndAgreed: [
-        'Mutual respect and avoidance of wrongful consumption of property (Akl al-Amwal bil-Batil).',
-        'Necessity of documented evidence.',
-      ],
+      whatIsClearAndAgreed,
       whatDiffersAcrossSchools: differsAcrossSchools,
       whatDependsOnPersonalCircumstances: dependsOnPersonalFacts,
       safeImmediateSynthesis,

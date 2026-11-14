@@ -26,7 +26,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
   if (!isOpen) return null;
 
   const getItemTitle = (item: NavAppItem) => {
-    if (currentLang === 'roman') return item.titleRoman || item.titleUrdu || item.title;
+    if (currentLang === 'roman') return item.titleRoman || item.title;
     if (currentLang === 'ur') return item.titleUrdu || item.title;
     if (currentLang === 'ar') return item.titleArabic || item.titleUrdu || item.title;
     return item.title;
@@ -82,6 +82,43 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
           </span>
         </button>
 
+        {/* Voluntary Support Waqf Button (Mobile Menu) */}
+        <button
+          onClick={() => {
+            onClose();
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new CustomEvent('amal-open-waqf'));
+            }
+          }}
+          aria-label="Support Amal Sovereign Waqf"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            padding: '11px 14px',
+            borderRadius: 10,
+            border: '1px solid rgba(212, 175, 55, 0.45)',
+            backgroundColor: '#FFFBEB',
+            color: '#92400E',
+            fontSize: 13,
+            fontWeight: 800,
+            cursor: 'pointer',
+            boxShadow: '0 2px 6px rgba(217, 119, 6, 0.08)',
+          }}
+        >
+          <span>🤲</span>
+          <span>
+            {currentLang === 'ur'
+              ? 'وقفِ امل میں رضاکارانہ معاونت (صدقۂ جاریہ)'
+              : currentLang === 'ar'
+              ? 'دعم وقف أمل السيادي (صدقة جارية)'
+              : currentLang === 'roman'
+              ? 'Amal Waqf Support (Sadaqah Jariyah)'
+              : 'Support Amal Waqf (Voluntary Sadaqah)'}
+          </span>
+        </button>
+
         {/* Premier Quran Link (Mobile) */}
         <Link
           href="/quran"
@@ -109,11 +146,11 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 : currentLang === 'ar'
                 ? 'القرآن الكريم والحكمة'
                 : currentLang === 'roman'
-                ? 'Quran Kareem wa Hikmat'
+                ? 'Quran Kareem & Hikmat'
                 : 'Holy Quran & Wisdom'}
             </span>
           </div>
-          <span style={{ fontSize: 10, backgroundColor: '#16A34A', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+          <span style={{ fontSize: 10, backgroundColor: '#15803D', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
             {currentLang === 'ur'
               ? 'کنز الایمان'
               : currentLang === 'ar'
@@ -151,17 +188,17 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 : currentLang === 'ar'
                 ? 'الرحلات الإيمانية والمسار اليومي'
                 : currentLang === 'roman'
-                ? 'Ruhani Asfar wa Daily Tracker'
+                ? '14-Day Deeni Journeys'
                 : 'Spiritual Journeys (8 Roadmaps)'}
             </span>
           </div>
-          <span style={{ fontSize: 10, backgroundColor: '#059669', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
+          <span style={{ fontSize: 10, backgroundColor: '#047857', color: '#FFFFFF', padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>
             {currentLang === 'ur'
               ? '14 روزہ'
               : currentLang === 'ar'
               ? '١٤ يوماً'
               : currentLang === 'roman'
-              ? '14-Rooza'
+              ? '14-Day'
               : '14-Day'}
           </span>
         </Link>
@@ -193,7 +230,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 : currentLang === 'ar'
                 ? 'واحة المرأة المسلمة والصحابيات'
                 : currentLang === 'roman'
-                ? 'Gosha-e-Khawateen wa Sahabiyyat (Amal Nisa)'
+                ? 'Sisters Sanctuary & Sahabiyyat'
                 : 'The Sisters Sanctuary (Amal Nisa)'}
             </span>
           </div>
@@ -203,7 +240,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               : currentLang === 'ar'
               ? '٢٠ كتاباً'
               : currentLang === 'roman'
-              ? '20 Kutub'
+              ? '20 Books'
               : '20 Books'}
           </span>
         </Link>
@@ -263,7 +300,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 : currentLang === 'ar'
                 ? 'الإعدادات المركزية'
                 : currentLang === 'roman'
-                ? 'Markazi Tarteebat'
+                ? 'Settings'
                 : 'Settings'}
             </span>
           </Link>
@@ -278,7 +315,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               : currentLang === 'ar'
               ? 'العبادات والمعاملات'
               : currentLang === 'roman'
-              ? 'Ibadat wa Ma\'moolat'
+              ? 'Ibadat & Daily Life'
               : 'Worship & Routine'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
@@ -319,7 +356,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               : currentLang === 'ar'
               ? 'العلوم والتراث والسيرة'
               : currentLang === 'roman'
-              ? 'Ilm, Kutub wa Seerat'
+              ? 'Ilm & Islamic Heritage'
               : 'Ilm & Heritage'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
@@ -361,7 +398,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
                 : currentLang === 'ar'
                 ? 'الأسرة وواحة المرأة'
                 : currentLang === 'roman'
-                ? 'Khandan wa Gosha-e-Niswan'
+                ? 'Family & Sisters Hub'
                 : 'Family & Sisters Sanctuary'}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
@@ -403,7 +440,7 @@ export const NavigationMobileMenu: React.FC<NavigationMobileMenuProps> = ({
               : currentLang === 'ar'
               ? 'الأحكام والمواريث والسلوك'
               : currentLang === 'roman'
-              ? 'Ahkam, Miras wa Suluk'
+              ? 'Fiqh, Miras & Guidance'
               : 'Fiqh, Miras & Suluk'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>

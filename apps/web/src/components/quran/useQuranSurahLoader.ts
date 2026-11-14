@@ -1,6 +1,30 @@
 import { useState } from 'react';
 import { QURAN_SURAHS_COLLECTION, QuranSurahData } from '../../lib/quran-surahs-data';
 import { ALL_114_SURAHS } from '../../lib/quran-114-directory';
+import { triggerHaptic } from '../../lib/haptics';
+
+export const BISMILLAH_PREFIX_REGEX = /^ب[ًٌٍَُِّْ]*س[ًٌٍَُِّْ]*م[ًٌٍَُِّْ]*\s+[ٱا][ًٌٍَُِّْ]*ل[ًٌٍَُِّْ]*ل[ًٌٍَُِّْ]*ـ?[ًٌٍَُِّْ]*ه[ًٌٍَُِّْ]*\s+[ٱا][ًٌٍَُِّْ]*ل[ًٌٍَُِّْ]*ر[ًٌٍَُِّْ]*ح[ًٌٍَُِّْ]*م[ًٌٍَُِّٰ]*ن[ًٌٍَُِّْ]*\s+[ٱا][ًٌٍَُِّْ]*ل[ًٌٍَُِّْ]*ر[ًٌٍَُِّْ]*ح[ًٌٍَُِّْ]*ي[ًٌٍَُِّْ]*م[ًٌٍَُِّْ]*\s*/u;
+
+/**
+ * Sanitizes Surah verses so Bismillah is never duplicated.
+ * In Surah 1 (Al-Fatihah), Bismillah IS Ayah 1 (kept).
+ * In Surah 9 (At-Tawbah), there is no Bismillah.
+ * In Surahs 2-114, Bismillah is rendered exclusively in the gilded header cartouche,
+ * so any leading Bismillah text in Ayah 1 is stripped.
+ */
+export function sanitizeSurahVerses(surahNum: number, verses: QuranSurahData['verses']): QuranSurahData['verses'] {
+  if (surahNum === 1 || surahNum === 9 || !verses || verses.length === 0) {
+    return verses;
+  }
+  const first = verses[0];
+  if (first && first.textArabic && BISMILLAH_PREFIX_REGEX.test(first.textArabic)) {
+    const cleaned = first.textArabic.replace(BISMILLAH_PREFIX_REGEX, '').trim();
+    if (cleaned.length > 0) {
+      return [{ ...first, textArabic: cleaned }, ...verses.slice(1)];
+    }
+  }
+  return verses;
+}
 
 interface UseQuranSurahLoaderOptions {
   setSelectedSurahNumber: (num: number) => void;
@@ -27,6 +51,7 @@ export function useQuranSurahLoader({
   const [surahFetchError, setSurahFetchError] = useState<string | null>(null);
 
   const handleSelectSurah = async (surahNum: number, targetAyahNumber?: number) => {
+    triggerHaptic('selection');
     setSelectedSurahNumber(surahNum);
     setFocusedAyahNumber(targetAyahNumber && targetAyahNumber >= 1 ? targetAyahNumber : 1);
     setSurahFetchError(null);
@@ -48,7 +73,11 @@ export function useQuranSurahLoader({
       if (offlineCached) {
         const parsed = JSON.parse(offlineCached);
         if (parsed && Array.isArray(parsed.verses) && parsed.verses.length > 0) {
-          setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: parsed }));
+          const sanitizedSurah: QuranSurahData = {
+            ...parsed,
+            verses: sanitizeSurahVerses(surahNum, parsed.verses),
+          };
+          setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: sanitizedSurah }));
           return;
         }
       }
@@ -70,7 +99,7 @@ export function useQuranSurahLoader({
               nameEnglish: meta?.nameEnglish || localData.nameEnglish,
               revelationType: (meta?.revelationType || localData.revelationType) as ('MECCAN' | 'MEDINAN'),
               ayahsCount: meta?.ayahsCount || localData.ayahsCount || localData.verses.length,
-              verses: localData.verses,
+              verses: sanitizeSurahVerses(surahNum, localData.verses),
             };
             setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: bundledSurah }));
             try {
@@ -95,7 +124,7 @@ export function useQuranSurahLoader({
         const urdu = data.data[1];
         const english = data.data[2];
 
-        const verses = uthmani.ayahs.map((ayah: any, idx: number) => ({
+        const rawVerses = uthmani.ayahs.map((ayah: any, idx: number) => ({
           ayahNumber: ayah.numberInSurah,
           textArabic: ayah.text,
           textUrdu: urdu.ayahs[idx]?.text || '',
@@ -111,7 +140,7 @@ export function useQuranSurahLoader({
           revelationType: (meta?.revelationType ||
             (uthmani.revelationType === 'Meccan' ? 'MECCAN' : 'MEDINAN')) as ('MECCAN' | 'MEDINAN'),
           ayahsCount: meta?.ayahsCount || uthmani.numberOfAyahs,
-          verses,
+          verses: sanitizeSurahVerses(surahNum, rawVerses),
         };
 
         setLoadedSurahsCache((prev) => ({ ...prev, [surahNum]: newSurah }));

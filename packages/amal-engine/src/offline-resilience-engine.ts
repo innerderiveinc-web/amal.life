@@ -107,6 +107,80 @@ export class OfflineResilienceEngine {
         'Counting round-trip (Safa to Marwah and back) as one lap instead of two.',
       ],
     },
+    {
+      stage: 'ARAFAT',
+      title: 'Wuquf at the Plains of Arafat (9th Dhul Hijjah)',
+      titleUrdu: 'میدانِ عرفات میں وقوف (۹ ذوالحجہ - اصل حج)',
+      location: 'Plains of Arafat & Masjid Namirah',
+      essentialSunnahActions: [
+        'Arrive at Arafat before Zawal on the 9th of Dhul Hijjah.',
+        'Combine Dhuhr and Asr prayers in Qasr at Dhuhr time with one Adhan and two Iqamahs.',
+        'Perform the Great Standing (Wuquf) from after Zawal until complete sunset, facing the Qibla.',
+        'Engage in constant Duas, Istighfar, and Talbiyah. The Prophet ﷺ said: "Hajj is Arafah" (Sahih).',
+      ],
+      authenticDuas: [
+        {
+          title: 'The Best Dua of the Day of Arafah',
+          arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+          urdu: 'اللہ کے سوا کوئی معبود نہیں، وہ یکتا ہے، اس کا کوئی شریک نہیں، اسی کی بادشاہی ہے اور تمام تعریف اسی کے لیے ہے اور وہ ہر چیز پر قادر ہے۔',
+          reference: 'Sunan al-Tirmidhi #3585 (Prophetic Sunnah)',
+          audioUrl: 'https://everyayah.com/data/Husary_128kbps/002255.mp3',
+        },
+      ],
+      commonMistakesToAvoid: [
+        'Leaving Arafat before the sun completely sets (requires Dam penalty in classical Fiqh).',
+        'Believing that climbing the Mount of Mercy (Jabal al-Rahmah) is required for Hajj validity.',
+      ],
+    },
+    {
+      stage: 'MUZDALIFAH',
+      title: "Night Stay at Muzdalifah (Eve of 10th Dhul Hijjah)",
+      titleUrdu: 'مزدلفہ میں شب گزاری و مشعر الحرام (۱۰ ذوالحجہ کی رات)',
+      location: 'Muzdalifah (Mash\'ar al-Haram)',
+      essentialSunnahActions: [
+        'Depart Arafat calmly after sunset without praying Maghrib on the road.',
+        'Combine Maghrib (3 Rak\'ahs) and Isha (2 Rak\'ahs Qasr) together at Muzdalifah at Isha time.',
+        'Spend the night resting in Muzdalifah until dawn.',
+        'Pray Fajr in twilight, make intensive Dua at Mash\'ar al-Haram, and collect 49 or 70 chickpea-sized pebbles for stoning.',
+      ],
+      authenticDuas: [
+        {
+          title: 'Remembrance at Mash\'ar al-Haram',
+          arabic: 'فَإِذَا أَفَضْتُم مِّنْ عَرَفَاتٍ فَاذْكُرُوا اللَّهَ عِندَ الْمَشْعَرِ الْحَرَامِ ۖ وَاذْكُرُوهُ كَمَا هَدَاكُمْ',
+          urdu: 'پھر جب تم عرفات سے پلٹو تو مشعرِ حرام کے پاس اللہ کا ذکر کرو اور اس کا ذکر ویسے کرو جیسے اس نے تمہیں ہدایت فرمائی۔',
+          reference: 'Surah Al-Baqarah 2:198',
+        },
+      ],
+      commonMistakesToAvoid: [
+        'Praying Maghrib on the road before reaching Muzdalifah (Sunnah is to combine them at Muzdalifah).',
+        'Collecting huge rocks or throwing trash instead of prescribed clean small pebbles.',
+      ],
+    },
+    {
+      stage: 'MINA_RAMY',
+      title: 'Ramy al-Jamarat, Qurbani & Tahallul (10th - 12th Dhul Hijjah)',
+      titleUrdu: 'رمیِ جمرات، قربانی اور طوافِ زیارت (۱۰ تا ۱۲ ذوالحجہ)',
+      location: 'Mina Jamarat Complex & Masjid al-Haram',
+      essentialSunnahActions: [
+        '10th Dhul Hijjah (Yawm al-Nahr): Stone Jamrat al-Aqabah (the Big Pillar) with 7 pebbles with Takbeer.',
+        'Perform Hady (animal sacrifice), then shave (Halq) or trim (Taqsir) hair to achieve first Tahallul.',
+        'Proceed to Makkah to perform Tawaf al-Ziyarah (Fardh Pillar of Hajj) and Sa\'i.',
+        '11th & 12th Dhul Hijjah: Stone all three Jamarat (Small, Medium, Large) with 7 pebbles each after Zawal.',
+      ],
+      authenticDuas: [
+        {
+          title: 'Takbeer with Each Pebble',
+          arabic: 'بِسْمِ اللَّهِ، اللَّهُ أَكْبَرُ، رَغْمًا لِلشَّيْطَانِ وَرِضًا لِلرَّحْمَٰنِ',
+          urdu: 'اللہ کے نام سے، اللہ سب سے بڑا ہے، شیطان کو ذلیل کرنے اور رحمان کی رضا حاصل کرنے کے لیے۔',
+          reference: 'Classical Hanafi & Shafi\'i Manasik consensus',
+        },
+      ],
+      commonMistakesToAvoid: [
+        'Throwing all 7 stones together at once (counts as only ONE stone).',
+        'Throwing stones before Zawal on the 11th and 12th of Dhul Hijjah.',
+        'Pushing, shoving, or throwing sandals/shoes at the pillars.',
+      ],
+    },
   ];
 
   public getOfflineBundleStatus(): OfflineBundleStatus {

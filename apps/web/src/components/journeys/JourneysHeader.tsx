@@ -67,7 +67,9 @@ export const JourneysHeader: React.FC<JourneysHeaderProps> = ({
         >
           <span>✓ {statusMsg}</span>
           <button
+            type="button"
             onClick={onClearStatus}
+            aria-label="Dismiss notice"
             style={{
               background: 'none',
               border: 'none',

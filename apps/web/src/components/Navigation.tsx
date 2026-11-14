@@ -10,15 +10,18 @@ import { NavigationUtilityRibbon } from './navigation/NavigationUtilityRibbon';
 import { NavigationPillarsDesktop } from './navigation/NavigationPillarsDesktop';
 import { useNavigationLiveStatus } from './navigation/useNavigationLiveStatus';
 import { SavedBookmarksModal } from './navigation/SavedBookmarksModal';
+import { AdabHotkeysGuideModal } from './AdabHotkeysGuideModal';
+import { AmalLogo } from './icons/AmalLogo';
 import { ibadatItems, ilmItems, familySistersItems, ahkamItems, allApps } from './navigation/navigation-items';
 
 export const Navigation: React.FC = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { language: currentLang, setLanguage: switchLanguage } = useLanguage();
+  const { language: currentLang, setLanguage: switchLanguage, t } = useLanguage();
   const [isMounted, setIsMounted] = useState(false);
   const [isAppsMenuOpen, setIsAppsMenuOpen] = useState(false);
   const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
+  const [isHotkeysOpen, setIsHotkeysOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -28,6 +31,39 @@ export const Navigation: React.FC = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Global Scholar Adab Hotkeys Listener (?, Cmd+K, F)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select' || (e.target as HTMLElement)?.isContentEditable) {
+        return;
+      }
+
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        setIsHotkeysOpen((prev) => !prev);
+      }
+
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        router.push('/ask');
+      }
+
+      if (e.key === 'f' || e.key === 'F') {
+        if (!e.metaKey && !e.ctrlKey && !e.altKey) {
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen?.().catch(() => {});
+          } else {
+            document.exitFullscreen?.().catch(() => {});
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [router]);
 
   // Close dropdowns & mobile menu on route change
   useEffect(() => {
@@ -52,10 +88,14 @@ export const Navigation: React.FC = () => {
     <header
       ref={dropdownRef}
       style={{
-        backgroundColor: '#FFFFFF',
-        borderBottom: `1px solid ${AmalTheme.colors.surface.borderLight}`,
+        backgroundColor: 'rgba(255, 255, 255, 0.94)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(212, 175, 55, 0.22)',
+        boxShadow: '0 4px 20px -2px rgba(6, 78, 59, 0.05)',
         marginBottom: 24,
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
         zIndex: 1000,
         fontFamily: 'system-ui, -apple-system, sans-serif',
       }}
@@ -75,58 +115,26 @@ export const Navigation: React.FC = () => {
       {/* 2. MAIN NAVIGATION BAR */}
       <nav
         style={{
-          maxWidth: 1240,
+          maxWidth: 1380,
           margin: '0 auto',
-          padding: '12px 24px',
+          padding: '10px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: 16,
+          gap: 12,
         }}
       >
         {/* Brand & Identity */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                backgroundColor: '#064E3B',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 20,
-                boxShadow: '0 2px 6px rgba(6, 78, 59, 0.25)',
-                flexShrink: 0,
-              }}
-            >
-              🧭
-            </div>
-            <div>
-              <div
-                style={{
-                  fontSize: 18,
-                  fontWeight: 900,
-                  color: '#064E3B',
-                  letterSpacing: 0.5,
-                  lineHeight: 1.1,
-                }}
-              >
-                AMAL OS
-              </div>
-              <div style={{ fontSize: 9, color: '#64748B', fontWeight: 700, letterSpacing: 0.4, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ textTransform: 'uppercase' }}>Deen &amp; Life OS</span>
-                <span style={{ color: '#059669', fontWeight: 800 }}>· by Qsura</span>
-              </div>
-            </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <AmalLogo size={38} variant="full" />
           </Link>
 
           <span
             className="desktop-only"
             style={{
               fontSize: 10,
-              padding: '2px 8px',
+              padding: '3px 8px',
               borderRadius: 12,
               backgroundColor: '#F0FDF4',
               color: '#065F46',
@@ -135,10 +143,12 @@ export const Navigation: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 4,
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             <span style={{ color: '#059669', fontSize: 10 }}>✓</span>
-            <span>Ahl al-Sunnah</span>
+            <span>{t('Ahl al-Sunnah', 'اہلِ سنت', 'أهل السنة', 'Ahl al-Sunnah')}</span>
           </span>
         </div>
 
@@ -152,7 +162,7 @@ export const Navigation: React.FC = () => {
         />
 
         {/* Right Tools: Sleek Search & Apps Launcher */}
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
           {/* Quick Action: Search (Cmd+K) - Desktop */}
           <button
             onClick={() => {
@@ -163,21 +173,22 @@ export const Navigation: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
+              gap: 6,
               border: '1px solid #E2E8F0',
               borderRadius: 8,
-              padding: '6px 12px',
+              padding: '6px 10px',
               backgroundColor: '#F8FAFC',
               color: '#64748B',
               fontSize: 12,
               fontWeight: 600,
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
               transition: 'all 0.15s ease',
             }}
-            title="Universal Instant Search (Cmd+K)"
+            title={currentLang === 'ur' ? 'ہمہ جہت تلاش (Cmd+K)' : currentLang === 'roman' ? 'Instant Search (Cmd+K)' : 'Universal Instant Search (Cmd+K)'}
           >
             <span>🔍</span>
-            <span style={{ fontSize: 12 }}>{currentLang === 'ur' ? 'تلاش...' : 'Search...'}</span>
+            <span style={{ fontSize: 12 }}>{currentLang === 'ur' ? 'تلاش' : currentLang === 'roman' ? 'Search' : 'Search'}</span>
             <kbd style={{ fontSize: 10, backgroundColor: '#E2E8F0', color: '#475569', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>⌘K</kbd>
           </button>
 
@@ -188,21 +199,53 @@ export const Navigation: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
+              justifyContent: 'center',
               border: '1px solid #E2E8F0',
               borderRadius: 8,
-              padding: '6px 10px',
+              padding: '6px 9px',
               backgroundColor: '#F8FAFC',
               color: '#1B4332',
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: 700,
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
               transition: 'all 0.15s ease',
             }}
-            title={currentLang === 'ur' ? 'محفوظ شدہ اسباق (Bookmarks)' : 'Saved Bookmarks & Reading History'}
+            title={currentLang === 'ur' ? 'محفوظ شدہ اسباق و نشانات' : currentLang === 'roman' ? 'Mehfoozat (Bookmarks)' : 'Saved Bookmarks & Reading History'}
           >
             <span>🔖</span>
-            <span className="desktop-only">{currentLang === 'ur' ? 'محفوظات' : 'Bookmarks'}</span>
+          </button>
+
+          {/* Voluntary Support Waqf Quick Action */}
+          <button
+            onClick={() => {
+              if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-waqf'));
+            }}
+            aria-label="Support Amal Sovereign Waqf"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              border: '1px solid rgba(212, 175, 55, 0.45)',
+              borderRadius: 8,
+              padding: '6px 10px',
+              backgroundColor: 'rgba(217, 119, 6, 0.08)',
+              color: '#92400E',
+              fontSize: 12,
+              fontWeight: 800,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              transition: 'all 0.15s ease',
+            }}
+            title={t(
+              'Support the Amal Sovereign Waqf (Perpetual Sadaqah Jariyah)',
+              'وقفِ امل میں رضاکارانہ حصہ ملائیں (صدقۂ جاریہ)',
+              'دعم وقف أمل السيادي (صدقة جارية)',
+              'Support Amal Sovereign Waqf (Sadaqah Jariyah)'
+            )}
+          >
+            <span style={{ fontSize: 13 }}>🤲</span>
+            <span>{t('Support Waqf', 'وقف', 'الوقف', 'Waqf')}</span>
           </button>
 
           {/* 9-Dots All 15 Apps Launcher */}
@@ -257,6 +300,12 @@ export const Navigation: React.FC = () => {
       <SavedBookmarksModal
         isOpen={isBookmarksOpen}
         onClose={() => setIsBookmarksOpen(false)}
+      />
+
+      {/* Global Scholar Adab Hotkeys Modal */}
+      <AdabHotkeysGuideModal
+        isOpen={isHotkeysOpen}
+        onClose={() => setIsHotkeysOpen(false)}
       />
     </header>
   );

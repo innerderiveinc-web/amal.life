@@ -1,6 +1,7 @@
 import React from 'react';
 import { SirahEventRecord, PropheticLifePeriod } from '@amal/types';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../../context/LanguageContext';
 
 interface PropheticTimelineProps {
   events: SirahEventRecord[];
@@ -13,6 +14,7 @@ export const PropheticTimeline: React.FC<PropheticTimelineProps> = ({
   activePeriod,
   onSelectEvent,
 }) => {
+  const { t } = useLanguage();
   const filteredEvents = activePeriod
     ? events.filter((e) => e.life_period === activePeriod)
     : events;
@@ -20,7 +22,7 @@ export const PropheticTimeline: React.FC<PropheticTimelineProps> = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h3 style={{ fontSize: 16, fontWeight: 700, margin: 0, color: AmalTheme.colors.text.primaryLight }}>
-        Chronological Prophetic Milestones ({filteredEvents.length})
+        {t('Chronological Prophetic Milestones', 'ترتیب وار اہم ترین واقعاتِ سیرت', 'محطات السيرة النبوية المرتبة زمنياً', 'Tarteeb-war Ahem Waqiat-e-Seerat')} ({filteredEvents.length})
       </h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {filteredEvents.map((evt) => (
@@ -39,7 +41,7 @@ export const PropheticTimeline: React.FC<PropheticTimelineProps> = ({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <span style={{ fontSize: 11, fontWeight: 700, color: AmalTheme.colors.primary, textTransform: 'uppercase' }}>
-                  {evt.life_period.replace(/_/g, ' ')} · {evt.start_hijri_year ? `${evt.start_hijri_year} AH` : 'Pre-Hijrah'}
+                  {evt.life_period.replace(/_/g, ' ')} · {evt.start_hijri_year ? `${evt.start_hijri_year} ${t('AH', 'ھ', 'هـ', 'AH')}` : t('Pre-Hijrah', 'قبل از ہجرت', 'قبل الهجرة', 'Qabl az Hijrat')}
                 </span>
                 <h4 style={{ margin: '4px 0', fontSize: 16, fontWeight: 700 }}>
                   {evt.canonical_title} <span style={{ color: '#666', fontWeight: 400 }}>({evt.arabic_title})</span>

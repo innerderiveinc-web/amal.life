@@ -14,31 +14,29 @@ export function SistersDuasTab({
   const [copiedDuaId, setCopiedDuaId] = useState<string | null>(null);
 
   const getDuaTitle = (dua: MasnoonFamilyDua) => {
-    if (isRomanUrdu) return dua.titleRomanUrdu || dua.titleUrdu;
+    if (isRomanUrdu) return dua.titleRomanUrdu || dua.titleEnglish;
     if (isUrdu) return dua.titleUrdu;
     return dua.titleEnglish;
   };
 
   const getDuaSubtitle = (dua: MasnoonFamilyDua) => {
-    if (isRomanUrdu) return dua.titleEnglish;
-    if (isUrdu) return dua.titleEnglish;
+    if (isRomanUrdu || isUrdu) return dua.titleEnglish;
     return dua.titleUrdu;
   };
 
   const getDuaPrimaryTranslation = (dua: MasnoonFamilyDua) => {
-    if (isRomanUrdu) return dua.translationRomanUrdu || dua.translationUrdu;
+    if (isRomanUrdu) return dua.translationRomanUrdu || dua.translationEnglish;
     if (isUrdu) return dua.translationUrdu;
     return dua.translationEnglish;
   };
 
   const getDuaSecondaryTranslation = (dua: MasnoonFamilyDua) => {
-    if (isRomanUrdu) return dua.translationEnglish;
-    if (isUrdu) return dua.translationEnglish;
+    if (isRomanUrdu || isUrdu) return dua.translationEnglish;
     return dua.translationUrdu;
   };
 
   const getDuaVirtue = (dua: MasnoonFamilyDua) => {
-    if (isRomanUrdu) return dua.spiritualVirtueRomanUrdu || dua.spiritualVirtueUrdu;
+    if (isRomanUrdu) return dua.spiritualVirtueRomanUrdu || dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu;
     if (isUrdu) return dua.spiritualVirtueUrdu;
     return dua.spiritualVirtueEnglish || dua.spiritualVirtueUrdu;
   };
@@ -280,7 +278,7 @@ export function SistersDuasTab({
               <button
                 onClick={() => handleShareDuaWhatsApp(dua)}
                 style={{
-                  backgroundColor: '#25D366',
+                  backgroundColor: '#075E54',
                   color: '#FFFFFF',
                   border: 'none',
                   padding: '6px 12px',

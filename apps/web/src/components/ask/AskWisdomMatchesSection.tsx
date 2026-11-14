@@ -8,7 +8,7 @@ interface AskWisdomMatchesSectionProps {
   onPlayAudio: (card: QuranAyahWisdomCard, type: 'ARABIC' | 'URDU') => void;
   onOpenModal: (card: QuranAyahWisdomCard) => void;
   isUrdu: boolean;
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = ({
@@ -34,7 +34,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 20 }}>📖</span>
           <h2 style={{ fontSize: 18, fontWeight: 800, margin: 0, color: '#064E3B' }}>
-            {t('Quranic Ayah Wisdom & Tafsir', 'قرآنی رہنمائی و تفسیری حکمت')}
+            {t('Quranic Ayah Wisdom & Tafsir', 'قرآنی رہنمائی و تفسیری حکمت', 'الحكمة القرآنية والتفسير', 'Quranic Ayah Wisdom & Tafsir')}
           </h2>
         </div>
         <Link
@@ -46,7 +46,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
             textDecoration: 'none',
           }}
         >
-          {t('Open Quran Reader →', 'قرآن ریڈر پر جائیں →')}
+          {t('Open Quran Reader →', 'قرآن ریڈر پر جائیں →', 'فتح المصحف الشريف ←', 'Quran Reader Kholein →')}
         </Link>
       </div>
 
@@ -101,7 +101,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                       color: '#92400E',
                     }}
                   >
-                    {t('Translation: Kanz-ul-Iman', 'کنز الایمان فی ترجمۃ القرآن')}
+                    {t('Translation: Kanz-ul-Iman', 'کنز الایمان فی ترجمۃ القرآن', 'كنز الإيمان', 'Tarjuma: Kanz-ul-Iman')}
                   </span>
                 </div>
                 <span style={{ fontSize: 12, fontWeight: 800, color: '#0F172A' }}>
@@ -142,7 +142,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                   textAlign: 'right',
                 }}
               >
-                <strong>{t('Translation (Kanz-ul-Iman):', 'ترجمہ کنز الایمان:')}</strong>{' '}
+                <strong>{t('Translation (Kanz-ul-Iman):', 'ترجمہ کنز الایمان:', 'الترجمة:', 'Tarjuma (Kanz-ul-Iman):')}</strong>{' '}
                 {card.tarjumaKanzulIman}
               </div>
 
@@ -173,7 +173,9 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                 >
                   {t(
                     "📖 Khaza'in-ul-Irfan Tafsir Excerpt:",
-                    '📖 خزائن العرفان (صدر الافاضل مولانا نعیم الدین مراد آبادی):'
+                    '📖 خزائن العرفان (صدر الافاضل مولانا نعیم الدین مراد آبادی):',
+                    'تفسير خزائن العرفان:',
+                    "Khaza'in-ul-Irfan Tafsir:"
                   )}
                 </div>
                 <div style={{ fontSize: 13, color: '#78350F', lineHeight: 1.7 }}>
@@ -212,7 +214,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                     }}
                   >
                     <span>{isPlayingArabic ? '⏸' : '🎙️'}</span>
-                    <span>{t('Arabic Audio', 'عربی تلاوت')}</span>
+                    <span>{t('Arabic Audio', 'عربی تلاوت', 'تلاوة عربية', 'Arabic Tilawat')}</span>
                   </button>
 
                   <button
@@ -233,7 +235,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                     }}
                   >
                     <span>{isPlayingUrdu ? '⏸' : '🎧'}</span>
-                    <span>{t('Urdu Audio', 'اردو ترجمہ آڈیو')}</span>
+                    <span>{t('Urdu Audio', 'اردو ترجمہ آڈیو', 'صوت أردي', 'Urdu Tarjuma Audio')}</span>
                   </button>
                 </div>
 
@@ -256,7 +258,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                     }}
                   >
                     <span>✨</span>
-                    <span>{t('View Tadabbur Card', 'مکمل تدبر و نیت کارڈ')}</span>
+                    <span>{t('View Tadabbur Card', 'مکمل تدبر و نیت کارڈ', 'عرض بطاقة التدبر', 'Tadabbur Card Dekhein')}</span>
                   </button>
 
                   <Link
@@ -276,7 +278,7 @@ export const AskWisdomMatchesSection: React.FC<AskWisdomMatchesSectionProps> = (
                     }}
                   >
                     <span>📖</span>
-                    <span>{t('View Surah →', 'سورت دیکھیں →')}</span>
+                    <span>{t('View Surah →', 'سورت دیکھیں →', 'عرض السورة ←', 'Surah Dekhein →')}</span>
                   </Link>
                 </div>
               </div>

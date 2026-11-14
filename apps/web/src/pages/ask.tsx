@@ -17,6 +17,9 @@ import { AskCrisisBanner } from '../components/ask/AskCrisisBanner';
 import { AskScholarEscalationBanner } from '../components/ask/AskScholarEscalationBanner';
 import { AskWisdomMatchesSection } from '../components/ask/AskWisdomMatchesSection';
 import { AskEvidenceResultsSection } from '../components/ask/AskEvidenceResultsSection';
+import { AskClassicalMutunMatchesSection } from '../components/ask/AskClassicalMutunMatchesSection';
+import { findClassicalAuthorities, normalizeQuery, ClassicalAuthorityMatch } from '../lib/classical-rag-engine';
+import { SacredAiDisclaimer } from '../components/common/SacredAiDisclaimer';
 
 export default function AskAmalPage() {
   const { t, isUrdu } = useLanguage();
@@ -25,6 +28,7 @@ export default function AskAmalPage() {
   const [results, setResults] = useState<any[] | null>(null);
   const [safetyResult, setSafetyResult] = useState<SafetyClassification | null>(null);
   const [matchedWisdomCards, setMatchedWisdomCards] = useState<QuranAyahWisdomCard[]>([]);
+  const [classicalMatches, setClassicalMatches] = useState<ClassicalAuthorityMatch[]>([]);
   const [modalCard, setModalCard] = useState<QuranAyahWisdomCard | null>(null);
   const [activeAudioKey, setActiveAudioKey] = useState<string | null>(null);
   const askAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -52,9 +56,8 @@ export default function AskAmalPage() {
     }
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanQuery = query.trim();
+  const executeSearchForQuery = async (rawQuery: string) => {
+    const cleanQuery = rawQuery.trim();
     if (!cleanQuery) return;
 
     // Run Fatwa Safety Firewall classification
@@ -65,6 +68,7 @@ export default function AskAmalPage() {
     if (classification.requiresCrisisIntervention) {
       setResults(null);
       setMatchedWisdomCards([]);
+      setClassicalMatches([]);
       return;
     }
 
@@ -72,45 +76,71 @@ export default function AskAmalPage() {
     if (classification.requiresScholarEscalation) {
       setResults(null);
       setMatchedWisdomCards([]);
+      setClassicalMatches([]);
       return;
     }
 
-    // Match Quran Wisdom Collection
-    const lower = cleanQuery.toLowerCase();
-    const matches = QURAN_WISDOM_COLLECTION.filter((c) => {
-      return (
-        c.tadabburPrompt.theme.toLowerCase().includes(lower) ||
-        c.surahNameTransliterated.toLowerCase().includes(lower) ||
-        c.surahNameUrdu.includes(cleanQuery) ||
-        c.textArabic.includes(cleanQuery) ||
-        c.tarjumaKanzulIman.includes(cleanQuery) ||
-        c.tarjumaEnglish.toLowerCase().includes(lower) ||
-        c.tafseerKhazainUlIrfan.excerptUrdu.includes(cleanQuery) ||
-        (c.crossReferenceBook && c.crossReferenceBook.workTitle.includes(cleanQuery)) ||
-        (lower.includes('duha') && c.surahNumber === 93) ||
-        (lower.includes('fajr') && c.surahNumber === 89) ||
-        (lower.includes('ala') && c.surahNumber === 87) ||
-        (lower.includes('naba') && c.surahNumber === 78) ||
-        (lower.includes('fatih') && c.surahNumber === 1) ||
-        (lower.includes('asr') && c.surahNumber === 103) ||
-        (lower.includes('maun') && c.surahNumber === 107) ||
-        (lower.includes('ikhlas') && c.surahNumber === 112) ||
-        (lower.includes('tawakkul') && c.tadabburPrompt.theme === 'TAWAKKUL') ||
-        (lower.includes('patience') &&
-          (c.tadabburPrompt.theme === 'TAWAKKUL' || c.surahNumber === 103)) ||
-        (lower.includes('sabr') &&
-          (c.tadabburPrompt.theme === 'TAWAKKUL' || c.surahNumber === 103)) ||
-        (lower.includes('salah') && c.tadabburPrompt.theme === 'SALAH') ||
-        (lower.includes('namaz') && c.tadabburPrompt.theme === 'SALAH') ||
-        (lower.includes('prayer') && c.tadabburPrompt.theme === 'SALAH') ||
-        (lower.includes('time') && c.tadabburPrompt.theme === 'TIME_MANAGEMENT') ||
-        (lower.includes('waqt') && c.tadabburPrompt.theme === 'TIME_MANAGEMENT') ||
-        (lower.includes('akhlaq') && c.tadabburPrompt.theme === 'AKHLAQ') ||
-        (lower.includes('manner') && c.tadabburPrompt.theme === 'AKHLAQ') ||
-        (lower.includes('ikhlas') && c.tadabburPrompt.theme === 'IKHLAS') ||
-        (lower.includes('sincerity') && c.tadabburPrompt.theme === 'IKHLAS')
-      );
-    }).slice(0, 3);
+    // Match Classical Sunni Authorities (RAG)
+    const classMatches = findClassicalAuthorities(cleanQuery, 4);
+    setClassicalMatches(classMatches);
+
+    // Semantic Matcher for Quran Wisdom Collection
+    const normQuery = normalizeQuery(cleanQuery);
+    const tokens = normQuery
+      .split(' ')
+      .filter((t) => t.length > 2)
+      .map((t) => t.trim());
+
+    // Semantic Theme Expansion Dictionary
+    const themeSynonyms: Record<string, string[]> = {
+      TAWAKKUL: ['sabr', 'patience', 'shukr', 'gratitude', 'trust', 'tawakkul', 'grief', 'sad', 'hardship', 'mushkil', 'pareshani', 'asani', 'ease', 'depression', 'stress', 'dua', 'help', 'madad'],
+      SALAH: ['salah', 'namaz', 'prayer', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha', 'qiyam', 'sajda', 'khushu', 'tahajjud', 'witr', 'rakat', 'azaan', 'adhan', 'masjid', 'wudu', 'taharah', 'paaki', 'ghusl'],
+      IKHLAS: ['ikhlas', 'sincerity', 'pure', 'intention', 'niyyah', 'riya', 'shirk', 'tawbah', 'astaghfirullah', 'forgiveness', 'maghfirat', 'istighfar', 'tawheed', 'gunah', 'mafi'],
+      AKHLAQ: ['akhlaq', 'manner', 'adab', 'character', 'kind', 'anger', 'ghussa', 'gheebat', 'backbiting', 'jhoot', 'lie', 'parents', 'walidain', 'maa', 'baap', 'brother', 'silat', 'rehm'],
+      HUQUQ_UL_IBAD: ['rights', 'huquq', 'neighbor', 'humsaya', 'poor', 'miskeen', 'orphan', 'yateem', 'zakat', 'sadqa', 'charity', 'infaq', 'insaniyat', 'parents', 'walidain', 'khandan'],
+      TIME_MANAGEMENT: ['time', 'waqt', 'asr', 'fajr', 'age', 'life', 'umr', 'hasrat', 'delay', 'qada', 'barakah', 'barkat']
+    };
+
+    const scoredCards = QURAN_WISDOM_COLLECTION.map((c) => {
+      let score = 0;
+      const normAr = normalizeQuery(c.textArabic);
+      const normUr = normalizeQuery(c.tarjumaKanzulIman);
+      const normEn = normalizeQuery(c.tarjumaEnglish);
+      const normTafsir = normalizeQuery(c.tafseerKhazainUlIrfan.excerptUrdu);
+      const normSurahEn = normalizeQuery(c.surahNameTransliterated);
+      const normSurahUr = normalizeQuery(c.surahNameUrdu);
+      const cardTheme = c.tadabburPrompt.theme;
+
+      // 1. Direct whole query matching
+      if (normUr.includes(normQuery) || normEn.includes(normQuery) || normAr.includes(normQuery)) score += 90;
+      if (normTafsir.includes(normQuery)) score += 60;
+      if (normSurahEn.includes(normQuery) || normSurahUr.includes(normQuery)) score += 80;
+
+      // 2. Token level matching
+      for (const tok of tokens) {
+        if (normUr.includes(tok)) score += 25;
+        if (normEn.includes(tok)) score += 20;
+        if (normAr.includes(tok)) score += 35;
+        if (normTafsir.includes(tok)) score += 15;
+        if (normSurahEn.includes(tok) || normSurahUr.includes(tok)) score += 30;
+
+        // Theme synonym boost
+        for (const [themeKey, syns] of Object.entries(themeSynonyms)) {
+          if (cardTheme === themeKey && syns.some((s) => s.includes(tok) || tok.includes(s))) {
+            score += 30;
+          }
+        }
+      }
+
+      return { card: c, score };
+    });
+
+    const matches = scoredCards
+      .filter((sc) => sc.score > 20)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((sc) => sc.card);
+
     setMatchedWisdomCards(matches);
 
     setLoading(true);
@@ -137,6 +167,16 @@ export default function AskAmalPage() {
     }
   };
 
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await executeSearchForQuery(query);
+  };
+
+  const handleSelectSampleQuery = (sampleText: string) => {
+    setQuery(sampleText);
+    executeSearchForQuery(sampleText);
+  };
+
   return (
     <div
       style={{
@@ -147,6 +187,7 @@ export default function AskAmalPage() {
     >
       <Head>
         <title>AMAL OS — Ask AMAL &amp; Evidence Explorer</title>
+        <meta name="description" content="Classical Evidence Search and Scholarly Question Engine grounded in authentic Ahl al-Sunnah consensus." />
       </Head>
 
       <Navigation />
@@ -172,7 +213,7 @@ export default function AskAmalPage() {
               letterSpacing: 1,
             }}
           >
-            علمی و تحقیقی تلاش · SCHOLARLY EVIDENCE EXPLORER
+            {t('SCHOLARLY EVIDENCE EXPLORER', 'علمی و تحقیقی تلاش', 'استكشاف الأدلة العلمية المعتمدة', 'SCHOLARLY EVIDENCE EXPLORER')}
           </span>
           <h1
             style={{
@@ -182,7 +223,12 @@ export default function AskAmalPage() {
               color: AmalTheme.colors.text.primaryLight,
             }}
           >
-            کتبِ معتبرہ سے تلاش و رہنمائی (Canonical Guidance &amp; Evidence)
+            {t(
+              'Canonical Guidance & Evidence Explorer',
+              'کتبِ معتبرہ سے تلاش و رہنمائی',
+              'البحث في أمهات الكتب المعتمدة',
+              'Kutub-e-Motabara Se Rahnumayi o Shawahid'
+            )}
           </h1>
           <p
             style={{
@@ -192,7 +238,12 @@ export default function AskAmalPage() {
               lineHeight: 1.6,
             }}
           >
-            قرآن و سنت، احادیثِ مبارکہ اور فقہائے اربعہ کی مصدقہ کتب سے حوالہ جات دریافت کریں۔ امل کوئی مصنوعی یا خود ساختہ فتویٰ جاری نہیں کرتا، بلکہ صرف مستند کتب کے صحیح متون پیش کرتا ہے۔
+            {t(
+              'Search verified references from the Holy Quran, Prophetic Sunnah, and authoritative classical texts across the 4 Madhhabs. AMAL never fabricates rulings; it only surfaces authentic mutun with full sanad.',
+              'قرآن و سنت، احادیثِ مبارکہ اور فقہائے اربعہ کی مصدقہ کتب سے حوالہ جات دریافت کریں۔ امل کوئی مصنوعی یا خود ساختہ فتویٰ جاری نہیں کرتا، بلکہ صرف مستند کتب کے صحیح متون پیش کرتا ہے۔',
+              'ابحث في نصوص القرآن الكريم والسنة النبوية وأمهات كتب الفقه المعتمدة على المذاهب الأربعة.',
+              'Quran o Sunnat, Ahadith-e-Mubarakah aur 4 Madhahib ki mustanad kutub se hawala jaat talash karein. AMAL fatwa nahi deta, sirf authentic mutoon pesh karta hai.'
+            )}
           </p>
         </header>
 
@@ -211,7 +262,7 @@ export default function AskAmalPage() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g. Sabr and patience during difficult times, Fajr timing, gratitude..."
+              placeholder={t('e.g. Sabr and patience during difficult times, Fajr timing, gratitude...', 'مثلاً: صبر و شکر کی فضیلت، وقتِ فجر، حقوق العباد...', 'مثلاً: فضل الصبر والشكر، وقت صلاة الفجر...', 'Maslan: Sabr o shukr ki fazeelat, waqt-e-Fajr, huqooq-ul-ibad...')}
               style={{
                 flex: 1,
                 padding: '12px 16px',
@@ -233,10 +284,74 @@ export default function AskAmalPage() {
                 cursor: 'pointer',
               }}
             >
-              {loading ? 'Searching...' : 'Explore Evidence'}
+              {loading ? t('Searching...', 'تلاش جاری ہے...', 'جارٍ البحث...', 'Talash Jaari Hai...') : t('Explore Evidence', 'شواہد تلاش کریں', 'بحث الشواهد', 'Shawahid Talash Karein')}
             </button>
           </form>
+
+          {/* Quick Curated Scholarly Inquiry Chips */}
+          <div style={{ marginTop: 14, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#6B7280', marginRight: 4 }}>
+              {t('Suggested Topics:', 'تجویز کردہ علمی موضوعات:', 'موضوعات مقترحة:', 'Tajweez Kardah Mozooat:')}
+            </span>
+            {[
+              {
+                en: 'Patience in Hardship (Sabr)',
+                ur: 'صبر و شکر کی فضیلت',
+                query: isUrdu ? 'صبر و شکر کی فضیلت' : 'Patience and Sabr during difficult times',
+              },
+              {
+                en: 'Khushu in Salah',
+                ur: 'نماز میں یکسوئی و خشوع',
+                query: isUrdu ? 'نماز میں خشوع اور یکسوئی' : 'Khushu and focus in Salah prayer',
+              },
+              {
+                en: 'Repentance & Istighfar',
+                ur: 'توبہ و استغفار کی اہمیت',
+                query: isUrdu ? 'توبہ اور استغفار کی فضیلت' : 'Repentance and Istighfar forgiveness',
+              },
+              {
+                en: 'Rights of Parents',
+                ur: 'والدین کے حقوق و اطاعت',
+                query: isUrdu ? 'والدین کے حقوق اور حسن سلوک' : 'Rights of parents and honoring mother father',
+              },
+              {
+                en: 'Halal Sustenance & Barakah',
+                ur: 'حلال رزق اور برکت',
+                query: isUrdu ? 'حلال رزق اور تجارت میں برکت' : 'Halal earnings sustenance and barakah',
+              },
+              {
+                en: 'Wudu & Taharah Purity',
+                ur: 'وضو و طہارت کے مسائل',
+                query: isUrdu ? 'وضو اور طہارت کے بنیادی احکام' : 'Wudu purity and taharah rules',
+              },
+            ].map((chip, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => handleSelectSampleQuery(chip.query)}
+                style={{
+                  fontSize: 11.5,
+                  padding: '4px 10px',
+                  borderRadius: 16,
+                  border: '1px solid #E5E7EB',
+                  backgroundColor: '#F9FAFB',
+                  color: '#374151',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                {isUrdu ? chip.ur : chip.en}
+              </button>
+            ))}
+          </div>
+
+          {/* Inline Compact AI Sacred Disclaimer Pill */}
+          <SacredAiDisclaimer variant="compact" />
         </section>
+
+        {/* Global Sacred AI Research & Epistemic Grounding Disclaimer Banner */}
+        <SacredAiDisclaimer variant="banner" />
 
         {/* CLASS E: IMMEDIATE CRISIS INTERCEPT BANNER */}
         {safetyResult?.requiresCrisisIntervention && (
@@ -251,6 +366,9 @@ export default function AskAmalPage() {
             t={t}
           />
         )}
+
+        {/* CLASSICAL SUNNI CANONICAL AUTHORITY MATCHES (RAG) */}
+        <AskClassicalMutunMatchesSection matches={classicalMatches} isUrdu={isUrdu} />
 
         {/* MATCHED QURAN AYAH WISDOM CARDS */}
         <AskWisdomMatchesSection

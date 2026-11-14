@@ -32,6 +32,13 @@ interface AudioPlayerContextType {
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | undefined>(undefined);
 
+const getLang = (): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('amal_app_language') || 'ur';
+  }
+  return 'ur';
+};
+
 export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -40,6 +47,8 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(100);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const tabIdRef = useRef<string>(typeof window !== 'undefined' ? Math.random().toString(36).substring(2, 9) : 'tab-srv');
+  const syncChannelRef = useRef<BroadcastChannel | null>(null);
 
   // Play a gentle Web Audio chime for instant audible confirmation on user click
   const playTestChime = () => {
@@ -82,7 +91,13 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         setIsPlaying(false);
         setCurrentTime(0);
       };
-      const handlePlay = () => setIsPlaying(true);
+      const handlePlay = () => {
+        setIsPlaying(true);
+        // Multi-tab broadcast: notify other tabs to suspend duplicate audio
+        if (syncChannelRef.current) {
+          syncChannelRef.current.postMessage({ type: 'AMAL_AUDIO_PLAYING', senderTabId: tabIdRef.current });
+        }
+      };
       const handlePause = () => setIsPlaying(false);
 
       audio.addEventListener('timeupdate', handleTimeUpdate);
@@ -91,6 +106,22 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       audio.addEventListener('play', handlePlay);
       audio.addEventListener('pause', handlePause);
 
+      // Initialize cross-tab multi-audio synchronization
+      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+        try {
+          const channel = new BroadcastChannel('amal_audio_sync_bus');
+          syncChannelRef.current = channel;
+          channel.onmessage = (event) => {
+            if (event.data?.type === 'AMAL_AUDIO_PLAYING' && event.data?.senderTabId !== tabIdRef.current) {
+              if (audioRef.current && !audioRef.current.paused) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+              }
+            }
+          };
+        } catch {}
+      }
+
       return () => {
         audio.removeEventListener('timeupdate', handleTimeUpdate);
         audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
@@ -98,6 +129,10 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         audio.removeEventListener('play', handlePlay);
         audio.removeEventListener('pause', handlePause);
         audio.pause();
+        if (syncChannelRef.current) {
+          syncChannelRef.current.close();
+          syncChannelRef.current = null;
+        }
       };
     }
   }, []);
@@ -140,7 +175,17 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
       window.speechSynthesis.speak(utterance);
     } else {
       setIsPlaying(false);
-      showAmalToast('Audio stream unavailable and speech synthesis not supported.', 'warning');
+      const lang = getLang();
+      showAmalToast(
+        lang === 'ur'
+          ? 'آڈیو سرور اور صوتی معاونت دستیاب نہیں ہے۔'
+          : lang === 'ar'
+          ? 'البث الصوتي والتوليف الصوتي غير متاح.'
+          : lang === 'ru'
+          ? 'Audio stream aur speech support dastiyab nahi hai.'
+          : 'Audio stream unavailable and speech synthesis not supported.',
+        'warning'
+      );
     }
   };
 
@@ -220,10 +265,20 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         };
 
         const attemptPlaySource = (srcIndex: number) => {
+          const lang = getLang();
           if (srcIndex >= sources.length) {
             console.warn('All audio stream sources failed for track:', track.title);
             setIsPlaying(false);
-            showAmalToast('Audio stream unavailable. Please check your internet connection or CDN.', 'warning');
+            showAmalToast(
+              lang === 'ur'
+                ? 'آڈیو سرور سے رابطہ نہیں ہو سکا۔ انٹرنیٹ کنکشن چیک کریں۔'
+                : lang === 'ar'
+                ? 'البث الصوتي غير متاح. يرجى التحقق من الاتصال.'
+                : lang === 'ru'
+                ? 'Audio stream dastiyab nahi hai. Internet connection check karein.'
+                : 'Audio stream unavailable. Please check your internet connection or CDN.',
+              'warning'
+            );
             return;
           }
 
@@ -233,7 +288,16 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
               attemptPlaySource(srcIndex + 1);
             } else {
               setIsPlaying(false);
-              showAmalToast('Audio stream unavailable. Please check connection.', 'warning');
+              showAmalToast(
+                lang === 'ur'
+                  ? 'آڈیو سرور سے رابطہ نہیں ہو سکا۔'
+                  : lang === 'ar'
+                  ? 'البث الصوتي غير متاح حالياً.'
+                  : lang === 'ru'
+                  ? 'Audio stream dastiyab nahi hai.'
+                  : 'Audio stream unavailable. Please check connection.',
+                'warning'
+              );
             }
             return;
           }
@@ -244,11 +308,29 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
           audio.onerror = () => {
             console.warn(`Audio stream failed on source [${srcIndex}]:`, currentSrc);
             if (srcIndex + 1 < sources.length) {
-              showAmalToast(`Network slow/throttled. Switching to audio mirror ${srcIndex + 2}...`, 'info');
+              showAmalToast(
+                lang === 'ur'
+                  ? `آڈیو متبادل سرور ${srcIndex + 2} پر منتقل ہو رہی ہے...`
+                  : lang === 'ar'
+                  ? `جارٍ التبديل إلى الخادم البديل ${srcIndex + 2}...`
+                  : lang === 'ru'
+                  ? `Audio mirror ${srcIndex + 2} par switch ho raha hai...`
+                  : `Network slow/throttled. Switching to audio mirror ${srcIndex + 2}...`,
+                'info'
+              );
               attemptPlaySource(srcIndex + 1);
             } else {
               setIsPlaying(false);
-              showAmalToast('Audio stream unavailable on this network. Please check connection.', 'warning');
+              showAmalToast(
+                lang === 'ur'
+                  ? 'اس نیٹ ورک پر آڈیو سرور دستیاب نہیں ہے۔'
+                  : lang === 'ar'
+                  ? 'البث الصوتي غير متاح على هذه الشبكة.'
+                  : lang === 'ru'
+                  ? 'Audio stream is network par dastiyab nahi hai.'
+                  : 'Audio stream unavailable on this network. Please check connection.',
+                'warning'
+              );
             }
           };
 
@@ -259,7 +341,17 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
                 setIsPlaying(true);
                 const isOffline = currentSrc.startsWith('blob:');
                 showAmalToast(
-                  isOffline ? `Playing offline track: ${track.title}` : `Playing recitation: ${track.title}`,
+                  isOffline
+                    ? (lang === 'ur'
+                        ? `آف لائن آڈیو جاری ہے: ${track.title}`
+                        : lang === 'ar'
+                        ? `تشغيل دون اتصال: ${track.title}`
+                        : `Playing offline track: ${track.title}`)
+                    : (lang === 'ur'
+                        ? `تلاوت جاری ہے: ${track.title}`
+                        : lang === 'ar'
+                        ? `جارٍ تشغيل التلاوة: ${track.title}`
+                        : `Playing recitation: ${track.title}`),
                   'success'
                 );
                 setupMediaSession();
@@ -270,7 +362,16 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
                   attemptPlaySource(srcIndex + 1);
                 } else {
                   setIsPlaying(false);
-                  showAmalToast('Audio playback error. Please try again.', 'warning');
+                  showAmalToast(
+                    lang === 'ur'
+                      ? 'آڈیو پلے کرنے میں خرابی ہوئی۔ دوبارہ کوشش کریں۔'
+                      : lang === 'ar'
+                      ? 'حدث خطأ في تشغيل الصوت. يرجى المحاولة مرة أخرى.'
+                      : lang === 'ru'
+                      ? 'Audio play karne me kharabi hui. Dobara koshish karein.'
+                      : 'Audio playback error. Please try again.',
+                    'warning'
+                  );
                 }
               });
           }
@@ -279,7 +380,17 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({ c
         attemptPlaySource(0);
       } else {
         setIsPlaying(false);
-        showAmalToast('Audio stream unavailable.', 'warning');
+        const lang = getLang();
+        showAmalToast(
+          lang === 'ur'
+            ? 'آڈیو سرور سے رابطہ نہیں ہو سکا۔'
+            : lang === 'ar'
+            ? 'البث الصوتي غير متاح.'
+            : lang === 'ru'
+            ? 'Audio stream dastiyab nahi hai.'
+            : 'Audio stream unavailable.',
+          'warning'
+        );
       }
     });
   };

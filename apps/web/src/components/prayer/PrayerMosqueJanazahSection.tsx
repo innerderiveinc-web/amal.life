@@ -1,6 +1,5 @@
 import React from 'react';
 import { LocalMosqueSettings } from '../../lib/prayer-utils';
-import { mosqueIqamahSyncEngine } from '@amal/amal-engine';
 
 interface PrayerMosqueJanazahSectionProps {
   mosqueSettings: LocalMosqueSettings;
@@ -64,23 +63,8 @@ export function PrayerMosqueJanazahSection({
     },
   ];
 
-  const syncSchedule = mosqueIqamahSyncEngine.computeSynchronizedSchedule({
-    fajr: prayerTimes.fajr,
-    dhuhr: prayerTimes.dhuhr,
-    asr: prayerTimes.asr,
-    maghrib: prayerTimes.maghrib,
-    isha: prayerTimes.isha,
-  });
-
   return (
-    <div
-      style={{
-        marginTop: 28,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: 24,
-      }}
-    >
+    <div style={{ marginTop: 28 }}>
       {/* Mosque Iqamah Schedule */}
       <div
         style={{
@@ -156,57 +140,6 @@ export function PrayerMosqueJanazahSection({
                   Iqamah: <strong>{item.iqamahTime}</strong>
                   <span style={{ fontSize: 10, color: '#6B7280', marginLeft: 4 }}>({item.offset})</span>
                 </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Janazah Announcements */}
-      <div
-        style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: 12,
-          padding: 24,
-          border: '1px solid #E5E7EB',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-          <div>
-            <span
-              style={{
-                fontSize: 11,
-                fontWeight: 800,
-                color: '#92400E',
-                letterSpacing: 1,
-                textTransform: 'uppercase',
-              }}
-            >
-              FARD KIFAYAH NOTICE
-            </span>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#92400E', margin: '2px 0 0' }}>
-              🕊️ Community Janazah Notices
-            </h3>
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {syncSchedule.janazahAlerts.map((notice, idx) => (
-            <div
-              key={idx}
-              style={{
-                padding: 14,
-                borderRadius: 10,
-                backgroundColor: '#FFFBEB',
-                border: '1px solid #FDE68A',
-              }}
-            >
-              <div style={{ fontWeight: 800, color: '#92400E', fontSize: 14 }}>
-                {notice.title}
-              </div>
-              <div style={{ fontSize: 12, color: '#78350F', marginTop: 4, lineHeight: 1.5 }}>
-                📍 <strong>Location:</strong> {notice.details} <br />
-                ⏰ <strong>Time:</strong> {notice.time || notice.date}
               </div>
             </div>
           ))}

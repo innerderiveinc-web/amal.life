@@ -27,7 +27,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
   fallbackUrdu,
   fallbackEnglish,
 }) => {
-  const { t } = useLanguage();
+  const { t, isUrdu, isArabic, language } = useLanguage();
   const [userWisdomNote, setUserWisdomNote] = useState('');
 
   if (!wisdomCard) {
@@ -377,7 +377,7 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  {t('Save Note', 'محفوظ کریں (Save Note)', 'حفظ الخاطرة', 'Save Note')}
+                  {t('Save Note', 'محفوظ کریں', 'حفظ الخاطرة', 'Save Note')}
                 </button>
               </div>
             </div>
@@ -400,8 +400,13 @@ export const AyahWisdomTabContent: React.FC<AyahWisdomTabContentProps> = ({
             </div>
 
             <div style={{ fontSize: 14, fontWeight: 700, color: '#166534', marginBottom: 4 }}>
-              {wisdomCard.optionalAmal.titleUrdu} ({wisdomCard.optionalAmal.titleEnglish})
+              {(isUrdu || isArabic) ? wisdomCard.optionalAmal.titleUrdu : wisdomCard.optionalAmal.titleEnglish}
             </div>
+            {!(isUrdu || isArabic) && wisdomCard.optionalAmal.titleUrdu && (
+              <div dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: 13, color: '#047857', marginBottom: 4 }}>
+                {wisdomCard.optionalAmal.titleUrdu}
+              </div>
+            )}
             <div style={{ fontSize: 11, color: '#047857', marginBottom: 8 }}>
               {t('Source: ', 'سند / ماخذ: ', 'السند والمصدر: ', 'Sanad / Maakhaz: ')}
               <strong>{wisdomCard.optionalAmal.classicalSource}</strong>

@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, memo } from 'react';
 import { useRouter } from 'next/router';
 import { UniversalSearchEngine, SearchResultItem } from '@amal/amal-engine';
 import { AmalTheme } from '@amal/ui';
 import { SMART_FIQH_DATA, SmartFiqhItem } from '../data/smart-fiqh-finder-data';
+import { useLanguage } from '../context/LanguageContext';
 
 interface UniversalSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOpen, onClose }) => {
+const UniversalSearchModalInner: React.FC<UniversalSearchModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
+  const { t, language } = useLanguage();
   const [query, setQuery] = useState('');
   const [searchMode, setSearchMode] = useState<'ALL' | 'FIQH'>('ALL');
   const [results, setResults] = useState<SearchResultItem[]>([]);
@@ -33,15 +35,32 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
   }, [query, searchMode]);
 
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-      setResults(UniversalSearchEngine.search(''));
-    } else {
+    if (!isOpen) {
       setQuery('');
       setResults([]);
       setSearchMode('ALL');
+      return;
     }
-  }, [isOpen]);
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    setTimeout(() => inputRef.current?.focus(), 50);
+    setResults(UniversalSearchEngine.search(''));
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   const handleQueryChange = (text: string) => {
     setQuery(text);
@@ -79,6 +98,10 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
       onClick={onClose}
     >
       <div
+        className="universal-search-card"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t('Universal Search', 'عالمگیر تلاش', 'البحث الشامل', 'Universal Search')}
         style={{
           width: '92%',
           maxWidth: 640,
@@ -108,7 +131,12 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
             type="text"
             value={query}
             onChange={e => handleQueryChange(e.target.value)}
-            placeholder="تلاش کریں / Search Quran, Hadith, Duas, Zakat, Miras, Prayer..."
+            placeholder={t(
+              'Search Quran, Hadith, Duas, Zakat, Miras, Prayer...',
+              'تلاش کریں (قرآن، حدیث، مسنون دعائیں، زکوٰۃ، میراث، نماز)...',
+              'ابحث في القرآن والحديث والأدعية...',
+              'Search karein Quran, Hadith, Duas, Zakat, Miras, Namaz...'
+            )}
             style={{
               flex: 1,
               border: 'none',
@@ -134,7 +162,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
           <span
             style={{
               fontSize: 11,
-              color: '#64748B',
+              color: '#475569',
               backgroundColor: '#F1F5F9',
               padding: '2px 6px',
               borderRadius: 4,
@@ -173,7 +201,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
             }}
           >
             <span>🔍</span>
-            <span>ہمہ جہت تلاش (All Search)</span>
+            <span>{t('All Search', 'ہمہ جہت تلاش', 'البحث الشامل', 'All Search')}</span>
           </button>
 
           <button
@@ -194,15 +222,15 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
             }}
           >
             <span>⚡</span>
-            <span>فوری فقہی رہنمائی (Smart Fiqh Finder)</span>
+            <span>{t('Smart Fiqh Finder', 'فوری فقہی رہنمائی', 'الباحث الفقهي الذكي', 'Smart Fiqh Finder')}</span>
           </button>
         </div>
 
         {/* Suggestion Chips when query is empty */}
         {query.trim().length === 0 && (
           <div style={{ padding: '16px 20px', borderBottom: '1px solid #F1F5F9' }}>
-            <div style={{ fontSize: 12, color: '#64748B', marginBottom: 8, fontWeight: 600 }}>
-              POPULAR DISCOVERY TOPICS (اہم موضوعات):
+            <div style={{ fontSize: 12, color: '#475569', marginBottom: 8, fontWeight: 600 }}>
+              {t('POPULAR DISCOVERY TOPICS:', 'اہم موضوعات:', 'مواضيع البحث الشائعة:', 'Popular Discovery Topics:')}
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {suggestions.map(s => (
@@ -245,7 +273,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                 }}
               >
                 <span>⚡</span>
-                <span>مصدقہ فقہی فتاویٰ و احکام (Source-Backed Classical Rulings):</span>
+                <span>{t('Source-Backed Classical Rulings:', 'مصدقہ فقہی فتاویٰ و احکام:', 'فتاوى وأحكام فقهية موثقة:', 'Source-Backed Classical Rulings:')}</span>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -263,10 +291,10 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: 6 }}>
                       <div>
                         <div style={{ fontSize: 14, fontWeight: 800, color: '#064E3B' }}>
-                          {fiqh.questionUrdu}
+                          {language === 'ur' ? fiqh.questionUrdu : (language === 'roman' ? (fiqh.questionEnglish || fiqh.questionUrdu) : fiqh.questionEnglish)}
                         </div>
                         <div style={{ fontSize: 12, color: '#334155', marginTop: 2 }}>
-                          {fiqh.questionEnglish}
+                          {language === 'ur' ? fiqh.questionEnglish : fiqh.questionUrdu}
                         </div>
                       </div>
                       <span
@@ -279,9 +307,9 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                             fiqh.hukmType === 'FARZ'
                               ? '#DC2626'
                               : fiqh.hukmType === 'WAJIB'
-                              ? '#D97706'
+                              ? '#B45309'
                               : fiqh.hukmType === 'SUNNAH'
-                              ? '#059669'
+                              ? '#047857'
                               : '#2563EB',
                           color: '#FFFFFF',
                           whiteSpace: 'nowrap',
@@ -292,13 +320,13 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                     </div>
 
                     <div style={{ fontSize: 13, color: '#1E293B', lineHeight: 1.6, marginTop: 6, backgroundColor: '#FFFFFF', padding: '10px 12px', borderRadius: 8, border: '1px solid #DCFCE7' }}>
-                      <p style={{ margin: '0 0 4px', fontWeight: 600 }}>{fiqh.summaryUrdu}</p>
-                      <p style={{ margin: 0, fontSize: 12, color: '#475569' }}>{fiqh.summaryEnglish}</p>
+                      <p style={{ margin: '0 0 4px', fontWeight: 600 }}>{language === 'ur' ? fiqh.summaryUrdu : fiqh.summaryEnglish}</p>
+                      <p style={{ margin: 0, fontSize: 12, color: '#475569' }}>{language === 'ur' ? fiqh.summaryEnglish : fiqh.summaryUrdu}</p>
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, flexWrap: 'wrap', gap: 6 }}>
                       <div style={{ fontSize: 11, color: '#047857', fontWeight: 700 }}>
-                        📖 حوالہ: {fiqh.canonicalReference}
+                        📖 {t('Source Reference:', 'حوالہ:', 'المرجع:', 'Hawala:')} {fiqh.canonicalReference}
                       </div>
                       {fiqh.libraryBookId && (
                         <button
@@ -314,7 +342,7 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                             cursor: 'pointer',
                           }}
                         >
-                          کتاب میں مطالعہ کریں →
+                          {t('Read in Library →', 'کتاب میں مطالعہ کریں →', 'اقرأ في المكتبة ←', 'Kitab me Padhein →')}
                         </button>
                       )}
                     </div>
@@ -325,18 +353,28 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
           )}
 
           {searchMode === 'FIQH' && matchedFiqhItems.length === 0 && query.trim().length > 0 && (
-            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#64748B', fontSize: 14 }}>
-              اس فقہی سوال کا مصدقہ حوالہ تلاش نہیں ہو سکا۔
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#475569', fontSize: 14 }}>
+              {t(
+                'No classical reference found for this query.',
+                'اس فقہی سوال کا مصدقہ حوالہ تلاش نہیں ہو سکا۔',
+                'لم يتم العثور على مرجع فقهي معتمد لهذا السؤال.',
+                'Is fiqhi sawal ka mustanad hawala talash nahi ho saka.'
+              )}
               <br />
               <span style={{ fontSize: 12, color: '#94A3B8' }}>
-                نمونہ الفاظ: سفر، قصر، غسل، سجدہ سہو، زکوٰۃ، حیض، وتر، انجکشن، ناخن پالش
+                {t(
+                  'Sample keywords: travel, prayer, ghusl, zakat, fasting, nail polish',
+                  'نمونہ الفاظ: سفر، قصر، غسل، سجدہ سہو، زکوٰۃ، حیض، وتر، انجکشن، ناخن پالش',
+                  'كلمات تجريبية: سفر، قصر، غسل، سجود السهو، زكاة، حيض، وتر، حقنة',
+                  'Misal keywords: safar, qasr, ghusl, sajda sahw, zakat, haidh, witr, injection, nail polish'
+                )}
               </span>
             </div>
           )}
 
           {searchMode === 'ALL' && results.length === 0 && matchedFiqhItems.length === 0 && query.trim().length > 0 && (
-            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#64748B', fontSize: 14 }}>
-              کوئی نتیجہ نہیں ملا۔ برائے مہربانی آسان الفاظ لکھیں۔
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: '#475569', fontSize: 14 }}>
+              {t('No results found. Try simpler keywords.', 'کوئی نتیجہ نہیں ملا۔ برائے مہربانی آسان الفاظ لکھیں۔', 'لم يتم العثور على نتائج. يرجى تجربة كلمات أبسط.', 'Koi natija nahi mila. Asaan alfaz likhein.')}
               <br />
               <span style={{ fontSize: 12, color: '#94A3B8' }}>No results found for &quot;{query}&quot;. Try generic keywords.</span>
             </div>
@@ -403,11 +441,11 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
                     {item.category}
                   </span>
                   <span style={{ fontSize: 14, fontWeight: 700, color: '#1E293B' }}>
-                    {item.titleEn}
+                    {language === 'ur' ? item.titleUr : item.titleEn}
                   </span>
                 </div>
                 <div style={{ fontSize: 13, color: '#475569', marginTop: 3 }}>
-                  {item.titleUr}
+                  {language === 'ur' ? item.titleEn : (language === 'roman' ? item.snippetEn : item.titleUr)}
                 </div>
                 <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
                   {item.snippetEn}
@@ -429,13 +467,15 @@ export const UniversalSearchModal: React.FC<UniversalSearchModalProps> = ({ isOp
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: 11,
-            color: '#64748B',
+            color: '#475569',
           }}
         >
-          <span>100% Sunni Classical Corpus & Verified Calculations</span>
-          <span>پوری ایپ میں فوری تلاش</span>
+          <span>{t('100% Sunni Classical Corpus & Shariah Calculations', 'مستند و متفقہ اہل سنت ذخیرہ و شرعی حساب', 'المعتمد عند أهل السنة والجماعة', '100% Sunni Classical Corpus & Shariah Calculations')}</span>
+          <span>{t('Universal Instant Search', 'پوری ایپ میں فوری تلاش', 'البحث الفوري الشامل', 'Instant App Search')}</span>
         </div>
       </div>
     </div>
   );
 };
+
+export const UniversalSearchModal = memo(UniversalSearchModalInner);

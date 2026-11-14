@@ -258,7 +258,7 @@ export function verifyContentCitation(rawCitation: string): SanadVerificationRep
     sourceNameEnglish,
     citationReference: rawCitation || 'Classical Islamic Corpus',
     grading,
-    gradingUrdu: grading === 'SAHIH' ? 'صحیح (Mustanad)' : grading === 'HASAN' ? 'حسن (Authentic)' : 'معتبر و مقبول',
+    gradingUrdu: grading === 'SAHIH' ? 'صحیح و مستند' : grading === 'HASAN' ? 'حسن و معتمد' : 'معتبر و مقبول',
     gradingEnglish: grading,
     isVerifiedAuthentic: true,
     verificationTimestamp: new Date().toISOString(),

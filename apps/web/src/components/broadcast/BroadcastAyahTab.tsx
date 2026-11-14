@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { DailyKnowledgeBroadcast } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface BroadcastAyahTabProps {
   ayah: DailyKnowledgeBroadcast['ayah'];
@@ -17,6 +18,7 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
   onPlayAyah,
   onMakeCard,
 }) => {
+  const { t } = useLanguage();
   return (
     <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
       <div
@@ -52,7 +54,9 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
             color: '#475569',
           }}
         >
-          {copied ? '✅ کاپی ہو گیا' : '📋 متن کاپی کریں'}
+          {copied
+            ? t('✅ Copied', '✅ کاپی ہو گیا', '✅ تم النسخ', '✅ Copy ho gaya')
+            : t('📋 Copy Text', '📋 متن کاپی کریں', '📋 نسخ النص', '📋 Matn Copy Karein')}
         </button>
       </div>
 
@@ -90,21 +94,26 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
           marginBottom: 12,
         }}
       >
-        <span style={{ fontWeight: 800, color: '#047857' }}>ترجمہ کنز الایمان: </span>
+        <span style={{ fontWeight: 800, color: '#047857' }}>
+          ترجمہ کنز الایمان:{' '}
+        </span>
         {ayah.kanzAlImanUrdu}
       </div>
 
       {/* English translation */}
-      <div style={{ fontSize: 13, color: '#4B5563', fontStyle: 'italic', marginBottom: 16 }}>
-        &ldquo;{ayah.englishTranslation}&rdquo;
-      </div>
+      {ayah.englishTranslation && (
+        <div style={{ fontSize: 13.5, color: '#374151', marginBottom: 16, lineHeight: 1.6, padding: '10px 14px', backgroundColor: '#F8FAFC', borderRadius: 8, border: '1px solid #E2E8F0' }}>
+          <strong style={{ color: '#047857' }}>{t('English Meaning: ', 'انگریزی ترجمہ: ', 'المعنى بالإنجليزية: ', 'English Meaning: ')}</strong>
+          &ldquo;{ayah.englishTranslation}&rdquo;
+        </div>
+      )}
 
       {/* Action Footer */}
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
         <button
           onClick={onPlayAyah}
           style={{
-            backgroundColor: '#059669',
+            backgroundColor: '#047857',
             color: '#FFFFFF',
             border: 'none',
             fontSize: 13,
@@ -117,7 +126,7 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
             cursor: 'pointer',
           }}
         >
-          <span>🎧 تلاوت سنیں (Listen to Recitation)</span>
+          <span>🎧 {t('Listen to Recitation', 'تلاوت سنیں', 'استمع للتلاوة', 'Tilawat Sunein')}</span>
         </button>
 
         {onMakeCard && (
@@ -138,7 +147,7 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
               boxShadow: '0 2px 4px rgba(6, 78, 59, 0.2)',
             }}
           >
-            <span>📸 سوشل میڈیا کارڈ بنائیں</span>
+            <span>📸 {t('Create Social Card', 'سوشل میڈیا کارڈ بنائیں', 'إنشاء بطاقة', 'Social Media Card Banayein')}</span>
           </button>
         )}
 
@@ -158,7 +167,7 @@ export const BroadcastAyahTab: React.FC<BroadcastAyahTabProps> = ({
             gap: 6,
           }}
         >
-          <span>📖 مکمل سورۃ {ayah.surahNameUrdu} قرآن ریڈر میں کھولیں →</span>
+          <span>📖 {t(`Open Surah ${ayah.surahNameUrdu} in Reader →`, `مکمل سورۃ ${ayah.surahNameUrdu} قرآن ریڈر میں کھولیں →`, `فتح سورة ${ayah.surahNameUrdu} في المصحف ←`, `Surah ${ayah.surahNameUrdu} Reader me Kholein →`)}</span>
         </Link>
       </div>
     </div>

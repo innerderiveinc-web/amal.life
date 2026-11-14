@@ -13,7 +13,7 @@ interface QuranHeaderBarProps {
     surahNameArabic?: string;
     surahNameUrdu?: string;
     surahNameTransliterated?: string;
-    viewMode: 'SCROLL' | 'FOCUS';
+    viewMode: 'SCROLL' | 'FOCUS' | 'MUSHAF';
     timestamp: number;
   } | null;
   onResumeLastRead: () => void;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MultiFiqhPrecisionReport } from '../../lib/prayer-precision-engine';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -14,6 +14,15 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
   onClose,
 }) => {
   const { language, t } = useLanguage();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !report) return null;
 
@@ -63,7 +72,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
                   width: 36,
                   height: 36,
                   borderRadius: '50%',
-                  backgroundColor: '#10B981',
+                  backgroundColor: '#047857',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -82,7 +91,9 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Close"
               style={{
                 width: 30,
                 height: 30,
@@ -112,7 +123,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
             }}
           >
             <div style={{ fontSize: 12, fontWeight: 800, color: '#065F46', marginBottom: 4 }}>
-              ⚖️ {t('Asr Shadow Jurisprudence (حنابلہ، شافعیہ، مالکیہ بمقابلہ احناف):', 'عصر مثلِ اول بمقابلہ مثلِ ثانی:')}
+              ⚖️ {t('Asr Shadow Jurisprudence (Majority vs Hanafi):', 'عصر مثلِ اول بمقابلہ مثلِ ثانی:', 'فقه ظل صلاة العصر (الجمهور مقابل الحنفية):', 'Asr Misl-e-Awwal vs Misl-e-Saani:')}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, fontSize: 13 }}>
               <div>
@@ -165,7 +176,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
                     >
                       <td style={{ padding: '8px 10px', fontWeight: idx === 0 ? 800 : 600 }}>
                         {(language === 'ur' || language === 'ar') ? auth.authorityNameUrdu : auth.authorityNameEnglish}
-                        {idx === 0 && <span style={{ color: '#047857', fontSize: 10, display: 'block' }}>★ Default</span>}
+                        {idx === 0 && <span style={{ color: '#047857', fontSize: 10, display: 'block' }}>★ {t('Default', 'طے شدہ', 'الافتراضي', 'Default')}</span>}
                       </td>
                       <td style={{ padding: '8px 8px', fontWeight: 700 }}>{auth.fajrTime}</td>
                       <td style={{ padding: '8px 8px', color: '#6B7280' }}>{auth.sunriseTime}</td>

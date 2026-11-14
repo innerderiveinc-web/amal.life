@@ -1,7 +1,10 @@
 import React from 'react';
-import { ALL_114_SURAHS, QuranSurahMeta } from '../../lib/quran-114-directory';
+import { ALL_114_SURAHS } from '../../lib/quran-114-directory';
 import { QuranSurahData } from '../../lib/quran-surahs-data';
 import { UniversalCardPayload } from '../cards/UniversalContentShareModal';
+import { useLanguage } from '../../context/LanguageContext';
+import { IslamicBismillahCartouche } from '../ui/IslamicArabesqueFrame';
+import { BISMILLAH_PREFIX_REGEX } from '../quran/useQuranSurahLoader';
 
 export interface LibraryQuranReaderViewProps {
   readerTheme: 'CLEAN' | 'SEPIA' | 'DARK';
@@ -26,6 +29,8 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
   onSharePayload,
   onOpenWisdomModal,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div>
       {/* Quick Surah Shortcuts */}
@@ -47,7 +52,12 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
                   : readerTheme === 'DARK'
                   ? '#0F172A'
                   : '#E2E8F0',
-              color: selectedSurahNumber === s.num ? '#FFFFFF' : '#334155',
+              color:
+                selectedSurahNumber === s.num
+                  ? '#FFFFFF'
+                  : readerTheme === 'DARK'
+                  ? '#CBD5E1'
+                  : '#334155',
             }}
           >
             {s.label}
@@ -73,7 +83,7 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
         >
           {ALL_114_SURAHS.map((s) => (
             <option key={s.number} value={s.number}>
-              {s.number}. {s.nameArabic} ({s.nameTransliterated} · {s.ayahsCount} Ayahs)
+              {s.number}. {s.nameArabic} ({s.nameTransliterated} · {s.ayahsCount} {t('Ayahs', 'آیات', 'آيات', 'Ayat')})
             </option>
           ))}
         </select>
@@ -81,7 +91,12 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
 
       {isLoadingSurah && (
         <div style={{ textAlign: 'center', padding: 40, color: '#059669', fontSize: 13 }}>
-          Downloading Surah text from CDN...
+          {t(
+            'Downloading Surah text from CDN...',
+            'قرآنِ کریم کا متن لوڈ ہو رہا ہے...',
+            'جاري تحميل نص السورة...',
+            'Surah ka matn load ho raha hai...'
+          )}
         </div>
       )}
 
@@ -96,28 +111,45 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
             paddingRight: 6,
           }}
         >
-          {currentSurah.verses.map((v) => (
-            <div
-              key={v.ayahNumber}
-              style={{
-                padding: 16,
-                borderRadius: 12,
-                backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#F9FAFB',
-                border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E5E7EB'}`,
-              }}
-            >
+          {/* Bismillah Cartouche for Surahs 2-114 (except Surah 9 At-Tawbah) */}
+          {selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && (
+            <div style={{ marginBottom: 4 }}>
+              <IslamicBismillahCartouche
+                bismillahText="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
+                fontSize={fontSize + 2}
+                variant="gold"
+              />
+            </div>
+          )}
+
+          {currentSurah.verses.map((v) => {
+            const cleanArabicText =
+              selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && v.ayahNumber === 1
+                ? v.textArabic.replace(BISMILLAH_PREFIX_REGEX, '').trim()
+                : v.textArabic;
+
+            return (
               <div
-                dir="rtl"
+                key={v.ayahNumber}
                 style={{
-                  fontFamily: 'var(--font-arabic), "Amiri", serif',
-                  fontSize: fontSize + 6,
-                  lineHeight: 2.2,
-                  textAlign: 'right',
-                  color: readerTheme === 'DARK' ? '#F8FAFC' : '#111827',
-                  marginBottom: 10,
+                  padding: 16,
+                  borderRadius: 12,
+                  backgroundColor: readerTheme === 'DARK' ? '#0F172A' : '#F9FAFB',
+                  border: `1px solid ${readerTheme === 'DARK' ? '#334155' : '#E5E7EB'}`,
                 }}
               >
-                {v.textArabic}{' '}
+                <div
+                  dir="rtl"
+                  style={{
+                    fontFamily: 'var(--font-arabic), "Amiri", serif',
+                    fontSize: fontSize + 6,
+                    lineHeight: 2.2,
+                    textAlign: 'right',
+                    color: readerTheme === 'DARK' ? '#F8FAFC' : '#111827',
+                    marginBottom: 10,
+                  }}
+                >
+                  {cleanArabicText}{' '}
                 <span
                   style={{
                     fontSize: fontSize - 2,
@@ -196,7 +228,7 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
                         category: 'QURAN',
                         titleUrdu: currentSurah.nameUrdu,
                         badgeContext: `آیت مبارکہ ${v.ayahNumber}`,
-                        arabicText: v.textArabic,
+                        arabicText: cleanArabicText,
                         primaryTextUrdu: v.textUrdu,
                         secondaryTextEnglish: v.textEnglish,
                         sourceCitation: `${currentSurah.nameUrdu} (${currentSurah.surahNumber}:${v.ayahNumber}) · کنز الایمان`,
@@ -213,7 +245,7 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
                       cursor: 'pointer',
                     }}
                   >
-                    📸 کارڈ
+                    📸 {t('Card', 'کارڈ', 'بطاقة', 'Card')}
                   </button>
                   <button
                     onClick={() => onOpenWisdomModal(currentSurah.surahNumber, v.ayahNumber)}
@@ -228,12 +260,13 @@ export const LibraryQuranReaderView: React.FC<LibraryQuranReaderViewProps> = ({
                       cursor: 'pointer',
                     }}
                   >
-                    📖 حکمت کارڈ
+                    📖 {t('Wisdom Card', 'حکمت کارڈ', 'بطاقة الحكمة', 'Hikmat Card')}
                   </button>
                 </div>
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
       )}
     </div>

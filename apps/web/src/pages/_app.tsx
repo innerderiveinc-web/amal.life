@@ -5,13 +5,17 @@ import '../styles/globals.css';
 import { AudioPlayerProvider } from '../context/AudioPlayerContext';
 import { AuthProvider } from '../context/AuthContext';
 import { LanguageProvider, useLanguage } from '../context/LanguageContext';
+import { ThemeProvider } from '../context/ThemeContext';
 import { PersistentAudioPlayer } from '../components/PersistentAudioPlayer';
 import { UniversalSearchModal } from '../components/UniversalSearchModal';
 import { ReaderSettingsModal } from '../components/ReaderSettingsModal';
+import { SacredThemeModal } from '../components/SacredThemeModal';
 import { OnboardingWizardModal } from '../components/OnboardingWizardModal';
 import { BookmarksQuickDrawer } from '../components/BookmarksQuickDrawer';
 import { AuthModal } from '../components/AuthModal';
 import { PWAInstallModal } from '../components/PWAInstallModal';
+import { PWAUpdateBanner } from '../components/PWAUpdateBanner';
+import { SupportWaqfModal } from '../components/waqf/SupportWaqfModal';
 import { Footer } from '../components/Footer';
 import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
@@ -26,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isInstallOpen, setIsInstallOpen] = useState(false);
+  const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isTahajjudMode, setIsTahajjudMode] = useState(false);
+  const [isWaqfOpen, setIsWaqfOpen] = useState(false);
 
   useEffect(() => {
     // 1. Restore Tahajjud theme preference
@@ -34,6 +40,12 @@ export default function App({ Component, pageProps }: AppProps) {
     if (savedTahajjud === 'true') {
       setIsTahajjudMode(true);
       document.body.classList.add('theme-tahajjud');
+    }
+
+    // 1.1 Restore High Contrast preference
+    const savedHighContrast = localStorage.getItem('amal_high_contrast');
+    if (savedHighContrast === 'true') {
+      document.body.classList.add('high-contrast');
     }
 
     // PWA Install Prompt Handlers
@@ -51,6 +63,29 @@ export default function App({ Component, pageProps }: AppProps) {
     // Register Service Worker with intelligent update detection
     const registerSW = () => {
       if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+        // In local development, avoid stale service worker caches on localhost
+        if (
+          process.env.NODE_ENV === 'development' ||
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1'
+        ) {
+          navigator.serviceWorker.getRegistrations().then((regs) => {
+            for (const r of regs) {
+              r.unregister();
+            }
+          });
+          if ('caches' in window) {
+            caches.keys().then((names) => {
+              for (const name of names) {
+                if (name.startsWith('amal-os-cache')) {
+                  caches.delete(name);
+                }
+              }
+            });
+          }
+          return;
+        }
+
         navigator.serviceWorker
           .register('/sw.js')
           .then((reg) => {
@@ -84,13 +119,15 @@ export default function App({ Component, pageProps }: AppProps) {
         try {
           const health = await checkStorageHealth();
           if (health.shouldPromptBackup) {
-            const isUrdu = localStorage.getItem('amal_app_language') === 'ur';
-            showAmalToast(
-              isUrdu
-                ? 'روحانی ڈیٹا کی حفاظت: آپ کے اعمال و نوٹس محفوظ ہیں۔ ترتیبات (Settings) میں جا کر بیک اپ ایکسپورٹ کر لیں تاکہ براؤزر کیش صاف ہونے سے ڈیٹا ضائع نہ ہو۔'
-                : 'Data Protection: Your personal notes and habits are safely stored. Consider exporting a backup in Settings.',
-              'info'
-            );
+            const lang = localStorage.getItem('amal_app_language') || 'ur';
+            const msg = lang === 'ur'
+              ? 'روحانی ڈیٹا کی حفاظت: آپ کے اعمال و نوٹس محفوظ ہیں۔ ترتیبات میں جا کر بیک اپ برآمد کر لیں تاکہ براؤزر کیش صاف ہونے سے ڈیٹا محفوظ رہے۔'
+              : lang === 'ar'
+              ? 'حماية البيانات: سجلاتك وملاحظاتك محفوظة. يمكنك تصدير نسخة احتياطية من الإعدادات.'
+              : lang === 'ru'
+              ? 'Data Protection: Aapke aamal aur notes mehfooz hain. Settings me ja kar backup export kar lein.'
+              : 'Data Protection: Your personal notes and habits are safely stored. Consider exporting a backup in Settings.';
+            showAmalToast(msg, 'info');
           }
         } catch {}
       }, 5000);
@@ -134,6 +171,8 @@ export default function App({ Component, pageProps }: AppProps) {
     const handleOpenBookmarks = () => setIsBookmarksOpen(true);
     const handleOpenAuth = () => setIsAuthOpen(true);
     const handleOpenInstall = () => setIsInstallOpen(true);
+    const handleOpenTheme = () => setIsThemeOpen(true);
+    const handleOpenWaqf = () => setIsWaqfOpen(true);
     const handleToggleTahajjud = () => {
       setIsTahajjudMode((prev) => {
         const next = !prev;
@@ -153,6 +192,8 @@ export default function App({ Component, pageProps }: AppProps) {
     window.addEventListener('amal-open-bookmarks', handleOpenBookmarks);
     window.addEventListener('amal-open-auth', handleOpenAuth);
     window.addEventListener('amal-open-install', handleOpenInstall);
+    window.addEventListener('amal-open-theme', handleOpenTheme);
+    window.addEventListener('amal-open-waqf', handleOpenWaqf);
     window.addEventListener('amal-toggle-tahajjud', handleToggleTahajjud);
 
     // 4. Auto-show gentle onboarding if first time visit
@@ -169,6 +210,8 @@ export default function App({ Component, pageProps }: AppProps) {
       window.removeEventListener('amal-open-bookmarks', handleOpenBookmarks);
       window.removeEventListener('amal-open-auth', handleOpenAuth);
       window.removeEventListener('amal-open-install', handleOpenInstall);
+      window.removeEventListener('amal-open-theme', handleOpenTheme);
+      window.removeEventListener('amal-open-waqf', handleOpenWaqf);
       window.removeEventListener('amal-toggle-tahajjud', handleToggleTahajjud);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
@@ -178,13 +221,19 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <LanguageProvider>
-      <AuthProvider>
-        <AudioPlayerProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AudioPlayerProvider>
           <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         </Head>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ flex: 1 }}>
+          {/* WCAG 2.1 AAA Accessibility: Skip to Main Content Link */}
+          <a href="#main-content" className="amal-skip-link">
+            Skip to main content · براہِ راست مواد پر جائیں
+          </a>
+
+          <div id="main-content" style={{ flex: 1 }} tabIndex={-1}>
             <GlobalCrashGuardErrorBoundary>
               <Component {...pageProps} />
             </GlobalCrashGuardErrorBoundary>
@@ -214,6 +263,12 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* Global PWA Home Screen Install Modal */}
           <PWAInstallModal isOpen={isInstallOpen} onClose={() => setIsInstallOpen(false)} />
 
+          {/* Global Sacred Cultural Themes Modal */}
+          <SacredThemeModal isOpen={isThemeOpen} onClose={() => setIsThemeOpen(false)} />
+
+          {/* Global Voluntary Sovereign Waqf & Patron Modal */}
+          <SupportWaqfModal isOpen={isWaqfOpen} onClose={() => setIsWaqfOpen(false)} />
+
           {/* Floating Quick Bookmark Tab (Right Screen Edge) */}
           <FloatingBookmarkTab onOpen={() => setIsBookmarksOpen(true)} />
 
@@ -222,9 +277,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
           {/* Mobile Thumb-Zone Navigation Dock */}
           <MobileBottomNav />
+
+          {/* PWA Auto-Update Notification Banner */}
+          <PWAUpdateBanner />
         </div>
       </AudioPlayerProvider>
     </AuthProvider>
+    </ThemeProvider>
   </LanguageProvider>
 );
 }

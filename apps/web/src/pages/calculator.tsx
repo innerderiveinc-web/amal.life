@@ -153,11 +153,11 @@ export default function CalculatorPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
             <span style={{ fontSize: 28 }}>⚖️</span>
             <h1 style={{ fontSize: 28, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-              Financial Fiqh: Zakat &amp; Miras Engines
+              {t('Financial Fiqh: Zakat & Miras Engines', 'مالیاتی فقہ: زکوٰۃ و میراث کیلکولیٹر', 'الفقه المالي: حاسبة الزكاة والميراث', 'Financial Fiqh: Zakat & Miras Engines')}
             </h1>
           </div>
           <p style={{ color: '#4B5563', margin: 0, fontSize: 14 }}>
-            Deterministic Islamic financial mathematics. Zero guessing, fully verified against classical Fiqh benchmarks.
+            {t('Deterministic Islamic financial mathematics. Zero guessing, fully verified against classical Fiqh benchmarks.', 'مستند اسلامی مالیاتی حسابات۔ سو فیصد مصدقہ اور فقہی اصولوں کے عین مطابق۔', 'حسابات فقهية مالية دقيقة ومحققة وفق المذاهب الفقهية المعتمدة.', 'Deterministic Islamic financial calculations. Classical Fiqh ke ain mutabiq.')}
           </p>
         </div>
 
@@ -176,7 +176,7 @@ export default function CalculatorPage() {
               color: activeTab === 'ZAKAT' ? '#FFFFFF' : '#374151',
             }}
           >
-            💰 Zakat (Purification &amp; Nisab)
+            {t('💰 Zakat (Purification & Nisab)', '💰 زکوٰۃ (نصاب و حساب)', '💰 الزكاة والنصاب', '💰 Zakat (Nisab aur Hisab)')}
           </button>
           <button
             onClick={() => setActiveTab('MIRAS')}
@@ -191,7 +191,7 @@ export default function CalculatorPage() {
               color: activeTab === 'MIRAS' ? '#FFFFFF' : '#374151',
             }}
           >
-            📜 Miras (Inheritance / Fara'id)
+            {t('📜 Miras (Inheritance / Fara\'id)', '📜 میراث (تقسیمِ ترکہ و فرائض)', '📜 الميراث وتقسيم التركات', '📜 Miras (Taqseem-e-Tarka)')}
           </button>
           <button
             onClick={() => setActiveTab('QADHA')}
@@ -206,7 +206,7 @@ export default function CalculatorPage() {
               color: activeTab === 'QADHA' ? '#FFFFFF' : '#374151',
             }}
           >
-            📿 Qadha-e-Umri &amp; Fiqh FAQs
+            {t('📿 Qadha-e-Umri & Fiqh FAQs', '📿 قضائے عمری و اہم مسائل', '📿 قضاء الفوائت والمسائل', '📿 Qadha-e-Umri aur Fiqh FAQs')}
           </button>
         </div>
 

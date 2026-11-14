@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { showAmalToast } from '../Toast';
 
 interface PrayerItem {
   key: string;
@@ -20,7 +21,7 @@ interface PrayerScheduleCardProps {
   t?: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
-export function PrayerScheduleCard({
+function PrayerScheduleCardInner({
   prayerList,
   prayerTimes,
   nextPrayer,
@@ -40,15 +41,82 @@ export function PrayerScheduleCard({
     return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
   })();
 
+  const handleShareSchedule = async () => {
+    const text =
+      `🕌 *اوقاتِ نماز برائے آج — ${selectedCityName}*\n` +
+      `📅 تاریخ: ${prayerTimes.date || ''}\n` +
+      `-----------------------------\n` +
+      `🌅 فجر (Fajr): ${prayerTimes.fajr} (سحری ختم: ${sehriCutoff})\n` +
+      `☀️ طلوعِ آفتاب (Sunrise): ${prayerTimes.sunrise}\n` +
+      `☀️ ظہر (Dhuhr): ${prayerTimes.dhuhr}\n` +
+      `⛅ عصر (Asr): ${prayerTimes.asr}\n` +
+      `🌇 مغرب / افطار (Maghrib / Iftar): ${prayerTimes.maghrib}\n` +
+      `🌌 عشاء (Isha): ${prayerTimes.isha}\n` +
+      `🌙 تہجد / ثلثِ اخیر (Tahajjud): ${prayerTimes.tahajjud || prayerTimes.qiyamThird || '03:15'}\n` +
+      `-----------------------------\n` +
+      `⚠️ اوقاتِ مکروہہ (نماز ممنوع): طلوع (${makroohTimes?.sunrise?.start || ''}-${makroohTimes?.sunrise?.end || ''}), استواء (${makroohTimes?.zawal?.start || ''}-${makroohTimes?.zawal?.end || ''}), غروب (${makroohTimes?.sunset?.start || ''}-${makroohTimes?.sunset?.end || ''})\n\n` +
+      `✨ حاصل کریں 100% اشتہارات سے پاک AMAL OS پر:\nhttps://amal.life/prayer`;
+
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: `اوقاتِ نماز — ${selectedCityName}`,
+          text,
+        });
+        showAmalToast(
+          t('Prayer schedule shared successfully!', 'اوقاتِ نماز شیئر کر دیے گئے!', 'تمت مشاركة مواقيت الصلاة بنجاح!', 'Prayer schedule share ho gaya!'),
+          'success'
+        );
+        return;
+      } catch (e: any) {
+        if (e?.name === 'AbortError') return;
+      }
+    }
+
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+      showAmalToast(
+        t('Schedule copied to clipboard! Opening WhatsApp...', 'اوقاتِ نماز کلپ بورڈ پر کاپی ہو گئے۔ واٹس ایپ کھل رہا ہے...', 'تم نسخ المواقيت!', 'Schedule copy ho gaya! WhatsApp open ho raha hai...'),
+        'info'
+      );
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', margin: 0 }}>
-          {t('Daily Auqat-e-Namaz', 'اوقاتِ نماز برائے آج', 'مواقيت الصلاة اليومية', 'Daily Auqat-e-Namaz')} ({prayerTimes.date})
-        </h2>
-        <span style={{ fontSize: 12, color: '#6B7280' }}>
-          {selectedCityName}
-        </span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+        <div>
+          <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1B4332', margin: 0 }}>
+            {t('Daily Auqat-e-Namaz', 'اوقاتِ نماز برائے آج', 'مواقيت الصلاة اليومية', 'Daily Auqat-e-Namaz')} ({prayerTimes.date})
+          </h2>
+          <span style={{ fontSize: 12, color: '#6B7280' }}>
+            📍 {selectedCityName}
+          </span>
+        </div>
+        <button
+          onClick={handleShareSchedule}
+          type="button"
+          aria-label="Share Today's Prayer Schedule to Family or WhatsApp"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '6px 14px',
+            borderRadius: 8,
+            backgroundColor: '#ECFDF5',
+            color: '#065F46',
+            border: '1px solid #A7F3D0',
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.15s ease',
+          }}
+          title={t('Share today’s prayer times to WhatsApp or family group', 'آج کے اوقاتِ نماز واٹس ایپ یا فیملی گروپ میں شیئر کریں', 'مشاركة مواقيت الصلاة اليومية', 'Share schedule to WhatsApp')}
+        >
+          <span>📲</span>
+          <span>{t('Share Schedule', 'شیئر اوقات', 'مشاركة المواقيت', 'Share Schedule')}</span>
+        </button>
       </div>
 
       {/* Main 5 Prayers Grid */}
@@ -87,7 +155,7 @@ export function PrayerScheduleCard({
                         style={{
                           fontSize: 10,
                           fontWeight: 800,
-                          backgroundColor: '#059669',
+                          backgroundColor: '#047857',
                           color: '#FFFFFF',
                           padding: '2px 8px',
                           borderRadius: 12,
@@ -99,7 +167,7 @@ export function PrayerScheduleCard({
                     )}
                   </div>
                   <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>
-                    {p.nameArabic} • {language === 'ur' ? p.name : p.nameUrdu}
+                    {p.nameArabic} • {language === 'ur' ? p.name : (language === 'roman' ? p.name : p.nameUrdu)}
                   </div>
                 </div>
               </div>
@@ -249,3 +317,6 @@ export function PrayerScheduleCard({
     </div>
   );
 }
+
+/** Memoized — prayer list only changes when city or calculation method changes */
+export const PrayerScheduleCard = memo(PrayerScheduleCardInner);

@@ -97,10 +97,10 @@ export const SurahDirectorySidebar: React.FC<SurahDirectorySidebarProps> = ({
             }}
           >
             {rf === 'ALL'
-              ? t('All (114)', 'سب سورتیں (114)', 'الكل (١١٤)', 'Sab Surahs (114)')
+              ? t('All (114)', 'سب سورتیں (۱۱۴)', 'الكل (١١٤)', 'Sab Surahs (114)')
               : rf === 'MECCAN'
-                ? t('Meccan (86)', 'مکی (86)', 'مكية (٨٦)', 'Makki (86)')
-                : t('Medinan (28)', 'مدنی (28)', 'مدنية (٢٨)', 'Madani (28)')}
+                ? t('Meccan (86)', 'مکی (۸۶)', 'مكية (٨٦)', 'Makki (86)')
+                : t('Medinan (28)', 'مدنی (۲۸)', 'مدنية (٢٨)', 'Madani (28)')}
           </button>
         ))}
       </div>

@@ -78,18 +78,32 @@ export function getAyahAudioUrl(
 /**
  * Returns certified streaming URL for Urdu translation audio:
  * Strictly KANZ-UL-IMAN Ayah-by-Ayah recited by Maulana Haji Abdul Habib Attari (Dawat-e-Islami official repository)
- * with EveryAyah CDN as resilient fallback.
+ * with multi-mirror Kanz-ul-Iman CDN fallback.
+ * (Farhat Hashmi, Shamshad Ali Khan, or any non-Kanz-ul-Iman audio is strictly forbidden).
  */
 export function getAyahUrduAudioUrl(surahNumber: number, ayahNumber: number): string {
+  // Surah 1 (Al-Fatihah): In Dawat-e-Islami Indo-Pak counting, Bismillah is verse 000,
+  // whereas in standard Uthmanic prints Ayah 1 is Bismillah and Ayah 7 combines both clauses.
+  // We bundle Surah 1 locally for zero-latency, 100% reliable 1-to-1 Uthmanic alignment.
+  if (surahNumber === 1 && ayahNumber >= 1 && ayahNumber <= 7) {
+    return `/audio/kanzuliman/001/${ayahNumber}.mp3`;
+  }
   const s = String(surahNumber).padStart(3, '0');
   const a = String(ayahNumber).padStart(3, '0');
   return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/${s}/U02${s}${a}.mp3`;
 }
 
 export function getAyahUrduAudioFallbackUrl(surahNumber: number, ayahNumber: number): string {
+  if (surahNumber === 1 && ayahNumber >= 1 && ayahNumber <= 7) {
+    if (ayahNumber === 1) {
+      return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001000.mp3`;
+    }
+    const fIdx = String(ayahNumber - 1).padStart(3, '0');
+    return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001${fIdx}.mp3`;
+  }
   const s = String(surahNumber).padStart(3, '0');
   const a = String(ayahNumber).padStart(3, '0');
-  return `https://everyayah.com/data/translations/urdu_shamshad_ali_khan_46kbps/${s}${a}.mp3`;
+  return `https://data.dawateislami.net/static/images/main-website/quran-arabic-audios/${s}/U02${s}${a}.mp3`;
 }
 
 /**

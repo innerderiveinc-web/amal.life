@@ -5,11 +5,13 @@ import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { audioStreamingEngine, SirahMasterWork, SirahMasterChapter } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { useLanguage } from '../context/LanguageContext';
 import { offlineAudioCache } from '../services/offline-audio-cache';
 import { AmalTokens } from '../styles/tokens';
 
 export default function AudioPage() {
   const router = useRouter();
+  const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
   const [activeTab, setActiveTab] = useState<'QURAN' | 'SHAMAIL' | 'SIRAH'>('SIRAH');
   const [selectedReciter, setSelectedReciter] = useState<string>('husary');
   const [expandedChapter, setExpandedChapter] = useState<number | null>(1);
@@ -102,6 +104,7 @@ export default function AudioPage() {
     <div style={{ minHeight: '100vh', backgroundColor: '#F8F9FA', paddingBottom: 120 }}>
       <Head>
         <title>Audio Recitations & Sirah Audiobooks | AMAL OS</title>
+        <meta name="description" content="The Complete 114-Surah Holy Quran Audio Suite, Master Qurra recitations, Tafseer, and Prophetic Seerah audiobooks." />
       </Head>
       <Navigation />
 
@@ -125,7 +128,8 @@ export default function AudioPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>✨</span>
               <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
-                This audio suite is part of the <strong>Unified Quran Hub</strong>.
+                {t('This audio suite is part of the ', 'یہ آڈیو سویٹ حصہ ہے ', 'هذه الحزمة الصوتية جزء من ', 'Yeh audio suite hissa hai ')}
+                <strong>{t('Unified Quran Hub', 'متحدہ قرآن ہب', 'مركز القرآن الموحد', 'Unified Quran Hub')}</strong>.
               </span>
             </div>
             <Link
@@ -140,7 +144,7 @@ export default function AudioPage() {
                 fontSize: 12,
               }}
             >
-              Open Inside Quran Hub ➔
+              {t('Open Inside Quran Hub ➔', 'قرآن ہب میں کھولیں ←', 'فتح في مركز القرآن ➔', 'Quran Hub Mein Kholein ➔')}
             </Link>
           </div>
 
@@ -226,16 +230,16 @@ export default function AudioPage() {
               <div>
                 <div style={{ fontWeight: 800, fontSize: 15, color: '#065F46', display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span>🎧</span>
-                  <span>Unified 114-Surah Quran Audio Hub Available</span>
+                  <span>{t('Unified 114-Surah Quran Audio Hub Available', 'متحدہ ۱۱۴ سورتوں کا قرآن آڈیو ہب دستیاب ہے', 'مركز تلاوة القرآن الكريم الكامل (١١٤ سورة) متاح', 'Unified 114-Surah Quran Audio Hub Available')}</span>
                 </div>
                 <div style={{ fontSize: 13, color: '#047857', marginTop: 4, lineHeight: 1.4 }}>
-                  Listen to the entire Holy Quran (all 114 Surahs) by 4 world-renowned Qurra with continuous playback and synchronized Ayah tracking inside the Unified Quran Hub.
+                  {t('Listen to the entire Holy Quran (all 114 Surahs) by 4 world-renowned Qurra with continuous playback and synchronized Ayah tracking inside the Unified Quran Hub.', 'متحدہ قرآن ہب میں ۴ عالمی شہرت یافتہ قراء کی آواز میں مسلسل تلاوت اور ہم آہنگ آیت ٹریکنگ کے ساتھ مکمل قرآن مجید سنیں۔', 'استمع إلى القرآن الكريم كاملاً (١١٤ سورة) بصوت ٤ من كبار القراء مع تشغيل متواصل ومتابعة متزامنة للآيات.', 'Listen to the entire Holy Quran (all 114 Surahs) by 4 world-renowned Qurra with continuous playback inside the Unified Quran Hub.')}
                 </div>
               </div>
               <Link
                 href="/quran?tab=audio"
                 style={{
-                  backgroundColor: '#059669',
+                  backgroundColor: '#047857',
                   color: '#FFFFFF',
                   padding: '9px 18px',
                   borderRadius: 8,
@@ -248,7 +252,7 @@ export default function AudioPage() {
                   boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
                 }}
               >
-                <span>Open All 114 Surahs</span>
+                <span>{t('Open All 114 Surahs', 'تمام ۱۱۴ سورتیں کھولیں', 'فتح كافة السور (١١٤)', 'Open All 114 Surahs')}</span>
                 <span>➔</span>
               </Link>
             </div>
@@ -300,8 +304,8 @@ export default function AudioPage() {
                 <span>✈️</span>
                 <span style={{ fontWeight: 700, color: cachedUrls.size > 0 ? '#166534' : '#475569' }}>
                   {cachedUrls.size > 0
-                    ? `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`
-                    : 'آف لائن لسننگ (Offline Listening): کسی بھی باب کو بغیر انٹرنیٹ سننے کے لیے "⬇️ Save Offline" دبائیں۔'}
+                    ? t(`Offline Mode Ready: ${cachedUrls.size} chapters available offline (${totalCacheMb} MB)`, `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`, `وضع غير متصل جاهز: ${cachedUrls.size} أبواب متاحة دون إنترنت (${totalCacheMb} ميغابايت)`, `Offline mode tayyar: ${cachedUrls.size} abwab internet ke baghair dastiyab hain (${totalCacheMb} MB)`)
+                    : t('Offline Listening: Click "⬇️ Save Offline" on any chapter to listen without internet.', 'آف لائن سماعت: انٹرنیٹ کے بغیر سننے کے لیے کسی بھی باب پر "⬇️ آف لائن محفوظ کریں" دبائیں۔', 'الاستماع دون اتصال: انقر على "⬇️ حفظ دون اتصال" لأي باب للاستماع دون إنترنت.', 'Offline Samat: Internet ke baghair sunne ke liye kisi bhi bab par "⬇️ Save Offline" dabayein.')}
                 </span>
               </div>
               {cachedUrls.size > 0 && (
@@ -459,8 +463,8 @@ export default function AudioPage() {
                   </div>
 
                   {ch.narrator && (
-                    <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 12, direction: 'rtl', textAlign: 'right' }}>
-                      <strong>راوی (Narrator):</strong> {ch.narrator}
+                    <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 12, direction: (isUrdu || isArabic) ? 'rtl' : 'ltr', textAlign: (isUrdu || isArabic) ? 'right' : 'left' }}>
+                      <strong>{t('Narrator', 'راوی', 'الراوي', 'Rawi')}:</strong> {ch.narrator}
                     </div>
                   )}
 
@@ -546,7 +550,7 @@ export default function AudioPage() {
                           transition: 'all 0.15s ease',
                         }}
                       >
-                        <span>📺 اردو شرح (YouTube Dars) ↗</span>
+                        <span>{t('📺 Urdu Explanation (YouTube) ↗', '📺 اردو شرح (یوٹیوب) ↗', '📺 شرح أردو (يوتيوب) ↗', '📺 Urdu Sharh (YouTube) ↗')}</span>
                       </a>
                     ) : (
                       <button
@@ -619,10 +623,10 @@ export default function AudioPage() {
               <div>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#065F46', display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span>🕌</span>
-                  <span>سیرت النبی ﷺ آڈیو بکس و تفصیلی شروحات (Prophetic Sirah Audio Library)</span>
+                  <span>{t('Prophetic Sirah Audio Library & Scholarly Commentary', 'سیرت النبی ﷺ صوتی کتب خانہ و تفصیلی شروحات', 'مكتبة السيرة النبوية الصوتية والشروح المفصلة', 'Seerat-un-Nabi ﷺ Audio Library o Tafseeli Shuruhat')}</span>
                 </div>
                 <p style={{ margin: '4px 0 0', fontSize: 13, color: '#047857', lineHeight: 1.5 }}>
-                  اہل سنت و جماعت (سوادِ اعظم) کے جید ائمہ و محققین کی مستند کتبِ سیرت، مکمل بے حذف آڈیو کتب اور سلسلہ وار دروس کا صوتی انسائیکلوپیڈیا۔
+                  {t('Authentic Sirah audiobooks, complete unabridged recitations, and scholarly audio encyclopedias from Ahlus Sunnah scholars.', 'اہل سنت و جماعت (سوادِ اعظم) کے جید ائمہ و محققین کی مستند کتبِ سیرت، مکمل بے حذف صوتی کتب اور سلسلہ وار دروس کا صوتی انسائیکلوپیڈیا۔', 'كتب السيرة النبوية المعتمدة لعلماء أهل السنة والجماعة، مع تسجيلات صوتية كاملة وموسوعة دروس مسموعة.', 'Ahl-e-Sunnat ke mustanad aaimah ki sirat audiobooks aur dars encyclopaedia.')}
                 </p>
               </div>
 
@@ -642,7 +646,7 @@ export default function AudioPage() {
                     transition: 'all 0.15s ease',
                   }}
                 >
-                  📚 ۴ شاہکار کتبِ سیرت (Master Works)
+                  {t('📚 4 Master Sirah Works', '📚 ۴ شاہکار کتبِ سیرت', '📚 ٤ أمهات كتب السيرة', '📚 4 Shahkar Kutub-e-Seerat')}
                 </button>
                 <button
                   onClick={() => setSirahViewMode('TIMELINE')}
@@ -658,7 +662,7 @@ export default function AudioPage() {
                     transition: 'all 0.15s ease',
                   }}
                 >
-                  ⏳ خلاصۂ تاریخ (Timeline Lessons)
+                  {t('⏳ Chronological Lessons', '⏳ سلسلہ وار دروسِ تاریخ', '⏳ دروس تاريخية متسلسلة', '⏳ Silsilawar Duroos')}
                 </button>
               </div>
             </div>
@@ -682,8 +686,8 @@ export default function AudioPage() {
                 <span>✈️</span>
                 <span style={{ fontWeight: 700, color: cachedUrls.size > 0 ? '#166534' : '#475569' }}>
                   {cachedUrls.size > 0
-                    ? `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`
-                    : 'آف لائن لسننگ (Offline Listening): کسی بھی باب کو بغیر انٹرنیٹ سننے کے لیے "⬇️ Save Offline" دبائیں۔'}
+                    ? t(`Offline Mode Ready: ${cachedUrls.size} chapters available offline (${totalCacheMb} MB)`, `آف لائن موڈ تیار: ${cachedUrls.size} ابواب انٹرنیٹ کے بغیر دستیاب ہیں (${totalCacheMb} MB)`, `وضع غير متصل جاهز: ${cachedUrls.size} أبواب متاحة دون إنترنت (${totalCacheMb} ميغابايت)`, `Offline mode tayyar: ${cachedUrls.size} abwab internet ke baghair dastiyab hain (${totalCacheMb} MB)`)
+                    : t('Offline Listening: Click "⬇️ Save Offline" on any chapter to listen without internet.', 'آف لائن سماعت: انٹرنیٹ کے بغیر سننے کے لیے کسی بھی باب پر "⬇️ آف لائن محفوظ کریں" دبائیں۔', 'الاستماع دون اتصال: انقر على "⬇️ حفظ دون اتصال" لأي باب للاستماع دون إنترنت.', 'Offline Samat: Internet ke baghair sunne ke liye kisi bhi bab par "⬇️ Save Offline" dabayein.')}
                 </span>
               </div>
               {cachedUrls.size > 0 && (
@@ -853,7 +857,7 @@ export default function AudioPage() {
                             transition: 'all 0.15s ease',
                           }}
                         >
-                          <span>🎬 یوٹیوب مکمل پلے لسٹ ↗</span>
+                          <span>{t('🎬 YouTube Full Playlist ↗', '🎬 یوٹیوب مکمل پلے لسٹ ↗', '🎬 قائمة تشغيل يوتيوب ↗', '🎬 YouTube Full Playlist ↗')}</span>
                         </a>
 
                         {currentWork.externalSources.archiveOrgUrl && (
@@ -876,7 +880,7 @@ export default function AudioPage() {
                               transition: 'all 0.15s ease',
                             }}
                           >
-                            <span>🏛️ Archive.org MP3 پورٹل ↗</span>
+                            <span>{t('🏛️ Archive.org MP3 Portal ↗', '🏛️ Archive.org MP3 پورٹل ↗', '🏛️ أرشيف MP3 ↗', '🏛️ Archive.org MP3 Portal ↗')}</span>
                           </a>
                         )}
 
@@ -900,7 +904,7 @@ export default function AudioPage() {
                               transition: 'all 0.15s ease',
                             }}
                           >
-                            <span>🌐 سرکاری پبلیکیشن ریفرنس ↗</span>
+                            <span>{t('🌐 Official Reference ↗', '🌐 سرکاری پبلیکیشن ریفرنس ↗', '🌐 المرجع الرسمي ↗', '🌐 Official Reference ↗')}</span>
                           </a>
                         )}
 
@@ -1047,8 +1051,8 @@ export default function AudioPage() {
                                       whiteSpace: 'nowrap',
                                     }}
                                   >
-                                    <span>📺 یوٹیوب درس سنیں</span>
-                                    <span>Watch / Listen Dars ({Math.round(ch.durationSeconds / 60)}m) ↗</span>
+                                    <span>📺</span>
+                                    <span>{t('Watch / Listen Dars', 'یوٹیوب درس سنیں', 'استماع الدرس على يوتيوب', 'YouTube Dars Sunein')} ({Math.round(ch.durationSeconds / 60)}m) ↗</span>
                                   </a>
 
                                   {currentWork.externalSources?.officialPortalUrl && (
@@ -1072,7 +1076,7 @@ export default function AudioPage() {
                                         whiteSpace: 'nowrap',
                                       }}
                                     >
-                                      <span>📖 باضابطہ پورٹل ↗</span>
+                                      <span>📖 {t('Official Portal ↗', 'باضابطہ پورٹل ↗', 'البوابة الرسمية ↗', 'Official Portal ↗')}</span>
                                     </a>
                                   )}
                                 </>
@@ -1106,8 +1110,11 @@ export default function AudioPage() {
                                       whiteSpace: 'nowrap',
                                     }}
                                   >
-                                    <span>{isThisPlaying ? '⏸ وقفہ' : '▶ سنیں'}</span>
-                                    <span>{isThisPlaying ? 'Pause Audio' : `Play (${Math.round(ch.durationSeconds / 60)}m)`}</span>
+                                    <span>
+                                      {isThisPlaying
+                                        ? t('⏸ Pause Audio', '⏸ وقفہ', '⏸ إيقاف مؤقت', '⏸ Pause Audio')
+                                        : t(`▶ Play (${Math.round(ch.durationSeconds / 60)}m)`, `▶ سنیں (${Math.round(ch.durationSeconds / 60)} منٹ)`, `▶ استماع (${Math.round(ch.durationSeconds / 60)} د)`, `▶ Sunein (${Math.round(ch.durationSeconds / 60)}m)`)}
+                                    </span>
                                   </button>
 
                                   {/* Offline Airplane Mode Save Button */}
@@ -1229,7 +1236,13 @@ export default function AudioPage() {
                     color: '#1E40AF',
                   }}
                 >
-                  🕌 <strong>Authentic Chronological Sirah Lessons (خلاصۂ سیرت النبی):</strong> High-fidelity audio lessons detailing the life and milestones of the Prophet Muhammad ﷺ from birth through the Madinan era.
+                  🕌 <strong>{t('Authentic Chronological Sirah Lessons', 'خلاصۂ سیرت النبی ﷺ', 'دروس السيرة النبوية المؤصلة', 'Khulasa-e-Seerat un Nabi ﷺ')}:</strong>{' '}
+                  {t(
+                    'High-fidelity audio lessons detailing the life and milestones of the Prophet Muhammad ﷺ from birth through the Madinan era.',
+                    'حضور اکرم ﷺ کی ولادتِ باسعادت سے لے کر مدنی دور تک کے تمام مراحل پر مشتمل مستند صوتی اسباق۔',
+                    'دروس صوتية عالية الجودة تتناول مراحل السيرة النبوية الشريفة من المولد النبوي إلى العهد المدني.',
+                    'Huzoor Pak ﷺ ki wiladat se lekar Madani daur tak ke mukammal marahil par mustanad audio dars.'
+                  )}
                 </div>
 
                 {audioStreamingEngine.sirahEpisodes.map((ep) => {

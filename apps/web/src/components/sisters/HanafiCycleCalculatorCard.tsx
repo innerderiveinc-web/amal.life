@@ -21,29 +21,29 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
   const { isUrdu, isRomanUrdu, t } = useLanguage();
 
   const getStatusText = () => {
-    if (isRomanUrdu) return calcResult.statusRomanUrdu || calcResult.statusUrdu;
+    if (isRomanUrdu) return calcResult.statusRomanUrdu || calcResult.statusEnglish;
     if (isUrdu) return calcResult.statusUrdu;
     return calcResult.statusEnglish;
   };
 
   const getPrayerRuling = () => {
-    if (isRomanUrdu) return calcResult.prayerRulingsRomanUrdu || calcResult.prayerRulingsUrdu;
+    if (isRomanUrdu) return calcResult.prayerRulingsRomanUrdu || calcResult.prayerRulingsEnglish;
     if (isUrdu) return calcResult.prayerRulingsUrdu;
     return calcResult.prayerRulingsEnglish;
   };
 
   const getGhuslObligation = () => {
-    if (isRomanUrdu) return calcResult.ghuslObligationRomanUrdu || calcResult.ghuslObligationUrdu;
+    if (isRomanUrdu) return calcResult.ghuslObligationRomanUrdu || calcResult.ghuslObligationEnglish;
     if (isUrdu) return calcResult.ghuslObligationUrdu;
     return calcResult.ghuslObligationEnglish;
   };
 
-  const getPrescriptions = () => {
-    if (isRomanUrdu && calcResult.spiritualPrescriptionRomanUrdu) {
-      return calcResult.spiritualPrescriptionRomanUrdu;
+  const getPrescriptions = (): string[] => {
+    if (isRomanUrdu) {
+      return calcResult.spiritualPrescriptionRomanUrdu || calcResult.spiritualPrescriptionEnglish || [];
     }
-    if (isUrdu) return calcResult.spiritualPrescriptionUrdu;
-    return calcResult.spiritualPrescriptionEnglish || calcResult.spiritualPrescriptionUrdu;
+    if (isUrdu) return calcResult.spiritualPrescriptionUrdu || [];
+    return calcResult.spiritualPrescriptionEnglish || calcResult.spiritualPrescriptionUrdu || [];
   };
   return (
     <div
@@ -91,7 +91,7 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
       >
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            {t('Total Bleeding Days:', 'خون کے کل دن (Total Days):', 'مجموع أيام الدم:', 'Khoon ke Kul Din (Total Days):')}
+            {t('Total Bleeding Days:', 'خون کے کل ایام:', 'مجموع أيام الدم:', 'Khoon ke Kul Din:')}
           </label>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <input
@@ -131,9 +131,9 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
             {t(
               'Your Normal Habit Days:',
-              'معمول کی سابقہ عادت (Normal Habit):',
+              'معمول کی سابقہ عادت:',
               'أيام العادة السابقة:',
-              'Mamool ki Sabiqa Aadat (Habit Days):'
+              'Mamool ki Sabiqa Aadat:'
             )}
           </label>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -149,7 +149,7 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
               style={{
                 minWidth: 44,
                 padding: '4px 10px',
-                backgroundColor: '#D97706',
+                backgroundColor: '#B45309',
                 color: '#FFFFFF',
                 borderRadius: 8,
                 fontSize: 14,
@@ -208,7 +208,7 @@ export const HanafiCycleCalculatorCard: React.FC<HanafiCycleCalculatorCardProps>
             }}
           >
             {calcResult.status === 'VALID_HAIDH'
-              ? t('✓ Valid Haidh', '✓ حیضِ شرعی (Valid Haidh)', '✓ حيض شرعي صحيح', '✓ Haidh-e-Shar\'i (Valid Haidh)')
+              ? t('✓ Valid Haidh', '✓ حیضِ شرعی', '✓ حيض شرعي صحيح', '✓ Haidh-e-Shar\'i')
               : calcResult.status === 'EXCESS_ISTIHADHA'
               ? t('⚠️ Habit Exceeded (Istihadha)', '⚠️ عادت سے تجاوز (استحاضہ)', '⚠️ تجاوز العادة (استحاضة)', '⚠️ Aadat se Tajawuz (Istihadha)')
               : t('⚠️ Deficient Bleeding (Istihadha)', '⚠️ ۳ دن سے کم (استحاضہ)', '⚠️ أقل من ٣ أيام (استحاضة)', '⚠️ 3 Din se Kam (Istihadha)')}

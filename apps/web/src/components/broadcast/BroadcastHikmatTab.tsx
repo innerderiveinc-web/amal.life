@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { DailyKnowledgeBroadcast } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface BroadcastHikmatTabProps {
   hikmat: DailyKnowledgeBroadcast['hikmat'];
@@ -15,6 +16,7 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
   onCopy,
   onMakeCard,
 }) => {
+  const { t } = useLanguage();
   return (
     <div style={{ animation: 'fadeIn 0.2s ease-in-out' }}>
       <div
@@ -50,7 +52,9 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
             color: '#475569',
           }}
         >
-          {copied ? '✅ کاپی ہو گیا' : '📋 نصیحت کاپی کریں'}
+          {copied
+            ? t('✅ Copied', '✅ کاپی ہو گیا', '✅ تم النسخ', '✅ Copy ho gaya')
+            : t('📋 Copy Wisdom', '📋 نصیحت کاپی کریں', '📋 نسخ الحكمة', '📋 Nasihat Copy Karein')}
         </button>
       </div>
 
@@ -90,9 +94,19 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
           marginBottom: 12,
         }}
       >
-        <span style={{ fontWeight: 800, color: '#6D28D9' }}>بصیرت و نصیحت: </span>
+        <span style={{ fontWeight: 800, color: '#6D28D9' }}>
+          بصیرت و نصیحت:{' '}
+        </span>
         {hikmat.urduWisdom}
       </div>
+
+      {/* English Wisdom */}
+      {hikmat.englishWisdom && (
+        <div style={{ fontSize: 13.5, color: '#374151', marginBottom: 14, lineHeight: 1.6, padding: '10px 14px', backgroundColor: '#F8FAFC', borderRadius: 8, border: '1px solid #E2E8F0' }}>
+          <strong style={{ color: '#6D28D9' }}>{t('English Wisdom: ', 'انگریزی حکمت: ', 'الحكمة بالإنجليزية: ', 'English Hikmat: ')}</strong>
+          &ldquo;{hikmat.englishWisdom}&rdquo;
+        </div>
+      )}
 
       {/* Practical Reflection */}
       <div
@@ -106,7 +120,7 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
           marginBottom: 16,
         }}
       >
-        <strong>🌱 آج کا عملی محاسبہ: </strong> {hikmat.practicalReflection}
+        <strong>🌱 {t('Daily Self-Reflection: ', 'آج کا عملی محاسبہ: ', 'المحاسبة اليومية: ', 'Aaj ka Jaiza: ')}</strong> {hikmat.practicalReflection}
       </div>
 
       {/* Action Footer */}
@@ -129,7 +143,7 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
               boxShadow: '0 2px 4px rgba(91, 33, 182, 0.2)',
             }}
           >
-            <span>📸 حکمت کارڈ بنائیں</span>
+            <span>📸 {t('Create Wisdom Card', 'حکمت کارڈ بنائیں', 'إنشاء بطاقة الحكمة', 'Hikmat Card Banayein')}</span>
           </button>
         )}
 
@@ -148,7 +162,7 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
             gap: 6,
           }}
         >
-          <span>💎 نالج والٹ میں محفوظ کریں →</span>
+          <span>💎 {t('Save to Knowledge Vault →', 'نالج والٹ میں محفوظ کریں →', 'حفظ في خزينة المعرفة ←', 'Knowledge Vault me Save Karein →')}</span>
         </Link>
         <Link
           href="/reflections"
@@ -163,7 +177,7 @@ export const BroadcastHikmatTab: React.FC<BroadcastHikmatTabProps> = ({
             border: '1px solid #CBD5E1',
           }}
         >
-          شام کا محاسبہ و توبہ
+          {t('Evening Muhasabah & Taubah', 'شام کا محاسبہ و توبہ', 'محاسبة المساء والتوبة', 'Shaam ka Jaiza & Tauba')}
         </Link>
       </div>
     </div>

@@ -60,7 +60,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const t = (en: string, ur?: string, ar?: string, roman?: string): string => {
-    if (language === 'roman') return roman || ur || en;
+    if (language === 'roman') return roman || en;
     if (language === 'ur' && ur) return ur;
     if (language === 'ar' && ar) return ar;
     return en;

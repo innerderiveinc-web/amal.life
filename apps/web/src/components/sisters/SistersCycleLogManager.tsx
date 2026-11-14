@@ -350,7 +350,7 @@ export const SistersCycleLogManager: React.FC<SistersCycleLogManagerProps> = ({
         </h3>
 
         {savedCycles.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: 24, color: '#9CA3AF', fontSize: 13 }}>
+          <div style={{ textAlign: 'center', padding: 24, color: '#64748B', fontSize: 13, fontWeight: 500 }}>
             {t(
               'No cycle records saved yet. Add an entry using the form above.',
               'ابھی تک کوئی اندراج محفوظ نہیں ہوا۔ اوپر دیئے گئے فارم سے تاریخ درج کریں۔',

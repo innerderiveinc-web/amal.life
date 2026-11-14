@@ -33,7 +33,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
           }}
         >
           <span>🕋</span>
-          <span>{t('Worship & Al-Quran', 'عبادات و کلامِ پاک', 'العبادات والقرآن الكريم', 'Ibadat o Kalam-e-Paak')}</span>
+          <span>{t('Worship & Al-Quran', 'عبادات و کلامِ پاک', 'العبادات والقرآن الكريم', 'Ibadat & Quran Kareem')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
@@ -49,8 +49,8 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
                 gap: 6,
               }}
             >
-              <span style={{ color: '#10B981' }}>✦</span>
-              <span>{t('Al-Quran Reader & Audio', 'قرآنِ کریم (تلاوت و ترجمہ)', 'القرآن الكريم (تلاوة وترجمة)', 'Quran-e-Kareem (Tilawat o Tarjuma)')}</span>
+              <span style={{ color: '#34D399' }}>✦</span>
+              <span>{t('Al-Quran Reader & Audio', 'قرآنِ کریم (تلاوت و ترجمہ)', 'القرآن الكريم (تلاوة وترجمة)', 'Quran Kareem (Tilawat & Tarjuma)')}</span>
             </Link>
           </li>
           <li>
@@ -67,32 +67,32 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
               }}
             >
               <span style={{ color: '#F59E0B' }}>★</span>
-              <span>{t('Sacred Knowledge Cards', 'قرآنی حکمت کارڈز', 'بطاقات الحكمة القرآنية', 'Qurani Hikmat Cards')}</span>
+              <span>{t('Sacred Knowledge Cards', 'قرآنی حکمت کارڈز', 'بطاقات الحكمة القرآنية', 'Quranic Wisdom Cards')}</span>
             </Link>
           </li>
           <li>
             <Link href="/prayer" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Prayer Times & Qibla Compass', 'اوقاتِ نماز و قبلہ نما', 'مواقيت الصلاة وبوصلة القبلة', 'Auqat-e-Namaz o Qibla Numa')}
+              {t('Prayer Times & Qibla Compass', 'اوقاتِ نماز و قبلہ نما', 'مواقيت الصلاة وبوصلة القبلة', 'Namaz ke Auqaat & Qibla')}
             </Link>
           </li>
           <li>
             <Link href="/tasbih" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Digital Masnoon Tasbih', 'مسنون تسبیح و اذکار', 'المسبحة المسنونة والأذكار', 'Masnoon Tasbih o Azkaar')}
+              {t('Digital Masnoon Tasbih', 'مسنون تسبیح و اذکار', 'المسبحة المسنونة والأذكار', 'Masnoon Tasbih Counter')}
             </Link>
           </li>
           <li>
             <Link href="/calendar" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Hijri Calendar & Sunnah Fasting', 'ہجری کیلنڈر و مسنون روزے', 'التقويم الهجري وصيام السنة', 'Hijri Calendar o Masnoon Rozay')}
+              {t('Hijri Calendar & Sunnah Fasting', 'ہجری کیلنڈر و مسنون روزے', 'التقويم الهجري وصيام السنة', 'Hijri Calendar aur Rozey')}
             </Link>
           </li>
           <li>
             <Link href="/tajweed" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Tajweed & Audio Pronunciation', 'تجوید و مخارج صوتی مشق', 'التجويد ومخارج الحروف الصوتية', 'Tajweed o Makharij')}
+              {t('Tajweed & Audio Pronunciation', 'تجوید و مخارج صوتی مشق', 'التجويد ومخارج الحروف الصوتية', 'Tajweed & Makharij Audio')}
             </Link>
           </li>
           <li>
             <Link href="/hajj" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Hajj & Umrah Pilgrimage Guide', 'حج و عمرہ رہنمائی', 'دليل مناسك الحج والعمرة', 'Hajj o Umrah Rehnumai')}
+              {t('Hajj & Umrah Pilgrimage Guide', 'حج و عمرہ رہنمائی', 'دليل مناسك الحج والعمرة', 'Hajj & Umrah Guide')}
             </Link>
           </li>
         </ul>
@@ -113,37 +113,37 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
           }}
         >
           <span>📚</span>
-          <span>{t('Knowledge & Prophetic Sirah', 'علم و سیرتِ مبارکہ ﷺ', 'العلم والسيرة النبوية الشريفة ﷺ', 'Ilm o Seerat-e-Mubarakah ﷺ')}</span>
+          <span>{t('Knowledge & Prophetic Sirah', 'علم و سیرتِ مبارکہ ﷺ', 'العلم والسيرة النبوية الشريفة ﷺ', 'Ilm & Sirat-un-Nabi ﷺ')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
             <Link href="/sirah" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Living Sirah & Shama\'il', 'سیرت النبی ﷺ و شمائل', 'السيرة النبوية والشمائل المحمدية', 'Seerat-un-Nabi ﷺ wa Shamail')}
+              {t('Living Sirah & Shama\'il', 'سیرت النبی ﷺ و شمائل', 'السيرة النبوية والشمائل المحمدية', 'Sirat-un-Nabi ﷺ & Shamail')}
             </Link>
           </li>
           <li>
             <Link href="/library" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('106-Book Canonical Library', '106 معتمد کتبِ اہل سنت', 'المكتبة المعتمدة (١٠٦ كتب)', '106 Mu\'tamad Kutub-e-Ahl-e-Sunnat')}
+              {t('106-Book Canonical Library', '106 معتمد کتبِ اہل سنت', 'المكتبة المعتمدة (١٠٦ كتب)', 'Classical Library (130 Kitabein)')}
             </Link>
           </li>
           <li>
             <Link href="/audio" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Quran Audio (4 Master Qurra)', 'تلاوتِ قرآن (۴ معتمد قراء)', 'تلاوات القرآن (٤ قراء معتمدين)', 'Tilawat-e-Quran (4 Mu\'tamad Qurra)')}
+              {t('Quran Audio (4 Master Qurra)', 'تلاوتِ قرآن (۴ معتمد قراء)', 'تلاوات القرآن (٤ قراء معتمدين)', 'Quran Audio (4 Mashhoor Qurra)')}
             </Link>
           </li>
           <li>
             <Link href="/ask" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Ask AMAL (Evidence Inquiries)', 'دینی سوال و مستند حوالہ جات', 'اسأل أمل (استفسارات موثقة)', 'Ask AMAL (Dini Sawal o Hawala Jaat)')}
+              {t('Ask AMAL (Evidence Inquiries)', 'دینی سوال و مستند حوالہ جات', 'اسأل أمل (استفسارات موثقة)', 'Ask AMAL (Kitabon se Khoj)')}
             </Link>
           </li>
           <li>
             <Link href="/vault" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Knowledge Vault & Study Notes', 'علمی ذخیرہ و خطبات کے نوٹس', 'خزانة المعرفة وملاحظات الخطب', 'Ilmi Zakheera o Khutbat Notes')}
+              {t('Knowledge Vault & Study Notes', 'علمی ذخیرہ و خطبات کے نوٹس', 'خزانة المعرفة وملاحظات الخطب', 'Knowledge Vault & Bayanat')}
             </Link>
           </li>
           <li>
             <Link href="/journeys" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('40-Day Spiritual Journeys', '40 روزہ دینی سفر', 'الرحلات الإيمانية الأربعينية', '40 Roza Dini Safar')}
+              {t('40-Day Spiritual Journeys', '40 روزہ دینی سفر', 'الرحلات الإيمانية الأربعينية', '14-Day Deeni Journeys')}
             </Link>
           </li>
         </ul>
@@ -164,37 +164,37 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
           }}
         >
           <span>⚖️</span>
-          <span>{t('Fiqh Guidance & Family OS', 'فقہی احکام و خاندانی نظام', 'الأحكام الفقهية والنظام الأسري', 'Fiqhi Ahkam o Khandani Nizam')}</span>
+          <span>{t('Fiqh Guidance & Family OS', 'فقہی احکام و خاندانی نظام', 'الأحكام الفقهية والنظام الأسري', 'Fiqh & Family Guidance')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
             <Link href="/calculator" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Zakat & Nisab Calculator', 'زکوٰۃ و نصاب کیلکولیٹر', 'حاسبة الزكاة والنصاب', 'Zakat o Nisab Calculator')}
+              {t('Zakat & Nisab Calculator', 'زکوٰۃ و نصاب کیلکولیٹر', 'حاسبة الزكاة والنصاب', 'Zakat & Gold Calculator')}
             </Link>
           </li>
           <li>
             <Link href="/calculator" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Miras Quranic Inheritance Shares', 'میراثِ شرعیہ و فرائض کی تقسیم', 'الميراث الشرعي وحساب الفرائض', 'Miras Shar\'iyah o Faraiz')}
+              {t('Miras Quranic Inheritance Shares', 'میراثِ شرعیہ و فرائض کی تقسیم', 'الميراث الشرعي وحساب الفرائض', 'Miras & Property Share Calculator')}
             </Link>
           </li>
           <li>
             <Link href="/decision-room" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Decision Room & Scholar Packet', 'ڈیسیژن روم و مفتی پیکٹ', 'غرفة القرار وحزمة المستفتي', 'Decision Room o Mufti Packet')}
+              {t('Decision Room & Scholar Packet', 'ڈیسیژن روم و مفتی پیکٹ', 'غرفة القرار وحزمة المستفتي', 'Decision Room (Mufti Packet)')}
             </Link>
           </li>
           <li>
             <Link href="/family" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Family Deen Hub & Supervisions', 'خاندانی دینی نظام و حفاظت', 'حماية ورقابة الأسرة المسلمة', 'Khandani Dini Nizam o Hifazat')}
+              {t('Family Deen Hub & Supervisions', 'خاندانی دینی نظام و حفاظت', 'حماية ورقابة الأسرة المسلمة', 'Family Deen Hub & Tarbiyah')}
             </Link>
           </li>
           <li>
             <Link href="/reflections" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Evening Muhasabah & Reflections', 'شام کا محاسبہ و نجی ڈائری', 'محاسبة المساء والخواطر الخاصة', 'Shaam Ka Muhasabah o Diary')}
+              {t('Evening Muhasabah & Reflections', 'شام کا محاسبہ و نجی ڈائری', 'محاسبة المساء والخواطر الخاصة', 'Daily Reflection (Aaj ka Jaiza)')}
             </Link>
           </li>
           <li>
             <Link href="/goals" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Spiritual Habits & Goals Tracker', 'دینی مقاصد و عادات', 'متتبع الأهداف والعادات الإيمانية', 'Dini Maqasid o Aadat Tracker')}
+              {t('Spiritual Habits & Goals Tracker', 'دینی مقاصد و عادات', 'متتبع الأهداف والعادات الإيمانية', 'Deeni Goals & Habits Tracker')}
             </Link>
           </li>
         </ul>
@@ -215,7 +215,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
           }}
         >
           <span>🛡️</span>
-          <span>{t('Sovereign Trust & Governance', 'پالیسی، شرعی قواعد و امانت', 'السياسة والأمانة الشرعية والحوكمة', 'Policy, Shar\'i Qawaid o Amanat')}</span>
+          <span>{t('Sovereign Trust & Governance', 'پالیسی، شرعی قواعد و امانت', 'السياسة والأمانة الشرعية والحوكمة', 'Privacy & Trust Policies')}</span>
         </h4>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <li>
@@ -232,7 +232,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
               }}
             >
               <span>📜</span>
-              <span>{t('Terms of Service & Adab', 'شرائط و شرعی آداب', 'شروط الاستخدام والآداب الشرعية', 'Shara\'it o Shar\'i Adaab')}</span>
+              <span>{t('Terms of Service & Adab', 'شرائط و شرعی آداب', 'شروط الاستخدام والآداب الشرعية', 'Terms of Service & Rules')}</span>
             </Link>
           </li>
           <li>
@@ -249,7 +249,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
               }}
             >
               <span>🔒</span>
-              <span>{t('Privacy Policy & Zero-Ad Guarantee', 'پرائیویسی و صفر ٹریکنگ امانت', 'سياسة الخصوصية وضمان عدم التتبع', 'Privacy Policy o Zero Tracking')}</span>
+              <span>{t('Privacy Policy & Zero-Ad Guarantee', 'پرائیویسی و صفر ٹریکنگ امانت', 'سياسة الخصوصية وضمان عدم التتبع', 'Privacy Policy (100% Zero Ads)')}</span>
             </Link>
           </li>
           <li>
@@ -266,17 +266,17 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
               }}
             >
               <span>⚖️</span>
-              <span>{t('Copyright, Waqf & Attribution', 'کاپی رائٹ، وقف و اوپن سورس', 'حقوق التأليف والوقف والمصادر', 'Copyright, Waqf o Open Source')}</span>
+              <span>{t('Copyright, Waqf & Attribution', 'کاپی رائٹ، وقف و اوپن سورس', 'حقوق التأليف والوقف والمصادر', 'Copyright & Open Source')}</span>
             </Link>
           </li>
           <li>
             <Link href="/about" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('About AMAL OS & Epistemic Creed', 'تعارف و شرعی منہج', 'عن نظام أمل والمنهج المعرفي', 'Ta\'aruf o Shar\'i Manhaj')}
+              {t('About AMAL OS & Epistemic Creed', 'تعارف و شرعی منہج', 'عن نظام أمل والمنهج المعرفي', 'About AMAL OS (Hamara Maqsad)')}
             </Link>
           </li>
           <li>
             <Link href="/contact" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: 13 }}>
-              {t('Contact & Scholarly Inquiries', 'رابطہ و شرعی استفسار', 'الاتصال والاستفسار العلمي الشرعي', 'Rabtah o Shar\'i Istifsaar')}
+              {t('Contact & Scholarly Inquiries', 'رابطہ و شرعی استفسار', 'الاتصال والاستفسار العلمي الشرعي', 'Contact & Help')}
             </Link>
           </li>
           <li>
@@ -289,7 +289,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
                 fontWeight: 700,
               }}
             >
-              ⚙️ {t('System Settings & Control', 'مرکزی ترتیبات', 'إعدادات النظام العامة', 'Markazi Tarteebat')}
+              ⚙️ {t('System Settings & Control', 'مرکزی ترتیبات', 'إعدادات النظام العامة', 'Settings & Preferences')}
             </Link>
           </li>
         </ul>

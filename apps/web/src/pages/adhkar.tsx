@@ -11,9 +11,11 @@ import { useLanguage } from '../context/LanguageContext';
 import { AdhkarHeader } from '../components/adhkar/AdhkarHeader';
 import { AdhkarCard } from '../components/adhkar/AdhkarCard';
 import { useAdhkarHaptics } from '../components/adhkar/useAdhkarHaptics';
+import { useWakeLock } from '../hooks/useWakeLock';
 
 export default function AdhkarPage() {
   const { t, isUrdu } = useLanguage();
+  useWakeLock(true); // Native screen wake lock ensures Adhkar recitation is uninterrupted
 
   // Determine default mode based on current local time
   const [activeTab, setActiveTab] = useState<'MORNING' | 'EVENING'>(() => {
@@ -92,7 +94,16 @@ export default function AdhkarPage() {
     triggerFeedback(isNowDone);
 
     if (isNowDone && current < item.targetCount) {
-      showAmalToast(`سبحان اللہ! ${item.titleUrdu} مکمل ہو گیا`, 'success');
+      const displayTitle = isUrdu ? item.titleUrdu : item.titleEnglish;
+      showAmalToast(
+        t(
+          `Subhan'Allah! ${item.titleEnglish} completed (${item.targetCount}x)`,
+          `سبحان اللہ! ${item.titleUrdu} مکمل ہو گیا (${item.targetCount} بار)`,
+          `سبحان الله! اكتمل ${item.titleArabic || item.titleEnglish} (${item.targetCount} مرات)`,
+          `Subhan'Allah! ${displayTitle} mukammal ho gaya (${item.targetCount}x)`
+        ),
+        'success'
+      );
     }
   };
 
@@ -112,14 +123,24 @@ export default function AdhkarPage() {
       confirm(
         t(
           'Reset all adhkar counters for today?',
-          'کیا آپ آج کے تمام اذکار کا کاؤنٹر دوبارہ صفر کرنا چاہتے ہیں؟'
+          'کیا آپ آج کے تمام اذکار کا کاؤنٹر دوبارہ صفر کرنا چاہتے ہیں؟',
+          'هل تريد إعادة ضبط جميع عدادات الأذكار لليوم؟',
+          'Kya aap aaj ke tamam adhkar counters ko dobara zero karna chahte hain?'
         )
       )
     ) {
       setCounts({});
       setCompletedIds({});
       saveProgress({}, {});
-      showAmalToast(t('All counters have been reset', 'تمام اذکار دوبارہ ری سیٹ ہو گئے'), 'info');
+      showAmalToast(
+        t(
+          'All counters have been reset',
+          'تمام اذکار دوبارہ ری سیٹ ہو گئے',
+          'تمت إعادة ضبط جميع العدادات',
+          'Tamam counters reset ho gaye'
+        ),
+        'info'
+      );
     }
   };
 
@@ -134,14 +155,9 @@ export default function AdhkarPage() {
       : 0;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#F8FAF9' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#FDFBF7' }}>
       <Head>
-        <title>
-          {t(
-            'Morning & Evening Sunnah Adhkar | AMAL OS',
-            'صبح و شام کے مسنون اذکار | امل او ایس'
-          )}
-        </title>
+        <title>{t('Morning & Evening Sunnah Adhkar | AMAL OS', 'صبح و شام کے مسنون اذکار | امل او ایس', 'أذكار الصباح والمساء المسنونة | نظام أمل', 'Subah o Sham ke Masnoon Adhkar | AMAL OS')}</title>
         <meta
           name="description"
           content="Authentic Morning and Evening prophetic Adhkar (Hisn al-Hasin, Bahar-e-Shariat, Sahih Hadith) with interactive digital tap ring, virtues, and progress tracking."

@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { showAmalToast } from '../Toast';
 import { drawUniversalContentCard } from './universal-canvas-renderer';
 
@@ -45,11 +46,12 @@ export interface UniversalContentShareModalProps {
 export type CardAspect = 'POST' | 'STORY';
 export type CardColorTheme = 'PRIMARY' | 'NIGHT_VELVET' | 'PARCHMENT';
 
-export const UniversalContentShareModal: React.FC<UniversalContentShareModalProps> = ({
+const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps> = ({
   isOpen,
   onClose,
   payload,
 }) => {
+  const { t } = useLanguage();
   const [aspect, setAspect] = useState<CardAspect>('POST');
   const [themeMode, setThemeMode] = useState<CardColorTheme>('PRIMARY');
   const [includeEnglish, setIncludeEnglish] = useState<boolean>(true);
@@ -76,9 +78,16 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
       }
       renderCardToCanvas();
       const t = setTimeout(() => renderCardToCanvas(), 180);
-      return () => clearTimeout(t);
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        clearTimeout(t);
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-  }, [isOpen, payload, renderCardToCanvas]);
+  }, [isOpen, payload, renderCardToCanvas, onClose]);
 
   if (!isOpen || !payload) return null;
 
@@ -107,7 +116,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   title: `${resolvedUrdu} · ${payload.titleUrdu}`,
                   text: `${payload.titleUrdu} — AMAL OS`,
                 });
-                showAmalToast('Sacred Card shared successfully!', 'success');
+                showAmalToast(t('Sacred Card shared successfully!', 'کارڈ کامیابی سے شیئر کر دیا گیا!', 'تمت مشاركة البطاقة بنجاح!', 'Card share ho gaya!'), 'success');
                 setIsGenerating(false);
                 return;
               } catch (e: any) {
@@ -131,7 +140,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
               document.body.removeChild(link);
               URL.revokeObjectURL(blobUrl);
             }, 150);
-            showAmalToast('Sacred Card downloaded successfully! (تصویر محفوظ ہو گئی)', 'success');
+            showAmalToast(t('Sacred Card downloaded successfully!', 'کارڈ تصویر کامیابی سے محفوظ ہو گئی!', 'تم حفظ البطاقة بنجاح!', 'Card download ho gaya!'), 'success');
             setIsGenerating(false);
           } else {
             fallbackDataUrlDownload();
@@ -164,9 +173,9 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
       setTimeout(() => {
         document.body.removeChild(link);
       }, 150);
-      showAmalToast('Sacred Card downloaded! (تصویر محفوظ ہو گئی)', 'success');
+      showAmalToast(t('Sacred Card downloaded!', 'کارڈ تصویر کامیابی سے محفوظ ہو گئی!', 'تم حفظ البطاقة بنجاح!', 'Sacred Card download ho gaya!'), 'success');
     } catch {
-      showAmalToast('براہ کرم کارڈ پر لانگ پریس کر کے محفوظ فرمائیں۔ (Long-press image to save)', 'info');
+      showAmalToast(t('Please long-press the card image to save.', 'براہ کرم کارڈ پر لانگ پریس کر کے محفوظ فرمائیں۔', 'يرجى الضغط مطولاً على الصورة لحفظها.', 'Card par long-press kar ke save karein.'), 'info');
     } finally {
       setIsGenerating(false);
     }
@@ -185,13 +194,13 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
           await navigator.clipboard.write([
             new window.ClipboardItem({ 'image/png': blob }),
           ]);
-          showAmalToast('Card copied to clipboard! Ready to paste into WhatsApp / Telegram.', 'success');
+          showAmalToast(t('Card copied to clipboard! Ready to paste.', 'کارڈ کلپ بورڈ پر کاپی ہو گیا! پیسٹ کے لیے تیار ہے۔', 'تم نسخ البطاقة إلى الحافظة!', 'Card copy ho gaya!'), 'success');
         } else {
           // Fallback to text copy
           await navigator.clipboard.writeText(
             `${payload.titleUrdu}\n\n${payload.arabicText ? `${payload.arabicText}\n\n` : ''}${payload.primaryTextUrdu}\n\n[ماخذ: ${payload.sourceCitation} — AMAL OS (amal.life)]`
           );
-          showAmalToast('Text and citation copied to clipboard!', 'info');
+          showAmalToast(t('Text and citation copied to clipboard!', 'متن اور حوالہ کلپ بورڈ پر کاپی ہو گیا!', 'تم نسخ النص والسند إلى الحافظة!', 'Matn aur sanad copy ho gayi!'), 'info');
         }
         setIsGenerating(false);
       }, 'image/png', 1.0);
@@ -225,7 +234,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
       `سند و ماخذ: ${payload.sourceCitation}\n` +
       `AMAL OS (amal.life)`;
     await navigator.clipboard.writeText(text);
-    showAmalToast('Content and citation copied to clipboard!', 'success');
+    showAmalToast(t('Content and citation copied to clipboard!', 'متن اور حوالہ کلپ بورڈ پر کاپی ہو گیا!', 'تم نسخ المحتوى والسند إلى الحافظة!', 'Matn aur hawala copy ho gaya!'), 'success');
   };
 
   return (
@@ -342,8 +351,8 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   }}
                 >
                   <span style={{ fontSize: 18 }}>⏹️</span>
-                  <span>Square Post (1:1)</span>
-                  <span style={{ fontSize: 10, opacity: 0.75 }}>Instagram &amp; Chat</span>
+                  <span>{t('Square Post (1:1)', 'مربع پوسٹ (۱:۱)', 'منشور مربع (١:١)', 'Square Post (1:1)')}</span>
+                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('Instagram & Chat', 'انسٹاگرام اور چیٹ', 'إنستغرام والدردشة', 'Instagram & Chat')}</span>
                 </button>
 
                 <button
@@ -365,8 +374,8 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   }}
                 >
                   <span style={{ fontSize: 18 }}>📱</span>
-                  <span>Vertical Story (9:16)</span>
-                  <span style={{ fontSize: 10, opacity: 0.75 }}>WhatsApp &amp; Stories</span>
+                  <span>{t('Vertical Story (9:16)', 'عمودی اسٹوری (۹:۱۶)', 'قصة رأسية (٩:١٦)', 'Vertical Story (9:16)')}</span>
+                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('WhatsApp & Stories', 'واٹس ایپ اور اسٹوریز', 'واتساب والقصص', 'WhatsApp & Stories')}</span>
                 </button>
               </div>
             </div>
@@ -447,7 +456,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                 }}
               >
                 <span>📥</span>
-                <span>تصویر ڈاؤن لوڈ کریں (Download PNG)</span>
+                <span>{t('Download Image (PNG)', 'تصویر ڈاؤن لوڈ کریں', 'تحميل الصورة بصيغة PNG', 'Image Download Karein (PNG)')}</span>
               </button>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -471,7 +480,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   }}
                 >
                   <span>📋</span>
-                  <span>کاپی امیج</span>
+                  <span>{t('Copy Image', 'تصویر کاپی کریں', 'نسخ الصورة', 'Image Copy Karein')}</span>
                 </button>
 
                 <button
@@ -480,7 +489,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   style={{
                     padding: '10px 14px',
                     borderRadius: 10,
-                    backgroundColor: '#25D366',
+                    backgroundColor: '#075E54',
                     color: '#FFFFFF',
                     border: 'none',
                     fontSize: 12,
@@ -493,7 +502,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                   }}
                 >
                   <span>💬</span>
-                  <span>واٹس ایپ شیئر</span>
+                  <span>{t('Share WhatsApp', 'واٹس ایپ شیئر', 'مشاركة واتساب', 'WhatsApp Share')}</span>
                 </button>
               </div>
 
@@ -516,7 +525,7 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
                 }}
               >
                 <span>🔗</span>
-                <span>متن و مکمل سند کاپی کریں</span>
+                <span>{t('Copy Text & Citation', 'متن و مکمل سند کاپی کریں', 'نسخ النص والسند كاملاً', 'Matn o Sanad Copy Karein')}</span>
               </button>
             </div>
           </div>
@@ -586,3 +595,5 @@ export const UniversalContentShareModal: React.FC<UniversalContentShareModalProp
     </div>
   );
 };
+
+export const UniversalContentShareModal = memo(UniversalContentShareModalInner);

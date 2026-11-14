@@ -154,7 +154,7 @@ export const MamoolIstiqamahStreak: React.FC<MamoolIstiqamahStreakProps> = () =>
               <span style={{ fontSize: 13, fontWeight: 800, color: '#0F172A' }}>
                 {t(
                   `${data.streak}-Day Istiqamah Streak`,
-                  `${data.streak} دن استقامت (Istiqamah Streak)`,
+                  `${data.streak} روزہ مسلسل استقامت`,
                   `سلسلة الاستقامة: ${data.streak} أيام`,
                   `${data.streak} Din Istiqamah Streak`
                 )}

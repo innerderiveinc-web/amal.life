@@ -118,7 +118,9 @@ export const BookmarksQuickDrawer: React.FC<BookmarksQuickDrawerProps> = ({ isOp
           </div>
 
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close"
             style={{
               background: 'rgba(255, 255, 255, 0.15)',
               border: 'none',

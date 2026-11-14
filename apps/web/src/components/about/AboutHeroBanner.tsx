@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
-interface AboutHeroBannerProps {
-  t: (en: string, ur: string) => string;
-}
+export const AboutHeroBanner: React.FC = () => {
+  const { t } = useLanguage();
 
-export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
   return (
     <section
       style={{
@@ -34,7 +33,7 @@ export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
             letterSpacing: 1,
           }}
         >
-          <span>🕌</span> {t('About & Methodology', 'تعارف و منہج')}
+          <span>🕌</span> {t('About & Methodology', 'تعارف اور منہجِ تحقیق', 'عن المنظومة والمنهج العلمي', 'About & Methodology')}
         </div>
 
         <h1
@@ -46,7 +45,7 @@ export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
             letterSpacing: -0.5,
           }}
         >
-          From Niyyah to Amal.
+          {t('From Niyyah to Amal.', 'نیت سے عمل تک۔', 'من النية إلى العمل.', 'Niyyah se Amal tak.')}
         </h1>
 
         <p
@@ -58,9 +57,12 @@ export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
             margin: '0 auto 28px',
           }}
         >
-          A sovereign, private, and evidence-grounded Muslim Life Operating System—designed to bring
-          calm, intentional worship into daily modern life without commercial ads, sectarian bias, or
-          unverified claims.
+          {t(
+            'A sovereign, private, and evidence-grounded Muslim Life Operating System—designed to bring calm, intentional worship into daily modern life without commercial ads, sectarian bias, or unverified claims.',
+            'ایک خود مختار، نجی اور مستند اسلامی نظامِ حیات — جو کمرشل اشتہارات، فرقہ وارانہ تعصب اور غیر مصدقہ دعووں سے پاک رہ کر روزمرہ جدید زندگی میں پرسکون اور مخلصانہ عبادت کو ممکن بناتا ہے۔',
+            'منظومة إسلامية سيادية خاصة ومؤصلة بالأدلة — صُممت لتمكين العبادة الهادئة والمخلصة في الحياة اليومية المعاصرة بعيداً عن الإعلانات التجارية والتعصب الحزبي.',
+            'Ek sovereign, private aur evidence-grounded Muslim Life Operating System — commercial ads aur unverified daawon se pak, daily life mein pur-sukoon ibadat ke liye.'
+          )}
         </p>
 
         <div
@@ -83,7 +85,7 @@ export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
               textDecoration: 'none',
             }}
           >
-            Explore Daily Suite →
+            {t('Explore Daily Suite →', 'روزمرہ معمولات دیکھیں →', 'استكشف المنظومة اليومية ←', 'Explore Daily Suite →')}
           </Link>
           <Link
             href="/library"
@@ -98,7 +100,7 @@ export const AboutHeroBanner: React.FC<AboutHeroBannerProps> = ({ t }) => {
               border: '1px solid rgba(255,255,255,0.2)',
             }}
           >
-            106 Classical Works 📚
+            {t('106 Classical Works 📚', '۱۰۶ معتبر کتب 📚', '١٠٦ مؤلفات تراثية 📚', '106 Classical Works 📚')}
           </Link>
         </div>
       </div>

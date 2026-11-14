@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { DailyKnowledgeEngine, DailyKnowledgeBroadcast } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -249,12 +249,12 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
                   fontWeight: 700,
                 }}
               >
-                {t('🕌 Blessed Friday', '🕌 جمعۃ المبارک')}
+                {t('🕌 Blessed Friday', '🕌 جمعۃ المبارک', '🕌 جمعة مباركة', '🕌 Juma Mubarak')}
               </span>
             )}
           </div>
           <h2 style={{ fontSize: 21, fontWeight: 800, color: '#1E293B', margin: '4px 0 0' }}>
-            {t('Daily Deen Knowledge Stream', 'روزانہ نشریۂ نورِ علم و عمل')}
+            {t('Daily Deen Knowledge Stream', 'روزانہ نشریۂ نورِ علم و عمل', 'بث المعرفة الإسلامية اليومي', 'Rozana Ilm o Amal Stream')}
           </h2>
         </div>
 
@@ -369,7 +369,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           );
         })}
         <span style={{ fontSize: 11, color: '#94A3B8', whiteSpace: 'nowrap', marginLeft: 4 }}>
-          • {t(`Day ${broadcast.dayOfYear}`, `دن ${broadcast.dayOfYear}`)}
+          • {t(`Day ${broadcast.dayOfYear}`, `دن ${broadcast.dayOfYear}`, `اليوم ${broadcast.dayOfYear}`, `Din ${broadcast.dayOfYear}`)}
         </span>
       </div>
 
@@ -401,7 +401,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>📖</span>
-          <span>{t('Quranic Verse', 'آیتِ مبارکہ (کنز الایمان)')}</span>
+          <span>{t('Quranic Verse', 'آیتِ مبارکہ (کنز الایمان)', 'آية قرآنية', 'Quranic Verse (Kanz-ul-Iman)')}</span>
         </button>
 
         <button
@@ -421,7 +421,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>📜</span>
-          <span>{t('Prophetic Hadith', 'حدیثِ نبوی ﷺ')}</span>
+          <span>{t('Prophetic Hadith', 'حدیثِ نبوی ﷺ', 'حديث نبوي', 'Hadith Sharif')}</span>
         </button>
 
         <button
@@ -441,7 +441,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>🤲</span>
-          <span>{t('Prophetic Dua', 'مسنون دعا')}</span>
+          <span>{t('Prophetic Dua', 'مسنون دعا', 'دعاء مأثور', 'Masnoon Dua')}</span>
         </button>
 
         <button
@@ -461,7 +461,7 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
           }}
         >
           <span>💎</span>
-          <span>{t('Spiritual Wisdom', 'تزکیہ و حکمت')}</span>
+          <span>{t('Spiritual Wisdom', 'تزکیہ و حکمت', 'حكمة وتزكية', 'Spiritual Wisdom (Hikmat)')}</span>
         </button>
       </div>
 
@@ -535,3 +535,6 @@ export const DailyKnowledgeBroadcastCard: React.FC = () => {
     </section>
   );
 };
+
+/** Memoized — knowledge content is day-scoped and doesn't change per parent render */
+export const DailyKnowledgeBroadcastCardMemo = memo(DailyKnowledgeBroadcastCard);

@@ -26,6 +26,15 @@ export interface ZakatGoldSilverNisabCardProps {
   isUrdu?: boolean;
 }
 
+export const REGIONAL_BULLION_PRESETS: Record<string, { gold: number; silver: number }> = {
+  INR: { gold: 7600, silver: 95 },
+  PKR: { gold: 24500, silver: 295 },
+  SAR: { gold: 310, silver: 3.9 },
+  AED: { gold: 305, silver: 3.8 },
+  USD: { gold: 85, silver: 1.05 },
+  GBP: { gold: 65, silver: 0.82 },
+};
+
 export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> = ({
   currency,
   setCurrency,
@@ -50,6 +59,16 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
 }) => {
   const { t } = useLanguage();
 
+  const handleCurrencyChange = (newCurr: string) => {
+    setCurrency(newCurr);
+    const preset = REGIONAL_BULLION_PRESETS[newCurr];
+    if (preset) {
+      setGoldPrice(preset.gold);
+      setSilverPrice(preset.silver);
+      showAmalToast(`${newCurr} gold & silver rates applied · نصاب کے نرخ بحال ہو گئے`, 'info');
+    }
+  };
+
   return (
     <>
       <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -59,21 +78,34 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <select
             value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
+            onChange={(e) => handleCurrencyChange(e.target.value)}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB' }}
           >
-            <option value="INR">INR (Indian Rupee ₹)</option>
-            <option value="USD">USD (US Dollar $)</option>
-            <option value="SAR">SAR (Saudi Riyal)</option>
-            <option value="AED">AED (UAE Dirham)</option>
-            <option value="GBP">GBP (British Pound £)</option>
-            <option value="PKR">PKR (Pakistani Rupee)</option>
+            <option value="INR">{t('INR (Indian Rupee ₹)', 'بھارتی روپیہ (INR ₹)', 'الروبية الهندية (INR ₹)', 'Indian Rupee (INR ₹)')}</option>
+            <option value="USD">{t('USD (US Dollar $)', 'امریکی ڈالر (USD $)', 'الدولار الأمريكي (USD $)', 'US Dollar (USD $)')}</option>
+            <option value="SAR">{t('SAR (Saudi Riyal)', 'سعودی ریال (SAR)', 'الريال السعودي (SAR)', 'Saudi Riyal (SAR)')}</option>
+            <option value="AED">{t('AED (UAE Dirham)', 'اماراتی درہم (AED)', 'الدرهم الإماراتي (AED)', 'UAE Dirham (AED)')}</option>
+            <option value="GBP">{t('GBP (British Pound £)', 'برطانوی پاؤنڈ (GBP £)', 'الجنيه الإسترليني (GBP £)', 'British Pound (GBP £)')}</option>
+            <option value="PKR">{t('PKR (Pakistani Rupee)', 'پاکستانی روپیہ (PKR)', 'الروبية الباكستانية (PKR)', 'Pakistani Rupee (PKR)')}</option>
           </select>
         </div>
         <div>
-          <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
-            {t('Nisab Standard', 'معیارِ نصاب', 'معيار النصاب', 'Meyar-e-Nisab')}
-          </label>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+            <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563' }}>
+              {t('Nisab Standard', 'معیارِ نصاب', 'معيار النصاب', 'Meyar-e-Nisab')}
+            </label>
+            <span
+              title={t(
+                'Nisab is the minimum qualifying wealth threshold held for one lunar year. Hanafi scholars favor Silver Nisab to maximize benefit for the poor.',
+                'نصاب: زکوٰۃ فرض ہونے کی کم از کم شرعی حد۔ فقہ حنفی میں چاندی کا نصاب راجح ہے تاکہ فقراء کو نفع پہنچے۔',
+                'النصاب هو الحد الأدنى لوجوب الزكاة بعد حولان الحول. ورجح الحنفية نصاب الفضة نفعاً للفقراء.',
+                'Nisab: Zakat wajib hone ki kam az kam hadd. Fiqh Hanafi mein Chandi ka nisab rajih hai taake fuqara ko faida ho.'
+              )}
+              style={{ fontSize: 11, color: '#047857', cursor: 'help', fontWeight: 600 }}
+            >
+              ℹ️ {t('What is Nisab?', 'نصاب کیا ہے؟', 'ما هو النصاب؟', 'Nisab kya hai?')}
+            </span>
+          </div>
           <select
             value={nisabStandard}
             onChange={(e) => setNisabStandard(e.target.value as ('SILVER' | 'GOLD'))}
@@ -101,8 +133,9 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <input
             type="number"
+            min="0"
             value={goldPrice}
-            onChange={(e) => setGoldPrice(Number(e.target.value))}
+            onChange={(e) => setGoldPrice(Math.max(0, Number(e.target.value) || 0))}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
           />
         </div>
@@ -112,8 +145,9 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <input
             type="number"
+            min="0"
             value={silverPrice}
-            onChange={(e) => setSilverPrice(Number(e.target.value))}
+            onChange={(e) => setSilverPrice(Math.max(0, Number(e.target.value) || 0))}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
           />
         </div>
@@ -130,8 +164,9 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
         </label>
         <input
           type="number"
+          min="0"
           value={cash}
-          onChange={(e) => setCash(Number(e.target.value))}
+          onChange={(e) => setCash(Math.max(0, Number(e.target.value) || 0))}
           style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
         />
       </div>
@@ -143,8 +178,9 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <input
             type="number"
+            min="0"
             value={goldGrams}
-            onChange={(e) => setGoldGrams(Number(e.target.value))}
+            onChange={(e) => setGoldGrams(Math.max(0, Number(e.target.value) || 0))}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
           />
         </div>
@@ -154,8 +190,9 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           </label>
           <input
             type="number"
+            min="0"
             value={silverGrams}
-            onChange={(e) => setSilverGrams(Number(e.target.value))}
+            onChange={(e) => setSilverGrams(Math.max(0, Number(e.target.value) || 0))}
             style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
           />
         </div>
@@ -251,35 +288,98 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
         {jewelryGrams > 0 && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: 6, border: '1px solid #FBCFE8', flexWrap: 'wrap', gap: 8 }}>
             <div style={{ fontSize: 11, color: '#831843' }}>
-              {t('Net 24K Gold Weight:', 'خالص سونے کا وزن (24K Equivalent):', 'الوزن الصافي المعادل لعيار ٢٤:', 'Khalis Sone ka Wazan (24K):')}{' '}
+              {t('Net 24K Gold Weight:', 'خالص ۲۴ قیراط سونے کا مساوی وزن:', 'الوزن الصافي المعادل لعيار ٢٤:', 'Khalis 24K Sone ka Wazan:')}{' '}
               <strong>{Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100}g</strong> ({Math.round(((jewelryGrams * (jewelryKarat / 24)) / 11.664) * 100) / 100} {t('Tolas', 'تولہ', 'تولة', 'Tola')})
             </div>
-            <button
-              onClick={() => {
-                const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
-                setGoldGrams(net24k);
-                showAmalToast(
-                  t(
-                    'Jewelry net weight applied to Zakat assets!',
-                    'خواتین کے زیورات کا خالص وزن زکوٰۃ میں درج ہو گیا!',
-                    'تم إدراج وزن الحلي الصافي في أصول الزكاة!',
-                    'Zewarat ka khalis wazan Zakat mein darj ho gaya!'
-                  )
-                );
-              }}
-              style={{
-                backgroundColor: '#9D174D',
-                color: '#FFFFFF',
-                border: 'none',
-                padding: '4px 10px',
-                borderRadius: 6,
-                fontSize: 11,
-                fontWeight: 700,
-                cursor: 'pointer',
-              }}
-            >
-              {t('Apply to Gold', 'اثاثوں میں درج کریں', 'إدراج في حساب الذهب', 'Sone mein Darj Karein')}
-            </button>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              {goldGrams > 0 ? (
+                <>
+                  <button
+                    onClick={() => {
+                      const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
+                      setGoldGrams(Math.round((goldGrams + net24k) * 100) / 100);
+                      showAmalToast(
+                        t(
+                          `Added +${net24k}g 24K jewelry weight to gold assets!`,
+                          `زیورات کا خالص وزن (+${net24k} گرام) سونے کے اثاثوں میں شامل کر دیا گیا!`,
+                          `تمت إضافة +${net24k} غرام من الذهب الصافي إلى الأصول!`,
+                          `Zewarat ka wazan (+${net24k}g) sone mein shamil ho gaya!`
+                        ),
+                        'success'
+                      );
+                    }}
+                    style={{
+                      backgroundColor: '#065F46',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                    title={t('Add to existing gold', 'موجودہ سونے میں شامل کریں')}
+                  >
+                    + {t('Add to Gold', 'سونے میں جمع کریں', 'إضافة للذهب', 'Add')}
+                  </button>
+                  <button
+                    onClick={() => {
+                      const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
+                      setGoldGrams(net24k);
+                      showAmalToast(
+                        t(
+                          'Jewelry net weight applied as total gold!',
+                          'زیورات کا وزن سونے کے کل وزن کے طور پر درج ہوا!',
+                          'تم ضبط وزن الحلي الصافي كإجمالي الذهب!',
+                          'Zewarat ka wazan sone ke wazan ke tor par darj hua!'
+                        )
+                      );
+                    }}
+                    style={{
+                      backgroundColor: '#9D174D',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                    title={t('Replace existing gold weight', 'موجودہ وزن کی جگہ درج کریں')}
+                  >
+                    {t('Replace Gold', 'سونے کی جگہ درج کریں', 'استبدال الذهب', 'Replace')}
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    const net24k = Math.round((jewelryGrams * (jewelryKarat / 24)) * 100) / 100;
+                    setGoldGrams(net24k);
+                    showAmalToast(
+                      t(
+                        'Jewelry net weight applied to Zakat assets!',
+                        'خواتین کے زیورات کا خالص وزن زکوٰۃ میں درج ہو گیا!',
+                        'تم إدراج وزن الحلي الصافي في أصول الزكاة!',
+                        'Zewarat ka khalis wazan Zakat mein darj ho gaya!'
+                      ),
+                      'success'
+                    );
+                  }}
+                  style={{
+                    backgroundColor: '#9D174D',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    padding: '4px 10px',
+                    borderRadius: 6,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t('Apply to Gold', 'اثاثوں میں درج کریں', 'إدراج في حساب الذهب', 'Sone mein Darj Karein')}
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

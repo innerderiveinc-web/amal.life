@@ -48,7 +48,14 @@ export default function JourneysPage() {
     const res = await AmalApiClient.startJourney(templateId, title, durationDays);
     setLoading(false);
     if (res.success) {
-      setStatusMsg(t(`Started journey: ${title}`, `سفر شروع کر دیا گیا: ${title}`));
+      setStatusMsg(
+        t(
+          `Started journey: ${title}`,
+          `سفر شروع کر دیا گیا: ${title}`,
+          `بدأت الرحلة الإيمانية: ${title}`,
+          `Safar shuru ho gaya: ${title}`
+        )
+      );
       loadJourneys();
     }
   };
@@ -81,7 +88,14 @@ export default function JourneysPage() {
       if (newState === 'COMPLETED') {
         newState = 'ACTIVE';
       }
-      setStatusMsg(t(`Day ${dayNumber} unmarked.`, `دن ${dayNumber} کی تکمیل منسوخ کر دی گئی۔`));
+      setStatusMsg(
+        t(
+          `Day ${dayNumber} unmarked.`,
+          `دن ${dayNumber} کی تکمیل منسوخ کر دی گئی۔`,
+          `تم إلغاء تحديد اليوم ${dayNumber}.`,
+          `Din ${dayNumber} unmark ho gaya.`
+        )
+      );
     } else {
       // Mark as completed
       newCompletedDays = Array.from(new Set([...completedDays, dayNumber])).sort((a, b) => a - b);
@@ -102,12 +116,19 @@ export default function JourneysPage() {
         setStatusMsg(
           t(
             `Alhamdulillah! All ${totalDays} days completed for "${journey.title}". May Allah accept your efforts!`,
-            `الحمدللہ! "${journey.title}" کے تمام ${totalDays} دن مکمل ہو گئے۔ اللہ تعالیٰ آپ کی محنت قبول فرمائے!`
+            `الحمدللہ! "${journey.title}" کے تمام ${totalDays} دن مکمل ہو گئے۔ اللہ تعالیٰ آپ کی محنت قبول فرمائے!`,
+            `الحمد لله! اكتملت جميع الأيام الـ ${totalDays} لرحلة "${journey.title}". تقبل الله طاعتكم!`,
+            `Alhamdulillah! "${journey.title}" ke tamam ${totalDays} din mukammal ho gaye. Allah qabool farmaye!`
           )
         );
       } else {
         setStatusMsg(
-          t(`Alhamdulillah! Day ${dayNumber} completed.`, `الحمدللہ! دن ${dayNumber} مکمل ہو گیا۔`)
+          t(
+            `Alhamdulillah! Day ${dayNumber} completed.`,
+            `الحمدللہ! دن ${dayNumber} مکمل ہو گیا۔`,
+            `الحمد لله! اكتمل اليوم ${dayNumber}.`,
+            `Alhamdulillah! Din ${dayNumber} mukammal ho gaya.`
+          )
         );
       }
     }
@@ -142,7 +163,9 @@ export default function JourneysPage() {
     const journeyId = journey.id || journey.journeyId;
     const confirmText = t(
       `Are you sure you want to reset "${journey.title}" back to Day 1? Your progress will reset with a fresh Niyyah.`,
-      `کیا آپ واقعی "${journey.title}" کو دوبارہ دن 1 سے شروع کرنا چاہتے ہیں؟ آپ کی پیشرفت نئی نیت کے ساتھ دوبارہ شروع ہو جائے گی۔`
+      `کیا آپ واقعی "${journey.title}" کو دوبارہ دن 1 سے شروع کرنا چاہتے ہیں؟ آپ کی پیشرفت نئی نیت کے ساتھ دوبارہ شروع ہو جائے گی۔`,
+      `هل أنت متأكد من إعادة ضبط رحلة "${journey.title}" إلى اليوم الأول بنية جديدة؟`,
+      `Kya aap sach mein "${journey.title}" ko naye siray se Day 1 par reset karna chahte hain?`
     );
     if (confirm(confirmText)) {
       await AmalApiClient.resetJourney(journeyId);
@@ -150,7 +173,9 @@ export default function JourneysPage() {
       setStatusMsg(
         t(
           `Journey "${journey.title}" has been reset back to Day 1 with a fresh Niyyah.`,
-          `سفر "${journey.title}" کو نئی نیت کے ساتھ دن 1 پر ری سیٹ کر دیا گیا۔`
+          `سفر "${journey.title}" کو نئی نیت کے ساتھ دن 1 پر ری سیٹ کر دیا گیا۔`,
+          `تمت إعادة ضبط رحلة "${journey.title}" إلى اليوم الأول بنية جديدة.`,
+          `Journey "${journey.title}" Day 1 par reset ho gayi fresh Niyyah ke sath.`
         )
       );
       loadJourneys();
@@ -161,11 +186,20 @@ export default function JourneysPage() {
     const journeyId = journey.id || journey.journeyId;
     const confirmText = t(
       `Remove journey "${journey.title}" from your active list?`,
-      `کیا آپ سفر "${journey.title}" کو اپنی فہرست سے ہٹانا چاہتے ہیں؟`
+      `کیا آپ سفر "${journey.title}" کو اپنی فہرست سے ہٹانا چاہتے ہیں؟`,
+      `هل تريد حذف رحلة "${journey.title}" من قائمتك؟`,
+      `Kya aap journey "${journey.title}" ko apni list se remove karna chahte hain?`
     );
     if (confirm(confirmText)) {
       await AmalApiClient.deleteJourney(journeyId);
-      setStatusMsg(t(`Journey removed.`, `سفر ہٹا دیا گیا۔`));
+      setStatusMsg(
+        t(
+          `Journey removed.`,
+          `سفر ہٹا دیا گیا۔`,
+          `تم حذف الرحلة.`,
+          `Journey remove ho gayi.`
+        )
+      );
       loadJourneys();
     }
   };
@@ -176,7 +210,9 @@ export default function JourneysPage() {
     setStatusMsg(
       t(
         `Advanced "${journey.title}" to Phase ${nextPhase}`,
-        `سفر "${journey.title}" کو مرحلہ ${nextPhase} پر منتقل کر دیا گیا۔`
+        `سفر "${journey.title}" کو مرحلہ ${nextPhase} پر منتقل کر دیا گیا۔`,
+        `تمت ترقية رحلة "${journey.title}" إلى المرحلة ${nextPhase}`,
+        `"${journey.title}" Phase ${nextPhase} par advance ho gaya.`
       )
     );
     loadJourneys();
@@ -187,7 +223,9 @@ export default function JourneysPage() {
       confirm(
         t(
           `Conclude the journey "${journey.title}"?`,
-          `کیا آپ سفر "${journey.title}" کو مکمل قرار دینا چاہتے ہیں؟`
+          `کیا آپ سفر "${journey.title}" کو مکمل قرار دینا چاہتے ہیں؟`,
+          `هل تريد إنهاء رحلة "${journey.title}" واعتماد إتمامها؟`,
+          `Kya aap journey "${journey.title}" ko conclude karna chahte hain?`
         )
       )
     ) {
@@ -195,7 +233,9 @@ export default function JourneysPage() {
       setStatusMsg(
         t(
           `Completed journey "${journey.title}". Alhamdulillah!`,
-          `سفر "${journey.title}" مکمل ہوا۔ الحمدللہ!`
+          `سفر "${journey.title}" مکمل ہوا۔ الحمدللہ!`,
+          `تم إتمام رحلة "${journey.title}". الحمد لله!`,
+          `Journey "${journey.title}" mukammal hui. Alhamdulillah!`
         )
       );
       loadJourneys();
@@ -211,7 +251,8 @@ export default function JourneysPage() {
       }}
     >
       <Head>
-        <title>{t('AMAL OS — Journeys', 'عمل او ایس — اسفار سلوک')}</title>
+        <title>{t('AMAL OS — 14-Day Structured Journeys (Suluk)', 'عمل او ایس — ۱۴ روزہ دینی و روحانی اسفار', 'نظام أمل — الرحلات الإيمانية المنتظمة والسلوك', 'AMAL OS — 14-Day Structured Deeni Journeys')}</title>
+        <meta name="description" content="Structured Spiritual Journeys: Tahajjud, Quran Memorization, Tazkiyah, and Sunnah Habits." />
       </Head>
 
       <Navigation />
@@ -235,10 +276,10 @@ export default function JourneysPage() {
             }}
           >
             <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: '#111827' }}>
-              {t('Your Active Journeys', 'آپ کے جاری اسفار')}
+              {t('Your Active Journeys', 'آپ کے جاری اسفار', 'رحلاتك الإيمانية الجارية', 'Aap Ke Jari Asfar')}
             </h2>
             <span style={{ fontSize: 13, color: '#6B7280', fontWeight: 500 }}>
-              {activeJourneys.length} {t('Active', 'جاری')}
+              {activeJourneys.length} {t('Active', 'جاری', 'نشطة', 'Jari')}
             </span>
           </div>
 
@@ -293,7 +334,12 @@ export default function JourneysPage() {
                 <h3
                   style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px', color: '#111827' }}
                 >
-                  {t('No Active Journeys Yet', 'فی الوقت کوئی جاری سفر نہیں ہے')}
+                  {t(
+                    'No Active Journeys Yet',
+                    'فی الوقت کوئی جاری سفر نہیں ہے',
+                    'لا توجد رحلات إيمانية جارية حالياً',
+                    'Fil-waqt koi jari safar nahi hai'
+                  )}
                 </h3>
                 <p
                   style={{
@@ -306,7 +352,9 @@ export default function JourneysPage() {
                 >
                   {t(
                     'Select a structured roadmap below to begin your daily journey toward consistent worship and personal growth.',
-                    'مستقل عبادت اور اخلاقی تربیت کے لیے نیچے دیے گئے اسفار میں سے کسی ایک کا انتخاب فرمائیں۔'
+                    'مستقل عبادت اور اخلاقی تربیت کے لیے نیچے دیے گئے اسفار میں سے کسی ایک کا انتخاب فرمائیں۔',
+                    'اختر أحد المسارات المنهجية أدناه للبدء في رحلتك اليومية نحو الاستقامة والتزكية.',
+                    'Mustaqil ibadat aur akhlaqi tarbiyat ke liye niche diye gaye asfar mein se intekhab karein.'
                   )}
                 </p>
               </div>

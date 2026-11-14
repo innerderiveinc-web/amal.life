@@ -74,11 +74,13 @@ export interface SahabiyyatProfile {
   titleUrdu: string;
   titleEnglish: string;
   kinshipToProphet: string;
+  kinshipToProphetEnglish?: string;
   classicalCitation: string;
   era: string;
   biographyUrdu: string;
   biographyEnglish: string;
   heroicAttributes: string[];
+  heroicAttributesEnglish?: string[];
   dailySunnahLessons: {
     ur: string;
     en: string;
@@ -1339,7 +1341,7 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     detailedRulingEnglish: 'According to Hanafi jurisprudence (Al-Hidayah & Radd al-Muhtar), limb differentiation typically occurs by 120 days. If medical inspection confirms any limbs or features were visible, the bleeding is strictly Nifas (prayers are completely exempt). If the miscarriage was merely an unformed clot or tissue, it cannot be Nifas: it is classified as Haidh if 15 days of purity intervened and bleeding lasts 3+ days, otherwise it is Istihadha (prayers are strictly obligatory and cannot be abandoned).',
     hanafiReference: 'بہارِ شریعت، حصہ ۲، باب النفاس / درِ مختار و رد المحتار، کتاب الطہارۃ، ج ۱',
     practicalGuidelines: [
-      'ہسپتال میں ڈاکٹر سے جنین (Fetus) کی حالت دریافت کریں کہ کیا اعضاء کے نقوش بن چکے تھے یا نہیں۔',
+      'ہسپتال میں ڈاکٹر سے جنین کی حالت دریافت کریں کہ کیا اعضاء کے نقوش بن چکے تھے یا نہیں۔',
       'اگر اعضاء نہیں بنے تھے اور خون جاری رہے تو اسے نفاس سمجھ کر نمازیں ہرگز نہ چھوڑیں، بلکہ غسل کر کے معذور کی طرح نماز ادا کریں۔',
       'اگر ناواقفیت میں نمازیں چھوٹ گئیں تو اعضاء نہ بننے کی صورت میں ان نمازوں کی قضا پڑھنا لازم ہے۔'
     ],
@@ -1382,7 +1384,7 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     hanafiReference: 'صحیح مسلم، حدیث رقم ۳۳۰ / الہدایہ شرح بدایۃ المبتدی، کتاب الطہارۃ / بہارِ شریعت',
     practicalGuidelines: [
       'مینڈھیاں باندھی ہوں تو سر کی جلد پر ہاتھ کی انگلیوں سے پانی کو اچھی طرح جڑوں تک پہنچائیں۔',
-      'اگر بال کھلے (unbraided) ہوں تو پورے بالوں کو بھگونا اور دھونا فرض ہے، ایک بال بھی سوکھا نہ رہے۔',
+      'اگر بال کھلے ہوں تو پورے بالوں کو بھگونا اور دھونا فرض ہے، ایک بال بھی سوکھا نہ رہے۔',
       'اگر بالوں میں ایسا تیل، جیل یا ویکس ہو جس سے پانی بالوں تک نہ پہنچے تو پہلے اسے دھو کر صاف کریں۔'
     ],
     practicalGuidelinesEnglish: [
@@ -1398,7 +1400,7 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     category: 'namaz_posture',
     summaryUrdu: 'ایسا میک اپ، نیل پالش یا مصنوعی ناخن جو ناخن یا جلد تک پانی پہنچنے سے مانع ہو، اس کی موجودگی میں وضو اور غسل نہیں ہوتا اور نماز باطل ہو جاتی ہے۔',
     summaryEnglish: 'Any cosmetic coating, commercial nail polish, or acrylic nails that form an impermeable barrier preventing water contact invalidates both Wudu and Ghusl.',
-    detailedRulingUrdu: 'وضو اور غسل کے ارکانِ فرضیہ میں سے ہے کہ اعضائے مغسولہ کے ہر حصے تک پانی پہنچے۔ روایتی نیل پالش، مصنوعی ایکریلک ناخن اور واٹر پروف فاؤنڈیشن جلد پر پلاسٹک جیسی پرت چڑھا دیتے ہیں جو پانی کو چھونے نہیں دیتے۔ نام نہاد "سانس لینے والی نیل پالش (Breathable Nail Polish)" کے متعلق ائمۂ فتویٰ کا فتویٰ ہے کہ چونکہ وہ مکمل اور فوری طور پر پورے ناخن تک پانی نہیں پہنچاتی، لہٰذا اس پر وضو و غسل کرنا سخت خطرناک اور نماز کو مشکوک بنانا ہے۔ اس کے برعکس قدرتی مہندی (حناء) صرف رنگ چھوڑتی ہے اور کوئی پرت نہیں بناتی، اس لیے مہندی کے ساتھ وضو اور غسل بالکل درست اور سنت ہے۔',
+    detailedRulingUrdu: 'وضو اور غسل کے ارکانِ فرضیہ میں سے ہے کہ اعضائے مغسولہ کے ہر حصے تک پانی پہنچے۔ روایتی نیل پالش، مصنوعی ایکریلک ناخن اور واٹر پروف فاؤنڈیشن جلد پر پلاسٹک جیسی پرت چڑھا دیتے ہیں جو پانی کو چھونے نہیں دیتے۔ نام نہاد "سانس لینے والی نیل پالش" کے متعلق ائمۂ فتویٰ کا فتویٰ ہے کہ چونکہ وہ مکمل اور فوری طور پر پورے ناخن تک پانی نہیں پہنچاتی، لہٰذا اس پر وضو و غسل کرنا سخت خطرناک اور نماز کو مشکوک بنانا ہے۔ اس کے برعکس قدرتی مہندی (حناء) صرف رنگ چھوڑتی ہے اور کوئی پرت نہیں بناتی، اس لیے مہندی کے ساتھ وضو اور غسل بالکل درست اور سنت ہے۔',
     detailedRulingEnglish: 'It is a strict legal requirement of Wudu and Ghusl that water must directly touch the outer skin and nail surface. Commercial nail enamels, artificial acrylic nails, and waterproof adhesives form an impermeable barrier preventing water contact, rendering purification void. Permeable ("breathable") polishes remain contentious and unsafe for valid Salah according to conservative fatwa councils. In contrast, pure natural Henna (Mehndi) merely deposits organic color stain without forming a physical crust, making it entirely permissible and Sunnah.',
     hanafiReference: 'فتاویٰ عالمگیری (الہندیہ)، ج ۱، کتاب الطہارۃ / فتاویٰ رضویہ، ج ۱ / بہارِ شریعت',
     practicalGuidelines: [
@@ -1419,7 +1421,7 @@ export const AHKAM_NISWAN_GUIDE: FiqhRulingItem[] = [
     category: 'istihadha',
     summaryUrdu: 'برتھ کنٹرول گولیوں یا آئی یو ڈی کی وجہ سے اگر عادت کے ایام سے ہٹ کر ہلکے داغ آئیں تو وہ "استحاضہ" ہیں، ان میں نماز اور روزہ نہیں چھوڑا جا سکتا۔',
     summaryEnglish: 'Irregular spotting caused by contraceptive implants, pills, or IUDs outside of customary cycle days is classified as Istihadha (illness); Salah and Sawm must never be suspended.',
-    detailedRulingUrdu: 'فقہ حنفی کا زریں اصول ہے کہ حیض کے لیے عادت (Aadat) اور دو حیض کے درمیان کم از کم ۱۵ دن کی طہارت کی شرط ہے۔ اگر کسی خاتون نے مانع حمل تدابیر کی وجہ سے ہر چند دن بعد ایک دو قطرے خون دیکھا، جبکہ اس کے حیض کا مہینہ پورا نہیں ہوا یا عادت کے دن نہیں ہیں، تو وہ قطرے محض استحاضہ (بیماری و عارضہ) شمار ہوں گے۔ ایسی بہن ہر نماز کے لیے وضو کرے، پرائیویٹ پارٹ کو صاف کر کے نیا پیڈ لگائے اور فرض و نفل نمازیں ادا کرے۔ ان داغوں کی وجہ سے نمازیں چھوڑنا سخت گناہ کا باعث ہے۔',
+    detailedRulingUrdu: 'فقہ حنفی کا زریں اصول ہے کہ حیض کے لیے عادت اور دو حیض کے درمیان کم از کم ۱۵ دن کی طہارت کی شرط ہے۔ اگر کسی خاتون نے مانع حمل تدابیر کی وجہ سے ہر چند دن بعد ایک دو قطرے خون دیکھا، جبکہ اس کے حیض کا مہینہ پورا نہیں ہوا یا عادت کے دن نہیں ہیں، تو وہ قطرے محض استحاضہ (بیماری و عارضہ) شمار ہوں گے۔ ایسی بہن ہر نماز کے لیے وضو کرے، پرائیویٹ پارٹ کو صاف کر کے نیا پیڈ لگائے اور فرض و نفل نمازیں ادا کرے۔ ان داغوں کی وجہ سے نمازیں چھوڑنا سخت گناہ کا باعث ہے۔',
     detailedRulingEnglish: 'A fundamental canon of Hanafi jurisprudence stipulates that regular habit (Aadat) governs menses, alongside a mandatory minimum interval of 15 days of purity (Tuhr) between cycles. Spotting caused by hormonal medications, birth control pills, or intrauterine devices (IUDs) outside customary menstruation days is legally Istihadha. A sister experiencing this washes the area, applies a fresh pad, performs fresh Wudu at each prayer time, and fulfills all obligatory prayers and fasts.',
     hanafiReference: 'رد المحتار علی الدر المختار، باب الحیض / فتاویٰ فیض الرسول / جنتی زیور',
     practicalGuidelines: [
@@ -1584,9 +1586,9 @@ export const MOTHERHOOD_FAMILY_DUAS: MasnoonFamilyDua[] = [
     translationEnglish: 'O Allah, I seek refuge in You from anxiety and grief, from incapacity and laziness, from stinginess and cowardice, from the burden of debt, and from the overpowering of people.',
     translationRomanUrdu: 'Ae Allah! Main Teri panah mangti hoon fikr o pareshani aur gham se, aur ajizi o kamzori aur susti se, aur bukhl aur buzdili se, aur qarz ke bojh aur logon ke dabao se.',
     reference: 'صحیح البخاری، حدیث ۲۸۹۳',
-    spiritualVirtueUrdu: 'زچگی کے بعد ہارمونز کے عدم توازن سے پیدا ہونے والے ڈپریشن (Postpartum Depression)، بے سبب رونے اور اداسی کے وقت اس دعا کا ورد دل کو گہری تسکین اور روحانی ڈھارس دیتا ہے۔',
+    spiritualVirtueUrdu: 'زچگی کے بعد ہارمونز کے عدم توازن سے پیدا ہونے والی اداسی، ڈپریشن، بے سبب رونے اور گھبراہٹ کے وقت اس دعا کا ورد دل کو گہری تسکین اور روحانی ڈھارس دیتا ہے۔',
     spiritualVirtueEnglish: 'The premier Prophetic shield against clinical grief, postpartum anxiety, emotional depletion, and irrational fear after childbirth.',
-    spiritualVirtueRomanUrdu: 'Zachgi ke baad hormones ke adam tawazun se paida hone wale depression (Postpartum Depression), be-sabab rone aur udasi ke waqt is dua ka wird dil ko gehri taskeen aur ruhani dharas deta hai.'
+    spiritualVirtueRomanUrdu: 'Zachgi ke baad paida hone wale depression, be-sabab rone aur udasi ke waqt is dua ka wird dil ko gehri taskeen aur ruhani dharas deta hai.'
   },
   {
     id: 'dua-09',

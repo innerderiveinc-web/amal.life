@@ -2,6 +2,7 @@ import React from 'react';
 import { CanonicalEditionRecord } from '@amal/evidence';
 import { AmalTheme } from '@amal/ui';
 import { getBookChapters } from '../../lib/classical-chapters-data';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface FilterCategory {
   key: string;
@@ -29,6 +30,7 @@ export function LibrarySidebar({
   selectedWork,
   onSelectWork,
 }: LibrarySidebarProps) {
+  const { t, isUrdu, isArabic } = useLanguage();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {/* Search & Filter Controls */}
@@ -44,7 +46,12 @@ export function LibrarySidebar({
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by book title (Arabic or English), author, publisher, or muhaqqiq..."
+          placeholder={t(
+            'Search by book title (Arabic or English), author, publisher, or muhaqqiq...',
+            'کتاب کے نام (عربی، اردو یا انگریزی)، مصنف یا محقق کے نام سے تلاش کریں...',
+            'البحث باسم الكتاب أو المؤلف أو المحقق...',
+            'Kitab ke naam, musannif ya muhaqqiq se talash karein...'
+          )}
           style={{
             width: '100%',
             padding: '12px 16px',
@@ -104,7 +111,7 @@ export function LibrarySidebar({
           }}
         >
           <span style={{ fontSize: 13, fontWeight: 700, color: '#444' }}>
-            Showing {filteredWorks.length} Classical Masterworks
+            {t(`Showing ${filteredWorks.length} Classical Masterworks`, `${filteredWorks.length} معتمد کتب دستیاب ہیں`, `عرض ${filteredWorks.length} مصنفاً معتمداً`, `${filteredWorks.length} Classical Kutub Dastiyab Hain`)}
           </span>
         </div>
 
@@ -147,7 +154,7 @@ export function LibrarySidebar({
                       color: '#334155',
                     }}
                   >
-                    {work.discipline.replace('_', ' ')}
+                    {work.discipline.replace(/_/g, ' ')}
                   </span>
                   <span
                     style={{
@@ -168,16 +175,16 @@ export function LibrarySidebar({
                     }}
                   >
                     {isWorkQuran
-                      ? '114 SURAHS IN-APP'
+                      ? t('114 SURAHS IN-APP', 'مکمل ۱۱۴ سورتیں', '١١٤ سورة داخل التطبيق', '114 SURAHS IN-APP')
                       : hasInApp
-                      ? 'CORE CURATED CHAPTERS'
-                      : 'VERIFIED REPOSITORY'}
+                      ? t('CORE CURATED CHAPTERS', 'منتخب اساسی ابواب', 'فصول دراسية مختارة', 'CORE CURATED CHAPTERS')
+                      : t('VERIFIED REPOSITORY', 'معتمد ڈیجیٹل نسخہ', 'مستودع رقمي موثق', 'VERIFIED REPOSITORY')}
                   </span>
                 </div>
                 <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
                   {work.author_death_hijri > 0
-                    ? `${work.author_death_hijri} AH`
-                    : 'Revelation'}
+                    ? (isUrdu || isArabic ? `${work.author_death_hijri}ھ` : `${work.author_death_hijri} AH`)
+                    : t('Revelation', 'وحیِ الٰہی', 'وحي', 'Divine')}
                 </span>
               </div>
 

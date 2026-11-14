@@ -53,13 +53,12 @@ export const SistersBookCardGrid: React.FC<SistersBookCardGridProps> = ({
   const getBookTitle = (book: SanctuaryBook) => {
     if (isArabic) return book.titleArabic || book.titleUrdu;
     if (isUrdu) return book.titleUrdu;
-    if (isRomanUrdu) return book.titleEnglish || book.titleUrdu;
     return book.titleEnglish;
   };
 
   const getBookSubTitle = (book: SanctuaryBook) => {
-    if (isArabic) return book.titleEnglish;
-    if (isUrdu) return book.titleEnglish;
+    if (isArabic || isUrdu) return book.titleEnglish;
+    if (isRomanUrdu) return book.titleEnglish;
     return book.titleUrdu;
   };
 

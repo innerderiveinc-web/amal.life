@@ -28,6 +28,7 @@ import { TahajjudSmartHub } from '../components/prayer/TahajjudSmartHub';
 import { computeMultiFiqhReport } from '../lib/prayer-precision-engine';
 import { MultiFiqhPrecisionModal } from '../components/prayer/MultiFiqhPrecisionModal';
 import { useLanguage } from '../context/LanguageContext';
+import { triggerHaptic } from '../lib/haptics';
 
 // Modularized Prayer Subcomponents
 import { PrayerActionBar } from '../components/prayer/PrayerActionBar';
@@ -39,6 +40,8 @@ import { PrayerScheduleCard } from '../components/prayer/PrayerScheduleCard';
 import { PrayerQiblaCard } from '../components/prayer/PrayerQiblaCard';
 import { PrayerMosqueJanazahSection } from '../components/prayer/PrayerMosqueJanazahSection';
 import { PrayerFiqhDifferenceGuide } from '../components/prayer/PrayerFiqhDifferenceGuide';
+import { CelestialSolarArc } from '../components/prayer/CelestialSolarArc';
+import { IconCompass } from '../components/icons/AmalIcons';
 
 export default function PrayerTimesPage() {
   const { t, isUrdu } = useLanguage();
@@ -73,6 +76,7 @@ export default function PrayerTimesPage() {
   }, []);
 
   const toggleSpiritualPause = () => {
+    triggerHaptic('medium');
     const newVal = !isSpiritualPause;
     setIsSpiritualPause(newVal);
     if (typeof window !== 'undefined') {
@@ -139,6 +143,7 @@ export default function PrayerTimesPage() {
   }, []);
 
   const handleSelectCity = (city: GlobalCity) => {
+    triggerHaptic('selection');
     setSelectedCity(city);
     setManualCityName(city.name);
     setManualLat(city.lat);
@@ -156,6 +161,7 @@ export default function PrayerTimesPage() {
   };
 
   const handleMadhhabChange = (newMadhhab: MadhhabAsr) => {
+    triggerHaptic('medium');
     setMadhhab(newMadhhab);
     if (typeof window !== 'undefined') {
       localStorage.setItem('amal_user_madhhab', newMadhhab);
@@ -165,6 +171,7 @@ export default function PrayerTimesPage() {
   };
 
   const handleMethodChange = (newMethod: CalculationMethod) => {
+    triggerHaptic('selection');
     setMethod(newMethod);
     if (typeof window !== 'undefined') {
       localStorage.setItem('amal_user_calc_method', newMethod);
@@ -174,6 +181,7 @@ export default function PrayerTimesPage() {
   };
 
   const handleUpdateOffset = (prayerKey: string, delta: number) => {
+    triggerHaptic('selection');
     const updated = { ...offsets, [prayerKey]: (offsets[prayerKey] || 0) + delta };
     setOffsets(updated);
     if (typeof window !== 'undefined') {
@@ -183,58 +191,66 @@ export default function PrayerTimesPage() {
   };
 
   const handleResetOffsets = () => {
+    triggerHaptic('heavy');
     const zero = { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 };
     setOffsets(zero);
     if (typeof window !== 'undefined') {
       localStorage.setItem('amal_user_prayer_offsets', JSON.stringify(zero));
       window.dispatchEvent(new Event('amal_prayer_settings_changed'));
     }
-    showAmalToast('Minute offsets reset to astronomical default', 'info');
+    showAmalToast(t('Minute offsets reset to astronomical default', 'اوقات کے منٹس اصل فلکیاتی معیار پر بحال ہو گئے', 'تمت إعادة ضبط دقائق التوقيت إلى المعيار الفلكي', 'Minute offsets astronomical default par reset ho gaye'), 'info');
   };
 
   const handleToggleAzaan = () => {
+    triggerHaptic('medium');
     const updated = { ...azaanSettings, enabled: !azaanSettings.enabled };
     setAzaanSettings(updated);
     saveAzaanSettings(updated);
-    showAmalToast(updated.enabled ? 'Azaan audio alerts enabled 🔊' : 'Azaan audio muted 🔇', 'info');
+    showAmalToast(updated.enabled ? t('Azaan alerts enabled 🔊', 'اذان الرٹس فعال ہیں 🔊', 'تم تفعيل تنبيهات الأذان 🔊', 'Azaan alerts active hain 🔊') : t('Azaan audio muted 🔇', 'اذان کی آواز خاموش 🔇', 'تم كتم صوت الأذان 🔇', 'Azaan audio muted 🔇'), 'info');
   };
 
   const handleTestPlayAzaan = () => {
+    triggerHaptic('light');
     setIsPlayingAzaan(true);
     playAzaanAudio(azaanSettings.soundType, azaanSettings.volume);
-    showAmalToast(`Playing preview: ${azaanSettings.soundType}`, 'info');
+    showAmalToast(t(`Playing preview: ${azaanSettings.soundType}`, `اذان کا پیش نظارہ: ${azaanSettings.soundType}`, `تشغيل تجريبي للأذان: ${azaanSettings.soundType}`, `Playing preview: ${azaanSettings.soundType}`), 'info');
     setTimeout(() => setIsPlayingAzaan(false), 5500);
   };
 
   const handleSoundTypeChange = (soundType: AzaanSoundType) => {
+    triggerHaptic('selection');
     const updated = { ...azaanSettings, soundType };
     setAzaanSettings(updated);
     saveAzaanSettings(updated);
     playAzaanAudio(soundType, azaanSettings.volume);
-    showAmalToast(`Azaan tone set to: ${soundType}`, 'info');
+    showAmalToast(t(`Azaan tone set to: ${soundType}`, `اذان کی آواز متعین: ${soundType}`, `تم تحديد نغمة الأذان: ${soundType}`, `Azaan tone set to: ${soundType}`), 'info');
   };
 
   const handleRequestBrowserNotification = async () => {
+    triggerHaptic('selection');
     if (typeof window === 'undefined' || !('Notification' in window)) {
-      showAmalToast('Notifications not supported in this browser', 'warning');
+      showAmalToast(t('Notifications not supported in this browser', 'اس براؤزر میں نوٹیفکیشن کی سہولت دستیاب نہیں ہے', 'الإشعارات غير مدعومة في هذا المتصفح', 'Is browser me notifications supported nahi hain'), 'warning');
       return;
     }
     const perm = await Notification.requestPermission();
     if (perm === 'granted') {
+      triggerHaptic('success');
       const updated = { ...azaanSettings, notificationsEnabled: true };
       setAzaanSettings(updated);
       saveAzaanSettings(updated);
-      showAmalToast('Browser Prayer notifications enabled successfully! 🔔', 'success');
+      showAmalToast(t('Browser Prayer notifications enabled successfully! 🔔', 'نماز کے نوٹیفکیشن کامیابی سے فعال ہو گئے! 🔔', 'تم تفعيل إشعارات الصلاة في المتصفح بنجاح! 🔔', 'Prayer notifications kamyabi se enable ho gaye! 🔔'), 'success');
       new Notification('AMAL OS — Azaan Alerts Active', {
         body: 'You will receive timely alerts for each Salah.',
         icon: '/favicon.ico',
       });
     } else {
-      showAmalToast('Notification permission was dismissed or blocked.', 'warning');
+      triggerHaptic('warning');
+      showAmalToast(t('Notification permission was dismissed or blocked.', 'نوٹیفکیشن کی اجازت بلاک یا مسترد کر دی گئی۔', 'تم رفض إذن الإشعارات.', 'Notification permission block ho gayi.'), 'warning');
     }
   };
 
   const handleSaveMosque = () => {
+    triggerHaptic('success');
     const updated: LocalMosqueSettings = {
       name: editMosqueName.trim() || 'Mohalla Jamia Masjid',
       iqamahOffsets: editIqamahOffsets,
@@ -242,18 +258,18 @@ export default function PrayerTimesPage() {
     setMosqueSettings(updated);
     saveMosqueSettings(updated);
     setIsMosqueModalOpen(false);
-    showAmalToast(`Local Mosque updated to: ${updated.name}`, 'success');
+    showAmalToast(t(`Local Mosque updated to: ${updated.name}`, `مقامی مسجد کا ریکارڈ اپ ڈیٹ: ${updated.name}`, `تم تحديث المسجد المحلي: ${updated.name}`, `Local Mosque update ho gayi: ${updated.name}`), 'success');
   };
 
   // Browser Geolocation / GPS Auto-Detection
   const handleUseGPS = () => {
     if (typeof window === 'undefined' || !('geolocation' in navigator)) {
-      showAmalToast('Geolocation is not supported by your browser', 'warning');
+      showAmalToast(t('Geolocation is not supported by your browser', 'آپ کا براؤزر جغرافیائی مقام کو سپورٹ نہیں کرتا', 'تحديد الموقع غير مدعوم في هذا المتصفح', 'Browser me GPS support nahi hai'), 'warning');
       return;
     }
 
     setIsLocating(true);
-    showAmalToast('Detecting your GPS coordinates...', 'info');
+    showAmalToast(t('Detecting your GPS coordinates...', 'جی پی ایس مقام تلاش کیا جا رہا ہے...', 'جارٍ تحديد إحداثيات الموقع...', 'GPS coordinates talash ho rahe hain...'), 'info');
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
@@ -304,11 +320,11 @@ export default function PrayerTimesPage() {
         setExternalResults(data);
       } else {
         setExternalResults([]);
-        showAmalToast('No places found on map. Try entering exact coordinates.', 'warning');
+        showAmalToast(t('No places found on map. Try entering exact coordinates.', 'نقشے پر کوئی مقام نہیں ملا۔ براہ کرم درست نام یا کوآرڈینیٹس درج کریں۔', 'لم يتم العثور على أماكن في الخريطة.', 'Map par koi muqam nahi mila.'), 'warning');
       }
     } catch (_) {
       setIsGeocoding(false);
-      showAmalToast('Could not query global map. Check network connection.', 'warning');
+      showAmalToast(t('Could not query global map. Check network connection.', 'عالمی نقشے سے رابطہ نہیں ہو سکا۔ انٹرنیٹ کنکشن چیک کریں۔', 'تعذر الاتصال بالخريطة العالمية. تحقق من الاتصال.', 'Global map se connection nahi ho saka.'), 'warning');
     }
   };
 
@@ -379,7 +395,7 @@ export default function PrayerTimesPage() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#F8F9FA' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#FDFBF7' }}>
       <Head>
         <title>Precision Prayer Times & Qibla Compass | AMAL OS</title>
         <meta
@@ -393,7 +409,7 @@ export default function PrayerTimesPage() {
         {/* Header */}
         <div style={{ marginBottom: 24 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-            <span style={{ fontSize: 28 }}>🧭</span>
+            <IconCompass size={30} color="#166534" />
             <h1 style={{ fontSize: 28, fontWeight: 800, color: '#1B4332', margin: 0 }}>
               Precision Prayer Times & Qibla Compass
             </h1>
@@ -456,6 +472,14 @@ export default function PrayerTimesPage() {
           handleMadhhabChange={handleMadhhabChange}
           method={method}
           handleMethodChange={handleMethodChange}
+        />
+
+        {/* 5.5. CELESTIAL SOLAR ARC (PURE MATHEMATICAL VECTOR SKY TRANSIT) */}
+        <CelestialSolarArc
+          prayerTimes={prayerTimes}
+          nextPrayer={nextPrayer}
+          cityName={selectedCity.name}
+          t={t}
         />
 
         {/* 6. Grid: Prayer Schedule & Qibla Compass */}

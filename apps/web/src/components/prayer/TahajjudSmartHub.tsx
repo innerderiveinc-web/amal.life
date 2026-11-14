@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, memo } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { showAmalToast } from '../Toast';
 import { TahajjudCalculationGrid } from './TahajjudCalculationGrid';
 import { TahajjudSunnahGuide } from './TahajjudSunnahGuide';
@@ -11,13 +12,14 @@ export interface TahajjudSmartHubProps {
   cityName: string;
 }
 
-export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
+const TahajjudSmartHubInner: React.FC<TahajjudSmartHubProps> = ({
   maghribTime,
   fajrTime,
   qiyamThirdTime,
   midnightTime,
   cityName,
 }) => {
+  const { t } = useLanguage();
   const [now, setNow] = useState<Date>(() => new Date());
   const [showGuide, setShowGuide] = useState(false);
   const [isPlayingAlarmTest, setIsPlayingAlarmTest] = useState(false);
@@ -169,7 +171,15 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showAmalToast('Tahajjud alarm calendar event downloaded! Open to add to your mobile calendar.', 'success');
+    showAmalToast(
+      t(
+        'Tahajjud alarm calendar event downloaded! Open to add to your mobile calendar.',
+        'تہجد الارم کا کیلنڈر ایونٹ ڈاؤنلوڈ ہو گیا۔ اپنے موبائل کیلنڈر میں شامل کریں۔',
+        'تم تنزيل موعد منبه صلاة التهجد! افتحه لإضافته إلى تقويم هاتفك.',
+        'Tahajjud alarm calendar event download ho gaya! Mobile calendar mein add karein.'
+      ),
+      'success'
+    );
   };
 
   return (
@@ -242,7 +252,12 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
               color: calculation.isActive ? '#A7F3D0' : '#F8FAFC',
             }}
           >
-            Sacred Last Third of the Night (ثلثِ آخر و صلوٰۃ التہجد)
+            {t(
+              'Sacred Last Third of the Night & Tahajjud',
+              'رات کا آخری تہائی حصہ و نمازِ تہجد',
+              'الثلث الأخير من الليل وصلاة التهجد المباركة',
+              'Raat ka Aakhri Tehai Hissa o Namaz-e-Tahajjud'
+            )}
           </h2>
         </div>
 
@@ -268,7 +283,11 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
             title="Play gentle morning wake-up chime"
           >
             <span>{isPlayingAlarmTest ? '🔊' : '🔔'}</span>
-            <span>{isPlayingAlarmTest ? 'بج رہا ہے...' : 'چائم سنیں'}</span>
+            <span>
+              {isPlayingAlarmTest
+                ? t('Playing...', 'بج رہا ہے...', 'جارٍ التشغيل...', 'Baj raha hai...')
+                : t('Test Chime', 'چائم سنیں', 'تجربة التنبيه', 'Chime Sunein')}
+            </span>
           </button>
 
           <button
@@ -291,7 +310,7 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
             title="Download ICS reminder for mobile calendar"
           >
             <span>⏰</span>
-            <span>الارم سیٹ کریں (ICS)</span>
+            <span>{t('Set Alarm (ICS)', 'الارم سیٹ کریں', 'ضبط المنبه في التقويم', 'Alarm Set Karein (ICS)')}</span>
           </button>
 
           <button
@@ -312,7 +331,11 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
             }}
           >
             <span>📖</span>
-            <span>{showGuide ? 'طریقہ بند کریں ▲' : 'مسنون طریقہ ▼'}</span>
+            <span>
+              {showGuide
+                ? t('Close Guide ▲', 'طریقہ بند کریں ▲', 'إغلاق الدليل ▲', 'Tariqa Band Karein ▲')
+                : t('Sunnah Guide ▼', 'مسنون طریقہ ▼', 'الدليل المسنون ▼', 'Sunnah Tariqa ▼')}
+            </span>
           </button>
         </div>
       </div>
@@ -325,3 +348,6 @@ export const TahajjudSmartHub: React.FC<TahajjudSmartHubProps> = ({
     </div>
   );
 };
+
+/** Memoized export — skips re-render when prayer times haven't changed */
+export const TahajjudSmartHub = memo(TahajjudSmartHubInner);

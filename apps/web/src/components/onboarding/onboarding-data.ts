@@ -120,7 +120,7 @@ export const getMadhhabsList = (lang: SupportedLanguage) => [
     id: 'GENERAL_UMMAH' as const,
     title: {
       EN: 'General Ummah (Sawad al-A\'zam)',
-      UR: 'سوادِ اعظم عمومی رہنمائی (General Ummah)',
+      UR: 'سوادِ اعظم عمومی رہنمائی (جمہور امت)',
       AR: 'السواد الأعظم (جمهور الأمة)',
     }[lang],
     sub: {

@@ -15,6 +15,15 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
 }) => {
   const { t, isUrdu, isArabic, isRomanUrdu } = useLanguage();
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen || !report) return null;
 
   const gradingText = isArabic
@@ -96,7 +105,7 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
                   width: 36,
                   height: 36,
                   borderRadius: '50%',
-                  backgroundColor: '#10B981',
+                  backgroundColor: '#047857',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -125,7 +134,9 @@ export const SanadVerificationModal: React.FC<SanadVerificationModalProps> = ({
               </div>
             </div>
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Close"
               style={{
                 width: 30,
                 height: 30,

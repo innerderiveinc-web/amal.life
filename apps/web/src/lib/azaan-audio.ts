@@ -150,12 +150,27 @@ export async function triggerPrayerAlert(prayerName: string, prayerTime: string)
     playAzaanAudio(settings.soundType, settings.volume);
   }
 
-  // 2. Dispatch browser notification if permitted
+  // 2. Dispatch persistent service worker notification or browser notification
   if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
     try {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.ready;
+        if (reg && reg.showNotification) {
+          await reg.showNotification(`🕋 وقتِ نماز: ${prayerName}`, {
+            body: `It is now time for ${prayerName} (${prayerTime}). Prepare for Salah and Takbir al-Ula.`,
+            icon: '/icon-192.png',
+            badge: '/icon-192.png',
+            tag: `prayer-${prayerName.toLowerCase()}`,
+            vibrate: [300, 150, 300],
+            requireInteraction: true,
+            data: { url: '/prayer' },
+          });
+          return;
+        }
+      }
       new Notification(`🕋 وقتِ نماز: ${prayerName}`, {
         body: `It is now time for ${prayerName} (${prayerTime}). Prepare for Salah and Takbir al-Ula.`,
-        icon: '/favicon.ico',
+        icon: '/icon-192.png',
       });
     } catch (_) {}
   }

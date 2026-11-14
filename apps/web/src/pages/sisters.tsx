@@ -20,6 +20,7 @@ import { SistersSahabiyyatTab } from '../components/sisters/SistersSahabiyyatTab
 import { SistersFiqhTab } from '../components/sisters/SistersFiqhTab';
 import { SistersDuasTab } from '../components/sisters/SistersDuasTab';
 import { SistersVaultTab } from '../components/sisters/SistersVaultTab';
+import { showAmalToast } from '../components/Toast';
 
 export default function SistersSanctuaryPage() {
   const { language, isUrdu, isArabic, isRomanUrdu, t } = useLanguage();
@@ -69,13 +70,14 @@ export default function SistersSanctuaryPage() {
       }
       setDeferredPrompt(null);
     } else {
-      alert(
+      showAmalToast(
         t(
           'Tap your browser share/menu icon and select "Add to Home Screen" to install Amal Nisa as a standalone app.',
           'اپنے موبائل براؤزر کے مینیو (تین نقطوں یا شیئر بٹن) پر کلک کر کے "Add to Home Screen" یا "Install App" منتخب کریں۔',
           'انقر على أيقونة المشاركة أو القائمة في متصفحك واختر "إضافة إلى الشاشة الرئيسية".',
           'Apne mobile browser menu par click karke "Add to Home Screen" ya "Install App" select karein.'
-        )
+        ),
+        'info'
       );
     }
   };
@@ -184,14 +186,7 @@ export default function SistersSanctuaryPage() {
   return (
     <>
       <Head>
-        <title>
-          {t(
-            'The Sacred Sisters Sanctuary — Amal OS',
-            'گوشۂ خواتین و صحابیات — امل آپریٹنگ سسٹم',
-            'روضة النساء والصحابيات — نظام أمل',
-            'Goshah-e-Khawateen wa Sahabiyyat — Amal OS'
-          )}
-        </title>
+        <title>{t('The Sacred Sisters Sanctuary — Amal OS', 'گوشۂ خواتین و صحابیات — امل آپریٹنگ سسٹم', 'روضة النساء والصحابيات — نظام أمل', 'Goshah-e-Khawateen wa Sahabiyyat — Amal OS')}</title>
         <meta
           name="description"
           content="The authentic Ahl al-Sunnah Sanctuary for Muslim Women: 20 Classical Masterworks, Biographies of the Sahabiyyat, Taharah & Fiqh Guide, and Private Sovereign Vault."

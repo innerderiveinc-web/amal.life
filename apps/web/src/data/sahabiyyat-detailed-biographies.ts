@@ -27,11 +27,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'طاہرہ، ام المؤمنین، سیدۃ نساء قریش، رفیقۂ نبوت',
     titleEnglish: 'At-Tahirah (The Pure), Mother of the Believers, First Believer',
     kinshipToProphet: 'رسول اللہ ﷺ کی پہلی زوجۂ مطہرہ، سیدہ فاطمہ اور چاروں بناتِ رسول کی والدہ ماجدہ',
+    kinshipToProphetEnglish: 'First Noble Spouse of the Prophet ﷺ, Mother of Sayyidah Fatimah and all four daughters of the Prophet ﷺ',
     classicalCitation: 'صحیح البخاری، حدیث ۳، ۳۴۳۱ / صحیح مسلم، حدیث ۲۴۳۲، ۲۴۳۵',
     era: 'قبلِ ہجرت ۳ سال قبل وصال مکہ مکرمہ (عام الحزن)',
     biographyUrdu: 'کائنات میں سب سے پہلے اسلام قبول کرنے والی، رسول اللہ ﷺ کی پہلی رفیقۂ حیات اور نبوت کی سب سے مضبوط غمخوار۔ نزولِ وحی کے وقت ڈھارس بندھائی، شعبِ ابی طالب کے بائیکاٹ میں اپنی بے پناہ دولت نچھاور کی اور اللہ تعالیٰ نے حضرت جبرائیل کے ذریعے ان کے لیے سلام بھیجا۔',
     biographyEnglish: 'The first human being to embrace Islam and the premier emotional and spiritual fortress of the Prophet ﷺ. She recognized his Prophethood at Cave Hira, sacrificed her entire trading empire for the Da\'wah, and received greetings directly from Allah Almighty via Angel Jibril.',
     heroicAttributes: ['بے پناہ استقامت', 'کامل مالی ایثار', 'شوہر کی بہترین ڈھارس', 'رسول اللہ ﷺ کا بے مثال دفاع'],
+    heroicAttributesEnglish: ['Unflinching Resilience', 'Complete Financial Devotion', 'Emotional Pillar of the Prophet ﷺ', 'Fierce Defense of Revelation'],
     dailySunnahLessons: [
       {
         ur: 'مشکل اور پریشانی کے وقت شوہر اور اہل خانہ کی ڈھارس بندھانا اور ان کا حوصلہ بڑھانا۔',
@@ -134,11 +136,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'صدیقہ، حمیراء، فقیہۃ الامت، ام المؤمنین، حبیبۃ حبیب اللہ',
     titleEnglish: 'As-Siddiqah, The Great Jurist, Mother of the Believers',
     kinshipToProphet: 'رسول اللہ ﷺ کی محبوب ترین زوجۂ مطہرہ، خلیفۂ اول حضرت ابوبکر صدیق کی لختِ جگر',
+    kinshipToProphetEnglish: 'Most Beloved Noble Spouse of the Prophet ﷺ, Daughter of the First Caliph Sayyiduna Abu Bakr al-Siddiq',
     classicalCitation: 'صحیح البخاری، حدیث ۳۷۶۸، ۴۷۵۰ / جامع الترمذی، حدیث ۳۸۸۳',
     era: 'متوفی ۵۸ ہجری مدینہ منورہ (تدفین جنت البقیع)',
     biographyUrdu: 'امتِ مسلمہ کی سب سے عظیم عالمہ، فقیہہ اور مفسرہ۔ رسول اللہ ﷺ سے ۲,۲۱۰ احادیث روایت فرمائیں۔ صحابہ کرام فقہی اور میراث کے مسائل میں آپ کی طرف رجوع فرماتے تھے۔ قرآن مجید میں ان کی براءت نازل ہوئی اور ان کا حجرہ مبارکہ ہی روضۂ اطہر بنا۔',
     biographyEnglish: 'The supreme female scholar of Islam. Transmitter of 2,210+ Hadiths, master of jurisprudence, medicine, and Arabic poetry. Senior companions consulted her for legal decrees. Her innocence was enshrined forever in Surah An-Nur, and her sacred chamber became the resting place of the Prophet ﷺ.',
     heroicAttributes: ['بے مثال علمی و اجتہادی عبقریت', 'سخاوت اور فیاضی کا سمندر', 'شب بیداری، زہد اور کثرتِ روزے', 'حدیث و فقہ کی حفاظت'],
+    heroicAttributesEnglish: ['Scholarly Preeminence', 'Deep Legal Insight', 'Premier Hadith Transmitter', 'Eloquence and Oratory'],
     dailySunnahLessons: [
       {
         ur: 'دین کے علم، فقہ اور حدیث کو باریکی اور تحقیق کے ساتھ سیکھنا۔',
@@ -240,11 +244,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'سیدۃ نساء اہل الجنہ، بتول، زہراء، بضعۃ النبی، ام ابیہا',
     titleEnglish: 'Leader of the Women of Paradise, Az-Zahra, Badi\'at al-Nabi',
     kinshipToProphet: 'رسول اللہ ﷺ کی سب سے چہیتی صاحبزادی، حضرت علی المرتضیٰ کی زوجہ، حسنین کریمین کی والدہ ماجدہ',
+    kinshipToProphetEnglish: 'Beloved Youngest Daughter of the Prophet ﷺ, Mother of the Youths of Paradise (Imam Hasan and Imam Husayn)',
     classicalCitation: 'صحیح البخاری، حدیث ۳۷۱۴، ۳۷۶۷ / صحیح مسلم، حدیث ۲۴۴۹',
     era: 'متوفی ۱۱ ہجری (وصالِ نبوی کے ۶ ماہ بعد مدینہ منورہ)',
     biographyUrdu: 'رسول اللہ ﷺ کے جگر کا ٹکڑا، حسن و سیرت میں ہو بہو شبیہِ مصطفیٰ، اور جنت کی تمام عورتوں کی سردار۔ بچپن میں مکہ میں حضور ﷺ کا دفاع کیا، فقر و فاقہ میں چکی پیستے ہوئے صبر و قناعت کی تاریخ رقم کی اور حسنین کریمین جیسی پاکیزہ نسل پروان چڑھائی۔',
     biographyEnglish: 'The flesh and blood of the Prophet ﷺ, his mirror image in noble carriage and character, and the Leader of the Women of Paradise. Stood fearlessly in childhood defending the Prophet at the Ka\'bah, personified absolute contentment in poverty, and mothered the sacred Hasani-Husayni lineage.',
     heroicAttributes: ['اعلیٰ ترین حیا اور عفت', 'بے مثل زہد، قناعت اور صبر', 'حضور ﷺ سے بے پناہ عشق اور شبیہِ نبوی', 'اہلِ بیتِ اطہار کی سرداری'],
+    heroicAttributesEnglish: ['Supreme Piety', 'Patience in Poverty', 'Devotion to Parents', 'Dignity of Labor'],
     dailySunnahLessons: [
       {
         ur: 'سادگی، قناعت اور پردے کو اپنی زینت بنانا اور دنیاوی نمود و نمائش سے بچنا۔',
@@ -346,11 +352,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'ام المؤمنین، صاحبۃ الرائے الصائب، مہاجرۃ الہجرتین',
     titleEnglish: 'Mother of the Believers, The Wise Counselor of Hudaybiyyah',
     kinshipToProphet: 'رسول اللہ ﷺ کی زوجۂ مطہرہ، قریش کے مخزوم قبیلے کی معزز ترین خاتون',
+    kinshipToProphetEnglish: 'Noble Spouse of the Prophet ﷺ, Renowned Jurist and Wise Counselor at the Truce of Hudaybiyyah',
     classicalCitation: 'صحیح البخاری، حدیث ۲۷۳۱، ۲۷۳۲ / صحیح مسلم، حدیث ۹۱۸',
     era: 'متوفی ۶۲ ہجری مدینہ منورہ (سب سے آخر میں وصال پانے والی زوجۂ مطہرہ)',
     biographyUrdu: 'حبشہ اور مدینہ دونوں طرف ہجرت کرنے والی جلیل القدر خاتون۔ صلحِ حدیبیہ کے موقع پر آپ کی بے مثل حکمت اور دانشمندانہ مشورے نے امت کو بحران سے نکالا۔ مصیبت کے وقت ان کی سکھائی ہوئی دعا "اللهم أجرني في مصيبتي" ہر مسلمان کے لیے مشعلِ راہ ہے۔',
     biographyEnglish: 'Migrant of both Abyssinia and Madinah. Celebrated for her consummate political intellect and wisdom. At the Treaty of Hudaybiyyah, her strategic counsel saved the Muslim army from spiritual crisis. She was the last of the Mothers of the Believers to pass away.',
     heroicAttributes: ['گہری سیاسی و معاشرتی بصیرت', 'مصیبت میں انا للہ کا مکمل یقین', 'فقہی و روایتی مہارت', 'یتیم بچوں کی مثالی تربیت'],
+    heroicAttributesEnglish: ['Political Wisdom', 'Profound Patience', 'Sound Counsel', 'Legal Understanding'],
     dailySunnahLessons: [
       {
         ur: 'کسی بھی نقصان یا صدمے پر یہ مسنون دعا پڑھنا: "اللهم أجرني في مصيبتي وأخلف لي خيراً منها"۔',
@@ -433,11 +441,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'ذات النطاقین (دو کمر بند والی)، شجاعۃ الایمان',
     titleEnglish: 'Dhat an-Nitaqayn (Possessor of the Two Belts)',
     kinshipToProphet: 'ام المؤمنین عائشہ کی بڑی ہمشیرہ، حضرت ابوبکر کی بیٹی، حواریِ رسول حضرت زبیر بن عوام کی زوجہ، عبداللہ بن زبیر کی والدہ',
+    kinshipToProphetEnglish: 'Daughter of Sayyiduna Abu Bakr al-Siddiq, Elder Sister of Sayyidah Aisha, Mother of Abdullah ibn al-Zubayr',
     classicalCitation: 'صحیح البخاری، حدیث ۲۹۷۹، ۳۱۱۶ / صحیح مسلم، حدیث ۲۵۰۵',
     era: 'متوفی ۷۳ ہجری مکہ مکرمہ (۱۰۰ سال کی عمر مبارک)',
     biographyUrdu: 'ہجرتِ نبوی کی عظیم ہیروئن جنہوں نے غارِ ثور میں کھانا پہنچانے کے لیے اپنا کمر بند پھاڑ کر سامان باندھا، جس پر حضور ﷺ نے "ذات النطاقین" کا لقب عطا فرمایا۔ ابو جہل کے ظالمانہ تھپڑ کھا کر بھی راز فاش نہ کیا۔ سو سال کی عمر میں ظالم حجاج بن یوسف کے سامنے حق کا کلمہ بلند کیا۔',
     biographyEnglish: 'The fearless heroine of the Hijrah who tore her waist-belt in two to secure provisions for the Prophet ﷺ in Cave Thawr. Endured Abu Jahl\'s violent strike without breaking silence, lived to age 100 with pristine intellect, and fearlessly confronted the tyrant al-Hajjaj.',
     heroicAttributes: ['بے پناہ جرات اور رازداری', 'محنت، مشقت اور خودداری', 'ظالم کے سامنے کلمۂ حق کہنا', 'اولاد میں غیرتِ ایمانی پیدا کرنا'],
+    heroicAttributesEnglish: ['Courage at Cave Thawr', 'Steely Endurance', 'Truthfulness', 'Fearlessness before Tyrants'],
     dailySunnahLessons: [
       {
         ur: 'خاندان اور دوستوں کے رازوں کو اپنے سینے میں ہمیشہ محفوظ رکھنا۔',
@@ -520,11 +530,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'فارسۃ الاسلام، مجاہدۂ احد، حامیۃ الرسول',
     titleEnglish: 'The Knight of Islam, Defender of the Prophet at Uhud',
     kinshipToProphet: 'انصار کی بیعتِ عقبہ ثانیہ کی اولین خاتون، مجاہدۂ اسلام',
+    kinshipToProphetEnglish: 'Noble Ansar Matron who took the Second Pledge of Aqabah, Steely Defender at the Battle of Uhud',
     classicalCitation: 'الطبقات الکبریٰ لابن سعد، ج ۸، ص ۴۱۵ / سبل الہدیٰ والرشاد',
     era: 'متوفی ۱۳ ہجری (جنگِ یمامہ کے بعد مدینہ منورہ)',
     biographyUrdu: 'غزوۂ احد کی وہ دلیر مجاہدہ جنہوں نے اس نازک وقت میں تلوار اور تیر چلا کر رسول اللہ ﷺ کے گرد ڈھال بن کر دفاع کیا جب بڑے بڑوں کے پاؤں اکھڑ رہے تھے۔ رسول اللہ ﷺ نے دعا فرمائی: "اے اللہ! انہیں جنت میں میرا رفیق بنا دے"۔ جنگِ یمامہ میں مسیلمہ کذاب کے خلاف لڑتے ہوئے ایک ہاتھ کٹوا بیٹھیں مگر کذاب کے خاتمے تک ڈٹی رہیں۔',
     biographyEnglish: 'The legendary warrior companion at Uhud who drew her sword and bow to shield the Prophet ﷺ when others retreated. The Prophet ﷺ prayed that she and her family would be his companions in Paradise. Later lost an arm at the Battle of Yamamah fighting Musaylimah the Liar.',
     heroicAttributes: ['بے پناہ حربی شجاعت', 'حضور ﷺ سے والہانہ عشق اور جاں نثاری', 'مسیلمہ کذاب کے خلاف فیصلہ کن جہاد'],
+    heroicAttributesEnglish: ['Battlefield Valor', 'Direct Defense of the Prophet ﷺ', 'Steadfast Faith', 'Unmatched Heroism'],
     dailySunnahLessons: [
       {
         ur: 'دینِ حق کے دفاع میں بزدلی اور کمزوری کو چھوڑ کر شجاعت اور بہادری پیدا کرنا۔',
@@ -607,11 +619,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'اول شہیدہ فی الاسلام، شہیدۃ التوحید',
     titleEnglish: 'The First Martyr of Islam',
     kinshipToProphet: 'سابقینِ اولین، حضرت عمار بن یاسر کی والدہ ماجدہ، آلِ یاسر',
+    kinshipToProphetEnglish: 'First Martyr of Islam, Mother of Sayyiduna Ammar ibn Yasir, Exemplar of the House of Yasir',
     classicalCitation: 'الطبقات الکبریٰ لابن سعد، ج ۸، ص ۲۶۴ / الاصابة لابن حجر، ج ۸',
     era: 'قبلِ ہجرت ۷ سال قبل مکہ مکرمہ',
     biographyUrdu: 'اسلام کی اولین شہید خاتون۔ مکہ کی تپتی ریت پر جب ابو جہل نے دہکتے انگاروں پر لٹا کر کفر بکنے کا مطالبہ کیا، تو اس ضعیفہ نے کلمۂ توحید کا نعرہ بلند کیا۔ ابو جہل نے غصے میں آ کر نیزہ مار کر شہید کیا۔ ان کی شہادت نے ثابت کیا کہ ایمان کی طاقت ہر دنیاوی فرعون پر غالب ہے۔',
     biographyEnglish: 'The very first martyr in the history of Islam. An elderly woman who withstood horrific tortures under the scorching desert sun from Abu Jahl, refusing to recant Tawhid. Struck down by Abu Jahl\'s spear, her martyrdom became an eternal monument of unyielding faith.',
     heroicAttributes: ['عقیدۂ توحید پر چٹان جیسا ثبات', 'موت کے خوف پر ایمان کی برتری', 'ظالم کے سامنے بے خوفی'],
+    heroicAttributesEnglish: ['First Martyr of Islam', 'Unshakable Creed', 'Triumph over Torture', 'Pinnacle of Steadfastness'],
     dailySunnahLessons: [
       {
         ur: 'عقیدے اور سچائی پر کبھی سمجھوتہ نہ کرنا، چاہے حالات کتنے ہی ناسازگار ہوں۔',
@@ -688,11 +702,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'الرمیصاء، عاقلۃ النساء، امِ انس',
     titleEnglish: 'Al-Rumaysa, The Wise Matron, Mother of Anas',
     kinshipToProphet: 'خادمِ رسول حضرت انس بن مالک کی والدہ ماجدہ، حضور ﷺ کی رضاعی خالہ',
+    kinshipToProphetEnglish: 'Mother of Sayyiduna Anas ibn Malik, Foster Aunt of the Prophet ﷺ, Sage Matron of Madinah',
     classicalCitation: 'صحیح البخاری، حدیث ۵۰۴۹ / صحیح مسلم، حدیث ۲۴۵۶، ۲۴۵۷',
     era: 'متوفی ۳۰ ہجری مدینہ منورہ',
     biographyUrdu: 'وہ عظیم خاتون جن کے نکاح کا مہر سونا چاندی نہیں بلکہ "اسلام" تھا۔ ابو طلحہ کے پیغامِ نکاح پر فرمایا: اگر تم بت پرستی چھوڑ کر مسلمان ہو جاؤ تو یہی میرا مہر ہوگا۔ انہوں نے اپنے دس سالہ بیٹے حضرت انس کو حضور ﷺ کی خدمت کے لیے وقف کیا۔ رسول اللہ ﷺ نے خواب میں جنت میں ان کے قدموں کی آہٹ سنی۔',
     biographyEnglish: 'The extraordinary woman whose bridal dowry was Islam itself. Refusing gold and silver, she accepted Abu Talha\'s marriage proposal only on condition of his conversion to Islam. She dedicated her son Anas ibn Malik to a decade of service to the Prophet ﷺ, who heard her footsteps in Paradise.',
     heroicAttributes: ['دولت پر ایمان کو ترجیح دینا', 'اولاد کی مثالی اسلامی تربیت', 'جنت میں قدموں کی چاپ کی بشارت'],
+    heroicAttributesEnglish: ['Exemplary Dowry of Faith', 'Steadfast Motherhood', 'Service to the Messenger ﷺ', 'Heroism at Uhud'],
     dailySunnahLessons: [
       {
         ur: 'رشتوں کے انتخاب میں دنیاوی مال و دولت کے بجائے دینداری اور اخلاق کو اولیت دینا۔',
@@ -775,11 +791,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'صوامۃ قوامۃ (کثرت سے روزے رکھنے اور شب بیداری کرنے والی)، حارثۃ المصحف',
     titleEnglish: 'The Nocturnal Devotee, Custodian of the Master Quranic Codex',
     kinshipToProphet: 'رسول اللہ ﷺ کی زوجۂ مطہرہ، امیر المؤمنین عمر بن الخطاب کی لختِ جگر',
+    kinshipToProphetEnglish: 'Noble Spouse of the Prophet ﷺ, Daughter of Umar ibn al-Khattab, Custodian of the Master Quranic Codex',
     classicalCitation: 'صحیح البخاری، حدیث ۴۹۸۷ (جمع القرآن) / سنن ابی داؤد، حدیث ۲۲۸۳',
     era: 'متوفی ۴۵ ہجری مدینہ منورہ (تدفین جنت البقیع)',
     biographyUrdu: 'حضرت عمر فاروق کی صاحبزادی اور کثرت سے روزے رکھنے اور راتوں کو عبادت کرنے والی جلیل القدر ام المؤمنین۔ ان کا سب سے عظیم تاریخی کارنامہ یہ ہے کہ حضرت ابوبکر صدیق اور حضرت عمر کے دور میں جمع کیا گیا قرآن مجید کا اولین اصل تحریری نسخہ (المصحف الامام) انہی کی تحویل اور حفاظت میں رکھا گیا، جس سے بعد میں خلافتِ عثمانی میں تمام نسخے نقل ہوئے۔',
     biographyEnglish: 'Daughter of Umar ibn al-Khattab and an extraordinary ascetic described by Angel Jibril as "frequently fasting and standing in prayer". Her monumental historical legacy was serving as the sole trusted custodian of the primary official written codex (Mushaf) of the Holy Quran, from which all copies were transcribed.',
     heroicAttributes: ['قرآن مجید کے اولین نسخے کی امانت دار', 'کثرتِ صوم اور تہجد گزاری', 'کتابت اور تعلیم کی ماہر'],
+    heroicAttributesEnglish: ['Custodian of the Holy Codex', 'Vigilance in Worship', 'Truthfulness', 'Deep Devotion to Prayer'],
     dailySunnahLessons: [
       {
         ur: 'تلاوتِ قرآن اور کلامِ الٰہی کی حفاظت و تعظیم کو اپنی ترجیح بنانا۔',
@@ -860,11 +878,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'معلمۃ القراءۃ والکتابۃ، نگرانِ بازارِ مدینہ',
     titleEnglish: 'The Teacher of Literacy, Market Administrator of Madinah',
     kinshipToProphet: 'حضور ﷺ کی قریبی معتمد صحابیہ، ام المؤمنین حفصہ کی استاد',
+    kinshipToProphetEnglish: 'Distinguished Scholar, Physician, Teacher of Reading & Writing in Madinah, Trusted by Umar Farooq',
     classicalCitation: 'سنن ابی داؤد، حدیث ۳۸۸۷ / الاصابة لابن حجر، ج ۸، ص ۲۰۱',
     era: 'متوفی ۲۰ ہجری دورِ خلافتِ فاروقی مدینہ منورہ',
     biographyUrdu: 'مکہ مکرمہ کی ان گنی چنی ہستیوں میں سے تھیں جو لکھنا پڑھنا اور طب جانتی تھیں۔ رسول اللہ ﷺ نے ان کی علمی صلاحیتوں کو سراہا اور ام المؤمنین سیدتنا حفصہ کو کتابت سکھانے کا حکم دیا۔ خلیفۂ دوم حضرت عمر فاروق رضی اللہ عنہ نے ان کی دیانت، ذہانت اور فہم کی بنا پر انہیں مدینہ منورہ کی مارکیٹ (بازار) کی نگرانی اور معاشی احتساب کی ذمہ داری سونپی۔',
     biographyEnglish: 'One of the exceptionally rare literate scholars of pre-Islamic Makkah. The Prophet ﷺ commissioned her to instruct Mother of the Believers Hafsah in writing. Caliph Umar ibn al-Khattab respected her integrity and commercial ethics so profoundly that he consulted her on marketplace administration in Madinah.',
     heroicAttributes: ['اعلیٰ علمی و ادبی قابلیت', 'انتظامی فراست اور مارکیٹ کا نظم و نسق', 'پردے کے ساتھ امت کی رہنمائی'],
+    heroicAttributesEnglish: ['First Female Teacher in Madinah', 'Healing and Medicine', 'Administrative Trust', 'Scholarly Erudition'],
     dailySunnahLessons: [
       {
         ur: 'دوسروں کو لکھنا پڑھنا، مفید ہنر اور دینی علم سکھانا صدقہ جاریہ ہے۔',
@@ -939,11 +959,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'بتول، عذراء، صدیقہ، مصطفاۃ علی نساء العالمین',
     titleEnglish: 'The Chaste Virgin, As-Siddiqah, Chosen Above All Women',
     kinshipToProphet: 'سیدنا عیسیٰ علیہ السلام کی والدہ ماجدہ، قرآن میں جن کے نام پر مکمل سورہ ہے',
+    kinshipToProphetEnglish: 'Mother of Prophet Isa (Jesus) peace be upon him, Divinely Purified Sovereign Lady with a Quranic Surah named after her',
     classicalCitation: 'سورۃ آل عمران: ۴۲ / سورۃ مریم / صحیح البخاری، حدیث ۳۴۳۱',
     era: 'دورِ بنی اسرائیل قبلِ میلادِ مسیح (بیت المقدس)',
     biographyUrdu: 'کائنات کی تمام عورتوں پر برگزیدہ اور پاکباز ہستی جن کی والدہ نے انہیں ولادت سے قبل ہی بیت المقدس کی خدمت کے لیے وقف کر دیا تھا۔ حضرت زکریا علیہ السلام کی کفالت میں محرابِ عبادت میں رہیں۔ اللہ تعالیٰ نے بے موسم کے جنتی پھلوں سے ان کی ضیافت فرمائی اور بغیر باپ کے حضرت عیسیٰ علیہ السلام کے معجزانہ حمل کی بشارت دی، جس پر انہوں نے بے مثال صبر اور تقویٰ کی مثال قائم کی۔',
     biographyEnglish: 'The pure, sanctified matriarch chosen by Allah Almighty above all the women of the universe. Dedicated to the Temple by her mother Hannah, nurtured under Prophet Zakariyya, provided with miraculous divine sustenance in her sanctuary (Mihrab), and chosen for the miraculous virgin birth of Prophet Isa (peace be upon him).',
     heroicAttributes: ['اعلیٰ ترین حیا اور عفت', 'شب و روز کی کامل یکسوئی والی عبادت', 'الزام تراشی پر چٹان جیسا صبر'],
+    heroicAttributesEnglish: ['Chastity and Devotion', 'Trust in Divine Decree', 'Sanctuary Worship', 'Exalted Quranic Rank'],
     dailySunnahLessons: [
       {
         ur: 'اپنی پاکدامنی اور عفت کی ہر قیمت پر حفاظت کرنا اور لغو مجالس سے دور رہنا۔',
@@ -1030,11 +1052,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'شہیدۂ توحید، زوجۂ فرعون، سیدۃ نساء اہل الجنہ',
     titleEnglish: 'The Champion of Tawhid, Wife of Pharaoh, Matron of Paradise',
     kinshipToProphet: 'سیدنا موسیٰ علیہ السلام کی مربی والدہ، جنت میں حضور ﷺ کی رفیقہ',
+    kinshipToProphetEnglish: 'Queen of Faith who rescued Prophet Musa (Moses) from the Nile, Martyr of Divine Monotheism',
     classicalCitation: 'سورۃ التحریم: ۱۱ / صحیح البخاری، حدیث ۳۴۱۱ / المعجم الکبیر',
     era: 'دورِ فرعونِ مصر (قبلِ ہجرت بنی اسرائیل)',
     biographyUrdu: 'مصر کے سب سے متکبر اور خدائی کا دعویٰ کرنے والے بادشاہ فرعون کی ملکہ جنہوں نے محلات کی شاہانہ آسائشوں کو ٹھکرا کر اللہ کی وحدانیت کو قبول کیا۔ دریائے نیل سے حضرت موسیٰ علیہ السلام کے صندوق کو نکال کر اپنے سینے سے لگایا اور فرعون کے سامنے ان کی جان بچائی۔ جب فرعون کو ان کے ایمان کا پتہ چلا تو ان پر ہولناک تشدد کیا گیا مگر ان کے پائے ثبات میں لرزش نہ آئی۔',
     biographyEnglish: 'The Queen of Egypt who defied the supreme tyrant of history. She plucked baby Musa from the Nile, compelled Pharaoh to adopt him, embraced pure Monotheism (Tawhid) in the heart of royal oppression, and chose excruciating martyrdom over idolatrous palaces, praying for an eternal home in Paradise near Allah.',
     heroicAttributes: ['شاہی آسائشوں پر ایمان کو ترجیح دینا', 'فرعون کے جبر کے سامنے فولادی عزم', 'سیدنا موسیٰ کی مربیانہ حفاظت'],
+    heroicAttributesEnglish: ['Rejection of Tyranny', 'Spiritual Sovereignty', 'Palace of Paradise', 'Unyielding Faith'],
     dailySunnahLessons: [
       {
         ur: 'دنیا کی دولت، عہدے اور آسائشیں ایمان کے مقابلے میں کوئی وقعت نہیں رکھتیں۔',
@@ -1115,11 +1139,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'کبریٰ بناتِ رسول، صابرہ، مہاجرہ',
     titleEnglish: 'The Eldest Daughter of the Prophet ﷺ, The Patient Migrant',
     kinshipToProphet: 'رسول اللہ ﷺ اور سیدہ خدیجہ کی سب سے بڑی صاحبزادی',
+    kinshipToProphetEnglish: 'Eldest Daughter of the Prophet ﷺ and Sayyidah Khadijah, Heroic Emigrant of Truth',
     classicalCitation: 'صحیح البخاری، حدیث ۳۱۳۸ / سنن ابی داؤد، حدیث ۲۶۹۲',
     era: 'متوفی ۸ ہجری مدینہ منورہ (جنت البقیع)',
     biographyUrdu: 'رسول اللہ ﷺ کی سب سے بڑی لختِ جگر جن کے اخلاق میں خدیجۃ الکبریٰ کا پرتو تھا۔ ابتدائے اسلام ہی میں مکہ میں والدہ کے ساتھ ایمان لائیں۔ ہجرت کے دوران قریش کے ظالم ہبار بن اسود نے نیزہ مارا جس سے اونٹ سے گریں اور شدید زخمی ہوئیں۔ حضور ﷺ نے ان کی قربانی پر فرمایا: "یہ میری سب سے بہترین بیٹی ہے جو میری محبت میں تکلیفوں سے گزاری گئی"۔',
     biographyEnglish: 'The eldest noble daughter of the Prophet ﷺ and Sayyidatuna Khadijah. Embraced Islam at its inception. During her migration to Madinah, she was brutally attacked while pregnant by Habbar ibn al-Aswad, falling from her camel. The Prophet ﷺ praised her fortitude: "She was the best of my daughters who was afflicted for my sake."',
     heroicAttributes: ['ہجرت میں جان لیوا زخموں پر صبر', 'والدِ محترم ﷺ پر والہانہ فداکاری', 'حیا اور وفائے شوہر کا اعلیٰ نمونہ'],
+    heroicAttributesEnglish: ['Patience during Hijrah', 'Marital Forbearance', 'Noble Lineage', 'Exemplary Devotion'],
     dailySunnahLessons: [
       {
         ur: 'دینِ حق کی خاطر جسمانی و مالی تکالیف کو صبر اور رضا کے ساتھ برداشت کرنا۔',
@@ -1196,11 +1222,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'ذات الہجرتین، زوجۂ ذوالنورین، شہزادیٔ رسول',
     titleEnglish: 'Dhat al-Hijratayn (Migrant of Two Hijrahs), Wife of Uthman',
     kinshipToProphet: 'رسول اللہ ﷺ کی دوسری صاحبزادی، سیدنا عثمان غنی کی زوجۂ مطہرہ',
+    kinshipToProphetEnglish: 'Second Daughter of the Prophet ﷺ, Noble Spouse of Sayyiduna Uthman ibn Affan, Emigrant of Two Hijrahs',
     classicalCitation: 'صحیح البخاری، حدیث ۳۱۳۰، ۳۶۹۸ / الطبقات الکبریٰ لابن سعد',
     era: 'متوفی ۲ ہجری مدینہ منورہ (فتحِ بدر کے دن وصال)',
     biographyUrdu: 'رسول اللہ ﷺ کی وہ پاکیزہ بیٹی جنہوں نے اسلام کی خاطر دو مرتبہ ہجرت فرمائی: پہلے حبشہ کی طرف اور پھر مدینہ منورہ کی طرف۔ سیدنا عثمان بن عفان رضی اللہ عنہ کے ساتھ ان کا نکاح آسمانوں پر مقدر تھا۔ غزوۂ بدر کے موقع پر شدید بیمار تھیں، حضور ﷺ نے حضرت عثمان کو ان کی تیمارداری کے لیے روکا اور انہیں بدر کے مجاہدین کے برابر اجر اور غنیمت کا حصہ عطا فرمایا۔',
     biographyEnglish: 'The revered daughter of the Prophet ﷺ who undertook both foundational migrations of Islam: first to Abyssinia and then to Madinah alongside her husband Sayyiduna Uthman ibn Affan. During Badr, she fell mortally ill; the Prophet ﷺ ordered Uthman to nurse her, declaring he would receive the exact reward and spoils of a Badr warrior.',
     heroicAttributes: ['حبشہ اور مدینہ کی دوہری ہجرت کا شرف', 'میکے اور سسرال کی مثالی پاکیزگی', 'مرضِ وفات پر صبر'],
+    heroicAttributesEnglish: ['Emigrant of Two Hijrahs', 'Patience in Sickness', 'Sacred Lineage', 'Serenity of Character'],
     dailySunnahLessons: [
       {
         ur: 'دین کے تحفظ کے لیے اپنے وطن اور آسائشوں کو خوش دلی سے چھوڑ دینا۔',
@@ -1224,7 +1252,7 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     exhaustiveBiographyUrdu: [
       'سیدتنا رقیہ رضی اللہ عنہا کو تاریخِ اسلام میں "ذات الہجرتین" (دو ہجرتوں والی عظیم خاتون) کے لقب سے جانا جاتا ہے۔ جب مکہ میں قریش کا ظلم و ستم انتہا کو پہنچ گیا اور مسلمانوں پر زمین تنگ کر دی گئی، تو رسول اللہ ﷺ نے حبشہ کی طرف ہجرت کا حکم دیا۔ سیدتنا رقیہ اپنے شوہر سیدنا عثمان بن عفان کے ساتھ سمندر کا پرخطر سفر طے کر کے حبشہ پہنچیں اور وہاں کئی سال غربت و جلاوطنی میں صبر سے گزارے۔',
       'جب رسول اللہ ﷺ نے مدینہ کی طرف ہجرت فرمائی، تو سیدہ رقیہ اور سیدنا عثمان حبشہ سے واپس مکہ آئے اور پھر وہاں سے مدینہ کی دوسری مبارک ہجرت فرمائی۔ مدینہ منورہ میں ان کے بیٹے حضرت عبد اللہ بن عثمان کی ولادت ہوئی جن کی وفات پر انہیں گہرا صدمہ پہنچا۔',
-      '۲ ہجری میں جب مسلمان غزوۂ بدر کے لیے نکل رہے تھے، تو سیدتنا رقیہ کو شدید چیچک (smallpox) اور تیز بخار نے آ لیا۔ سیدنا عثمان غنی رسول اللہ ﷺ کے ساتھ بدر کے معرکے میں جانا چاہتے تھے، مگر حضور ﷺ نے حکم دیا: "تم رقیہ کے پاس ٹھہرو، تمہیں بدر میں حاضر ہونے والے مجاہد جتنا اجر اور مالِ غنیمت کا پورا حصہ ملے گا"۔',
+      '۲ ہجری میں جب مسلمان غزوۂ بدر کے لیے نکل رہے تھے، تو سیدتنا رقیہ کو شدید چیچک اور تیز بخار نے آ لیا۔ سیدنا عثمان غنی رسول اللہ ﷺ کے ساتھ بدر کے معرکے میں جانا چاہتے تھے، مگر حضور ﷺ نے حکم دیا: "تم رقیہ کے پاس ٹھہرو، تمہیں بدر میں حاضر ہونے والے مجاہد جتنا اجر اور مالِ غنیمت کا پورا حصہ ملے گا"۔',
       'جس دن حضرت زید بن حارثہ رضی اللہ عنہ بدر کی عظیم الشان فتح کی خوشخبری لے کر مدینہ منورہ میں داخل ہوئے، اسی دن سیدتنا رقیہ کا وصال ہوا اور انہیں جنت البقیع میں دفن کیا جا رہا تھا۔ سیدنا عثمان ان کی جدائی پر رو پڑے تو رسول اللہ ﷺ نے فرمایا کہ رقیہ اپنے سلفِ صالحین سے جا ملی ہیں۔'
     ],
     exhaustiveBiographyEnglish: [
@@ -1277,11 +1305,13 @@ export const DETAILED_SAHABIYYAT_PROFILES: SahabiyyatProfile[] = [
     titleUrdu: 'کریمۂ مصطفیٰ، رفیقۂ ذوالنورین، صابرہ',
     titleEnglish: 'Daughter of the Prophet ﷺ, The Second Light of Uthman',
     kinshipToProphet: 'رسول اللہ ﷺ کی تیسری صاحبزادی، حضرت عثمان کی دوسری زوجۂ مطہرہ',
+    kinshipToProphetEnglish: 'Third Daughter of the Prophet ﷺ, Second Noble Spouse of Sayyiduna Uthman ibn Affan (Dhun-Nurayn)',
     classicalCitation: 'صحیح البخاری، حدیث ۱۲۸۵ / سنن ابن ماجہ، حدیث ۱۴۵۹',
     era: 'متوفی ۹ ہجری مدینہ منورہ (جنت البقیع)',
     biographyUrdu: 'رسول اللہ ﷺ کی وہ عظیم الشان بیٹی جن کے عقد میں آنے کے بعد حضرت عثمان کو "ذوالنورین" (دو نوروں والا) کا تاریخی اور منفرد لقب ملا۔ جب سیدہ رقیہ کے وصال کے بعد رسول اللہ ﷺ نے اپنی تیسری بیٹی ام کلثوم کا نکاح حضرت عثمان سے فرمایا، تو ارشاد فرمایا: "اگر میری چالیس بیٹیاں بھی ہوتیں تو میں ایک کے بعد ایک کر کے سب عثمان کے نکاح میں دے دیتا"۔ شعبِ ابی طالب کی تین سالہ بھوک اور بائیکاٹ میں حضور ﷺ کی خدمت میں پیش پیش رہیں۔',
     biographyEnglish: 'The blessed third daughter of the Prophet ﷺ whose marriage to Sayyiduna Uthman after Ruqayyah\'s passing cemented Uthman\'s eternal title Dhu al-Nurayn (Possessor of Two Lights). Endured the grueling 3-year siege of Shi\'b Abi Talib. The Prophet ﷺ proclaimed: "If I possessed forty daughters, I would marry them to Uthman one after another."',
     heroicAttributes: ['شعبِ ابی طالب کے بائیکاٹ میں باپ کی خدمت', 'سیدنا عثمان کے گھر کو نور بنانے والی رفیقہ', 'بے پناہ زہد و حیا'],
+    heroicAttributesEnglish: ['Spouse of Dhun-Nurayn', 'Support of the Mission', 'Purity and Grace', 'Patience in the Path of Allah'],
     dailySunnahLessons: [
       {
         ur: 'آزمائش کے وقت اپنے والدین اور بزرگوں کی دل و جان سے خدمت کرنا۔',

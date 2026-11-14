@@ -38,6 +38,15 @@ export const OnboardingWizardModal: React.FC<OnboardingWizardModalProps> = ({
   const [timeCommitment, setTimeCommitment] = useState<OnboardingTimeCommitment>('15_MINS');
   const [generatedPlan, setGeneratedPlan] = useState<StarterPlan | null>(null);
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleLanguageChange = (newLang: SupportedLanguage) => {
@@ -136,7 +145,9 @@ export const OnboardingWizardModal: React.FC<OnboardingWizardModalProps> = ({
             </div>
 
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Close"
               style={{
                 background: 'transparent',
                 border: 'none',

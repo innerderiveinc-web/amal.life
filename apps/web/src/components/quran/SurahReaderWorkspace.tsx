@@ -6,6 +6,7 @@ import { AyahShareCardModal } from './AyahShareCardModal';
 import { SurahReaderHeader } from './SurahReaderHeader';
 import { AyahFocusModeView } from './AyahFocusModeView';
 import { AyahScrollView } from './AyahScrollView';
+import { MushafPageView } from './MushafPageView';
 
 export interface SurahReaderWorkspaceProps {
   currentSurahMeta: QuranSurahMeta;
@@ -38,8 +39,8 @@ export interface SurahReaderWorkspaceProps {
   handlePlaySurahTilawatOnly: () => void;
   handlePlayAyahAudio: (ayahNum: number, segment: AudioSegment) => void;
   onOpenWisdomModal: (surahNumber: number, ayahNumber: number) => void;
-  viewMode?: 'SCROLL' | 'FOCUS';
-  setViewMode?: (mode: 'SCROLL' | 'FOCUS') => void;
+  viewMode?: 'SCROLL' | 'FOCUS' | 'MUSHAF';
+  setViewMode?: (mode: 'SCROLL' | 'FOCUS' | 'MUSHAF') => void;
   focusedAyahNumber?: number;
   setFocusedAyahNumber?: React.Dispatch<React.SetStateAction<number>>;
   continuousSurahPlayback?: boolean;
@@ -94,6 +95,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
     urduTranslation: string;
     englishTranslation?: string;
   } | null>(null);
+  const [isHifzBlurActive, setIsHifzBlurActive] = useState<boolean>(false);
 
   // Auto-scroll to focused Ayah in Continuous Scroll view when resuming or jumping
   useEffect(() => {
@@ -110,6 +112,7 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
 
   return (
     <div
+      className={isHifzBlurActive ? 'hifz-test-blur' : ''}
       style={{
         backgroundColor: '#FFFFFF',
         borderRadius: 16,
@@ -118,6 +121,18 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
         boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
       }}
     >
+      <style>{`
+        .hifz-test-blur .quran-arabic-matn {
+          filter: blur(8px);
+          transition: filter 0.25s ease;
+          user-select: none;
+        }
+        .hifz-test-blur .quran-arabic-matn:hover,
+        .hifz-test-blur .quran-arabic-matn:active {
+          filter: none !important;
+          user-select: text;
+        }
+      `}</style>
       <SurahReaderHeader
         currentSurahMeta={currentSurahMeta}
         currentSurah={currentSurah}
@@ -130,6 +145,8 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
         setIsSurahSettingsOpen={setIsSurahSettingsOpen}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        isHifzBlurActive={isHifzBlurActive}
+        setIsHifzBlurActive={setIsHifzBlurActive}
         selectedQari={selectedQari}
         setSelectedQari={setSelectedQari}
         playbackSpeed={playbackSpeed}
@@ -199,6 +216,16 @@ export const SurahReaderWorkspace: React.FC<SurahReaderWorkspaceProps> = ({
           onOpenShareModal={setShareModalAyah}
           fontSize={fontSize}
           showRomanUrdu={showRomanUrdu}
+        />
+      )}
+
+      {/* 604-Page Madani Mushaf View (Ayah App Style) */}
+      {!isLoadingSurah && viewMode === 'MUSHAF' && (
+        <MushafPageView
+          selectedSurahNumber={selectedSurahNumber}
+          playingAyahNumber={playingAyahNumber}
+          onOpenShareModal={setShareModalAyah}
+          onPlayAyahAudio={(sNum, aNum) => handlePlayAyahAudio(aNum, 'ARABIC')}
         />
       )}
 

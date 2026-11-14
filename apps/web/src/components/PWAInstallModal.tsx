@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { usePWAInstallPrompt } from './pwa/usePWAInstallPrompt';
 import { PWAInstallIOSInstructions } from './pwa/PWAInstallIOSInstructions';
 import { PWAInstallStandardView } from './pwa/PWAInstallStandardView';
@@ -9,7 +10,17 @@ export interface PWAInstallModalProps {
 }
 
 export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useLanguage();
   const { isIOS, isStandalone, isInstalling, handleInstallClick } = usePWAInstallPrompt(isOpen, onClose);
+
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -147,7 +158,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({ isOpen, onClos
                 cursor: 'pointer',
               }}
             >
-              بند کریں (Close)
+              {t('Close', 'بند کریں', 'إغلاق', 'Band Karein')}
             </button>
           </div>
         </div>

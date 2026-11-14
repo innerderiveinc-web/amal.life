@@ -80,7 +80,7 @@ export const DEFAULT_BELOVED_BOOKMARKS: SavedBookmarkItem[] = [
     arabicText: 'إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا',
     translationUrdu: 'بیشک اللہ اور اس کے فرشتے درود بھیجتے ہیں اس غیب بتانے والے (نبی) پر، اے ایمان والو ان پر درود اور خوب سلام بھیجو۔',
     translationEnglish: 'Indeed, Allah and His angels confer blessings upon the Prophet. O you who have believed, ask [Allah to confer] blessings upon him and ask [Allah to grant him] peace.',
-    citation: 'سورة الأحزاب ۳۳:۵۶ (Kanz al-Iman Translation)',
+    citation: 'سورة الأحزاب ۳۳:۵۶ · ترجمہ کنز الایمان',
     audioUrl: 'https://everyayah.com/data/Husary_128kbps/033056.mp3',
     reciter: 'Shaykh Mahmoud Khalil Al-Husary',
   },

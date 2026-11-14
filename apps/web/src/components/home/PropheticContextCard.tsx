@@ -1,5 +1,6 @@
 import React from 'react';
 import { PropheticContextResult } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface PropheticContextCardProps {
   struggleQuery: string;
@@ -14,6 +15,7 @@ export const PropheticContextCard: React.FC<PropheticContextCardProps> = ({
   propheticContext,
   onSearchPropheticContext,
 }) => {
+  const { t } = useLanguage();
   return (
     <div
       className="amal-card-hover"
@@ -37,7 +39,7 @@ export const PropheticContextCard: React.FC<PropheticContextCardProps> = ({
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: 22,
-            color: '#0284C7',
+            color: '#0369A1',
             flexShrink: 0,
           }}
         >
@@ -180,11 +182,11 @@ export const PropheticContextCard: React.FC<PropheticContextCardProps> = ({
 
           {/* Character Principle & Amal */}
           <div style={{ fontSize: 13, color: '#14532D' }}>
-            <strong>Character Principle:</strong> {propheticContext.characterPrinciple.virtueName} —{' '}
+            <strong>{t('Character Principle:', 'خلقی اصول:', 'المبدأ الأخلاقي:', 'Character Principle:')}</strong> {propheticContext.characterPrinciple.virtueName} —{' '}
             {propheticContext.characterPrinciple.practicalTakeaway}
           </div>
           <div style={{ marginTop: 8, fontSize: 12, color: '#166534', fontWeight: 700 }}>
-            Suggested Action: {propheticContext.optionalAmalAction}
+            {t('Suggested Action:', 'تجویز کردہ عمل:', 'العمل المقترح:', 'Tajweez Karda Amal:')} {propheticContext.optionalAmalAction}
           </div>
         </div>
       )}

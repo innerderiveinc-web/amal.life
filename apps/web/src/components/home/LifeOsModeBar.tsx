@@ -1,5 +1,6 @@
 import React from 'react';
 import { LifeOsMode, LifeOsModeProfile } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface LifeOsModeBarProps {
   currentMode: LifeOsMode;
@@ -12,6 +13,22 @@ export const LifeOsModeBar: React.FC<LifeOsModeBarProps> = ({
   modeProfile,
   onSwitchMode,
 }) => {
+  const { t } = useLanguage();
+
+  const getModeLabel = (m: LifeOsMode) => {
+    switch (m) {
+      case 'STANDARD':
+        return t('Daily Routine', 'معمولِ حیات', 'الروتين اليومي', 'Rozmarrah Mamool');
+      case 'TRAVEL':
+        return t('✈️ Travel', '✈️ حالتِ سفر', '✈️ وضع السفر', '✈️ Safar Mode');
+      case 'EXAMS_WORK_CRUNCH':
+        return t('📚 Focus & Study', '📚 امتحان و توجہ', '📚 الامتحانات والتركيز', '📚 Imtehan o Focus');
+      case 'NEW_PARENT':
+        return t('👶 Parenthood', '👶 والدینیت و اولاد', '👶 رعاية الأبناء', '👶 Waldainiyat');
+      default:
+        return m;
+    }
+  };
   return (
     <>
       <div
@@ -61,13 +78,7 @@ export const LifeOsModeBar: React.FC<LifeOsModeBarProps> = ({
                   transition: 'all 0.15s ease',
                 }}
               >
-                {m === 'STANDARD'
-                  ? 'معمول (Daily)'
-                  : m === 'TRAVEL'
-                  ? '✈️ سفر (Travel)'
-                  : m === 'EXAMS_WORK_CRUNCH'
-                  ? '📚 امتحانات (Focus)'
-                  : '👶 والدینیت (Parent)'}
+                {getModeLabel(m)}
               </button>
             ))}
           </div>

@@ -1,0 +1,37 @@
+{
+  "workId": "CANON-NIS-04",
+  "verifiedExternalUrl": "https://www.dawateislami.net/bookslibrary/ur/islami-behno-ki-namaz",
+  "verifiedExternalName": "Maktaba-tul-Madina (Islami Behnon Ki Namaz Complete Edition)",
+  "chapters": [
+    {
+      "chapterId": "ssg-01",
+      "chapterTitleArabic": "صلاة وطهارة المرأة المسلمة وفق الفقه الحنفي",
+      "chapterTitleUrdu": "غسلِ حیض و طہارت کا مکمل مسنون طریقہ",
+      "chapterTitleEnglish": "Sunnah Method of Post-Menstrual Ghusl (Purification)",
+      "arabicMatn": "رد المحتار علی الدر المختار، باب الغسل",
+      "urduTranslation": "جب حیض کا خون بند ہو جائے تو غسل فرض ہے۔ غسل میں پہلے استنجا کرے اور نجاست دھوئے، پھر نماز کا وضو کرے۔ اس کے بعد تین بار سر پر، تین بار دائیں اور تین بار بائیں کاندھے پر پانی بہائے۔ کلی کرنا اور ناک کی نرم ہڈی تک پانی پہنچانا فرض ہے۔",
+      "englishSynopsis": "The three obligatory acts (Fara'idh) of Ghusl: rinsing the mouth, cleansing the nose up to soft bone, and washing the entire body thoroughly.",
+      "scholarlyNotes": "غسل کے تین فرائض ہیں: کلی کرنا، ناک میں پانی چڑھانا، اور سارے بدن پر پانی بہانا۔ • اگر بالوں کی مینڈھیاں (چوٹیاں) کھلی نہ ہوں تو جڑوں تک پانی پہنچانا ضروری ہے۔ • ناخن پالش اگر جمی ہو تو اسے ہٹائے بغیر وضو اور غسل نہیں ہوگا۔"
+    },
+    {
+      "chapterId": "ssg-02",
+      "chapterTitleArabic": "صلاة وطهارة المرأة المسلمة وفق الفقه الحنفي",
+      "chapterTitleUrdu": "وضو کے چار فرائض اور خواتین کی عام غلطیاں",
+      "chapterTitleEnglish": "Four Pillars of Wudu & Rectifying Common Female Errors",
+      "arabicMatn": "بہارِ شریعت، حصہ اول و دوم / قانونِ شریعت",
+      "urduTranslation": "فقہ حنفی میں وضو کے چار فرائض ہیں: (۱) چہرہ دھونا (پیشانی سے ٹھوڑی اور ایک کان سے دوسرے کان تک)، (۲) کہنیوں سمیت دونوں ہاتھ دھونا، (۳) چوتھائی سر کا مسح کرنا، (۴) ٹخنوں سمیت دونوں پاؤں دھونا۔ خواتین کو چاہیے کہ وضو کرتے وقت چوڑیوں اور انگوٹھیوں کو حرکت دیں تاکہ نیچے پانی پہنچ جائے، اور کاجل یا واٹر پروف میک اپ کی تہہ کو پہلے مکمل صاف کر لیں۔",
+      "englishSynopsis": "The four non-negotiable obligations of Wudu: washing entire face ear to ear, washing hands past elbows, wiping quarter head, washing feet with ankles.",
+      "scholarlyNotes": "کان کی لو اور گلے کے قریب خشکی رہ جانے سے وضو نہیں ہوتا۔ • آنکھوں کے کونوں میں کیچڑ یا کاجل کی پپڑی کو صاف کرنا ضروری ہے۔ • ایڑیوں اور انگلیوں کے درمیانی خلا کو اچھی طرح تر کیا جائے۔"
+    },
+    {
+      "chapterId": "ssg-03",
+      "chapterTitleArabic": "صلاة وطهارة المرأة المسلمة وفق الفقه الحنفي",
+      "chapterTitleUrdu": "نماز میں ستر کے احکام اور دوپٹہ اوڑھنے کا طریقہ",
+      "chapterTitleEnglish": "Rules of Aurah in Prayer & Correct Dupatta/Scarf Coverage",
+      "arabicMatn": "سنن ابی داؤد، حدیث رقم ۶۴۱ / درِ مختار",
+      "urduTranslation": "رسول اللہ ﷺ نے ارشاد فرمایا: \"اللہ تعالیٰ کسی بالغہ عورت کی نماز بغیر اوڑھنی (خمار) کے قبول نہیں فرماتا\" (سنن ابی داؤد)۔ پس بہنوں پر لازم ہے کہ نماز کے وقت موٹی چادر یا ایسا اسکارف استعمال کریں جس سے بال اور گردن بالکل نہ جھلکیں۔ اگر غفلت کی وجہ سے بال یا گلا کھل جائے اور فوراً نہ ڈھانپا جائے تو نماز کا لوٹانا فرض ہے۔",
+      "englishSynopsis": "In prayer, the woman's entire body is Aurah except face, palms, and feet; if a quarter of the neck, ear, or hair remains exposed for one pillar duration, Salah is invalidated.",
+      "scholarlyNotes": "باریک دوپٹہ جس سے بالوں کی سیاہی چمکے نماز کے لیے ناکافی ہے۔ • ٹھوڑی کے نیچے کا حصہ اور کلائیاں مکمل طور پر ڈھانپی ہونی چاہئیں۔ • سجدے میں جاتے وقت اگر پچھلی طرف سے بال یا پیٹھ ننگی ہو گئی تو نماز ٹوٹ جائے گی۔"
+    }
+  ]
+}

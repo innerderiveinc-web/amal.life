@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ibadatItems, ilmItems, familySistersItems, ahkamItems } from './navigation-items';
+import { IconKaaba, IconQuran, IconScale, IconMosque, IconSun } from '../icons/AmalIcons';
 
 export interface NavigationPillarsDesktopProps {
   currentLang: string;
@@ -25,7 +26,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
   };
 
   return (
-    <div className="desktop-only" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+    <div className="desktop-only" style={{ display: 'flex', gap: 4, alignItems: 'center', flexShrink: 0 }}>
       <Link
         href="/"
         style={{
@@ -33,23 +34,30 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           fontSize: 13,
           fontWeight: currentPath === '/' ? 700 : 600,
           color: currentPath === '/' ? '#065F46' : '#334155',
-          padding: '6px 10px',
+          padding: '6px 8px',
           borderRadius: 6,
           backgroundColor: currentPath === '/' ? '#F0FDF4' : 'transparent',
           transition: 'all 0.15s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 5,
+          whiteSpace: 'nowrap',
         }}
       >
-        {currentLang === 'ur'
-          ? '🌅 آج'
-          : currentLang === 'ar'
-          ? '🌅 اليوم'
-          : currentLang === 'roman'
-          ? '🌅 Aaj'
-          : '🌅 Today'}
+        <IconSun size={15} color={currentPath === '/' ? '#065F46' : '#64748B'} />
+        <span>
+          {currentLang === 'ur'
+            ? 'آج'
+            : currentLang === 'ar'
+            ? 'اليوم'
+            : currentLang === 'roman'
+            ? 'Aaj'
+            : 'Today'}
+        </span>
       </Link>
 
       {/* Pillar 1: Ibadah & Daily Rhythm */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', flexShrink: 0 }}>
         <button
           onClick={() => setActiveDropdown(activeDropdown === 'ibadat' ? null : 'ibadat')}
           style={{
@@ -63,21 +71,24 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
             color: activeDropdown === 'ibadat' ? '#065F46' : '#374151',
             cursor: 'pointer',
             padding: '6px 10px',
-            borderRadius: 6,
+            borderRadius: 8,
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
             backgroundColor: activeDropdown === 'ibadat' ? '#F0FDF4' : 'transparent',
+            transition: 'all 0.15s ease',
           }}
         >
-          <span>🕋</span>
-          <span>
+          <IconKaaba size={15} color={activeDropdown === 'ibadat' ? '#065F46' : '#64748B'} />
+          <span style={{ whiteSpace: 'nowrap' }}>
             {currentLang === 'ur'
-              ? 'عبادات و معمولات'
+              ? 'عبادات'
               : currentLang === 'ar'
-              ? 'العبادات والأوراد'
+              ? 'العبادات'
               : currentLang === 'roman'
-              ? 'Ibadat wa Ma\'moolat'
-              : 'Ibadah & Rhythm'}
+              ? 'Ibadat'
+              : 'Ibadah'}
           </span>
-          <span style={{ fontSize: 9 }}>▼</span>
+          <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
         </button>
 
         {activeDropdown === 'ibadat' && (
@@ -122,7 +133,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
       </div>
 
       {/* Pillar 2: Quran & Sacred Knowledge */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', flexShrink: 0 }}>
         <button
           onClick={() => setActiveDropdown(activeDropdown === 'ilm' ? null : 'ilm')}
           style={{
@@ -136,21 +147,24 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
             color: activeDropdown === 'ilm' ? '#065F46' : '#374151',
             cursor: 'pointer',
             padding: '6px 10px',
-            borderRadius: 6,
+            borderRadius: 8,
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
             backgroundColor: activeDropdown === 'ilm' ? '#F0FDF4' : 'transparent',
+            transition: 'all 0.15s ease',
           }}
         >
-          <span>📖</span>
-          <span>
+          <IconQuran size={15} color={activeDropdown === 'ilm' ? '#065F46' : '#64748B'} />
+          <span style={{ whiteSpace: 'nowrap' }}>
             {currentLang === 'ur'
-              ? 'قرآن و علوم'
+              ? 'قرآن و علم'
               : currentLang === 'ar'
-              ? 'القرآن وعلومه'
+              ? 'القرآن والعلم'
               : currentLang === 'roman'
-              ? 'Quran wa Uloom'
+              ? 'Quran & Ilm'
               : 'Quran & Ilm'}
           </span>
-          <span style={{ fontSize: 9 }}>▼</span>
+          <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
         </button>
 
         {activeDropdown === 'ilm' && (
@@ -195,7 +209,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
       </div>
 
       {/* Pillar 3: Family & Sisters Sanctuary */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', flexShrink: 0 }}>
         <button
           onClick={() => setActiveDropdown(activeDropdown === 'family' ? null : 'family')}
           style={{
@@ -209,22 +223,24 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
             color: activeDropdown === 'family' ? '#9D174D' : '#374151',
             cursor: 'pointer',
             padding: '6px 10px',
-            borderRadius: 6,
+            borderRadius: 8,
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
             backgroundColor: activeDropdown === 'family' ? '#FDF2F8' : 'transparent',
             transition: 'all 0.15s ease',
           }}
         >
           <span>🌸</span>
-          <span>
+          <span style={{ whiteSpace: 'nowrap' }}>
             {currentLang === 'ur'
-              ? 'خاندان و نسواں'
+              ? 'خواتین'
               : currentLang === 'ar'
-              ? 'الأسرة والمرأة'
+              ? 'المرأة والأسرة'
               : currentLang === 'roman'
-              ? 'Khandan wa Niswan'
-              : 'Family & Sisters'}
+              ? 'Sisters'
+              : 'Sisters & Family'}
           </span>
-          <span style={{ fontSize: 9 }}>▼</span>
+          <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
         </button>
 
         {activeDropdown === 'family' && (
@@ -269,7 +285,7 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
       </div>
 
       {/* Pillar 4: Fiqh, Miras & Suluk */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', flexShrink: 0 }}>
         <button
           onClick={() => setActiveDropdown(activeDropdown === 'ahkam' ? null : 'ahkam')}
           style={{
@@ -283,22 +299,24 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
             color: activeDropdown === 'ahkam' ? '#065F46' : '#374151',
             cursor: 'pointer',
             padding: '6px 10px',
-            borderRadius: 6,
+            borderRadius: 8,
             whiteSpace: 'nowrap',
+            flexShrink: 0,
             backgroundColor: activeDropdown === 'ahkam' ? '#F0FDF4' : 'transparent',
+            transition: 'all 0.15s ease',
           }}
         >
-          <span>⚖️</span>
-          <span>
+          <IconScale size={15} color={activeDropdown === 'ahkam' ? '#065F46' : '#64748B'} />
+          <span style={{ whiteSpace: 'nowrap' }}>
             {currentLang === 'ur'
-              ? 'احکام و سلوک'
+              ? 'فقہ'
               : currentLang === 'ar'
-              ? 'الفقه والسلوك'
+              ? 'الفقه'
               : currentLang === 'roman'
-              ? 'Ahkam wa Suluk'
-              : 'Fiqh & Suluk'}
+              ? 'Fiqh'
+              : 'Fiqh & Guidance'}
           </span>
-          <span style={{ fontSize: 9 }}>▼</span>
+          <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
         </button>
 
         {activeDropdown === 'ahkam' && (
@@ -351,18 +369,22 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           fontWeight: currentPath === '/ask' ? 700 : 600,
           color: currentPath === '/ask' ? '#065F46' : '#374151',
           padding: '6px 10px',
-          borderRadius: 6,
+          borderRadius: 8,
           backgroundColor: currentPath === '/ask' ? '#F0FDF4' : 'transparent',
           whiteSpace: 'nowrap',
+          flexShrink: 0,
+          transition: 'all 0.15s ease',
         }}
       >
-        {currentLang === 'ur'
-          ? '💬 سوال'
-          : currentLang === 'ar'
-          ? '💬 سؤال'
-          : currentLang === 'roman'
-          ? '💬 Sawal'
-          : '💬 Ask'}
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {currentLang === 'ur'
+            ? '💬 سوال'
+            : currentLang === 'ar'
+            ? '💬 سؤال'
+            : currentLang === 'roman'
+            ? '💬 Ask'
+            : '💬 Ask'}
+        </span>
       </Link>
 
       {/* Direct Link: About & Methodology */}
@@ -374,18 +396,26 @@ export const NavigationPillarsDesktop: React.FC<NavigationPillarsDesktopProps> =
           fontWeight: currentPath === '/about' ? 700 : 600,
           color: currentPath === '/about' ? '#065F46' : '#374151',
           padding: '6px 10px',
-          borderRadius: 6,
+          borderRadius: 8,
           backgroundColor: currentPath === '/about' ? '#F0FDF4' : 'transparent',
           whiteSpace: 'nowrap',
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 5,
+          transition: 'all 0.15s ease',
         }}
       >
-        {currentLang === 'ur'
-          ? '🕌 منہج'
-          : currentLang === 'ar'
-          ? '🕌 المنهج'
-          : currentLang === 'roman'
-          ? '🕌 Manhaj'
-          : '🕌 About'}
+        <IconMosque size={15} color={currentPath === '/about' ? '#065F46' : '#64748B'} />
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {currentLang === 'ur'
+            ? 'منہج'
+            : currentLang === 'ar'
+            ? 'المنهج'
+            : currentLang === 'roman'
+            ? 'About'
+            : 'About'}
+        </span>
       </Link>
     </div>
   );

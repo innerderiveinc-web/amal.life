@@ -30,8 +30,13 @@ export function SavedBookmarksModal({
     if (isOpen) {
       setBookmarks(getSavedBookmarks());
       setHistory(getReadingHistory());
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -66,7 +71,8 @@ export function SavedBookmarksModal({
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         zIndex: 10005,
         display: 'flex',
         alignItems: 'center',
@@ -112,7 +118,9 @@ export function SavedBookmarksModal({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close"
             style={{
               width: 32,
               height: 32,
@@ -268,7 +276,7 @@ export function SavedBookmarksModal({
                         title={t('Remove Bookmark', 'بک مارک ہٹائیں', 'إزالة الإشارة', 'Bookmark Hatayein')}
                         style={{
                           backgroundColor: '#FEE2E2',
-                          color: '#DC2626',
+                          color: '#B91C1C',
                           border: 'none',
                           borderRadius: 8,
                           padding: '6px 10px',
@@ -342,7 +350,7 @@ export function SavedBookmarksModal({
                     </div>
                   </div>
 
-                  <span style={{ fontSize: 18, color: '#10B981' }}>➔</span>
+                  <span style={{ fontSize: 18, color: '#047857' }}>➔</span>
                 </Link>
               ))}
             </div>

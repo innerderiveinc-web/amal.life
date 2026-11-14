@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { AmalApiClient } from '../lib/api';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../context/LanguageContext';
 import { biometricVaultGuardEngine, VaultSecurityMode } from '@amal/amal-engine';
 import { showAmalToast } from '../components/Toast';
 
 export default function PrivacyPage() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'POLICY' | 'VAULT' | 'ACTIONS'>('POLICY');
   const [exportData, setExportData] = useState<any | null>(null);
   const [loadingExport, setLoadingExport] = useState(false);
@@ -19,10 +21,10 @@ export default function PrivacyPage() {
   const [pin, setPin] = useState('1234');
   const [vaultSaveMsg, setVaultSaveMsg] = useState<string | null>(null);
 
-  const handleSaveVaultSecurity = () => {
-    biometricVaultGuardEngine.setSecurityMode('usr_default', securityMode, pin);
+  const handleSaveVaultSecurity = async () => {
+    await biometricVaultGuardEngine.setSecurityMode('usr_default', securityMode, pin);
     setVaultSaveMsg('Vault lock preferences saved successfully!');
-    showAmalToast('Biometric Vault Guard settings updated', 'success');
+    showAmalToast(t('Biometric Vault Guard settings updated', 'والٹ لاک کی ترتیبات محفوظ ہو گئیں', 'تم تحديث إعدادات قفل الخزنة', 'Vault settings update ho gayi'), 'success');
     setTimeout(() => setVaultSaveMsg(null), 3000);
   };
 
@@ -32,7 +34,7 @@ export default function PrivacyPage() {
     setLoadingExport(false);
     if (res.success && res.data) {
       setExportData(res.data);
-      showAmalToast('GDPR Data Snapshot exported', 'success');
+      showAmalToast(t('Data Snapshot exported (.json)', 'ڈیٹا بیک اپ برآمد ہو گیا (.json)', 'تم تصدير نسخة البيانات (.json)', 'Data Snapshot export ho gaya (.json)'), 'success');
       if (typeof window !== 'undefined') {
         const blob = new Blob([JSON.stringify(res.data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -46,7 +48,12 @@ export default function PrivacyPage() {
   };
 
   const handleDelete = async () => {
-    if (!confirm('Are you absolutely sure? This will trigger an irreversible GDPR purge of your profile, goals, journeys, and reflections.')) {
+    if (!confirm(t(
+      'Are you absolutely sure? This will trigger an irreversible GDPR purge of your profile, goals, journeys, and reflections.',
+      'کیا آپ کو مکمل یقین ہے؟ یہ عمل آپ کے پروفائل، اہداف، اور تمام ذاتی ریکارڈز کو مستقل طور پر صاف کر دے گا۔',
+      'هل أنت متأكد تماماً؟ سيؤدي هذا الإجراء إلى مسح كافة سجلاتك وبياناتك نهائياً.',
+      'Kya aap ko mukammal yaqeen hai? Yeh amal aapke profile aur records ko permanently delete kar dega.'
+    ))) {
       return;
     }
     setLoadingDelete(true);
@@ -54,7 +61,7 @@ export default function PrivacyPage() {
     setLoadingDelete(false);
     if (res.success) {
       setDeleted(true);
-      showAmalToast('Account data permanently purged', 'info');
+      showAmalToast(t('Account data permanently purged', 'اکاؤنٹ ڈیٹا مکمل طور پر صاف کر دیا گیا', 'تم حذف بيانات الحساب نهائياً', 'Account data permanently purge ho gaya'), 'info');
     }
   };
 
@@ -72,17 +79,27 @@ export default function PrivacyPage() {
         <header style={{ marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
             <span style={{ fontSize: 11, fontWeight: 800, color: '#1B4332', letterSpacing: 1, textTransform: 'uppercase' }}>
-              DATA SOVEREIGNTY & THE SACRED TRUST (الأمانة)
+              {t(
+                'DATA SOVEREIGNTY & THE SACRED TRUST',
+                'ڈیٹا کی خودمختاری اور مقدس امانت',
+                'سيادة البيانات والأمانة الشرعية',
+                'DATA SOVEREIGNTY & SACRED TRUST'
+              )}
             </span>
             <span style={{ fontSize: 11, backgroundColor: '#D1FAE5', color: '#065F46', padding: '2px 8px', borderRadius: 12, fontWeight: 700 }}>
               GDPR & CCPA Compliant
             </span>
           </div>
           <h1 style={{ fontSize: 32, fontWeight: 800, margin: '0 0 10px', color: '#1B4332' }}>
-            Privacy Policy & Sovereign Trust Center
+            {t('Privacy Policy & Sovereign Trust Center', 'رازداری کی پالیسی اور خود مختار اعتماد کا مرکز', 'سياسة الخصوصية ومركز الأمانة والسيادة', 'Privacy Policy & Sovereign Trust Center')}
           </h1>
           <p style={{ color: '#4B5563', fontSize: 15, margin: 0, lineHeight: 1.6 }}>
-            In Islam, privacy is a sacred trust: <em>&quot;Indeed, Allah commands you to render trusts to whom they are due&quot;</em> (Surah An-Nisa 4:58). AMAL OS is stewarded by <strong>Qsura India Pvt Ltd</strong> with a binding guarantee of zero advertising, zero location tracking brokers, and complete cryptographic client-side isolation.
+            {t(
+              'In Islam, privacy is a sacred trust: "Indeed, Allah commands you to render trusts to whom they are due" (Surah An-Nisa 4:58). AMAL OS is stewarded by Qsura India Pvt Ltd with a binding guarantee of zero advertising, zero location tracking brokers, and complete cryptographic client-side isolation.',
+              'اسلام میں رازداری ایک امانت ہے: "بے شک اللہ تمہیں حکم دیتا ہے کہ امانتیں جن کی ہیں انہیں سپرد کرو" (سورۃ النساء ۵۸:۴)۔ عمل او ایس کو قصورہ انڈیا پرائیویٹ لمیٹڈ چلاتا ہے جس میں کسی اشتہار بازی، لوکیشن ٹریکنگ اور بیرونی ڈیٹا شیئرنگ کی سختی سے ممانعت ہے۔',
+              'في الإسلام، الخصوصية أمانة شرعية مؤكدة: "إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا" (سورة النساء: ٥٨). نظام عمل مدار من شركة قصورة مع التزام تام بعدم بيع البيانات.',
+              'Islam mein privacy ek muqaddas amanat hai: "Beshak Allah tumhe hukum deta hai ke amanatein unke ahl ko ada karo" (Surah An-Nisa 4:58). AMAL OS ko Qsura India Pvt Ltd chalata hai ba-shart-e zero advertising aur zero data tracking.'
+            )}
           </p>
         </header>
 
@@ -173,7 +190,7 @@ export default function PrivacyPage() {
                   2. Isolated Reflection & Tawbah Vault
                 </h3>
                 <p style={{ fontSize: 13, color: '#4B5563', margin: 0, lineHeight: 1.6 }}>
-                  Personal Muhasabah journal entries, sincere repentance prayers, and spiritual goals are encrypted locally. Even in Family Circles, personal reflection logs are strictly isolated by our Domestic Privacy Wall.
+                  Personal Muhasabah journal entries, sincere repentance prayers, and spiritual goals are stored exclusively on your device. Even in Family Circles, personal reflection logs are strictly isolated by our Domestic Privacy Wall — they are never visible to family members.
                 </p>
               </div>
 
@@ -209,7 +226,7 @@ export default function PrivacyPage() {
                   <strong>Legal Basis for Processing:</strong> We process minimal operational preferences solely on the basis of your explicit consent and legitimate interest in receiving prayer calculation services.
                 </p>
                 <p>
-                  <strong>Your Sovereign Rights:</strong> Under GDPR Articles 15-22 and the California Consumer Privacy Act (CCPA), you retain the unconditional right to access your stored records, export them into machine-readable JSON format, or request complete, irreversible cryptographic deletion.
+                  <strong>Your Sovereign Rights:</strong> Under GDPR Articles 15-22 and the California Consumer Privacy Act (CCPA), you retain the unconditional right to access your stored records, export them into machine-readable JSON format, or permanently delete all locally stored data from this device.
                 </p>
               </div>
             </div>
@@ -250,22 +267,26 @@ export default function PrivacyPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 24 }}>
               <div style={{ padding: 16, backgroundColor: '#F9FAFB', borderRadius: 12, border: '1px solid #E5E7EB' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 8 }}>Lock Mode</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 8 }}>
+                  {t('Lock Mode', 'لاک موڈ', 'وضع القفل', 'Lock Mode')}
+                </div>
                 <select
                   value={securityMode}
                   onChange={(e) => setSecurityMode(e.target.value as VaultSecurityMode)}
                   style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', fontSize: 13 }}
                 >
-                  <option value="BIOMETRIC_FACE_ID">FaceID (Biometric)</option>
-                  <option value="BIOMETRIC_FINGERPRINT">Fingerprint / TouchID</option>
-                  <option value="FOUR_DIGIT_PIN">4-Digit PIN Code</option>
-                  <option value="DISABLED">Unlocked (No Lock)</option>
+                  <option value="BIOMETRIC_FACE_ID">{t('FaceID (Biometric)', 'فیس آئی ڈی (بایومیٹرک)', 'بصمة الوجه (بيومتري)', 'FaceID (Biometric)')}</option>
+                  <option value="BIOMETRIC_FINGERPRINT">{t('Fingerprint / TouchID', 'فنگر پرنٹ / ٹچ آئی ڈی', 'بصمة الإصبع', 'Fingerprint / TouchID')}</option>
+                  <option value="FOUR_DIGIT_PIN">{t('4-Digit PIN Code', '۴ ہندسی پن کوڈ', 'رمز PIN من ٤ أرقام', '4-Digit PIN Code')}</option>
+                  <option value="DISABLED">{t('Unlocked (No Lock)', 'غیر مقفل (بغیر لاک)', 'غير مقفل', 'Unlocked (No Lock)')}</option>
                 </select>
               </div>
 
               {securityMode === 'FOUR_DIGIT_PIN' && (
                 <div style={{ padding: 16, backgroundColor: '#F9FAFB', borderRadius: 12, border: '1px solid #E5E7EB' }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 8 }}>Set 4-Digit PIN</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 8 }}>
+                    {t('Set 4-Digit PIN', '۴ ہندسی پن مقرر کریں', 'تعيين رمز PIN من ٤ أرقام', '4-Digit PIN Muqarrar Karein')}
+                  </div>
                   <input
                     type="password"
                     maxLength={4}
@@ -278,16 +299,20 @@ export default function PrivacyPage() {
               )}
 
               <div style={{ padding: 16, backgroundColor: '#F9FAFB', borderRadius: 12, border: '1px solid #E5E7EB' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>Auto-Lock Policy</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>
+                  {t('Auto-Lock Policy', 'خودکار لاک کی پالیسی', 'سياسة القفل التلقائي', 'Auto-Lock Policy')}
+                </div>
                 <div style={{ fontSize: 12, color: '#4B5563', marginTop: 6, lineHeight: 1.5 }}>
-                  Immediate upon minimizing app or switching tabs
+                  {t('Immediate upon minimizing app or switching tabs', 'ایپ منیمائز کرنے یا ٹیب بدلنے پر فوری', 'فوراً عند تصغير التطبيق أو تبديل علامات التبويب', 'App minimize karne ya tab badalne par fori')}
                 </div>
               </div>
 
               <div style={{ padding: 16, backgroundColor: '#F9FAFB', borderRadius: 12, border: '1px solid #E5E7EB' }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>Shielded Sections</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#111827' }}>
+                  {t('Shielded Sections', 'محفوظ شعبہ جات', 'الأقسام المحمية', 'Mahfooz Sections')}
+                </div>
                 <div style={{ fontSize: 12, color: '#4B5563', marginTop: 6, lineHeight: 1.5 }}>
-                  Tawbah, Reflections, Scholar Dossiers, Family Notes
+                  {t('Tawbah, Reflections, Scholar Dossiers, Family Notes', 'توبہ، محاسبہ و فکر، علمی کیسز، خاندانی نوٹس', 'التوبة والتأملات وملفات العلماء وملاحظات العائلة', 'Tawbah, Fikr, Scholar Dossiers, Family Notes')}
                 </div>
               </div>
             </div>
@@ -305,7 +330,7 @@ export default function PrivacyPage() {
                 cursor: 'pointer',
               }}
             >
-              Save Vault Preferences
+              {t('Save Vault Preferences', 'والٹ ترجیحات محفوظ کریں', 'حفظ تفضيلات الخزنة', 'Vault Preferences Mehfooz Karein')}
             </button>
           </div>
         )}
@@ -319,7 +344,7 @@ export default function PrivacyPage() {
             border: '1px solid #E5E7EB',
           }}>
             <h2 style={{ fontSize: 20, fontWeight: 800, margin: '0 0 10px', color: '#111827' }}>
-              Data Portability & Irreversible Deletion
+              {t('Data Portability & Irreversible Deletion', 'ڈیٹا کی منتقلی اور حتمی صفائی', 'نقل البيانات والحذف النهائي', 'Data Portability & Irreversible Deletion')}
             </h2>
             <p style={{ fontSize: 14, color: '#4B5563', margin: '0 0 24px', lineHeight: 1.6 }}>
               In full adherence to GDPR Article 20 (Right to Data Portability) and Article 17 (Right to Erasure), you can export a complete machine-readable snapshot or cryptographically wipe all records.
@@ -340,7 +365,7 @@ export default function PrivacyPage() {
                   cursor: 'pointer',
                 }}
               >
-                {loadingExport ? 'Generating Export...' : '📥 Download Full Data Export (JSON)'}
+                {loadingExport ? t('Generating Export...', 'ایکسپورٹ تیار ہو رہی ہے...', 'جاري التصدير...', 'Export ban raha hai...') : t('📥 Download Full Data Export (JSON)', '📥 مکمل ڈیٹا ایکسپورٹ ڈاؤن لوڈ کریں (JSON)', '📥 تحميل تصدير البيانات الكامل (JSON)', '📥 Download Full Data Export (JSON)')}
               </button>
 
               <button
@@ -357,13 +382,13 @@ export default function PrivacyPage() {
                   cursor: 'pointer',
                 }}
               >
-                {loadingDelete ? 'Purging...' : '🗑️ Delete My Account Permanently'}
+                {loadingDelete ? t('Purging...', 'ڈیٹا صاف ہو رہا ہے...', 'جاري الحذف...', 'Purge ho raha hai...') : t('🗑️ Delete My Account Permanently', '🗑️ میرا اکاؤنٹ مستقل طور پر حذف کریں', '🗑️ حذف حسابي نهائياً', '🗑️ Delete My Account Permanently')}
               </button>
             </div>
 
             {deleted && (
               <div style={{ padding: 16, backgroundColor: '#FEF2F2', color: '#991B1B', borderRadius: 12, fontSize: 14, marginBottom: 20, border: '1px solid #FCA5A5' }}>
-                ✓ Account deletion request executed. Cryptographic purge complete. All personal records have been erased.
+                ✓ {t('Account deletion request executed. Cryptographic purge complete. All personal records have been erased.', 'اکاؤنٹ حذف کرنے کی درخواست مکمل۔ ذاتی ریکارڈز مٹا دیے گئے ہیں۔', 'تم تنفيذ طلب حذف الحساب بنجاح، ومسح كافة السجلات الشخصية.', 'Account deletion mukammal. Personal records mita diye gaye.')}
               </div>
             )}
 
@@ -388,14 +413,14 @@ export default function PrivacyPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 36, flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', gap: 16 }}>
             <Link href="/terms" style={{ color: '#1B4332', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-              ← Terms of Service & Shar'i Adab
+              {t('← Terms of Service & Shar\'i Adab', 'شرائطِ استعمال و شرعی ادب نامہ ←', '← شروط الخدمة والآداب الشرعية', 'Terms of Service & Shar\'i Adab ←')}
             </Link>
             <Link href="/copyright" style={{ color: '#1B4332', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-              Copyright & Waqf Charter →
+              {t('Copyright & Waqf Charter →', 'کاپی رائٹ اور وقف چارٹر ←', 'ميثاق حقوق النشر والوقف ←', 'Copyright & Waqf Charter →')}
             </Link>
           </div>
           <span style={{ fontSize: 12, color: '#6B7280' }}>
-            Zero cookies used for third-party tracking.
+            {t('Zero cookies used for third-party tracking.', 'تیسری پارٹی کی ٹریکنگ کے لیے کوئی کوکیز استعمال نہیں کی جاتیں۔', 'لا توجد ملفات تعريف ارتباط لتتبع الطرف الثالث.', 'Third-party tracking ke liye koi cookies istemal nahi hoti.')}
           </span>
         </div>
       </main>

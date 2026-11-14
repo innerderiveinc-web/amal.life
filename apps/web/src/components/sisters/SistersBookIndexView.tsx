@@ -103,7 +103,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                 transition: 'all 0.15s ease',
               }}
             >
-              📑 {t('Full Book Edition', 'مکمل اصل کتاب (Full Book)', 'الكتاب الأصلي كاملاً', 'Mukammal Asal Kitab')}
+              📑 {t('Full Book Edition', 'مکمل اصل کتاب', 'الكتاب الأصلي كاملاً', 'Mukammal Asal Kitab')}
             </button>
           </div>
 
@@ -164,7 +164,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
         {(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
       </h2>
       <div style={{ fontSize: 14, color: '#047857', fontWeight: 600, marginBottom: 6 }}>
-        {language === 'en' ? readingBook.titleUrdu : readingBook.titleEnglish}
+        {(language === 'ur' || language === 'ar') ? readingBook.titleEnglish : (readingBook.titleArabic || readingBook.titleUrdu)}
       </div>
       <div style={{ fontSize: 14, color: '#4B5563', marginBottom: 12 }}>
         <strong>{(language === 'ur' || language === 'ar') ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {readingBook.authorEra}
@@ -210,7 +210,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
           <div style={{ fontSize: 12.5, color: '#166534', lineHeight: 1.5 }}>
             {t(
               'These chapters represent foundational instructional selections from this masterwork. For the complete unabridged original edition, tap the "Full Book Edition" tab above.',
-              'یہ ابواب اس شاہکار کتاب کے کلیدی تربیتی و فقہی مسائل کے جامع خلاصے ہیں۔ مکمل غیر محذوف کتاب مع تمام ابواب کے اصل نسخے کے لیے اوپر "مکمل اصل کتاب (Full Book)" ٹیب سے استفادہ فرمائیں۔',
+              'یہ ابواب اس شاہکار کتاب کے کلیدی تربیتی و فقہی مسائل کے جامع خلاصے ہیں۔ مکمل غیر محذوف کتاب مع تمام ابواب کے اصل نسخے کے لیے اوپر "مکمل اصل کتاب" کے ٹیب سے استفادہ فرمائیں۔',
               'تمثل هذه الأبواب خلاصات تربوية وفقهية جوهرية من هذا المصنف الأصيل. للاطلاع على النسخة الكاملة، استخدم علامة التبويب أعلاه.',
               'Yeh abwaab is shahkaar kitab ke kaleedi tarbiyati o fiqhi masail ke jaame khulasey hain. Mukammal kitab ke liye ooper Full Book tab dekhein.'
             )}
@@ -462,7 +462,7 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
                     {ch.chapterNumber}. {(language === 'ur' || language === 'ar') ? ch.titleUrdu : ch.titleEnglish}
                   </div>
                   <div style={{ fontSize: 12, color: '#059669', marginBottom: 4 }}>
-                    {language === 'en' ? ch.titleUrdu : ch.titleEnglish}
+                    {(language === 'ur' || language === 'ar') ? ch.titleEnglish : (ch.hadithOrFiqhReference || ch.titleUrdu)}
                   </div>
                   <div style={{ fontSize: 13, color: '#6B7280' }}>
                     {(language === 'ur' || language === 'ar') ? ch.summaryUrdu : ch.summaryEnglish}

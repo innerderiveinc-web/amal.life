@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { showAmalToast } from './Toast';
 import { AuthSignInTab } from './auth/AuthSignInTab';
 import { AuthRegisterTab } from './auth/AuthRegisterTab';
@@ -11,6 +12,7 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useLanguage();
   const { user, signIn, register, continueAsGuest, signOut, exportSovereignData } = useAuth();
   const [activeTab, setActiveTab] = useState<'SIGNIN' | 'REGISTER' | 'PROFILE'>(
     user && !user.isGuest ? 'PROFILE' : 'SIGNIN'
@@ -24,16 +26,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [city, setCity] = useState('Delhi, India');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim()) {
-      showAmalToast('Please enter your username', 'warning');
+      showAmalToast(t('Please enter your username', 'برائے مہربانی صارف کا نام درج کریں', 'يرجى إدخال اسم المستخدم', 'Baraye meharbani username darj karein'), 'warning');
       return;
     }
     if (!password.trim()) {
-      showAmalToast('Please enter your password', 'warning');
+      showAmalToast(t('Please enter your password', 'برائے مہربانی پاسورڈ درج کریں', 'يرجى إدخال كلمة المرور', 'Baraye meharbani password darj karein'), 'warning');
       return;
     }
     setIsSubmitting(true);
@@ -45,15 +56,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim()) {
-      showAmalToast('Please choose a username', 'warning');
+      showAmalToast(t('Please choose a username', 'برائے مہربانی شناختی نام منتخب کریں', 'يرجى اختيار اسم المستخدم', 'Baraye meharbani username chunein'), 'warning');
       return;
     }
     if (!name.trim()) {
-      showAmalToast('Please enter your full name', 'warning');
+      showAmalToast(t('Please enter your full name', 'برائے مہربانی اپنا مکمل نام درج کریں', 'يرجى إدخال الاسم الكامل', 'Baraye meharbani mukammal naam darj karein'), 'warning');
       return;
     }
     if (!password.trim() || password.length < 4) {
-      showAmalToast('Please enter a password (min 4 characters)', 'warning');
+      showAmalToast(t('Please enter a password (min 4 characters)', 'پاسورڈ کم از کم ۴ حروف پر مشتمل ہونا چاہیے', 'يرجى إدخال كلمة مرور (٤ أحرف على الأقل)', 'Password kam az kam 4 characters ka hona chahiye'), 'warning');
       return;
     }
     setIsSubmitting(true);
@@ -108,7 +119,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }}
         >
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close"
             style={{
               position: 'absolute',
               top: 18,
@@ -133,21 +146,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <span style={{ fontSize: 24 }}>👤</span>
             <div>
               <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, letterSpacing: -0.3 }}>
-                AMAL OS اکاؤنٹ و شناخت
+                {t('AMAL OS Account & Identity', 'عمل او ایس اکاؤنٹ و شناخت', 'حساب وهوية AMAL OS', 'AMAL OS Account o Shanakht')}
               </h2>
               <div style={{ fontSize: 11, color: '#A7F3D0', fontWeight: 600 }}>
-                Sovereign Identity &amp; Cross-Device Cloud Sync
+                {t('Sovereign Identity & Cross-Device Cloud Sync', 'خود مختار شناخت اور کلاؤڈ سنک', 'هوية سيادية ومزامنة سحابية عبر الأجهزة', 'Sovereign Identity & Cloud Sync')}
               </div>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '8px 0 0', fontSize: 11, color: '#A7F3D0', fontWeight: 600, flexWrap: 'wrap' }}>
-            <span>🔒 100% Private</span>
+            <span>{t('🔒 100% Private', '🔒 ۱۰۰٪ نجی', '🔒 ١٠٠٪ خاص', '🔒 100% Private')}</span>
             <span>•</span>
-            <span>Zero Tracking</span>
+            <span>{t('Zero Tracking', 'بغیر ٹریکنگ', 'بدون أي تتبع', 'Baghair Tracking')}</span>
             <span>•</span>
-            <span>Ad-Free</span>
+            <span>{t('Ad-Free', 'اشتہارات سے پاک', 'خالٍ من الإعلانات', 'Ad-Free')}</span>
             <span>•</span>
-            <span>محفوظ نجی سنک</span>
+            <span>{t('Encrypted Cloud Sync', 'محفوظ نجی کلاؤڈ سنک', 'مزامنة مشفرة', 'Encrypted Cloud Sync')}</span>
           </div>
         </div>
 

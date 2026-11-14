@@ -24,9 +24,7 @@ export const BookmarkItemCard: React.FC<BookmarkItemCardProps> = ({
     ? (bm.titleEnglish || bm.titleUrdu)
     : bm.titleEnglish;
 
-  const subTitle = isArabic
-    ? bm.titleEnglish
-    : isUrdu
+  const subTitle = (isArabic || isUrdu || isRomanUrdu)
     ? bm.titleEnglish
     : bm.titleUrdu;
 

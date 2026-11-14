@@ -160,9 +160,9 @@ Important: These dispensations apply strictly to clearing massive Qadha backlogs
       category: 'Medical Fiqh',
       source: 'مجمع الفقہ الاسلامی الدولی / فتاویٰ امجدیہ / قرارات دار الافتاء',
       urduContent: `معاصر فقہی کونسلوں اور مقتدر علمائے اہل سنت کی اجتماعی تحقیق کے مطابق:
-۱. گوشت یا رگ کا انجکشن (Intramuscular / Intravenous): انسولین، اینٹی بائیوٹک یا درد کا انجکشن لگانے سے روزہ نہیں ٹوٹتا، کیونکہ دوائی رگ یا پٹھے میں داخل ہوتی ہے، معدے یا دماغ کے قدرتی منفذ (حلق) سے داخل نہیں ہوتی۔
+۱. گوشت یا رگ کا انجکشن: انسولین، اینٹی بائیوٹک یا درد کا انجکشن لگانے سے روزہ نہیں ٹوٹتا، کیونکہ دوائی رگ یا پٹھے میں داخل ہوتی ہے، معدے یا دماغ کے قدرتی منفذ (حلق) سے داخل نہیں ہوتی۔
 ۲. طاقت کی گلوکوز ڈرپ: بلاوجہ محض بھوک مٹانے کے لیے گلوکوز چڑھوانا مکروہ ہے، البتہ شدید نقاہت کے علاج کے لیے ہو تو روزہ نہیں ٹوٹتا۔
-۳. انہیلر (Asthma Inhaler): دمہ کے انہیلر سے دوا پھیپھڑوں اور سانس کی نالی کے ذریعے اندر جاتی ہے جس سے روزہ فاسد ہو جاتا ہے، اس دن کی بعد میں صرف قضا لازم ہوگی۔
+۳. دمے کا انہیلر: دمہ کے انہیلر سے دوا پھیپھڑوں اور سانس کی نالی کے ذریعے اندر جاتی ہے جس سے روزہ فاسد ہو جاتا ہے، اس دن کی بعد میں صرف قضا لازم ہوگی۔
 ۴. شوگر اور دائمی مریض: وہ بوڑھے یا شدید مریض جن کے مرض کے ٹھیک ہونے کی طبی امید نہ ہو، وہ روزے کے بدلے روزانہ ایک فدیہ (ایک صدقہ فطر = ۱.۹۲ کلو گندم یا اس کی نقدی قیمت) کسی غریب مستحق کو ادا کریں۔`,
       englishContent: `According to the consensus of contemporary Sunni legal assemblies and traditional Hanafi jurists:
 1. Injections & Insulin: Subcutaneous, intramuscular, and intravenous injections (such as insulin for diabetes, pain relievers, or vaccines) DO NOT break the fast, because medicine enters muscles and bloodstream rather than direct stomach/brain cavities via natural orifices.

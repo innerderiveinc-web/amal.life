@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
+import React, { useState, useRef, useEffect, memo } from 'react';
+import { getAyahWisdomCard, getAyahAudioUrl, getAyahUrduAudioUrl, getAyahUrduAudioFallbackUrl, getSurahTafseerAudioUrl } from '../lib/quran-wisdom-data';
 import { showAmalToast } from './Toast';
 import { UniversalContentShareModal } from './cards/UniversalContentShareModal';
 import { AyahAudioControlsBar } from './wisdom/AyahAudioControlsBar';
 import { AyahWisdomTabContent, AyahWisdomTabKey } from './wisdom/AyahWisdomTabContent';
 import { useLanguage } from '../context/LanguageContext';
+import { triggerHaptic } from '../lib/haptics';
 
 export interface AyahWisdomModalProps {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export interface AyahWisdomModalProps {
   fallbackEnglish?: string;
 }
 
-export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
+const AyahWisdomModalInner: React.FC<AyahWisdomModalProps> = ({
   isOpen,
   onClose,
   surahNumber,
@@ -72,6 +73,48 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
     }
   }, [playbackSpeed, audioSrc]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [dragOffsetY, setDragOffsetY] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      setTouchStartY(touch.clientY);
+      setIsDragging(true);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY === null || !isDragging) return;
+    const touch = e.touches[0];
+    if (touch) {
+      const deltaY = touch.clientY - touchStartY;
+      if (deltaY > 0) {
+        setDragOffsetY(deltaY);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragOffsetY > 85) {
+      triggerHaptic('medium');
+      onClose();
+    }
+    setTouchStartY(null);
+    setDragOffsetY(0);
+    setIsDragging(false);
+  };
+
   if (!isOpen) return null;
 
   const handleToggleSpeakTafseer = () => {
@@ -105,8 +148,8 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             );
           })
           .catch((e) => {
-            console.warn('Audio play error in modal, trying Ayah Urdu audio:', e);
-            const fallback = getAyahUrduAudioUrl(surahNumber, ayahNumber);
+            console.warn('Audio play error in modal, trying Ayah Urdu audio fallback:', e);
+            const fallback = getAyahUrduAudioFallbackUrl(surahNumber, ayahNumber);
             if (modalAudioRef.current) {
               modalAudioRef.current.src = fallback;
               modalAudioRef.current
@@ -221,13 +264,17 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 16,
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           width: '100%',
           maxWidth: 820,
@@ -238,8 +285,31 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
           flexDirection: 'column',
           overflow: 'hidden',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+          transform: dragOffsetY > 0 ? `translateY(${dragOffsetY}px)` : 'none',
+          transition: isDragging ? 'none' : 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
+        {/* Mobile Drag Down Pill Handle */}
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: 8,
+            paddingBottom: 2,
+            backgroundColor: '#F8FAFC',
+          }}
+        >
+          <div
+            style={{
+              width: 44,
+              height: 5,
+              borderRadius: 3,
+              backgroundColor: '#CBD5E1',
+            }}
+          />
+        </div>
+
         {/* Modal Header */}
         <div
           style={{
@@ -294,7 +364,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
             </button>
 
             <button
-              onClick={onClose}
+              onClick={() => {
+                triggerHaptic('light');
+                onClose();
+              }}
               style={{
                 border: 'none',
                 backgroundColor: 'transparent',
@@ -394,7 +467,10 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
               return (
                 <button
                   key={tab.key}
-                  onClick={() => setWisdomTab(tab.key as AyahWisdomTabKey)}
+                  onClick={() => {
+                    triggerHaptic('selection');
+                    setWisdomTab(tab.key as AyahWisdomTabKey);
+                  }}
                   style={{
                     padding: '8px 14px',
                     border: 'none',
@@ -449,3 +525,6 @@ export const AyahWisdomModal: React.FC<AyahWisdomModalProps> = ({
     </div>
   );
 };
+
+/** Memoized — avoids re-rendering 527-line modal when parent re-renders unrelated state */
+export const AyahWisdomModal = memo(AyahWisdomModalInner);

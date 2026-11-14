@@ -6,6 +6,7 @@ import {
   QuranAyahWisdomCard,
   getAyahAudioUrl,
   getAyahUrduAudioUrl,
+  getAyahUrduAudioFallbackUrl,
   getSurahTafseerAudioUrl,
 } from '../../lib/quran-wisdom-data';
 import { showAmalToast } from '../Toast';
@@ -52,6 +53,14 @@ export function useQuranMasterAudio({
   const [surahWideAudioType, setSurahWideAudioType] = useState<'KANZUL_IMAN' | 'TAFSEER' | null>(null);
   const [continuousTafseerIndex, setContinuousTafseerIndex] = useState<number | null>(null);
 
+  // Hifz & Memorization Repeat Engine State
+  const [hifzRepeatTarget, setHifzRepeatTarget] = useState<number>(1);
+  const [currentRepeatIteration, setCurrentRepeatIteration] = useState<number>(1);
+
+  // Multi-Tab Audio Synchronization
+  const tabIdRef = useRef<string>(typeof window !== 'undefined' ? Math.random().toString(36).substring(2, 9) : 'tab-srv');
+  const syncChannelRef = useRef<BroadcastChannel | null>(null);
+
   // Single Master Audio Ref — strictly prevents any audio overlapping
   const masterAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -70,6 +79,30 @@ export function useQuranMasterAudio({
   useEffect(() => {
     if (masterAudioRef.current) masterAudioRef.current.playbackRate = playbackSpeed;
   }, [playbackSpeed]);
+
+  // Multi-Tab Audio Synchronization Listener
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+      try {
+        const channel = new BroadcastChannel('amal_audio_sync_bus');
+        syncChannelRef.current = channel;
+        channel.onmessage = (event) => {
+          if (event.data?.type === 'AMAL_AUDIO_PLAYING' && event.data?.senderTabId !== tabIdRef.current) {
+            if (masterAudioRef.current && !masterAudioRef.current.paused) {
+              masterAudioRef.current.pause();
+              setIsPlayingPaused(true);
+            }
+          }
+        };
+      } catch {}
+    }
+    return () => {
+      if (syncChannelRef.current) {
+        syncChannelRef.current.close();
+        syncChannelRef.current = null;
+      }
+    };
+  }, []);
 
   // Master Stop Audio Function — completely silences and resets all audio
   const handleStopAudio = () => {
@@ -97,9 +130,29 @@ export function useQuranMasterAudio({
     }
   };
 
+  const checkOfflinePlaybackAvailability = (): boolean => {
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && !navigator.onLine && !isSurahCachedOffline) {
+      const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+      const offlineMsg = lang === 'ur'
+        ? 'انٹرنیٹ رابطہ دستیاب نہیں ہے۔ بغیر انٹرنیٹ سننے کے لیے "ڈاؤنلوڈ آف لائن" بٹن دبا کر سورت پہلے محفوظ فرمائیں۔'
+        : lang === 'ar'
+        ? 'لا يوجد اتصال بالإنترنت. يرجى الضغط على "تنزيل دون اتصال" لحفظ السورة محلياً.'
+        : lang === 'ru'
+        ? 'Internet dastiyab nahi hai. Offline sunne ke liye "Download Offline" daba kar Surah save karein.'
+        : 'Audio stream unavailable offline. Tap "Download Offline" to save this Surah locally.';
+      showAmalToast(offlineMsg, 'warning');
+      return false;
+    }
+    return true;
+  };
+
   // Master Play Ayah Function: handles ARABIC, URDU, and TAFSEER segments on single master player
   const handlePlayAyahAudio = (ayahNum: number, segment: AudioSegment = 'ARABIC') => {
     pauseGlobalPlayer();
+
+    if (!checkOfflinePlaybackAvailability()) {
+      return;
+    }
 
     if (playingAyahNumber === ayahNum && currentAudioSegment === segment) {
       if (masterAudioRef.current) {
@@ -114,8 +167,9 @@ export function useQuranMasterAudio({
       return;
     }
 
-    // Seamlessly switch audio track without explicit OS background pause
+    // Seamlessly switch audio track and synchronize active Ayah view/translation
     setPlayingAyahNumber(ayahNum);
+    setFocusedAyahNumber(ayahNum);
     setCurrentAudioSegment(segment);
     setIsPlayingPaused(false);
     setSurahWideAudioType(null);
@@ -145,7 +199,27 @@ export function useQuranMasterAudio({
             return;
           }
           console.warn('Audio play error on source:', url, e);
-          showAmalToast('آڈیو پلے کرنے میں دشواری ہوئی۔ برائے مہربانی دوبارہ کوشش فرمائیں۔', 'warning');
+          const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+          const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
+          if (isOffline) {
+            showAmalToast(
+              lang === 'ur'
+                ? 'انٹرنیٹ رابطہ منقطع ہے۔ بغیر انٹرنیٹ تلاوت کے لیے "ڈاؤنلوڈ آف لائن" بٹن استعمال فرمائیں۔'
+                : 'Audio unavailable offline. Please use "Download Offline" to cache this Surah.',
+              'warning'
+            );
+          } else {
+            showAmalToast(
+              lang === 'ur'
+                ? 'آڈیو پلے کرنے میں دشواری ہوئی۔ برائے مہربانی دوبارہ کوشش فرمائیں۔'
+                : lang === 'ar'
+                ? 'حدث خطأ في تشغيل الصوت. يرجى المحاولة مرة أخرى.'
+                : lang === 'ru'
+                ? 'Audio play karne me dikkat aayi. Dobara koshish karein.'
+                : 'Error playing audio. Please try again.',
+              'warning'
+            );
+          }
         });
     }
   };
@@ -217,10 +291,33 @@ export function useQuranMasterAudio({
 
     const totalVerses = currentSurah?.verses?.length || 0;
 
+    // Hifz & Memorization Repeat check before advancing to next Ayah
+    const canAdvanceAyah = () => {
+      if (hifzRepeatTarget > 1) {
+        if (currentRepeatIteration < hifzRepeatTarget) {
+          const nextIter = currentRepeatIteration + 1;
+          setCurrentRepeatIteration(nextIter);
+          handlePlayAyahAudio(playingAyahNumber, currentAudioSegment === 'URDU' && (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') ? 'ARABIC' : currentAudioSegment);
+          showAmalToast(
+            isUrdu
+              ? `تکرار برائے حفظ: دور ${nextIter} از ${hifzRepeatTarget}`
+              : `Hifz Repeat: ${nextIter} of ${hifzRepeatTarget}`,
+            'info'
+          );
+          return false;
+        } else {
+          setCurrentRepeatIteration(1);
+          return true;
+        }
+      }
+      return true;
+    };
+
     if (audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC') {
       if (currentAudioSegment === 'ARABIC') {
         handlePlayAyahAudio(playingAyahNumber, 'URDU');
       } else {
+        if (!canAdvanceAyah()) return;
         if (playingAyahNumber < totalVerses) {
           handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
         } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
@@ -234,6 +331,7 @@ export function useQuranMasterAudio({
         }
       }
     } else if (audioSyncMode === 'URDU_ONLY_CONTINUOUS') {
+      if (!canAdvanceAyah()) return;
       if (playingAyahNumber < totalVerses) {
         handlePlayAyahAudio(playingAyahNumber + 1, 'URDU');
       } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
@@ -246,6 +344,7 @@ export function useQuranMasterAudio({
         );
       }
     } else if (audioSyncMode === 'TILAWAT_ONLY') {
+      if (!canAdvanceAyah()) return;
       if (playingAyahNumber < totalVerses) {
         handlePlayAyahAudio(playingAyahNumber + 1, 'ARABIC');
       } else if (continuousSurahPlayback && selectedSurahNumber < 114) {
@@ -298,7 +397,17 @@ export function useQuranMasterAudio({
     if (cardsToPlay.length === 0 || startIndex >= cardsToPlay.length) {
       handleStopAudio();
       setContinuousTafseerIndex(null);
-      showAmalToast('تمام تفسیری حکمت مکمل ہو گئی۔', 'success');
+      const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+      showAmalToast(
+        lang === 'ur'
+          ? 'تمام تفسیری حکمت مکمل ہو گئی۔'
+          : lang === 'ar'
+          ? 'اكتملت دراسات التفسير والحكمة كاملة.'
+          : lang === 'ru'
+          ? 'Tamam tafseeri hikmat mukammal ho gayi.'
+          : 'Completed all tafsir wisdom reflections.',
+        'success'
+      );
       return;
     }
 
@@ -338,10 +447,16 @@ export function useQuranMasterAudio({
     handleStopAudio();
     setAudioSyncMode('TILAWAT_URDU_SYNC');
     handlePlayAyahAudio(1, 'ARABIC');
-    showAmalToast(
-      `سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت اور مستند اردو ترجمہ (Sync) شروع ہو گیا۔`,
-      'success'
-    );
+    const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+    const surahName = lang === 'ur' ? (currentSurahMeta?.nameUrdu || '') : (currentSurahMeta?.nameTransliterated || '');
+    const msg = lang === 'ur'
+      ? `سورۃ ${surahName}: تلاوت اور مستند اردو ترجمہ ہم آہنگ ہو کر شروع ہو گیا۔`
+      : lang === 'ar'
+      ? `سورة ${currentSurahMeta?.nameArabic || ''}: بدأت التلاوة المتزامنة مع الترجمة.`
+      : lang === 'ru'
+      ? `Surah ${surahName}: Tilawat aur mustanad Urdu tarjuma shuru ho gaya.`
+      : `Surah ${surahName}: Recitation with synchronized translation started.`;
+    showAmalToast(msg, 'success');
   };
 
   const handlePlaySurahKanzulIman = () => {
@@ -352,10 +467,16 @@ export function useQuranMasterAudio({
     handleStopAudio();
     setAudioSyncMode('TILAWAT_URDU_SYNC');
     handlePlayAyahAudio(1, 'ARABIC');
-    showAmalToast(
-      `سورۃ ${currentSurahMeta?.nameUrdu || ''}: تلاوت اور مستند اردو ترجمہ (2-Step Sync) شروع ہو گیا۔`,
-      'success'
-    );
+    const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+    const surahName = lang === 'ur' ? (currentSurahMeta?.nameUrdu || '') : (currentSurahMeta?.nameTransliterated || '');
+    const msg = lang === 'ur'
+      ? `سورۃ ${surahName}: تلاوت اور مستند اردو ترجمہ دو مرحلہ وار شروع ہو گیا۔`
+      : lang === 'ar'
+      ? `سورة ${currentSurahMeta?.nameArabic || ''}: بدأت التلاوة والترجمة خطوة بخطوة.`
+      : lang === 'ru'
+      ? `Surah ${surahName}: Tilawat aur tarjuma do-marhala shuru ho gaya.`
+      : `Surah ${surahName}: Step-by-step recitation and translation started.`;
+    showAmalToast(msg, 'success');
   };
 
   const handlePlaySurahUrduOnly = () => {
@@ -379,6 +500,7 @@ export function useQuranMasterAudio({
   };
 
   const handlePlaySurahTafseer = () => {
+    if (!checkOfflinePlaybackAvailability()) return;
     if (surahWideAudioType === 'TAFSEER') {
       if (masterAudioRef.current) {
         if (masterAudioRef.current.paused) {
@@ -455,6 +577,9 @@ export function useQuranMasterAudio({
     setSurahWideAudioType,
     continuousTafseerIndex,
     setContinuousTafseerIndex,
+    hifzRepeatTarget,
+    setHifzRepeatTarget,
+    currentRepeatIteration,
     isSurahCachedOffline,
     isCachingSurah,
     handleCacheSurahOffline,

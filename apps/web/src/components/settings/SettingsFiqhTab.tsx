@@ -27,7 +27,7 @@ interface SettingsFiqhTabProps {
     isha: number;
   }>>;
   handleSaveFiqh: () => void;
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function SettingsFiqhTab({
@@ -47,17 +47,17 @@ export function SettingsFiqhTab({
   return (
     <div>
       <h2 style={{ margin: '0 0 16px', fontSize: 20, fontWeight: 800, color: '#111827' }}>
-        Fiqh & Prayer Auqat Configuration
+        {t('Fiqh & Prayer Auqat Configuration', 'فقہی احکام و اوقات کی ترتیبات', 'إعدادات الفقه ومواقيت الصلاة', 'Fiqh & Namaz ke Auqat')}
       </h2>
       <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280' }}>
-        Select your school of jurisprudence (Madhhab), calculation authority, and moon-sighting offset.
+        {t('Select your school of jurisprudence (Madhhab), calculation authority, and moon-sighting offset.', 'فقہی مسلک، فلکیاتی طریقہ اور رویت ہلال کا تعین فرمائیں۔', 'اختر المذهب الفقهي، طريقة الحساب الفلكي، وتعديل رؤية الهلال.', 'Fiqhi maslak, calculation method aur chand ki tareekh adjust karein.')}
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Madhhab */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            School of Fiqh (فقہی مسلک برائے عصر)
+            {t('School of Fiqh (Asr Time Calculation)', 'فقہی مسلک (عصر کا وقت)', 'المذهب الفقهي (حساب وقت العصر)', 'School of Fiqh (Asr Waqt)')}
           </label>
           <select
             value={madhhab}
@@ -72,15 +72,15 @@ export function SettingsFiqhTab({
               backgroundColor: '#F9FAFB',
             }}
           >
-            <option value="HANAFI">{t('Hanafi — Mithlayn (Shadow ratio 2:1 for Asr)', 'حنفی — مثلین (عصر کا وقت)')}</option>
-            <option value="STANDARD_JUMHUR">{t('Shafi\'i / Maliki / Hanbali — Mithl Awwal (Shadow ratio 1:1)', 'جمہور فقہاء (شافعی، مالکی، حنبلی) — مثلِ اول')}</option>
+            <option value="HANAFI">{t('Hanafi — Mithlayn (Shadow ratio 2:1 for Asr)', 'حنفی — مثلین (عصر کا وقت)', 'الحنفي — مثلين (وقت العصر)', 'Hanafi — Mithlayn (2x Shadow)')}</option>
+            <option value="STANDARD_JUMHUR">{t('Shafi\'i / Maliki / Hanbali — Mithl Awwal (Shadow ratio 1:1)', 'جمہور فقہاء (شافعی، مالکی، حنبلی) — مثلِ اول', 'الجمهور (شافعي، مالكي، حنبلي) — مثل أول', 'Jumhur (Shafi\'i, Maliki, Hanbali) — Mithl Awwal (1x Shadow)')}</option>
           </select>
         </div>
 
         {/* Calculation Method */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            {t('Astronomical Calculation Method', 'فلکیاتی طریقہ حساب')}
+            {t('Astronomical Calculation Method', 'فلکیاتی طریقہ حساب', 'طريقة الحساب الفلكي', 'Astronomical Calculation Method')}
           </label>
           <select
             value={calcMethod}
@@ -106,7 +106,7 @@ export function SettingsFiqhTab({
         {/* Hijri Moon Sight Offset */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Hijri Moon Sight Offset (رویت ہلال ایڈجسٹمنٹ)
+            {t('Hijri Moon Sight Offset', 'رویت ہلال ایڈجسٹمنٹ (ہجری تاریخ)', 'تعديل رؤية الهلال (التقويم الهجري)', 'Chand Dekhne ka Offset (Hijri Tareekh)')}
           </label>
           <select
             value={hijriOffset}
@@ -132,7 +132,7 @@ export function SettingsFiqhTab({
         {/* Athan Voice */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            Athan Audio Notification (آواز اذان)
+            {t('Athan Audio Notification', 'آواز اذان (اطلاعات)', 'صوت الأذان والتنبيهات', 'Azan Audio Notification')}
           </label>
           <select
             value={athanSound}
@@ -147,17 +147,17 @@ export function SettingsFiqhTab({
               backgroundColor: '#F9FAFB',
             }}
           >
-            <option value="makkah">Masjid al-Haram (Makkah Mukarramah)</option>
-            <option value="madinah">Al-Masjid an-Nabawi (Madinah Munawwarah)</option>
-            <option value="alaqsa">Al-Masjid al-Aqsa (Al-Quds)</option>
-            <option value="silent">Silent Notification Only</option>
+            <option value="makkah">{t('Masjid al-Haram (Makkah Mukarramah)', 'مسجد الحرام (مکہ مکرمہ)', 'المسجد الحرام (مكة المكرمة)', 'Masjid al-Haram (Makkah)')}</option>
+            <option value="madinah">{t('Al-Masjid an-Nabawi (Madinah Munawwarah)', 'مسجد نبوی (مدینہ منورہ)', 'المسجد النبوي (المدينة المنورة)', 'Al-Masjid an-Nabawi (Madinah)')}</option>
+            <option value="alaqsa">{t('Al-Masjid al-Aqsa (Al-Quds)', 'مسجد اقصیٰ (القدس شریف)', 'المسجد الأقصى (القدس)', 'Al-Masjid al-Aqsa (Al-Quds)')}</option>
+            <option value="silent">{t('Silent Notification Only', 'صرف خاموش اطلاع', 'إشعار صامت فقط', 'Silent Notification Only')}</option>
           </select>
         </div>
 
         {/* Prayer Offsets Grid */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 8 }}>
-            Manual Minute Offsets per Prayer (منٹوں کی انفرادی ترتیب)
+            {t('Manual Minute Offsets per Prayer', 'نماز کے اوقات میں انفرادی منٹ ایڈجسٹمنٹ', 'تعديل الدقائق يدوياً لكل صلاة', 'Har Namaz me Minute Adjustments')}
           </label>
           <div
             style={{
@@ -203,7 +203,7 @@ export function SettingsFiqhTab({
             cursor: 'pointer',
           }}
         >
-          Save Fiqh & Prayer Settings
+          {t('Save Fiqh & Prayer Settings', 'فقہی ترتیبات محفوظ کریں', 'حفظ إعدادات الفقه ومواقيت الصلاة', 'Save Fiqh Settings')}
         </button>
       </div>
     </div>

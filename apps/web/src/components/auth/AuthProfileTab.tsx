@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export interface AuthProfileTabProps {
   user: {
@@ -16,6 +17,8 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
   onExportSovereignData,
   onSignOut,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       {/* Profile Card */}
@@ -51,7 +54,7 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
           <div style={{ fontSize: 12, color: '#047857', fontWeight: 600 }}>@{user.username || 'seeker'}</div>
           <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
             <span style={{ fontSize: 10, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '1px 6px', borderRadius: 4 }}>
-              {user.madhhab} Fiqh
+              {user.madhhab} {t('Fiqh', 'فقہ', 'فقه', 'Fiqh')}
             </span>
             <span style={{ fontSize: 10, fontWeight: 700, backgroundColor: '#D1FAE5', color: '#065F46', padding: '1px 6px', borderRadius: 4 }}>
               {user.role}
@@ -75,10 +78,12 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }}></span>
-          <span style={{ fontWeight: 700, color: '#1E293B' }}>Cloud Sync Active</span>
+          <span style={{ fontWeight: 700, color: '#1E293B' }}>
+            {t('Cloud Sync Active', 'کلاؤڈ سنک فعال', 'المزامنة السحابية نشطة', 'Cloud Sync Active')}
+          </span>
         </div>
         <span style={{ fontSize: 11, color: '#64748B' }}>
-          Device &amp; Family Circles Connected
+          {t('Device & Family Circles Connected', 'ڈیوائس اور فیملی سرکلز منسلک', 'الأجهزة ودوائر العائلة متصلة', 'Device & Family Circles Connected')}
         </span>
       </div>
 
@@ -103,7 +108,7 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
           }}
         >
           <span>📥</span>
-          <span>Export Sovereign Data (.json)</span>
+          <span>{t('Export Sovereign Data (.json)', 'خود مختار ڈیٹا ایکسپورٹ کریں (.json)', 'تصدير البيانات السيادية (.json)', 'Export Sovereign Data (.json)')}</span>
         </button>
 
         <button
@@ -114,7 +119,7 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
             borderRadius: 8,
             border: '1px solid #FCA5A5',
             backgroundColor: '#FEF2F2',
-            color: '#DC2626',
+            color: '#B91C1C',
             fontSize: 13,
             fontWeight: 700,
             cursor: 'pointer',
@@ -125,7 +130,7 @@ export const AuthProfileTab: React.FC<AuthProfileTabProps> = ({
           }}
         >
           <span>🚪</span>
-          <span>سائن آؤٹ کریں · Sign Out</span>
+          <span>{t('Sign Out', 'سائن آؤٹ کریں', 'تسجيل الخروج', 'Sign Out')}</span>
         </button>
       </div>
     </div>

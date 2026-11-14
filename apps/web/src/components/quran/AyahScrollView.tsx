@@ -5,6 +5,7 @@ import { getAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { AudioSegment } from './FloatingQuranAudioPlayer';
 import { useLanguage } from '../../context/LanguageContext';
+import { BISMILLAH_PREFIX_REGEX } from './useQuranSurahLoader';
 
 export interface AyahScrollViewProps {
   currentSurah: QuranSurahData;
@@ -54,11 +55,16 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
         const isPlayingThis = playingAyahNumber === verse.ayahNumber;
         const isFocusedThis = focusedAyahNumber === verse.ayahNumber;
         const hasWisdom = !!getAyahWisdomCard(selectedSurahNumber, verse.ayahNumber);
+        const cleanArabicText =
+          selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && verse.ayahNumber === 1
+            ? verse.textArabic.replace(BISMILLAH_PREFIX_REGEX, '').trim()
+            : verse.textArabic;
 
         return (
           <div
             key={verse.ayahNumber}
             id={`ayah-${verse.ayahNumber}`}
+            className={isPlayingThis ? 'amal-ayah-illuminated' : ''}
             onClick={() => {
               if (setFocusedAyahNumber && focusedAyahNumber !== verse.ayahNumber) {
                 setFocusedAyahNumber(verse.ayahNumber);
@@ -68,14 +74,14 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
               padding: '18px 14px',
               margin: '4px 0',
               borderBottom: '1px solid #F1F5F9',
-              backgroundColor: isPlayingThis ? '#F0FDF4' : isFocusedThis ? '#F8FAFC' : 'transparent',
+              backgroundColor: isPlayingThis ? '#F0FDF4' : isFocusedThis ? '#FDFBF7' : 'transparent',
               borderRadius: isPlayingThis || isFocusedThis ? 12 : 0,
               border: isPlayingThis
-                ? '1.5px solid #86EFAC'
-                : isFocusedThis
                 ? '1.5px solid #10B981'
+                : isFocusedThis
+                ? '1.5px solid rgba(212, 175, 55, 0.45)'
                 : '1.5px solid transparent',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
               cursor: 'pointer',
             }}
           >
@@ -213,7 +219,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                     surahNameEnglish: currentSurahMeta.nameEnglish,
                     surahNameUrdu: currentSurahMeta.nameUrdu,
                     ayahNumber: verse.ayahNumber,
-                    arabicText: verse.textArabic,
+                    arabicText: cleanArabicText,
                     urduTranslation: verse.textUrdu,
                     englishTranslation: verse.textEnglish,
                   });
@@ -242,6 +248,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
             {/* Arabic Text */}
             <div
               dir="rtl"
+              className="quran-arabic-matn"
               style={{
                 fontFamily: 'var(--font-arabic), "Amiri", serif',
                 fontSize: fontSize,
@@ -252,7 +259,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
                 letterSpacing: 0.2,
               }}
             >
-              {verse.textArabic}{' '}
+              {cleanArabicText}{' '}
               <span style={{ fontSize: fontSize - 6, color: '#059669', marginRight: 8 }}>
                 ﴿{verse.ayahNumber}﴾
               </span>
@@ -293,8 +300,8 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
             {/* Roman Urdu Transliteration & Tarjuma (when enabled and authentic) */}
             {showRomanUrdu &&
               (() => {
-                const translit = getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber);
-                const romanTarjuma = getAyahRomanUrduTarjuma(selectedSurahNumber, verse.ayahNumber);
+                const translit = getAyahRomanTransliteration(selectedSurahNumber, verse.ayahNumber, verse.textArabic);
+                const romanTarjuma = getAyahRomanUrduTarjuma(selectedSurahNumber, verse.ayahNumber, verse.textUrdu);
                 if (!translit && !romanTarjuma) return null;
                 return (
                   <div

@@ -165,7 +165,7 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
             </span>
           ) : isRomanUrdu ? (
             <span suppressHydrationWarning>
-              Agli Namaz: <strong style={{ color: '#064E3B' }}>{livePrayerInfo?.nameEnglish || mamool.nextPrayerName}</strong> mein taqreeban {formattedCountdown.urdu} baqi hain
+              Agli Namaz: <strong style={{ color: '#064E3B' }}>{livePrayerInfo?.nameEnglish || mamool.nextPrayerName}</strong> ({formattedCountdown.english || 'soon'})
             </span>
           ) : (
             <span suppressHydrationWarning>
@@ -280,7 +280,7 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
                   <span suppressHydrationWarning>{p.label}</span>
                   <span suppressHydrationWarning style={{ fontWeight: 800, color: isNext ? '#047857' : '#0F172A' }}>{p.time}</span>
                   {isNext && (
-                    <span suppressHydrationWarning style={{ fontSize: 9, backgroundColor: '#059669', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
+                    <span suppressHydrationWarning style={{ fontSize: 9, backgroundColor: '#047857', color: '#FFF', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>
                       {t('NEXT', 'اگلی', 'القادمة', 'Agli')}
                     </span>
                   )}
@@ -314,7 +314,7 @@ export const MamoolPrayerAuqatStrip: React.FC<MamoolPrayerAuqatStripProps> = ({
               style={{
                 fontSize: 11,
                 fontWeight: 700,
-                color: '#059669',
+                color: '#065F46',
                 backgroundColor: '#ECFDF5',
                 border: '1px solid #A7F3D0',
                 padding: '3px 8px',

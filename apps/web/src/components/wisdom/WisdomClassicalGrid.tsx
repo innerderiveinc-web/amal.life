@@ -262,7 +262,7 @@ export const WisdomClassicalGrid: React.FC<WisdomClassicalGridProps> = ({
               style={{
                 padding: '8px 14px',
                 borderRadius: 8,
-                backgroundColor: '#25D366',
+                backgroundColor: '#075E54',
                 color: '#FFFFFF',
                 border: 'none',
                 fontSize: 12,

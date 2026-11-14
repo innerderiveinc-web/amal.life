@@ -1,5 +1,6 @@
 import React from 'react';
 import { AmalTheme } from '@amal/ui';
+import { useLanguage } from '../../context/LanguageContext';
 
 export type SettingsTab = 'GENERAL' | 'FIQH' | 'SCHOLARSHIP' | 'PRIVACY' | 'READER' | 'SYSTEM';
 
@@ -9,13 +10,14 @@ interface SettingsTabsSidebarProps {
 }
 
 export function SettingsTabsSidebar({ activeTab, setActiveTab }: SettingsTabsSidebarProps) {
+  const { t } = useLanguage();
   const tabs: { key: SettingsTab; icon: string; label: string }[] = [
-    { key: 'GENERAL', icon: '🌐', label: 'General & Interface' },
-    { key: 'FIQH', icon: '🕋', label: 'Fiqh & Prayer Auqat' },
-    { key: 'SCHOLARSHIP', icon: '📜', label: 'Scholarly Strictness & Verification' },
-    { key: 'PRIVACY', icon: '🔒', label: 'Sovereign Vault & Privacy Guard' },
-    { key: 'READER', icon: '📖', label: 'Quran & Reader Codex' },
-    { key: 'SYSTEM', icon: '🎛️', label: 'System & Diagnostics' },
+    { key: 'GENERAL', icon: '🌐', label: t('General & Interface', 'عمومی ترتیبات', 'الإعدادات العامة والواجهة', 'General & Interface') },
+    { key: 'FIQH', icon: '🕋', label: t('Fiqh & Prayer Auqat', 'فقہی احکام و اوقات', 'الفقه ومواقيت الصلاة', 'Fiqh & Namaz ke Auqat') },
+    { key: 'SCHOLARSHIP', icon: '📜', label: t('Scholarly Strictness & Verification', 'تحقیقی و علمی اصول', 'التدقيق العلمي والمعايير', 'Scholarly Strictness') },
+    { key: 'PRIVACY', icon: '🔒', label: t('Sovereign Vault & Privacy Guard', 'محفوظ والٹ و پرائیویسی', 'الخزينة والخصوصية', 'Personal Vault & Privacy') },
+    { key: 'READER', icon: '📖', label: t('Quran & Reader Codex', 'قرآن و مطالعہ کوڈیکس', 'المصحف وإعدادات القراءة', 'Quran & Reader Codex') },
+    { key: 'SYSTEM', icon: '🎛️', label: t('System & Diagnostics', 'سسٹم و ڈائیگنوسٹکس', 'النظام والتشخيص', 'System & Diagnostics') },
   ];
 
   return (

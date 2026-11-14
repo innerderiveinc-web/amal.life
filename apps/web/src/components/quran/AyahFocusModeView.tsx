@@ -5,6 +5,7 @@ import { getAyahWisdomCard } from '../../lib/quran-wisdom-data';
 import { getAyahRomanTransliteration, getAyahRomanUrduTarjuma } from '../../lib/quran-roman-urdu';
 import { AudioSegment } from './FloatingQuranAudioPlayer';
 import { useLanguage } from '../../context/LanguageContext';
+import { BISMILLAH_PREFIX_REGEX } from './useQuranSurahLoader';
 
 export interface AyahFocusModeViewProps {
   currentSurah: QuranSurahData;
@@ -54,6 +55,10 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
   const isPlayingThis = playingAyahNumber === currentAyah.ayahNumber;
   const hasWisdom = !!getAyahWisdomCard(selectedSurahNumber, currentAyah.ayahNumber);
   const progressPercent = Math.round((currentAyah.ayahNumber / totalVerses) * 100);
+  const cleanArabicText =
+    selectedSurahNumber !== 1 && selectedSurahNumber !== 9 && currentAyah.ayahNumber === 1
+      ? currentAyah.textArabic.replace(BISMILLAH_PREFIX_REGEX, '').trim()
+      : currentAyah.textArabic;
 
   const handlePrevAyah = () => {
     const prevNum = Math.max(1, currentAyah.ayahNumber - 1);
@@ -168,6 +173,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
         {/* Arabic Text (Centered, Extra-Large Reverent Typography) */}
         <div
           dir="rtl"
+          className="quran-arabic-matn"
           style={{
             fontFamily: 'var(--font-arabic), "Amiri", "Traditional Arabic", serif',
             fontSize: fontSize + 6,
@@ -178,7 +184,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
             fontWeight: 500,
           }}
         >
-          {currentAyah.textArabic}
+          {cleanArabicText}
           <span
             style={{
               display: 'inline-flex',
@@ -300,7 +306,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
             style={{
               padding: '10px 18px',
               borderRadius: 10,
-              backgroundColor: '#0284C7',
+              backgroundColor: '#0369A1',
               color: '#FFFFFF',
               border: 'none',
               fontSize: 13,
@@ -348,7 +354,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
                 surahNameEnglish: currentSurahMeta.nameEnglish,
                 surahNameUrdu: currentSurahMeta.nameUrdu,
                 ayahNumber: currentAyah.ayahNumber,
-                arabicText: currentAyah.textArabic,
+                arabicText: cleanArabicText,
                 urduTranslation: currentAyah.textUrdu,
                 englishTranslation: currentAyah.textEnglish,
               })
@@ -432,7 +438,7 @@ export const AyahFocusModeView: React.FC<AyahFocusModeViewProps> = ({
       <div style={{ textAlign: 'center', fontSize: 12, color: '#64748B', lineHeight: 1.6 }}>
         {t(
           '💡 Auto-Advance: When listening, the next Ayah displays automatically upon audio completion. For manual reading, use left/right arrows (← →) or the buttons above.',
-          '💡 آٹو ایڈوانس (Auto-Advance): آڈیو سننے کے دوران ہر آیت کا ترجمہ مکمل ہونے پر اگلی آیت خود بخود سامنے آ جاتی ہے۔ دستی پڑھنے کے لیے کی بورڈ کے دائیں/بائیں تیر (← →) یا اوپر نیچے بٹن استعمال کریں۔',
+          '💡 خودکار پیش رفت: آڈیو سننے کے دوران ہر آیت کا ترجمہ مکمل ہونے پر اگلی آیت خود بخود سامنے آ جاتی ہے۔ دستی پڑھنے کے لیے کی بورڈ کے دائیں/بائیں تیر (← →) یا اوپر نیچے بٹن استعمال کریں۔',
           '💡 التقدم التلقائي: أثناء الاستماع، تظهر الآية التالية تلقائياً عند انتهاء الصوت. للقراءة اليدوية، استخدم الأسهم (← →) أو الأزرار أعلاه.',
           '💡 Auto-Advance: Audio sunte hue har aayat ka tarjuma mukammal hone par agli aayat khud-bakhud samne aa jati hai. Dasti padhne ke liye keyboard ke teer (← →) ya buttons istemal karein.'
         )}

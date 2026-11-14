@@ -112,7 +112,7 @@ export const SMART_FIQH_DATA: SmartFiqhItem[] = [
     hukmType: 'MUFSID',
     hukmUrdu: 'وضو اور غسل نہیں ہوتا (پالش اتارنا فرض ہے)',
     hukmEnglish: 'Purification is Invalid (Removing polish is obligatory)',
-    summaryUrdu: 'روایتی ناخن پالش ناخنوں پر ایسی غیر مسام دار تہہ (impermeable layer) بنا دیتی ہے جو پانی کو ناخن تک پہنچنے سے روکتی ہے۔ اس کو مکمل اتارے بغیر وضو اور غسل درست نہیں ہوتا۔ وضو کے بعد پالش لگانا جائز ہے جب تک باوضو رہیں۔',
+    summaryUrdu: 'روایتی ناخن پالش ناخنوں پر ایسی غیر مسام دار تہہ بنا دیتی ہے جو پانی کو ناخن تک پہنچنے سے روکتی ہے۔ اس کو مکمل اتارے بغیر وضو اور غسل درست نہیں ہوتا۔ وضو کے بعد پالش لگانا جائز ہے جب تک باوضو رہیں۔',
     summaryEnglish: 'Conventional nail lacquer creates an impermeable barrier that prevents water from reaching the keratin nail surface, preventing valid Wudu and Ghusl. It must be completely removed prior to purification.',
     canonicalReference: 'رد المحتار ۱/۱۵۴؛ فتاویٰ رضویہ ۱/۱۱۲؛ بہارِ شریعت ۱/۲۸۸',
     libraryBookId: 'CANON-FIQ-HAN-001',

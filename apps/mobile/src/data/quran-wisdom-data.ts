@@ -76,12 +76,35 @@ export function getAyahAudioUrl(
 }
 
 /**
- * Returns certified EveryAyah streaming URL for Urdu translation audio (100% human reciter)
+ * Returns certified streaming URL for Urdu translation audio:
+ * Strictly KANZ-UL-IMAN Ayah-by-Ayah recited by Maulana Haji Abdul Habib Attari (Dawat-e-Islami official repository)
+ * with multi-mirror Kanz-ul-Iman CDN fallback.
+ * (Farhat Hashmi, Shamshad Ali Khan, or any non-Kanz-ul-Iman audio is strictly forbidden).
  */
 export function getAyahUrduAudioUrl(surahNumber: number, ayahNumber: number): string {
+  if (surahNumber === 1 && ayahNumber >= 1 && ayahNumber <= 7) {
+    if (ayahNumber === 1) {
+      return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001000.mp3`;
+    }
+    const fIdx = String(ayahNumber - 1).padStart(3, '0');
+    return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001${fIdx}.mp3`;
+  }
   const s = String(surahNumber).padStart(3, '0');
   const a = String(ayahNumber).padStart(3, '0');
-  return `https://everyayah.com/data/translations/urdu_shamshad_ali_khan_46kbps/${s}${a}.mp3`;
+  return `https://data2.dawateislami.net/static/images/main-website/quran-arabic-audios/${s}/U02${s}${a}.mp3`;
+}
+
+export function getAyahUrduAudioFallbackUrl(surahNumber: number, ayahNumber: number): string {
+  if (surahNumber === 1 && ayahNumber >= 1 && ayahNumber <= 7) {
+    if (ayahNumber === 1) {
+      return `https://data.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001000.mp3`;
+    }
+    const fIdx = String(ayahNumber - 1).padStart(3, '0');
+    return `https://data.dawateislami.net/static/images/main-website/quran-arabic-audios/001/U02001${fIdx}.mp3`;
+  }
+  const s = String(surahNumber).padStart(3, '0');
+  const a = String(ayahNumber).padStart(3, '0');
+  return `https://data.dawateislami.net/static/images/main-website/quran-arabic-audios/${s}/U02${s}${a}.mp3`;
 }
 
 /**

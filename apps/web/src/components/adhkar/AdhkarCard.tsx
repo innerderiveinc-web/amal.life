@@ -90,7 +90,7 @@ export const AdhkarCard: React.FC<AdhkarCardProps> = ({
                 : item.titleEnglish}
             </h3>
             <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-              {isUrdu ? item.titleEnglish : item.titleArabic || item.titleUrdu} • {item.sourceHadith}
+              {(isUrdu || isRomanUrdu) ? item.titleEnglish : (item.titleArabic || item.titleUrdu)} • {item.sourceHadith}
             </div>
           </div>
         </div>

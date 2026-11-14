@@ -28,32 +28,32 @@ export const WisdomCategoryBar: React.FC<WisdomCategoryBarProps> = ({
   const categories = [
     {
       id: 'QURAN' as WisdomCategory,
-      label: t('📖 Quran Wisdom (42)', '📖 قرآنی حکمت (42)', '📖 حكمة القرآن (٤٢)', '📖 Qurani Hikmat (42)'),
+      label: t('📖 Quran Wisdom (42)', '📖 قرآنی حکمت (۴۲)', '📖 حكمة القرآن (٤٢)', '📖 Qurani Hikmat (42)'),
     },
     {
       id: 'HADITH' as WisdomCategory,
-      label: t('📜 Hadith Cards (14)', '📜 احادیثِ مبارکہ (14)', '📜 أحاديث نبوية (١٤)', '📜 Hadees Cards (14)'),
+      label: t('📜 Hadith Cards (14)', '📜 احادیثِ مبارکہ (۱۴)', '📜 أحاديث نبوية (١٤)', '📜 Hadees Cards (14)'),
     },
     {
       id: 'SHAMAIL' as WisdomCategory,
-      label: t("🌹 Prophetic Shama'il (12)", '🌹 شمائلِ مصطفیٰ ﷺ (12)', '🌹 الشمائل المحمدية (١٢)', "🌹 Prophetic Shama'il (12)"),
+      label: t("🌹 Prophetic Shama'il (12)", '🌹 شمائلِ مصطفیٰ ﷺ (۱۲)', '🌹 الشمائل المحمدية (١٢)', "🌹 Prophetic Shama'il (12)"),
     },
     {
       id: 'TASAWWUF' as WisdomCategory,
-      label: t('💎 Spiritual Wisdom (12)', '💎 تزکیہ و تصوف (12)', '💎 التزكية والتصوف (١٢)', '💎 Tazkiyah o Tasawwuf (12)'),
+      label: t('💎 Spiritual Wisdom (12)', '💎 تزکیہ و تصوف (۱۲)', '💎 التزكية والتصوف (١٢)', '💎 Tazkiyah o Tasawwuf (12)'),
     },
     {
       id: 'FIQH' as WisdomCategory,
-      label: t('⚖️ Daily Fiqh Guidance (10)', '⚖️ احکامِ فقہ (10)', '⚖️ فقه يومي (١٠)', '⚖️ Ahkam-e-Fiqh (10)'),
+      label: t('⚖️ Daily Fiqh Guidance (10)', '⚖️ احکامِ فقہ (۱۰)', '⚖️ فقه يومي (١٠)', '⚖️ Ahkam-e-Fiqh (10)'),
     },
     {
       id: 'DUA' as WisdomCategory,
-      label: t('🤲 Prophetic Duas (15)', '🤲 ادعیہ و اذکار (15)', '🤲 أدعية نبوية (١٥)', '🤲 Masnoon Duas (15)'),
+      label: t('🤲 Prophetic Duas (15)', '🤲 ادعیہ و اذکار (۱۵)', '🤲 أدعية نبوية (١٥)', '🤲 Masnoon Duas (15)'),
     },
   ];
 
   const themeFilters = [
-    { id: 'ALL', label: t('All (42)', 'تمام آیات (All 42)', 'جميع الآيات (٤٢)', 'Tamam Aayatein (42)') },
+    { id: 'ALL', label: t('All (42)', 'تمام آیات (۴۲)', 'جميع الآيات (٤٢)', 'Tamam Aayatein (42)') },
     { id: 'BOOKMARKED', label: t('⭐ Saved', '⭐ محفوظ', '⭐ المحفوظة', '⭐ Mehfooz') },
     { id: 'IKHLAS', label: t('✨ Sincerity & Intention', '✨ اخلاص و نیت', '✨ الإخلاص والنية', '✨ Ikhlas o Niyyat') },
     { id: 'TAWAKKUL', label: t('🛡️ Reliance & Patience', '🛡️ توکل و صبر', '🛡️ التوكل والصبر', '🛡️ Tawakkul o Sabr') },

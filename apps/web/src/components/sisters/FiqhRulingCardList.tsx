@@ -15,7 +15,7 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
   const { isUrdu, isRomanUrdu, t } = useLanguage();
 
   const getTitle = (item: FiqhRulingItem) => {
-    if (isRomanUrdu) return item.titleRomanUrdu || item.titleUrdu;
+    if (isRomanUrdu) return item.titleRomanUrdu || item.titleEnglish;
     if (isUrdu) return item.titleUrdu;
     return item.titleEnglish;
   };
@@ -26,13 +26,13 @@ export const FiqhRulingCardList: React.FC<FiqhRulingCardListProps> = ({
   };
 
   const getSummary = (item: FiqhRulingItem) => {
-    if (isRomanUrdu) return item.summaryRomanUrdu || item.summaryUrdu;
+    if (isRomanUrdu) return item.summaryRomanUrdu || item.summaryEnglish;
     if (isUrdu) return item.summaryUrdu;
     return item.summaryEnglish;
   };
 
   const getDetailed = (item: FiqhRulingItem) => {
-    if (isRomanUrdu) return item.detailedRulingRomanUrdu || item.detailedRulingUrdu;
+    if (isRomanUrdu) return item.detailedRulingRomanUrdu || item.detailedRulingEnglish || item.detailedRulingUrdu;
     if (isUrdu) return item.detailedRulingUrdu;
     return item.detailedRulingEnglish || item.detailedRulingUrdu;
   };

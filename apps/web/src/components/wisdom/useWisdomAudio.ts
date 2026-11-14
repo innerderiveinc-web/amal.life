@@ -4,10 +4,18 @@ import {
   QuranAyahWisdomCard,
   getAyahAudioUrl,
   getAyahUrduAudioUrl,
+  getAyahUrduAudioFallbackUrl,
   getSurahTafseerAudioUrl,
 } from '../../lib/quran-wisdom-data';
 import { showAmalToast } from '../Toast';
 import { useAudioPlayer } from '../../context/AudioPlayerContext';
+
+const getLang = (): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('amal_app_language') || 'ur';
+  }
+  return 'ur';
+};
 
 export function useWisdomAudio() {
   const [activeAudioKey, setActiveAudioKey] = useState<string | null>(null);
@@ -82,10 +90,19 @@ export function useWisdomAudio() {
         .then(() => {
           setActiveAudioKey(key);
           setIsPlayingAudio(true);
+          const lang = getLang();
           showAmalToast(
             type === 'URDU'
-              ? `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}) کا مستند اردو ترجمہ (کنز الایمان) جاری ہے`
-              : `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}) کی عربی تلاوت جاری ہے`,
+              ? (lang === 'ur'
+                  ? `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}) کا مستند اردو ترجمہ جاری ہے`
+                  : lang === 'ar'
+                  ? `سورة ${card.surahNameArabic || card.surahNameUrdu} (الآية ${card.ayahNumber}): الترجمة الأردية`
+                  : `Surah ${card.surahNameTransliterated || card.surahNameUrdu} (${card.ayahNumber}): Urdu translation playing`)
+              : (lang === 'ur'
+                  ? `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}) کی تلاوت جاری ہے`
+                  : lang === 'ar'
+                  ? `سورة ${card.surahNameArabic || card.surahNameUrdu} (الآية ${card.ayahNumber}): تلاوة القرآن الكريم`
+                  : `Surah ${card.surahNameTransliterated || card.surahNameUrdu} (${card.ayahNumber}): Recitation playing`),
             'info'
           );
         })
@@ -93,7 +110,17 @@ export function useWisdomAudio() {
           console.warn('Audio play error:', e);
           setIsPlayingAudio(false);
           setActiveAudioKey(null);
-          showAmalToast('آڈیو لوڈ کرنے میں عارضی تاخیر ہوئی۔ براہ کرم دوبارہ کوشش کریں۔', 'warning');
+          const lang = getLang();
+          showAmalToast(
+            lang === 'ur'
+              ? 'آڈیو لوڈ کرنے میں عارضی تاخیر ہوئی۔ براہ کرم دوبارہ کوشش کریں۔'
+              : lang === 'ar'
+              ? 'حدث تأخير في تحميل الصوت. يرجى المحاولة مرة أخرى.'
+              : lang === 'ru'
+              ? 'Audio load karne me takheer hui. Dobara koshish karein.'
+              : 'Audio load delayed. Please try again.',
+            'warning'
+          );
         });
     }
   };
@@ -196,14 +223,29 @@ export function useWisdomAudio() {
               .then(() => {
                 setActiveAudioKey(key);
                 setIsPlayingAudio(true);
+                const lang = getLang();
                 showAmalToast(
-                  `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): اردو تفسیری ترجمہ جاری ہے۔`,
+                  lang === 'ur'
+                    ? `سورۃ ${card.surahNameUrdu} (آیت ${card.ayahNumber}): اردو تفسیری ترجمہ جاری ہے۔`
+                    : lang === 'ar'
+                    ? `سورة ${card.surahNameArabic || card.surahNameUrdu}: جارية التلاوة مع التفسير.`
+                    : `Surah ${card.surahNameTransliterated || card.surahNameUrdu} (${card.ayahNumber}): Tafsir commentary playing.`,
                   'info'
                 );
               })
               .catch((fallbackErr) => {
                 console.error('Final fallback error:', fallbackErr);
-                showAmalToast('آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔', 'warning');
+                const lang = getLang();
+                showAmalToast(
+                  lang === 'ur'
+                    ? 'آڈیو لوڈ کرنے میں تاخیر ہوئی۔ دوبارہ کوشش کریں۔'
+                    : lang === 'ar'
+                    ? 'تعذر تحميل الصوت. يرجى المحاولة مرة أخرى.'
+                    : lang === 'ru'
+                    ? 'Audio load me takheer hui. Dobara koshish karein.'
+                    : 'Audio playback error. Please try again.',
+                  'warning'
+                );
                 setActiveAudioKey(null);
                 setIsPlayingAudio(false);
               });
@@ -223,7 +265,17 @@ export function useWisdomAudio() {
       setContinuousIndex(null);
       setActiveAudioKey(null);
       setIsPlayingAudio(false);
-      showAmalToast('تمام ۴۲ آیات کی حکمت و ترجمہ مکمل ہو گیا۔', 'success');
+      const lang = getLang();
+      showAmalToast(
+        lang === 'ur'
+          ? 'تمام ۴۲ آیات کی حکمت و ترجمہ مکمل ہو گیا۔'
+          : lang === 'ar'
+          ? 'اكتملت حكمة وترجمة جميع الآيات الـ ٤٢.'
+          : lang === 'ru'
+          ? 'Tamam 42 aayat ki hikmat mukammal ho gayi.'
+          : 'Completed wisdom and reflection for all 42 verses.',
+        'success'
+      );
       return;
     }
 
@@ -266,7 +318,7 @@ export function useWisdomAudio() {
       const parts = activeAudioKey.split(':');
       const surah = parseInt(parts[0] || '1', 10);
       const ayah = parseInt(parts[1] || '1', 10);
-      const fallbackUrl = getAyahUrduAudioUrl(surah, ayah);
+      const fallbackUrl = getAyahUrduAudioFallbackUrl(surah, ayah);
       if (audioRef.current.src !== fallbackUrl) {
         console.warn('Tafseer remote stream failed, falling back to EveryAyah CDN');
         audioRef.current.src = fallbackUrl;
@@ -274,7 +326,17 @@ export function useWisdomAudio() {
           .play()
           .then(() => {
             setIsPlayingAudio(true);
-            showAmalToast('مستند اردو ترجمہ و تفسیری قرأت (کنز الایمان) جاری ہے۔', 'info');
+            const lang = getLang();
+            showAmalToast(
+              lang === 'ur'
+                ? 'مستند اردو ترجمہ و تفسیری قرأت (کنز الایمان) جاری ہے۔'
+                : lang === 'ar'
+                ? 'جارٍ تشغيل تلاوة وترجمة كنز الإيمان.'
+                : lang === 'ru'
+                ? 'Kanz-ul-Iman tarjuma jari hai.'
+                : 'Kanz al-Iman translation and recitation playing.',
+              'info'
+            );
           })
           .catch(() => {
             setIsPlayingAudio(false);
@@ -283,7 +345,17 @@ export function useWisdomAudio() {
         return;
       }
     }
-    showAmalToast('آڈیو پلے بیک میں عارضی تعطل پیش آیا۔ دوبارہ کوشش کریں۔', 'warning');
+    const lang = getLang();
+    showAmalToast(
+      lang === 'ur'
+        ? 'آڈیو پلے بیک میں عارضی تعطل پیش آیا۔ دوبارہ کوشش کریں۔'
+        : lang === 'ar'
+        ? 'توقف البث الصوتي مؤقتاً. يرجى إعادة المحاولة.'
+        : lang === 'ru'
+        ? 'Audio me ta\'attul pesh aaya. Dobara koshish karein.'
+        : 'Audio playback interrupted. Please try again.',
+      'warning'
+    );
     setIsPlayingAudio(false);
     setActiveAudioKey(null);
   };

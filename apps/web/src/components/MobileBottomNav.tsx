@@ -50,9 +50,9 @@ export const MobileBottomNav: React.FC = () => {
               gap: 2,
               padding: '4px 12px',
               borderRadius: 8,
-              color: isActive ? '#065F46' : '#6B7280',
-              fontWeight: isActive ? 700 : 500,
-              fontSize: 10,
+              color: isActive ? '#065F46' : '#475569',
+              fontWeight: isActive ? 800 : 600,
+              fontSize: 10.5,
             }}
           >
             <span style={{ fontSize: 20 }}>{item.icon}</span>
@@ -76,9 +76,9 @@ export const MobileBottomNav: React.FC = () => {
           borderRadius: 8,
           background: 'none',
           border: 'none',
-          color: '#6B7280',
-          fontSize: 10,
-          fontWeight: 500,
+          color: '#475569',
+          fontSize: 10.5,
+          fontWeight: 600,
           cursor: 'pointer',
         }}
       >

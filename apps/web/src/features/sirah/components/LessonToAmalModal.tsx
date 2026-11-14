@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SirahAmalMappingRecord } from '@amal/types';
 import { AmalTheme } from '@amal/ui';
 
@@ -13,26 +13,52 @@ export const LessonToAmalModal: React.FC<LessonToAmalModalProps> = ({
   onClose,
   onCommit,
 }) => {
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: 20,
-    }}>
-      <div style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        maxWidth: 540,
-        width: '100%',
-        padding: 24,
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: 20,
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Translate Lesson to Practical Amal"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 16,
+          maxWidth: 540,
+          width: '100%',
+          padding: 24,
         boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
         display: 'flex',
         flexDirection: 'column',
@@ -42,7 +68,7 @@ export const LessonToAmalModal: React.FC<LessonToAmalModalProps> = ({
           <span style={{ fontSize: 12, fontWeight: 700, color: AmalTheme.colors.primary, letterSpacing: 1 }}>
             TRANSLATE LESSON TO PRACTICAL AMAL
           </span>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer' }}>✕</button>
+          <button type="button" onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer' }}>✕</button>
         </div>
 
         <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800 }}>
@@ -66,7 +92,7 @@ export const LessonToAmalModal: React.FC<LessonToAmalModalProps> = ({
           padding: 12,
           borderRadius: 8,
           fontSize: 12,
-          color: '#E65100',
+          color: '#C2410C',
           lineHeight: 1.5,
         }}>
           <strong>Non-Invented Obligation Notice:</strong> {mapping.non_invented_obligation_disclaimer}

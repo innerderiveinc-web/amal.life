@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PrayerFiqhDifferenceGuideProps {
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function PrayerFiqhDifferenceGuide({ t }: PrayerFiqhDifferenceGuideProps) {
@@ -49,36 +49,42 @@ export function PrayerFiqhDifferenceGuide({ t }: PrayerFiqhDifferenceGuideProps)
 
         <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
           <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-            {t('2. Fajr & Isha Calculation Angles', '۲. فجر و عشاء کے زاویے (Calculation Angles)')}
+            {t('2. Fajr & Isha Calculation Angles', '۲. فجر و عشاء کے فلکیاتی زاویے', '٢. زوايا حساب الفجر والعشاء', '2. Fajr o Isha Calculation Angles')}
           </div>
           <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
             {t(
               'Subcontinent authorities (Karachi, Deoband, Bareilly) recognize Subh Sadiq at 18 degrees below horizon. North America (ISNA) often utilizes 15 degrees, while Umm al-Qura fixes Isha 90 minutes after Maghrib.',
-              'برصغیر (دیوبند، بریلی، کراچی) میں صبحِ صادق ۱۸ ڈگری پر تسلیم کی جاتی ہے۔ جبکہ مغربی ممالک میں بعض ادارے ۱۵ ڈگری (ISNA) اور سعودی عرب میں فجر ۱۸.۵ ڈگری اور عشاء مغرب کے ۹۰ منٹ بعد شمار کرتے ہیں۔'
+              'برصغیر (دیوبند، بریلی، کراچی) میں صبحِ صادق ۱۸ ڈگری پر تسلیم کی جاتی ہے۔ جبکہ مغربی ممالک میں بعض ادارے ۱۵ ڈگری اور سعودی عرب میں فجر ۱۸.۵ ڈگری اور عشاء مغرب کے ۹۰ منٹ بعد شمار کرتے ہیں۔',
+              'تعتمد جهات شبه القارة الهندية زاوية ١٨ درجة للفجر الصادق، بينما تعتمد بعض المراكز في أمريكا ١٥ درجة، وتعتمد أم القرى تثبيت العشاء بعد ٩٠ دقيقة من المغرب.',
+              'Bar-e-sagheer mein Subh-e-Sadiq 18 degree par tasleem ki jati hai, jabke maghribi mumalik mein baaz idaray 15 degree aur Umm al-Qura Isha ko Maghrib ke 90 minute baad shumar karte hain.'
             )}
           </p>
         </div>
 
         <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
           <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-            {t('3. Prayer Start Time vs Mosque Jama\'at Time', '۳. دخولِ وقت بمقابلہ جماعت کا وقت (Start vs Jama\'at)')}
+            {t('3. Prayer Start Time vs Mosque Jama\'at Time', '۳. دخولِ وقت بمقابلہ جماعت کا وقت', '٣. وقت دخول الصلاة مقابل وقت الجماعة', '3. Dukhul-e-Waqt vs Jamaat ka Waqt')}
           </div>
           <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
             {t(
               'AMAL OS shows the exact astronomical moment when a prayer enters (Dukhul-e-Waqt). Mosques set congregations at round community times (e.g. 1:30 PM or 5:15 PM) for congregation convenience.',
-              'یہ ایپ فلکیاتی اعتبار سے وقت شروع ہونے (دخولِ وقت) کا دقیق منٹ بتاتی ہے، جبکہ مساجد میں اقامت/جماعت کا وقت عام سہولت کے لیے مخصوص گول اوقات (مثلاً ۱:۳۰ یا ۵:۱۵) پر طے کیا جاتا ہے۔'
+              'یہ ایپ فلکیاتی اعتبار سے وقت شروع ہونے (دخولِ وقت) کا دقیق منٹ بتاتی ہے، جبکہ مساجد میں اقامت و جماعت کا وقت عام سہولت کے لیے مخصوص گول اوقات (مثلاً ۱:۳۰ یا ۵:۱۵) پر طے کیا جاتا ہے۔',
+              'يوضح التطبيق اللحظة الفلكية الدقيقة لدخول الوقت، بينما تحدد المساجد أوقات الإقامة وفق أوقات محددة تناسب المصلين.',
+              'Yeh app astronomical hisab se waqt dakhil hone ka daqeeq waqt batati hai, jabke masajid me iqamat ka waqt aam sahulat ke hisab se tay hota hai.'
             )}
           </p>
         </div>
 
         <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
           <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-            {t('4. Local Precautionary Buffers (Ihtiyat)', '۴. احتیاطی منٹس (Local Precautionary Buffers)')}
+            {t('4. Local Precautionary Buffers (Ihtiyat)', '۴. احتیاطی منٹس اور افقی پیمانہ', '٤. دقائق الاحتياط المحلية', '4. Ihtiyati Minutes (Precautionary Buffers)')}
           </div>
           <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
             {t(
               'Scholars in many cities add 1-3 precautionary minutes to sunset or Fajr for horizon assurance. You can calibrate this easily using the "Calibrate / ± Minutes" button above.',
-              'مختلف شہروں کے علماء افق اور بلندی کے لحاظ سے مغرب یا فجر میں ۱ تا ۳ احتیاطی منٹ شامل کرتے ہیں۔ اگر آپ کی مقامی مسجد میں ایسا ہو تو آپ اوپر دیے گئے بٹن "Calibrate / ± Minutes" سے آسانی سے منٹس سیٹ کر سکتے ہیں۔'
+              'مختلف شہروں کے علماء افق اور بلندی کے لحاظ سے مغرب یا فجر میں ۱ تا ۳ احتیاطی منٹ شامل کرتے ہیں۔ اگر آپ کی مقامی مسجد میں ایسا ہو تو آپ اوپر دیے گئے بٹن سے آسانی سے منٹس سیٹ کر سکتے ہیں۔',
+              'يضيف العلماء في بعض المدن من دقيقة إلى ٣ دقائق كاحتياط فقهي بحسب الأفق، ويمكن ضبط ذلك بسهولة من زر المعايرة بالأعلى.',
+              'Mukhtalif shehron ke ulama ufuq ke hisab se 1 se 3 ihtiyati minutes shamil karte hain. Aap upar diye gaye button se ise aasani se calibrate kar sakte hain.'
             )}
           </p>
         </div>

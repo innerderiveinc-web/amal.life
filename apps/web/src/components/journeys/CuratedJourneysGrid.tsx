@@ -302,7 +302,7 @@ export const CuratedJourneysGrid: React.FC<CuratedJourneysGridProps> = ({
                   borderTop: '1px solid #F3F4F6',
                 }}
               >
-                <span style={{ fontSize: 12, color: '#9CA3AF' }}>
+                <span style={{ fontSize: 12, color: '#64748B', fontWeight: 500 }}>
                   {isAlreadyActive
                     ? t('Currently Active', 'پہلے سے جاری ہے', 'مفعّل حالياً', 'Pehle se jari hai')
                     : t('100% Private (On-Device)', 'مکمل نجی (ڈیوائس پر)', 'خصوصية تامة (على جهازك)', 'Mukammal Niji (Device par)')}

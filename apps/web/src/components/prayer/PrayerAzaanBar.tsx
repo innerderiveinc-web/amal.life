@@ -8,7 +8,7 @@ interface PrayerAzaanBarProps {
   handleTestPlayAzaan: () => void;
   handleToggleAzaan: () => void;
   handleRequestBrowserNotification: () => void;
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function PrayerAzaanBar({
@@ -74,9 +74,9 @@ export function PrayerAzaanBar({
             fontWeight: 600,
           }}
         >
-          <option value="BAYATI_CALL">{t('Maqam Bayati Sacred Call', 'مقام بیاتی اذان')}</option>
-          <option value="MECCA_TONE">Haram Makkah Reverberant Tone</option>
-          <option value="TAKBEER_CHIME">Gentle 3-Tone Takbeer Chime</option>
+          <option value="BAYATI_CALL">{t('Maqam Bayati Sacred Call', 'مقام بیاتی اذان', 'أذان مقام بياتي', 'Maqam Bayati Azaan')}</option>
+          <option value="MECCA_TONE">{t('Haram Makkah Reverberant Tone', 'حرم مکہ کی گونج دار صدا', 'نغمة الحرم المكي الشريف', 'Haram Makkah Tone')}</option>
+          <option value="TAKBEER_CHIME">{t('Gentle 3-Tone Takbeer Chime', 'دھیمی ۳ بار تکبیر کی گھنٹی', 'تنبيه تكبير لطيف ثلاثي', 'Gentle 3-Tone Takbeer Chime')}</option>
         </select>
 
         <button
@@ -97,7 +97,11 @@ export function PrayerAzaanBar({
           }}
         >
           <span>{isPlayingAzaan ? '⏳' : '▶'}</span>
-          <span>{isPlayingAzaan ? 'Playing...' : 'Test Sound'}</span>
+          <span>
+            {isPlayingAzaan
+              ? t('Playing...', 'چل رہا ہے...', 'جاري التشغيل...', 'Playing...')
+              : t('Test Sound', 'آواز چیک کریں', 'تجربة الصوت', 'Test Sound')}
+          </span>
         </button>
 
         <button
@@ -113,7 +117,9 @@ export function PrayerAzaanBar({
             cursor: 'pointer',
           }}
         >
-          {azaanSettings.enabled ? 'Mute' : 'Enable Audio'}
+          {azaanSettings.enabled
+            ? t('Mute', 'خاموش کریں', 'كتم الصوت', 'Mute')
+            : t('Enable Audio', 'آڈیو فعال کریں', 'تفعيل الصوت', 'Enable Audio')}
         </button>
 
         <button
@@ -133,7 +139,7 @@ export function PrayerAzaanBar({
           }}
         >
           <span>🔔</span>
-          <span>Push Alerts</span>
+          <span>{t('Push Alerts', 'نوٹیفکیشن الرٹ', 'تنبيهات الإشعار', 'Push Alerts')}</span>
         </button>
       </div>
     </div>

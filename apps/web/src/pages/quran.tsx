@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { ALL_114_SURAHS } from '../lib/quran-114-directory';
-import { getSurahAudioEndpoints } from '../lib/quran-wisdom-data';
+import { getSurahAudioEndpoints, getAyahUrduAudioFallbackUrl, getAyahAudioUrl } from '../lib/quran-wisdom-data';
 import { AyahWisdomModal } from '../components/AyahWisdomModal';
 import { SurahDirectorySidebar } from '../components/quran/SurahDirectorySidebar';
 import { SurahReaderWorkspace } from '../components/quran/SurahReaderWorkspace';
@@ -19,12 +19,15 @@ import { QuranTajweedHubTab } from '../components/quran/QuranTajweedHubTab';
 import { useQuranMasterAudio } from '../components/quran/useQuranMasterAudio';
 import { QuranHeaderBar, QuranHubTab } from '../components/quran/QuranHeaderBar';
 import { useQuranSurahLoader } from '../components/quran/useQuranSurahLoader';
+import { triggerHaptic } from '../lib/haptics';
+import { useWakeLock } from '../hooks/useWakeLock';
 
 export type { AudioSyncMode, AudioSegment, QuranHubTab };
 
 export default function QuranWisdomPage() {
   const router = useRouter();
   const { t, isUrdu } = useLanguage();
+  useWakeLock(true); // Native screen wake lock ensures continuous Quran recitation without display timeout
   const [activeHubTab, setActiveHubTab] = useState<QuranHubTab>('READER');
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export default function QuranWisdomPage() {
     }
   };
 
-  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS'>('FOCUS');
+  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS' | 'MUSHAF'>('MUSHAF');
   const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
   const [mobileTab, setMobileTab] = useState<'READER' | 'DIRECTORY'>('READER');
   const [continuousSurahPlayback, setContinuousSurahPlaybackState] = useState<boolean>(() => {
@@ -90,7 +93,7 @@ export default function QuranWisdomPage() {
     surahNameArabic?: string;
     surahNameUrdu?: string;
     surahNameTransliterated?: string;
-    viewMode: 'SCROLL' | 'FOCUS';
+    viewMode: 'SCROLL' | 'FOCUS' | 'MUSHAF';
     timestamp: number;
   } | null>(null);
 
@@ -132,6 +135,9 @@ export default function QuranWisdomPage() {
     isCachingSurah,
     handleCacheSurahOffline,
     handleDownloadSurahAudio,
+    hifzRepeatTarget,
+    setHifzRepeatTarget,
+    currentRepeatIteration,
     handleStopAudio,
     togglePlayPause,
     handlePlayAyahAudio,
@@ -181,7 +187,7 @@ export default function QuranWisdomPage() {
           ) {
             setLastReadPosition(parsed);
             handleSelectSurah(parsed.surahNumber, parsed.ayahNumber || 1);
-            if (parsed.viewMode === 'SCROLL' || parsed.viewMode === 'FOCUS') {
+            if (parsed.viewMode === 'SCROLL' || parsed.viewMode === 'FOCUS' || parsed.viewMode === 'MUSHAF') {
               setViewModeState(parsed.viewMode);
             }
             showAmalToast(
@@ -203,16 +209,19 @@ export default function QuranWisdomPage() {
         setViewModeState('SCROLL');
       } else if (router.query.mode === 'focus') {
         setViewModeState('FOCUS');
+      } else if (router.query.mode === 'mushaf') {
+        setViewModeState('MUSHAF');
       } else {
-        const savedMode = localStorage.getItem('amal_quran_view_mode') as 'SCROLL' | 'FOCUS';
-        if (savedMode === 'FOCUS' || savedMode === 'SCROLL') {
+        const savedMode = localStorage.getItem('amal_quran_view_mode') as 'SCROLL' | 'FOCUS' | 'MUSHAF';
+        if (savedMode === 'FOCUS' || savedMode === 'SCROLL' || savedMode === 'MUSHAF') {
           setViewModeState(savedMode);
         }
       }
     }
   }, [router.query.mode]);
 
-  const setViewMode = (mode: 'SCROLL' | 'FOCUS') => {
+  const setViewMode = (mode: 'SCROLL' | 'FOCUS' | 'MUSHAF') => {
+    triggerHaptic('medium');
     setViewModeState(mode);
     try {
       localStorage.setItem('amal_quran_view_mode', mode);
@@ -256,9 +265,11 @@ export default function QuranWisdomPage() {
         const totalVerses = currentSurah?.verses?.length || 1;
         if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'j') {
           e.preventDefault();
+          triggerHaptic('light');
           setFocusedAyahNumber((prev) => Math.min(totalVerses, prev + 1));
         } else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'k') {
           e.preventDefault();
+          triggerHaptic('light');
           setFocusedAyahNumber((prev) => Math.max(1, prev - 1));
         }
       }
@@ -299,11 +310,9 @@ export default function QuranWisdomPage() {
   ];
 
   return (
-    <div style={{ backgroundColor: '#F8FAF9', minHeight: '100vh', paddingBottom: 100 }}>
+    <div style={{ backgroundColor: '#FDFBF7', minHeight: '100vh', paddingBottom: 100 }}>
       <Head>
-        <title>
-          {t('Al-Quran Al-Kareem & Wisdom | AMAL OS', 'قرآنِ کریم، حکمت و تدبر | امل او ایس')}
-        </title>
+        <title>{t('Al-Quran Al-Kareem & Wisdom | AMAL OS', 'قرآنِ کریم، حکمت و تدبر | امل او ایس')}</title>
         <meta
           name="description"
           content="AMAL Quran Wisdom & Listening Experience with Kanz-ul-Iman Tarjuma, Khaza'in-ul-Irfan Tafsir, 100% Real Human Voice Recitation, and 2-Minute Quick Wisdom."
@@ -340,6 +349,30 @@ export default function QuranWisdomPage() {
 
           console.warn('Master audio error on source:', currentSrc, e);
 
+          // 1. Ayah-level Urdu translation fallback cascade
+          if (playingAyahNumber !== null && currentAudioSegment === 'URDU') {
+            const fallbackUrdu = getAyahUrduAudioFallbackUrl(selectedSurahNumber, playingAyahNumber);
+            if (masterAudioRef.current && currentSrc !== fallbackUrdu) {
+              console.info('Ayah Urdu audio primary failed, cascading to backup CDN:', fallbackUrdu);
+              masterAudioRef.current.src = fallbackUrdu;
+              masterAudioRef.current.play().catch(() => {});
+              return;
+            }
+          }
+
+          // 2. Ayah-level Arabic recitation fallback cascade (Alafasy <-> Husary)
+          if (playingAyahNumber !== null && currentAudioSegment === 'ARABIC') {
+            const fallbackQari = selectedQari === 'alafasy' ? 'husary' : 'alafasy';
+            const fallbackArabic = getAyahAudioUrl(selectedSurahNumber, playingAyahNumber, fallbackQari);
+            if (masterAudioRef.current && currentSrc !== fallbackArabic) {
+              console.info('Ayah Arabic audio primary failed, cascading to fallback reciter:', fallbackArabic);
+              masterAudioRef.current.src = fallbackArabic;
+              masterAudioRef.current.play().catch(() => {});
+              return;
+            }
+          }
+
+          // 3. Whole Surah multi-mirror cascade
           const endpoints = getSurahAudioEndpoints(selectedSurahNumber);
           const currentIdx = endpoints.findIndex((u) =>
             currentSrc.includes(encodeURIComponent(u.split('/').pop() || ''))
@@ -367,7 +400,28 @@ export default function QuranWisdomPage() {
           setSurahWideAudioType(null);
           setActiveTafseerCardKey(null);
           setContinuousTafseerIndex(null);
-          showAmalToast('آڈیو سرور سے رابطہ میں تاخیر ہوئی۔ برائے مہربانی دوبارہ پلے دبائیں۔', 'warning');
+          const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
+          if (isOffline) {
+            showAmalToast(
+              t(
+                'Audio stream unavailable offline. Please tap "Download Offline" to save this Surah locally.',
+                'انٹرنیٹ رابطہ منقطع ہے۔ بغیر انٹرنیٹ سننے کے لیے "ڈاؤنلوڈ آف لائن" بٹن سے سورت محفوظ فرمائیں۔',
+                'لا يوجد اتصال بالإنترنت. يرجى تنزيل السورة للاستماع دون اتصال.',
+                'Audio stream offline hai. "Download Offline" daba kar Surah save karein.'
+              ),
+              'warning'
+            );
+          } else {
+            showAmalToast(
+              t(
+                'Audio connection timed out. Please tap play again.',
+                'آڈیو سرور سے رابطہ میں تاخیر ہوئی۔ برائے مہربانی دوبارہ پلے دبائیں۔',
+                'تأخر الاتصال بخادم الصوت. يرجى إعادة التشغيل.',
+                'Audio connection delayed. Dobara play karein.'
+              ),
+              'warning'
+            );
+          }
         }}
         style={{ position: 'fixed', bottom: -100, opacity: 0, pointerEvents: 'none' }}
       />
@@ -390,7 +444,10 @@ export default function QuranWisdomPage() {
             }
           }}
           activeHubTab={activeHubTab}
-          onSelectHubTab={setActiveHubTab}
+          onSelectHubTab={(tab) => {
+            triggerHaptic('selection');
+            setActiveHubTab(tab);
+          }}
           isUrdu={isUrdu}
           t={t}
         />
@@ -431,7 +488,7 @@ export default function QuranWisdomPage() {
                 <span
                   style={{
                     fontSize: 10,
-                    backgroundColor: '#10B981',
+                    backgroundColor: '#047857',
                     color: '#FFF',
                     padding: '1px 5px',
                     borderRadius: 4,
@@ -602,6 +659,9 @@ export default function QuranWisdomPage() {
         selectedSurahNumber={selectedSurahNumber}
         continuousSurahPlayback={continuousSurahPlayback}
         setContinuousSurahPlayback={setContinuousSurahPlayback}
+        hifzRepeatTarget={hifzRepeatTarget}
+        setHifzRepeatTarget={setHifzRepeatTarget}
+        currentRepeatIteration={currentRepeatIteration}
         handleAdvanceToNextSurah={handleAdvanceToNextSurah}
         handleSelectSurah={handleSelectSurah}
       />

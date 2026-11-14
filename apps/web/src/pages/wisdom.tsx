@@ -43,7 +43,7 @@ export default function QuranWisdomDedicatedPage() {
   const [activeModalCard, setActiveModalCard] = useState<QuranAyahWisdomCard | null>(null);
   const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
   const [activeSanadReport, setActiveSanadReport] = useState<SanadVerificationReport | null>(null);
-  const { isUrdu } = useLanguage();
+  const { isUrdu, t, language } = useLanguage();
 
   // Audio Playback & Continuous Controls Hook
   const {
@@ -90,8 +90,8 @@ export default function QuranWisdomDedicatedPage() {
       }
       showAmalToast(
         prev.includes(cardKey)
-          ? 'حکمت کارڈ محفوظ فہرست سے ہٹا دیا گیا۔'
-          : '⭐ حکمت کارڈ محفوظ کر لیا گیا!',
+          ? t('Wisdom Card removed from bookmarks.', 'حکمت کارڈ محفوظ فہرست سے ہٹا دیا گیا۔', 'تمت إزالة بطاقة الحكمة من المحفوظات.', 'Hikmat Card bookmarks se hata diya gaya.')
+          : t('⭐ Wisdom Card bookmarked!', '⭐ حکمت کارڈ محفوظ کر لیا گیا!', '⭐ تم حفظ بطاقة الحكمة بنجاح!', '⭐ Hikmat Card mehfooz kar liya gaya!'),
         'success'
       );
       return next;
@@ -199,7 +199,7 @@ export default function QuranWisdomDedicatedPage() {
   return (
     <div style={{ backgroundColor: '#F8FAF9', minHeight: '100vh', paddingBottom: 100 }}>
       <Head>
-        <title>قرآنی حکمت، تدبر و عمل (Quran Wisdom &amp; Reflection) | AMAL OS</title>
+        <title>{`AMAL OS — ${t('Quranic Wisdom & Reflection', 'قرآنی حکمت، تدبر و عمل', 'حكم القرآن وتدبره والعمل به', 'Qurani Hikmat o Tadabbur')}`}</title>
         <meta
           name="description"
           content="42 authentic Juz 'Amma Quran Wisdom Cards with Kanz-ul-Iman translation, Khaza'in-ul-Irfan Tafsir, and Sunnah action steps."

@@ -1,0 +1,17 @@
+{
+  "workId": "CANON-TAF-011",
+  "verifiedExternalUrl": "https://www.dawateislami.net/bookslibrary/ur/khazain-ul-irfan",
+  "verifiedExternalName": "Maktaba-tul-Madina (Khaza'in-ul-Irfan - Sadr al-Afadil Muradabadi)",
+  "chapters": [
+    {
+      "chapterId": "khaz_1",
+      "chapterTitleArabic": "تَفْسِيرُ آيَةِ الْكُرْسِيِّ (أَعْظَمُ آيَةٍ فِي كِتَابِ اللَّهِ)",
+      "chapterTitleUrdu": "تفسیر آیت الکرسی — خزائن العرفان",
+      "chapterTitleEnglish": "Exegesis of Ayat al-Kursi (The Greatest Verse of the Quran)",
+      "arabicMatn": "﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾ [البقرة: ۲۵۵]",
+      "urduTranslation": "صدر الافاضل مولانا سید محمد نعیم الدین مراد آبادی رحمۃ اللہ علیہ فرماتے ہیں:\n\"آیت الکرسی قرآنِ پاک کی اعظم ترین آیات میں سے ہے۔\n'الحیّ': وہ جو ہمیشہ سے زندہ ہے اور ہمیشہ زندہ رہے گا، جس کی حیات فنا سے پاک ہے۔\n'القیّوم': جو خود قائم ہے اور تمام مخلوقات کو قائم رکھنے والا ہے۔\n'مَن ذَا الَّذِی یَشْفَعُ عِنْدَہٗ إِلَّا بِإِذْنِہٖ': مشرکین کا رد ہے جو اپنے بتوں کو شفیع گمان کرتے تھے۔ اللہ تعالیٰ کے حضور اس کے اذن کے بغیر کوئی شفاعت نہیں کر سکتا، جبکہ اس کے اذن سے اس کے مقرب بندے، انبیاء اور اولیاء شفاعت فرمائیں گے جیسا کہ کتبِ تفاسیر میں مروی ہے۔\n'یَعْلَمُ مَا بَیْنَ أَیْدِیْہِمْ وَمَا خَلْفَہُمْ': اللہ تعالیٰ کا علم تمام غیوب اور تمام جہانوں پر محیط ہے\"۔",
+      "englishSynopsis": "Sadr al-Afadil provides classical theological commentary on Ayat al-Kursi, confirming divine transcendence, eternal self-subsistence, and orthodox consensus on intercession by divine permission.",
+      "scholarlyNotes": "The premier marginal commentary (Hashiyah) on Kanz-ul-Iman, published by Maktaba-tul-Madina with verification from Tafsir al-Tabari and Tafsir al-Razi."
+    }
+  ]
+}

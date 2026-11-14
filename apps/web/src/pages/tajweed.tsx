@@ -5,8 +5,10 @@ import { useRouter } from 'next/router';
 import { Navigation } from '../components/Navigation';
 import { wordByWordTajweedEngine, TajweedAudioPassage } from '@amal/amal-engine';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function TajweedPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   useEffect(() => {
     router.replace('/quran?tab=tajweed');
@@ -35,6 +37,7 @@ export default function TajweedPage() {
     <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', paddingBottom: 80 }}>
       <Head>
         <title>AMAL OS — Word-by-Word Tajweed & Makharij Trainer</title>
+        <meta name="description" content="Word-by-word Tajweed Rules, Precision Makharij, and Audio Drill System." />
       </Head>
       <Navigation />
 
@@ -57,7 +60,8 @@ export default function TajweedPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: 20 }}>✨</span>
             <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
-              Word-by-word Tajweed is integrated into the <strong>Unified Quran Hub</strong>.
+              {t('Word-by-word Tajweed is integrated into the ', 'لفظ بہ لفظ تجوید کو ضم کر دیا گیا ہے ', 'تم دمج التجويد كلمة بكلمة في ', 'Word-by-word Tajweed ko shamil kiya gaya hai ')}
+              <strong>{t('Unified Quran Hub', 'متحدہ قرآن ہب', 'مركز القرآن الموحد', 'Unified Quran Hub')}</strong>.
             </span>
           </div>
           <Link
@@ -72,7 +76,7 @@ export default function TajweedPage() {
               fontSize: 12,
             }}
           >
-            Open Inside Quran Hub ➔
+            {t('Open Inside Quran Hub ➔', 'قرآن ہب میں کھولیں ←', 'فتح في مركز القرآن ➔', 'Quran Hub Mein Kholein ➔')}
           </Link>
         </div>
 

@@ -36,6 +36,9 @@ export interface FloatingQuranAudioPlayerProps {
   selectedSurahNumber: number;
   continuousSurahPlayback?: boolean;
   setContinuousSurahPlayback?: (val: boolean) => void;
+  hifzRepeatTarget?: number;
+  setHifzRepeatTarget?: (val: number) => void;
+  currentRepeatIteration?: number;
   handleAdvanceToNextSurah?: (segment?: AudioSegment) => void;
   handleSelectSurah?: (surahNum: number, targetAyahNumber?: number) => void;
 }
@@ -63,6 +66,9 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
   selectedSurahNumber,
   continuousSurahPlayback = true,
   setContinuousSurahPlayback,
+  hifzRepeatTarget = 1,
+  setHifzRepeatTarget,
+  currentRepeatIteration = 1,
   handleAdvanceToNextSurah,
   handleSelectSurah,
 }) => {
@@ -79,12 +85,13 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
         left: 0,
         right: 0,
         zIndex: 1100,
-        background: 'linear-gradient(135deg, #064E3B 0%, #0F291E 100%)',
+        background: 'linear-gradient(135deg, rgba(6, 78, 59, 0.96) 0%, rgba(15, 41, 30, 0.98) 100%)',
         color: '#FFFFFF',
-        boxShadow: '0 -8px 30px rgba(0, 0, 0, 0.35)',
-        borderTop: '2px solid #10B981',
+        boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.4), 0 -1px 0 rgba(212, 175, 55, 0.45)',
+        borderTop: '1.5px solid rgba(212, 175, 55, 0.5)',
         padding: '12px 20px',
-        backdropFilter: 'blur(8px)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
       }}
     >
       <div
@@ -127,6 +134,9 @@ export const FloatingQuranAudioPlayer: React.FC<FloatingQuranAudioPlayerProps> =
           setPlaybackSpeed={setPlaybackSpeed}
           continuousSurahPlayback={continuousSurahPlayback}
           setContinuousSurahPlayback={setContinuousSurahPlayback}
+          hifzRepeatTarget={hifzRepeatTarget}
+          setHifzRepeatTarget={setHifzRepeatTarget}
+          currentRepeatIteration={currentRepeatIteration}
           isSurahCachedOffline={isSurahCachedOffline}
           isCachingSurah={isCachingSurah}
           handleCacheSurahOffline={handleCacheSurahOffline}

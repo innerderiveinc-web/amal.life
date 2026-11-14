@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface MosqueIqamahModalProps {
   isOpen: boolean;
@@ -35,6 +36,17 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
   setEditIqamahOffsets,
   onSaveMosque,
 }) => {
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
@@ -46,11 +58,13 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         zIndex: 10006,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 16,
       }}
       onClick={onClose}
     >
@@ -72,15 +86,32 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div>
             <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-              🕌 Configure Your Mohalla Mosque
+              🕌 {t('Configure Your Mohalla Mosque', 'مقامی محلہ مسجد کی ترتیبات', 'ضبط بيانات مسجد الحي والإقامة', 'Mohalla Masjid ki Tarteebat')}
             </h2>
             <p style={{ fontSize: 12, color: '#64748B', margin: '4px 0 0' }}>
-              اپنی مقامی مسجد کا نام اور جماعت (اقامت) کا وقت سیٹ کریں
+              {t(
+                'Set your local mosque name and Jama\'ah (Iqamah) offsets',
+                'اپنی مقامی مسجد کا نام اور جماعت (اقامت) کا وقت سیٹ کریں',
+                'حدد اسم المسجد المحلي وفوارق أوقات الإقامة بعد الأذان',
+                'Apni muqami masjid ka naam aur jama\'at (iqamah) ka waqt set karein'
+              )}
             </p>
           </div>
           <button
             onClick={onClose}
-            style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer', color: '#94A3B8' }}
+            style={{
+              background: '#F1F5F9',
+              border: 'none',
+              borderRadius: '50%',
+              width: 32,
+              height: 32,
+              fontSize: 16,
+              cursor: 'pointer',
+              color: '#64748B',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             aria-label="Close Mosque Settings Modal"
           >
             ✕
@@ -90,13 +121,18 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
         {/* Mosque Name Input */}
         <div style={{ marginBottom: 18 }}>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#1F2937', marginBottom: 6 }}>
-            Mosque Name (مسجد کا نام):
+            {t('Mosque Name:', 'مسجد کا نام:', 'اسم المسجد:', 'Masjid ka Naam:')}
           </label>
           <input
             type="text"
             value={editMosqueName}
             onChange={(e) => setEditMosqueName(e.target.value)}
-            placeholder="e.g. Markaz Jamia Masjid, Noor Masjid Mohalla 4..."
+            placeholder={t(
+              'e.g. Markaz Jamia Masjid, Noor Masjid Mohalla 4...',
+              'مثلاً جامع مسجد، نور مسجد، مدینہ مسجد...',
+              'مثال: جامع المدينة، مسجد النور...',
+              'e.g. Jamia Masjid, Noor Masjid...'
+            )}
             style={{
               width: '100%',
               padding: '10px 14px',
@@ -112,15 +148,20 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
         {/* Iqamah Offsets */}
         <div style={{ marginBottom: 20 }}>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#1F2937', marginBottom: 10 }}>
-            Iqamah Delay After Adhan (اذان کے بعد جماعت کا وقفہ):
+            {t(
+              'Iqamah Delay After Adhan (Minutes):',
+              'اذان کے بعد جماعت کا وقفہ (منٹ):',
+              'فارق وقت الإقامة بعد الأذان (بالدقائق):',
+              'Azan ke baad Jama\'at ka waqfa (Minutes):'
+            )}
           </label>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { key: 'fajr', label: 'Fajr Iqamah (فجر)' },
-              { key: 'dhuhr', label: 'Dhuhr Iqamah (ظہر)' },
-              { key: 'asr', label: 'Asr Iqamah (عصر)' },
-              { key: 'maghrib', label: 'Maghrib Iqamah (مغرب)' },
-              { key: 'isha', label: 'Isha Iqamah (عشاء)' },
+              { key: 'fajr', en: 'Fajr Iqamah', ur: 'اقامتِ فجر', ar: 'إقامة الفجر', roman: 'Fajr Iqamah' },
+              { key: 'dhuhr', en: 'Dhuhr Iqamah', ur: 'اقامتِ ظہر', ar: 'إقامة الظهر', roman: 'Dhuhr Iqamah' },
+              { key: 'asr', en: 'Asr Iqamah', ur: 'اقامتِ عصر', ar: 'إقامة العصر', roman: 'Asr Iqamah' },
+              { key: 'maghrib', en: 'Maghrib Iqamah', ur: 'اقامتِ مغرب', ar: 'إقامة المغرب', roman: 'Maghrib Iqamah' },
+              { key: 'isha', en: 'Isha Iqamah', ur: 'اقامتِ عشاء', ar: 'إقامة العشاء', roman: 'Isha Iqamah' },
             ].map((item) => {
               const val = (editIqamahOffsets[item.key as keyof typeof editIqamahOffsets] as number) ?? 20;
               return (
@@ -136,7 +177,9 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
                     border: '1px solid #E5E7EB',
                   }}
                 >
-                  <span style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>{item.label}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
+                    {t(item.en, item.ur, item.ar, item.roman)}
+                  </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <button
                       type="button"
@@ -155,12 +198,12 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
                         cursor: 'pointer',
                         fontWeight: 800,
                       }}
-                      aria-label={`Decrease Iqamah delay for ${item.label}`}
+                      aria-label={`Decrease Iqamah delay for ${item.en}`}
                     >
                       -
                     </button>
-                    <span style={{ minWidth: 50, textAlign: 'center', fontWeight: 800, color: '#047857', fontSize: 13 }}>
-                      +{val} min
+                    <span style={{ minWidth: 60, textAlign: 'center', fontWeight: 800, color: '#047857', fontSize: 13 }}>
+                      +{val} {t('min', 'منٹ', 'د', 'min')}
                     </span>
                     <button
                       type="button"
@@ -179,7 +222,7 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
                         cursor: 'pointer',
                         fontWeight: 800,
                       }}
-                      aria-label={`Increase Iqamah delay for ${item.label}`}
+                      aria-label={`Increase Iqamah delay for ${item.en}`}
                     >
                       +
                     </button>
@@ -201,7 +244,7 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
               }}
             >
               <span style={{ fontSize: 13, fontWeight: 700, color: '#065F46' }}>
-                Jumu&apos;ah Prayer Time (جمعہ کی نماز):
+                {t('Jumu\'ah Prayer Time:', 'جمعہ کی نماز کا وقت:', 'وقت صلاة الجمعة:', 'Jumu\'ah Namaz ka Waqt:')}
               </span>
               <input
                 type="time"
@@ -237,7 +280,7 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
               cursor: 'pointer',
             }}
           >
-            Cancel (منسوخ)
+            {t('Cancel', 'منسوخ', 'إلغاء', 'Cancel')}
           </button>
           <button
             type="button"
@@ -257,7 +300,9 @@ export const MosqueIqamahModal: React.FC<MosqueIqamahModalProps> = ({
             }}
           >
             <span>✓</span>
-            <span>Save Mosque Settings (محفوظ کریں)</span>
+            <span>
+              {t('Save Mosque Settings', 'مسجد کی ترتیبات محفوظ کریں', 'حفظ بيانات المسجد', 'Masjid Settings Save Karein')}
+            </span>
           </button>
         </div>
       </div>

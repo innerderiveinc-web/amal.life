@@ -102,7 +102,7 @@ export const SacredPillarsMatrix: React.FC = () => {
       primaryLink: '/calculator',
       links: [
         { labelUrdu: 'زکوٰۃ و سونا', labelEn: 'Zakat & Gold', labelAr: 'الزكاة والذهب', labelRoman: 'Zakat wa Sona', href: '/calculator?tab=zakat' },
-        { labelUrdu: 'میراث تقسیم (PDF)', labelEn: 'Miras Shares', labelAr: 'قسمة المواريث', labelRoman: 'Miras Taqseem (PDF)', href: '/calculator?tab=miras' },
+        { labelUrdu: 'شرعی تقسیمِ میراث', labelEn: 'Miras Shares', labelAr: 'قسمة المواريث', labelRoman: 'Shar\'i Taqseem-e-Miras', href: '/calculator?tab=miras' },
         { labelUrdu: 'قضائے عمری', labelEn: 'Qadha Calculator', labelAr: 'قضاء الفوائت', labelRoman: 'Qadha-e-Umri', href: '/calculator?tab=qadha' },
         { labelUrdu: 'ڈیسیژن روم', labelEn: 'Decision Room', labelAr: 'غرفة القرارات', labelRoman: 'Decision Room', href: '/decision-room' },
         { labelUrdu: '۱۴ روزہ اسفار', labelEn: '14-Day Journeys', labelAr: 'رحلات ١٤ يوماً', labelRoman: '14-Day Asfar', href: '/journeys' },

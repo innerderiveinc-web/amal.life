@@ -72,16 +72,7 @@ export class MosqueIqamahSyncEngine {
         secondKhutbah: '14:00',
         secondPrayer: '14:25',
       },
-      communityAnnouncements: [
-        {
-          announcementId: 'jnz_1',
-          type: 'JANAZAH',
-          title: 'Janazah Announcement: Haji Muhammad Siddiq (Rahimahullah)',
-          details: 'Janazah prayer will be held after Asr prayer at the main courtyard. Please recite Fatihah and pray for Maghfirah.',
-          date: 'Today',
-          time: 'Post-Asr (17:30)',
-        },
-      ],
+      communityAnnouncements: [],
     });
   }
 

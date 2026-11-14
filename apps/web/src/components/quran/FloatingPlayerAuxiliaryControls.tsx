@@ -7,6 +7,9 @@ export interface FloatingPlayerAuxiliaryControlsProps {
   setPlaybackSpeed: (speed: number) => void;
   continuousSurahPlayback?: boolean;
   setContinuousSurahPlayback?: (val: boolean) => void;
+  hifzRepeatTarget?: number;
+  setHifzRepeatTarget?: (val: number) => void;
+  currentRepeatIteration?: number;
   isSurahCachedOffline: boolean;
   isCachingSurah: boolean;
   handleCacheSurahOffline: () => void;
@@ -23,6 +26,9 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
   setPlaybackSpeed,
   continuousSurahPlayback = true,
   setContinuousSurahPlayback,
+  hifzRepeatTarget = 1,
+  setHifzRepeatTarget,
+  currentRepeatIteration = 1,
   isSurahCachedOffline,
   isCachingSurah,
   handleCacheSurahOffline,
@@ -100,7 +106,7 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
               fontSize: 10,
               fontWeight: 800,
               border: 'none',
-              backgroundColor: playbackSpeed === speed ? '#10B981' : 'transparent',
+              backgroundColor: playbackSpeed === speed ? '#047857' : 'transparent',
               color: '#FFFFFF',
               cursor: 'pointer',
             }}
@@ -110,6 +116,45 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
           </button>
         ))}
       </div>
+
+      {/* Hifz Repeat Mode Pill Group */}
+      {setHifzRepeatTarget && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            backgroundColor: 'rgba(255,255,255,0.12)',
+            padding: '2px 4px',
+            borderRadius: 16,
+          }}
+          title={isUrdu ? 'حفظ و تکرارِ آیت موڈ' : 'Hifz Ayah Repeat Mode'}
+        >
+          <span style={{ fontSize: 10, color: '#A7F3D0', fontWeight: 800, paddingLeft: 4, paddingRight: 2 }}>
+            🔁 {hifzRepeatTarget > 1 ? `${currentRepeatIteration}/${hifzRepeatTarget}` : ''}
+          </span>
+          {[1, 3, 5, 10].map((repeat) => (
+            <button
+              key={repeat}
+              type="button"
+              onClick={() => setHifzRepeatTarget(repeat)}
+              aria-label={`Repeat ${repeat} times for memorization`}
+              style={{
+                padding: '2px 6px',
+                borderRadius: 10,
+                fontSize: 10,
+                fontWeight: 800,
+                border: 'none',
+                backgroundColor: hifzRepeatTarget === repeat ? '#047857' : 'transparent',
+                color: '#FFFFFF',
+                cursor: 'pointer',
+              }}
+            >
+              {repeat === 1 ? '1×' : `${repeat}×`}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Offline Caching Button */}
       <button
@@ -153,9 +198,9 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
           fontWeight: 700,
           backgroundColor:
             audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC'
-              ? '#10B981'
+              ? '#047857'
               : audioSyncMode === 'URDU_ONLY_CONTINUOUS'
-                ? '#0284C7'
+                ? '#0369A1'
                 : 'rgba(255,255,255,0.15)',
           color: '#FFFFFF',
           border: 'none',
@@ -164,16 +209,16 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
           alignItems: 'center',
           gap: 4,
         }}
-        title={t('Change Audio Mode', 'آڈیو موڈ تبدیل کریں')}
+        title={t('Change Audio Mode', 'آڈیو موڈ تبدیل کریں', 'تغيير وضع الصوت', 'Audio Mode Badlein')}
       >
         <span>
           {audioSyncMode === 'FULL_SYNC' || audioSyncMode === 'TILAWAT_URDU_SYNC'
-            ? t('🎧 Recitation + Translation (Sync)', '🎧 تلاوت + اردو (Sync)')
+            ? t('🎧 Recitation + Translation (Sync)', '🎧 تلاوت + اردو (ہم آہنگ)', '🎧 تلاوة + أردو (مزامنة)', '🎧 Tilawat + Urdu Tarjuma (Sync)')
             : audioSyncMode === 'URDU_ONLY_CONTINUOUS'
-              ? t('🎙️ Translation Only', '🎙️ صرف اردو ترجمہ')
+              ? t('🎙️ Translation Only', '🎙️ صرف اردو ترجمہ', '🎙️ ترجمة أردية فقط', '🎙️ Sirf Urdu Tarjuma')
               : audioSyncMode === 'TAFSEER_BROADCAST'
-                ? t('📖 Tafsir Studio', '📖 تفسیر سٹوڈیو')
-                : t('🎙️ Recitation Only', '🎙️ صرف عربی تلاوت')}
+                ? t('📖 Tafsir Studio', '📖 تفسیر سٹوڈیو', '📖 استوديو التفسير', '📖 Tafsir Studio')
+                : t('🎙️ Recitation Only', '🎙️ صرف عربی تلاوت', '🎙️ تلاوة فقط', '🎙️ Sirf Arabic Tilawat')}
         </span>
       </button>
 

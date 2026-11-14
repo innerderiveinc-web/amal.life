@@ -175,7 +175,7 @@ export const DailyMamoolBar: React.FC = () => {
               onClick={() => setSelectedSlot('AUTO')}
               style={{
                 fontSize: 11,
-                color: '#059669',
+                color: '#065F46',
                 backgroundColor: '#ECFDF5',
                 border: '1px solid #A7F3D0',
                 padding: '2px 8px',

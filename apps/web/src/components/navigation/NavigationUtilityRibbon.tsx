@@ -5,7 +5,7 @@ import { CloudSyncBadge } from './CloudSyncBadge';
 export interface NavigationUtilityRibbonProps {
   isOnline: boolean;
   isMounted: boolean;
-  hijri: { day: number; monthNameEnglish: string; monthNameUrdu: string; year: number };
+  hijri: { day: number; monthNameEnglish: string; monthNameUrdu: string; monthNameArabic?: string; year: number };
   nextPrayer: any;
   currentLang: string;
   user: any;
@@ -88,7 +88,11 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
               <span style={{ color: '#86EFAC' }}>🌙</span>
               <span suppressHydrationWarning style={{ fontWeight: 700, color: '#F9FAFB' }}>
                 {isMounted
-                  ? `${hijri.day} ${currentLang === 'ur' ? hijri.monthNameUrdu : hijri.monthNameEnglish} ${hijri.year} AH`
+                  ? currentLang === 'ar'
+                    ? `${hijri.day} ${hijri.monthNameArabic || hijri.monthNameEnglish} ${hijri.year} هـ`
+                    : currentLang === 'ur'
+                    ? `${hijri.day} ${hijri.monthNameUrdu} ${hijri.year}ھ`
+                    : `${hijri.day} ${hijri.monthNameEnglish} ${hijri.year} AH`
                   : '...'}
               </span>
             </div>
@@ -104,13 +108,13 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
               <span suppressHydrationWarning>
                 {isMounted && nextPrayer ? (
                   <>
-                    <span style={{ color: '#9CA3AF' }}>
+                    <span style={{ color: '#CBD5E1' }}>
                       {currentLang === 'ur'
                         ? `اگلی نماز: ${nextPrayer.nameUrdu}`
                         : currentLang === 'ar'
                         ? `الصلاة القادمة: ${nextPrayer.nameUrdu}`
                         : currentLang === 'roman'
-                        ? `Agli Namaz: ${nextPrayer.nameUrdu}`
+                        ? `Agli Namaz: ${nextPrayer.nameEnglish}`
                         : `Next Salah: ${nextPrayer.nameEnglish}`}
                     </span>{' '}
                     <strong suppressHydrationWarning style={{ color: '#FFFFFF' }}>
@@ -123,7 +127,7 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                       ({currentLang === 'ur'
                         ? nextPrayer.formattedCountdownUrdu
                         : currentLang === 'roman'
-                        ? nextPrayer.formattedCountdownUrdu
+                        ? nextPrayer.formattedCountdownEnglish
                         : nextPrayer.formattedCountdownEnglish})
                     </span>
                   </>
@@ -134,7 +138,7 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
                       : currentLang === 'ar'
                       ? 'مواقيت الصلاة'
                       : currentLang === 'roman'
-                      ? 'Auqat-e-Namaz'
+                      ? 'Namaz ke Auqaat'
                       : 'Prayer Times'}
                   </span>
                 )}
@@ -158,6 +162,40 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
 
           {/* Right: Streamlined, Spacious Utility Toolbar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            {/* Sacred Theme Picker */}
+            <button
+              onClick={() => {
+                if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-theme'));
+              }}
+              aria-label="Select Sacred Islamic Aesthetic Theme"
+              style={{
+                border: '1px solid rgba(212, 175, 55, 0.35)',
+                borderRadius: 14,
+                padding: '3px 10px',
+                fontSize: 11,
+                fontWeight: 600,
+                backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                color: '#FDE68A',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                transition: 'all 0.15s ease',
+              }}
+              title="Select Cultural & Sacred Theme (Rawdah, Kiswah, Damascus, Lapis)"
+            >
+              <span>🎨</span>
+              <span>
+                {currentLang === 'ur'
+                  ? 'تھیم'
+                  : currentLang === 'ar'
+                  ? 'المظهر'
+                  : currentLang === 'roman'
+                  ? 'Theme'
+                  : 'Theme'}
+              </span>
+            </button>
+
             {/* Tahajjud Mode */}
             <button
               onClick={() => {

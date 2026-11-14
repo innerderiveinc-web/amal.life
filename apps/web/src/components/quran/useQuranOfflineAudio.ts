@@ -39,7 +39,17 @@ export function useQuranOfflineAudio({
 
   const handleCacheSurahOffline = async () => {
     if (typeof window === 'undefined' || !('caches' in window)) {
-      showAmalToast('آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔', 'warning');
+      const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+      showAmalToast(
+        lang === 'ur'
+          ? 'آپ کے براؤزر میں آف لائن کیشنگ دستیاب نہیں ہے۔'
+          : lang === 'ar'
+          ? 'التخزين دون اتصال غير مدعوم في هذا المتصفح.'
+          : lang === 'ru'
+          ? 'Browser me offline caching dastiyab nahi hai.'
+          : 'Offline caching is not supported in this browser.',
+        'warning'
+      );
       return;
     }
     setIsCachingSurah(true);
@@ -55,22 +65,45 @@ export function useQuranOfflineAudio({
       await Promise.all([p1, p2]);
 
       setIsSurahCachedOffline(true);
-      showAmalToast(
-        'سورۃ مبارکہ کی آڈیو کامیابی سے آف لائن محفوظ کر لی گئی ہے! (Surah cached offline)',
-        'success'
-      );
+      const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+      const successMsg = lang === 'ur'
+        ? 'سورۃ مبارکہ کی آڈیو کامیابی سے آف لائن محفوظ کر لی گئی ہے!'
+        : lang === 'ar'
+        ? 'تم حفظ تلاوة السورة المباركة دون اتصال بنجاح!'
+        : lang === 'ru'
+        ? 'Surah mubarakah ki audio offline mehfooz kar li gayi hai!'
+        : 'Surah recitation successfully cached offline!';
+      showAmalToast(successMsg, 'success');
     } catch (e) {
       console.warn('Failed to cache surah audio:', e);
-      showAmalToast('آف لائن محفوظ کرنے میں خرابی پیش آئی۔', 'warning');
+      const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
+      const errorMsg = lang === 'ur'
+        ? 'آف لائن محفوظ کرنے میں خرابی پیش آئی۔'
+        : lang === 'ar'
+        ? 'حدث خطأ أثناء الحفظ دون اتصال.'
+        : lang === 'ru'
+        ? 'Offline save karne me kharabi pesh aayi.'
+        : 'Failed to cache audio offline.';
+      showAmalToast(errorMsg, 'warning');
     } finally {
       setIsCachingSurah(false);
     }
   };
 
   const handleDownloadSurahAudio = () => {
+    const lang = typeof window !== 'undefined' ? (localStorage.getItem('amal_app_language') || 'ur') : 'ur';
     const kanzulImanUrl = getSurahKanzulImanAudioUrl(selectedSurahNumber);
     if (!kanzulImanUrl) {
-      showAmalToast('اس سورت کا مکمل آڈیو لنک دستیاب نہیں ہے۔', 'warning');
+      showAmalToast(
+        lang === 'ur'
+          ? 'اس سورت کا مکمل آڈیو لنک دستیاب نہیں ہے۔'
+          : lang === 'ar'
+          ? 'رابط الصوت لهذه السورة غير متاح حالياً.'
+          : lang === 'ru'
+          ? 'Is Surah ka audio link dastiyab nahi hai.'
+          : 'Audio link for this Surah is not available.',
+        'warning'
+      );
       return;
     }
     try {
@@ -81,9 +114,27 @@ export function useQuranOfflineAudio({
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      showAmalToast('مکمل سورت کی آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔', 'success');
+      showAmalToast(
+        lang === 'ur'
+          ? 'مکمل سورت کی آڈیو ڈاؤنلوڈ شروع ہو گئی ہے۔'
+          : lang === 'ar'
+          ? 'بدأ تنزيل التلاوة الكاملة للسورة.'
+          : lang === 'ru'
+          ? 'Mukammal Surah ki audio download shuru ho gayi.'
+          : 'Surah audio download started.',
+        'success'
+      );
     } catch (e) {
-      showAmalToast('ڈاؤنلوڈ میں خرابی پیش آئی۔', 'warning');
+      showAmalToast(
+        lang === 'ur'
+          ? 'ڈاؤنلوڈ میں خرابی پیش آئی۔'
+          : lang === 'ar'
+          ? 'حدث خطأ أثناء التنزيل.'
+          : lang === 'ru'
+          ? 'Download me kharabi pesh aayi.'
+          : 'Failed to download audio.',
+        'warning'
+      );
     }
   };
 

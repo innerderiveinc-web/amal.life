@@ -175,9 +175,39 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               marginBottom: 16,
             }}
           >
-            {language === 'en' ? activeChapter.titleUrdu : activeChapter.titleEnglish} • {activeChapter.hadithOrFiqhReference}
+            {(language === 'ur' || language === 'ar') ? activeChapter.titleEnglish : (activeChapter.titleUrdu ? `${activeChapter.titleUrdu} • ` : '')}{activeChapter.hadithOrFiqhReference}
           </p>
 
+      {/* English Pedagogical Synopsis for English & Roman Urdu readers */}
+      {activeChapter.summaryEnglish && (language === 'en' || language === 'roman') && (
+        <div
+          style={{
+            backgroundColor: '#F0FDF4',
+            border: '1px solid #BBF7D0',
+            borderRadius: 12,
+            padding: '14px 18px',
+            marginBottom: 16,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 800,
+              color: '#166534',
+              letterSpacing: '0.04em',
+              marginBottom: 6,
+              textTransform: 'uppercase',
+            }}
+          >
+            {language === 'roman' ? 'English Khulasa (Synopsis)' : 'English Pedagogical Synopsis'}
+          </div>
+          <div style={{ fontSize: 14.5, lineHeight: 1.75, color: '#14532D' }}>
+            {activeChapter.summaryEnglish}
+          </div>
+        </div>
+      )}
+
+      {/* Primary Key Takeaways */}
       <div
         style={{
           backgroundColor: '#F9FAFB',
@@ -188,7 +218,7 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
         }}
       >
         <div style={{ fontWeight: 700, marginBottom: 6, color: '#374151' }}>
-          {t('Key Takeaways:', 'اہم ترین نکات (Key Takeaways):', 'أهم الفوائد والنقاط:', 'Aham Tareen Nukaat:')}
+          {t('Key Takeaways:', 'اہم ترین نکات:', 'أهم الفوائد والنقاط:', 'Aham Tareen Nukaat:')}
         </div>
         <ul style={{ margin: 0, paddingInlineStart: 20, lineHeight: 1.8 }}>
           {activeChapter.keyTakeaways.map((point, idx) => (
@@ -199,10 +229,35 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
         </ul>
       </div>
 
+      {/* Authentic Classical Arabic Evidence if present */}
+      {activeChapter.arabicEvidence && (
+        <div
+          dir="rtl"
+          style={{
+            backgroundColor: '#F8FAFC',
+            border: '1px solid #E2E8F0',
+            borderRadius: 12,
+            padding: '16px 20px',
+            marginBottom: 16,
+            fontFamily: 'var(--font-arabic), "Amiri", serif',
+            fontSize: 20,
+            lineHeight: 2.2,
+            textAlign: 'right',
+            color: '#0F172A',
+          }}
+        >
+          {activeChapter.arabicEvidence}
+        </div>
+      )}
+
+      {/* Classical Authentic Urdu Text */}
       <div
+        dir="rtl"
         style={{
-          fontSize: (language === 'ur' || language === 'ar') ? 17 : 15,
-          lineHeight: 2,
+          fontFamily: 'var(--font-urdu), "Noto Nastaliq Urdu", serif',
+          fontSize: (language === 'ur' || language === 'ar') ? 18 : 16,
+          lineHeight: 2.2,
+          textAlign: 'right',
           color: '#111827',
           whiteSpace: 'pre-line',
           padding: '16px 8px',

@@ -62,6 +62,21 @@ export const WAVE_3_CANONICAL_CORPUS: CanonicalEditionRecord[] = [
     provenance_sha256: crypto.createHash('sha256').update('TADRIB-AL-RAWI-SUYUTI-911AH').digest('hex'),
     scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
   },
+  {
+    work_id: 'CANON-MST-004',
+    title_arabic: 'الجواهر المكللة في الأخبار المسلسلة',
+    title_transliterated: 'Al-Jawahir al-Mukallalah fi al-Akhbar al-Musalsalah',
+    author_name: 'Al-Hafiz Shams al-Din Muhammad ibn Abd al-Rahman al-Sakhawi',
+    author_death_hijri: 902,
+    discipline: 'MUSTALAH_AL_HADITH',
+    edition_publisher: 'Dar al-Basha\'ir al-Islamiyyah / Maktabat al-Rushd',
+    publication_city: 'Beirut / Riyadh',
+    critical_editor_muhaqqiq: 'Dr. Muhammad ibn Lutfi al-Sabbagh',
+    volume_count: 1,
+    rights_status: 'PUBLIC_DOMAIN_CONFIRMED',
+    provenance_sha256: crypto.createHash('sha256').update('AL-JAWAHIR-AL-MUKALLALAH-SAKHAWI-902AH').digest('hex'),
+    scholarly_authority_level: 'TIER_C_LATER_CLASSICAL',
+  },
 
   // ==========================================
   // 2. USUL AL-FIQH & QAWA'ID FIQHIYYAH (LEGAL METHODOLOGY & MAXIMS)

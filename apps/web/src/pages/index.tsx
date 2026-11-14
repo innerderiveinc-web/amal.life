@@ -106,16 +106,9 @@ export default function Home() {
   };
 
   return (
-    <div style={{ backgroundColor: '#F8F9FA', minHeight: '100vh', paddingBottom: 120 }}>
+    <div style={{ backgroundColor: '#FDFBF7', minHeight: '100vh', paddingBottom: 120 }}>
       <Head>
-        <title>
-          {t(
-            'AMAL OS by Qsura India Pvt Ltd — From Niyyah to Amal',
-            'امل آپریٹنگ سسٹم — نیت سے عمل تک',
-            'نظام أمل — من النية إلى العمل',
-            'Amal OS — Niyyah se Amal tak'
-          )}
-        </title>
+        <title>{t('AMAL OS by Qsura India Pvt Ltd — From Niyyah to Amal', 'امل آپریٹنگ سسٹم — نیت سے عمل تک', 'نظام أمل — من النية إلى العمل', 'Amal OS — Niyyah se Amal tak')}</title>
         <meta name="author" content="Qsura India Pvt Ltd" />
         <meta name="description" content="AMAL OS by Qsura India Pvt Ltd: Ad-free, zero-tracking sovereign Muslim life operating system grounded in Sawad al-A'zam orthodoxy." />
       </Head>

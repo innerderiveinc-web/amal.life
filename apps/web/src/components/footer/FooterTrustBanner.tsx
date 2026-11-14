@@ -62,12 +62,12 @@ export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = () => {
                 {t('VERIFIED CANON', 'مستند شرعی منہج', 'منهج شرعي موثق', 'Verified Shar\'i Manhaj')}
               </span>
             </div>
-            <p style={{ margin: '4px 0 0', fontSize: 13, color: '#9CA3AF', lineHeight: 1.5 }}>
+            <p style={{ margin: '4px 0 0', fontSize: 13, color: '#CBD5E1', lineHeight: 1.5 }}>
               {t(
                 '100% Authentic Sunni Orthodox Practice · 106 Classical Masterworks across Hanafi, Shafi\'i, Maliki & Hanbali Heritage',
                 '100% مستند سنی عقائد و معمولات · فقہ حنفی، شافعی، مالکی و حنبلی کی 106 معتبر کتب کا تحقیقی پلیٹ فارم',
                 '١٠٠٪ عقائد وممارسات سنية معتمدة · ١٠٦ أمهات الكتب عبر الفقه الحنفي والشافعي والمالكي والحنبلي',
-                '100% Mustanad Sunni Aqaid wa Mamoolat · Fiqh Hanafi, Shafi\'i, Maliki wa Hanbali ki 106 motabar kutub ka tehqeeqi platform'
+                '100% Authentic Sunni Practice · Hanafi, Shafi\'i, Maliki aur Hanbali ki classical kitabein'
               )}
             </p>
           </div>
@@ -103,7 +103,7 @@ export const FooterTrustBanner: React.FC<FooterTrustBannerProps> = () => {
                 'Sadaqah Jariyah Lil-Ummah · Sacred Public Trust',
                 'وقف لوجہ اللہ تعالیٰ · صدقہ جاریہ برائے امت',
                 'وقف لوجه الله تعالى · صدقة جارية للأمة',
-                'Waqf Li-Wajh-illah Ta\'ala · Sadaqah Jariyah'
+                'Ummat ke liye Sadaqah Jariyah · 100% Free & No Ads'
               )}
             </span>
           </div>

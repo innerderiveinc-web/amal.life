@@ -70,7 +70,7 @@ export function PrayerActionBar({
             {t('ACTIVE', 'فعال', 'نشط', 'Fa\'al')}
           </span>
         </div>
-        <div style={{ fontSize: 12, color: '#9CA3AF', marginTop: 4 }}>
+        <div style={{ fontSize: 12, color: '#64748B', marginTop: 4, fontWeight: 500 }}>
           {t('Coordinates:', 'مقام / بلدیاتی کوآرڈینیٹس:', 'الإحداثيات:', 'Coordinates:')}{' '}
           {selectedCity.lat.toFixed(4)}° N, {selectedCity.lon.toFixed(4)}° E •{' '}
           {t('Qibla Bearing:', 'سمتِ قبلہ:', 'اتجاه القبلة:', 'Simt-e-Qibla:')}{' '}
@@ -91,7 +91,7 @@ export function PrayerActionBar({
             gap: 6,
             padding: '8px 14px',
             borderRadius: 8,
-            backgroundColor: '#10B981',
+            backgroundColor: '#047857',
             color: '#FFFFFF',
             border: 'none',
             fontWeight: 700,
@@ -103,7 +103,7 @@ export function PrayerActionBar({
           <span>
             {isLocating
               ? t('Detecting GPS...', 'جی پی ایس تلاش جاری ہے...', 'جارٍ تحديد الموقع...', 'GPS Talash Jari Hai...')
-              : t('Use My GPS', 'میرا جی پی ایس مقام', 'استخدام موقعي (GPS)', 'Mera GPS Muqam')}
+              : t('Use My GPS', 'میرا جغرافیائی مقام', 'استخدام الموقع الجغرافي الحالي', 'Mera GPS Muqam')}
           </span>
         </button>
 
@@ -224,7 +224,7 @@ export function PrayerActionBar({
             padding: '8px 12px',
             borderRadius: 8,
             backgroundColor: 'transparent',
-            color: '#9CA3AF',
+            color: '#E2E8F0',
             border: '1px solid rgba(255,255,255,0.2)',
             fontWeight: 600,
             fontSize: 13,

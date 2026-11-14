@@ -1,6 +1,7 @@
 import React from 'react';
 import { AmalTheme } from '@amal/ui';
 import { GLOBAL_CITIES } from '../../lib/global-locations';
+import { useTheme, SACRED_THEMES, SacredTheme } from '../../context/ThemeContext';
 
 interface SettingsGeneralTabProps {
   appLanguage: 'en' | 'ur' | 'ar' | 'roman';
@@ -13,7 +14,7 @@ interface SettingsGeneralTabProps {
   highContrast: boolean;
   setHighContrast: (enabled: boolean) => void;
   handleSaveGeneral: () => void;
-  t: (en: string, ur: string) => string;
+  t: (en: string, ur?: string, ar?: string, roman?: string) => string;
 }
 
 export function SettingsGeneralTab({
@@ -29,20 +30,21 @@ export function SettingsGeneralTab({
   handleSaveGeneral,
   t,
 }: SettingsGeneralTabProps) {
+  const { theme, setTheme } = useTheme();
   return (
     <div>
       <h2 style={{ margin: '0 0 16px', fontSize: 20, fontWeight: 800, color: '#111827' }}>
-        General & Interface Configuration
+        {t('General & Interface Configuration', 'عمومی ترتیبات و انٹرفیس', 'إعدادات الواجهة العامة', 'General & Interface Configuration')}
       </h2>
       <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280' }}>
-        Manage your display language, night serenity mode, and primary location.
+        {t('Manage your display language, night serenity mode, and primary location.', 'زبان، نائٹ موڈ اور اپنے بنیادی شہر کا انتخاب کریں۔', 'إدارة لغة العرض، الوضع الليلي، والموقع الجغرافي.', 'Zaban, dark mode aur apna shehar select karein.')}
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-        {/* Language */}
+        {/* System Language */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            {t('System Language', 'زبان کا انتخاب')}
+            {t('System Language', 'زبان کا انتخاب', 'لغة النظام', 'System Language')}
           </label>
           <select
             value={appLanguage}
@@ -61,17 +63,71 @@ export function SettingsGeneralTab({
               backgroundColor: '#F9FAFB',
             }}
           >
-            <option value="en">English (Global Default)</option>
+            <option value="en">{t('English (Global Default)', 'انگریزی (عالمی طے شدہ)', 'الإنجليزية (الافتراضي عالمياً)', 'English (Global Default)')}</option>
             <option value="ur">اردو (Urdu)</option>
             <option value="ar">العربية (Arabic)</option>
-            <option value="roman">Roman Urdu (رومن اردو)</option>
+            <option value="roman">{t('Roman Urdu', 'رومن اردو', 'الرومانية الأردية', 'Roman Urdu')}</option>
           </select>
+        </div>
+
+        {/* Sacred Islamic Aesthetics */}
+        <div>
+          <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 8 }}>
+            {t('Sacred Islamic Aesthetic & Visual Theme', 'اسلامی ثقافتی و روایتی تھیمز', 'المظهر والسمات الجمالية الإسلامية', 'Sacred Islamic Visual Theme')}
+          </label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
+            {(Object.keys(SACRED_THEMES) as SacredTheme[]).map((key) => {
+              const meta = SACRED_THEMES[key];
+              const isSelected = theme === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setTheme(key)}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    padding: 12,
+                    borderRadius: 10,
+                    border: isSelected ? '2px solid #D4AF37' : '1px solid #E5E7EB',
+                    backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : '#FFFFFF',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.15s ease',
+                    boxShadow: isSelected ? '0 0 10px rgba(212, 175, 55, 0.25)' : 'none',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', marginBottom: 6 }}>
+                    <span
+                      style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: '50%',
+                        backgroundColor: meta.primaryColor,
+                        border: `2px solid ${meta.accentGold}`,
+                        display: 'inline-block',
+                        flexShrink: 0,
+                      }}
+                    />
+                    <strong style={{ fontSize: 13, color: isSelected ? '#111827' : '#374151', flex: 1 }}>
+                      {appLanguage === 'ur' ? meta.nameUrdu : appLanguage === 'ar' ? meta.nameArabic : meta.nameEnglish}
+                    </strong>
+                    {isSelected && <span style={{ color: '#D4AF37', fontSize: 12, fontWeight: 800 }}>✓</span>}
+                  </div>
+                  <span style={{ fontSize: 11, color: '#6B7280', lineHeight: 1.3 }}>
+                    {meta.descriptionEn}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Primary Location */}
         <div>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 700, color: '#374151', marginBottom: 6 }}>
-            {t('Primary Geographic City', 'شہر کا تعین')}
+            {t('Primary Geographic City', 'شہر کا تعین', 'المدينة الرئيسية', 'Primary City')}
           </label>
           <select
             value={selectedCity}
@@ -108,8 +164,12 @@ export function SettingsGeneralTab({
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>🌙 Tahajjud OLED Dark Mode</div>
-              <div style={{ fontSize: 12, color: '#6B7280' }}>Ultra-deep night serenity theme for prayer and reflection</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>
+                {t('🌙 Tahajjud OLED Dark Mode', '🌙 تہجد گہرا شبینہ موڈ', '🌙 وضع التهجد الليلي فائق السواد', '🌙 Tahajjud OLED Dark Mode')}
+              </div>
+              <div style={{ fontSize: 12, color: '#6B7280' }}>
+                {t('Ultra-deep night serenity theme for prayer and reflection', 'رات کی عبادات اور غور و فکر کے لیے ڈارک موڈ', 'الوضع الليلي الهادئ للعبادة والتأمل', 'Night time ibadat aur reflection ke liye serene dark mode')}
+              </div>
             </div>
             <input
               type="checkbox"
@@ -121,8 +181,12 @@ export function SettingsGeneralTab({
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>👁️ High Contrast Typography</div>
-              <div style={{ fontSize: 12, color: '#6B7280' }}>Enhanced contrast for seniors and low-vision accessibility</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>
+                {t('👁️ High Contrast Typography', '👁️ واضح ترین تحریر (ہائی کنٹراسٹ)', '👁️ تباين عالي للنصوص', '👁️ High Contrast Typography')}
+              </div>
+              <div style={{ fontSize: 12, color: '#6B7280' }}>
+                {t('Enhanced contrast for seniors and low-vision accessibility', 'بزرگوں اور کمزور بینائی والے صارفین کے لیے واضح ترین فونٹ', 'تحسين الرؤية لكبار السن وضعاف البصر', 'Behtar visibility aur asani se padhne ke liye high contrast')}
+              </div>
             </div>
             <input
               type="checkbox"
@@ -147,7 +211,7 @@ export function SettingsGeneralTab({
             cursor: 'pointer',
           }}
         >
-          Save General Settings
+          {t('Save General Settings', 'ترتیبات محفوظ کریں', 'حفظ الإعدادات العامة', 'Save General Settings')}
         </button>
       </div>
     </div>

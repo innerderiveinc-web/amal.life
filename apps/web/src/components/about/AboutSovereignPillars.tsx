@@ -1,21 +1,30 @@
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '../../context/LanguageContext';
 
-interface AboutSovereignPillarsProps {
-  t: (en: string, ur: string) => string;
-}
+export const AboutSovereignPillars: React.FC = () => {
+  const { t } = useLanguage();
 
-export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t }) => {
   return (
     <>
       {/* Five Core Pillars */}
       <section style={{ marginBottom: 56 }}>
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
           <h2 style={{ fontSize: 26, fontWeight: 800, color: '#1B4332' }}>
-            The Five Sovereign Pillars of AMAL OS
+            {t(
+              'The Five Sovereign Pillars of AMAL OS',
+              'امل او ایس کے پانچ خود مختار بنیادی اصول',
+              'الأركان السيادية الخمسة لنظام عمل',
+              'AMAL OS ke Paanch Buniyadi Usool'
+            )}
           </h2>
           <p style={{ fontSize: 14, color: '#6B7280', marginTop: 6 }}>
-            Hamare 5 Buniyadi Usool — The principles behind every line of code we write
+            {t(
+              'The principles behind every line of code we write',
+              'ہمارے ۵ بنیادی اصول — جن پر اس پورے سسٹم کی بنیاد رکھی گئی ہے',
+              'المبادئ الحاكمة لكل سطر برمجي نكتبه',
+              'Hamare 5 Buniyadi Usool — The principles behind every line of code'
+            )}
           </p>
         </div>
 
@@ -29,36 +38,63 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
           {[
             {
               icon: '🌿',
-              title: 'Sakinah Calm (Zero Gamification)',
-              desc: 'We categorically reject "Taqwa Points", spiritual leaderboards, and panic-inducing guilt streaks. Faith is for Allah (Ikhlas), not algorithm dopamine. AMAL OS fosters peaceful, longitudinal habit formation rooted in Prophetic ease.',
+              title: t('Sakinah Calm (Zero Gamification)', 'سکینہ و وقار (بغیر کسی دکھاوے کے)', 'السكينة والهدوء (دون تشتيت)', 'Sakinah Calm (Zero Gamification)'),
+              desc: t(
+                'We categorically reject "Taqwa Points", spiritual leaderboards, and panic-inducing guilt streaks. Faith is for Allah (Ikhlas), not algorithm dopamine. AMAL OS fosters peaceful, longitudinal habit formation rooted in Prophetic ease.',
+                'ہم اسکورنگ اور اسٹریکس کے ذریعے عبادت کو کھیل بنانے کے قطعی خلاف ہیں۔ ایمان اور عبادت صرف اللہ کی رضا (اخلاص) کے لیے ہے۔ امل او ایس نبوی اعتدال اور سکون کے ساتھ معمولات قائم کرنے میں مدد دیتا ہے۔',
+                'نرفض تحويل العبادات إلى منافسات ونقاط. الإيمان لله تعالى وحده بإخلاص. يعزز نظام عمل الاستقامة الهادئة وفق الهدي النبوي الشريف.',
+                'Hum taqwa points ya guilt streaks ke sakht khilaf hain. Ibadat sirf Allah ke liye (Ikhlas) hai. AMAL OS pur-sukoon aur mustaqil mamoolat banata hai.'
+              ),
             },
             {
               icon: '🛡️',
-              title: '100% Zero-Tracking & Private Vault',
-              desc: 'No commercial ads, no selling location data to brokers, and no invasive behavioral trackers. Your personal evening reflections and repentance remain isolated even from family sync via our Domestic Privacy Vault.',
+              title: t('100% Zero-Tracking & Private Vault', '۱۰۰٪ بغیر ٹریکنگ نجی والٹ', 'خزانة خاصة دون تتبع بنسبة ١٠٠٪', '100% Zero-Tracking & Private Vault'),
+              desc: t(
+                'No commercial ads, no selling location data to brokers, and no invasive behavioral trackers. Your personal evening reflections and repentance remain isolated even from family sync via our Domestic Privacy Vault.',
+                'کوئی تجارتی اشتہارات نہیں، نہ لوکیشن بروکرز کو بیچی جاتی ہے، اور نہ کوئی بیہیویرل ٹریکر موجود ہے۔ آپ کا شام کا نجی محاسبہ اور توبہ مکمل طور پر آپ کے اپنے فون میں محفوظ رہتی ہے۔',
+                'خالٍ تماماً من الإعلانات ومن بيع البيانات لأي جهة. محاسبتك المسائية وتأملاتك الخاصة تظل محفوظة ومحمية على جهازك المحلي.',
+                'Commercial ads aur data selling se 100% pak. Aapka zaati muhasabah aur tauba aapke apne device mein mehfooz rehti hai.'
+              ),
             },
             {
               icon: '⚖️',
-              title: t('Fatwa Firewall & Scholar Oversight', 'اہلِ علم کی نگرانی اور فتویٰ فائر وال'),
+              title: t('Fatwa Firewall & Scholar Oversight', 'اہلِ علم کی نگرانی اور فتویٰ فائر وال', 'ضوابط الإفتاء وإشراف العلماء', 'Fatwa Firewall & Scholar Oversight'),
               desc: t(
                 'Issuing legal verdicts (Fatwas) belongs exclusively to living, qualified Islamic jurists (Muftis). AMAL OS strictly prohibits machine-generated rulings; all fiqh discussions cite canonical classical texts, and complex inquiries are routed directly to living scholars.',
-                'شریعت کے حتمی فیصلے اور فتاویٰ صرف زندہ و مستند مفتیانِ کرام کا منصب ہیں۔ امل میں کسی خود ساختہ رائے کی قطعی ممانعت ہے؛ تمام فقہی مباحث صرف مستند کلاسیکی کتب سے پیش کیے جاتے ہیں اور پیچیدہ سوالات باقاعدہ اہل علم کے سپرد کیے جاتے ہیں۔'
+                'شریعت کے حتمی فیصلے اور فتاویٰ صرف زندہ و مستند مفتیانِ کرام کا منصب ہیں۔ امل میں کسی خود ساختہ رائے کی قطعی ممانعت ہے؛ تمام فقہی مباحث صرف مستند کلاسیکی کتب سے پیش کیے جاتے ہیں اور پیچیدہ سوالات باقاعدہ اہل علم کے سپرد کیے جاتے ہیں۔',
+                'إصدار الفتاوى الشرعية حق حصري للفقهاء والمفتين المؤهلين. يمنع نظام عمل الأحكام المستحدثة آلياً، ويعتمد على النصوص التراثية الموثقة.',
+                'Fatwa dena sirf ahl-e-ilm aur muftiyan-e-kiram ka mansab hai. AMAL OS machine rulings se pak hai aur sirf classical maraje pesh karta hai.'
               ),
             },
             {
               icon: '🕌',
-              title: 'Ahl al-Sunnah & Four-Madhhab Parity',
-              desc: "Universal fidelity to the Sawad al-A'zam. We honor Imam Abu Hanifa, Imam Malik, Imam al-Shafi'i, and Imam Ahmad ibn Hanbal equally, providing full Madhhab toggles for Asr times, Zakat, and comparative Fiqh.",
+              title: t('Ahl al-Sunnah & Four-Madhhab Parity', 'اہل سنت و جماعت اور چاروں فقہی مذاہب کا احترام', 'أهل السنة والجماعة والمذاهب الأربعة', 'Ahl al-Sunnah & Four Madhhabs'),
+              desc: t(
+                "Universal fidelity to the Sawad al-A'zam. We honor Imam Abu Hanifa, Imam Malik, Imam al-Shafi'i, and Imam Ahmad ibn Hanbal equally, providing full Madhhab toggles for Asr times, Zakat, and comparative Fiqh.",
+                'سوادِ اعظم کے مسلکِ حق پر کامل استقامت۔ امام اعظم ابو حنیفہ، امام مالک، امام شافعی، اور امام احمد بن حنبل رحمہم اللہ کا یکساں احترام، اور عصر کے اوقات اور زکوٰۃ کے لیے مذاہب کے انتخاب کی مکمل سہولت۔',
+                'الالتزام بالسواد الأعظم وأئمة الفقه الأربعة (أبو حنيفة، مالك، الشافعي، أحمد بن حنبل) مع إتاحة خيارات المذاهب في مواقيت الصلاة والزكاة.',
+                'Sawad-e-A\'zam ke manhaj par Charon Madhahib (Hanafi, Maliki, Shafi\'i, Hanbali) ka yaksaan ehtiram aur options.'
+              ),
             },
             {
               icon: '🧭',
-              title: 'On-Device Deterministic Math',
-              desc: 'Prayer times, lunar Hijri dates, and Kaaba Qibla bearings are computed mathematically on your local device. The app works 100% offline and will never stop functioning due to third-party server outages.',
+              title: t('On-Device Deterministic Math', 'ڈیوائس پر ریاضیاتی و فلکیاتی حساب', 'حسابات فلكية قطعية على الجهاز', 'On-Device Deterministic Math'),
+              desc: t(
+                'Prayer times, lunar Hijri dates, and Kaaba Qibla bearings are computed mathematically on your local device. The app works 100% offline and will never stop functioning due to third-party server outages.',
+                'نماز کے اوقات، ہجری تاریخ، اور قبلہ کی سمت کا قطعی حساب مکمل طور پر آپ کی ڈیوائس پر ہوتا ہے۔ یہ ایپ انٹرنیٹ کے بغیر سو فیصد آف لائن کام کرتی ہے۔',
+                'مواقيت الصلاة، التقويم الهجري، واتجاه القبلة تُحسب فلكياً على الجهاز مباشرة دون الحاجة لإنترنت أو خوادم خارجية.',
+                'Namaz ke auqaat, Hijri tareekh aur Qibla rukh local device par mathematically calculate hote hain, 100% offline.'
+              ),
             },
             {
               icon: '📚',
-              title: 'Verified 106-Book Canonical Corpus',
-              desc: 'Every quote, Hadith grading, and Fiqh ruling is cryptographically anchored in primary classical texts (*Al-Hidayah*, *Al-Umm*, *Al-Risalah*, *Al-Mughni*, *Bahar-e-Shariat*, *Riyadh al-Salihin*).',
+              title: t('Verified 106-Book Canonical Corpus', '۱۰۶ مصدقہ کلاسیکی کتب کا ذخیرہ', 'المجموعة التراثية المعتمدة (١٠٦ كتب)', 'Verified 106-Book Canonical Corpus'),
+              desc: t(
+                'Every quote, Hadith grading, and Fiqh ruling is cryptographically anchored in primary classical texts (Al-Hidayah, Al-Umm, Al-Risalah, Al-Mughni, Bahar-e-Shariat, Riyadh al-Salihin).',
+                'ہر حوالہ، حدیث کا درجہ اور فقہی مسئلہ براہ راست بنیادی کتب (الہدایہ، الام، الرسالہ، المغنی، بہارِ شریعت، ریاض الصالحین) سے ماخوذ و مصدقہ ہے۔',
+                'كل نص وحكم فقهي موثق بدقة من أمهات الكتب المعتمدة (الهداية، الأم، الرسالة، المغني، بهار شريعت، رياض الصالحين).',
+                'Har hawala aur fiqhi ruling classical motabar kutub (Al-Hidayah, Bahar-e-Shariat, Riyadh al-Salihin) se verified hai.'
+              ),
             },
           ].map((pillar, idx) => (
             <div
@@ -122,14 +158,28 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
                 color: '#FFFFFF',
               }}
             >
-              4 Canonical Pillars: How Digital Research Serves Classical Scholarship
+              {t(
+                '4 Canonical Pillars: How Digital Research Serves Classical Scholarship',
+                '۴ بنیادی ستون: ڈیجیٹل ریسرچ کس طرح کلاسیکی علوم کی خدمت کرتی ہے',
+                'الأركان الأربعة: كيف يخدم البحث الرقمي العلوم الشرعية',
+                '4 Buniyadi Sutoon: Digital Research Classical Uloom ki Khidmat'
+              )}
             </h2>
             <p style={{ fontSize: 15, color: '#A7F3D0', margin: 0, fontWeight: 700 }}>
-              روایتی علومِ دینیہ کی خدمت میں ڈیجیٹل انڈیکس کے ۴ بنیادی ستون (صرف خادم، کبھی مفتی نہیں)
+              {t(
+                'Digital Research Serving Classical Scholarship (Clerical Assistant, Never a Mufti)',
+                'روایتی علومِ دینیہ کی خدمت میں ڈیجیٹل انڈیکس (صرف کاتب و خادم، کبھی مفتی نہیں)',
+                'البحث الرقمي في خدمة التراث الإسلامي (كاتب وخادم، وليس مفتياً)',
+                'Digital Research Serving Classical Scholarship (Sirf Kaatib, Mufti Nahi)'
+              )}
             </p>
             <p style={{ fontSize: 13, color: '#D1D5DB', marginTop: 12, lineHeight: 1.6 }}>
-              Islam requires rigorous fidelity to truth. In AMAL OS, digital technology is{' '}
-              <strong>never a Mufti, Lawgiver, or Preacher</strong>. It is strictly a specialized digital clerk (Kaatib) and indexer that upholds canonical Ahl al-Sunnah literature without altering a single letter of sacred text.
+              {t(
+                'Islam requires rigorous fidelity to truth. In AMAL OS, digital technology is never a Mufti, Lawgiver, or Preacher. It is strictly a specialized digital clerk (Kaatib) and indexer that upholds canonical Ahl al-Sunnah literature without altering a single letter of sacred text.',
+                'اسلام سچائی اور امانت داری پر سخت اصرار کرتا ہے۔ امل او ایس میں جدید ٹیکنالوجی کبھی مفتی، شارع یا خطیب نہیں بنتی؛ بلکہ یہ صرف ایک تخصیصی کاتب اور اشاریہ ہے جو کتبِ اہل سنت کی نصوص میں بغیر کسی رد و بدل کے ان کی خدمت انجام دیتا ہے۔',
+                'يتطلب الإسلام تحري الصدق والأمانة. في نظام عمل، التكنولوجيا ليست مفتياً ولا مشرعاً، بل هي مجرد كاتب مفهرس ومساعد تقني يخدم نصوص أهل السنة دون تبديل.',
+                'Islam amanatdari par zor deta hai. AMAL OS mein technology mufti ya shar\'i judge nahi, balki ek digital kaatib hai jo sacred texts ko bina badle organize karta hai.'
+              )}
             </p>
           </div>
 
@@ -207,7 +257,8 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: 11,
-                  color: '#9CA3AF',
+                  color: '#CBD5E1',
+                  fontWeight: 500,
                 }}
               >
                 <span>Shar&apos;i Boundary: 100% Verbatim</span>
@@ -282,7 +333,8 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: 11,
-                  color: '#9CA3AF',
+                  color: '#CBD5E1',
+                  fontWeight: 500,
                 }}
               >
                 <span>Shar&apos;i Boundary: Sunnah Habits Only</span>
@@ -357,7 +409,8 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: 11,
-                  color: '#9CA3AF',
+                  color: '#CBD5E1',
+                  fontWeight: 500,
                 }}
               >
                 <span>Shar&apos;i Boundary: Unaltered Primary Sources</span>
@@ -432,7 +485,8 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: 11,
-                  color: '#9CA3AF',
+                  color: '#CBD5E1',
+                  fontWeight: 500,
                 }}
               >
                 <span>Shar&apos;i Boundary: Strict Human Mufti Ifta</span>
@@ -461,11 +515,22 @@ export const AboutSovereignPillars: React.FC<AboutSovereignPillarsProps> = ({ t 
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>📜</span>
               <span style={{ color: '#F9FAFB' }}>
-                <strong>The Sovereign AMAL OS Guarantee:</strong> Machine learning is our clerk; classical consensus (Ijma) is our anchor; human scholars are our arbiters.
+                <strong>{t('The Sovereign AMAL OS Guarantee:', 'عمل او ایس کی خود مختار ضمانت:', 'ضمان AMAL OS السيادي:', 'The Sovereign AMAL OS Guarantee:')}</strong>{' '}
+                {t(
+                  'Machine learning is our clerk; classical consensus (Ijma) is our anchor; human scholars are our arbiters.',
+                  'مشین لرننگ ہمارا منشی ہے، فقہی اجماع ہماری بنیاد ہے، اور علمائے کرام ہمارے فیصل ہیں۔',
+                  'التعلم الآلي هو كاتبنا، والإجماع الفقهي هو مرساتنا، والعلماء الأجلاء هم مراجعنا.',
+                  'Machine learning hamara clerk hai, Ijma hamara anchor hai, ulama hamare faisal hain.'
+                )}
               </span>
             </div>
             <span style={{ color: '#D4AF37', fontWeight: 800 }}>
-              Ad-Free · Hallucination-Free · Ahl al-Sunnah
+              {t(
+                'Ad-Free · Hallucination-Free · Ahl al-Sunnah',
+                'اشتہارات سے پاک · بے بنیاد باتوں سے محفوظ · اہلِ سنت و جماعت',
+                'خالٍ من الإعلانات · مأمون من الهذيان · أهل السنة والجماعة',
+                'Ad-Free · Hallucination-Free · Ahl al-Sunnah'
+              )}
             </span>
           </div>
         </div>

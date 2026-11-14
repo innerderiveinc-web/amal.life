@@ -21,7 +21,7 @@ export default function AuthPage() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim() || !password.trim()) {
-      showAmalToast('Please enter your username and password', 'warning');
+      showAmalToast(t('Please enter your username and password', 'برائے مہربانی اپنا صارف نام اور پاسورڈ درج کریں', 'يرجى إدخال اسم المستخدم وكلمة المرور', 'Baraye meharbani username aur password darj karein'), 'warning');
       return;
     }
     setIsSubmitting(true);
@@ -32,7 +32,7 @@ export default function AuthPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim() || !name.trim() || !password.trim()) {
-      showAmalToast('Please enter username, full name, and password', 'warning');
+      showAmalToast(t('Please enter username, full name, and password', 'برائے مہربانی نام، صارف نام اور پاسورڈ درج کریں', 'يرجى إدخال اسم المستخدم والاسم الكامل وكلمة المرور', 'Baraye meharbani naam, username aur password darj karein'), 'warning');
       return;
     }
     setIsSubmitting(true);
@@ -46,6 +46,7 @@ export default function AuthPage() {
     <div style={{ minHeight: '100vh', backgroundColor: '#F8F9FA' }}>
       <Head>
         <title>Account, Sign In &amp; Sovereign Identity | AMAL OS</title>
+        <meta name="description" content="AMAL OS Sovereign Identity, Private Account Access, and Cross-Device Cloud Sync." />
       </Head>
 
       <Navigation />
@@ -71,10 +72,10 @@ export default function AuthPage() {
           >
             <span style={{ fontSize: 36, display: 'block', marginBottom: 8 }}>👤</span>
             <h1 style={{ fontSize: 24, fontWeight: 900, margin: 0, letterSpacing: -0.3 }}>
-              AMAL OS اکاؤنٹ و کلاؤڈ سنک
+              {t('AMAL OS Account & Cloud Sync', 'AMAL OS اکاؤنٹ و کلاؤڈ سنک', 'حساب نظام عمل والمزامنة السحابية', 'AMAL OS Account o Cloud Sync')}
             </h1>
             <p style={{ margin: '8px 0 0', fontSize: 13, color: '#A7F3D0' }}>
-              Sovereign Identity · Multi-Device Cloud Sync · Zero-Ad Architecture
+              {t('Sovereign Identity · Multi-Device Cloud Sync · Zero-Ad Architecture', 'خود مختار شناخت · کثیر آلات کلاؤڈ سنک · بلاتشہیری ساخت', 'هوية سيادية · مزامنة سحابية متعددة الأجهزة · خالية من الإعلانات', 'Sovereign Identity · Multi-Device Cloud Sync · Zero-Ad')}
             </p>
           </div>
 
@@ -133,7 +134,7 @@ export default function AuthPage() {
                       cursor: 'pointer',
                     }}
                   >
-                    📥 Export All Data (.json)
+                    {t('📥 Export All Data (.json)', '📥 تمام ڈیٹا برآمد کریں (.json)', '📥 تصدير جميع البيانات (.json)', '📥 Saara Data Export Karein (.json)')}
                   </button>
 
                   <button
@@ -143,13 +144,13 @@ export default function AuthPage() {
                       borderRadius: 10,
                       border: '1px solid #FCA5A5',
                       backgroundColor: '#FEF2F2',
-                      color: '#DC2626',
+                      color: '#B91C1C',
                       fontSize: 14,
                       fontWeight: 700,
                       cursor: 'pointer',
                     }}
                   >
-                    🚪 سائن آؤٹ کریں (Sign Out)
+                    {t('🚪 Sign Out', '🚪 سائن آؤٹ کریں', '🚪 تسجيل الخروج', '🚪 Sign Out Karein')}
                   </button>
 
                   <Link
@@ -165,7 +166,7 @@ export default function AuthPage() {
                       fontWeight: 800,
                     }}
                   >
-                    ہوم پیج پر واپس جائیں (Back to Home)
+                    {t('Back to Home', 'ہوم پیج پر واپس جائیں', 'العودة إلى الصفحة الرئيسية', 'Home Page Par Wapis Jayein')}
                   </Link>
                 </div>
               </div>
@@ -187,7 +188,7 @@ export default function AuthPage() {
                       cursor: 'pointer',
                     }}
                   >
-                    Sign In · لاگ ان
+                    {t('Sign In', 'لاگ ان', 'تسجيل الدخول', 'Sign In')}
                   </button>
                   <button
                     onClick={() => setMode('REGISTER')}
@@ -203,7 +204,7 @@ export default function AuthPage() {
                       cursor: 'pointer',
                     }}
                   >
-                    Register · نیا اکاؤنٹ
+                    {t('Register', 'نیا اکاؤنٹ', 'حساب جديد', 'Register')}
                   </button>
                 </div>
 
@@ -212,11 +213,8 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Username
+                          {t('Username', 'صارف کا نام', 'اسم المستخدم', 'Username')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          صارف کا نام / شناختی نام
-                        </span>
                       </div>
                       <input
                         type="text"
@@ -230,11 +228,8 @@ export default function AuthPage() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                         <label style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>
-                          Password
+                          {t('Password', 'پاسورڈ', 'كلمة المرور', 'Password')}
                         </label>
-                        <span style={{ fontSize: 12, color: '#6B7280' }}>
-                          پاسورڈ / خفیہ کوڈ
-                        </span>
                       </div>
                       <input
                         type="password"
@@ -400,7 +395,7 @@ export default function AuthPage() {
                       textDecoration: 'underline',
                     }}
                   >
-                    بغیر اکاؤنٹ کے آف لائن موڈ میں جاری رکھیں (Continue as Guest)
+                    {t('Continue as Guest (Offline Mode)', 'بغیر اکاؤنٹ کے آف لائن موڈ میں جاری رکھیں', 'المتابعة كضيف دون حساب (وضع غير متصل)', 'Baghair account ke offline mode mein jari rakhein')}
                   </button>
                 </div>
               </div>

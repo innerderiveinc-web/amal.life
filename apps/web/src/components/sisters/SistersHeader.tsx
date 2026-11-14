@@ -189,7 +189,7 @@ export function SistersHeader({
               color: '#D1FAE5',
             }}
           >
-            <span style={{ color: '#10B981' }}>●</span>
+            <span style={{ color: '#34D399' }}>●</span>
             <span>
               {t(
                 '100% Offline & Authenticated — Derived from Jannati Zewar, Bahar-e-Shari\'at, and Madarij-un-Nubuwwah',

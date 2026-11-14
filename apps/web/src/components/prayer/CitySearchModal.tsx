@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GlobalCity } from '../../lib/global-locations';
 import { CalculationMethod } from '@amal/amal-engine';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface CitySearchModalProps {
   isOpen: boolean;
@@ -31,6 +32,17 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
   handleSelectCity,
   method,
 }) => {
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
@@ -42,11 +54,13 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         zIndex: 10005,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 16,
       }}
       onClick={onClose}
     >
@@ -68,15 +82,32 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div>
             <h2 style={{ fontSize: 20, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-              🌍 Select or Search Any City in the World
+              🌍 {t('Select or Search Any City Worldwide', 'دنیا کا کوئی بھی شہر منتخب یا تلاش کریں', 'اختر أو ابحث عن أي مدينة في العالم', 'Dunya ka koi bhi shehar muntakhab karein')}
             </h2>
             <p style={{ fontSize: 12, color: '#64748B', margin: '4px 0 0' }}>
-              Choose from 100+ preset global cities or type any town or village worldwide.
+              {t(
+                'Choose from 100+ preset global cities or search any town worldwide.',
+                '۱۰۰ سے زائد عالمی شہروں میں سے منتخب کریں یا دنیا کا کوئی بھی شہر تلاش کریں۔',
+                'اختر من أكثر من ١٠٠ مدينة عالمية جاهزة أو ابحث عن أي بلدة في العالم.',
+                '100+ aalmi shehron mein se chunein ya koi bhi shehar search karein.'
+              )}
             </p>
           </div>
           <button
             onClick={onClose}
-            style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer', color: '#94A3B8' }}
+            style={{
+              background: '#F1F5F9',
+              border: 'none',
+              borderRadius: '50%',
+              width: 32,
+              height: 32,
+              fontSize: 16,
+              cursor: 'pointer',
+              color: '#64748B',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             aria-label="Close City Search Modal"
           >
             ✕
@@ -90,7 +121,12 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
             autoFocus
             value={citySearchQuery}
             onChange={(e) => setCitySearchQuery(e.target.value)}
-            placeholder="Type city name (e.g. Delhi, Lucknow, Hyderabad, London, Dubai)..."
+            placeholder={t(
+              'Type city name (e.g. Delhi, Lucknow, Hyderabad, London, Dubai)...',
+              'شہر کا نام درج کریں (مثلاً دہلی، لکھنؤ، حیدرآباد، لندن، دبئی)...',
+              'اكتب اسم المدينة (مثال: دلهي، لكنؤ، حيدرآباد، لندن، دبي)...',
+              'Shehar ka naam darj karein (e.g. Delhi, Lucknow, Hyderabad, London)...'
+            )}
             style={{
               flex: 1,
               padding: '12px 16px',
@@ -98,6 +134,7 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
               border: '2px solid #1B4332',
               fontSize: 14,
               outline: 'none',
+              boxSizing: 'border-box',
             }}
           />
           <button
@@ -115,7 +152,9 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
               whiteSpace: 'nowrap',
             }}
           >
-            {isGeocoding ? 'Searching...' : 'Search Map ↗'}
+            {isGeocoding
+              ? t('Searching...', 'تلاش جاری ہے...', 'جاري البحث...', 'Dhoond rahe hain...')
+              : t('Search Map ↗', 'نقشہ پر تلاش کریں ↗', 'بحث في الخريطة ↗', 'Search Map ↗')}
           </button>
         </div>
 
@@ -140,7 +179,14 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
             }}
           >
             <span>📍</span>
-            <span>Auto-Detect My GPS Location Right Now</span>
+            <span>
+              {t(
+                'Auto-Detect My GPS Location Right Now',
+                'میرے موجودہ مقام کی بذریعہ GPS خودکار تشخیص کریں',
+                'تحديد موقعي الحالي تلقائياً عبر GPS',
+                'Mera GPS Location Detect Karein'
+              )}
+            </span>
           </button>
         </div>
 
@@ -148,7 +194,12 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
         {externalResults.length > 0 && (
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#047857', marginBottom: 8 }}>
-              WORLD MAP GEOCODING RESULTS:
+              {t(
+                'WORLD MAP GEOCODING RESULTS:',
+                'عالمی نقشے کے نتائج:',
+                'نتائج الخريطة العالمية:',
+                'World Map Results:'
+              )}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {externalResults.map((item, idx) => (
@@ -176,7 +227,7 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
                 >
                   <div style={{ fontWeight: 700, color: '#166534' }}>{item.display_name}</div>
                   <div style={{ fontSize: 11, color: '#4B5563', marginTop: 2 }}>
-                    Coordinates: {parseFloat(item.lat).toFixed(4)}° N, {parseFloat(item.lon).toFixed(4)}° E
+                    {t('Coordinates:', 'نقاطِ عرض و طول:', 'الإحداثيات:', 'Coordinates:')} {parseFloat(item.lat).toFixed(4)}° N, {parseFloat(item.lon).toFixed(4)}° E
                   </div>
                 </div>
               ))}
@@ -187,8 +238,14 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
         {/* Preset Global Cities List */}
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#64748B', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
-            <span>PRESET GLOBAL CITIES ({filteredPresetCities.length})</span>
-            {citySearchQuery && <span>Matching &ldquo;{citySearchQuery}&rdquo;</span>}
+            <span>
+              {t('PRESET GLOBAL CITIES', 'منتخب عالمی شہر', 'المدن العالمية الجاهزة', 'Preset Global Cities')} ({filteredPresetCities.length})
+            </span>
+            {citySearchQuery && (
+              <span>
+                {t('Matching', 'مطابقت برائے', 'مطابق لـ', 'Matching')} &ldquo;{citySearchQuery}&rdquo;
+              </span>
+            )}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' }}>
@@ -223,7 +280,9 @@ export const CitySearchModal: React.FC<CitySearchModalProps> = ({
                       {c.lat.toFixed(2)}°, {c.lon.toFixed(2)}°
                     </span>
                     {isSelected && (
-                      <div style={{ fontSize: 11, color: '#059669', fontWeight: 800 }}>✓ SELECTED</div>
+                      <div style={{ fontSize: 11, color: '#059669', fontWeight: 800 }}>
+                        ✓ {t('SELECTED', 'منتخب شدہ', 'تم الاختيار', 'SELECTED')}
+                      </div>
                     )}
                   </div>
                 </div>
