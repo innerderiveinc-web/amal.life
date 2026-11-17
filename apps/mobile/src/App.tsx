@@ -18,6 +18,45 @@ import { ReflectionScreen } from './screens/ReflectionScreen';
 import { PrivacyCenterScreen } from './screens/PrivacyCenterScreen';
 import { ReplayScreen } from './screens/ReplayScreen';
 
+interface ScreenErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ScreenErrorBoundary extends React.Component<
+  { screenName: string; children: React.ReactNode },
+  ScreenErrorBoundaryState
+> {
+  override state: ScreenErrorBoundaryState = { hasError: false, error: null };
+  static getDerivedStateFromError(error: Error): ScreenErrorBoundaryState {
+    return { hasError: true, error };
+  }
+  override componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.warn(`Screen ${this.props.screenName} error:`, error, info);
+  }
+  override render() {
+    if (this.state.hasError) {
+      return (
+        <View style={{ flex: 1, padding: 24, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16, fontWeight: '700', color: '#991B1B', marginBottom: 8, textAlign: 'center' }}>
+            {this.props.screenName} اس وقت لوڈ نہیں ہو سکی
+          </Text>
+          <Text style={{ fontSize: 12, color: '#6B7280', textAlign: 'center', marginBottom: 16, lineHeight: 18 }}>
+            {this.state.error?.message || 'نامعلوم مسئلہ'}
+          </Text>
+          <TouchableOpacity
+            style={{ backgroundColor: '#1B4332', paddingHorizontal: 16, paddingVertical: 10, borderRadius: 8 }}
+            onPress={() => this.setState({ hasError: false, error: null })}
+          >
+            <Text style={{ color: '#FFFFFF', fontWeight: '700' }}>🔄 دوبارہ کوشش کریں (Retry)</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 type Tab =
   | 'TODAY'
   | 'QURAN'
@@ -104,23 +143,91 @@ export const App: React.FC = () => {
 
       {/* 2. SCREEN CONTAINER */}
       <View style={styles.screenContainer}>
-        {activeTab === 'TODAY' && <TodayScreen />}
-        {activeTab === 'QURAN' && <QuranScreen />}
-        {activeTab === 'ASK_AMAL' && <AskAmalScreen />}
-        {activeTab === 'PRAYER' && <PrayerScreen />}
-        {activeTab === 'TASBIH' && <TasbihScreen />}
-        {activeTab === 'CALCULATOR' && <CalculatorScreen />}
-        {activeTab === 'LIBRARY' && <LibraryScreen />}
-        {activeTab === 'SIRAH' && <SirahScreen />}
-        {activeTab === 'CALENDAR' && <CalendarScreen />}
-        {activeTab === 'FAMILY' && <FamilyScreen />}
-        {activeTab === 'ABOUT' && <AboutScreen />}
-        {activeTab === 'AUDIO' && <AudioScreen />}
-        {activeTab === 'VAULT' && <VaultScreen />}
-        {activeTab === 'JOURNEY' && <JourneyScreen />}
-        {activeTab === 'REFLECTION' && <ReflectionScreen />}
-        {activeTab === 'PRIVACY' && <PrivacyCenterScreen />}
-        {activeTab === 'REPLAY' && <ReplayScreen />}
+        {activeTab === 'TODAY' && (
+          <ScreenErrorBoundary screenName="آج کا معمول (Today)">
+            <TodayScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'QURAN' && (
+          <ScreenErrorBoundary screenName="قرآنِ مجید (Quran)">
+            <QuranScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'ASK_AMAL' && (
+          <ScreenErrorBoundary screenName="رہنمائی (Ask Amal)">
+            <AskAmalScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'PRAYER' && (
+          <ScreenErrorBoundary screenName="نماز و قبلہ (Prayer)">
+            <PrayerScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'TASBIH' && (
+          <ScreenErrorBoundary screenName="مسنون تسبیح (Tasbih)">
+            <TasbihScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'CALCULATOR' && (
+          <ScreenErrorBoundary screenName="زکوٰۃ و وراثت (Calculator)">
+            <CalculatorScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'LIBRARY' && (
+          <ScreenErrorBoundary screenName="کتب خانہ السواد الاعظم (Library)">
+            <LibraryScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'SIRAH' && (
+          <ScreenErrorBoundary screenName="سیرت النبی ﷺ (Sirah)">
+            <SirahScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'CALENDAR' && (
+          <ScreenErrorBoundary screenName="ہجری کیلنڈر (Calendar)">
+            <CalendarScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'FAMILY' && (
+          <ScreenErrorBoundary screenName="فیملی سرکل (Family)">
+            <FamilyScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'ABOUT' && (
+          <ScreenErrorBoundary screenName="تعارف و منہج (About)">
+            <AboutScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'AUDIO' && (
+          <ScreenErrorBoundary screenName="صوتی تلاوت و اشعار (Audio)">
+            <AudioScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'VAULT' && (
+          <ScreenErrorBoundary screenName="ذخیرہ علم و نوٹس (Vault)">
+            <VaultScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'JOURNEY' && (
+          <ScreenErrorBoundary screenName="روحانی منازل (Journeys)">
+            <JourneyScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'REFLECTION' && (
+          <ScreenErrorBoundary screenName="روزانہ محاسبہ (Reflections)">
+            <ReflectionScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'PRIVACY' && (
+          <ScreenErrorBoundary screenName="پرائیویسی سینٹر (Privacy)">
+            <PrivacyCenterScreen />
+          </ScreenErrorBoundary>
+        )}
+        {activeTab === 'REPLAY' && (
+          <ScreenErrorBoundary screenName="سالانہ دین ری پلے (Replay)">
+            <ReplayScreen />
+          </ScreenErrorBoundary>
+        )}
       </View>
 
       {/* 3. 5-PILLAR CALM BOTTOM NAVIGATION (فکسڈ اور واضح ۵ ارکان) */}
