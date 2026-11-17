@@ -28,13 +28,16 @@
         "backgroundColor": "#1B4332"
       },
       "package": "com.amal.lifeos",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
         "VIBRATE"
       ]
     },
+    "plugins": [
+      "./plugins/withAndroidWebAssets.js"
+    ],
     "extra": {
       "eas": {
         "projectId": "c5fe5907-3e42-4534-b5d1-a7c8cca78d44"

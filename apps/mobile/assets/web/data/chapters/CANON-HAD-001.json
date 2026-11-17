@@ -1,0 +1,47 @@
+{
+  "workId": "CANON-HAD-001",
+  "verifiedExternalUrl": "https://sunnah.com/bukhari",
+  "verifiedExternalName": "Sunnah.com (Complete Sahih al-Bukhari)",
+  "chapters": [
+    {
+      "chapterId": "buk_1",
+      "chapterTitleArabic": "كِتَابُ بَدْءِ الْوَحْيِ (حدیثِ نیت)",
+      "chapterTitleUrdu": "کتاب بدء الوحی (پہلا باب: نیت کا بیان)",
+      "chapterTitleEnglish": "Book 1: Revelation & Sincerity of Intention",
+      "arabicMatn": "عَنْ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ:\n\n«إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ».",
+      "urduTranslation": "امیر المؤمنین حضرت عمر بن الخطاب رضی اللہ عنہ نے فرمایا: میں نے رسول اللہ ﷺ کو فرماتے سنا: \"اعمال کا دارومدار صرف نیتوں پر ہے، اور ہر شخص کے لیے وہی ہے جس کی اس نے نیت کی۔ پس جس کی ہجرت دنیا کے لیے ہو یا کسی عورت سے نکاح کے لیے، تو اس کی ہجرت اسی کے لیے شمار ہوگی جس کے لیے اس نے ہجرت کی تھی\"۔",
+      "englishSynopsis": "Hadith 1 of Sahih al-Bukhari establishes that all actions are judged exclusively by internal sincerity (Niyyah).",
+      "scholarlyNotes": "Imam al-Shafi'i stated this Hadith forms one-third of all Islamic knowledge, governing worship, transactions, and oath-taking."
+    },
+    {
+      "chapterId": "buk_2",
+      "chapterTitleArabic": "كِتَابُ الإِيمَانِ (شُعَبُ الإِيمَانِ)",
+      "chapterTitleUrdu": "کتاب الایمان (ایمان کی شاخیں اور حیا)",
+      "chapterTitleEnglish": "Book 2: Faith & The Branches of Iman",
+      "arabicMatn": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ، عَنِ النَّبِيِّ ﷺ قَالَ:\n\n«الإِيمَانُ بِضْعٌ وَسِتُّونَ شُعْبَةً، وَالْحَيَاءُ شُعْبَةٌ مِنَ الإِيمَانِ».\n\nوَفِي حَدِيثِ أَنَسٍ رَضِيَ اللَّهُ عَنْهُ: «لا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ».",
+      "urduTranslation": "حضرت ابوہریرہ رضی اللہ عنہ سے روایت ہے کہ نبی کریم ﷺ نے فرمایا: \"ایمان کی ساٹھ سے زائد شاخیں ہیں، اور حیا بھی ایمان کا ایک بڑا شعبہ ہے\"۔ اور حضرت انس رضی اللہ عنہ سے روایت ہے کہ آپ ﷺ نے فرمایا: \"تم میں سے کوئی اس وقت تک کامل مومن نہیں ہو سکتا جب تک اپنے بھائی کے لیے وہی پسند نہ کرے جو اپنے لیے پسند کرتا ہے\"۔",
+      "englishSynopsis": "Iman comprises outward deeds and inward moral virtues; modesty and empathetic love for one's brother are core prerequisites of true faith.",
+      "scholarlyNotes": "Al-Bukhari demonstrates that Iman increases through good works and softens character through modesty and social brotherhood."
+    },
+    {
+      "chapterId": "buk_3",
+      "chapterTitleArabic": "كِتَابُ الْعِلْمِ (فَضْلُ طَلَبِ الْعِلْمِ)",
+      "chapterTitleUrdu": "کتاب العلم (علم دین حاصل کرنے کی فضیلت)",
+      "chapterTitleEnglish": "Book 3: Knowledge & Sacred Learning",
+      "arabicMatn": "عَنْ مُعَاوِيَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ:\n\n«مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِي الدِّينِ، وَإِنَّمَا أَنَا قَاسِمٌ وَاللَّهُ يُعْطِي».",
+      "urduTranslation": "حضرت معاویہ رضی اللہ عنہ فرماتے ہیں کہ میں نے رسول اللہ ﷺ کو ارشاد فرماتے سنا: \"اللہ تعالیٰ جس کے ساتھ بھلائی کا ارادہ فرماتا ہے، اسے دین میں گہری سمجھ (فقہ) عطا فرما دیتا ہے، اور میں تقسیم کرنے والا ہوں جبکہ عطا فرمانے والا اللہ ہے\"۔",
+      "englishSynopsis": "True comprehension (Fiqh) of the divine message is the ultimate manifestation of Allah's favor upon a servant.",
+      "scholarlyNotes": "Understanding the wisdom and rulings of the Sunnah protects a believer from spiritual confusion and misguided innovations."
+    },
+    {
+      "chapterId": "buk_4",
+      "chapterTitleArabic": "كِتَابُ الأَدَبِ (بِرُّ الْوَالِدَيْنِ)",
+      "chapterTitleUrdu": "کتاب الادب (والدین کی خدمت اور حسنِ اخلاق)",
+      "chapterTitleEnglish": "Book 78: Good Manners & Honoring Parents",
+      "arabicMatn": "عَنْ عَبْدِ اللَّهِ بْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَأَلْتُ النَّبِيَّ ﷺ: أَيُّ الْعَمَلِ أَحَبُّ إِلَى اللَّهِ؟\n\nقَالَ: «الصَّلاةُ عَلَى وَقْتِهَا». قُلْتُ: ثُمَّ أَيٌّ؟ قَالَ: «ثُمَّ بِرُّ الْوَالِدَيْنِ». قُلْتُ: ثُمَّ أَيٌّ؟ قَالَ: «الْجِهَادُ فِي سَبِيلِ اللَّهِ».",
+      "urduTranslation": "حضرت عبداللہ بن مسعود رضی اللہ عنہ فرماتے ہیں کہ میں نے نبی اکرم ﷺ سے دریافت کیا: کون سا عمل اللہ کو سب سے زیادہ محبوب ہے؟ آپ ﷺ نے فرمایا: \"نماز کو اس کے وقت پر ادا کرنا\"۔ میں نے عرض کیا: پھر کون سا؟ فرمایا: \"والدین کے ساتھ حسنِ سلوک کرنا\"۔ میں نے عرض کیا: پھر کون سا؟ فرمایا: \"اللہ کی راہ میں جدوجہد کرنا\"۔",
+      "englishSynopsis": "Praying Salah on time and gentle devotion to parents are placed before all other deeds in love before Allah.",
+      "scholarlyNotes": "Filial piety (Birr al-Walidayn) is linked directly to punctuality in prayer as an immutable priority in classical Islam."
+    }
+  ]
+}

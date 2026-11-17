@@ -1,0 +1,47 @@
+{
+  "workId": "CANON-NIS-02",
+  "verifiedExternalUrl": "https://www.dawateislami.net/bookslibrary/ur/bahar-e-shariat",
+  "verifiedExternalName": "Maktaba-tul-Madina (Bahar-e-Shari'at Complete 3 Volumes)",
+  "chapters": [
+    {
+      "chapterId": "bs-01",
+      "chapterTitleArabic": "بهار شريعت - قسم أحكام النساء والطهور",
+      "chapterTitleUrdu": "استحاضہ (بیماری کا خون) اور معذور کے احکام",
+      "chapterTitleEnglish": "Rulings on Istihadha and the Excused Person (Ma'dhur)",
+      "arabicMatn": "صحیح البخاری، حدیث رقم ۳۲۴ (حدیث فاطمہ بنت ابی حبیش)",
+      "urduTranslation": "رسول اللہ ﷺ نے حضرت فاطمہ بنت ابی حبیش رضی اللہ عنہا سے فرمایا: \"یہ حیض نہیں بلکہ رگ کا خون (استحاضہ) ہے۔ جب حیض کے دن آئیں تو نماز چھوڑ دو اور جب وہ مدت گزر جائے تو غسل کر کے نماز پڑھو اور ہر نماز کے لیے وضو کرو۔\" (صحیح بخاری)",
+      "englishSynopsis": "Bleeding less than 3 days or more than 10 days is Istihadha. Prayer is NOT exempt; the sister makes Wudu for each prayer time and prays.",
+      "scholarlyNotes": "استحاضہ بیماری ہے، اس میں نماز اور روزہ چھوڑنا جائز نہیں۔ • ہر فرض نماز کے وقت کے داخل ہونے پر نیا وضو کیا جائے۔ • اس حالت میں تلاوتِ قرآن اور کعبہ کا طواف باوضو جائز ہے۔"
+    },
+    {
+      "chapterId": "bs-02",
+      "chapterTitleArabic": "بهار شريعت - قسم أحكام النساء والطهور",
+      "chapterTitleUrdu": "غسل کے فرائض اور مینڈھیوں (چوٹیوں) کے احکام",
+      "chapterTitleEnglish": "Obligations of Ghusl & Rulings on Braided Hair",
+      "arabicMatn": "صحیح مسلم، حدیث رقم ۳۳۰ (حدیث ام سلمہ) / بہارِ شریعت حصہ ۲",
+      "urduTranslation": "ام المؤمنین حضرت ام سلمہ رضی اللہ عنہا نے بارگاہِ رسالت ﷺ میں عرض کیا: \"یا رسول اللہ! میں اپنے سر کے بال گوندھ کر رکھتی ہوں، کیا حیض اور جنابت کے غسل کے لیے انہیں کھولوں؟\" آپ ﷺ نے فرمایا: \"نہیں! تمہارے لیے صرف یہ کافی ہے کہ تم اپنے سر پر تین چلو پانی ڈال لو، پھر تمام بدن پر پانی بہا لو، تم پاک ہو جاؤ گی۔\" صدر الشریعہ فرماتے ہیں: یہ رخصت صرف عورتوں کے لیے ہے اور اس شرط کے ساتھ ہے کہ بالوں کی جڑوں میں پانی پہنچ جائے۔",
+      "englishSynopsis": "Ghusl has 3 obligatory acts: gargling mouth, rinsing nose to bone, and washing entirety of body. Braided hair does not need unbraiding if roots receive water.",
+      "scholarlyNotes": "اگر بالوں کی جڑوں تک پانی پہنچ جائے تو چوٹیاں کھولنا فرض نہیں ہے۔ • اگر بال کھلے ہوں تو ایک ایک بال کا دھونا فرض ہے۔ • انگوٹھی، نتھ، بالیوں اور چوڑیوں کو ہلا کر نیچے پانی پہنچانا لازم ہے۔"
+    },
+    {
+      "chapterId": "bs-03",
+      "chapterTitleArabic": "بهار شريعت - قسم أحكام النساء والطهور",
+      "chapterTitleUrdu": "نفاس (ولادت کے بعد کا خون) اور چالیس دن کی شرعی حدود",
+      "chapterTitleEnglish": "Postnatal Bleeding (Nifas) & The 40-Day Maximum Ceiling",
+      "arabicMatn": "جامع الترمذی، حدیث رقم ۱۳۹ / بہارِ شریعت حصہ ۲",
+      "urduTranslation": "سیدہ ام سلمہ رضی اللہ عنہا فرماتی ہیں: \"رسول اللہ ﷺ کے مبارک زمانے میں نفاس والی خواتین چالیس دن تک انتظار کیا کرتی تھیں\"۔ فقہ حنفی میں اس کی کم سے کم کوئی مدت نہیں، اگر ولادت کے بعد ایک گھنٹے میں بھی خون بند ہو جائے تو فوراً غسل کر کے نماز اور روزے شروع کرنا فرض ہے۔ چالیس دن کے بعد آنے والا خون استحاضہ (بیماری) ہے جس میں نماز نہیں چھوڑی جائے گی۔",
+      "englishSynopsis": "The absolute maximum limit for Nifas is 40 days; there is no minimum. If bleeding stops before 40 days, the mother must immediately perform Ghusl and resume Salah.",
+      "scholarlyNotes": "یہ عوامی وہم باطل ہے کہ ہر عورت پر ۴۰ دن پورے کرنا لازم ہے۔ • خون ۱۰ یا ۲۰ دن میں رک جائے تو اسی وقت پاک شمار ہوگی اور غسل کر کے نماز شروع کرے۔ • ۴۰ دن سے زیادہ آنے والا خون استحاضہ ہے، اس میں غسل کر کے ہر نماز کے لیے وضو کرے گی۔"
+    },
+    {
+      "chapterId": "bs-04",
+      "chapterTitleArabic": "بهار شريعت - قسم أحكام النساء والطهور",
+      "chapterTitleUrdu": "طہارت کی حتمی علامات: قصۂ بیضاء اور سفیدی کا ظہور",
+      "chapterTitleEnglish": "Final Markers of Purity: White Discharge (Qassah Bayda) & Dryness",
+      "arabicMatn": "صحیح البخاری، کتاب الحیض، تعلیقاً / بہارِ شریعت حصہ ۲",
+      "urduTranslation": "حضرت عائشہ صدیقہ رضی اللہ عنہا کی خدمت میں خواتین روئی کے ٹکڑے بھیجتی تھیں جن پر پیلاہٹ ہوتی تھی، تو آپ فرماتی تھیں: \"جلدی نہ کرو، یہاں تک کہ تم خالص سفید رطوبت (قصۂ بیضاء) نہ دیکھ لو\"۔ پس جب تک سفید رطوبت ظاہر نہ ہو یا روئی بالکل خشک نہ نکلے، طہارت مکمل نہیں ہوتی۔",
+      "englishSynopsis": "A woman is officially pure when white discharge (Qassah Bayda) appears or the cotton pad emerges completely clean and dry.",
+      "scholarlyNotes": "جب تک زردی یا خاکی رنگت باقی ہے حیض ختم نہیں مانا جائے گا۔ • سیدہ عائشہ نے فرمایا: جلدی نہ کرو جب تک سفید دھاگے کی طرح سفیدی نہ دیکھ لو۔ • عادت کے دن پورے ہونے پر سفید رطوبت آتے ہی غسل کر لیا جائے۔"
+    }
+  ]
+}

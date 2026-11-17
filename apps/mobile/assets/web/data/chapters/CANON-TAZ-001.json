@@ -1,0 +1,27 @@
+{
+  "workId": "CANON-TAZ-001",
+  "verifiedExternalUrl": "https://archive.org",
+  "verifiedExternalName": "Al-Ghazali Heritage Archive (Ihya Ulum al-Din)",
+  "chapters": [
+    {
+      "chapterId": "ihy_1",
+      "chapterTitleArabic": "كِتَابُ الْعِلْمِ (حَقِيقَةُ الْعِلْمِ النَّافِعِ)",
+      "chapterTitleUrdu": "کتاب العلم (علمِ نافع کی حقیقت اور علماءِ آخرت)",
+      "chapterTitleEnglish": "Book 1: Knowledge & The Ulama of the Hereafter",
+      "arabicMatn": "قَالَ حُجَّةُ الإِسْلامِ أَبُو حَامِدٍ الْغَزَالِيُّ رَحِمَهُ اللَّهُ:\n\n«اعْلَمْ أَنَّ الْعِلْمَ النَّافِعَ هُوَ الَّذِي يَزِيدُ فِي خَوْفِكَ مِنَ اللَّهِ تَعَالَى، وَيَزِيدُ فِي بَصِيرَتِكَ بِعُيُوبِ نَفْسِكَ، وَيُزَهِّدُكَ فِي الدُّنْيَا وَيُرَغِّبُكَ فِي الآخِرَةِ. فَإِذَا رَأَيْتَ الْعَالِمَ مُقْبِلا عَلَى الدُّنْيَا مُتَهَالِكًا عَلَى الْجَاهِ، فَاعْلَمْ أَنَّ عِلْمَهُ حُجَّةٌ عَلَيْهِ لا لَهُ».",
+      "urduTranslation": "حجۃ الاسلام امام غزالی رحمہ اللہ فرماتے ہیں: \"جان لو کہ نفع بخش علم وہ ہے جو اللہ تعالیٰ کا خوف تمہارے دل میں بڑھائے، تمہارے اپنے عیوب پر تمہاری بصیرت کھولے، تمہیں دنیا سے بے رغبت اور آخرت کی طرف متوجہ کرے۔ پس جب تم کسی عالم کو دیکھو کہ وہ دنیا اور جاہ و منصب پر ٹوٹ رہا ہے، تو سمجھ لو کہ اس کا علم اس کے حق میں نہیں بلکہ اس کے خلاف حجت ہے\"۔",
+      "englishSynopsis": "Defines beneficial knowledge as that which increases awe of Allah and removes spiritual self-deception.",
+      "scholarlyNotes": "Imam al-Ghazali distinguishes between knowledge sought for worldly prestige and that pursued for eternal salvation."
+    },
+    {
+      "chapterId": "ihy_2",
+      "chapterTitleArabic": "أَسْرَارُ الصَّلاةِ (حُضُورُ الْقَلْبِ وَالْخُشُوعُ)",
+      "chapterTitleUrdu": "اسرار الصلاۃ (حضورِ قلب اور خشوع کے باطنی آداب)",
+      "chapterTitleEnglish": "Book 4: Inward Realities of Prayer & Khushu'",
+      "arabicMatn": "«وَاعْلَمْ أَنَّ رُوحَ الصَّلاةِ وَحَيَاتَهَا هُوَ الْخُشُوعُ وَحُضُورُ الْقَلْبِ. فَمَنْ صَلَّى بِلا حُضُورِ قَلْبٍ كَانَ كَمَنْ أَهْدَى إِلَى مَلِكٍ جَارِيَةً مَيِّتَةً! وَحُضُورُ الْقَلْبِ سَبَبُهُ فَرَاغُ الْقَلْبِ مِنَ الشَّوَاغِلِ الدُّنْيَوِيَّةِ عِنْدَ قَوْلِ: اللَّهُ أَكْبَرُ، لِيَسْتَحْضِرَ أَنَّ اللَّهَ أَعْظَمُ مِنْ كُلِّ مَا سِوَاهُ».",
+      "urduTranslation": "\"اور جان لیجیے کہ نماز کی روح اور اس کی حیات حضورِ قلب اور خشوع ہے۔ پس جس نے دل کی حاضری کے بغیر نماز پڑھی وہ اس شخص کی مانند ہے جس نے کسی بادشاہ کو مردہ کنیز تحفے میں پیش کی ہو! اور حضورِ قلب کا طریقہ یہ ہے کہ تکبیرِ تحریمہ کہتے وقت دل کو تمام دنیاوی تفکرات سے خالی کیا جائے تاکہ بندہ محسوس کرے کہ اللہ ہر چیز سے بڑا ہے\"۔",
+      "englishSynopsis": "Explains that outward postures without presence of heart are an empty vessel; Takbir must sever ties with worldly anxieties.",
+      "scholarlyNotes": "Al-Ghazali outlines the six inner states of prayer: presence of heart, understanding, awe, hope, modesty, and reverence."
+    }
+  ]
+}

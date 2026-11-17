@@ -30,4 +30,7 @@ apps/*/services/**/*.d.ts
 
 # Large PDF Digital Library storage (kept local / served via CDN)
 apps/web/public/books/
+*.apk
+*.aab
+apps/web/public/downloads/
 

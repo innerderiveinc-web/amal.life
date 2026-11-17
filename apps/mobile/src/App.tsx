@@ -1,506 +1,491 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, SafeAreaView, Modal, ScrollView } from 'react-native';
-import { TodayScreen } from './screens/TodayScreen';
-import { QuranScreen } from './screens/QuranScreen';
-import { AskAmalScreen } from './screens/AskAmalScreen';
-import { PrayerScreen } from './screens/PrayerScreen';
-import { TasbihScreen } from './screens/TasbihScreen';
-import { CalculatorScreen } from './screens/CalculatorScreen';
-import { LibraryScreen } from './screens/LibraryScreen';
-import { SirahScreen } from './screens/SirahScreen';
-import { CalendarScreen } from './screens/CalendarScreen';
-import { FamilyScreen } from './screens/FamilyScreen';
-import { AboutScreen } from './screens/AboutScreen';
-import { AudioScreen } from './screens/AudioScreen';
-import { VaultScreen } from './screens/VaultScreen';
-import { JourneyScreen } from './screens/JourneyScreen';
-import { ReflectionScreen } from './screens/ReflectionScreen';
-import { PrivacyCenterScreen } from './screens/PrivacyCenterScreen';
-import { ReplayScreen } from './screens/ReplayScreen';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  StatusBar,
+  SafeAreaView,
+  BackHandler,
+  TouchableOpacity,
+  ActivityIndicator,
+  TextInput,
+  Modal,
+} from 'react-native';
+import { WebView, WebViewNavigation } from 'react-native-webview';
 
-interface ScreenErrorBoundaryState {
-  hasError: boolean;
-  error: Error | null;
-}
-
-class ScreenErrorBoundary extends React.Component<
-  { screenName: string; children: React.ReactNode },
-  ScreenErrorBoundaryState
-> {
-  override state: ScreenErrorBoundaryState = { hasError: false, error: null };
-  static getDerivedStateFromError(error: Error): ScreenErrorBoundaryState {
-    return { hasError: true, error };
-  }
-  override componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.warn(`Screen ${this.props.screenName} error:`, error, info);
-  }
-  override render() {
-    if (this.state.hasError) {
-      return (
-        <View style={{ flex: 1, padding: 24, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontSize: 16, fontWeight: '700', color: '#991B1B', marginBottom: 8, textAlign: 'center' }}>
-            {this.props.screenName} اس وقت لوڈ نہیں ہو سکی
-          </Text>
-          <Text style={{ fontSize: 12, color: '#6B7280', textAlign: 'center', marginBottom: 16, lineHeight: 18 }}>
-            {this.state.error?.message || 'نامعلوم مسئلہ'}
-          </Text>
-          <TouchableOpacity
-            style={{ backgroundColor: '#1B4332', paddingHorizontal: 16, paddingVertical: 10, borderRadius: 8 }}
-            onPress={() => this.setState({ hasError: false, error: null })}
-          >
-            <Text style={{ color: '#FFFFFF', fontWeight: '700' }}>🔄 دوبارہ کوشش کریں (Retry)</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-type Tab =
-  | 'TODAY'
-  | 'QURAN'
-  | 'ASK_AMAL'
-  | 'PRAYER'
-  | 'TASBIH'
-  | 'CALCULATOR'
-  | 'LIBRARY'
-  | 'SIRAH'
-  | 'CALENDAR'
-  | 'FAMILY'
-  | 'ABOUT'
-  | 'AUDIO'
-  | 'VAULT'
-  | 'JOURNEY'
-  | 'REFLECTION'
-  | 'PRIVACY'
-  | 'REPLAY';
+// Canonical URLs
+const OFFLINE_EMBEDDED_URL = 'file:///android_asset/web/index.html';
+const DEFAULT_LOCAL_DEV_URL = 'http://192.168.1.8:3005';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('TODAY');
-  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState<boolean>(false);
+  const webViewRef = useRef<WebView>(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [targetUrl, setTargetUrl] = useState(OFFLINE_EMBEDDED_URL);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isUrlModalOpen, setIsUrlModalOpen] = useState(false);
+  const [inputUrl, setInputUrl] = useState(DEFAULT_LOCAL_DEV_URL);
 
-  const mainTabs: { id: Tab; label: string; labelUrdu: string; icon: string }[] = [
-    { id: 'TODAY', label: 'Today', labelUrdu: 'آج', icon: '🌅' },
-    { id: 'QURAN', label: 'Quran', labelUrdu: 'قرآن', icon: '📖' },
-    { id: 'ASK_AMAL', label: 'Ask', labelUrdu: 'رہنمائی', icon: '💬' },
-    { id: 'PRAYER', label: 'Prayer', labelUrdu: 'نماز', icon: '🕋' },
-    { id: 'TASBIH', label: 'Tasbih', labelUrdu: 'تسبیح', icon: '📿' },
-  ];
+  // 1. Android Hardware Back Button Handler
+  useEffect(() => {
+    const onBackPress = () => {
+      if (webViewRef.current && canGoBack) {
+        webViewRef.current.goBack();
+        return true; // handled
+      }
+      return false; // let Android handle (exit app if at root)
+    };
 
-  const isMainTab = mainTabs.some((t) => t.id === activeTab);
+    const backSubscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => backSubscription.remove();
+  }, [canGoBack]);
 
-  const canonicalSciences: { id: Tab; title: string; subtitle: string; icon: string }[] = [
-    { id: 'LIBRARY', title: '106-Book Canonical Library', subtitle: 'کتب خانہ السواد الاعظم', icon: '📚' },
-    { id: 'SIRAH', title: 'Living Sirah & Shama\'il', subtitle: 'سیرت النبی ﷺ و شمائل', icon: '🕊️' },
-    { id: 'AUDIO', title: 'Recitations & Audio Streaming', subtitle: 'صوتی تلاوت و اشعار و شمائل', icon: '🎧' },
-    { id: 'VAULT', title: 'Knowledge Vault & Note Verification', subtitle: 'ذخیرہ علم و تصدیقِ نوٹس', icon: '🔐' },
-    { id: 'REPLAY', title: 'Deen Replay & Annual Insights', subtitle: 'سالانہ سفر دین و مشاہدات', icon: '📈' },
-  ];
+  const handleNavigationStateChange = (navState: WebViewNavigation) => {
+    setCanGoBack(navState.canGoBack);
+  };
 
-  const devotionalPractices: { id: Tab; title: string; subtitle: string; icon: string }[] = [
-    { id: 'CALCULATOR', title: 'Zakat & Miras Calculator', subtitle: 'زکوٰۃ و وراثت تقسیم', icon: '💰' },
-    { id: 'CALENDAR', title: 'Hijri Calendar & Fasting', subtitle: 'ہجری کیلنڈر و روزے', icon: '🌙' },
-    { id: 'JOURNEY', title: 'Adaptive Spiritual Journeys', subtitle: 'روحانی تربیت و منازل', icon: '🌱' },
-    { id: 'REFLECTION', title: 'Daily Muhasabah & Reflections', subtitle: 'روزانہ محاسبہ و فکروتدبر', icon: '📝' },
-  ];
+  const handleReload = () => {
+    setHasError(false);
+    if (webViewRef.current) {
+      webViewRef.current.reload();
+    }
+  };
 
-  const governanceAndFamily: { id: Tab; title: string; subtitle: string; icon: string }[] = [
-    { id: 'FAMILY', title: 'Family Deen Circle', subtitle: 'فیملی سرکل و معمولات', icon: '👨‍👩‍👧‍👦' },
-    { id: 'PRIVACY', title: 'Sovereign Privacy Center', subtitle: 'خود مختار پرائیویسی و ڈیفنس', icon: '🛡️' },
-    { id: 'ABOUT', title: 'About & Methodology', subtitle: 'تعارف و منہج عمل', icon: 'ℹ️' },
-  ];
+  const handleSwitchToOffline = () => {
+    setHasError(false);
+    setTargetUrl(OFFLINE_EMBEDDED_URL);
+    setIsUrlModalOpen(false);
+  };
 
-  const handleSelectMoreApp = (tabId: Tab) => {
-    setActiveTab(tabId);
-    setIsMoreMenuOpen(false);
+  const handleSwitchToCustomUrl = () => {
+    if (!inputUrl.trim()) return;
+    let url = inputUrl.trim();
+    if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('file://')) {
+      url = 'http://' + url;
+    }
+    setHasError(false);
+    setTargetUrl(url);
+    setIsUrlModalOpen(false);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* 1. TOP DIGNIFIED HEADER */}
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#064E3B" />
+
+      {/* COMPACT DIGNIFIED BRAND HEADER & CONTROLS */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          {!isMainTab && (
+          {canGoBack && (
             <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => setActiveTab('TODAY')}
+              style={styles.headerBtn}
+              onPress={() => webViewRef.current?.goBack()}
+              accessibilityLabel="Back"
             >
-              <Text style={styles.backButtonText}>← واپس</Text>
+              <Text style={styles.headerBtnText}>←</Text>
             </TouchableOpacity>
           )}
-          <Text style={styles.logo}>AMAL</Text>
-          <View style={styles.deeniBadge}>
-            <Text style={styles.deeniBadgeText}>اہلسنت تصدیق شدہ</Text>
+          <Text style={styles.logoText}>AMAL OS</Text>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>
+              {targetUrl.startsWith('file://') ? '📱 Offline OS' : '🌐 Live Dev'}
+            </Text>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.moreHeaderBtn} onPress={() => setIsMoreMenuOpen(true)}>
-          <Text style={styles.moreHeaderIcon}>☰</Text>
-          <Text style={styles.moreHeaderText}>دیگر کتب و خدمات (17)</Text>
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={handleReload}
+            accessibilityLabel="Reload"
+          >
+            <Text style={styles.headerActionIcon}>🔄</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={() => setIsUrlModalOpen(true)}
+            accessibilityLabel="Network Switcher"
+          >
+            <Text style={styles.headerActionIcon}>⚙️</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* 2. SCREEN CONTAINER */}
-      <View style={styles.screenContainer}>
-        {activeTab === 'TODAY' && (
-          <ScreenErrorBoundary screenName="آج کا معمول (Today)">
-            <TodayScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'QURAN' && (
-          <ScreenErrorBoundary screenName="قرآنِ مجید (Quran)">
-            <QuranScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'ASK_AMAL' && (
-          <ScreenErrorBoundary screenName="رہنمائی (Ask Amal)">
-            <AskAmalScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'PRAYER' && (
-          <ScreenErrorBoundary screenName="نماز و قبلہ (Prayer)">
-            <PrayerScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'TASBIH' && (
-          <ScreenErrorBoundary screenName="مسنون تسبیح (Tasbih)">
-            <TasbihScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'CALCULATOR' && (
-          <ScreenErrorBoundary screenName="زکوٰۃ و وراثت (Calculator)">
-            <CalculatorScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'LIBRARY' && (
-          <ScreenErrorBoundary screenName="کتب خانہ السواد الاعظم (Library)">
-            <LibraryScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'SIRAH' && (
-          <ScreenErrorBoundary screenName="سیرت النبی ﷺ (Sirah)">
-            <SirahScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'CALENDAR' && (
-          <ScreenErrorBoundary screenName="ہجری کیلنڈر (Calendar)">
-            <CalendarScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'FAMILY' && (
-          <ScreenErrorBoundary screenName="فیملی سرکل (Family)">
-            <FamilyScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'ABOUT' && (
-          <ScreenErrorBoundary screenName="تعارف و منہج (About)">
-            <AboutScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'AUDIO' && (
-          <ScreenErrorBoundary screenName="صوتی تلاوت و اشعار (Audio)">
-            <AudioScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'VAULT' && (
-          <ScreenErrorBoundary screenName="ذخیرہ علم و نوٹس (Vault)">
-            <VaultScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'JOURNEY' && (
-          <ScreenErrorBoundary screenName="روحانی منازل (Journeys)">
-            <JourneyScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'REFLECTION' && (
-          <ScreenErrorBoundary screenName="روزانہ محاسبہ (Reflections)">
-            <ReflectionScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'PRIVACY' && (
-          <ScreenErrorBoundary screenName="پرائیویسی سینٹر (Privacy)">
-            <PrivacyCenterScreen />
-          </ScreenErrorBoundary>
-        )}
-        {activeTab === 'REPLAY' && (
-          <ScreenErrorBoundary screenName="سالانہ دین ری پلے (Replay)">
-            <ReplayScreen />
-          </ScreenErrorBoundary>
-        )}
-      </View>
+      {/* WEBVIEW CONTAINER */}
+      <View style={styles.webviewContainer}>
+        <WebView
+          ref={webViewRef}
+          source={{ uri: targetUrl }}
+          style={styles.webview}
+          onNavigationStateChange={handleNavigationStateChange}
+          onLoadStart={() => {
+            setIsLoading(true);
+            setHasError(false);
+          }}
+          onLoadEnd={() => setIsLoading(false)}
+          onError={(syntheticEvent) => {
+            const { nativeEvent } = syntheticEvent;
+            console.warn('WebView error: ', nativeEvent);
+            setHasError(true);
+            setErrorMessage(nativeEvent.description || 'Connection failed');
+            setIsLoading(false);
+          }}
+          // Enhanced Hybrid Native Android Settings
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          allowFileAccess={true}
+          allowFileAccessFromFileURLs={true}
+          allowUniversalAccessFromFileURLs={true}
+          originWhitelist={['*']}
+          mixedContentMode="always"
+          allowsInlineMediaPlayback={true}
+          mediaPlaybackRequiresUserAction={false}
+          cacheEnabled={true}
+          cacheMode="LOAD_DEFAULT"
+          scalesPageToFit={true}
+          bounces={false}
+          overScrollMode="never"
+        />
 
-      {/* 3. 5-PILLAR CALM BOTTOM NAVIGATION (فکسڈ اور واضح ۵ ارکان) */}
-      <View style={styles.bottomNav}>
-        {mainTabs.map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <TouchableOpacity
-              key={tab.id}
-              style={[styles.navItem, isActive && styles.navItemActive]}
-              onPress={() => setActiveTab(tab.id)}
-            >
-              <Text style={styles.navIcon}>{tab.icon}</Text>
-              <Text style={[styles.navLabel, isActive && styles.navLabelActive]}>
-                {tab.labelUrdu}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+        {/* LOADING INDICATOR */}
+        {isLoading && (
+          <View style={styles.loadingOverlay}>
+            <ActivityIndicator size="large" color="#10B981" />
+            <Text style={styles.loadingText}>AMAL OS لوڈ ہو رہا ہے...</Text>
+          </View>
+        )}
 
-      {/* 4. MORE APPS MODAL / DRAWER */}
-      {isMoreMenuOpen && (
-        <Modal visible={isMoreMenuOpen} transparent animationType="slide">
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalSheet}>
-              <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>تمام اسلامی خدمات (All 17 AMAL Services)</Text>
-                <TouchableOpacity onPress={() => setIsMoreMenuOpen(false)}>
-                  <Text style={styles.modalClose}>✕</Text>
+        {/* ERROR RECOVERY SHIELD */}
+        {hasError && (
+          <View style={styles.errorOverlay}>
+            <Text style={styles.errorBismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
+            <Text style={styles.errorTitle}>AMAL OS — رابطہ منقطع ہوا</Text>
+            <Text style={styles.errorSub}>
+              {targetUrl.startsWith('file://')
+                ? 'مقامی فائل لوڈ کرنے میں عارضی مسئلہ آیا ہے۔'
+                : `سرور (${targetUrl}) سے رابطہ نہیں ہو سکا۔`}
+            </Text>
+            <Text style={styles.errorDesc}>{errorMessage}</Text>
+
+            <View style={styles.errorActions}>
+              <TouchableOpacity style={styles.retryBtn} onPress={handleReload}>
+                <Text style={styles.retryBtnText}>🔄 دوبارہ کوشش کریں (Retry)</Text>
+              </TouchableOpacity>
+
+              {!targetUrl.startsWith('file://') && (
+                <TouchableOpacity
+                  style={styles.offlineBtn}
+                  onPress={handleSwitchToOffline}
+                >
+                  <Text style={styles.offlineBtnText}>📱 آف لائن موڈ چلائیں (Switch to Offline)</Text>
                 </TouchableOpacity>
-              </View>
-
-              <ScrollView style={styles.modalBody}>
-                {/* Section 1: Canonical Sciences */}
-                <Text style={styles.drawerSectionTitle}>کتب و علوم (Canonical Sciences & Vault)</Text>
-                {canonicalSciences.map((app) => (
-                  <TouchableOpacity
-                    key={app.id}
-                    style={styles.moreAppRow}
-                    onPress={() => handleSelectMoreApp(app.id)}
-                  >
-                    <Text style={styles.moreAppIcon}>{app.icon}</Text>
-                    <View style={styles.moreAppDetails}>
-                      <Text style={styles.moreAppTitle}>{app.title}</Text>
-                      <Text style={styles.moreAppSub}>{app.subtitle}</Text>
-                    </View>
-                    <Text style={styles.moreAppArrow}>➔</Text>
-                  </TouchableOpacity>
-                ))}
-
-                {/* Section 2: Devotional Practices */}
-                <Text style={styles.drawerSectionTitle}>عبادات، منازل و محاسبہ (Practices & Growth)</Text>
-                {devotionalPractices.map((app) => (
-                  <TouchableOpacity
-                    key={app.id}
-                    style={styles.moreAppRow}
-                    onPress={() => handleSelectMoreApp(app.id)}
-                  >
-                    <Text style={styles.moreAppIcon}>{app.icon}</Text>
-                    <View style={styles.moreAppDetails}>
-                      <Text style={styles.moreAppTitle}>{app.title}</Text>
-                      <Text style={styles.moreAppSub}>{app.subtitle}</Text>
-                    </View>
-                    <Text style={styles.moreAppArrow}>➔</Text>
-                  </TouchableOpacity>
-                ))}
-
-                {/* Section 3: Family & Governance */}
-                <Text style={styles.drawerSectionTitle}>خاندان و خود مختار تحفظ (Family & Sovereignty)</Text>
-                {governanceAndFamily.map((app) => (
-                  <TouchableOpacity
-                    key={app.id}
-                    style={styles.moreAppRow}
-                    onPress={() => handleSelectMoreApp(app.id)}
-                  >
-                    <Text style={styles.moreAppIcon}>{app.icon}</Text>
-                    <View style={styles.moreAppDetails}>
-                      <Text style={styles.moreAppTitle}>{app.title}</Text>
-                      <Text style={styles.moreAppSub}>{app.subtitle}</Text>
-                    </View>
-                    <Text style={styles.moreAppArrow}>➔</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
+              )}
             </View>
           </View>
-        </Modal>
-      )}
+        )}
+      </View>
+
+      {/* NETWORK / TARGET SWITCHER MODAL */}
+      <Modal
+        visible={isUrlModalOpen}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setIsUrlModalOpen(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>AMAL OS کنکشن مینیجر</Text>
+            <Text style={styles.modalSub}>
+              ٹیسٹنگ اور مکمل فیڈ بیک کے لیے منتخب فرمائیں کہ ایپ کہاں سے چلے:
+            </Text>
+
+            {/* OPTION 1: EMBEDDED OFFLINE OS */}
+            <TouchableOpacity
+              style={[
+                styles.optionCard,
+                targetUrl.startsWith('file://') && styles.optionCardActive,
+              ]}
+              onPress={handleSwitchToOffline}
+            >
+              <Text style={styles.optionIcon}>📱</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.optionTitle}>مکمل آف لائن امبلڈڈ OS (Recommended)</Text>
+                <Text style={styles.optionDesc}>
+                  تمام 31 اسکرینیں، 106 کتب، اور 548 صفحات کا مصحف براہِ راست APK کے اندر سے لوڈ ہوگا۔ انٹرنیٹ کی ضرورت نہیں۔
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            {/* OPTION 2: LIVE WI-FI DEV SERVER */}
+            <View style={styles.customUrlSection}>
+              <Text style={styles.customUrlLabel}>یا اپنے لیپ ٹاپ / سرور سے لائیو جوڑیں:</Text>
+              <TextInput
+                style={styles.urlInput}
+                value={inputUrl}
+                onChangeText={setInputUrl}
+                placeholder="http://192.168.1.8:3005"
+                placeholderTextColor="#94A3B8"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <TouchableOpacity
+                style={styles.connectBtn}
+                onPress={handleSwitchToCustomUrl}
+              >
+                <Text style={styles.connectBtnText}>لائیو سرور سے جوڑیں (Connect)</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              style={styles.closeModalBtn}
+              onPress={() => setIsUrlModalOpen(false)}
+            >
+              <Text style={styles.closeModalBtnText}>بند کریں (Close)</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: '#F8FAF9',
+    backgroundColor: '#064E3B',
   },
   header: {
+    height: 48,
+    backgroundColor: '#064E3B',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0',
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  backButton: {
-    backgroundColor: '#065F46',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+  headerBtn: {
+    padding: 6,
     marginRight: 4,
   },
-  backButtonText: {
-    fontSize: 11,
-    fontWeight: '700',
+  headerBtnText: {
     color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  logo: {
-    fontSize: 20,
+  logoText: {
+    color: '#FDE68A',
     fontWeight: '900',
-    color: '#064E3B',
-    letterSpacing: 0.5,
+    fontSize: 16,
+    letterSpacing: 1.2,
   },
-  deeniBadge: {
-    backgroundColor: '#ECFDF5',
+  badge: {
+    backgroundColor: 'rgba(16, 185, 129, 0.25)',
     paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#A7F3D0',
+    borderColor: 'rgba(52, 211, 153, 0.4)',
   },
-  deeniBadgeText: {
+  badgeText: {
+    color: '#A7F3D0',
     fontSize: 10,
     fontWeight: '700',
-    color: '#047857',
   },
-  moreHeaderBtn: {
+  headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    backgroundColor: '#F1F5F9',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
+    gap: 12,
   },
-  moreHeaderIcon: {
-    fontSize: 14,
-    color: '#475569',
+  headerActionBtn: {
+    padding: 6,
   },
-  moreHeaderText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#334155',
+  headerActionIcon: {
+    fontSize: 16,
   },
-  screenContainer: {
+  webviewContainer: {
     flex: 1,
+    backgroundColor: '#022C22',
+    position: 'relative',
   },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E2E8F0',
-    paddingVertical: 8,
-    paddingBottom: 14,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 8,
+  webview: {
+    flex: 1,
+    backgroundColor: '#022C22',
   },
-  navItem: {
-    alignItems: 'center',
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#022C22',
     justifyContent: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    alignItems: 'center',
+    gap: 12,
   },
-  navItemActive: {
-    backgroundColor: '#F0FDF4',
+  loadingText: {
+    color: '#A7F3D0',
+    fontSize: 14,
+    fontWeight: '700',
   },
-  navIcon: {
-    fontSize: 20,
-    marginBottom: 2,
+  errorOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#022C22',
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  navLabel: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#64748B',
+  errorBismillah: {
+    fontSize: 16,
+    color: '#86EFAC',
+    marginBottom: 8,
   },
-  navLabelActive: {
-    color: '#065F46',
+  errorTitle: {
+    fontSize: 18,
     fontWeight: '800',
+    color: '#F87171',
+    marginBottom: 6,
   },
-  modalOverlay: {
+  errorSub: {
+    fontSize: 13,
+    color: '#E2E8F0',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  errorDesc: {
+    fontSize: 11,
+    color: '#94A3B8',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  errorActions: {
+    width: '100%',
+    gap: 10,
+  },
+  retryBtn: {
+    backgroundColor: '#059669',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  retryBtnText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  offlineBtn: {
+    backgroundColor: '#1E293B',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  offlineBtnText: {
+    color: '#E2E8F0',
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  modalBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
     justifyContent: 'flex-end',
   },
-  modalSheet: {
-    backgroundColor: '#FFFFFF',
+  modalCard: {
+    backgroundColor: '#0F172A',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '75%',
     padding: 20,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0',
-    paddingBottom: 12,
-    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
   },
   modalTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: '#0F172A',
-  },
-  modalClose: {
     fontSize: 18,
-    color: '#64748B',
-    fontWeight: '700',
-  },
-  modalBody: {
-    paddingBottom: 24,
-  },
-  drawerSectionTitle: {
-    fontSize: 11,
     fontWeight: '800',
-    color: '#047857',
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
-    marginTop: 14,
-    marginBottom: 6,
-    paddingHorizontal: 4,
+    color: '#FFFFFF',
+    marginBottom: 4,
+    textAlign: 'right',
   },
-  moreAppRow: {
+  modalSub: {
+    fontSize: 12,
+    color: '#94A3B8',
+    marginBottom: 16,
+    textAlign: 'right',
+    lineHeight: 18,
+  },
+  optionCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F1F5F9',
+    gap: 12,
+    backgroundColor: '#1E293B',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
+    marginBottom: 14,
   },
-  moreAppIcon: {
-    fontSize: 22,
-    marginRight: 12,
+  optionCardActive: {
+    borderColor: '#10B981',
+    backgroundColor: '#064E3B',
   },
-  moreAppDetails: {
-    flex: 1,
+  optionIcon: {
+    fontSize: 28,
   },
-  moreAppTitle: {
+  optionTitle: {
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
-    color: '#1E293B',
+    marginBottom: 4,
   },
-  moreAppSub: {
-    fontSize: 11,
-    color: '#64748B',
-    marginTop: 2,
-  },
-  moreAppArrow: {
-    fontSize: 14,
+  optionDesc: {
     color: '#94A3B8',
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  customUrlSection: {
+    backgroundColor: '#1E293B',
+    padding: 14,
+    borderRadius: 12,
+    marginBottom: 14,
+  },
+  customUrlLabel: {
+    color: '#E2E8F0',
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 8,
+    textAlign: 'right',
+  },
+  urlInput: {
+    backgroundColor: '#0F172A',
+    color: '#FFFFFF',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#334155',
+    fontSize: 13,
+    marginBottom: 10,
+  },
+  connectBtn: {
+    backgroundColor: '#059669',
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  connectBtnText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  closeModalBtn: {
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  closeModalBtnText: {
+    color: '#94A3B8',
+    fontWeight: '700',
+    fontSize: 14,
   },
 });

@@ -19,10 +19,11 @@
     "@amal/evidence": "workspace:*",
     "@amal/types": "workspace:*",
     "@amal/ui": "workspace:*",
+    "@babel/runtime": "^7.20.0",
     "expo": "^51.0.0",
     "react": "18.2.0",
     "react-native": "0.74.5",
-    "@babel/runtime": "^7.20.0"
+    "react-native-webview": "^14.0.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-class-static-block": "^7.24.0",
