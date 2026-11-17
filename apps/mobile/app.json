@@ -28,7 +28,7 @@
         "backgroundColor": "#1B4332"
       },
       "package": "com.amal.lifeos",
-      "versionCode": 6,
+      "versionCode": 7,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -43,8 +43,7 @@
             "minSdkVersion": 24
           }
         }
-      ],
-      "./plugins/withAndroidWebAssets.js"
+      ]
     ],
     "extra": {
       "eas": {
