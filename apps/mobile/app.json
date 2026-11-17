@@ -28,7 +28,7 @@
         "backgroundColor": "#1B4332"
       },
       "package": "com.amal.lifeos",
-      "versionCode": 4,
+      "versionCode": 5,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -36,6 +36,14 @@
       ]
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24
+          }
+        }
+      ],
       "./plugins/withAndroidWebAssets.js"
     ],
     "extra": {
