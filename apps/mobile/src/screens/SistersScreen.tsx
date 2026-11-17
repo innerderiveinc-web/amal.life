@@ -9,16 +9,18 @@ import {
   TextInput,
 } from 'react-native';
 import {
-  SANCTUARY_BOOKS,
+  WOMEN_CLASSICAL_CANON,
   SanctuaryBook,
   SanctuaryBookChapter,
-  SAHABIYYAT_DIRECTORY,
+  SAHABIYYAT_PROFILES,
   SahabiyyatProfile,
-  MASNOON_FAMILY_DUAS,
+  MOTHERHOOD_FAMILY_DUAS,
+  AHKAM_NISWAN_GUIDE,
+  FiqhRulingItem,
 } from '../data/women-sanctuary-data';
 
 export const SistersScreen: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'BOOKS' | 'SAHABIYYAT' | 'DUAS'>('BOOKS');
+  const [activeTab, setActiveTab] = useState<'BOOKS' | 'FIQH' | 'SAHABIYYAT' | 'DUAS'>('BOOKS');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -28,14 +30,14 @@ export const SistersScreen: React.FC = () => {
   const [activeProfile, setActiveProfile] = useState<SahabiyyatProfile | null>(null);
 
   const categories = [
-    { id: 'ALL', label: 'تمام کتب (21)' },
+    { id: 'ALL', label: `تمام کتب (${WOMEN_CLASSICAL_CANON.length})` },
     { id: 'fiqh_taharah', label: 'فقہ و طہارت' },
     { id: 'ummahat_banat', label: 'امہات المؤمنین' },
     { id: 'sahabiyyat_muhaddithat', label: 'صحابیات و محدثات' },
     { id: 'salihat_tarbiyat', label: 'صالحات و تربیت' },
   ];
 
-  const filteredBooks = SANCTUARY_BOOKS.filter((book) => {
+  const filteredBooks = WOMEN_CLASSICAL_CANON.filter((book) => {
     const matchesCat = selectedCategory === 'ALL' || book.category === selectedCategory;
     const matchesSearch =
       searchQuery === '' ||
@@ -63,7 +65,16 @@ export const SistersScreen: React.FC = () => {
           onPress={() => setActiveTab('BOOKS')}
         >
           <Text style={[styles.tabBtnText, activeTab === 'BOOKS' && styles.tabBtnTextActive]}>
-            📚 کتب خانہ ({SANCTUARY_BOOKS.length})
+            📚 کتب خانہ ({WOMEN_CLASSICAL_CANON.length})
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tabBtn, activeTab === 'FIQH' && styles.tabBtnActive]}
+          onPress={() => setActiveTab('FIQH')}
+        >
+          <Text style={[styles.tabBtnText, activeTab === 'FIQH' && styles.tabBtnTextActive]}>
+            ⚖️ احکامِ نسواں
           </Text>
         </TouchableOpacity>
 
@@ -72,7 +83,7 @@ export const SistersScreen: React.FC = () => {
           onPress={() => setActiveTab('SAHABIYYAT')}
         >
           <Text style={[styles.tabBtnText, activeTab === 'SAHABIYYAT' && styles.tabBtnTextActive]}>
-            🌸 سیرتِ صحابیات ({SAHABIYYAT_DIRECTORY.length})
+            🌸 سیرتِ صحابیات ({SAHABIYYAT_PROFILES.length})
           </Text>
         </TouchableOpacity>
 
@@ -81,7 +92,7 @@ export const SistersScreen: React.FC = () => {
           onPress={() => setActiveTab('DUAS')}
         >
           <Text style={[styles.tabBtnText, activeTab === 'DUAS' && styles.tabBtnTextActive]}>
-            🤲 مسنون دعائیں
+            🤲 دعائیں
           </Text>
         </TouchableOpacity>
       </View>
@@ -90,7 +101,6 @@ export const SistersScreen: React.FC = () => {
         {/* 1. BOOKS TAB */}
         {activeTab === 'BOOKS' && (
           <View>
-            {/* Search Input */}
             <TextInput
               style={styles.searchInput}
               placeholder="کتاب یا مصنف کا نام تلاش فرمائیں..."
@@ -145,10 +155,30 @@ export const SistersScreen: React.FC = () => {
           </View>
         )}
 
-        {/* 2. SAHABIYYAT TAB */}
+        {/* 2. FIQH AL-NISWAN TAB */}
+        {activeTab === 'FIQH' && (
+          <View>
+            {AHKAM_NISWAN_GUIDE.map((item) => (
+              <View key={item.id} style={styles.fiqhCard}>
+                <View style={styles.fiqhCardHeader}>
+                  <Text style={styles.fiqhBadge}>{item.titleUrdu}</Text>
+                  <Text style={styles.fiqhRulingBadge}>{item.category}</Text>
+                </View>
+                <Text style={styles.fiqhQuestion}>{item.summaryUrdu}</Text>
+                <Text style={styles.fiqhAnswer}>{item.detailedRulingUrdu}</Text>
+                <View style={styles.fiqhCitationBox}>
+                  <Text style={styles.fiqhCitationTitle}>مستند ماخذ:</Text>
+                  <Text style={styles.fiqhCitation}>{item.hanafiReference}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {/* 3. SAHABIYYAT TAB */}
         {activeTab === 'SAHABIYYAT' && (
           <View>
-            {SAHABIYYAT_DIRECTORY.map((profile) => (
+            {SAHABIYYAT_PROFILES.map((profile) => (
               <TouchableOpacity
                 key={profile.id}
                 style={styles.profileCard}
@@ -158,11 +188,11 @@ export const SistersScreen: React.FC = () => {
                   <Text style={styles.profileIcon}>🌸</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.profileNameUrdu}>{profile.nameUrdu}</Text>
-                    <Text style={styles.profileTitleUrdu}>{profile.titleHonorificUrdu}</Text>
+                    <Text style={styles.profileTitleUrdu}>{profile.titleUrdu}</Text>
                   </View>
                 </View>
                 <Text style={styles.profileSummary} numberOfLines={3}>
-                  {profile.biographySummaryUrdu}
+                  {profile.biographyUrdu}
                 </Text>
                 <View style={styles.profileFooter}>
                   <Text style={styles.openProfile}>سیرت و احادیث پڑھیں ➔</Text>
@@ -172,21 +202,21 @@ export const SistersScreen: React.FC = () => {
           </View>
         )}
 
-        {/* 3. MASNOON DUAS TAB */}
+        {/* 4. MASNOON DUAS TAB */}
         {activeTab === 'DUAS' && (
           <View>
-            {MASNOON_FAMILY_DUAS.map((dua) => (
+            {MOTHERHOOD_FAMILY_DUAS.map((dua) => (
               <View key={dua.id} style={styles.duaCard}>
                 <View style={styles.duaHeader}>
                   <Text style={styles.duaTitleUrdu}>{dua.titleUrdu}</Text>
-                  <Text style={styles.duaOccasion}>{dua.occasionUrdu}</Text>
+                  <Text style={styles.duaOccasion}>{dua.category}</Text>
                 </View>
                 <Text style={styles.duaArabic}>{dua.arabicText}</Text>
                 <View style={styles.tarjumaBox}>
                   <Text style={styles.tarjumaLabel}>ترجمہ:</Text>
                   <Text style={styles.tarjumaText}>{dua.translationUrdu}</Text>
                 </View>
-                <Text style={styles.duaSanad}>حوالہ: {dua.hadithReference}</Text>
+                <Text style={styles.duaSanad}>حوالہ: {dua.reference}</Text>
               </View>
             ))}
           </View>
@@ -281,21 +311,31 @@ export const SistersScreen: React.FC = () => {
             {activeProfile && (
               <View style={styles.chapterContent}>
                 <Text style={styles.profileModalName}>{activeProfile.nameUrdu}</Text>
-                <Text style={styles.profileModalTitle}>{activeProfile.titleHonorificUrdu}</Text>
-                <Text style={styles.profileEraBadge}>دور: {activeProfile.eraAndLineageUrdu}</Text>
+                <Text style={styles.profileModalTitle}>{activeProfile.titleUrdu}</Text>
+                <Text style={styles.profileEraBadge}>دور: {activeProfile.era} • {activeProfile.kinshipToProphet}</Text>
 
                 <View style={styles.bioCard}>
                   <Text style={styles.bioHeading}>حیاتِ مبارکہ اور خدمات:</Text>
-                  <Text style={styles.bioText}>{activeProfile.biographySummaryUrdu}</Text>
+                  <Text style={styles.bioText}>{activeProfile.biographyUrdu}</Text>
                 </View>
 
-                {activeProfile.keyMilestones && activeProfile.keyMilestones.length > 0 && (
+                {activeProfile.heroicAttributes && activeProfile.heroicAttributes.length > 0 && (
                   <View style={styles.milestonesSection}>
-                    <Text style={styles.milestoneHeading}>نمایاں تاریخی لمحات:</Text>
-                    {activeProfile.keyMilestones.map((m, idx) => (
+                    <Text style={styles.milestoneHeading}>نمایاں اوصاف و خصوصیات:</Text>
+                    {activeProfile.heroicAttributes.map((attr, idx) => (
                       <View key={idx} style={styles.milestoneItem}>
-                        <Text style={styles.milestoneTitle}>✦ {m.eventTitleUrdu}</Text>
-                        <Text style={styles.milestoneDesc}>{m.descriptionUrdu}</Text>
+                        <Text style={styles.milestoneTitle}>✦ {attr}</Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+
+                {activeProfile.dailySunnahLessons && activeProfile.dailySunnahLessons.length > 0 && (
+                  <View style={styles.milestonesSection}>
+                    <Text style={styles.milestoneHeading}>روزمرہ کے عملی دروس:</Text>
+                    {activeProfile.dailySunnahLessons.map((lesson, idx) => (
+                      <View key={idx} style={styles.milestoneItem}>
+                        <Text style={styles.milestoneDesc}>{lesson.ur}</Text>
                       </View>
                     ))}
                   </View>
@@ -351,7 +391,7 @@ const styles = StyleSheet.create({
   },
   tabBtn: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     alignItems: 'center',
   },
   tabBtnActive: {
@@ -360,7 +400,7 @@ const styles = StyleSheet.create({
   },
   tabBtnText: {
     color: '#64748B',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
   },
   tabBtnTextActive: {
@@ -487,6 +527,64 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#059669',
     fontWeight: '700',
+  },
+  fiqhCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  fiqhCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  fiqhBadge: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#065F46',
+    backgroundColor: '#ECFDF5',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  fiqhRulingBadge: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  fiqhQuestion: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#0F172A',
+    textAlign: 'right',
+    marginBottom: 6,
+    lineHeight: 20,
+  },
+  fiqhAnswer: {
+    fontSize: 12,
+    color: '#334155',
+    textAlign: 'right',
+    lineHeight: 18,
+    marginBottom: 8,
+  },
+  fiqhCitationBox: {
+    backgroundColor: '#F8FAFC',
+    padding: 8,
+    borderRadius: 6,
+  },
+  fiqhCitationTitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#64748B',
+  },
+  fiqhCitation: {
+    fontSize: 10,
+    color: '#475569',
+    marginTop: 2,
   },
   profileCard: {
     backgroundColor: '#FFFFFF',

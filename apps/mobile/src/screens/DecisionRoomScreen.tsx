@@ -91,11 +91,13 @@ export const DecisionRoomScreen: React.FC = () => {
             </View>
             <Text style={styles.actionText}>{compiledPlan.microAmal.concreteAction}</Text>
             <Text style={styles.durationText}>
-              ⏱️ دورانیہ: {compiledPlan.microAmal.durationMinutes} منٹ • بوجھ: {compiledPlan.microAmal.perceivedBurden}
+              ⏱️ دورانیہ: {compiledPlan.microAmal.durationMinutes} منٹ • آسانی: {compiledPlan.microAmal.frictionFailsafe}
             </Text>
             <View style={styles.evidenceBox}>
               <Text style={styles.evidenceTitle}>شرعی بنیاد / ثبوت:</Text>
-              <Text style={styles.evidenceText}>{compiledPlan.fiqhRuling}</Text>
+              <Text style={styles.evidenceText}>
+                {compiledPlan.evidenceGrounding.scholarlyRule || compiledPlan.evidenceGrounding.hadithCitation}
+              </Text>
             </View>
           </View>
         )}
