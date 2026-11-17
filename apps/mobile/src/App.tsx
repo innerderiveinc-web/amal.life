@@ -17,6 +17,55 @@ import { WebView, WebViewNavigation } from 'react-native-webview';
 const OFFLINE_EMBEDDED_URL = 'file:///android_asset/web/index.html';
 const DEFAULT_LOCAL_DEV_URL = 'http://192.168.1.8:3005';
 
+// Client-side script injected into Android WebView to ensure robust offline routing & storage
+const INJECTED_OFFLINE_SHIELD = `
+  (function() {
+    // 1. In-memory storage fallback if file:/// protocol restricts localStorage
+    try {
+      var _probe = '__probe__';
+      window.localStorage.setItem(_probe, _probe);
+      window.localStorage.removeItem(_probe);
+    } catch (e) {
+      console.warn('[AMAL Hybrid] localStorage sandboxed. Installing memory fallback.');
+      var _memStore = {};
+      try {
+        Object.defineProperty(window, 'localStorage', {
+          value: {
+            getItem: function(k) { return _memStore[k] || null; },
+            setItem: function(k, v) { _memStore[k] = String(v); },
+            removeItem: function(k) { delete _memStore[k]; },
+            clear: function() { _memStore = {}; },
+            get length() { return Object.keys(_memStore).length; },
+            key: function(i) { return Object.keys(_memStore)[i] || null; }
+          },
+          writable: true,
+          configurable: true
+        });
+      } catch (err) {}
+    }
+
+    // 2. Intercept root-relative links in file:/// mode to route to android_asset/web/...
+    if (window.location.protocol === 'file:') {
+      document.addEventListener('click', function(e) {
+        var el = e.target;
+        while (el && el.tagName !== 'A') {
+          el = el.parentElement;
+        }
+        if (el && el.getAttribute) {
+          var href = el.getAttribute('href');
+          if (href && href.startsWith('/') && !href.startsWith('//')) {
+            e.preventDefault();
+            var path = href.replace(/^\\/+/, '').replace(/\\/+$/, '');
+            var target = path ? 'file:///android_asset/web/' + path + '/index.html' : 'file:///android_asset/web/index.html';
+            window.location.href = target;
+          }
+        }
+      }, true);
+    }
+  })();
+  true;
+`;
+
 export const App: React.FC = () => {
   const webViewRef = useRef<WebView>(null);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -124,6 +173,21 @@ export const App: React.FC = () => {
             setHasError(false);
           }}
           onLoadEnd={() => setIsLoading(false)}
+          injectedJavaScriptBeforeContentLoaded={INJECTED_OFFLINE_SHIELD}
+          onShouldStartLoadWithRequest={(request) => {
+            const { url } = request;
+            if (url.startsWith('file:///android_asset/web/')) {
+              return true;
+            }
+            if (url.startsWith('file:///')) {
+              const subPath = url.replace('file:///', '').replace(/^\/+/, '');
+              const cleanPath = subPath.replace(/\/index\.html$/, '').replace(/\/$/, '');
+              const newTarget = cleanPath ? `file:///android_asset/web/${cleanPath}/index.html` : 'file:///android_asset/web/index.html';
+              setTargetUrl(newTarget);
+              return false;
+            }
+            return true;
+          }}
           onError={(syntheticEvent) => {
             const { nativeEvent } = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);

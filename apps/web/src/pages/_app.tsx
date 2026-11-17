@@ -23,6 +23,32 @@ import { enablePersistentStorage, checkStorageHealth } from '../lib/storage-guar
 import { showAmalToast } from '../components/Toast';
 import { GlobalCrashGuardErrorBoundary } from '../components/GlobalCrashGuardErrorBoundary';
 
+// In-memory fallback if localStorage is sandboxed under file:/// protocol in mobile WebView
+if (typeof window !== 'undefined') {
+  try {
+    const _test = '__amal_storage_probe__';
+    window.localStorage.setItem(_test, _test);
+    window.localStorage.removeItem(_test);
+  } catch (e) {
+    console.warn('[AMAL StorageGuard] localStorage restricted by host environment. Initializing resilient in-memory storage fallback.');
+    const _memStore: Record<string, string> = {};
+    try {
+      Object.defineProperty(window, 'localStorage', {
+        value: {
+          getItem: (key: string) => _memStore[key] ?? null,
+          setItem: (key: string, val: string) => { _memStore[key] = String(val); },
+          removeItem: (key: string) => { delete _memStore[key]; },
+          clear: () => { Object.keys(_memStore).forEach(k => delete _memStore[k]); },
+          get length() { return Object.keys(_memStore).length; },
+          key: (i: number) => Object.keys(_memStore)[i] ?? null,
+        },
+        writable: true,
+        configurable: true,
+      });
+    } catch (_) {}
+  }
+}
+
 export default function App({ Component, pageProps }: AppProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isReaderSettingsOpen, setIsReaderSettingsOpen] = useState(false);
@@ -35,17 +61,21 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isWaqfOpen, setIsWaqfOpen] = useState(false);
 
   useEffect(() => {
-    // 1. Restore Tahajjud theme preference
-    const savedTahajjud = localStorage.getItem('amal_tahajjud_mode');
-    if (savedTahajjud === 'true') {
-      setIsTahajjudMode(true);
-      document.body.classList.add('theme-tahajjud');
-    }
+    try {
+      // 1. Restore Tahajjud theme preference
+      const savedTahajjud = localStorage.getItem('amal_tahajjud_mode');
+      if (savedTahajjud === 'true') {
+        setIsTahajjudMode(true);
+        document.body.classList.add('theme-tahajjud');
+      }
 
-    // 1.1 Restore High Contrast preference
-    const savedHighContrast = localStorage.getItem('amal_high_contrast');
-    if (savedHighContrast === 'true') {
-      document.body.classList.add('high-contrast');
+      // 1.1 Restore High Contrast preference
+      const savedHighContrast = localStorage.getItem('amal_high_contrast');
+      if (savedHighContrast === 'true') {
+        document.body.classList.add('high-contrast');
+      }
+    } catch (e) {
+      console.warn('LocalStorage access in _app mount:', e);
     }
 
     // PWA Install Prompt Handlers

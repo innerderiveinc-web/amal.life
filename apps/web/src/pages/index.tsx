@@ -50,22 +50,31 @@ export default function Home() {
     signatureCapabilitiesEngine.getLifeOsProfile('STANDARD')
   );
 
-  // 5. Sakinah Focus Mode State (Tranquility vs Full Suite) - Defaults to Tranquility (True) for serene user experience
-  const [isFocusMode, setIsFocusMode] = useState<boolean>(true);
+  // 5. Sakinah Focus Mode State (Tranquility vs Full Suite) - Defaults to Full Suite (false) so all 24 modules & signature engines are open
+  const [isFocusMode, setIsFocusMode] = useState<boolean>(false);
   const { t, isUrdu } = useLanguage();
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('amal_focus_mode');
-      if (saved === 'false') setIsFocusMode(false);
-      else setIsFocusMode(true);
+    try {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('amal_focus_mode');
+        if (saved === 'true') setIsFocusMode(true);
+        else setIsFocusMode(false);
+      }
+    } catch (e) {
+      console.warn('LocalStorage access issue in focus mode init:', e);
+      setIsFocusMode(false);
     }
   }, []);
 
   const toggleFocusMode = (focus: boolean) => {
     setIsFocusMode(focus);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('amal_focus_mode', focus ? 'true' : 'false');
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('amal_focus_mode', focus ? 'true' : 'false');
+      }
+    } catch (e) {
+      console.warn('LocalStorage access issue in toggleFocusMode:', e);
     }
   };
 
