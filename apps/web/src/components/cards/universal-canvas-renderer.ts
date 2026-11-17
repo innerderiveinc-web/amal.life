@@ -143,7 +143,7 @@ export function drawUniversalContentCard(
   includeEnglish: boolean
 ): string | null {
   const width = 1080;
-  const height = aspect === 'STORY' ? 1920 : 1080;
+  const height = aspect === 'WALLPAPER' ? 2340 : aspect === 'STORY' ? 1920 : 1080;
   canvas.width = width;
   canvas.height = height;
 
@@ -177,6 +177,18 @@ export function drawUniversalContentCard(
       badgeBg: 'rgba(6, 78, 59, 0.12)',
       badgeText: '#064E3B',
       isLight: true,
+    };
+  } else if (themeMode === 'AMOLED_GOLD') {
+    t = {
+      bgGradient: ['#000000', '#09090B'],
+      borderColor: '#D4AF37',
+      accentColor: '#F59E0B',
+      textColor: '#FFFFFF',
+      secondaryTextColor: '#FEF3C7',
+      citationColor: '#FDE68A',
+      badgeBg: 'rgba(212, 175, 55, 0.2)',
+      badgeText: '#FDE68A',
+      isLight: false,
     };
   }
 
@@ -234,7 +246,7 @@ export function drawUniversalContentCard(
   drawCorner(width - innerMargin, height - innerMargin);
 
   // 5. Header: Category Seal & Title
-  let cursorY = aspect === 'STORY' ? 170 : 130;
+  let cursorY = aspect === 'WALLPAPER' ? 360 : aspect === 'STORY' ? 170 : 130;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
@@ -267,7 +279,7 @@ export function drawUniversalContentCard(
   ctx.fillStyle = t.accentColor;
   ctx.font = 'bold 15px -apple-system, system-ui, sans-serif';
   ctx.fillText('✦ ۞ ✦', width / 2, cursorY);
-  cursorY += aspect === 'STORY' ? 70 : 45;
+  cursorY += aspect === 'WALLPAPER' ? 80 : aspect === 'STORY' ? 70 : 45;
 
   const maxTextWidth = width - 180;
 
@@ -294,7 +306,7 @@ export function drawUniversalContentCard(
       cursorY += arabicLineHeight;
     }
 
-    cursorY += aspect === 'STORY' ? 36 : 24;
+    cursorY += aspect === 'WALLPAPER' ? 44 : aspect === 'STORY' ? 36 : 24;
 
     // Small central diamond
     ctx.direction = 'ltr';
@@ -336,7 +348,7 @@ export function drawUniversalContentCard(
 
   // 9. Secondary English Text (if requested and present)
   if (includeEnglish && payload.secondaryTextEnglish) {
-    cursorY += aspect === 'STORY' ? 36 : 24;
+    cursorY += aspect === 'WALLPAPER' ? 44 : aspect === 'STORY' ? 36 : 24;
     ctx.direction = 'ltr';
     ctx.font = 'italic 18px Georgia, serif';
     ctx.fillStyle = t.isLight ? '#475569' : '#CBD5E1';
@@ -349,7 +361,7 @@ export function drawUniversalContentCard(
   }
 
   // 10. Source Citation Pill
-  cursorY += aspect === 'STORY' ? 40 : 25;
+  cursorY += aspect === 'WALLPAPER' ? 48 : aspect === 'STORY' ? 40 : 25;
   ctx.direction = 'ltr';
   ctx.font = 'bold 16px -apple-system, system-ui, sans-serif';
   ctx.fillStyle = t.citationColor;

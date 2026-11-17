@@ -294,7 +294,7 @@ export class AmalApiClient {
         arabicText: m.chapter.arabicMatn,
         translatedText: m.chapter.urduTranslation || m.chapter.englishSynopsis,
         synopsis: m.chapter.englishSynopsis,
-        takeaway: m.chapter.practicalTakeaway,
+        takeaway: m.chapter.scholarlyNotes || m.chapter.englishSynopsis,
       }));
       return { success: true, isLocalOnly: true, data: results as T };
     }

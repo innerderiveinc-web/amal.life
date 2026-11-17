@@ -164,7 +164,7 @@ export async function triggerPrayerAlert(prayerName: string, prayerTime: string)
             vibrate: [300, 150, 300],
             requireInteraction: true,
             data: { url: '/prayer' },
-          });
+          } as any);
           return;
         }
       }

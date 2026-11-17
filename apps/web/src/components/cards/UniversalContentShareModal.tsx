@@ -43,8 +43,8 @@ export interface UniversalContentShareModalProps {
   payload: UniversalCardPayload | null;
 }
 
-export type CardAspect = 'POST' | 'STORY';
-export type CardColorTheme = 'PRIMARY' | 'NIGHT_VELVET' | 'PARCHMENT';
+export type CardAspect = 'POST' | 'STORY' | 'WALLPAPER';
+export type CardColorTheme = 'PRIMARY' | 'NIGHT_VELVET' | 'PARCHMENT' | 'AMOLED_GOLD';
 
 const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps> = ({
   isOpen,
@@ -331,18 +331,18 @@ const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps>
               <label style={{ fontSize: 12, fontWeight: 800, color: '#334155', display: 'block', marginBottom: 8, letterSpacing: 0.5 }}>
                 1. FORMAT &amp; ASPECT RATIO (سائز و تناسب):
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10 }}>
                 <button
                   type="button"
                   onClick={() => setAspect('POST')}
                   style={{
-                    padding: '12px 14px',
+                    padding: '12px 10px',
                     borderRadius: 10,
                     border: aspect === 'POST' ? '2px solid #064E3B' : '1px solid #CBD5E1',
                     backgroundColor: aspect === 'POST' ? '#ECFDF5' : '#F8FAFC',
                     color: aspect === 'POST' ? '#064E3B' : '#475569',
                     fontWeight: 700,
-                    fontSize: 13,
+                    fontSize: 12,
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
@@ -351,21 +351,21 @@ const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps>
                   }}
                 >
                   <span style={{ fontSize: 18 }}>⏹️</span>
-                  <span>{t('Square Post (1:1)', 'مربع پوسٹ (۱:۱)', 'منشور مربع (١:١)', 'Square Post (1:1)')}</span>
-                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('Instagram & Chat', 'انسٹاگرام اور چیٹ', 'إنستغرام والدردشة', 'Instagram & Chat')}</span>
+                  <span>{t('Square (1:1)', 'مربع (۱:۱)', 'منشور مربع', 'Square (1:1)')}</span>
+                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('Feed & DP', 'پوسٹ و ڈی پی', 'تغذية', 'Post & DP')}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setAspect('STORY')}
                   style={{
-                    padding: '12px 14px',
+                    padding: '12px 10px',
                     borderRadius: 10,
                     border: aspect === 'STORY' ? '2px solid #064E3B' : '1px solid #CBD5E1',
                     backgroundColor: aspect === 'STORY' ? '#ECFDF5' : '#F8FAFC',
                     color: aspect === 'STORY' ? '#064E3B' : '#475569',
                     fontWeight: 700,
-                    fontSize: 13,
+                    fontSize: 12,
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
@@ -374,8 +374,31 @@ const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps>
                   }}
                 >
                   <span style={{ fontSize: 18 }}>📱</span>
-                  <span>{t('Vertical Story (9:16)', 'عمودی اسٹوری (۹:۱۶)', 'قصة رأسية (٩:١٦)', 'Vertical Story (9:16)')}</span>
-                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('WhatsApp & Stories', 'واٹس ایپ اور اسٹوریز', 'واتساب والقصص', 'WhatsApp & Stories')}</span>
+                  <span>{t('Story (9:16)', 'اسٹوری (۹:۱۶)', 'قصة رأسية', 'Story (9:16)')}</span>
+                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('WhatsApp Status', 'واٹس ایپ اسٹیٹس', 'واتساب', 'Status & Story')}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setAspect('WALLPAPER')}
+                  style={{
+                    padding: '12px 10px',
+                    borderRadius: 10,
+                    border: aspect === 'WALLPAPER' ? '2px solid #064E3B' : '1px solid #CBD5E1',
+                    backgroundColor: aspect === 'WALLPAPER' ? '#ECFDF5' : '#F8FAFC',
+                    color: aspect === 'WALLPAPER' ? '#064E3B' : '#475569',
+                    fontWeight: 700,
+                    fontSize: 12,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <span style={{ fontSize: 18 }}>🖼️</span>
+                  <span>{t('Wallpaper (9:20)', 'وال پیپر (۹:۲۰)', 'خلفية الجوال', 'Wallpaper')}</span>
+                  <span style={{ fontSize: 10, opacity: 0.75 }}>{t('Lock Screen HD', 'لاک اسکرین ایچ ڈی', 'قفل الشاشة', 'Lockscreen HD')}</span>
                 </button>
               </div>
             </div>
@@ -390,6 +413,7 @@ const UniversalContentShareModalInner: React.FC<UniversalContentShareModalProps>
                   { id: 'PRIMARY', name: 'Signature Sacred (اصلی مبارک رنگ)', desc: 'Category-specific canonical color harmony' },
                   { id: 'NIGHT_VELVET', name: 'Midnight Velvet (شبینہ مخمل)', desc: 'Deep cosmic slate with celestial highlights' },
                   { id: 'PARCHMENT', name: 'Antique Manuscript (قرطاسِ کہن)', desc: 'Warm scholarly parchment with dark ink' },
+                  { id: 'AMOLED_GOLD', name: 'Pure AMOLED Gold (سیاہ و طلائی وال پیپر)', desc: 'Deep OLED black with luminous gold typography' },
                 ].map((th) => (
                   <button
                     key={th.id}

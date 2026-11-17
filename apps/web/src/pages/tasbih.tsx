@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import { Navigation } from '../components/Navigation';
 import { MasnoonTasbihEngine, TasbihPreset, TasbihSessionState } from '@amal/amal-engine';
@@ -7,6 +7,10 @@ import { showAmalToast } from '../components/Toast';
 import { useLanguage } from '../context/LanguageContext';
 import { triggerHaptic } from '../lib/haptics';
 import { useWakeLock } from '../hooks/useWakeLock';
+import {
+  UniversalContentShareModal,
+  UniversalCardPayload,
+} from '../components/cards/UniversalContentShareModal';
 
 export default function TasbihPage() {
   const { t, isUrdu, isArabic } = useLanguage();
@@ -16,10 +20,36 @@ export default function TasbihPage() {
   const [session, setSession] = useState<TasbihSessionState>(
     MasnoonTasbihEngine.reset(presets[0]?.id || 'subhanallah')
   );
+  const [selectedTarget, setSelectedTarget] = useState<number | null>(null);
   const [hapticEnabled, setHapticEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [isFullscreenTap, setIsFullscreenTap] = useState(false);
+  const [sharePayload, setSharePayload] = useState<UniversalCardPayload | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
+
+  // Persistence of Daily and Lifetime Counts
+  const todayKey = useMemo(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }, []);
+
+  const [dailyTotal, setDailyTotal] = useState<number>(0);
+  const [lifetimeTotal, setLifetimeTotal] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedDaily = localStorage.getItem(`amal_tasbih_daily_${todayKey}`);
+        const savedLife = localStorage.getItem('amal_tasbih_lifetime');
+        if (savedDaily) setDailyTotal(parseInt(savedDaily, 10) || 0);
+        if (savedLife) setLifetimeTotal(parseInt(savedLife, 10) || 0);
+      } catch (_) {}
+    }
+  }, [todayKey]);
+
   const activePreset: TasbihPreset | undefined = presets.find(p => p.id === selectedPresetId);
+  const target = selectedTarget || (activePreset ? activePreset.targetCount : 33);
+  const progressPercent = Math.min(100, (session.currentCount / target) * 100);
 
   const triggerFeedback = (type: 'TICK' | 'THRESHOLD_REACHED' | 'CYCLE_COMPLETE') => {
     // 1. Tactile Web Haptics Engine
@@ -61,10 +91,41 @@ export default function TasbihPage() {
   };
 
   const handleTap = () => {
-    const { nextState, hapticType } = MasnoonTasbihEngine.increment(session);
+    const nextCount = session.currentCount + 1;
+    const nextTotalInSession = session.totalCountsInSession + 1;
+    const nextDaily = dailyTotal + 1;
+    const nextLife = lifetimeTotal + 1;
+
+    setDailyTotal(nextDaily);
+    setLifetimeTotal(nextLife);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(`amal_tasbih_daily_${todayKey}`, String(nextDaily));
+        localStorage.setItem('amal_tasbih_lifetime', String(nextLife));
+      } catch (_) {}
+    }
+
+    const isComplete = nextCount >= target;
+    const nextState: TasbihSessionState = {
+      presetId: session.presetId,
+      currentCount: isComplete ? 0 : nextCount,
+      roundsCompleted: isComplete ? session.roundsCompleted + 1 : session.roundsCompleted,
+      totalCountsInSession: nextTotalInSession,
+      isComplete,
+    };
+
     setSession(nextState);
-    triggerFeedback(hapticType === 'NONE' ? 'TICK' : hapticType);
-    if (hapticType === 'CYCLE_COMPLETE') {
+
+    let hapticType: 'TICK' | 'THRESHOLD_REACHED' | 'CYCLE_COMPLETE' = 'TICK';
+    if (isComplete) {
+      hapticType = 'CYCLE_COMPLETE';
+    } else if (nextCount === 33 || nextCount === 66 || nextCount === 99 || nextCount === 100) {
+      hapticType = 'THRESHOLD_REACHED';
+    }
+
+    triggerFeedback(hapticType);
+
+    if (isComplete) {
       showAmalToast(
         t(
           `Masha'Allah! Cycle completed: ${activePreset?.arabicText || 'Done'} (${nextState.roundsCompleted} rounds)`,
@@ -80,6 +141,7 @@ export default function TasbihPage() {
   const handleSelectPreset = (id: string) => {
     triggerHaptic('selection');
     setSelectedPresetId(id);
+    setSelectedTarget(null);
     setSession(MasnoonTasbihEngine.reset(id));
   };
 
@@ -92,8 +154,24 @@ export default function TasbihPage() {
     );
   };
 
+  const handleShareZikr = () => {
+    if (!activePreset) return;
+    setSharePayload({
+      category: 'DUA',
+      categoryLabelUrdu: 'مسنون تسبیحات و اذکار',
+      categoryLabelEnglish: 'Prophetic Tasbih & Remembrance',
+      titleArabic: activePreset.arabicText,
+      titleUrdu: activePreset.transliteration,
+      titleEnglish: activePreset.transliteration,
+      arabicText: activePreset.arabicText,
+      primaryTextUrdu: `${activePreset.urduTranslation}\n\nفضیلت و برکت: ${activePreset.fadilahUrdu}`,
+      secondaryTextEnglish: `${activePreset.englishTranslation} — ${activePreset.fadilahEnglish}`,
+      sourceCitation: activePreset.hadithSource,
+      badgeContext: `ہدف: ${target} بار`,
+    });
+  };
   // Keyboard accessibility: Space or Enter to increment, R to reset
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
         return;
@@ -108,10 +186,7 @@ export default function TasbihPage() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [session, selectedPresetId, hapticEnabled, soundEnabled]);
-
-  const target = activePreset ? activePreset.targetCount : 33;
-  const progressPercent = Math.min(100, (session.currentCount / target) * 100);
+  }, [session, selectedPresetId, hapticEnabled, soundEnabled, target]);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#FDFBF7', paddingBottom: 100 }}>
@@ -301,46 +376,142 @@ export default function TasbihPage() {
               />
             </div>
 
-            {/* Session Stats & Reset */}
+            {/* Target Count Quick Selector */}
+            <div style={{ marginTop: 20, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#64748B' }}>
+                {t('Target:', 'ہدف:', 'الهدف:', 'Target:')}
+              </span>
+              {[33, 100, 313, 1000].map((count) => {
+                const isCurrent = target === count;
+                return (
+                  <button
+                    key={count}
+                    onClick={() => {
+                      triggerHaptic('selection');
+                      setSelectedTarget(count);
+                    }}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: 16,
+                      border: isCurrent ? '1.5px solid #065F46' : '1px solid #CBD5E1',
+                      backgroundColor: isCurrent ? '#D1FAE5' : '#F8FAFC',
+                      color: isCurrent ? '#065F46' : '#475569',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {count}x
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Session Stats & Daily Record */}
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
+                gap: 12,
                 width: '100%',
-                maxWidth: 420,
-                marginTop: 24,
+                maxWidth: 480,
+                marginTop: 20,
                 padding: '12px 16px',
                 backgroundColor: '#F8FAFC',
-                borderRadius: 12,
+                borderRadius: 14,
                 border: '1px solid #E2E8F0',
+                textAlign: 'center',
               }}
             >
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>
-                  {t('Rounds Completed:', 'مکمل چکر (دور):', 'الدورات المكتملة:', 'Mukammal Rounds:')}
+              <div>
+                <div style={{ fontSize: 10, color: '#64748B' }}>
+                  {t('Rounds', 'دور (چکر)', 'الدورات', 'Rounds')}
                 </div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: '#1E293B' }}>
                   {session.roundsCompleted}
                 </div>
               </div>
 
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 11, color: '#64748B' }}>
-                  {t('Session Total:', 'اس نشست کی کل گنتی:', 'إجمالي الجلسة:', 'Is Baithak ki Ginti:')}
+              <div>
+                <div style={{ fontSize: 10, color: '#64748B' }}>
+                  {t('Session', 'اس نشست', 'الجلسة', 'Session')}
                 </div>
                 <div style={{ fontSize: 16, fontWeight: 800, color: AmalTheme.colors.primary }}>
                   {session.totalCountsInSession}
                 </div>
               </div>
 
+              <div>
+                <div style={{ fontSize: 10, color: '#047857' }}>
+                  {t('Today', 'آج کا کل', 'اليوم', 'Aaj Total')}
+                </div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: '#065F46' }}>
+                  {dailyTotal}
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: 10, color: '#64748B' }}>
+                  {t('Lifetime', 'کل ذکر', 'المجموع', 'Lifetime')}
+                </div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: '#334155' }}>
+                  {lifetimeTotal}
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons: Fullscreen Tap & Share as Status/Wallpaper */}
+            <div style={{ display: 'flex', gap: 10, marginTop: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button
+                onClick={() => {
+                  triggerHaptic('medium');
+                  setIsFullscreenTap(true);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '8px 14px',
+                  backgroundColor: '#ECFDF5',
+                  border: '1px solid #A7F3D0',
+                  borderRadius: 10,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: '#065F46',
+                  cursor: 'pointer',
+                }}
+              >
+                <span>🖐️</span>
+                <span>{t('Tap Anywhere Mode', 'پورے اسکرین پر چھوئیں', 'وضع اللمس الكامل', 'Tap Anywhere Mode')}</span>
+              </button>
+
+              <button
+                onClick={handleShareZikr}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '8px 14px',
+                  backgroundColor: '#FFFBEB',
+                  border: '1px solid #FDE68A',
+                  borderRadius: 10,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: '#92400E',
+                  cursor: 'pointer',
+                }}
+              >
+                <span>📸</span>
+                <span>{t('Share Wallpaper / Status', 'اسٹیٹس و وال پیپر بنائیں', 'بطاقة / خلفية', 'Wallpaper & Status')}</span>
+              </button>
+
               <button
                 onClick={handleReset}
                 style={{
                   backgroundColor: '#F1F5F9',
                   border: '1px solid #CBD5E1',
-                  borderRadius: 8,
-                  padding: '6px 12px',
+                  borderRadius: 10,
+                  padding: '8px 14px',
                   fontSize: 12,
                   fontWeight: 600,
                   color: '#475569',
@@ -375,7 +546,7 @@ export default function TasbihPage() {
             {/* Hadith & Fadilah Box */}
             <div
               style={{
-                marginTop: 32,
+                marginTop: 28,
                 width: '100%',
                 backgroundColor: '#ECFDF5',
                 borderRadius: 16,
@@ -418,6 +589,88 @@ export default function TasbihPage() {
           </div>
         )}
       </main>
+
+      {/* FULLSCREEN TAP OVERLAY (Eyes Closed / Walking Mode) */}
+      {isFullscreenTap && (
+        <div
+          onClick={handleTap}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: '#064E3B',
+            color: '#FFFFFF',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '30px 20px',
+            userSelect: 'none',
+            cursor: 'pointer',
+            touchAction: 'manipulation',
+          }}
+        >
+          {/* Top Bar with Exit */}
+          <div style={{ width: '100%', maxWidth: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ fontSize: 14, color: '#A7F3D0', fontWeight: 600 }}>
+              {activePreset?.transliteration} ({target}x)
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFullscreenTap(false);
+              }}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: 20,
+                padding: '6px 14px',
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              ✕ {t('Exit', 'بند کریں', 'خروج', 'Exit')}
+            </button>
+          </div>
+
+          {/* Central Mega Number & Arabic Text */}
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                fontSize: 34,
+                fontWeight: 800,
+                color: '#FEF3C7',
+                fontFamily: "'Amiri', serif",
+                marginBottom: 12,
+              }}
+            >
+              {activePreset?.arabicText}
+            </div>
+            <div style={{ fontSize: 96, fontWeight: 900, lineHeight: 1, letterSpacing: -2 }}>
+              {session.currentCount}
+            </div>
+            <div style={{ fontSize: 16, color: '#A7F3D0', marginTop: 12, fontWeight: 600 }}>
+              {t(`Round ${session.roundsCompleted + 1} · Target ${target}`, `دور ${session.roundsCompleted + 1} · ہدف ${target}`, `الدورة ${session.roundsCompleted + 1}`, `Round ${session.roundsCompleted + 1}`)}
+            </div>
+          </div>
+
+          {/* Bottom Gentle Instruction */}
+          <div style={{ fontSize: 13, color: '#6EE7B7', opacity: 0.85, textAlign: 'center' }}>
+            {t('Tap anywhere on the screen to count', 'گنتی کے لیے اسکرین پر کہیں بھی چھوئیں', 'المس أي مكان في الشاشة للعد', 'Screen par kahin bhi tap karein')}
+          </div>
+        </div>
+      )}
+
+      {/* Universal Content Share Modal for Sacred Wallpaper / Status Card */}
+      {sharePayload && (
+        <UniversalContentShareModal
+          isOpen={!!sharePayload}
+          onClose={() => setSharePayload(null)}
+          payload={sharePayload}
+        />
+      )}
     </div>
   );
 }
