@@ -43,6 +43,12 @@
     "turbo": "^2.0.0",
     "typescript": "^5.4.5"
   },
+  "pnpm": {
+    "overrides": {
+      "react": "18.2.0",
+      "react-dom": "18.2.0"
+    }
+  },
   "engines": {
     "node": ">=20.0.0"
   }

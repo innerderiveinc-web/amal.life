@@ -28,7 +28,7 @@
         "backgroundColor": "#1B4332"
       },
       "package": "com.amal.lifeos",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
