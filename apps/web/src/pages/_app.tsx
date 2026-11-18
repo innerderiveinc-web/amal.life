@@ -7,21 +7,24 @@ import { AuthProvider } from '../context/AuthContext';
 import { LanguageProvider, useLanguage } from '../context/LanguageContext';
 import { ThemeProvider } from '../context/ThemeContext';
 import { PersistentAudioPlayer } from '../components/PersistentAudioPlayer';
-import { UniversalSearchModal } from '../components/UniversalSearchModal';
-import { ReaderSettingsModal } from '../components/ReaderSettingsModal';
-import { SacredThemeModal } from '../components/SacredThemeModal';
-import { OnboardingWizardModal } from '../components/OnboardingWizardModal';
-import { BookmarksQuickDrawer } from '../components/BookmarksQuickDrawer';
-import { AuthModal } from '../components/AuthModal';
-import { PWAInstallModal } from '../components/PWAInstallModal';
-import { PWAUpdateBanner } from '../components/PWAUpdateBanner';
-import { SupportWaqfModal } from '../components/waqf/SupportWaqfModal';
+import dynamic from 'next/dynamic';
 import { Footer } from '../components/Footer';
 import { ToastContainer } from '../components/Toast';
 import { MobileBottomNav } from '../components/MobileBottomNav';
 import { enablePersistentStorage, checkStorageHealth } from '../lib/storage-guard';
 import { showAmalToast } from '../components/Toast';
 import { GlobalCrashGuardErrorBoundary } from '../components/GlobalCrashGuardErrorBoundary';
+
+// Dynamically imported heavy modals to achieve ultra-fast mobile hydration
+const UniversalSearchModal = dynamic(() => import('../components/UniversalSearchModal').then(m => m.UniversalSearchModal), { ssr: false });
+const ReaderSettingsModal = dynamic(() => import('../components/ReaderSettingsModal').then(m => m.ReaderSettingsModal), { ssr: false });
+const SacredThemeModal = dynamic(() => import('../components/SacredThemeModal').then(m => m.SacredThemeModal), { ssr: false });
+const OnboardingWizardModal = dynamic(() => import('../components/OnboardingWizardModal').then(m => m.OnboardingWizardModal), { ssr: false });
+const BookmarksQuickDrawer = dynamic(() => import('../components/BookmarksQuickDrawer').then(m => m.BookmarksQuickDrawer), { ssr: false });
+const AuthModal = dynamic(() => import('../components/AuthModal').then(m => m.AuthModal), { ssr: false });
+const PWAInstallModal = dynamic(() => import('../components/PWAInstallModal').then(m => m.PWAInstallModal), { ssr: false });
+const PWAUpdateBanner = dynamic(() => import('../components/PWAUpdateBanner').then(m => m.PWAUpdateBanner), { ssr: false });
+const SupportWaqfModal = dynamic(() => import('../components/waqf/SupportWaqfModal').then(m => m.SupportWaqfModal), { ssr: false });
 
 // In-memory fallback if localStorage is sandboxed under file:/// protocol in mobile WebView
 if (typeof window !== 'undefined') {
@@ -276,28 +279,28 @@ export default function App({ Component, pageProps }: AppProps) {
           <PersistentAudioPlayer />
 
           {/* Global Universal Instant Search (Cmd+K) */}
-          <UniversalSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+          {isSearchOpen && <UniversalSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
 
           {/* Global Senior & Quran Reader Settings Modal */}
-          <ReaderSettingsModal isOpen={isReaderSettingsOpen} onClose={() => setIsReaderSettingsOpen(false)} />
+          {isReaderSettingsOpen && <ReaderSettingsModal isOpen={isReaderSettingsOpen} onClose={() => setIsReaderSettingsOpen(false)} />}
 
           {/* Global 30-Second Gentle Onboarding Wizard */}
-          <OnboardingWizardModal isOpen={isOnboardingOpen} onClose={() => setIsOnboardingOpen(false)} />
+          {isOnboardingOpen && <OnboardingWizardModal isOpen={isOnboardingOpen} onClose={() => setIsOnboardingOpen(false)} />}
 
           {/* Global Masnoon Duas & Adhkar Quick Drawer (Cmd+B) */}
-          <BookmarksQuickDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />
+          {isBookmarksOpen && <BookmarksQuickDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />}
 
           {/* Global Account & Cloud Sync Modal */}
-          <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+          {isAuthOpen && <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />}
 
           {/* Global PWA Home Screen Install Modal */}
-          <PWAInstallModal isOpen={isInstallOpen} onClose={() => setIsInstallOpen(false)} />
+          {isInstallOpen && <PWAInstallModal isOpen={isInstallOpen} onClose={() => setIsInstallOpen(false)} />}
 
           {/* Global Sacred Cultural Themes Modal */}
-          <SacredThemeModal isOpen={isThemeOpen} onClose={() => setIsThemeOpen(false)} />
+          {isThemeOpen && <SacredThemeModal isOpen={isThemeOpen} onClose={() => setIsThemeOpen(false)} />}
 
           {/* Global Voluntary Sovereign Waqf & Patron Modal */}
-          <SupportWaqfModal isOpen={isWaqfOpen} onClose={() => setIsWaqfOpen(false)} />
+          {isWaqfOpen && <SupportWaqfModal isOpen={isWaqfOpen} onClose={() => setIsWaqfOpen(false)} />}
 
           {/* Floating Quick Bookmark Tab (Right Screen Edge) */}
           <FloatingBookmarkTab onOpen={() => setIsBookmarksOpen(true)} />

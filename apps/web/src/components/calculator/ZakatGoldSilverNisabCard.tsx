@@ -152,6 +152,24 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
           />
         </div>
       </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -6, marginBottom: 8 }}>
+        <button
+          type="button"
+          onClick={() => handleCurrencyChange(currency)}
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            color: '#065F46',
+            backgroundColor: '#ECFDF5',
+            border: '1px solid #A7F3D0',
+            borderRadius: 6,
+            padding: '3px 8px',
+            cursor: 'pointer',
+          }}
+        >
+          🔄 {t(`Reset ${currency} Standard Bullion Rates`, `${currency} کے معیاری مارکیٹ ریٹس بحال کریں`, `استعادة أسعار ${currency} المعتمدة`, `Reset ${currency} Bullion Rates`)}
+        </button>
+      </div>
 
       <div>
         <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
