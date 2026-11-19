@@ -60,7 +60,7 @@ export default function QuranWisdomPage() {
     }
   };
 
-  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS' | 'MUSHAF'>('MUSHAF');
+  const [viewMode, setViewModeState] = useState<'SCROLL' | 'FOCUS' | 'MUSHAF'>('SCROLL');
   const [focusedAyahNumber, setFocusedAyahNumber] = useState<number>(1);
   const [mobileTab, setMobileTab] = useState<'READER' | 'DIRECTORY'>('READER');
   const [continuousSurahPlayback, setContinuousSurahPlaybackState] = useState<boolean>(() => {

@@ -207,15 +207,41 @@ img, video, iframe, svg {
     padding-bottom: 76px; /* Ensure space for mobile bottom bar */
   }
 
+  /* High-Polish Mobile Top Bar & Footer */
+  header {
+    margin-bottom: 12px !important;
+    border-bottom: 1.5px solid rgba(212, 175, 55, 0.35) !important;
+    box-shadow: 0 4px 16px rgba(6, 78, 59, 0.08) !important;
+  }
+
+  header nav {
+    padding: 8px 12px !important;
+    min-height: 52px !important;
+  }
+
+  footer {
+    border-top: 3px solid #10B981 !important;
+    padding-bottom: 20px !important;
+  }
+
   .desktop-only {
     display: none !important;
   }
 
   /* Responsive padding for main content containers */
   main {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-    padding-top: 16px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 12px !important;
+  }
+
+  .ayah-scroll-container {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  .surah-header-container {
+    padding: 14px 10px !important;
   }
 
   /* Grid layout collapsing to single column on mobile */
@@ -295,6 +321,13 @@ img, video, iframe, svg {
 @media (min-width: 769px) {
   .mobile-only {
     display: none !important;
+  }
+  .ayah-scroll-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .surah-header-container {
+    padding: 20px 24px !important;
   }
 }
 

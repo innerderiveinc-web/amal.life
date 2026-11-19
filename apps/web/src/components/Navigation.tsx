@@ -216,12 +216,13 @@ export const Navigation: React.FC = () => {
             <span>🔖</span>
           </button>
 
-          {/* Voluntary Support Waqf Quick Action */}
+          {/* Voluntary Support Waqf Quick Action (Desktop) */}
           <button
             onClick={() => {
               if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-waqf'));
             }}
             aria-label="Support Amal Sovereign Waqf"
+            className="desktop-only"
             style={{
               display: 'flex',
               alignItems: 'center',

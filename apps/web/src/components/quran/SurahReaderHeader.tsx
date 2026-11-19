@@ -78,15 +78,16 @@ const SurahReaderHeaderInner: React.FC<SurahReaderHeaderProps> = ({
     <>
       {/* Surah Header Banner */}
       <div
+        className="surah-header-container"
         style={{
-          padding: '20px 24px',
+          padding: '16px 14px',
           borderBottom: '1px solid #E2E8F0',
           backgroundColor: '#F8FAFC',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: 16,
+          gap: 12,
         }}
       >
         <div>

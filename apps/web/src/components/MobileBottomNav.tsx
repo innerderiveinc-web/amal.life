@@ -5,15 +5,14 @@ import { useLanguage } from '../context/LanguageContext';
 
 export const MobileBottomNav: React.FC = () => {
   const router = useRouter();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const navItems = [
     { label: 'Today', labelUrdu: 'آج', labelArabic: 'اليوم', labelRoman: 'Aaj', href: '/', icon: '🌅' },
-    { label: 'Journeys', labelUrdu: 'اسفار', labelArabic: 'الرحلات', labelRoman: 'Asfar', href: '/journeys', icon: '🌱' },
     { label: 'Quran', labelUrdu: 'قرآن', labelArabic: 'القرآن', labelRoman: 'Quran', href: '/quran', icon: '📖' },
     { label: 'Prayer', labelUrdu: 'نماز', labelArabic: 'الصلاة', labelRoman: 'Namaz', href: '/prayer', icon: '🕋' },
-    { label: 'Wisdom', labelUrdu: 'حکمت', labelArabic: 'الحكمة', labelRoman: 'Hikmat', href: '/wisdom', icon: '✨' },
-    { label: 'Tasbih', labelUrdu: 'تسبیح', labelArabic: 'التسبيح', labelRoman: 'Tasbih', href: '/tasbih', icon: '📿' },
+    { label: 'Library', labelUrdu: 'مکتبہ', labelArabic: 'المكتبة', labelRoman: 'Maktabah', href: '/library', icon: '📚' },
+    { label: 'Sisters', labelUrdu: 'خواتین', labelArabic: 'النساء', labelRoman: 'Khawateen', href: '/sisters', icon: '🌸' },
   ];
 
   return (
@@ -24,19 +23,20 @@ export const MobileBottomNav: React.FC = () => {
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.94)',
-        backdropFilter: 'blur(12px)',
-        borderTop: '1px solid #E5E7EB',
+        backgroundColor: 'rgba(255, 255, 255, 0.96)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderTop: '1px solid #E2E8F0',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
-        padding: '8px 12px 14px',
+        padding: '6px 8px 12px',
         zIndex: 9000,
-        boxShadow: '0 -4px 10px rgba(0, 0, 0, 0.04)',
+        boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.06)',
       }}
     >
       {navItems.map((item) => {
-        const isActive = router.pathname === item.href;
+        const isActive = router.pathname === item.href || (item.href === '/library' && router.pathname === '/books');
         return (
           <Link
             key={item.href}
@@ -48,42 +48,48 @@ export const MobileBottomNav: React.FC = () => {
               alignItems: 'center',
               textDecoration: 'none',
               gap: 2,
-              padding: '4px 12px',
-              borderRadius: 8,
-              color: isActive ? '#065F46' : '#475569',
+              padding: '4px 8px',
+              borderRadius: 10,
+              backgroundColor: isActive ? '#ECFDF5' : 'transparent',
+              color: isActive ? '#065F46' : '#64748B',
               fontWeight: isActive ? 800 : 600,
               fontSize: 10.5,
+              minWidth: 54,
+              transition: 'all 0.15s ease',
             }}
           >
-            <span style={{ fontSize: 20 }}>{item.icon}</span>
+            <span style={{ fontSize: 19 }}>{item.icon}</span>
             <span>{t(item.label, item.labelUrdu, item.labelArabic, item.labelRoman)}</span>
           </Link>
         );
       })}
 
-      {/* 5th Button: Universal Search */}
+      {/* 6th Button: Universal Search / More Tools Drawer */}
       <button
         onClick={() => {
-          if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('amal-open-search'));
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('amal-open-search'));
+          }
         }}
-        aria-label="Open Universal Evidence Search (Cmd+K)"
+        aria-label="All 30 Modules & Universal Search"
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: 2,
-          padding: '4px 12px',
-          borderRadius: 8,
+          padding: '4px 8px',
+          borderRadius: 10,
           background: 'none',
           border: 'none',
-          color: '#475569',
+          color: '#64748B',
           fontSize: 10.5,
           fontWeight: 600,
           cursor: 'pointer',
+          minWidth: 54,
         }}
       >
-        <span style={{ fontSize: 20 }}>🔍</span>
-        <span>{t('Search', 'تلاش', 'البحث', 'Talash')}</span>
+        <span style={{ fontSize: 19 }}>🧭</span>
+        <span>{t('All 30', '۳۰ ماڈیولز', '٣٠ تطبيقاً', '30 Modules')}</span>
       </button>
     </nav>
   );

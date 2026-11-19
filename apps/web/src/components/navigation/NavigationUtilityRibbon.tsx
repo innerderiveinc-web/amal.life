@@ -83,7 +83,7 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
           }}
         >
           {/* Left: Live Hijri Date & Prayer Countdown */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'nowrap', overflowX: 'auto', whiteSpace: 'nowrap', flexShrink: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: '#86EFAC' }}>🌙</span>
               <span suppressHydrationWarning style={{ fontWeight: 700, color: '#F9FAFB' }}>
@@ -160,8 +160,8 @@ export const NavigationUtilityRibbon: React.FC<NavigationUtilityRibbonProps> = (
             </span>
           </div>
 
-          {/* Right: Streamlined, Spacious Utility Toolbar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          {/* Right: Streamlined, Spacious Utility Toolbar (Desktop Only) */}
+          <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             {/* Sacred Theme Picker */}
             <button
               onClick={() => {

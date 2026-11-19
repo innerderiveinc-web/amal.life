@@ -13,13 +13,13 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: 36,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: 20,
         marginBottom: 36,
       }}
     >
       {/* Column 1: Worship & Quran */}
-      <div>
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.025)', border: '1px solid rgba(255, 255, 255, 0.07)', borderRadius: 14, padding: '20px 18px' }}>
         <h4
           style={{
             fontSize: 14,
@@ -99,7 +99,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
       </div>
 
       {/* Column 2: Ilm & Sirah */}
-      <div>
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.025)', border: '1px solid rgba(255, 255, 255, 0.07)', borderRadius: 14, padding: '20px 18px' }}>
         <h4
           style={{
             fontSize: 14,
@@ -150,7 +150,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
       </div>
 
       {/* Column 3: Fiqh & Family OS */}
-      <div>
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.025)', border: '1px solid rgba(255, 255, 255, 0.07)', borderRadius: 14, padding: '20px 18px' }}>
         <h4
           style={{
             fontSize: 14,
@@ -201,7 +201,7 @@ export const FooterNavigationGrid: React.FC<FooterNavigationGridProps> = () => {
       </div>
 
       {/* Column 4: Sovereign Trust, Policy & Legal */}
-      <div>
+      <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.025)', border: '1px solid rgba(255, 255, 255, 0.07)', borderRadius: 14, padding: '20px 18px' }}>
         <h4
           style={{
             fontSize: 14,

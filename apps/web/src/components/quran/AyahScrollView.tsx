@@ -50,7 +50,7 @@ export const AyahScrollView: React.FC<AyahScrollViewProps> = ({
   const { t } = useLanguage();
 
   return (
-    <div style={{ padding: '8px 24px', display: 'flex', flexDirection: 'column' }}>
+    <div className="ayah-scroll-container" style={{ padding: '8px 6px', display: 'flex', flexDirection: 'column' }}>
       {currentSurah.verses.map((verse) => {
         const isPlayingThis = playingAyahNumber === verse.ayahNumber;
         const isFocusedThis = focusedAyahNumber === verse.ayahNumber;
