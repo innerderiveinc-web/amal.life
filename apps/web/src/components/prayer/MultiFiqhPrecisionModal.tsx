@@ -83,7 +83,12 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
               </div>
               <div>
                 <h3 style={{ margin: 0, fontSize: 17, fontWeight: 800 }}>
-                  {t('Astronomical & Multi-Fiqh Precision Engine', 'فلکیاتی و فقہی تقابلی تحقیق')}
+                  {t(
+                    'Astronomical & Multi-Fiqh Precision Engine',
+                    'فلکیاتی و فقہی تقابلی تحقیق',
+                    'محرك الدقة الفلكية والمقارنة الفقهية',
+                    'Falkiyati wa Fiqhi Taqabuli Tehqeeq'
+                  )}
                 </h3>
                 <span style={{ fontSize: 11, color: '#A7F3D0' }}>
                   {report.city} · Lat: {report.latitude.toFixed(2)}°, Long: {report.longitude.toFixed(2)}°
@@ -127,11 +132,25 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, fontSize: 13 }}>
               <div>
-                <span style={{ color: '#4B5563' }}>{t('Jumhoor / Shafi\'i (Misl-e-Awwal):', 'جمہور / شافعی (مثلِ اول):')} </span>
+                <span style={{ color: '#4B5563' }}>
+                  {t(
+                    'Jumhoor / Shafi\'i (Misl-e-Awwal):',
+                    'جمہور / شافعی (مثلِ اول):',
+                    'الجمهور / الشافعي (المثل الأول):',
+                    'Jumhoor / Shafi\'i (Misl-e-Awwal):'
+                  )}{' '}
+                </span>
                 <strong style={{ color: '#064E3B' }}>{report.authorities[0]?.asrShafiTime}</strong>
               </div>
               <div>
-                <span style={{ color: '#4B5563' }}>{t('Hanafi (Misl-e-Saani):', 'حنفی (مثلِ ثانی):')} </span>
+                <span style={{ color: '#4B5563' }}>
+                  {t(
+                    'Hanafi (Misl-e-Saani):',
+                    'حنفی (مثلِ ثانی):',
+                    'الحنفي (المثل الثاني):',
+                    'Hanafi (Misl-e-Saani):'
+                  )}{' '}
+                </span>
                 <strong style={{ color: '#064E3B' }}>{report.authorities[0]?.asrHanafiTime}</strong>
               </div>
               <div
@@ -144,7 +163,7 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
                   borderRadius: 12,
                 }}
               >
-                +{report.asrDeltaMinutes} {t('minutes difference', 'منٹ کا فرق')}
+                +{report.asrDeltaMinutes} {t('minutes difference', 'منٹ کا فرق', 'دقائق فارق', 'minute ka farq')}
               </div>
             </div>
           </div>
@@ -152,17 +171,32 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
           {/* Multi-Authority Comparison Table */}
           <div style={{ marginBottom: 18 }}>
             <div style={{ fontSize: 13, fontWeight: 800, color: '#1F2937', marginBottom: 8 }}>
-              {t('Multi-Authority Consensus Matrix:', '۵ عالمی فقہی و فلکیاتی اداروں کا موازنہ:')}
+              {t(
+                'Multi-Authority Consensus Matrix:',
+                '۵ عالمی فقہی و فلکیاتی اداروں کا موازنہ:',
+                'مصفوفة التوافق بين الهيئات الفلكية الخمس:',
+                '5 Aalami Fiqhi wa Falkiyati Idaron ka Mawazna:'
+              )}
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '2px solid #E2E8F0' }}>
-                    <th style={{ padding: '8px 10px', color: '#475569' }}>{t('Authority', 'ادارہ')}</th>
-                    <th style={{ padding: '8px 8px', color: '#065F46' }}>{t('Fajr', 'فجر')}</th>
-                    <th style={{ padding: '8px 8px', color: '#065F46' }}>{t('Sunrise', 'طلوع')}</th>
-                    <th style={{ padding: '8px 8px', color: '#065F46' }}>{t('Maghrib', 'مغرب')}</th>
-                    <th style={{ padding: '8px 8px', color: '#065F46' }}>{t('Isha', 'عشاء')}</th>
+                    <th style={{ padding: '8px 10px', color: '#475569' }}>
+                      {t('Authority', 'ادارہ', 'الهيئة الفلكية', 'Idarah')}
+                    </th>
+                    <th style={{ padding: '8px 8px', color: '#065F46' }}>
+                      {t('Fajr', 'فجر', 'الفجر', 'Fajr')}
+                    </th>
+                    <th style={{ padding: '8px 8px', color: '#065F46' }}>
+                      {t('Sunrise', 'طلوع', 'الشروق', 'Tulu')}
+                    </th>
+                    <th style={{ padding: '8px 8px', color: '#065F46' }}>
+                      {t('Maghrib', 'مغرب', 'المغرب', 'Maghrib')}
+                    </th>
+                    <th style={{ padding: '8px 8px', color: '#065F46' }}>
+                      {t('Isha', 'عشاء', 'العشاء', 'Isha')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -202,13 +236,29 @@ export const MultiFiqhPrecisionModal: React.FC<MultiFiqhPrecisionModalProps> = (
               color: report.highLatitude.isHighLatitude ? '#92400E' : '#475569',
             }}
           >
-            <strong>🌐 {t('Geographical Altitude Check:', 'جغرافیائی خطہ و شفق کی حالت:')} </strong>
+            <strong>
+              🌐{' '}
+              {t(
+                'Geographical Altitude Check:',
+                'جغرافیائی خطہ و شفق کی حالت:',
+                'فحص خط العرض الجغرافي وحالة الشفق:',
+                'Jughrafiyai Khitta wa Shafaq ki Halat:'
+              )}{' '}
+            </strong>
             <span>{(language === 'ur' || language === 'ar') ? report.highLatitude.explanationUrdu : report.highLatitude.explanationEnglish}</span>
           </div>
 
           {/* Scholarly Ihtiyat Notes */}
           <div style={{ fontSize: 11, color: '#6B7280', lineHeight: 1.5, borderTop: '1px solid #E5E7EB', paddingTop: 12 }}>
-            <strong>💡 {t('Local Mosque Discrepancies:', 'مقامی مسجد کے وقت میں فرق کی وجہ:')} </strong>
+            <strong>
+              💡{' '}
+              {t(
+                'Local Mosque Discrepancies:',
+                'مقامی مسجد کے وقت میں فرق کی وجہ:',
+                'سبب الاختلاف مع المسجد المحلي:',
+                'Maqami Masjid ke Waqt mein Farq ki Wajah:'
+              )}{' '}
+            </strong>
             <span>{(language === 'ur' || language === 'ar') ? report.scholarlyIhtiyatNotes.ur : report.scholarlyIhtiyatNotes.en}</span>
           </div>
         </div>

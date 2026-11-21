@@ -350,10 +350,15 @@ function FloatingBookmarkTab({ onOpen }: { onOpen: () => void }) {
         alignItems: 'center',
         gap: 6,
       }}
-      title={t('Open Saved Duas (Cmd+B)', 'محفوظ دعائیں کھولیں (Cmd+B)')}
+      title={t(
+        'Open Saved Duas (Cmd+B)',
+        'محفوظ دعائیں کھولیں (Cmd+B)',
+        'فتح الأدعية المحفوظة (Cmd+B)',
+        'Mehfooz Duayein Kholein (Cmd+B)'
+      )}
     >
       <span>⭐</span>
-      <span>{t('Saved Duas', 'محفوظ دعائیں')}</span>
+      <span>{t('Saved Duas', 'محفوظ دعائیں', 'الأدعية المحفوظة', 'Mehfooz Duayein')}</span>
     </button>
   );
 }

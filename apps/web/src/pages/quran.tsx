@@ -312,7 +312,14 @@ export default function QuranWisdomPage() {
   return (
     <div style={{ backgroundColor: '#FDFBF7', minHeight: '100vh', paddingBottom: 100 }}>
       <Head>
-        <title>{t('Al-Quran Al-Kareem & Wisdom | AMAL OS', 'قرآنِ کریم، حکمت و تدبر | امل او ایس')}</title>
+        <title>
+          {t(
+            'Al-Quran Al-Kareem & Wisdom | AMAL OS',
+            'قرآنِ کریم، حکمت و تدبر | امل او ایس',
+            'القرآن الكريم والحكمة والتدبر | نظام عمل',
+            'Al-Quran Al-Kareem & Hikmat | AMAL OS'
+          )}
+        </title>
         <meta
           name="description"
           content="AMAL Quran Wisdom & Listening Experience with Kanz-ul-Iman Tarjuma, Khaza'in-ul-Irfan Tafsir, 100% Real Human Voice Recitation, and 2-Minute Quick Wisdom."
@@ -437,7 +444,9 @@ export default function QuranWisdomPage() {
               showAmalToast(
                 t(
                   `✨ Resumed: ${lastReadPosition.surahNameTransliterated} (Verse ${lastReadPosition.ayahNumber})`,
-                  `✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`
+                  `✨ آخری تلاوت پر منتقل ہو گئے: ${lastReadPosition.surahNameUrdu || lastReadPosition.surahNameTransliterated} (آیت ${lastReadPosition.ayahNumber})`,
+                  `✨ تم استئناف التلاوة: ${lastReadPosition.surahNameTransliterated} (الآية ${lastReadPosition.ayahNumber})`,
+                  `✨ Aakhri tilawat par muntaqil: ${lastReadPosition.surahNameTransliterated} (Ayah ${lastReadPosition.ayahNumber})`
                 ),
                 'success'
               );

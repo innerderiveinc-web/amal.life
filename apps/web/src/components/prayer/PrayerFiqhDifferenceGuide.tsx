@@ -18,13 +18,20 @@ export function PrayerFiqhDifferenceGuide({ t }: PrayerFiqhDifferenceGuideProps)
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <span style={{ fontSize: 22 }}>📖</span>
         <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1B4332', margin: 0 }}>
-          {t('Why Prayer Timings Differ Across Calendars', 'نماز کے اوقات میں فرق کیوں ہوتا ہے؟')}
+          {t(
+            'Why Prayer Timings Differ Across Calendars',
+            'نماز کے اوقات میں فرق کیوں ہوتا ہے؟',
+            'لماذا تختلف مواقيت الصلاة بين التقاويم؟',
+            'Namaz ke auqat mein farq kyon hota hai?'
+          )}
         </h3>
       </div>
       <p style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.6, marginBottom: 16 }}>
         {t(
           'If you notice a difference of a few minutes or Asr timing between this app and your local mosque timetable, it stems from four valid jurisprudential and astronomical factors:',
-          'اگر آپ کو اپنی مسجد کے نقشۂ اوقات اور اس ایپ کے اوقات میں چند منٹ یا عصر کے وقت میں فرق محسوس ہو، تو اس کی بنیادی ۴ شرعی و فلکیاتی وجوہات درج ذیل ہیں:'
+          'اگر آپ کو اپنی مسجد کے نقشۂ اوقات اور اس ایپ کے اوقات میں چند منٹ یا عصر کے وقت میں فرق محسوس ہو، تو اس کی بنیادی ۴ شرعی و فلکیاتی وجوہات درج ذیل ہیں:',
+          'إذا لاحظت فارقاً لبضع دقائق أو في وقت العصر بين هذا التطبيق وتقويم مسجدكم المحلي، فإن ذلك يرجع لأربعة أسباب فقهية وفلكية معتبرة:',
+          'Agar aap ko apni masjid ke naqsha-e-auqat aur is app ke auqat mein chand minute ya Asar ke waqt mein farq mehsoos ho, to is ki bunyadi 4 shar\'i wa falkiyati wujoohaat darj zail hain:'
         )}
       </p>
 
@@ -37,12 +44,19 @@ export function PrayerFiqhDifferenceGuide({ t }: PrayerFiqhDifferenceGuideProps)
       >
         <div style={{ backgroundColor: '#F9FAFB', padding: 14, borderRadius: 8, border: '1px solid #E5E7EB' }}>
           <div style={{ fontWeight: 800, color: '#1F2937', fontSize: 14, marginBottom: 4 }}>
-            {t('1. Asr Start Time (Hanafi Mithlayn vs Jumhur)', '۱. عصر کا وقت (حنفی مثلین بمقابلہ جمہور مثلِ اول)')}
+            {t(
+              '1. Asr Start Time (Hanafi Mithlayn vs Jumhur)',
+              '۱. عصر کا وقت (حنفی مثلین بمقابلہ جمہور مثلِ اول)',
+              '١. وقت صلاة العصر (المثلين عند الحنفية مقابل المثل عند الجمهور)',
+              '1. Asr Start Time (Hanafi Mithlayn vs Jumhur)'
+            )}
           </div>
           <p style={{ fontSize: 12, color: '#4B5563', margin: 0, lineHeight: 1.5 }}>
             {t(
               'The majority of Sunni schools (Shafi\'i, Maliki, Hanbali) mark Asr when an object\'s shadow equals its length (ratio 1:1). In the Hanafi school (authoritative position of Imam Abu Hanifa), Asr begins when the shadow reaches twice its length (ratio 2:1), roughly 50 to 65 minutes later.',
-              'جمہور ائمہ (شافعی، مالکی، حنبلی) کے نزدیک سائے کا ایک گنا ہونا عصر کا وقت ہے، جبکہ امامِ اعظم ابو حنیفہؒ کے معتمد قول پر سایہ دو گنا (مثلین) ہونے پر عصر شروع ہوتی ہے۔ اس لیے حنفی وقت جمہور سے تقریباً ۵۰ تا ۶۵ منٹ بعد ہوتا ہے۔'
+              'جمہور ائمہ (شافعی، مالکی، حنبلی) کے نزدیک سائے کا ایک گنا ہونا عصر کا وقت ہے، جبکہ امامِ اعظم ابو حنیفہؒ کے معتمد قول پر سایہ دو گنا (مثلین) ہونے پر عصر شروع ہوتی ہے۔ اس لیے حنفی وقت جمہور سے تقریباً ۵۰ تا ۶۵ منٹ بعد ہوتا ہے۔',
+              'ذهب جمهور الفقهاء (الشافعية والمالكية والحنابلة) إلى أن وقت العصر يبدأ إذا صار ظل كل شيء مثله، بينما المعتمد عند الإمام أبي حنيفة أن وقته يبدأ بمصير ظل الشيء مثليه، وهو فارق يتراوح بين ٥٠ إلى ٦٥ دقيقة تقريباً.',
+              'Jumhur aimma (Shafi\'i, Maliki, Hanbali) ke nazdeek saaye ka ek guna hona Asr ka waqt hai, jabke Imam-e-Azam Abu Hanifa ke motabar qaul par saya do guna (mithlayn) hone par Asr shuru hoti hai. Is liye Hanafi waqt Jumhur se taqreeban 50 ta 65 minute baad hota hai.'
             )}
           </p>
         </div>

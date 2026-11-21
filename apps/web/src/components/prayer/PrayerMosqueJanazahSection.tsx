@@ -108,12 +108,19 @@ export function PrayerMosqueJanazahSection({
             }}
           >
             <span>✏️</span>
-            <span>{t('Customize Mosque', 'مسجد کی ترتیبات')}</span>
+            <span>
+              {t('Customize Mosque', 'مسجد کی ترتیبات', 'تخصيص المسجد', 'Masjid ki Tarteebat')}
+            </span>
           </button>
         </div>
 
         <p style={{ fontSize: 13, color: '#4B5563', margin: '0 0 16px' }}>
-          Real-life Jama'at & Iqamah times calibrated to your Mohalla mosque:
+          {t(
+            "Real-life Jama'at & Iqamah times calibrated to your Mohalla mosque:",
+            'آپ کی محلے کی مسجد کے مطابق باجماعت نماز اور اقامت کے حقیقی اوقات:',
+            'مواقيت صلاة الجماعة والإقامة الفعلية لحيكم:',
+            "Aap ki mohalle ki masjid ke mutabiq ba-jama'at namaz aur iqamah ke haqeeqi auqat:"
+          )}
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

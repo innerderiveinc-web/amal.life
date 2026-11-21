@@ -241,7 +241,7 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
         }}
       >
         <span>📖</span>
-        <span>{t('Wisdom & Tafsir', 'حکمت و تفسیر')}</span>
+        <span>{t('Wisdom & Tafsir', 'حکمت و تفسیر', 'الحكمة والتفسير', 'Hikmat wa Tafsir')}</span>
       </button>
 
       {/* Close Button */}
@@ -261,7 +261,7 @@ export const FloatingPlayerAuxiliaryControls: React.FC<FloatingPlayerAuxiliaryCo
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        title={t('Close', 'بند کریں')}
+        title={t('Close', 'بند کریں', 'إغلاق', 'Band Karein')}
       >
         ✕
       </button>

@@ -231,7 +231,12 @@ export const AboutSovereignPillars: React.FC = () => {
                         textTransform: 'uppercase',
                       }}
                     >
-                      {t('Pillar 1 · Search & Guidance', 'بنیاد ۱ · تلاش و رہنمائی')}
+                      {t(
+                        'Pillar 1 · Search & Guidance',
+                        'بنیاد ۱ · تلاش و رہنمائی',
+                        'الركن ١ · البحث والاهتداء',
+                        'Bunyaad 1 · Talash wa Rahnumai'
+                      )}
                     </span>
                     <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                       Semantic Evidence Retrieval
@@ -241,7 +246,9 @@ export const AboutSovereignPillars: React.FC = () => {
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
                   {t(
                     '("Ask AMAL" — Emotional & Practical Retrieval)',
-                    '("Ask AMAL" — احساس و ضرورت کی بنیاد پر قرآنی نصوص کی تلاش)'
+                    '("Ask AMAL" — احساس و ضرورت کی بنیاد پر قرآنی نصوص کی تلاش)',
+                    '("اسأل عمل" — استرجاع النصوص بحسب الحاجة الروحية والواقعية)',
+                    '("Ask AMAL" — Ehsas wa Zaroorat ki Bunyad par Qurani Nusoos ki Talash)'
                   )}
                 </div>
                 <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
@@ -307,7 +314,12 @@ export const AboutSovereignPillars: React.FC = () => {
                         textTransform: 'uppercase',
                       }}
                     >
-                      {t('Pillar 2 · Niyyah Engine', 'بنیاد ۲ · نیت انجن')}
+                      {t(
+                        'Pillar 2 · Niyyah Engine',
+                        'بنیاد ۲ · نیت انجن',
+                        'الركن ٢ · محرك النية والعمل',
+                        'Bunyaad 2 · Niyyah Engine'
+                      )}
                     </span>
                     <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                       Intention-to-Action Translation
@@ -317,7 +329,9 @@ export const AboutSovereignPillars: React.FC = () => {
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
                   {t(
                     '(Transforming broad goals into structured Sunnah habits)',
-                    '(عام نیتوں کو باقاعدہ مسنون اعمال میں تبدیل کرنا)'
+                    '(عام نیتوں کو باقاعدہ مسنون اعمال میں تبدیل کرنا)',
+                    '(تحويل المقاصد العامة إلى عادات مسنونة محكمة)',
+                    '(Aam Niyyaton ko Baqaida Masnoon Amaal mein Tabdeel Karna)'
                   )}
                 </div>
                 <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
@@ -383,7 +397,12 @@ export const AboutSovereignPillars: React.FC = () => {
                         textTransform: 'uppercase',
                       }}
                     >
-                      {t('Pillar 3 · Classical Heritage', 'بنیاد ۳ · تراث و علمی اسناد')}
+                      {t(
+                        'Pillar 3 · Classical Heritage',
+                        'بنیاد ۳ · تراث و علمی اسناد',
+                        'الركن ٣ · الإسناد والتراث الأصيل',
+                        'Bunyaad 3 · Turas wa Ilmi Asnad'
+                      )}
                     </span>
                     <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                       Automatic Cross-Referencing
@@ -393,7 +412,9 @@ export const AboutSovereignPillars: React.FC = () => {
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
                   {t(
                     '(Linking Quran with Kanz-ul-Iman, Khaza\'in & Bahar-e-Shariat)',
-                    '(قرآن کریم کو کنز الایمان، خزائن العرفان اور بہارِ شریعت سے جوڑنا)'
+                    '(قرآن کریم کو کنز الایمان، خزائن العرفان اور بہارِ شریعت سے جوڑنا)',
+                    '(ربط القرآن بكنز الإيمان وخزائن العرفان وبهار شريعت)',
+                    '(Quran Kareem ko Kanz-ul-Iman, Khazain wa Bahar-e-Shariat se Jorna)'
                   )}
                 </div>
                 <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>
@@ -459,7 +480,12 @@ export const AboutSovereignPillars: React.FC = () => {
                         textTransform: 'uppercase',
                       }}
                     >
-                      {t('Pillar 4 · Mufti Secretariat', 'بنیاد ۴ · فتویٰ سیکریٹریٹ')}
+                      {t(
+                        'Pillar 4 · Mufti Secretariat',
+                        'بنیاد ۴ · فتویٰ سیکریٹریٹ',
+                        'الركن ٤ · أمانة الفتوى والاستفتاء',
+                        'Bunyaad 4 · Fatwa Secretariat'
+                      )}
                     </span>
                     <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
                       Mufti Query Dossier Preparation
@@ -469,7 +495,9 @@ export const AboutSovereignPillars: React.FC = () => {
                 <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 8 }}>
                   {t(
                     '(Organized Dossier Structuring for Human Muftis)',
-                    '(مفتیانِ کرام کے لیے سوال و حالات کی باقاعدہ فائل بندی)'
+                    '(مفتیانِ کرام کے لیے سوال و حالات کی باقاعدہ فائل بندی)',
+                    '(تنظيم ملف الاستفتاء الفقهي للسادة المفتين)',
+                    '(Muftiyan-e-Kiram ke liye Sawal wa Halat ki Baqaida File Bandi)'
                   )}
                 </div>
                 <p style={{ fontSize: 13, color: '#E5E7EB', lineHeight: 1.6, margin: 0 }}>

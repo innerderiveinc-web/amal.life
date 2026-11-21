@@ -76,10 +76,20 @@ export const AskScholarEscalationBanner: React.FC<AskScholarEscalationBannerProp
             color: '#1E40AF',
           }}
         >
-          <strong>⚖️ {t('Legitimate Scholarly Pluralism:', 'اختلاف ائمہ فقہ رحمت ہے:')}</strong>{' '}
+          <strong>
+            ⚖️{' '}
+            {t(
+              'Legitimate Scholarly Pluralism:',
+              'اختلاف ائمہ فقہ رحمت ہے:',
+              'اختلاف الأئمة رحمة وسعة:',
+              'Ikhtilaf-e-Aimma-e-Fiqh Rahmat Hai:'
+            )}
+          </strong>{' '}
           {t(
             "This topic involves established legal divergence across the recognized Sunni schools (Hanafi, Maliki, Shafi'i, and Hanbali). AMAL presents classical citations transparently without forcing an artificial single ruling.",
-            'اس مسئلے میں معتبر سنی فقہی مذاہب (حنفی، شافعی، مالکی، حنبلی) کے مابین دلائل پر مبنی علمی اختلاف موجود ہے۔ امل تمام آراء کو بلا تعصب پیش کرتا ہے۔'
+            'اس مسئلے میں معتبر سنی فقہی مذاہب (حنفی، شافعی، مالکی، حنبلی) کے مابین دلائل پر مبنی علمی اختلاف موجود ہے۔ امل تمام آراء کو بلا تعصب پیش کرتا ہے۔',
+            'تتضمن هذه المسألة خلافاً فقهياً معتبراً بين المذاهب السنية الأربعة (الحنفي والمالكي والشافعي والحنبلي). يعرض تطبيق عمل النصوص التراثية المعتمدة بشفافية دون إلزام برأي واحد.',
+            "Is mas'ale mein motabar Sunni fiqhi mazahib (Hanafi, Shafi'i, Maliki, Hanbali) ke mabain dalail par mabni ilmi ikhtilaf maujood hai. AMAL tamam araa ko bila ta'assub pesh karta hai."
           )}
         </div>
       )}

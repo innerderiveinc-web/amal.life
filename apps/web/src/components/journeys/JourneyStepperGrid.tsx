@@ -37,10 +37,21 @@ export const JourneyStepperGrid: React.FC<JourneyStepperGridProps> = ({
             letterSpacing: 0.5,
           }}
         >
-          {t('Day-by-Day Journey Track', 'روز بہ روز سفر کا جائزہ')} ({totalDays} {t('Days', 'دن')})
+          {t(
+            'Day-by-Day Journey Track',
+            'روز بہ روز سفر کا جائزہ',
+            'متابعة المسار يوماً بيوم',
+            'Roz-ba-Roz Safar ka Jaiza'
+          )}{' '}
+          ({totalDays} {t('Days', 'دن', 'أيام', 'Din')})
         </span>
         <span style={{ fontSize: 11, color: '#6B7280' }}>
-          {t('Click any day to view micro-action', 'عمل دیکھنے کے لیے کسی بھی دن پر کلک کریں')}
+          {t(
+            'Click any day to view micro-action',
+            'عمل دیکھنے کے لیے کسی بھی دن پر کلک کریں',
+            'اضغط على أي يوم لعرض ورده وعمله',
+            'Amal dekhne ke liye kisi bhi din par click karein'
+          )}
         </span>
       </div>
 
@@ -95,7 +106,11 @@ export const JourneyStepperGrid: React.FC<JourneyStepperGridProps> = ({
                 {isDone ? `✓ ${dayNum}` : dayNum}
               </span>
               <span style={{ fontSize: 9, opacity: 0.8, fontWeight: 500 }}>
-                {isDone ? t('Done', 'مکمل') : isCurrent ? t('Active', 'جاری') : t('Day', 'دن')}
+                {isDone
+                  ? t('Done', 'مکمل', 'مكتمل', 'Done')
+                  : isCurrent
+                  ? t('Active', 'جاری', 'نشط', 'Active')
+                  : t('Day', 'دن', 'يوم', 'Din')}
               </span>
             </button>
           );

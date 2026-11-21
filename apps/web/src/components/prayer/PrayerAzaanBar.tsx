@@ -40,7 +40,12 @@ export function PrayerAzaanBar({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontWeight: 800, color: '#1B4332', fontSize: 15 }}>
-              {t('Azaan Audio & Prayer Alerts', 'اذان آڈیو و الرٹس')}
+              {t(
+                'Azaan Audio & Prayer Alerts',
+                'اذان آڈیو و الرٹس',
+                'صوت الأذان وتنبيهات الصلاة',
+                'Azaan Audio wa Prayer Alerts'
+              )}
             </span>
             <span
               style={{
@@ -52,7 +57,9 @@ export function PrayerAzaanBar({
                 color: azaanSettings.enabled ? '#166534' : '#64748B',
               }}
             >
-              {azaanSettings.enabled ? 'ACTIVE 🔊' : 'MUTED 🔇'}
+              {azaanSettings.enabled
+                ? t('ACTIVE 🔊', 'فعال 🔊', 'مفعل 🔊', 'ACTIVE 🔊')
+                : t('MUTED 🔇', 'خاموش 🔇', 'صامت 🔇', 'MUTED 🔇')}
             </span>
           </div>
           <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>

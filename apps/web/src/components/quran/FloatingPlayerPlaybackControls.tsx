@@ -65,7 +65,7 @@ export const FloatingPlayerPlaybackControls: React.FC<FloatingPlayerPlaybackCont
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        title={t('Previous Ayah', 'پچھلی آیت')}
+        title={t('Previous Ayah', 'پچھلی آیت', 'الآية السابقة', 'Pichli Ayah')}
       >
         ⏮
       </button>
@@ -87,7 +87,11 @@ export const FloatingPlayerPlaybackControls: React.FC<FloatingPlayerPlaybackCont
           justifyContent: 'center',
           boxShadow: '0 4px 14px rgba(4, 120, 87, 0.4)',
         }}
-        title={isPlayingPaused ? t('Play', 'چلائیں') : t('Pause', 'وقفہ')}
+        title={
+          isPlayingPaused
+            ? t('Play', 'چلائیں', 'تشغيل', 'Chalayen')
+            : t('Pause', 'وقفہ', 'إيقاف مؤقت', 'Waqfah')
+        }
       >
         {isPlayingPaused ? '▶' : '⏸'}
       </button>
@@ -117,7 +121,7 @@ export const FloatingPlayerPlaybackControls: React.FC<FloatingPlayerPlaybackCont
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        title={t('Next Ayah', 'اگلی آیت')}
+        title={t('Next Ayah', 'اگلی آیت', 'الآية التالية', 'Agli Ayah')}
       >
         ⏭
       </button>

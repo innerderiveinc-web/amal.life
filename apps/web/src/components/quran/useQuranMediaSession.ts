@@ -47,7 +47,9 @@ export function useQuranMediaSession({
       const trackTitle = isUrduAudio
         ? t(
             `Kanz-ul-Iman Translation · Surah ${meta?.nameTransliterated || ''} · Verse ${playingAyahNumber}`,
-            `ترجمہ کنز الایمان - سورۃ ${meta?.nameUrdu || ''} · آیت ${playingAyahNumber}`
+            `ترجمہ کنز الایمان - سورۃ ${meta?.nameUrdu || ''} · آیت ${playingAyahNumber}`,
+            `ترجمة كنز الإيمان - سورة ${meta?.nameArabic || ''} · الآية ${playingAyahNumber}`,
+            `Tarjuma Kanz-ul-Iman · Surah ${meta?.nameTransliterated || ''} · Ayah ${playingAyahNumber}`
           )
         : isUrdu
           ? `سورۃ ${meta?.nameArabic || ''} (${meta?.nameUrdu || ''}) · آیت ${playingAyahNumber}`
@@ -61,7 +63,9 @@ export function useQuranMediaSession({
       const artistName = isUrduAudio
         ? t(
             'Kanz-ul-Iman Translation · 100% Human Voice',
-            'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice'
+            'کنز الایمان فی ترجمۃ القرآن · 100% Human Voice',
+            'ترجمة كنز الإيمان · بصوت بشري حقيقي',
+            'Kanz-ul-Iman Tarjuma · 100% Asli Insani Awaaz'
           )
         : qariDisplayMap[selectedQari];
 

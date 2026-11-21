@@ -132,7 +132,12 @@ export const FloatingPlayerTrackMeta: React.FC<FloatingPlayerTrackMetaProps> = (
               ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated})`
               : `Surah ${currentSurahMeta?.nameTransliterated} (${currentSurahMeta?.nameArabic})`
             : activeTafseerCardKey
-              ? t('Wisdom & Commentary Audio Recitation', 'حکمت و تفسیری عبارت کی صوتی قرأت')
+              ? t(
+                  'Wisdom & Commentary Audio Recitation',
+                  'حکمت و تفسیری عبارت کی صوتی قرأت',
+                  'تلاوة صوتية للحكمة والتفسير',
+                  'Hikmat wa Tafseeri Ibarat ki Audio Tilawat'
+                )
               : isUrdu
                 ? `سورۃ ${currentSurahMeta?.nameUrdu} (${currentSurahMeta?.nameTransliterated}) · آیت ${playingAyahNumber}`
                 : `Surah ${currentSurahMeta?.nameTransliterated} (${currentSurahMeta?.nameArabic}) · Verse ${playingAyahNumber}`}

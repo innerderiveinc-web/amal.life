@@ -23,7 +23,7 @@ export const JourneysHeader: React.FC<JourneysHeaderProps> = ({
             letterSpacing: 1,
           }}
         >
-          {t('JOURNEY ENGINE (SULUK)', 'سلوک اور اسفار')}
+          {t('JOURNEY ENGINE (SULUK)', 'سلوک اور اسفار', 'محرك السلوك والأوراد', 'Journey Engine (Suluk)')}
         </span>
         <h1
           style={{
@@ -33,7 +33,7 @@ export const JourneysHeader: React.FC<JourneysHeaderProps> = ({
             color: AmalTheme.colors.text.primaryLight,
           }}
         >
-          {t('Structured Spiritual Journeys', 'منظم روحانی اسفار')}
+          {t('Structured Spiritual Journeys', 'منظم روحانی اسفار', 'رحلات روحية منهجية', 'Munazzam Ruhani Asfar')}
         </h1>
         <p
           style={{
@@ -45,7 +45,9 @@ export const JourneysHeader: React.FC<JourneysHeaderProps> = ({
         >
           {t(
             'Evidence-backed, day-by-day micro-actions. If life causes friction, reset with a fresh Niyyah—there is zero shame, only gentle continuity.',
-            'نبوی سنت پر مبنی روزمرہ اعمال۔ کسی رکاوٹ کی صورت میں بغیر احساس ندامت نئی نیت کے ساتھ دوبارہ آغاز کریں؛ یہاں شرمندگی نہیں بلکہ رحمت اور استقامت ہے۔'
+            'نبوی سنت پر مبنی روزمرہ اعمال۔ کسی رکاوٹ کی صورت میں بغیر احساس ندامت نئی نیت کے ساتھ دوبارہ آغاز کریں؛ یہاں شرمندگی نہیں بلکہ رحمت اور استقامت ہے۔',
+            'خطوات يومية ميسرة مدعومة بالأدلة الشرعية. إن واجهتك مشاغل الحياة فجدد النية وابدأ برفق دون حرج؛ فالغاية هي الاستقامة المستمرة.',
+            'Nabwi Sunnah par mabni rozmarrah amaal. Kisi rukawat ki soorat mein baghair sharmindagi nayi niyyah ke sath dobara aaghaz karein; yahan sharmindagi nahi balke rahmat aur istiqamat hai.'
           )}
         </p>
       </header>

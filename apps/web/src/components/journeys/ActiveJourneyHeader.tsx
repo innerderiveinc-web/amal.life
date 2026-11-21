@@ -53,18 +53,24 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
               }}
             >
               {isCompletedState
-                ? t('COMPLETED', 'مکمل')
-                : t(`ACTIVE · PHASE ${journey.currentPhase || 1}`, `جاری · مرحلہ ${journey.currentPhase || 1}`)}
+                ? t('COMPLETED', 'مکمل', 'مكتمل', 'Mukammal')
+                : t(
+                    `ACTIVE · PHASE ${journey.currentPhase || 1}`,
+                    `جاری · مرحلہ ${journey.currentPhase || 1}`,
+                    `قيد التنفيذ · المرحلة ${journey.currentPhase || 1}`,
+                    `Jari · Marhala ${journey.currentPhase || 1}`
+                  )}
             </span>
             <span style={{ fontSize: 12, color: '#6B7280', fontWeight: 600 }}>
-              {completedDays.length} / {totalDays} {t('Days Complete', 'دن مکمل')}
+              {completedDays.length} / {totalDays}{' '}
+              {t('Days Complete', 'دن مکمل', 'أيام مكتملة', 'Din Mukammal')}
             </span>
           </div>
           <h3 style={{ fontSize: 20, fontWeight: 800, margin: '4px 0 6px', color: '#111827' }}>
             {journey.title}
           </h3>
           <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>
-            {t('Template', 'ٹیمپلیٹ')}:{' '}
+            {t('Template', 'ٹیمپلیٹ', 'النموذج', 'Template')}:{' '}
             <code
               style={{
                 fontSize: 12,
@@ -77,7 +83,8 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
             </code>
             {journey.startedAt && (
               <span style={{ marginLeft: 8 }}>
-                · {t('Started', 'آغاز')}: {new Date(journey.startedAt).toLocaleDateString()}
+                · {t('Started', 'آغاز', 'تاريخ البدء', 'Aaghaz')}:{' '}
+                {new Date(journey.startedAt).toLocaleDateString()}
               </span>
             )}
           </p>
@@ -88,7 +95,12 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
           {/* RESET JOURNEY BUTTON */}
           <button
             onClick={onResetJourney}
-            title={t('Restart this journey from Day 1 with a fresh Niyyah', 'نئی نیت کے ساتھ دن 1 سے دوبارہ شروع کریں')}
+            title={t(
+              'Restart this journey from Day 1 with a fresh Niyyah',
+              'نئی نیت کے ساتھ دن 1 سے دوبارہ شروع کریں',
+              'إعادة بدء هذا المسار من اليوم الأول بنية جديدة',
+              'Nayi niyyah ke sath din 1 se dobara shuru karein'
+            )}
             style={{
               padding: '8px 14px',
               borderRadius: 8,
@@ -104,7 +116,8 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
               transition: 'all 0.15s ease',
             }}
           >
-            <span>🔄</span> {t('Reset Journey', 'ری سیٹ (دوبارہ آغاز)')}
+            <span>🔄</span>{' '}
+            {t('Reset Journey', 'ری سیٹ (دوبارہ آغاز)', 'إعادة تعيين المسار', 'Reset (Dobara Aaghaz)')}
           </button>
 
           {!isCompletedState && (
@@ -121,7 +134,7 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              ▶ {t('Next Phase', 'اگلا مرحلہ')}
+              ▶ {t('Next Phase', 'اگلا مرحلہ', 'المرحلة التالية', 'Agla Marhala')}
             </button>
           )}
 
@@ -139,7 +152,7 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
                 cursor: 'pointer',
               }}
             >
-              ✓ {t('Conclude', 'مکمل کریں')}
+              ✓ {t('Conclude', 'مکمل کریں', 'إنهاء وتتويج', 'Mukammal Karein')}
             </button>
           ) : (
             <span
@@ -152,13 +165,13 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
                 borderRadius: 8,
               }}
             >
-              ✓ {t('Journey Finished', 'سفر مکمل')}
+              ✓ {t('Journey Finished', 'سفر مکمل', 'اكتمل المسار بنجاح', 'Safar Mukammal')}
             </span>
           )}
 
           <button
             onClick={onDeleteJourney}
-            title={t('Remove Journey', 'سفر حذف کریں')}
+            title={t('Remove Journey', 'سفر حذف کریں', 'حذف المسار', 'Safar Hazaf Karein')}
             style={{
               padding: '8px 10px',
               borderRadius: 8,
@@ -188,11 +201,12 @@ export const ActiveJourneyHeader: React.FC<ActiveJourneyHeaderProps> = ({
           }}
         >
           <span>
-            {t('Progress', 'پیشرفت')}: {progressPct}% · {completedDays.length} {t('of', 'از')}{' '}
-            {totalDays} {t('days', 'دن')}
+            {t('Progress', 'پیشرفت', 'التقدم', 'Peshraft')}: {progressPct}% · {completedDays.length}{' '}
+            {t('of', 'از', 'من', 'az')} {totalDays} {t('days', 'دن', 'أيام', 'din')}
           </span>
           <span>
-            {t('Currently Viewing', 'زیر مطالعہ')}: {t('Day', 'دن')} {selectedDay}
+            {t('Currently Viewing', 'زیر مطالعہ', 'المعروض حالياً', 'Zair-e-Muta\'ala')}:{' '}
+            {t('Day', 'دن', 'اليوم', 'Din')} {selectedDay}
           </span>
         </div>
         <div

@@ -69,7 +69,7 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               letterSpacing: 0.5,
             }}
           >
-            {t('DAY', 'دن')} {selectedDay} · {selectedDayPlan.phaseName}
+            {t('DAY', 'دن', 'اليوم', 'Din')} {selectedDay} · {selectedDayPlan.phaseName}
           </span>
           <h4 style={{ fontSize: 17, fontWeight: 800, margin: '4px 0 0', color: '#111827' }}>
             {selectedDayPlan.title}
@@ -87,7 +87,7 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               fontWeight: 700,
             }}
           >
-            ✓ {t('Completed for this Day', 'اس دن کا عمل مکمل')}
+            ✓ {t('Completed for this Day', 'اس دن کا عمل مکمل', 'اكتمل عمل هذا اليوم', 'Is din ka amal mukammal')}
           </span>
         )}
       </div>
@@ -95,7 +95,12 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
       {/* Micro-Action */}
       <div style={{ marginBottom: 14 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: '#374151', marginBottom: 4 }}>
-          {t("Today's Sunnah Action Step:", 'آج کا مسنون عمل:')}
+          {t(
+            "Today's Sunnah Action Step:",
+            'آج کا مسنون عمل:',
+            'الخطوة العملية المسنونة لليوم:',
+            'Aaj ka masnoon amal:'
+          )}
         </div>
         <p
           style={{
@@ -130,7 +135,12 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               marginBottom: 4,
             }}
           >
-            {t('PROPHETIC EVIDENCE / HADITH', 'حدیث مبارکہ / سند')}
+            {t(
+              'PROPHETIC EVIDENCE / HADITH',
+              'حدیث مبارکہ / سند',
+              'الدليل من الحديث الشريف / السند',
+              'Hadith Mubarakah / Sanad'
+            )}
           </div>
           <p
             style={{
@@ -175,10 +185,15 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
                 alignItems: 'center',
                 gap: 3,
               }}
-              title={t('View Authenticity & Sanad Certificate', 'تحقیق و سندِ روایت دیکھیں')}
+              title={t(
+                'View Authenticity & Sanad Certificate',
+                'تحقیق و سندِ روایت دیکھیں',
+                'عرض شهادة التحقيق والسند',
+                'Tehqeeq wa Sanad-e-Riwayat Dekhein'
+              )}
             >
               <span>✓</span>
-              <span>{t('Sanad Verified', 'مستند سند')}</span>
+              <span>{t('Sanad Verified', 'مستند سند', 'سند صحيح معتمد', 'Mustanad Sanad')}</span>
             </button>
           </div>
         </div>
@@ -188,7 +203,13 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
       {selectedDayPlan.reflectionPrompt && (
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontSize: 12, fontWeight: 600, color: '#4B5563', marginBottom: 4 }}>
-            💭 {t('Daily Muhasabah (Reflection):', 'روزانہ کا محاسبہ:')}
+            💭{' '}
+            {t(
+              'Daily Muhasabah (Reflection):',
+              'روزانہ کا محاسبہ:',
+              'المحاسبة اليومية (التأمل):',
+              'Rozana ka Muhasabah (Reflection):'
+            )}
           </div>
           <p
             style={{
@@ -204,7 +225,9 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
             type="text"
             placeholder={t(
               'Optional: Record a short personal reflection for this day...',
-              'اختیاری: اس دن کا اپنا تاثر یا محاسبہ درج کریں...'
+              'اختیاری: اس دن کا اپنا تاثر یا محاسبہ درج کریں...',
+              'اختياري: سجّل تأملك ومحاسبتك لهذا اليوم...',
+              'Ikhtiyari: Is din ka apna taasur ya muhasabah darj karein...'
             )}
             value={reflectionText}
             onChange={(e) => onReflectionChange(e.target.value)}
@@ -245,7 +268,9 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               <span>✓</span>{' '}
               {t(
                 `Day ${selectedDay} Completed · Click to Undo`,
-                `دن ${selectedDay} مکمل ہے · منسوخ کرنے کے لیے کلک کریں`
+                `دن ${selectedDay} مکمل ہے · منسوخ کرنے کے لیے کلک کریں`,
+                `اليوم ${selectedDay} مكتمل · اضغط للتراجع`,
+                `Din ${selectedDay} Mukammal · Undo karne ke liye click karein`
               )}
             </>
           ) : (
@@ -253,7 +278,9 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               <span>✓</span>{' '}
               {t(
                 `Mark Day ${selectedDay} Completed (Amal Done)`,
-                `دن ${selectedDay} کا عمل مکمل نشان زد کریں`
+                `دن ${selectedDay} کا عمل مکمل نشان زد کریں`,
+                `تحديد اليوم ${selectedDay} كمكتمل (تم العمل)`,
+                `Din ${selectedDay} ka amal mukammal nishan zad karein`
               )}
             </>
           )}
@@ -275,7 +302,7 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               opacity: selectedDay <= 1 ? 0.5 : 1,
             }}
           >
-            ← {t('Prev Day', 'پچھلا دن')}
+            ← {t('Prev Day', 'پچھلا دن', 'اليوم السابق', 'Pichla Din')}
           </button>
           <button
             disabled={selectedDay >= totalDays}
@@ -291,7 +318,7 @@ export const JourneyDailyActionCard: React.FC<JourneyDailyActionCardProps> = ({
               opacity: selectedDay >= totalDays ? 0.5 : 1,
             }}
           >
-            {t('Next Day', 'اگلا دن')} →
+            {t('Next Day', 'اگلا دن', 'اليوم التالي', 'Agla Din')} →
           </button>
         </div>
       </div>

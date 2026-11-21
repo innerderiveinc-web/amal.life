@@ -336,7 +336,12 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
                       fontWeight: 700,
                       cursor: 'pointer',
                     }}
-                    title={t('Add to existing gold', 'موجودہ سونے میں شامل کریں')}
+                    title={t(
+                      'Add to existing gold',
+                      'موجودہ سونے میں شامل کریں',
+                      'إضافة إلى الذهب الحالي',
+                      'Maujooda sone mein shamil karein'
+                    )}
                   >
                     + {t('Add to Gold', 'سونے میں جمع کریں', 'إضافة للذهب', 'Add')}
                   </button>
@@ -363,7 +368,12 @@ export const ZakatGoldSilverNisabCard: React.FC<ZakatGoldSilverNisabCardProps> =
                       fontWeight: 700,
                       cursor: 'pointer',
                     }}
-                    title={t('Replace existing gold weight', 'موجودہ وزن کی جگہ درج کریں')}
+                    title={t(
+                      'Replace existing gold weight',
+                      'موجودہ وزن کی جگہ درج کریں',
+                      'استبدال وزن الذهب الحالي',
+                      'Maujooda wazan ki jagah darj karein'
+                    )}
                   >
                     {t('Replace Gold', 'سونے کی جگہ درج کریں', 'استبدال الذهب', 'Replace')}
                   </button>
