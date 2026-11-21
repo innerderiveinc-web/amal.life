@@ -161,10 +161,18 @@ export const SistersBookIndexView: React.FC<SistersBookIndexViewProps> = ({
 
       {/* Book Metadata Header */}
       <h2 style={{ fontSize: 24, fontWeight: 800, color: '#064E3B', margin: '4px 0' }}>
-        {(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
+        {language === 'ar'
+          ? (readingBook.titleArabic || readingBook.titleUrdu)
+          : language === 'ur'
+          ? readingBook.titleUrdu
+          : readingBook.titleEnglish}
       </h2>
       <div style={{ fontSize: 14, color: '#047857', fontWeight: 600, marginBottom: 6 }}>
-        {(language === 'ur' || language === 'ar') ? readingBook.titleEnglish : (readingBook.titleArabic || readingBook.titleUrdu)}
+        {language === 'ar'
+          ? readingBook.titleUrdu
+          : language === 'ur'
+          ? readingBook.titleEnglish
+          : (readingBook.titleArabic || readingBook.titleUrdu)}
       </div>
       <div style={{ fontSize: 14, color: '#4B5563', marginBottom: 12 }}>
         <strong>{(language === 'ur' || language === 'ar') ? readingBook.authorUrdu : readingBook.authorEnglish}</strong> • {readingBook.authorEra}

@@ -97,7 +97,11 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
               fontWeight: 700,
             }}
           >
-            {(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
+            {language === 'ar'
+              ? (readingBook.titleArabic || readingBook.titleUrdu)
+              : language === 'ur'
+              ? readingBook.titleUrdu
+              : readingBook.titleEnglish}
           </span>
         </div>
       </div>
@@ -116,7 +120,12 @@ export const SistersChapterReaderView: React.FC<SistersChapterReaderViewProps> =
             }}
           >
             <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>
-              📑 {t('Complete Printed Edition — ', 'مکمل اصل مطبوعہ نسخہ — ', 'النسخة المطبوعة الأصلية الكاملة — ', 'Mukammal asal matboo\'ah nuskha — ')}{(language === 'ur' || language === 'ar') ? readingBook.titleUrdu : readingBook.titleEnglish}
+              📑 {t('Complete Printed Edition — ', 'مکمل اصل مطبوعہ نسخہ — ', 'النسخة المطبوعة الأصلية الكاملة — ', 'Mukammal asal matboo\'ah nuskha — ')}
+              {language === 'ar'
+                ? (readingBook.titleArabic || readingBook.titleUrdu)
+                : language === 'ur'
+                ? readingBook.titleUrdu
+                : readingBook.titleEnglish}
             </div>
             <a
               href={readingBook.pdfUrl}
