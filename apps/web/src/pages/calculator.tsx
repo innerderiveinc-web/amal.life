@@ -42,6 +42,34 @@ export default function CalculatorPage() {
   const [nisabStandard, setNisabStandard] = useState<'SILVER' | 'GOLD'>('SILVER');
   const [madhhab, setMadhhab] = useState<'HANAFI' | 'SHAFI_I' | 'MALIKI' | 'HANBALI'>('HANAFI');
 
+  // Hydrate user-modified Zakat bullion rates from localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedRates = localStorage.getItem('amal_zakat_rates');
+        if (savedRates) {
+          const parsed = JSON.parse(savedRates);
+          if (parsed.goldPrice && parsed.silverPrice) {
+            setGoldPrice(parsed.goldPrice);
+            setSilverPrice(parsed.silverPrice);
+            if (parsed.currency) setCurrency(parsed.currency);
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to parse saved zakat rates:', err);
+      }
+    }
+  }, []);
+
+  // Persist updated bullion rates to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('amal_zakat_rates', JSON.stringify({ currency, goldPrice, silverPrice }));
+      } catch {}
+    }
+  }, [currency, goldPrice, silverPrice]);
+
   const [cash, setCash] = useState(250000);
   const [goldGrams, setGoldGrams] = useState(25);
   const [silverGrams, setSilverGrams] = useState(100);
@@ -108,6 +136,10 @@ export default function CalculatorPage() {
   const [daughtersCount, setDaughtersCount] = useState(2);
   const [hasFather, setHasFather] = useState(true);
   const [hasMother, setHasMother] = useState(true);
+  const [fullBrothersCount, setFullBrothersCount] = useState(0);
+  const [fullSistersCount, setFullSistersCount] = useState(0);
+  const [hasPaternalGrandfather, setHasPaternalGrandfather] = useState(false);
+  const [hasPaternalGrandmother, setHasPaternalGrandmother] = useState(false);
 
   const mirasResult = useMemo(() => {
     const input: InheritanceInput = {
@@ -115,12 +147,16 @@ export default function CalculatorPage() {
       currency,
       deceasedGender,
       heirs: {
-        husband: hasHusband,
+        husband: deceasedGender === 'FEMALE' && hasHusband,
         wivesCount: deceasedGender === 'MALE' ? wivesCount : 0,
         sonsCount,
         daughtersCount,
         father: hasFather,
         mother: hasMother,
+        fullBrothersCount,
+        fullSistersCount,
+        paternalGrandfather: hasPaternalGrandfather,
+        paternalGrandmother: hasPaternalGrandmother,
       },
     };
     return zakatInheritanceEngine.calculateInheritance(input);
@@ -134,6 +170,10 @@ export default function CalculatorPage() {
     daughtersCount,
     hasFather,
     hasMother,
+    fullBrothersCount,
+    fullSistersCount,
+    hasPaternalGrandfather,
+    hasPaternalGrandmother,
   ]);
 
   return (
@@ -275,6 +315,14 @@ export default function CalculatorPage() {
             setHasFather={setHasFather}
             hasMother={hasMother}
             setHasMother={setHasMother}
+            fullBrothersCount={fullBrothersCount}
+            setFullBrothersCount={setFullBrothersCount}
+            fullSistersCount={fullSistersCount}
+            setFullSistersCount={setFullSistersCount}
+            hasPaternalGrandfather={hasPaternalGrandfather}
+            setHasPaternalGrandfather={setHasPaternalGrandfather}
+            hasPaternalGrandmother={hasPaternalGrandmother}
+            setHasPaternalGrandmother={setHasPaternalGrandmother}
             mirasResult={mirasResult}
             setMirasCert={setMirasCert}
             isUrdu={isUrdu}

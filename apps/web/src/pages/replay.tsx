@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { deenReplayEngine, DeenReplayAnnualReport } from '@amal/amal-engine';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,10 +8,87 @@ import { useLanguage } from '../context/LanguageContext';
 export default function DeenReplayPage() {
   const { t } = useLanguage();
   const [selectedQuarter, setSelectedQuarter] = useState<'ALL' | 'Q1' | 'Q2' | 'Q3' | 'Q4'>('ALL');
+  const [localMetrics, setLocalMetrics] = useState({
+    reflectionsCount: 0,
+    tasbihCount: 0,
+    bookmarksCount: 0,
+    activeGoalsCount: 0,
+    hasRealActivity: false,
+    latestReflection: '',
+    topGoals: [] as string[],
+  });
 
-  const report: DeenReplayAnnualReport = useMemo(() => {
-    return deenReplayEngine.generateAnnualReplay('usr_demo_1', 2026);
+  // Hydrate authentic on-device records on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const rawReflections = localStorage.getItem('amal_reflections');
+        const parsedReflections = rawReflections ? JSON.parse(rawReflections) : [];
+
+        const rawBookmarks = localStorage.getItem('amal_saved_bookmarks');
+        const parsedBookmarks = rawBookmarks ? JSON.parse(rawBookmarks) : [];
+
+        const rawGoals = localStorage.getItem('amal_goals');
+        const parsedGoals = rawGoals ? JSON.parse(rawGoals) : [];
+
+        // Calculate Tasbih Total
+        let totalTasbih = 0;
+        const rawTasbih = localStorage.getItem('amal_tasbih_counts');
+        if (rawTasbih) {
+          const parsedTasbih = JSON.parse(rawTasbih);
+          if (typeof parsedTasbih === 'object' && parsedTasbih !== null) {
+            totalTasbih = Object.values(parsedTasbih).reduce((acc: number, val: any) => acc + (Number(val) || 0), 0);
+          }
+        }
+
+        const hasRealActivity =
+          parsedReflections.length > 0 ||
+          totalTasbih > 0 ||
+          parsedBookmarks.length > 0 ||
+          parsedGoals.length > 0;
+
+        setLocalMetrics({
+          reflectionsCount: parsedReflections.length,
+          tasbihCount: totalTasbih,
+          bookmarksCount: parsedBookmarks.length,
+          activeGoalsCount: parsedGoals.length,
+          hasRealActivity,
+          latestReflection: parsedReflections[0]?.content || '',
+          topGoals: parsedGoals.slice(0, 3).map((g: any) => g.title || g.titleEnglish || 'Sunnah Habit'),
+        });
+      } catch (err) {
+        console.warn('Failed to parse authentic local replay records:', err);
+      }
+    }
   }, []);
+
+  const baseReport: DeenReplayAnnualReport = useMemo(() => {
+    return deenReplayEngine.generateAnnualReplay('usr_local_device', 2026);
+  }, []);
+
+  // Dynamically tailor the annual report with authentic local records
+  const report = useMemo(() => {
+    if (!localMetrics.hasRealActivity) return baseReport;
+
+    const modified = { ...baseReport };
+    const firstQuarter = modified.quarters[0];
+    if (firstQuarter) {
+      if (localMetrics.topGoals.length > 0) {
+        firstQuarter.primaryNiyyahs = localMetrics.topGoals;
+      }
+      if (localMetrics.latestReflection) {
+        firstQuarter.transformativeReflections = [
+          {
+            date: '2026-Local-Record',
+            excerpt: localMetrics.latestReflection.slice(0, 140) + '...',
+            perspectiveShift: 'Authentic on-device Muhasabah logged in your private vault.',
+          },
+          ...firstQuarter.transformativeReflections,
+        ];
+      }
+    }
+    return modified;
+  }, [baseReport, localMetrics]);
 
   const visibleQuarters = useMemo(() => {
     if (selectedQuarter === 'ALL') return report.quarters;
@@ -45,6 +123,62 @@ export default function DeenReplayPage() {
         </div>
 
         {/* Narrative Hero Card */}
+        {localMetrics.hasRealActivity ? (
+          <div style={{
+            backgroundColor: '#064E3B',
+            borderRadius: 14,
+            padding: '16px 20px',
+            marginBottom: 20,
+            border: '1.5px solid #34D399',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 12,
+          }}>
+            <div>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#A7F3D0', textTransform: 'uppercase', letterSpacing: 1 }}>
+                ✓ {t('AUTHENTIC ON-DEVICE LOCAL MUHASABAH SYNCED', 'مقامی ڈیوائس کا اصل ڈیٹا فعال ہے', 'سجلات المحاسبة المحلية الحقيقية موثقة', 'Local Device Real Muhasabah Active')}
+              </span>
+              <div style={{ fontSize: 13, color: '#FFFFFF', marginTop: 4, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                <span>🌱 <strong>{localMetrics.reflectionsCount}</strong> {t('Reflections', 'محاسبے', 'خواطر', 'Reflections')}</span>
+                <span>📿 <strong>{localMetrics.tasbihCount}</strong> {t('Tasbih Dhikr', 'تسبیحات', 'أذكار', 'Tasbihat')}</span>
+                <span>🔖 <strong>{localMetrics.bookmarksCount}</strong> {t('Bookmarks', 'بک مارکس', 'محفوظات', 'Bookmarks')}</span>
+                <span>🎯 <strong>{localMetrics.activeGoalsCount}</strong> {t('Active Goals', 'مقاصد', 'أهداف', 'Goals')}</span>
+              </div>
+            </div>
+            <Link
+              href="/reflections"
+              style={{
+                padding: '6px 12px',
+                borderRadius: 6,
+                backgroundColor: '#ECFDF5',
+                color: '#065F46',
+                fontWeight: 700,
+                fontSize: 12,
+                textDecoration: 'none',
+              }}
+            >
+              + {t('Add Today\'s Reflection', 'آج کا محاسبہ درج کریں', 'إضافة خاطرة اليوم', 'Aaj Ka Muhasabah')}
+            </Link>
+          </div>
+        ) : (
+          <div style={{
+            backgroundColor: '#F8FAFC',
+            borderRadius: 12,
+            padding: '12px 16px',
+            marginBottom: 20,
+            border: '1px solid #CBD5E1',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: 12.5,
+            color: '#475569',
+          }}>
+            <span>💡 {t('Sample Longitudinal Preview. As you log reflections, tasbih, and goals on your device, this dashboard automatically populates with your authentic annual journey.', 'یہ ایک تعارفی نمونہ ہے۔ جیسے ہی آپ اس ڈیوائس پر محاسبہ اور اذکار درج کریں گے، یہ ڈیش بورڈ خود بخود آپ کے حقیقی ریکارڈ سے بھر جائے گا۔', 'نموذج إرشادي. عند تسجيلك للخواطر والأذكار على هذا الجهاز، سيتم تحديث هذا التقرير تلقائياً بسجلاتك الحقيقية.', 'Sample preview. Jaise hi aap is device par reflections aur azkar log karenge, ye dashboard aapke real data se populate ho jayega.')}</span>
+          </div>
+        )}
+
         <div style={{
           backgroundColor: '#1B4332',
           borderRadius: 16,

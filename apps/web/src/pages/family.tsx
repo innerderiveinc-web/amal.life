@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { Navigation } from '../components/Navigation';
 import { familyDeenOsEngine, FamilyCircle } from '@amal/amal-engine';
@@ -52,10 +52,49 @@ const FAMILY_HALAQAH_BLUEPRINTS = [
 
 export default function FamilyPage() {
   const { t, language } = useLanguage();
-  const [family, setFamily] = useState<FamilyCircle>(familyDeenOsEngine.getFamilyCircle('fam_demo_1'));
+  const [family, setFamily] = useState<FamilyCircle>(() => {
+    return familyDeenOsEngine.getFamilyCircle('fam_demo_1');
+  });
   const [newJourneyTitle, setNewJourneyTitle] = useState('');
   const [newJourneyDesc, setNewJourneyDesc] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const isHydrated = useRef(false);
+
+  // Restore on-device Family Circle state from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('amal_family_circle');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.familyId && Array.isArray(parsed.members)) {
+            setFamily(parsed);
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to hydrate family circle from localStorage:', err);
+      } finally {
+        isHydrated.current = true;
+      }
+    }
+  }, []);
+
+  // Persist Family Circle updates automatically to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isHydrated.current) {
+      try {
+        localStorage.setItem('amal_family_circle', JSON.stringify(family));
+        // Also save active completed tasks tally for Deen Replay integration
+        const completedCount = family.sharedJourneys.reduce(
+          (acc, j) => acc + j.assignedTasks.filter(t => t.isCompleted).length,
+          0
+        );
+        localStorage.setItem('amal_family_completed_tasks_count', String(completedCount));
+      } catch (err) {
+        console.warn('Failed to save family circle to localStorage:', err);
+      }
+    }
+  }, [family]);
 
   const handleActivateBlueprint = (blueprint: typeof FAMILY_HALAQAH_BLUEPRINTS[0]) => {
     const j = familyDeenOsEngine.createSharedJourney('fam_demo_1', {

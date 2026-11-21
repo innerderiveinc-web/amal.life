@@ -1,36 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { knowledgeVaultEngine, VaultSavedNote } from '@amal/amal-engine';
+import { MASTER_CANONICAL_CORPUS } from '@amal/evidence';
 import { useLanguage } from '../context/LanguageContext';
 import { showAmalToast } from '../components/Toast';
 import { exportSovereignBackup, restoreSovereignBackup } from '../lib/sovereign-backup';
 import { triggerHaptic } from '../lib/haptics';
+import { getSavedBookmarks, BookmarkRecord } from '../lib/bookmarks-store';
 
 export default function KnowledgeVaultPage() {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState<'NOTES' | 'REFLECTIONS' | 'BOOKMARKS' | 'CANONICAL_CORPUS'>('NOTES');
   const [notes, setNotes] = useState<VaultSavedNote[]>([]);
+  const [reflections, setReflections] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] = useState<BookmarkRecord[]>([]);
+  const [corpusFilter, setCorpusFilter] = useState('');
   const [title, setTitle] = useState('');
   const [sourceType, setSourceType] = useState<VaultSavedNote['sourceType']>('FRIDAY_KHUTBAH');
   const [rawText, setRawText] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
-  // Restore saved notes from LocalStorage on mount with fallback to engine defaults
+  // Restore saved notes, reflections, and bookmarks from LocalStorage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const saved = localStorage.getItem('amal_vault_notes');
-        if (saved) {
-          const parsed = JSON.parse(saved);
+        const savedNotes = localStorage.getItem('amal_vault_notes');
+        if (savedNotes) {
+          const parsed = JSON.parse(savedNotes);
           if (Array.isArray(parsed) && parsed.length > 0) {
             setNotes(parsed);
-            return;
+          } else {
+            setNotes(knowledgeVaultEngine.getUserNotes('usr_demo_1'));
           }
+        } else {
+          setNotes(knowledgeVaultEngine.getUserNotes('usr_demo_1'));
         }
+
+        // Hydrate personal reflections
+        const savedReflections = localStorage.getItem('amal_reflections');
+        if (savedReflections) {
+          const parsed = JSON.parse(savedReflections);
+          if (Array.isArray(parsed)) setReflections(parsed);
+        }
+
+        // Hydrate bookmarks
+        setBookmarks(getSavedBookmarks());
       } catch (err) {
-        console.warn('Could not parse saved vault notes:', err);
+        console.warn('Could not parse vault items:', err);
+        setNotes(knowledgeVaultEngine.getUserNotes('usr_demo_1'));
       }
-      setNotes(knowledgeVaultEngine.getUserNotes('usr_demo_1'));
     }
   }, []);
 
@@ -132,6 +152,77 @@ export default function KnowledgeVaultPage() {
         </div>
 
         {/* Action Button Row */}
+        {/* Sovereign Vault Domain Navigation Tabs */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+          <button
+            type="button"
+            onClick={() => setActiveTab('NOTES')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'NOTES' ? '2px solid #1B4332' : '1px solid #D1D5DB',
+              backgroundColor: activeTab === 'NOTES' ? '#1B4332' : '#FFFFFF',
+              color: activeTab === 'NOTES' ? '#FFFFFF' : '#374151',
+            }}
+          >
+            📝 {t('Khutbah & Study Notes', 'خطبات و مطالعہ نوٹس', 'فوائد وخطب الجمعة', 'Khutbat o Study Notes')} ({notes.length})
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('REFLECTIONS')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'REFLECTIONS' ? '2px solid #1B4332' : '1px solid #D1D5DB',
+              backgroundColor: activeTab === 'REFLECTIONS' ? '#1B4332' : '#FFFFFF',
+              color: activeTab === 'REFLECTIONS' ? '#FFFFFF' : '#374151',
+            }}
+          >
+            🌱 {t('Muhasabah Reflections', 'محاسبہ و تاثرات', 'الخواطر والمحاسبة', 'Muhasabah Reflections')} ({reflections.length})
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('BOOKMARKS')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'BOOKMARKS' ? '2px solid #1B4332' : '1px solid #D1D5DB',
+              backgroundColor: activeTab === 'BOOKMARKS' ? '#1B4332' : '#FFFFFF',
+              color: activeTab === 'BOOKMARKS' ? '#FFFFFF' : '#374151',
+            }}
+          >
+            🔖 {t('Sacred Bookmarks', 'محفوظ آیات و اسباق', 'المحفوظات القرآنية', 'Mehfooz Bookmarks')} ({bookmarks.length})
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('CANONICAL_CORPUS')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'CANONICAL_CORPUS' ? '2px solid #1B4332' : '1px solid #D1D5DB',
+              backgroundColor: activeTab === 'CANONICAL_CORPUS' ? '#1B4332' : '#FFFFFF',
+              color: activeTab === 'CANONICAL_CORPUS' ? '#FFFFFF' : '#374151',
+            }}
+          >
+            📚 {t('151 Classical Works Catalog', '۱۵۱ امہات الکتب کی فہرست', 'فهرس الأصول المعتمدة', '151 Classical Books Catalog')} ({MASTER_CANONICAL_CORPUS.length})
+          </button>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <button
@@ -183,23 +274,67 @@ export default function KnowledgeVaultPage() {
             </label>
           </div>
 
-          <button
-            onClick={() => setIsAdding(!isAdding)}
-            style={{
-              padding: '10px 20px',
-              borderRadius: 8,
-              backgroundColor: '#1B4332',
-              color: '#FFFFFF',
-              border: 'none',
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            {isAdding
-              ? t('✕ Cancel', '✕ منسوخ کریں', '✕ إلغاء', '✕ Mansookh')
-              : t('+ Ingest Lecture / Khutbah Note', '+ درس یا خطبے کا نوٹ درج کریں', '+ إضافة فائدة علمية أو خطبة', '+ Dars Ya Khutbah Note Darj Karein')}
-          </button>
+          {activeTab === 'NOTES' && (
+            <button
+              onClick={() => setIsAdding(!isAdding)}
+              style={{
+                padding: '10px 20px',
+                borderRadius: 8,
+                backgroundColor: '#1B4332',
+                color: '#FFFFFF',
+                border: 'none',
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              {isAdding
+                ? t('✕ Cancel', '✕ منسوخ کریں', '✕ إلغاء', '✕ Mansookh')
+                : t('+ Ingest Lecture / Khutbah Note', '+ درس یا خطبے کا نوٹ درج کریں', '+ إضافة فائدة علمية أو خطبة', '+ Dars Ya Khutbah Note Darj Karein')}
+            </button>
+          )}
+
+          {activeTab === 'REFLECTIONS' && (
+            <Link
+              href="/reflections"
+              style={{
+                padding: '10px 18px',
+                borderRadius: 8,
+                backgroundColor: '#1B4332',
+                color: '#FFFFFF',
+                fontSize: 13,
+                fontWeight: 700,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span>✍️</span>
+              <span>{t('Open Muhasabah Studio', 'محاسبہ سٹوڈیو کھولیں', 'فتح استوديو المحاسبة', 'Open Muhasabah Studio')}</span>
+            </Link>
+          )}
+
+          {activeTab === 'CANONICAL_CORPUS' && (
+            <Link
+              href="/library"
+              style={{
+                padding: '10px 18px',
+                borderRadius: 8,
+                backgroundColor: '#1B4332',
+                color: '#FFFFFF',
+                fontSize: 13,
+                fontWeight: 700,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span>📖</span>
+              <span>{t('Open Full Library Reader', 'مکمل مکتبہ کھولیں', 'فتح المكتبة الشاملة', 'Open Full Library')}</span>
+            </Link>
+          )}
         </div>
 
         {isAdding && (
@@ -267,84 +402,255 @@ export default function KnowledgeVaultPage() {
           </form>
         )}
 
-        {/* Saved Notes List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {notes.map(n => (
-            <div key={n.noteId} style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: 4 }}>
-                  {getSourceTypeLabel(n.sourceType)}
-                </span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontSize: 12, color: '#6B7280' }}>
-                    {t('Added: ', 'تاریخِ اندراج: ', 'تاريخ الإضافة: ', 'Indiraj: ')}{n.dateAdded}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteNote(n.noteId)}
-                    style={{
-                      border: '1px solid #FCA5A5',
-                      backgroundColor: '#FEF2F2',
-                      color: '#DC2626',
-                      borderRadius: 6,
-                      cursor: 'pointer',
-                      fontSize: 11.5,
-                      fontWeight: 700,
-                      padding: '3px 8px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 4,
-                    }}
-                    title="Delete Note permanently"
-                  >
-                    <span>🗑️</span>
-                    <span>{t('Delete', 'حذف کریں', 'حذف', 'Delete')}</span>
-                  </button>
-                </div>
+        {/* Tab 1: Saved Notes List */}
+        {activeTab === 'NOTES' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {notes.length === 0 ? (
+              <div style={{ padding: 40, textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: 12, border: '1px dashed #CBD5E1' }}>
+                <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>📝</span>
+                <p style={{ margin: 0, fontWeight: 700, color: '#475569' }}>
+                  {t('No lecture or study notes ingested yet.', 'ابھی تک کوئی درس یا خطبے کا نوٹ درج نہیں کیا گیا۔', 'لا توجد ملاحظات مسجلة بعد.', 'Abhi tak koi dars ya khutbah note darj nahi hua.')}
+                </p>
               </div>
-
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: '#111827', margin: '4px 0 10px' }}>{n.title}</h3>
-              <p style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.6, margin: '0 0 16px', backgroundColor: '#F9FAFB', padding: 12, borderRadius: 8 }}>
-                "{n.rawText}"
-              </p>
-
-              {/* Extracted Citations */}
-              <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 12, fontWeight: 800, color: '#1B4332', marginBottom: 8 }}>
-                  {t('VERIFIED CITATIONS EXTRACTED:', 'مستند مصادر و اسناد کا استخراج:', 'الشواهد المعتمدة المستخرجة:', 'Mustanad Hawala Jaat (Citations):')}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {n.extractedItems.map((item, idx) => (
-                    <div key={idx} style={{ padding: 10, borderRadius: 6, backgroundColor: '#F0FDF4', border: '1px solid #86EFAC' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: 11, fontWeight: 800, color: '#166534' }}>{item.type}</span>
-                        <span style={{ fontSize: 10, color: '#047857', fontWeight: 700 }}>
-                          ✓ {t('CANONICAL MATCH', 'امہات الکتب سے توثیق شدہ', 'مطابق للأصول المعتمدة', 'Kutub Se Tasdeeq Shuda')}
-                        </span>
-                      </div>
-                      <div style={{ fontSize: 13, color: '#111827', margin: '4px 0' }}>{item.content}</div>
-                      <div style={{ fontSize: 11, color: '#6B7280' }}>
-                        {t('Ref: ', 'حوالہ: ', 'المرجع: ', 'Hawala: ')}{item.sourceAttribution}
-                      </div>
+            ) : (
+              notes.map(n => (
+                <div key={n.noteId} style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 24, border: '1px solid #E5E7EB' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: 4 }}>
+                      {getSourceTypeLabel(n.sourceType)}
+                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ fontSize: 12, color: '#6B7280' }}>
+                        {t('Added: ', 'تاریخِ اندراج: ', 'تاريخ الإضافة: ', 'Indiraj: ')}{n.dateAdded}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteNote(n.noteId)}
+                        style={{
+                          border: '1px solid #FCA5A5',
+                          backgroundColor: '#FEF2F2',
+                          color: '#DC2626',
+                          borderRadius: 6,
+                          cursor: 'pointer',
+                          fontSize: 11.5,
+                          fontWeight: 700,
+                          padding: '3px 8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                        }}
+                        title="Delete Note permanently"
+                      >
+                        <span>🗑️</span>
+                        <span>{t('Delete', 'حذف کریں', 'حذف', 'Delete')}</span>
+                      </button>
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Key Spiritual Takeaways */}
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 800, color: '#1B4332', marginBottom: 6 }}>
-                  {t('PRACTICAL SPIRITUAL TAKEAWAYS:', 'اہم عملی و روحانی نتائج:', 'الفوائد والدروس العملية:', 'Ahem Amli o Ruhani Nataij:')}
+                  <h3 style={{ fontSize: 18, fontWeight: 800, color: '#111827', margin: '4px 0 10px' }}>{n.title}</h3>
+                  <p style={{ fontSize: 13, color: '#4B5563', lineHeight: 1.6, margin: '0 0 16px', backgroundColor: '#F9FAFB', padding: 12, borderRadius: 8 }}>
+                    "{n.rawText}"
+                  </p>
+
+                  {/* Extracted Citations */}
+                  <div style={{ marginBottom: 16 }}>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: '#1B4332', marginBottom: 8 }}>
+                      {t('VERIFIED CITATIONS EXTRACTED:', 'مستند مصادر و اسناد کا استخراج:', 'الشواهد المعتمدة المستخرجة:', 'Mustanad Hawala Jaat (Citations):')}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {n.extractedItems.map((item, idx) => (
+                        <div key={idx} style={{ padding: 10, borderRadius: 6, backgroundColor: '#F0FDF4', border: '1px solid #86EFAC' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: '#166534' }}>{item.type}</span>
+                            <span style={{ fontSize: 10, color: '#047857', fontWeight: 700 }}>
+                              ✓ {t('CANONICAL MATCH', 'امہات الکتب سے توثیق شدہ', 'مطابق للأصول المعتمدة', 'Kutub Se Tasdeeq Shuda')}
+                            </span>
+                          </div>
+                          <div style={{ fontSize: 13, color: '#111827', margin: '4px 0' }}>{item.content}</div>
+                          <div style={{ fontSize: 11, color: '#6B7280' }}>
+                            {t('Ref: ', 'حوالہ: ', 'المرجع: ', 'Hawala: ')}{item.sourceAttribution}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Key Spiritual Takeaways */}
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: '#1B4332', marginBottom: 6 }}>
+                      {t('PRACTICAL SPIRITUAL TAKEAWAYS:', 'اہم عملی و روحانی نتائج:', 'الفوائد والدروس العملية:', 'Ahem Amli o Ruhani Nataij:')}
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#374151', lineHeight: 1.6 }}>
+                      {n.keySpiritualTakeaways.map((takeaway, idx) => (
+                        <li key={idx}>{takeaway}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#374151', lineHeight: 1.6 }}>
-                  {n.keySpiritualTakeaways.map((takeaway, idx) => (
-                    <li key={idx}>{takeaway}</li>
-                  ))}
-                </ul>
+              ))
+            )}
+          </div>
+        )}
+
+        {/* Tab 2: Spiritual Muhasabah Reflections */}
+        {activeTab === 'REFLECTIONS' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {reflections.length === 0 ? (
+              <div style={{ padding: 40, textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: 12, border: '1px dashed #CBD5E1' }}>
+                <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>🌱</span>
+                <p style={{ margin: '0 0 14px', fontWeight: 700, color: '#475569' }}>
+                  {t('No Muhasabah reflections logged yet.', 'ابھی تک کوئی ذاتی محاسبہ درج نہیں کیا گیا۔', 'لا توجد خواطر محاسبة مسجلة بعد.', 'Abhi tak koi zaati muhasabah darj nahi hua.')}
+                </p>
+                <Link
+                  href="/reflections"
+                  style={{
+                    display: 'inline-block',
+                    padding: '8px 16px',
+                    borderRadius: 8,
+                    backgroundColor: '#1B4332',
+                    color: '#FFFFFF',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                  }}
+                >
+                  {t('Write First Reflection →', 'پہلا محاسبہ لکھیں ➔', 'كتابة أول خاطرة ➔', 'Pehla Muhasabah Likhein ➔')}
+                </Link>
               </div>
+            ) : (
+              reflections.map((r, idx) => (
+                <div key={r.id || idx} style={{ backgroundColor: '#FFFFFF', borderRadius: 12, padding: 20, border: '1px solid #E2E8F0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: '#047857', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: 4 }}>
+                      {r.type || 'DAILY_MUHASABAH'}
+                    </span>
+                    <span style={{ fontSize: 12, color: '#64748B' }}>
+                      {r.timestamp ? new Date(r.timestamp).toLocaleDateString() : 'On-Device Record'}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 14, color: '#1E293B', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>
+                    {r.content}
+                  </p>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
+        {/* Tab 3: Sacred Bookmarks & Saved Ayahs */}
+        {activeTab === 'BOOKMARKS' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {bookmarks.length === 0 ? (
+              <div style={{ padding: 40, textAlign: 'center', backgroundColor: '#FFFFFF', borderRadius: 12, border: '1px dashed #CBD5E1' }}>
+                <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>🔖</span>
+                <p style={{ margin: 0, fontWeight: 700, color: '#475569' }}>
+                  {t('No bookmarks saved yet. Tap the bookmark icon while reading Quran or classical books.', 'ابھی کوئی بک مارک محفوظ نہیں۔ قرآن یا کتب کے مطالعے کے دوران بک مارک کا بٹن دبائیں۔', 'لا توجد محفوظات حالياً.', 'Koi bookmark save nahi hai. Quran ya kutub parhte waqt bookmark karein.')}
+                </p>
+              </div>
+            ) : (
+              bookmarks.map((bm) => (
+                <div key={bm.id} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 18, border: '1px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: '#0369A1', backgroundColor: '#F0F9FF', padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase' }}>
+                        {bm.category}
+                      </span>
+                      <h4 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#0F172A' }}>
+                        {bm.titleEnglish || bm.titleUrdu}
+                      </h4>
+                    </div>
+                    {bm.excerpt && (
+                      <p style={{ margin: '4px 0 0', fontSize: 12, color: '#475569', fontStyle: 'italic' }}>
+                        "{bm.excerpt.slice(0, 120)}..."
+                      </p>
+                    )}
+                    <span style={{ fontSize: 11, color: '#94A3B8' }}>{bm.sourceOrAuthor}</span>
+                  </div>
+
+                  <Link
+                    href={bm.category === 'quran' ? `/quran?surah=${bm.targetId}` : `/library`}
+                    style={{
+                      padding: '6px 14px',
+                      borderRadius: 6,
+                      backgroundColor: '#F8FAFC',
+                      color: '#047857',
+                      border: '1px solid #CBD5E1',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {t('Open →', 'کھولیں ➔', 'عرض ➔', 'Kholein ➔')}
+                  </Link>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
+        {/* Tab 4: 151 Classical Works Catalog */}
+        {activeTab === 'CANONICAL_CORPUS' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ marginBottom: 8 }}>
+              <input
+                type="text"
+                placeholder={t('Search 151 classical works by title, author, or discipline (e.g. Ghazali, Nawawi, Bukhari, Hidayah)...', 'کتاب، مصنف یا فن کے اعتبار سے تلاش کریں (مثلاً: بخاری، نووی، قدوری، احیاء العلوم)...', 'ابحث في أمهات الكتب...', 'Kitab, musannif ya fan se search karein...')}
+                value={corpusFilter}
+                onChange={(e) => setCorpusFilter(e.target.value)}
+                style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '1px solid #CBD5E1', fontSize: 13 }}
+              />
             </div>
-          ))}
-        </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 }}>
+              {MASTER_CANONICAL_CORPUS.filter(w => {
+                if (!corpusFilter.trim()) return true;
+                const q = corpusFilter.toLowerCase();
+                return (
+                  w.title_transliterated.toLowerCase().includes(q) ||
+                  w.title_arabic.includes(q) ||
+                  w.author_name.toLowerCase().includes(q) ||
+                  w.discipline.toLowerCase().includes(q)
+                );
+              }).map(w => (
+                <div key={w.work_id} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 16, border: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <span style={{ fontSize: 10, fontWeight: 800, color: '#B45309', backgroundColor: '#FEF3C7', padding: '2px 6px', borderRadius: 4 }}>
+                      {w.discipline}
+                    </span>
+                    <h4 style={{ margin: '8px 0 4px', fontSize: 15, fontWeight: 800, color: '#1B4332' }}>
+                      {w.title_transliterated}
+                    </h4>
+                    <div style={{ fontSize: 13, color: '#475569', fontFamily: 'Amiri, serif', direction: 'rtl', textAlign: 'right', marginBottom: 6 }}>
+                      {w.title_arabic}
+                    </div>
+                    <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>
+                      {w.author_name} ({w.author_death_hijri} AH)
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid #F1F5F9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: 10, color: '#059669', fontWeight: 700 }}>✓ Sawad al-A'zam</span>
+                    <Link
+                      href={`/library?work=${w.work_id}`}
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 6,
+                        backgroundColor: '#ECFDF5',
+                        color: '#065F46',
+                        fontSize: 11.5,
+                        fontWeight: 700,
+                        textDecoration: 'none',
+                        border: '1px solid #A7F3D0',
+                      }}
+                    >
+                      {t('Read in Library →', 'مطالعہ کریں ➔', 'قراءة ➔', 'Read in Library ➔')}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

@@ -3,6 +3,18 @@ import { useLanguage } from '../../context/LanguageContext';
 import { SistersPinLockView } from './SistersPinLockView';
 import { SistersCycleLogManager, SavedCycleRecord } from './SistersCycleLogManager';
 
+// WebCrypto SHA-256 Cryptographic Hash Helper for PIN Protection
+async function hashPin(pin: string): Promise<string> {
+  if (typeof window !== 'undefined' && window.crypto && window.crypto.subtle) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(`amal_nisa_sovereign_salt_${pin}`);
+    const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  return `hash_${pin}`;
+}
+
 export interface SistersVaultTabProps {
   isUrdu: boolean;
   hasPinConfigured: boolean;
@@ -46,9 +58,26 @@ export function SistersVaultTab({
     }
   }, []);
 
-  const handleUnlockPin = () => {
+  const handleUnlockPin = async () => {
     const storedPin = localStorage.getItem('amal_nisa_pin');
-    if (enteredPin === storedPin) {
+    if (!storedPin) return;
+
+    let isMatch = false;
+    // Transparently handle and upgrade legacy 4-digit plain-text PIN
+    if (storedPin.length === 4) {
+      if (enteredPin === storedPin) {
+        isMatch = true;
+        const upgradedHash = await hashPin(enteredPin);
+        localStorage.setItem('amal_nisa_pin', upgradedHash);
+      }
+    } else {
+      const enteredHash = await hashPin(enteredPin);
+      if (enteredHash === storedPin) {
+        isMatch = true;
+      }
+    }
+
+    if (isMatch) {
       setIsPinLocked(false);
       setPinError('');
       setEnteredPin('');
@@ -64,9 +93,10 @@ export function SistersVaultTab({
     }
   };
 
-  const handleSavePin = () => {
+  const handleSavePin = async () => {
     if (newPin.length === 4 && /^\d+$/.test(newPin)) {
-      localStorage.setItem('amal_nisa_pin', newPin);
+      const hashed = await hashPin(newPin);
+      localStorage.setItem('amal_nisa_pin', hashed);
       setHasPinConfigured(true);
       setIsPinLocked(false);
       setIsSettingUpPin(false);

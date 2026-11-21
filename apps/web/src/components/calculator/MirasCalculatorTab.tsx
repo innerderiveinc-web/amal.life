@@ -21,6 +21,14 @@ interface MirasCalculatorTabProps {
   setHasFather: (has: boolean) => void;
   hasMother: boolean;
   setHasMother: (has: boolean) => void;
+  fullBrothersCount?: number;
+  setFullBrothersCount?: (count: number) => void;
+  fullSistersCount?: number;
+  setFullSistersCount?: (count: number) => void;
+  hasPaternalGrandfather?: boolean;
+  setHasPaternalGrandfather?: (has: boolean) => void;
+  hasPaternalGrandmother?: boolean;
+  setHasPaternalGrandmother?: (has: boolean) => void;
   mirasResult: InheritanceCalculationResult;
   setMirasCert: (cert: MirasPdfCertificatePayload | null) => void;
   isUrdu?: boolean;
@@ -45,6 +53,14 @@ export function MirasCalculatorTab({
   setHasFather,
   hasMother,
   setHasMother,
+  fullBrothersCount = 0,
+  setFullBrothersCount,
+  fullSistersCount = 0,
+  setFullSistersCount,
+  hasPaternalGrandfather = false,
+  setHasPaternalGrandfather,
+  hasPaternalGrandmother = false,
+  setHasPaternalGrandmother,
   mirasResult,
   setMirasCert,
 }: MirasCalculatorTabProps) {
@@ -207,7 +223,7 @@ export function MirasCalculatorTab({
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', marginTop: 4 }}>
             <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontWeight: 600, color: '#334155' }}>
               <input
                 type="checkbox"
@@ -225,6 +241,86 @@ export function MirasCalculatorTab({
               {t('Mother Survives', 'والدہ باحیات ہیں', 'الأم على قيد الحياة', 'Walida Hayat Hain')}
             </label>
           </div>
+
+          {/* Siblings (Full Brothers & Full Sisters) */}
+          <div className="calc-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 4 }}>
+            <div>
+              <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
+                {t('Full Brothers (Haqeeqi Bhai)', 'حقیقی بھائیوں کی تعداد', 'عدد الإخوة الأشقاء', 'Haqeeqi Bhai (Brothers)')}
+              </label>
+              <input
+                type="number"
+                min={0}
+                value={fullBrothersCount}
+                onChange={(e) => setFullBrothersCount?.(Math.max(0, Number(e.target.value)))}
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, fontWeight: 700, color: '#4B5563', display: 'block', marginBottom: 4 }}>
+                {t('Full Sisters (Haqeeqi Behnein)', 'حقیقی بہنوں کی تعداد', 'عدد الأخوات الشقيقات', 'Haqeeqi Behnein (Sisters)')}
+              </label>
+              <input
+                type="number"
+                min={0}
+                value={fullSistersCount}
+                onChange={(e) => setFullSistersCount?.(Math.max(0, Number(e.target.value)))}
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #D1D5DB', boxSizing: 'border-box' }}
+              />
+            </div>
+          </div>
+
+          {/* Grandparents (Paternal Grandfather & Grandmother) */}
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', marginTop: 4 }}>
+            <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontWeight: 600, color: '#334155' }}>
+              <input
+                type="checkbox"
+                checked={hasPaternalGrandfather}
+                onChange={(e) => setHasPaternalGrandfather?.(e.target.checked)}
+              />
+              {t('Paternal Grandfather (Dada)', 'دادا باحیات ہیں', 'الجد لأب على قيد الحياة', 'Dada Hayat Hain')}
+            </label>
+            <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontWeight: 600, color: '#334155' }}>
+              <input
+                type="checkbox"
+                checked={hasPaternalGrandmother}
+                onChange={(e) => setHasPaternalGrandmother?.(e.target.checked)}
+              />
+              {t('Paternal Grandmother (Dadi)', 'دادی باحیات ہیں', 'الجدة لأب على قيد الحياة', 'Dadi Hayat Hain')}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* Dar-ul-Ifta Shariah Verification Advisory Banner */}
+      <div style={{
+        backgroundColor: '#FFFBEB',
+        borderRadius: 12,
+        padding: '14px 18px',
+        border: '1.5px solid #FCD34D',
+        marginBottom: 16,
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 12,
+      }}>
+        <span style={{ fontSize: 24, lineHeight: 1 }}>⚖️</span>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 800, color: '#92400E', marginBottom: 2 }}>
+            {t(
+              'Dar-ul-Ifta Shariah Advisory & Verification Notice',
+              'دار الافتاء تنبیہ و توثیقی ہدایت برائے وراثت',
+              'تنبيه دار الإفتاء والاعتماد الشرعي للتركات',
+              'Dar-ul-Ifta Shariah Advisory & Tasdeeq'
+            )}
+          </div>
+          <p style={{ margin: 0, fontSize: 12, color: '#78350F', lineHeight: 1.5 }}>
+            {t(
+              'This calculation follows classical Sunni Fara\'id jurisprudence (Surah An-Nisa). Estate distribution in practice requires verified death certification, full settlement of outstanding debts, funeral expenses, and non-heir bequests (max 1/3). We strongly advise obtaining a final formal written Fatwa from your local certified Dar-ul-Ifta prior to executing physical asset distribution.',
+              'یہ حساب کتاب قرآنی وراثت (سورۃ النساء) کے قطعی قواعد کے مطابق ہے۔ ترکے کی عملی تقسیم سے قبل میت کے کفن دفن کے اخراجات، قرضوں کی مکمل ادائیگی اور جائز وصیت کا نفاذ لازمی ہے۔ کسی بھی نزاع سے بچنے کے لیے اپنے قریبی معتبر دار الافتاء سے حتمی شرعی فتویٰ ضرور حاصل کریں۔',
+              'هذا الحساب مبني على الفرائض الشرعية القطعية. نوصي بمراجعة دار الإفتاء المعتمدة للتحقق من تفاصيل التركة وقضاء الديون والوصايا قبل التوزيع الفعلي.',
+              'Ye hisab Qurani Fara\'id ke mutabiq hai. Kafan dafan, qarz ki adayegi aur wasiyyat ke baad amli taqseem se pehle apne qareebi mustanad Dar-ul-Ifta se hatmi tasdeeq zaroor karwayein.'
+            )}
+          </p>
         </div>
       </div>
 
