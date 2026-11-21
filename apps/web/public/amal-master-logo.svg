@@ -1,0 +1,272 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Canvas Soft Radial Warmth -->
+    <radialGradient id="canvasWarmth" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="85%" stop-color="#FBFBF9"/>
+      <stop offset="100%" stop-color="#F5F5F0"/>
+    </radialGradient>
+
+    <!-- Deep Imperial Emerald Sky Gradient -->
+    <linearGradient id="emeraldSky" x1="512" y1="120" x2="512" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#064E3B"/>
+      <stop offset="35%" stop-color="#043C2E"/>
+      <stop offset="75%" stop-color="#032F23"/>
+      <stop offset="100%" stop-color="#011B14"/>
+    </linearGradient>
+
+    <!-- Master 3D Beveled Royal Gold Gradient -->
+    <linearGradient id="beveledGold" x1="280" y1="100" x2="744" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="18%" stop-color="#FDE047"/>
+      <stop offset="38%" stop-color="#D97706"/>
+      <stop offset="55%" stop-color="#B45309"/>
+      <stop offset="78%" stop-color="#F59E0B"/>
+      <stop offset="92%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#78350F"/>
+    </linearGradient>
+
+    <!-- Inner Gold Shimmer -->
+    <linearGradient id="goldShimmer" x1="512" y1="130" x2="512" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+
+    <!-- Golden Pathway ("Tariq") Gradient -->
+    <linearGradient id="tariqGold" x1="512" y1="520" x2="512" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FEF9C3"/>
+      <stop offset="40%" stop-color="#FDE047"/>
+      <stop offset="75%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Radiant Open Quran Pages -->
+    <linearGradient id="quranPageLight" x1="512" y1="430" x2="512" y2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#FDFBF7"/>
+      <stop offset="100%" stop-color="#F8F4EC"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filter for Arch -->
+    <filter id="archShadow" x="220" y="80" width="584" height="660" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#064E3B" flood-opacity="0.16"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#78350F" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Celestial Moon Glow -->
+    <filter id="moonGlow" x="400" y="160" width="224" height="224" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Clean Premium Canvas -->
+  <rect width="1024" height="1024" fill="url(#canvasWarmth)"/>
+
+  <!-- ============================================================ -->
+  <!-- 1. ARCHITECTURAL MIHRAB EMBLEM -->
+  <!-- ============================================================ -->
+  <g filter="url(#archShadow)">
+    <!-- Outer Heavy Beveled Gold Border -->
+    <path d="M512 110 C696 210 740 330 740 480 V680 H284 V480 C284 330 328 210 512 110 Z"
+          fill="url(#emeraldSky)"
+          stroke="url(#beveledGold)"
+          stroke-width="26"
+          stroke-linejoin="round"/>
+
+    <!-- Inner Secondary Gold Trim Line -->
+    <path d="M512 138 C676 228 718 338 718 480 V662 H306 V480 C306 338 348 228 512 138 Z"
+          fill="none"
+          stroke="url(#goldShimmer)"
+          stroke-width="5"
+          stroke-opacity="0.85"/>
+
+    <!-- Arch Base Threshold Plinth -->
+    <path d="M250 676 C250 670 260 664 284 664 H740 C764 664 774 670 774 676 C774 682 764 688 740 688 H284 C260 688 250 682 250 676 Z"
+          fill="url(#beveledGold)"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- 2. MOSQUE SILHOUETTE & CELESTIAL BACKGROUND -->
+  <!-- ============================================================ -->
+  <!-- Atmospheric Background Glow behind Mosque -->
+  <radialGradient id="skyLanternGlow" cx="512" cy="360" r="240" gradientUnits="userSpaceOnUse">
+    <stop offset="0%" stop-color="#047857" stop-opacity="0.6"/>
+    <stop offset="70%" stop-color="#064E3B" stop-opacity="0.1"/>
+    <stop offset="100%" stop-color="#064E3B" stop-opacity="0"/>
+  </radialGradient>
+  <circle cx="512" cy="360" r="240" fill="url(#skyLanternGlow)"/>
+
+  <!-- Left Distant Spire Minaret -->
+  <path d="M362 480 V320 L372 296 L382 320 V480 Z" fill="#0E5E45" opacity="0.9"/>
+  <rect x="358" y="360" width="28" height="6" rx="2" fill="url(#goldShimmer)" opacity="0.9"/>
+  <rect x="364" y="420" width="16" height="4" rx="1" fill="url(#goldShimmer)" opacity="0.75"/>
+  <circle cx="372" cy="290" r="5" fill="#FEF08A"/>
+
+  <!-- Right Distant Spire Minaret -->
+  <path d="M642 480 V320 L652 296 L662 320 V480 Z" fill="#0E5E45" opacity="0.9"/>
+  <rect x="638" y="360" width="28" height="6" rx="2" fill="url(#goldShimmer)" opacity="0.9"/>
+  <rect x="644" y="420" width="16" height="4" rx="1" fill="url(#goldShimmer)" opacity="0.75"/>
+  <circle cx="652" cy="290" r="5" fill="#FEF08A"/>
+
+  <!-- Flanking Secondary Domes -->
+  <path d="M394 480 C394 420 440 405 456 425 V480 Z" fill="#0A4D38" opacity="0.95"/>
+  <path d="M568 480 C584 405 630 420 630 480 Z" fill="#0A4D38" opacity="0.95"/>
+
+  <!-- Central Grand Mosque Dome -->
+  <path d="M438 480 C438 390 480 340 512 326 C544 340 586 390 586 480 Z" fill="#0B553E"/>
+  <path d="M508 326 V305 H516 V326 Z" fill="url(#goldShimmer)"/>
+  <circle cx="512" cy="300" r="7" fill="#FEF08A"/>
+
+  <!-- Mosque Wall Arcade (Base Columns) -->
+  <g fill="url(#goldShimmer)" opacity="0.35">
+    <rect x="446" y="440" width="8" height="30" rx="4"/>
+    <rect x="466" y="435" width="8" height="35" rx="4"/>
+    <rect x="486" y="430" width="8" height="40" rx="4"/>
+    <rect x="510" y="430" width="8" height="40" rx="4"/>
+    <rect x="530" y="435" width="8" height="35" rx="4"/>
+    <rect x="550" y="440" width="8" height="30" rx="4"/>
+  </g>
+
+  <!-- Celestial Crescent Moon & Star -->
+  <g filter="url(#moonGlow)">
+    <!-- Crescent -->
+    <path d="M536 190 C496 195 462 228 462 272 C462 318 498 354 544 354 C564 354 582 346 596 333 C582 359 551 376 518 376 C468 376 428 336 428 286 C428 236 468 196 518 196 C524 196 530 197 536 190 Z"
+          fill="url(#beveledGold)"/>
+    <!-- 5-Pointed Radiant Star -->
+    <path d="M550 220 L556 238 L575 240 L560 252 L565 270 L550 260 L535 270 L540 252 L525 240 L544 238 Z"
+          fill="#FFFBEB"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- 3. WINDING GOLDEN PATHWAY ("TARIQ") -->
+  <!-- ============================================================ -->
+  <!-- The Pathway flows outward from beneath the Quran, winding toward the viewer -->
+  <path d="M512 550 C480 600 440 620 460 655 C470 670 478 676 430 706 H594 C546 676 554 670 564 655 C584 620 544 600 512 550 Z"
+        fill="url(#tariqGold)"/>
+
+  <!-- Subtle Cobblestone Perspective Lines on Pathway -->
+  <path d="M495 575 C512 573 529 575 529 575" stroke="#B45309" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M482 605 C512 602 542 605 542 605" stroke="#B45309" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M470 635 C512 631 554 635 554 635" stroke="#B45309" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M452 668 C512 663 572 668 572 668" stroke="#B45309" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- ============================================================ -->
+  <!-- 4. REHAL (BOOKSTAND) & OPEN HOLY QURAN -->
+  <!-- ============================================================ -->
+  <!-- Rehal Crossed Legs -->
+  <g stroke="url(#beveledGold)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M370 575 L475 515"/>
+    <path d="M654 575 L549 515"/>
+    <path d="M420 595 H604"/>
+  </g>
+
+  <!-- Open Quran Pages Shadow Layer -->
+  <path d="M512 450 C420 415 330 430 286 455 C286 462 290 535 294 546 C344 522 430 508 512 542 C594 508 680 522 730 546 C734 535 738 462 738 455 C694 430 604 415 512 450 Z"
+        fill="#043929"
+        opacity="0.5"/>
+
+  <!-- Open Quran Leaves (Luminous Multi-Tier Pages) -->
+  <!-- Left Page Stack -->
+  <path d="M512 444 C424 412 334 424 290 448 C290 454 294 526 298 536 C348 512 432 498 512 532 Z"
+        fill="url(#quranPageLight)"
+        stroke="url(#beveledGold)"
+        stroke-width="7"
+        stroke-linejoin="round"/>
+
+  <!-- Right Page Stack -->
+  <path d="M512 444 C600 412 690 424 734 448 C734 454 730 526 726 536 C676 512 592 498 512 532 Z"
+        fill="url(#quranPageLight)"
+        stroke="url(#beveledGold)"
+        stroke-width="7"
+        stroke-linejoin="round"/>
+
+  <!-- Center Bound Spine -->
+  <path d="M512 444 V532" stroke="#78350F" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Classical Gold Text Line Inscriptions on Left Page -->
+  <g stroke="#D97706" stroke-width="3" stroke-linecap="round" opacity="0.65">
+    <line x1="334" y1="462" x2="472" y2="450"/>
+    <line x1="330" y1="482" x2="478" y2="470"/>
+    <line x1="336" y1="502" x2="474" y2="490"/>
+    <line x1="344" y1="520" x2="466" y2="508"/>
+  </g>
+
+  <!-- Classical Gold Text Line Inscriptions on Right Page -->
+  <g stroke="#D97706" stroke-width="3" stroke-linecap="round" opacity="0.65">
+    <line x1="552" y1="450" x2="690" y2="462"/>
+    <line x1="546" y1="470" x2="694" y2="482"/>
+    <line x1="550" y1="490" x2="688" y2="502"/>
+    <line x1="558" y1="508" x2="680" y2="520"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- 5. DELICATE GOLDEN OLIVE BRANCH / SPROUT OF TAZKIYAH -->
+  <!-- ============================================================ -->
+  <!-- Curved Stem emerging gracefully from the right edge of Quran -->
+  <path d="M720 475 C755 450 780 415 788 380"
+        stroke="url(#beveledGold)"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <!-- Upper Leaf -->
+  <path d="M788 380 C818 376 832 355 830 335 C808 340 782 360 788 380 Z"
+        fill="url(#beveledGold)"/>
+
+  <!-- Middle Leaf -->
+  <path d="M764 425 C794 415 808 395 802 376 C782 384 760 405 764 425 Z"
+        fill="url(#beveledGold)"/>
+
+  <!-- Lower Budding Leaf -->
+  <path d="M740 455 C764 450 776 438 772 424 C758 428 742 442 740 455 Z"
+        fill="url(#beveledGold)"/>
+
+  <!-- Apex Finial on top of the Mihrab Arch -->
+  <circle cx="512" cy="88" r="14" fill="url(#beveledGold)"/>
+  <circle cx="512" cy="88" r="7" fill="#FEF08A"/>
+
+  <!-- ============================================================ -->
+  <!-- 6. TYPOGRAPHIC LOCKUP (AMAL | عمل — Niyyah se Amal tak) -->
+  <!-- ============================================================ -->
+  <!-- English "AMAL" Brandmark in High-Contrast Imperial Serif -->
+  <text x="320" y="800"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="94"
+        font-weight="900"
+        letter-spacing="5"
+        fill="#064E3B">AMAL</text>
+
+  <!-- Vertical Divider in Royal Gold -->
+  <rect x="509" y="730" width="6" height="78" rx="3" fill="url(#beveledGold)"/>
+
+  <!-- Arabic Calligraphy "عمل" in Royal Gold -->
+  <!-- Rendered with high-legibility calligraphic font path -->
+  <text x="700" y="802"
+        text-anchor="middle"
+        font-family="'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', serif"
+        font-size="110"
+        font-weight="700"
+        fill="url(#beveledGold)"
+        direction="rtl">عَمَلْ</text>
+
+  <!-- Tagline Divider Rules & Subtitle: "— Niyyah se Amal tak —" -->
+  <g>
+    <!-- Left Gold Accent Rule -->
+    <line x1="220" y1="864" x2="340" y2="864" stroke="url(#beveledGold)" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Central Slogan Text -->
+    <text x="512" y="872"
+          text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="28"
+          font-style="italic"
+          font-weight="600"
+          letter-spacing="3"
+          fill="#334155">Niyyah se Amal tak</text>
+
+    <!-- Right Gold Accent Rule -->
+    <line x1="684" y1="864" x2="804" y2="864" stroke="url(#beveledGold)" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

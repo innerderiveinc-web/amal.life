@@ -9,99 +9,159 @@ export interface AmalLogoProps {
 }
 
 /**
- * AMAL OS — Official Sovereign Vector Emblem
- * Pure geometric SVG (0 KB raster):
+ * AMAL OS — Official Sovereign Vector Emblem & Logo
+ * Pure geometric SVG (0 KB raster, infinite scalability):
  *  - Pointed Prophetic Mihrab Arch (Rawdah & Sanctuary)
- *  - Crescent & Guiding Star (Hijri & Celestial Time)
- *  - Open Book / Mushaf on Rehal (Classical Ilm & Niyyah to Amal)
- * Scales razor-sharp from 16px favicon to 512px splash screen.
+ *  - Mosque Dome & Minarets Silhouette with Celestial Crescent & Star
+ *  - Open Book / Mushaf on Rehal with Radiant Pages & Olive Sprout
+ *  - Winding Golden Pathway ("Tariq") flowing outward
+ *  - Regal Bilingual Lockup: AMAL | عمل — Niyyah se Amal tak
  */
 export const AmalLogoMark: React.FC<{ size?: number; showBadge?: boolean; style?: React.CSSProperties }> = ({
-  size = 36,
+  size = 40,
   showBadge = true,
   style,
 }) => {
   const gradId = React.useId();
   const goldGradId = React.useId();
+  const pathGradId = React.useId();
+  const pageGradId = React.useId();
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 64 64"
+      viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ display: 'inline-block', flexShrink: 0, ...style }}
-      aria-label="AMAL OS Emblem"
+      aria-label="AMAL OS Sovereign Emblem"
     >
       <defs>
-        <linearGradient id={gradId} x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#065F46" />
+        <linearGradient id={gradId} x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#064E3B" />
+          <stop offset="45%" stopColor="#043929" />
           <stop offset="100%" stopColor="#022C22" />
         </linearGradient>
-        <linearGradient id={goldGradId} x1="16" y1="10" x2="48" y2="54" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FDE68A" />
-          <stop offset="50%" stopColor="#D4AF37" />
-          <stop offset="100%" stopColor="#B45309" />
+
+        <linearGradient id={goldGradId} x1="20" y1="12" x2="80" y2="88" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FEF08A" />
+          <stop offset="30%" stopColor="#F59E0B" />
+          <stop offset="50%" stopColor="#D97706" />
+          <stop offset="80%" stopColor="#FDE047" />
+          <stop offset="100%" stopColor="#92400E" />
+        </linearGradient>
+
+        <linearGradient id={pathGradId} x1="50" y1="62" x2="50" y2="88" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FEF08A" />
+          <stop offset="50%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#D97706" />
+        </linearGradient>
+
+        <linearGradient id={pageGradId} x1="50" y1="50" x2="50" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#FDFBF7" />
         </linearGradient>
       </defs>
 
       {showBadge && (
         <>
-          <rect x="2" y="2" width="60" height="60" rx="15" fill={`url(#${gradId})`} />
+          <rect x="2" y="2" width="96" height="96" rx="22" fill={`url(#${gradId})`} />
           <rect
             x="2.75"
             y="2.75"
-            width="58.5"
-            height="58.5"
-            rx="14.25"
+            width="94.5"
+            height="94.5"
+            rx="21.25"
             stroke={`url(#${goldGradId})`}
-            strokeOpacity="0.55"
             strokeWidth="1.5"
+            strokeOpacity="0.6"
           />
         </>
       )}
 
-      {/* Pointed Islamic Mihrab Arch */}
+      {/* Outer Beveled Mihrab Arch Frame */}
       <path
-        d="M32 10.5C41.5 17.5 47 24.5 47 35.5V48.5C47 49.6 46.1 50.5 45 50.5H19C17.9 50.5 17 49.6 17 48.5V35.5C17 24.5 22.5 17.5 32 10.5Z"
-        fill={showBadge ? '#043929' : 'none'}
+        d="M50 14 C66 24 74 34 74 48 V80 C74 81.5 72.8 82.5 71.2 82.5 H28.8 C27.2 82.5 26 81.5 26 80 V48 C26 34 34 24 50 14 Z"
+        fill={showBadge ? '#043324' : 'none'}
         stroke={`url(#${goldGradId})`}
-        strokeWidth="2.4"
+        strokeWidth="3"
         strokeLinejoin="round"
       />
 
-      {/* Crescent Moon inside Arch */}
+      {/* Inner Fine Arch Outline */}
       <path
-        d="M35.2 21.8C32.4 22.1 30.2 24.5 30.2 27.4C30.2 30.5 32.7 33 35.8 33C37.2 33 38.4 32.5 39.4 31.6C38.4 33.4 36.4 34.6 34.1 34.6C30.7 34.6 28 31.9 28 28.5C28 25.1 30.7 22.4 34.1 22.4C34.5 22.4 34.9 22.4 35.2 21.8Z"
-        fill="#FDE68A"
-      />
-
-      {/* Guiding Star */}
-      <path
-        d="M38.5 23.5L39.2 25.1L40.8 25.8L39.2 26.5L38.5 28.1L37.8 26.5L36.2 25.8L37.8 25.1L38.5 23.5Z"
-        fill="#FDE68A"
-      />
-
-      {/* Open Book / Mushaf at Base */}
-      <path
-        d="M21.5 39.5C25 38.2 29 38.6 32 40.8C35 38.6 39 38.2 42.5 39.5V47.2C39 46 35 46.4 32 48.4C29 46.4 25 46 21.5 47.2V39.5Z"
-        fill="#FDFBF7"
+        d="M50 17.5 C63.5 26 70.5 35 70.5 48 V79.5 H29.5 V48 C29.5 35 36.5 26 50 17.5 Z"
+        fill="none"
         stroke={`url(#${goldGradId})`}
-        strokeWidth="1.6"
+        strokeWidth="0.8"
+        strokeOpacity="0.7"
+      />
+
+      {/* Mosque Minarets Silhouette */}
+      <path d="M34 46 V30 L35 28 L36 30 V46 Z" fill="#0D5C43" opacity="0.85" />
+      <rect x="33.5" y="34" width="3" height="1" fill={`url(#${goldGradId})`} opacity="0.8" />
+      <circle cx="35" cy="27.5" r="0.6" fill="#FEF08A" />
+
+      <path d="M64 46 V30 L65 28 L66 30 V46 Z" fill="#0D5C43" opacity="0.85" />
+      <rect x="63.5" y="34" width="3" height="1" fill={`url(#${goldGradId})`} opacity="0.8" />
+      <circle cx="65" cy="27.5" r="0.6" fill="#FEF08A" />
+
+      {/* Central Grand Mosque Dome */}
+      <path d="M42 46 C42 38 46.5 34 50 33 C53.5 34 58 38 58 46 Z" fill="#0B523C" />
+      <path d="M49.5 33 V31.5 H50.5 V33 Z" fill={`url(#${goldGradId})`} />
+      <circle cx="50" cy="31" r="0.8" fill="#FEF08A" />
+
+      {/* Celestial Crescent Moon & Star */}
+      <path
+        d="M52 20.5 C49 20.8 46.5 23.2 46.5 26.2 C46.5 29.4 49.1 32 52.3 32 C53.7 32 55 31.5 56 30.6 C55 32.4 52.8 33.6 50.4 33.6 C46.8 33.6 44 30.8 44 27.2 C44 23.6 46.8 20.8 50.4 20.8 C51 20.8 51.5 20.9 52 20.5 Z"
+        fill={`url(#${goldGradId})`}
+      />
+      <path
+        d="M53.5 22.5 L54.1 23.8 L55.5 24 L54.4 25 L54.7 26.4 L53.5 25.7 L52.3 26.4 L52.6 25 L51.5 24 L52.9 23.8 Z"
+        fill="#FEF08A"
+      />
+
+      {/* Winding Golden Pathway ("Tariq") */}
+      <path
+        d="M50 63 C48 68 44 71 45 76 C46 80 48 81 44 86 H56 C57 82 54 79 55 76 C56 71 52 68 50 63 Z"
+        fill={`url(#${pathGradId})`}
+      />
+
+      {/* Rehal Base */}
+      <path d="M37 63 L46 58 M63 63 L54 58" stroke={`url(#${goldGradId})`} strokeWidth="2.2" strokeLinecap="round" />
+
+      {/* Open Holy Quran Pages */}
+      <path
+        d="M50 53 C43 50.5 35 51.5 31 53.5 C31 54 31.2 60 31.5 61 C35.5 59 43 58 50 61 Z"
+        fill={`url(#${pageGradId})`}
+        stroke={`url(#${goldGradId})`}
+        strokeWidth="1.2"
         strokeLinejoin="round"
       />
-      {/* Book Spine */}
-      <path d="M32 40.8V48.4" stroke="#B45309" strokeWidth="1.5" strokeLinecap="round" />
+      <path
+        d="M50 53 C57 50.5 65 51.5 69 53.5 C69 54 68.8 60 68.5 61 C64.5 59 57 58 50 61 Z"
+        fill={`url(#${pageGradId})`}
+        stroke={`url(#${goldGradId})`}
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path d="M50 53 V61" stroke="#92400E" strokeWidth="1.4" strokeLinecap="round" />
 
-      {/* Subtle Golden Apex Finial */}
-      <circle cx="32" cy="8.2" r="1.4" fill="#FDE68A" />
+      {/* Delicate Golden Olive Sprout */}
+      <path d="M68 55 C70 52 73 50 74 46" stroke={`url(#${goldGradId})`} strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M74 46 C77 46 78 43 78 41 C76 41 73 43 74 46 Z" fill={`url(#${goldGradId})`} />
+      <path d="M70.5 51 C73.5 50.5 74.5 48.5 74 47 C72 47.5 70 49 70.5 51 Z" fill={`url(#${goldGradId})`} />
+
+      {/* Apex Golden Finial */}
+      <circle cx="50" cy="11.5" r="1.6" fill={`url(#${goldGradId})`} />
+      <circle cx="50" cy="11.5" r="0.8" fill="#FEF08A" />
     </svg>
   );
 };
 
 export const AmalLogo: React.FC<AmalLogoProps> = ({
-  size = 38,
+  size = 42,
   variant = 'full',
   showBadge = true,
   className,
@@ -117,7 +177,7 @@ export const AmalLogo: React.FC<AmalLogoProps> = ({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 10,
+        gap: 12,
         flexShrink: 0,
         whiteSpace: 'nowrap',
         ...style,
@@ -125,47 +185,66 @@ export const AmalLogo: React.FC<AmalLogoProps> = ({
     >
       <AmalLogoMark size={size} showBadge={showBadge} />
       <div style={{ whiteSpace: 'nowrap' }}>
+        {/* Top Lockup: AMAL | عمل */}
         <div
           style={{
             display: 'flex',
-            alignItems: 'baseline',
-            gap: 4,
-            lineHeight: 1.05,
+            alignItems: 'center',
+            gap: 8,
+            lineHeight: 1,
           }}
         >
           <span
             style={{
-              fontSize: Math.round(size * 0.5),
+              fontSize: Math.round(size * 0.52),
               fontWeight: 900,
-              color: 'var(--amal-accent, #064E3B)',
-              letterSpacing: 0.6,
+              color: '#064E3B',
+              letterSpacing: 0.8,
+              fontFamily: 'serif, system-ui',
             }}
           >
             AMAL
           </span>
+
           <span
             style={{
-              fontSize: Math.round(size * 0.3),
-              fontWeight: 800,
-              color: 'var(--amal-gold, #B45309)',
-              letterSpacing: 1.2,
-              textTransform: 'uppercase',
+              width: 1.5,
+              height: Math.round(size * 0.44),
+              backgroundColor: '#D97706',
+              display: 'inline-block',
+            }}
+          />
+
+          <span
+            style={{
+              fontSize: Math.round(size * 0.48),
+              fontWeight: 700,
+              color: '#B45309',
+              fontFamily: 'Amiri, Noto Nastaliq Urdu, serif',
+              lineHeight: 1,
             }}
           >
-            OS
+            عمل
           </span>
         </div>
+
+        {/* Bottom Tagline: — Niyyah se Amal tak — */}
         <div
           style={{
-            fontSize: 9,
-            color: 'var(--amal-text-muted, #64748B)',
-            fontWeight: 700,
-            letterSpacing: 0.8,
-            textTransform: 'uppercase',
-            marginTop: 2,
+            fontSize: 9.5,
+            color: '#475569',
+            fontStyle: 'italic',
+            fontWeight: 600,
+            letterSpacing: 0.5,
+            marginTop: 3,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
           }}
         >
-          Deen &amp; Life OS
+          <span style={{ color: '#D97706' }}>—</span>
+          <span>Niyyah se Amal tak</span>
+          <span style={{ color: '#D97706' }}>—</span>
         </div>
       </div>
     </div>
